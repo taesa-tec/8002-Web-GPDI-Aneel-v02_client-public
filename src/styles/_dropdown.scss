@@ -1,0 +1,7 @@
+.dropdown-item {
+    border-bottom: solid 2px $gray-300;
+
+    &:last-child {
+        border-bottom-color: transparent;
+    }
+}

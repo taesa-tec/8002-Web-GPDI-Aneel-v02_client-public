@@ -1,0 +1,66 @@
+// stylelint-disable declaration-no-important
+
+// Margin and Padding
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    .fs#{$infix} {
+      @each $v in $font-sizes{
+        &-#{$v} {
+          font-size: #{$v}px !important;
+        }
+      }
+
+      &-plus {
+        &-quarter {
+          font-size: 125% !important;
+        }
+        &-half {
+          font-size: 150% !important;
+        }
+        &-three-quarter {
+          font-size: 175% !important;
+        }
+        &-double {
+          font-size: 200% !important;
+        }
+        @for $i from 1 to 10 {
+          &-percent-#{$i * 10} {
+            font-size: #{100+ ($i * 10)}#{'%'} !important;
+          }
+        }
+      }
+      @for $i from 1 to 10 {
+        &-p-#{$i * 10} {
+          font-size: #{($i * 10)}#{'%'} !important;
+        }
+      }
+
+      &-quarter {
+        font-size: 25% !important;
+      }
+
+      &-half {
+        font-size: 50% !important;
+      }
+
+      &-three-quarter {
+        font-size: 75% !important;
+      }
+
+      &-double {
+        font-size: 200% !important;
+      }
+    }
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .hover-text-#{$color} {
+    &:hover {
+      color: $value !important;
+    }
+  }
+}

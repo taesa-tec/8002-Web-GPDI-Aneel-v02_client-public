@@ -1,0 +1,107 @@
+<div class="bg-light py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="text-uppercase text-dark">Meu Cadastro</h3>
+            </div>
+        </div>
+    </div>
+</div>
+<form class="container mt-3">
+    <div class="row">
+        <div class="col-2">
+            <label class="rounded border d-block">
+                <div class="embed-responsive embed-responsive-1by1">
+                    <div class="embed-responsive-item p-2">
+                        <img class="img-fluid rounded " src="/assets/temp-user.png" alt="Avatar" />
+                    </div>
+                </div>
+                <div class="text-cinza-claro text-center py-2">
+                    <fa-icon icon="camera" size="1x"></fa-icon> Alterar Imagem
+                </div>
+                <input type="file" class="d-none">
+            </label>
+        </div>
+        <div class="col-10">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="">Nome Completo</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="">Email</label>
+                        <input type="email" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="">Empresa</label>
+                        <input type="text" disabled class="form-control">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="">CPF</label>
+                        <input type="text" disabled class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="">Razão Social</label>
+                        <input type="text" disabled class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h5>MEUS ACESSOS</h5>
+                    <div class="alert alert-primary" role="alert">
+                        <fa-icon icon="exclamation-triangle"></fa-icon> Seus acessos aos projetos são definidos
+                        pelo Administrador do sistema.
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="d-flex align-items-center">
+                                        <span class="mx-2">Número e tipo</span>
+                                        <span class="d-flex flex-column">
+                                            <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
+                                            <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
+                                        </span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="d-flex align-items-center">
+                                        <span class="mx-2">Nome</span>
+                                        <span class="d-flex flex-column">
+                                            <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
+                                            <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
+                                        </span>
+                                    </div>
+
+                                </th>
+                                <th>
+                                    <div class="d-flex align-items-center">
+                                        <span class="mx-2">Nível de acesso</span>
+                                        <span class="d-flex flex-column">
+                                            <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
+                                            <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
+                                        </span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

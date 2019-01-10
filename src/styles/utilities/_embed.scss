@@ -1,0 +1,24 @@
+
+.embed-responsive-2by1 {
+  &::before {
+    padding-top: percentage(1 / 2);
+  }
+}
+
+.embed-responsive-3by1 {
+  &::before {
+    padding-top: percentage(1 / 3);
+  }
+}
+
+.embed-responsive-4by1 {
+  &::before {
+    padding-top: percentage(1 / 4);
+  }
+}
+
+.embed-responsive-5by1 {
+  &::before {
+    padding-top: percentage(1 / 5);
+  }
+}

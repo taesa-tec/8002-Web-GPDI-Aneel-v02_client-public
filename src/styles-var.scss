@@ -1,0 +1,21 @@
+$blue: #03286a;
+$green: #259821;
+$yellow: #F7A30F;
+$red: #D95F5F;
+$orange: #ef6b01;
+
+$cinzaClaro: #B6BEC8;
+$cinzaEscuro: #323C47;
+$cinza: #656565;
+
+$theme-colors: ("blue": $blue, "red": $red, "orange": $orange, "yellow": $yellow, "green": $green, "cinza-escuro": $cinzaEscuro, "cinza-claro": $cinzaClaro, "cinza": $cinza);
+
+$font-sizes: 8, 10, 12, 14, 16, 18, 20, 22, 24, 28, 32, 36, 48, 64, 72 !default;
+
+$body-color: #4B4B4B;
+
+$dropdown-padding-y: 0;
+$dropdown-item-padding-y: 8px;
+$dropdown-link-color: $cinzaEscuro;
+$dropdown-link-hover-bg: $blue;
+$dropdown-link-hover-color: #FFF;

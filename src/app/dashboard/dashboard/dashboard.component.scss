@@ -1,0 +1,10 @@
+header {
+    background: url("/assets/fundo.png") no-repeat center;
+    background-size: 100%;
+}
+
+.wrap-menu-dropdown {
+    .dropdown-toggle::after {
+        display: none;
+    }
+}

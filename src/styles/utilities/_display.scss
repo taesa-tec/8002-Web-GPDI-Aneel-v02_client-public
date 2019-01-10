@@ -1,0 +1,32 @@
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+    .d#{$infix}-grid {
+      display: grid !important;
+      &-inline {
+        display: inline-grid !important;
+      }
+    }
+
+    @for $i from 1 to $grid-columns {
+      @for $o from 1 to $grid-columns {
+        .grid#{$infix}-#{$i}-#{$o} {
+          grid-template-columns: repeat($i, 1fr);
+          grid-template-rows: repeat($o, 1fr);
+        }
+      }
+    }
+    @each $i, $spacer in $spacers {
+      .grid-gap#{$infix}-#{$i} {
+        grid-gap: $spacer;
+      }
+      .row-gap#{$infix}-#{$i} {
+        row-gap: $spacer;
+      }
+      .col-gap#{$infix}-#{$i} {
+        column-gap: $spacer;
+      }
+    }
+
+  }
+}
