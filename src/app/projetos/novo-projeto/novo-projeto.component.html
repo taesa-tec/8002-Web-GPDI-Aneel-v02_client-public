@@ -1,0 +1,67 @@
+<div class="modal-header">
+    <div class="text-uppercase modal-title text-blue-light fs-24">Novo Projeto</div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <fa-icon icon="times-circle"></fa-icon>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="projetoForm" (ngSubmit)="onSubmit()">
+        <div class="row mb-4">
+            <div class="col">
+                <div class="form-group">
+                    <label class="text-blue-light" for="">Número do projeto</label>
+                    <input type="text" class="form-control" formControlName="numero" required>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="text-blue-light" for="">Titulo resumido do projeto</label>
+                    <input type="text" class="form-control" formControlName="titulo">
+                </div>
+            </div>
+        </div>
+        <div class="row my-4">
+            <div class="col-12">
+                <div class="form-group">
+                    <label class="text-blue-light" for="">Título do projeto</label>
+                    <textarea name="" id="" cols="30" rows="4" class="form-control" formControlName="tituloDesc"></textarea>
+                    <div class="text-right text-blue-light">{{tituloDescRestante}} caracteres sobrando</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label class="text-blue-light" for="">Empresa Proponente</label>
+                    <select name="" id="" class="form-control" formControlName="empresaProponente">
+                        <option value="">Selecione a empresa</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="text-blue-light" for="">Status</label>
+                    <select name="" id="" class="form-control" formControlName="status">
+                        <option value="">Selecione</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="projetoForm.dirty && projetoForm.invalid">
+            <div class="col-12">
+                <ngb-alert [dismissible]="false" type="danger">
+                    <fa-icon icon="exclamation-circle"></fa-icon> Todos os campos são obrigatórios
+                </ngb-alert>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-right">
+                <button type="button" class="btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</button>
+                <button type="submit" class="btn btn-primary">
+                    <fa-icon icon="plus-circle"></fa-icon>
+                    Criar Projeto
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

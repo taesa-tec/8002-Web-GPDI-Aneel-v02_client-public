@@ -4,21 +4,19 @@ import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { far } from '@fortawesome/free-regular-svg-icons';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MeuCadastroComponent } from './meu-cadastro/meu-cadastro.component';
-import { MeusProjetosComponent } from './meus-projetos/meus-projetos.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-library.add(fas, far);
+import { ProjetosModule } from '../projetos/projetos.module';
+import { SharedModule } from '../shared/shared.module';
+import { GerenciarUsuariosComponent } from './gerenciar-usuarios/gerenciar-usuarios.component';
 
 @NgModule({
-    declarations: [DashboardComponent, MeuCadastroComponent, MeusProjetosComponent, NotFoundComponent],
+    declarations: [DashboardComponent, MeuCadastroComponent, NotFoundComponent, GerenciarUsuariosComponent],
     imports: [
         CommonModule,
-        FontAwesomeModule,
+        SharedModule,
+        ProjetosModule,
         NgbModule,
         DashboardRoutingModule
     ]

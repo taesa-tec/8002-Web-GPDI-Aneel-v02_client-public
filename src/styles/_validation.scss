@@ -1,0 +1,8 @@
+.ng-touched.ng-valid[required], .ng-touched.ng-valid.required {
+    // border-left: 5px solid $success; /* green */
+}
+
+.ng-touched.ng-invalid:not(form) {
+    box-shadow: 0 0 4px transparentize($danger, 0.1);
+    //border-left: 5px solid $danger; /* red */
+}

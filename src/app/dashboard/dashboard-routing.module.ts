@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { MeusProjetosComponent } from './meus-projetos/meus-projetos.component';
 import { MeuCadastroComponent } from './meu-cadastro/meu-cadastro.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { MeusProjetosComponent } from '../projetos/meus-projetos/meus-projetos.component';
+import { GerenciarUsuariosComponent } from './gerenciar-usuarios/gerenciar-usuarios.component';
 
 const routes: Routes = [
     {
@@ -12,6 +13,7 @@ const routes: Routes = [
         children: [
             { path: '', component: MeusProjetosComponent, data: { title: "Meus Projetos" } },
             { path: 'meu-cadastro', component: MeuCadastroComponent, data: { title: "Meu Cadastro" } },
+            { path: 'gerenciar-usuarios', component: GerenciarUsuariosComponent, data: { title: "Meu Cadastro" } },
             { path: '**', component: NotFoundComponent, data: { title: "Não encontrado" } }
         ]
     }

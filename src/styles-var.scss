@@ -1,4 +1,5 @@
 $blue: #03286a;
+$blueLight: #7082A4;
 $green: #259821;
 $yellow: #F7A30F;
 $red: #D95F5F;
@@ -8,8 +9,9 @@ $cinzaClaro: #B6BEC8;
 $cinzaEscuro: #323C47;
 $cinza: #656565;
 
-$theme-colors: ("blue": $blue, "red": $red, "orange": $orange, "yellow": $yellow, "green": $green, "cinza-escuro": $cinzaEscuro, "cinza-claro": $cinzaClaro, "cinza": $cinza);
+$theme-colors: ("blue": $blue, "blue-light": $blueLight, "red": $red, "orange": $orange, "yellow": $yellow, "green": $green, "cinza-escuro": $cinzaEscuro, "cinza-claro": $cinzaClaro, "cinza": $cinza);
 
+$font-family-base: 'Roboto', sans-serif;
 $font-sizes: 8, 10, 12, 14, 16, 18, 20, 22, 24, 28, 32, 36, 48, 64, 72 !default;
 
 $body-color: #4B4B4B;
@@ -19,3 +21,9 @@ $dropdown-item-padding-y: 8px;
 $dropdown-link-color: $cinzaEscuro;
 $dropdown-link-hover-bg: $blue;
 $dropdown-link-hover-color: #FFF;
+
+$modal-backdrop-bg: #FFF;
+$modal-backdrop-opacity: 0.75;
+$modal-content-border-radius: 0;
+
+$btn-padding-y:0.75rem;
