@@ -1,0 +1,14 @@
+<div class="card w-100">
+    <div class="card-header bg-blue-light text-white d-flex justify-content-between">
+        <span class="text-uppercase">
+            {{projeto.numero}} - {{projeto.titulo}}
+        </span>
+        <span class="text-uppercase">
+            <fa-icon [icon]="icon"></fa-icon>
+            <span class="ml-3">{{status}}</span>
+        </span>
+    </div>
+    <div class="card-body">
+        <div>{{projeto.tituloDesc}}</div>
+    </div>
+</div>

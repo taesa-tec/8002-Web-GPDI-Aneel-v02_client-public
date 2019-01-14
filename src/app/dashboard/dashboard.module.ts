@@ -7,7 +7,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MeuCadastroComponent } from './meu-cadastro/meu-cadastro.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { ProjetosModule } from '../projetos/projetos.module';
 import { SharedModule } from '../shared/shared.module';
 import { GerenciarUsuariosComponent } from './gerenciar-usuarios/gerenciar-usuarios.component';
 
@@ -16,7 +15,6 @@ import { GerenciarUsuariosComponent } from './gerenciar-usuarios/gerenciar-usuar
     imports: [
         CommonModule,
         SharedModule,
-        ProjetosModule,
         NgbModule,
         DashboardRoutingModule
     ]

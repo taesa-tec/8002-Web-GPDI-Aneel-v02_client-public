@@ -13,6 +13,7 @@
         </div>
     </div>
 </div>
+<!-- Filtros -->
 <div class="container my-4">
     <div class="row">
         <div class="col">
@@ -35,7 +36,17 @@
             </div>
         </div>
         <div class="col d-flex align-items-center">
-            <span class="d-block mb-3 text-right flex-grow-1">xxx projetos</span>
+            <span class="d-block mb-3 text-right flex-grow-1">{{total_projetos}} projetos</span>
+        </div>
+    </div>
+</div>
+<!-- Lista -->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="d-grid grid-2-1 grid-gap-4 wrap-projetos-cards">
+                <app-projeto-card *ngFor="let projeto of projetos" [projeto]="projeto"></app-projeto-card>
+            </div>
         </div>
     </div>
 </div>

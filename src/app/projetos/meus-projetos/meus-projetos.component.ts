@@ -13,6 +13,7 @@ import { Projeto } from 'src/app/shared/projeto.model';
 export class MeusProjetosComponent implements OnInit {
 
     projetos: Projeto[];
+    total_projetos = 0;
 
     constructor(protected projetoService: ProjetoService, protected modalService: NgbModal) {
         this.projetos = [];
@@ -25,6 +26,7 @@ export class MeusProjetosComponent implements OnInit {
     getProjetos() {
         this.projetoService.getProjetos().subscribe(projetos => {
             this.projetos = projetos;
+            this.total_projetos = this.projetos.length;
         });
     }
 

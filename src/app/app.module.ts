@@ -9,6 +9,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProjetosModule } from './projetos/projetos.module';
 import { SharedModule } from './shared/shared.module';
+import { APP_CONFIG, APP_CONFIG_DEV } from './app.config';
 
 
 @NgModule({
@@ -23,10 +24,12 @@ import { SharedModule } from './shared/shared.module';
         DashboardModule,
         ProjetosModule,
         AppRoutingModule,
-        SharedModule
+        SharedModule,
     ],
     exports: [SharedModule],
-    providers: [],
+    providers: [
+        { provide: APP_CONFIG, useValue: APP_CONFIG_DEV }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
