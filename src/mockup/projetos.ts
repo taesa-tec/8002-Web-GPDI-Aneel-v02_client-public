@@ -1,4 +1,4 @@
-import { Projeto } from "@app/shared/projeto.model";
+import { Projeto, Status } from "@app/shared/projeto.model";
 
 
 export const projetos: Projeto[] = [
@@ -10,7 +10,7 @@ export const projetos: Projeto[] = [
         Eliminação de Desligamentos Indevidos pela Permanência dos Aterramentos Temporários.`,
         numero: "0001",
         empresaProponente: 1,
-        status: "1",
+        status: Status.Proposta,
         segmentoId: 1,
         avaliacaoInicial: "",
         compartResultados: "",
@@ -30,7 +30,7 @@ export const projetos: Projeto[] = [
         e alocação otimizada de recursos para manutenção emergencial de redes.`,
         numero: "0002",
         empresaProponente: 1,
-        status: "2",
+        status: Status.Iniciado,
         segmentoId: 1,
         avaliacaoInicial: "",
         compartResultados: "",
@@ -44,12 +44,12 @@ export const projetos: Projeto[] = [
     },
     {
         created: "2019-01-01",
-        projetoId: 1,
+        projetoId: 3,
         titulo: "Titulo C",
         tituloDesc: `Prospecção e Hierarquização de Inovações Tecnológicas Aplicadas a Equipamentos de Alta Tensão em Corrente Alternada`,
         numero: "0003",
         empresaProponente: 1,
-        status: "3",
+        status: Status.Encerrado,
         segmentoId: 1,
         avaliacaoInicial: "",
         compartResultados: "",
@@ -63,13 +63,13 @@ export const projetos: Projeto[] = [
     },
     {
         created: "2019-01-01",
-        projetoId: 1,
+        projetoId: 4,
         titulo: "Titulo D",
         tituloDesc: `Desenvolvimento de Tecnologia para Implementação de uma 
         Planta Termo-Solar de Cogeração no Município de Ribeiro Gonçalves`,
         numero: "0004",
         empresaProponente: 1,
-        status: "3",
+        status: Status.Encerrado,
         segmentoId: 1,
         avaliacaoInicial: "",
         compartResultados: "",

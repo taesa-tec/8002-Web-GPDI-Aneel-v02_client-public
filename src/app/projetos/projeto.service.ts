@@ -11,6 +11,21 @@ export class ProjetoService {
 
     constructor() { }
 
+    getById(id: number): Observable<Projeto> {
+        return new Observable<Projeto>(rootObserver => {
+            setTimeout(() => {
+                if (projetosMockup[id - 1]) {
+                    rootObserver.next(projetosMockup[id - 1]);
+                } else {
+                    rootObserver.error();
+                }
+                rootObserver.complete();
+            }, 500);
+
+        });
+
+    }
+
     getProjetos(): Observable<Projeto[]> {
         const projetos: Projeto[] = projetosMockup;
 

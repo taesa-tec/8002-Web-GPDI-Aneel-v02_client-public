@@ -1,5 +1,12 @@
 import { Produto } from './produto.model';
 
+export enum Status {
+    Desconhecido = "",
+    Proposta = "1",
+    Iniciado = "2",
+    Encerrado = "3"
+}
+
 export interface Projeto {
     created: string;
     projetoId: number;
@@ -7,7 +14,7 @@ export interface Projeto {
     tituloDesc: string;
     numero: string;
     empresaProponente: number;
-    status: string;
+    status: Status;
     segmentoId: number;
     avaliacaoInicial: string;
     compartResultados: string;
@@ -19,3 +26,5 @@ export interface Projeto {
     pesquisas: string;
     produtos: Produto[];
 }
+
+

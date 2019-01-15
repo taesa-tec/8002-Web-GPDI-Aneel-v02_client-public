@@ -1,0 +1,13 @@
+.form-group {
+    label {
+        color: $blueLight;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    textarea {
+        &.form-control {
+            resize: none;
+        }
+    }
+}

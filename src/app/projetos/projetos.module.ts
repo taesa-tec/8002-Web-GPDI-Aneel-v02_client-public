@@ -25,13 +25,31 @@ import { LogComponent } from './projeto/log/log.component';
 
 
 @NgModule({
-    declarations: [MeusProjetosComponent, NovoProjetoComponent, ProjetoCardComponent, ProjetoComponent, InfoComponent, TemasComponent, ProdutosComponent, EtapasComponent, EmpresasComponent, RecursosHumanosComponent, AlocacaoRecursosHumanosComponent, RecursosMateriaisComponent, AlocacaoRecursosMateriaisComponent, ExtratoFinanceiroEmpresaComponent, ExtratoFinanceiroEtapasComponent, CentralAdministrativaComponent, LogComponent],
+    declarations: [
+        MeusProjetosComponent,
+        NovoProjetoComponent,
+        ProjetoCardComponent,
+        ProjetoComponent,
+        InfoComponent,
+        TemasComponent,
+        ProdutosComponent,
+        EtapasComponent,
+        EmpresasComponent,
+        RecursosHumanosComponent,
+        AlocacaoRecursosHumanosComponent,
+        RecursosMateriaisComponent,
+        AlocacaoRecursosMateriaisComponent,
+        ExtratoFinanceiroEmpresaComponent,
+        ExtratoFinanceiroEtapasComponent,
+        CentralAdministrativaComponent,
+        LogComponent
+    ],
     entryComponents: [NovoProjetoComponent],
     imports: [
         CommonModule,
         SharedModule,
         ReactiveFormsModule,
-        RouterModule 
+        RouterModule
     ]
 })
 export class ProjetosModule { }

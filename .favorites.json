@@ -1,0 +1,29 @@
+[
+    {
+        "type": "Directory",
+        "name": "e:\\Clientes\\Taesa\\sistema-ped\\node_modules\\bootstrap",
+        "parent_id": null,
+        "fsPath": "e:\\Clientes\\Taesa\\sistema-ped\\node_modules\\bootstrap",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "wkVH4EjUIGPyegT8"
+    },
+    {
+        "type": "Directory",
+        "name": "e:\\Clientes\\Taesa\\sistema-ped\\src\\styles",
+        "parent_id": null,
+        "fsPath": "e:\\Clientes\\Taesa\\sistema-ped\\src\\styles",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "3N18VqUdoYCa5D0F"
+    },
+    {
+        "type": "Directory",
+        "name": "e:\\Clientes\\Taesa\\sistema-ped\\src\\app",
+        "parent_id": null,
+        "fsPath": "e:\\Clientes\\Taesa\\sistema-ped\\src\\app",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "90BWnG8uPhA3DvU1"
+    }
+]

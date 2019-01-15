@@ -11,7 +11,7 @@ $cinza: #656565;
 
 $theme-colors: ("blue": $blue, "blue-light": $blueLight, "red": $red, "orange": $orange, "yellow": $yellow, "green": $green, "cinza-escuro": $cinzaEscuro, "cinza-claro": $cinzaClaro, "cinza": $cinza);
 
-$font-family-base: 'Roboto', sans-serif;
+$font-family-base: "Roboto", sans-serif;
 $font-sizes: 8, 10, 12, 14, 16, 18, 20, 22, 24, 28, 32, 36, 48, 64, 72 !default;
 
 $body-color: #4B4B4B;
@@ -26,4 +26,8 @@ $modal-backdrop-bg: #FFF;
 $modal-backdrop-opacity: 0.75;
 $modal-content-border-radius: 0;
 
-$btn-padding-y:0.75rem;
+$btn-padding-y: 0.75rem;
+
+$label-margin-bottom: 0.2rem;
+
+$icomoon-font-path: "assets/fonts";
