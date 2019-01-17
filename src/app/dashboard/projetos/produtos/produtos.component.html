@@ -1,0 +1,87 @@
+<div class="row">
+    <div class="col">
+        <h5 class="text-uppercase text-blue font-weight-normal my-3">
+            Produtos
+        </h5>
+    </div>
+    <div class="col text-right">
+        <button class="btn btn-outline-primary" type="button" (click)="openFormProduto()">
+            <i class="ta-plus"></i>
+            Novo Produto
+        </button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">Produto Intermediário</span>
+                            <span class="d-flex flex-column">
+                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
+                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
+                            </span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">Etapa Associada</span>
+                            <span class="d-flex flex-column">
+                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
+                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
+                            </span>
+                        </div>
+
+                    </th>
+                    <th>
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">Classificação</span>
+                            <span class="d-flex flex-column">
+                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
+                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
+                            </span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">Ações</span>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tr>
+                <td>Titulo do produto</td>
+                <td>Etapa 01</td>
+                <td>Produto Intermediário</td>
+                <td>
+                    <button type="button" class="btn btn-primary" (click)="openFormProduto(1)">
+                        <i class="ta-edit"></i>
+                        EDITAR
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>Titulo do produto</td>
+                <td>Etapa 01</td>
+                <td>Produto Intermediário</td>
+                <td>
+                    <button type="button" class="btn btn-primary" (click)="openFormProduto(2)">
+                        <i class="ta-edit"></i>
+                        EDITAR
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<hr>
+<div class="row">
+    <div class="col-auto">
+        <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes</div>
+    <div class="col text-right">
+
+    </div>
+</div>

@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from './dashboard.component';
 import { MeuCadastroComponent } from './meu-cadastro/meu-cadastro.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { MeusProjetosComponent } from '../projetos/meus-projetos/meus-projetos.component';
+import { MeusProjetosComponent } from '@app/dashboard/meus-projetos/meus-projetos.component';
 import { GerenciarUsuariosComponent } from './gerenciar-usuarios/gerenciar-usuarios.component';
-import { ProjetoComponent } from '@app/projetos/projeto/projeto.component';
-import { projetoPlanejamentoRoutes } from '@app/projetos/projeto.routes';
+import { ProjetoComponent } from './projetos/projeto.component';
+
+import { projetoPlanejamentoRoutes } from '@app/dashboard/projetos/projeto.routes';
 
 
 

@@ -27,9 +27,10 @@
     "@types/lodash-es": "^4.17.1",
     "bootstrap": "^4.2.1",
     "core-js": "^2.5.4",
+    "jquery": "^1.9.1",
     "lodash-es": "^4.17.11",
     "materialize-css": "^1.0.0-rc.2",
-    "ngx-spinner": "^6.1.2",
+    "popper.js": "^1.14.6",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"

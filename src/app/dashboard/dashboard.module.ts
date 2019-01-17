@@ -2,20 +2,43 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedModule } from '@app/shared/shared.module';
 import { MeuCadastroComponent } from './meu-cadastro/meu-cadastro.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { SharedModule } from '../shared/shared.module';
 import { GerenciarUsuariosComponent } from './gerenciar-usuarios/gerenciar-usuarios.component';
+import { DashboardComponent } from './dashboard.component';
+import { ProjetoComponent } from './projetos/projeto.component';
+import { InfoComponent } from './projetos/info/info.component';
+import { TemasComponent } from './projetos/temas/temas.component';
+import { MeusProjetosComponent } from './meus-projetos/meus-projetos.component';
+import { ProjetosModule } from '@app/projetos/projetos.module';
+import { ProdutosComponent } from './projetos/produtos/produtos.component';
+import { BlankComponent } from './projetos/blank/blank.component';
+import { EtapasComponent } from './projetos/etapas/etapas.component';
+import { EmpresasComponent } from './projetos/empresas/empresas.component';
 
 @NgModule({
-    declarations: [DashboardComponent, MeuCadastroComponent, NotFoundComponent, GerenciarUsuariosComponent],
+    declarations: [
+        DashboardComponent,
+        MeuCadastroComponent,
+        NotFoundComponent,
+        GerenciarUsuariosComponent,
+        MeusProjetosComponent,
+        ProjetoComponent,
+        InfoComponent,
+        TemasComponent,
+        ProdutosComponent,
+        BlankComponent,
+        EtapasComponent,
+        EmpresasComponent
+    ],
     imports: [
         CommonModule,
         SharedModule,
         NgbModule,
+        ProjetosModule,
         DashboardRoutingModule
     ]
 })

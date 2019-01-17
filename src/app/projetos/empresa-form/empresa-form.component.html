@@ -1,0 +1,103 @@
+<div class="modal-header">
+    <div class="text-uppercase modal-title text-blue-light fs-24">Registrar empresa</div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <fa-icon icon="times-circle"></fa-icon>
+    </button>
+</div>
+<div class="modal-body">
+    <ngb-tabset justify="justified" type="bar-row">
+        <ngb-tab title="Empresa de energia Elétrica">
+            <ng-template ngbTabContent>
+                <div class="row my-5">
+                    <div class="col-6">
+                        <div class="form-group"><label for="">Empresa</label>
+                            <select name="" id="" class="form-control">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group"><label for="">Tipo Empresa</label>
+                            <select name="" id="" class="form-control">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-right">
+                        <div class="button btn btn-link">Cancelar</div>
+                        <button class="btn btn-primary">
+                            <i class="ta-plus fs-24 align-middle"></i>
+                            Salvar Empresa
+                        </button>
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Empresa Executora">
+            <ng-template ngbTabContent>
+                <div class="row my-5">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="">CNPJ</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group"><label for="">UF de cadastro na fazenda</label>
+                            <select name="" id="" class="form-control">
+                                <option value="">Selecione</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="">Razão social</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 text-right">
+                        <div class="button btn btn-link">Cancelar</div>
+                        <button class="btn btn-primary">
+                            <i class="ta-plus fs-24 align-middle"></i>
+                            Salvar Empresa
+                        </button>
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Empresa Parceira">
+            <ng-template ngbTabContent>
+                <div class="row my-5">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="">CNPJ</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="">Razão social</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-right">
+                        <div class="button btn btn-link">Cancelar</div>
+                        <button class="btn btn-primary">
+                            <i class="ta-plus fs-24 align-middle"></i>
+                            Salvar Empresa
+                        </button>
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-tab>
+    </ngb-tabset>
+</div>

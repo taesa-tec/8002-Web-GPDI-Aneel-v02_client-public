@@ -1,0 +1,25 @@
+.wrap-loading {
+    &.fullscreen {
+        z-index: 9999;
+        position: fixed;
+    }
+
+    &.fullparent {
+        position: absolute;
+    }
+
+    &.inline {
+        display: inline-flex;
+        padding: 1rem;
+    }
+
+    &.fullscreen, &.fullparent {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+}

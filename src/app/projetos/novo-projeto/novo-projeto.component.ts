@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProjetoService } from '../projeto.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Status } from '@app/shared/projeto.model';
+import { ProjetoStatus } from '@app/projetos/common';
 
 @Component({
     selector: 'app-novo-projeto',
@@ -68,7 +68,7 @@ export class NovoProjetoComponent implements OnInit {
             tituloDesc: '',
             numero: '',
             empresaProponente: 1,
-            status: Status.Proposta,
+            status: ProjetoStatus.Proposta,
             segmentoId: 1,
             avaliacaoInicial: '',
             compartResultados: '',

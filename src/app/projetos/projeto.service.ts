@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
-import { Projeto } from '../shared/projeto.model';
-import { Resultado } from '../shared/resultado.model';
+import { Projeto, Resultado } from '@app/projetos/common';
 import { projetos as projetosMockup } from "@mockup/projetos";
 
 @Injectable({
@@ -20,7 +19,7 @@ export class ProjetoService {
                     rootObserver.error();
                 }
                 rootObserver.complete();
-            }, 500);
+            }, 350);
 
         });
 

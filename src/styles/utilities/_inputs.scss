@@ -11,3 +11,49 @@
         }
     }
 }
+
+.form-check {
+    .form-check-input {
+        display: inline-block;
+        position: relative;
+        visibility: hidden;
+
+        + .form-check-label {
+            padding-left: 1em;
+
+            &::before {
+                color: inherit;
+                font-family: "taesa-icon" !important;
+                display: inline-block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                content: "\ea56";
+            }
+        }
+
+        &:checked {
+            + .form-check-label {
+                &::before {
+                    content: "\ea54";
+                }
+            }
+        }
+
+        &[type=checkbox] {
+            + .form-check-label {
+                &::before {
+                    content: "\ea53";
+                }
+            }
+
+            &:checked {
+                + .form-check-label {
+                    &::before {
+                        content: "\ea52";
+                    }
+                }
+            }
+        }
+    }
+}
