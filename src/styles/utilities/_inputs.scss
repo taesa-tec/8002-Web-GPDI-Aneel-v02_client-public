@@ -28,14 +28,14 @@
                 position: absolute;
                 top: 0;
                 left: 0;
-                content: "\ea56";
+                content: $ta-radio-unchecked;
             }
         }
 
         &:checked {
             + .form-check-label {
                 &::before {
-                    content: "\ea54";
+                    content: $ta-radio-checked;
                 }
             }
         }
@@ -43,14 +43,14 @@
         &[type=checkbox] {
             + .form-check-label {
                 &::before {
-                    content: "\ea53";
+                    content: $ta-checkbox-unchecked;
                 }
             }
 
             &:checked {
                 + .form-check-label {
                     &::before {
-                        content: "\ea52";
+                        content: $ta-checkbox-checked;
                     }
                 }
             }

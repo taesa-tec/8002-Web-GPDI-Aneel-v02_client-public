@@ -1,33 +1,24 @@
-<h5 class="text-uppercase text-blue font-weight-normal my-3">Etapas</h5>
 <div class="row">
     <div class="col">
-        <div class="form-group m-0">
-            <label for="">Data Inicial Projeto</label>
-        </div>
-        <div class="form-group form-inline">
-            <select name="" id="" class="form-control mr-3">
-                <option value="">MM</option>
-            </select>
-            <select name="" id="" class="form-control">
-                <option value="">AAAA</option>
-            </select>
-        </div>
+        <h5 class="text-uppercase text-blue font-weight-normal my-3">
+            Recursos Humanos
+        </h5>
     </div>
     <div class="col text-right">
         <button class="btn btn-outline-primary" type="button" (click)="openModal()">
-            <i class="ta-plus fs-24 align-middle align-middle"></i>
-            Novo Etapa
+            <i class="ta-plus fs-24 align-middle"></i>
+            Nova pessoa
         </button>
     </div>
 </div>
-<div class="row mt-4">
+<div class="row">
     <div class="col-12">
         <table class="table">
             <thead>
                 <tr>
                     <th>
                         <div class="d-flex align-items-center">
-                            <span class="mx-2">Etapas</span>
+                            <span class="mx-2">Nome</span>
                             <span class="d-flex flex-column">
                                 <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
                                 <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
@@ -36,7 +27,7 @@
                     </th>
                     <th>
                         <div class="d-flex align-items-center">
-                            <span class="mx-2">Data Inicial</span>
+                            <span class="mx-2">Empresa</span>
                             <span class="d-flex flex-column">
                                 <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
                                 <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
@@ -46,7 +37,16 @@
                     </th>
                     <th>
                         <div class="d-flex align-items-center">
-                            <span class="mx-2">Data Final</span>
+                            <span class="mx-2">Função</span>
+                            <span class="d-flex flex-column">
+                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
+                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
+                            </span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">Título</span>
                             <span class="d-flex flex-column">
                                 <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
                                 <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
@@ -61,30 +61,33 @@
                 </tr>
             </thead>
             <tr>
-                <td>Etapa 01</td>
-                <td>05/2019</td>
-                <td>11/2019</td>
+                <td>Frederico Souto dos Santos</td>
+                <td>Ivision Sistemas de Imagem e Visão S.A</td>
+                <td>Coodernador</td>
+                <td>Doutor</td>
                 <td>
-                    <button type="button" class="btn btn-primary">
-                        <i class="ta-bin"></i>
-                        Excluir
+                    <button type="button" class="btn btn-primary" (click)="openModal(1)">
+                        <i class="ta-edit"></i>
+                        EDITAR
                     </button>
                 </td>
             </tr>
             <tr>
-                <td>Etapa 02</td>
-                <td>11/2019</td>
-                <td>05/2020</td>
+                <td>André dos Santos</td>
+                <td>TAESA (7527)</td>
+                <td>Gerente</td>
+                <td>Mestre</td>
                 <td>
-                    <button type="button" class="btn btn-primary">
-                        <i class="ta-bin"></i>
-                        Excluir
+                    <button type="button" class="btn btn-primary" (click)="openModal(1)">
+                        <i class="ta-edit"></i>
+                        EDITAR
                     </button>
                 </td>
             </tr>
         </table>
     </div>
 </div>
+
 <hr>
 <div class="row">
     <div class="col-auto">

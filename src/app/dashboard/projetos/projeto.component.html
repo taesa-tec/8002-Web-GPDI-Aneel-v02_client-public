@@ -1,41 +1,42 @@
 <div class="side-bar">
-        <div class="projeto-side-info text-white fs-14 font-weight-light position-relative">
-            <app-loading type="fullparent"></app-loading>
-            <div *ngIf="currentProjeto">
-                <div class=" p-3 border-bottom border-cinza-claro text-uppercase">{{currentProjeto.numero}} -
-                    {{currentProjeto.titulo}}
+    <div class="projeto-side-info text-white fs-14 font-weight-light position-relative">
+        <app-loading type="fullparent"></app-loading>
+        <div *ngIf="currentProjeto">
+            <div class=" p-3 border-bottom border-cinza-claro text-uppercase">{{currentProjeto.numero}} -
+                {{currentProjeto.titulo}}
+            </div>
+            <div class="p-3 ">
+                <div class="etapa">
+                    Etapa:{{status}}
                 </div>
-                <div class="p-3 ">
-                    <div class="etapa">
-                        Etapa:{{status}}
-                    </div>
-                    <div class="empresa">
-                        Empresa Proponente
-                    </div>
-                    <div class="mt-2">
-                        <a routerLink="/dashboard/">
-                            <i class="ta-sync fs-18"></i>
-                            Tocar de projeto
-                        </a>
-                    </div>
+                <div class="empresa">
+                    Empresa Proponente
+                </div>
+                <div class="mt-2">
+                    <a routerLink="/dashboard/">
+                        <i class="ta-sync fs-18"></i>
+                        Tocar de projeto
+                    </a>
                 </div>
             </div>
         </div>
-        <nav class="side-nav">
-            <app-loading type="fullparent" background-color="transparent"></app-loading>
-    
-            <a *ngFor="let route of routes" [routerLink]="route.path" class="side-nav-item" routerLinkActive="active"
-                [hidden]="!currentProjeto">
-                <span class="fs-24 mr-3">
-                    <i [class]="route.data.icon"></i>
-                </span>
-                {{route.data.text}}
-            </a>
-        </nav>
     </div>
-    <div class="wrap-outlet py-4 px-5">
-    
-        <hr>
-    
-        <router-outlet></router-outlet>
-    </div>
+    <nav class="side-nav">
+        <app-loading type="fullparent" background-color="transparent"></app-loading>
+
+        <a *ngFor="let route of routes" [routerLink]="route.path" class="side-nav-item" routerLinkActive="active"
+           [hidden]="!currentProjeto">
+            <span class="fs-24 mr-3">
+                <i [class]="route.data['icon']"></i>
+            </span>
+            {{route.data['text']}}
+        </a>
+    </nav>
+</div>
+<div class="wrap-outlet py-4 px-5">
+
+    <!-- @todo Aletas -->
+    <hr>
+
+    <router-outlet></router-outlet>
+</div>

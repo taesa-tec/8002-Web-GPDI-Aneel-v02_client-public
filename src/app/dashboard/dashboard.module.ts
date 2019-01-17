@@ -18,6 +18,11 @@ import { ProdutosComponent } from './projetos/produtos/produtos.component';
 import { BlankComponent } from './projetos/blank/blank.component';
 import { EtapasComponent } from './projetos/etapas/etapas.component';
 import { EmpresasComponent } from './projetos/empresas/empresas.component';
+import { RecursosHumanosComponent } from './projetos/recursos-humanos/recursos-humanos.component';
+import { BaseComponent } from './projetos/base/base.component';
+import { AlocacaoComponent as AlocacaoHumanoComponent } from './projetos/recursos-humanos/alocacao.component';
+import { RecursosMateriaisComponent } from './projetos/recursos-materiais/recursos-materiais.component';
+import { AlocacaoComponent as AlocacaoMaterialComponent } from './projetos/recursos-materiais/alocacao.component';
 
 @NgModule({
     declarations: [
@@ -32,7 +37,11 @@ import { EmpresasComponent } from './projetos/empresas/empresas.component';
         ProdutosComponent,
         BlankComponent,
         EtapasComponent,
-        EmpresasComponent
+        EmpresasComponent,
+        RecursosHumanosComponent,
+        AlocacaoHumanoComponent,
+        RecursosMateriaisComponent,
+        AlocacaoMaterialComponent,
     ],
     imports: [
         CommonModule,
