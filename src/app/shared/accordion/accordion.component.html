@@ -1,0 +1,21 @@
+<div class="my-3">
+
+    <header class="card my-2" (click)="toogle()" [ngClass]="{'bg-light collapsed': isCollapsed, 'bg-blue-light text-white':!isCollapsed}">
+        <div class="card-body d-flex align-items-center">
+            <div>
+                <div class="icon-handle ta-circle-right fs-32"></div>
+            </div>
+            <div class="px-3 flex-grow-1">
+                <ng-content select="[role=heading]"></ng-content>
+            </div>
+        </div>
+    </header>
+    
+    <div [ngbCollapse]="isCollapsed">
+        <div class="card">
+            <div class="card-body">
+                <ng-content select="[role=main]"></ng-content>
+            </div>
+        </div>
+    </div>
+</div>

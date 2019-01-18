@@ -7,12 +7,13 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoadingComponent } from './loading/loading.component';
+import { AccordionComponent } from './accordion/accordion.component';
 
 
 library.add(fas, far);
 
 @NgModule({
-    declarations: [LoadingComponent],
+    declarations: [LoadingComponent, AccordionComponent],
     imports: [
         CommonModule,
         FontAwesomeModule,
@@ -23,7 +24,8 @@ library.add(fas, far);
         FontAwesomeModule,
         NgbModule,
         HttpClientModule,
-        LoadingComponent
+        LoadingComponent,
+        AccordionComponent
     ]
 
 })

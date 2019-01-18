@@ -1,0 +1,16 @@
+@import "components-base";
+
+header.card {
+    .icon-handle {
+        transform: rotate(90deg);
+        transition: transform ease 300ms;
+        color: inherit;
+    }
+
+    &.collapsed {
+        .icon-handle {
+            color: $blue;
+            transform: rotate(0deg);
+        }
+    }
+}

@@ -10,6 +10,8 @@ import { RecursosHumanosComponent } from './recursos-humanos/recursos-humanos.co
 import { RecursosMateriaisComponent } from './recursos-materiais/recursos-materiais.component';
 import { AlocacaoComponent as AlocacaoHComponent } from './recursos-humanos/alocacao.component';
 import { AlocacaoComponent as AlocacaoMComponent } from './recursos-materiais/alocacao.component';
+import { ExtratoFinanceiroEmpresasComponent } from './extrato-financeiro-empresas/extrato-financeiro-empresas.component';
+import { ExtratoFinanceiroEtapasComponent } from './extrato-financeiro-etapas/extrato-financeiro-etapas.component';
 
 export const projetoPlanejamentoRoutes: Routes = [
     { path: '', redirectTo: 'info', pathMatch: 'full' },
@@ -50,11 +52,11 @@ export const projetoPlanejamentoRoutes: Routes = [
         data: { text: "Alocação de recursos Materias", icon: "ta-alocacao-material" }
     },
     {
-        path: 'extrato-financeiro-empresas', component: BlankComponent,
+        path: 'extrato-financeiro-empresas', component: ExtratoFinanceiroEmpresasComponent,
         data: { text: "Extrato Financeiro Empresas", icon: "ta-extrato" }
     },
     {
-        path: 'extrato-financeiro-etapas', component: BlankComponent,
+        path: 'extrato-financeiro-etapas', component: ExtratoFinanceiroEtapasComponent,
         data: { text: "Extrato Financeiro Etapas", icon: "ta-table" }
     },
     {

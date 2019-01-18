@@ -1,0 +1,31 @@
+<h5 class="text-uppercase text-blue font-weight-normal my-3">Extrato Financeiro por etapas</h5>
+<div class="row" *ngFor="let item of ['Etapa 01', 'Etapa 02', 'Etapa 03']">
+    <div class="col-12">
+        <h6>{{item}}</h6>
+    </div>
+    <div class="col-12">
+        <app-accordion *ngFor="let itemExtrato of ['TAESA (7527)', 'ATE II (5012)']">
+            <header role="heading" class="d-flex justify-content-between">
+                <span>{{itemExtrato}}</span><span>R$12.345,00</span>
+            </header>
+            <div role="main">
+                <table class="table table-borderless">
+                    <tr *ngFor="let i of [0,0,0,0]">
+                        <td>Nome do Item</td>
+                        <td>Etapa 3</td>
+                        <td>Titulo</td>
+                        <td>R$12.345,00</td>
+                    </tr>
+                </table>
+            </div>
+        </app-accordion>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-auto">
+        <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes</div>
+    <div class="col text-right">
+
+    </div>
+</div>

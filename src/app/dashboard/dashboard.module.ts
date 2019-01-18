@@ -23,6 +23,8 @@ import { BaseComponent } from './projetos/base/base.component';
 import { AlocacaoComponent as AlocacaoHumanoComponent } from './projetos/recursos-humanos/alocacao.component';
 import { RecursosMateriaisComponent } from './projetos/recursos-materiais/recursos-materiais.component';
 import { AlocacaoComponent as AlocacaoMaterialComponent } from './projetos/recursos-materiais/alocacao.component';
+import { ExtratoFinanceiroEmpresasComponent } from './projetos/extrato-financeiro-empresas/extrato-financeiro-empresas.component';
+import { ExtratoFinanceiroEtapasComponent } from './projetos/extrato-financeiro-etapas/extrato-financeiro-etapas.component';
 
 @NgModule({
     declarations: [
@@ -42,6 +44,8 @@ import { AlocacaoComponent as AlocacaoMaterialComponent } from './projetos/recur
         AlocacaoHumanoComponent,
         RecursosMateriaisComponent,
         AlocacaoMaterialComponent,
+        ExtratoFinanceiroEmpresasComponent,
+        ExtratoFinanceiroEtapasComponent,
     ],
     imports: [
         CommonModule,
