@@ -26,6 +26,13 @@ import { AlocacaoComponent as AlocacaoMaterialComponent } from './projetos/recur
 import { ExtratoFinanceiroEmpresasComponent } from './projetos/extrato-financeiro-empresas/extrato-financeiro-empresas.component';
 import { ExtratoFinanceiroEtapasComponent } from './projetos/extrato-financeiro-etapas/extrato-financeiro-etapas.component';
 import { CentralAdministrativaComponent } from './projetos/central-administrativa/central-administrativa.component';
+import { GeracaoXmlComponent } from './projetos/central-administrativa/geracao-xml/geracao-xml.component';
+import { LogsDutoComponent } from './projetos/central-administrativa/logs-duto/logs-duto.component';
+import { RepositorioXmlComponent } from './projetos/central-administrativa/repositorio-xml/repositorio-xml.component';
+import { AlterarStatusComponent } from './projetos/central-administrativa/alterar-status/alterar-status.component';
+import { UsuariosComponent } from './projetos/central-administrativa/usuarios/usuarios.component';
+import { LogProjetoComponent } from './projetos/log-projeto/log-projeto.component';
+import { LogComponent } from './projetos/log-projeto/log.component';
 
 @NgModule({
     declarations: [
@@ -48,6 +55,13 @@ import { CentralAdministrativaComponent } from './projetos/central-administrativ
         ExtratoFinanceiroEmpresasComponent,
         ExtratoFinanceiroEtapasComponent,
         CentralAdministrativaComponent,
+        GeracaoXmlComponent,
+        LogsDutoComponent,
+        RepositorioXmlComponent,
+        AlterarStatusComponent,
+        UsuariosComponent,
+        LogProjetoComponent,
+        LogComponent,
     ],
     imports: [
         CommonModule,

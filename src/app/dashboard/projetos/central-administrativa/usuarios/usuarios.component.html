@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">NOME</span>
+                            <span class="d-flex flex-column">
+                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
+                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
+                            </span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">EMPRESA</span>
+                            <span class="d-flex flex-column">
+                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
+                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
+                            </span>
+                        </div>
+
+                    </th>
+                    <th>
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">&nbsp;</span>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tr *ngFor="let item of [1,2,3,4]">
+                <td>Usuário {{item}}</td>
+                <td>Taesa</td>
+                <td class="w-25">
+                    <select name="" id="" class="form-control">
+                        <option value="">Sem acesso</option>
+                        <option value="">Aprovador</option>
+                        <option value="">Administrador</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 text-right">
+        <button class="btn btn-link">Cancelar</button>
+        <button class="btn btn-primary"><i class="ta-save"></i> Salvar</button>
+    </div>
+</div>

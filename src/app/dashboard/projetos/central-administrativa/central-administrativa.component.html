@@ -1,3 +1,21 @@
-<p>
-  central-administrativa works!
-</p>
+<div class="row">
+    <div class="col">
+        <h5 class="text-uppercase text-blue font-weight-normal my-3">
+            Empresas
+        </h5>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <ul class="nav nav-bar-row nav-justified">
+            <li class="nav-item" *ngFor="let route of routes">
+                <a routerLinkActive="active" class="nav-link" [routerLink]="route.path">{{route.data['text']}}</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-12">
+        <router-outlet></router-outlet>
+    </div>
+</div>

@@ -13,6 +13,38 @@ import { AlocacaoComponent as AlocacaoMComponent } from './recursos-materiais/al
 import { ExtratoFinanceiroEmpresasComponent } from './extrato-financeiro-empresas/extrato-financeiro-empresas.component';
 import { ExtratoFinanceiroEtapasComponent } from './extrato-financeiro-etapas/extrato-financeiro-etapas.component';
 import { CentralAdministrativaComponent } from './central-administrativa/central-administrativa.component';
+import { GeracaoXmlComponent } from './central-administrativa/geracao-xml/geracao-xml.component';
+import { LogsDutoComponent } from './central-administrativa/logs-duto/logs-duto.component';
+import { RepositorioXmlComponent } from './central-administrativa/repositorio-xml/repositorio-xml.component';
+import { AlterarStatusComponent } from './central-administrativa/alterar-status/alterar-status.component';
+import { UsuariosComponent } from './central-administrativa/usuarios/usuarios.component';
+import { LogProjetoComponent } from './log-projeto/log-projeto.component';
+
+export const centralPlanejamentoRoutes: Routes = [{
+    path: "",
+    redirectTo: "geracao-xml",
+    pathMatch: "full"
+},
+{
+    path: "geracao-xml", component: GeracaoXmlComponent,
+    data: { text: 'Geração XMLS' }
+},
+{
+    path: "logs-duto", component: LogsDutoComponent,
+    data: { text: 'Logs DUTO' }
+},
+{
+    path: "repositorio-xml", component: RepositorioXmlComponent,
+    data: { text: 'Repositório XMLs Gerados' }
+},
+{
+    path: "alteracao-status-projeto", component: AlterarStatusComponent,
+    data: { text: 'Alteração Status Projeto' }
+},
+{
+    path: "usuarios", component: UsuariosComponent,
+    data: { text: 'Usuários' }
+}];
 
 export const projetoPlanejamentoRoutes: Routes = [
     { path: '', redirectTo: 'info', pathMatch: 'full' },
@@ -61,31 +93,11 @@ export const projetoPlanejamentoRoutes: Routes = [
         data: { text: "Extrato Financeiro Etapas", icon: "ta-table" }
     },
     {
-        path: 'central-administrativa', component: CentralAdministrativaComponent,
-        data: { text: "Central Adminstrativa", icon: "ta-central-admin" },
-        children: [
-            {
-                path: "geracao-xml", component: BlankComponent,
-                data: { text: 'Geração XMLS' }
-            },
-            {
-                path: "logs-duto", component: BlankComponent,
-                data: { text: 'Logs DUTO' }
-            },
-            {
-                path: "repositorio-xml", component: BlankComponent,
-                data: { text: 'Repositório XMLs Gerados' }
-            },
-            {
-                path: "alteracao-status-projeto", component: BlankComponent,
-                data: { text: 'Alteração Status Projeto' }
-            },
-            {
-                path: "usuarios", component: BlankComponent,
-                data: { text: 'Usuários' }
-            },
-        ]
+        path: 'central-administrativa',
+        component: CentralAdministrativaComponent,
+        data: { text: "Central Adminstrativa", icon: "ta-central-admin", routes: centralPlanejamentoRoutes },
+        children: centralPlanejamentoRoutes
     },
-    { path: 'logs', component: BlankComponent, data: { text: "Log Projeto", icon: "ta-log" } },
+    { path: 'logs', component: LogProjetoComponent, data: { text: "Log Projeto", icon: "ta-log" } },
     { path: '**', redirectTo: 'info', pathMatch: 'full' }
 ];
