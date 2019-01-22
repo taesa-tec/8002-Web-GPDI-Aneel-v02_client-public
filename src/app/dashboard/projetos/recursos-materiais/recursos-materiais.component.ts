@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseComponent } from '../base/base.component';
 import { ProjetoService } from '@app/projetos/projeto.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { RecursoMaterialFormComponent } from '@app/projetos/recurso-material-form/recurso-material-form.component';
@@ -9,19 +8,12 @@ import { RecursoMaterialFormComponent } from '@app/projetos/recurso-material-for
     templateUrl: './recursos-materiais.component.html',
     styleUrls: ['./recursos-materiais.component.scss']
 })
-export class RecursosMateriaisComponent extends BaseComponent implements OnInit {
+export class RecursosMateriaisComponent {
 
-    modalComponent = RecursoMaterialFormComponent;
+    constructor(protected projetoService: ProjetoService, protected modalService: NgbModal) { }
 
-    constructor(projetoService: ProjetoService, modalService: NgbModal) {
-        super(projetoService, modalService);
+    openModal(etapa_id: number) {
+        const modalRef = this.modalService.open(RecursoMaterialFormComponent, { size: 'lg' });
+        modalRef.componentInstance.etapa_id = etapa_id;
     }
-
-    modalSetup(modalRef: NgbModalRef, args) {
-
-    }
-
-    ngOnInit() {
-    }
-
 }

@@ -1,17 +1,62 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProjetoService } from '../projeto.service';
+import { Produto } from '../common';
 
 @Component({
     selector: 'app-etapa-form',
     templateUrl: './etapa-form.component.html',
     styleUrls: ['./etapa-form.component.scss']
 })
-export class EtapaFormComponent implements OnInit {
+export class EtapaFormComponent {
+
+    @Input() etapa_id;
+
+    etapaProdutos: Number[] = [0];
+    produtos: Produto[] = [
+        {
+            created: "2019-01-07",
+            desc: '',
+            produtoId: 1,
+            projetoId: 0,
+            titulo: 'Produto A'
+        },
+        {
+            created: "2019-01-07",
+            desc: '',
+            produtoId: 2,
+            projetoId: 0,
+            titulo: 'Produto B'
+        },
+        {
+            created: "2019-01-07",
+            desc: '',
+            produtoId: 3,
+            projetoId: 0,
+            titulo: 'Produto C'
+        },
+        {
+            created: "2019-01-07",
+            desc: '',
+            produtoId: 4,
+            projetoId: 0,
+            titulo: 'Produto D'
+        },
+    ];
+
 
     constructor(public activeModal: NgbActiveModal, private projetoService: ProjetoService) { }
+    adicionarProduto() {
+        this.etapaProdutos = [0, ...this.etapaProdutos];
+    }
+    removerProduto(index) {
+        console.log(index);
 
-    ngOnInit() {
+        this.etapaProdutos.splice(index, 1);
+    }
+
+    submit() {
+        this.activeModal.close('submit');
     }
 
 }

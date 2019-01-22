@@ -10,6 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProjetosModule } from './projetos/projetos.module';
 import { SharedModule } from './shared/shared.module';
 import { APP_CONFIG, APP_CONFIG_DEV } from './app.config';
+import { UiModule } from './ui/ui.module';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { APP_CONFIG, APP_CONFIG_DEV } from './app.config';
         ProjetosModule,
         AppRoutingModule,
         SharedModule,
+        UiModule
     ],
     exports: [SharedModule],
     providers: [

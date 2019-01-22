@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ProjetoService } from '../projeto.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -9,6 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class EmpresaFormComponent implements OnInit {
 
+    @Input() empresa_id;
     constructor(public activeModal: NgbActiveModal, private projetoService: ProjetoService) { }
 
     ngOnInit() {

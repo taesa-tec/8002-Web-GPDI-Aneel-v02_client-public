@@ -1,3 +1,65 @@
-<p>
-  alocar-recurso-humano-form works!
-</p>
+<div class="modal-header">
+    <div class="text-uppercase modal-title text-blue-light fs-24">Alocar Recurso Humano</div>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+
+                <label for="">Recurso Humano</label><select name="" id="" class="form-control"></select>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+
+                <label for="">Etapa Relacionada</label>
+                <select name="" id="" class="form-control"></select>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+
+                <label for="">Empresa Financiadora</label>
+                <select name="" id="" class="form-control"></select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group m-0"><label for="">Horas Alocadas por mês</label></div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex p-3 bg-cinza-claro rounded mb-4">
+                <div class="col-2"><label for="">Mês 01</label><input placeholder="Max 160h" type="text" class="form-control"></div>
+                <div class="col-2"><label for="">Mês 02</label><input placeholder="Max 160h" type="text" class="form-control"></div>
+                <div class="col-2"><label for="">Mês 03</label><input placeholder="Max 160h" type="text" class="form-control"></div>
+                <div class="col-2"><label for="">Mês 04</label><input placeholder="Max 160h" type="text" class="form-control"></div>
+                <div class="col-2"><label for="">Mês 05</label><input placeholder="Max 160h" type="text" class="form-control"></div>
+                <div class="col-2"><label for="">Mês 06</label><input placeholder="Max 160h" type="text" class="form-control"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">Justificativa do recurso</label>
+                <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-right">
+            <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
+            <button class="btn btn-primary" (click)="activeModal.close('temp')">
+                <i class="ta-plus"></i>
+                Alocar Reucurso
+            </button>
+        </div>
+    </div>
+</div>

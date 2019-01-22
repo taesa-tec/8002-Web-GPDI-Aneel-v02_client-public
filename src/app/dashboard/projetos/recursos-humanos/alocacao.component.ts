@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseComponent } from '../base/base.component';
+
 import { AlocarRecursoHumanoFormComponent } from '@app/projetos/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
 import { ProjetoService } from '@app/projetos/projeto.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -9,18 +9,13 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
     templateUrl: './alocacao.component.html',
     styleUrls: ['./alocacao.component.scss']
 })
-export class AlocacaoComponent extends BaseComponent implements OnInit {
+export class AlocacaoComponent {
 
-    modalComponent = AlocarRecursoHumanoFormComponent;
-    constructor(projetoService: ProjetoService, modalService: NgbModal) {
-        super(projetoService, modalService);
-    }
+    constructor(protected projetoService: ProjetoService, protected modalService: NgbModal) { }
 
-    modalSetup(modalRef: NgbModalRef, args) {
-        
-    }
-
-    ngOnInit() {
+    openModal(etapa_id: number) {
+        const modalRef = this.modalService.open(AlocarRecursoHumanoFormComponent, { size: 'lg' });
+        modalRef.componentInstance.etapa_id = etapa_id;
     }
 
 }

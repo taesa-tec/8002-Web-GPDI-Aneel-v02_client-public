@@ -1,3 +1,76 @@
-<p>
-  recurso-humano-form works!
-</p>
+<div class="modal-header">
+    <div class="text-uppercase modal-title text-blue-light fs-24">Registrar Recurso Humano</div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <fa-icon icon="times-circle"></fa-icon>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+
+                <label for="">Empresa</label><select name="" id="" class="form-control"></select>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+
+                <label for="">Valor Hora</label>
+                <input type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+
+                <label for="">Nome Completo</label>
+                <input type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">Titulo</label><select name="" id="" class="form-control"></select>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">Função</label><select name="" id="" class="form-control"></select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+
+                <label for="">Brasileiro</label><select name="" id="" class="form-control"></select>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+
+                <label for="">CPF ou Passaporte</label>
+                <input type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">Endereço Currículo Lattes</label>
+                <input type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-right">
+            <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
+            <button class="btn btn-primary" (click)="activeModal.close('temp')">
+                <i class="ta-plus"></i>
+                Salvar Pessoa
+            </button>
+        </div>
+    </div>
+</div>

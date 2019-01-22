@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseComponent } from '../base/base.component';
 import { RecursoHumanoFormComponent } from '@app/projetos/recurso-humano-form/recurso-humano-form.component';
 import { ProjetoService } from '@app/projetos/projeto.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -9,19 +8,13 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
     templateUrl: './recursos-humanos.component.html',
     styleUrls: ['./recursos-humanos.component.scss']
 })
-export class RecursosHumanosComponent extends BaseComponent implements OnInit {
+export class RecursosHumanosComponent {
 
-    modalComponent = RecursoHumanoFormComponent;
+    constructor(protected projetoService: ProjetoService, protected modalService: NgbModal) { }
 
-    constructor(projetoService: ProjetoService, modalService: NgbModal) {
-        super(projetoService, modalService);
-    }
-
-    modalSetup(modalRef: NgbModalRef, args) {
-        
-    }
-
-    ngOnInit() {
+    openModal(recurso_id: number) {
+        const modalRef = this.modalService.open(RecursoHumanoFormComponent, { size: 'lg' });
+        modalRef.componentInstance.recurso_id = recurso_id;
     }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
+import { UiService } from '@app/ui/ui.service';
 
 @Component({
     selector: 'app-dashboard',
@@ -10,10 +11,10 @@ export class DashboardComponent implements OnInit {
 
     @ViewChild(LoadingComponent)
     private loading: LoadingComponent;
-    constructor() { }
+    constructor(protected uiService: UiService) { }
 
     ngOnInit() {
-        
+
     }
 
 }

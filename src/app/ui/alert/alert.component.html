@@ -1,0 +1,12 @@
+<div class="modal-header">
+    <div class="text-uppercase modal-title text-blue-light fs-24">{{title}}</div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close('close')">
+        <fa-icon icon="times-circle"></fa-icon>
+    </button>
+</div>
+<div class="modal-body">
+    {{message}}
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="activeModal.close('ok')">Ok</button>
+</div>
