@@ -32,6 +32,8 @@ import { AlterarStatusComponent } from './projetos/central-administrativa/altera
 import { UsuariosComponent } from './projetos/central-administrativa/usuarios/usuarios.component';
 import { LogProjetoComponent } from './projetos/log-projeto/log-projeto.component';
 import { LogComponent } from './projetos/log-projeto/log.component';
+import { NovoUsuarioComponent } from './gerenciar-usuarios/novo-usuario/novo-usuario.component';
+import { EditUsuarioComponent } from './gerenciar-usuarios/edit-usuario/edit-usuario.component';
 
 @NgModule({
     declarations: [
@@ -61,6 +63,8 @@ import { LogComponent } from './projetos/log-projeto/log.component';
         UsuariosComponent,
         LogProjetoComponent,
         LogComponent,
+        NovoUsuarioComponent,
+        EditUsuarioComponent,
     ],
     imports: [
         CommonModule,

@@ -3,9 +3,9 @@
 @font-face {
   font-family: '#{$icomoon-font-family}';
   src:
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?u3rve7') format('truetype'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?u3rve7') format('woff'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?u3rve7##{$icomoon-font-family}') format('svg');
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?9bbck9') format('truetype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?9bbck9') format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?9bbck9##{$icomoon-font-family}') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -25,6 +25,46 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.ta-keyboard_arrow_down {
+  &:before {
+    content: $ta-keyboard_arrow_down; 
+  }
+}
+.ta-keyboard_arrow_left {
+  &:before {
+    content: $ta-keyboard_arrow_left; 
+  }
+}
+.ta-keyboard_arrow_right {
+  &:before {
+    content: $ta-keyboard_arrow_right; 
+  }
+}
+.ta-keyboard_arrow_up {
+  &:before {
+    content: $ta-keyboard_arrow_up; 
+  }
+}
+.ta-keyboard_arrow_down1 {
+  &:before {
+    content: $ta-keyboard_arrow_down1; 
+  }
+}
+.ta-keyboard_arrow_left1 {
+  &:before {
+    content: $ta-keyboard_arrow_left1; 
+  }
+}
+.ta-keyboard_arrow_right1 {
+  &:before {
+    content: $ta-keyboard_arrow_right1; 
+  }
+}
+.ta-keyboard_arrow_up1 {
+  &:before {
+    content: $ta-keyboard_arrow_up1; 
+  }
+}
 .ta-control_point {
   &:before {
     content: $ta-control_point; 
@@ -35,14 +75,14 @@
     content: $ta-remove_circle_outline; 
   }
 }
-.ta-plus {
+.ta-power_settings_new {
   &:before {
-    content: $ta-plus; 
+    content: $ta-power_settings_new; 
   }
 }
-.ta-remove {
+.ta-search {
   &:before {
-    content: $ta-remove; 
+    content: $ta-search; 
   }
 }
 .ta-alert {
@@ -70,9 +110,29 @@
     content: $ta-ampulheta; 
   }
 }
+.ta-bin {
+  &:before {
+    content: $ta-bin; 
+  }
+}
+.ta-blocked {
+  &:before {
+    content: $ta-blocked; 
+  }
+}
 .ta-box {
   &:before {
     content: $ta-box; 
+  }
+}
+.ta-cancel-circle {
+  &:before {
+    content: $ta-cancel-circle; 
+  }
+}
+.ta-ok {
+  &:before {
+    content: $ta-ok; 
   }
 }
 .ta-central-admin {
@@ -90,126 +150,6 @@
     content: $ta-chat; 
   }
 }
-.ta-edit {
-  &:before {
-    content: $ta-edit; 
-  }
-}
-.ta-empresas {
-  &:before {
-    content: $ta-empresas; 
-  }
-}
-.ta-envelope {
-  &:before {
-    content: $ta-envelope; 
-  }
-}
-.ta-etapas {
-  &:before {
-    content: $ta-etapas; 
-  }
-}
-.ta-extrato {
-  &:before {
-    content: $ta-extrato; 
-  }
-}
-.ta-eye {
-  &:before {
-    content: $ta-eye; 
-  }
-}
-.ta-gear {
-  &:before {
-    content: $ta-gear; 
-  }
-}
-.ta-group {
-  &:before {
-    content: $ta-group; 
-  }
-}
-.ta-lamp {
-  &:before {
-    content: $ta-lamp; 
-  }
-}
-.ta-lock {
-  &:before {
-    content: $ta-lock; 
-  }
-}
-.ta-log {
-  &:before {
-    content: $ta-log; 
-  }
-}
-.ta-ok {
-  &:before {
-    content: $ta-ok; 
-  }
-}
-.ta-projeto {
-  &:before {
-    content: $ta-projeto; 
-  }
-}
-.ta-question {
-  &:before {
-    content: $ta-question; 
-  }
-}
-.ta-recurso-material {
-  &:before {
-    content: $ta-recurso-material; 
-  }
-}
-.ta-save {
-  &:before {
-    content: $ta-save; 
-  }
-}
-.ta-sync {
-  &:before {
-    content: $ta-sync; 
-  }
-}
-.ta-table {
-  &:before {
-    content: $ta-table; 
-  }
-}
-.ta-torre {
-  &:before {
-    content: $ta-torre; 
-  }
-}
-.ta-tubo-ensaio {
-  &:before {
-    content: $ta-tubo-ensaio; 
-  }
-}
-.ta-user-id {
-  &:before {
-    content: $ta-user-id; 
-  }
-}
-.ta-bin {
-  &:before {
-    content: $ta-bin; 
-  }
-}
-.ta-blocked {
-  &:before {
-    content: $ta-blocked; 
-  }
-}
-.ta-cancel-circle {
-  &:before {
-    content: $ta-cancel-circle; 
-  }
-}
 .ta-checkbox-checked {
   &:before {
     content: $ta-checkbox-checked; 
@@ -218,6 +158,16 @@
 .ta-checkbox-unchecked {
   &:before {
     content: $ta-checkbox-unchecked; 
+  }
+}
+.ta-radio-checked {
+  &:before {
+    content: $ta-radio-checked; 
+  }
+}
+.ta-radio-unchecked {
+  &:before {
+    content: $ta-radio-unchecked; 
   }
 }
 .ta-circle-down {
@@ -245,9 +195,19 @@
     content: $ta-confused; 
   }
 }
-.ta-download2 {
+.ta-download {
   &:before {
-    content: $ta-download2; 
+    content: $ta-download; 
+  }
+}
+.ta-edit {
+  &:before {
+    content: $ta-edit; 
+  }
+}
+.ta-empresas {
+  &:before {
+    content: $ta-empresas; 
   }
 }
 .ta-enter {
@@ -255,9 +215,39 @@
     content: $ta-enter; 
   }
 }
+.ta-envelope {
+  &:before {
+    content: $ta-envelope; 
+  }
+}
+.ta-etapas {
+  &:before {
+    content: $ta-etapas; 
+  }
+}
 .ta-exit {
   &:before {
     content: $ta-exit; 
+  }
+}
+.ta-extrato {
+  &:before {
+    content: $ta-extrato; 
+  }
+}
+.ta-eye {
+  &:before {
+    content: $ta-eye; 
+  }
+}
+.ta-gear {
+  &:before {
+    content: $ta-gear; 
+  }
+}
+.ta-group {
+  &:before {
+    content: $ta-group; 
   }
 }
 .ta-info {
@@ -265,39 +255,89 @@
     content: $ta-info; 
   }
 }
-.ta-notification {
+.ta-lamp {
   &:before {
-    content: $ta-notification; 
+    content: $ta-lamp; 
   }
 }
-.ta-question1 {
+.ta-lock {
   &:before {
-    content: $ta-question1; 
+    content: $ta-lock; 
   }
 }
-.ta-radio-checked {
+.ta-log {
   &:before {
-    content: $ta-radio-checked; 
-  }
-}
-.ta-radio-unchecked {
-  &:before {
-    content: $ta-radio-unchecked; 
-  }
-}
-.ta-spinner11 {
-  &:before {
-    content: $ta-spinner11; 
-  }
-}
-.ta-upload2 {
-  &:before {
-    content: $ta-upload2; 
+    content: $ta-log; 
   }
 }
 .ta-warning {
   &:before {
     content: $ta-warning; 
+  }
+}
+.ta-notification {
+  &:before {
+    content: $ta-notification; 
+  }
+}
+.ta-question-o {
+  &:before {
+    content: $ta-question-o; 
+  }
+}
+.ta-question {
+  &:before {
+    content: $ta-question; 
+  }
+}
+.ta-projeto {
+  &:before {
+    content: $ta-projeto; 
+  }
+}
+.ta-recurso-material {
+  &:before {
+    content: $ta-recurso-material; 
+  }
+}
+.ta-save {
+  &:before {
+    content: $ta-save; 
+  }
+}
+.ta-spinner {
+  &:before {
+    content: $ta-spinner; 
+  }
+}
+.ta-sync {
+  &:before {
+    content: $ta-sync; 
+  }
+}
+.ta-table {
+  &:before {
+    content: $ta-table; 
+  }
+}
+.ta-torre {
+  &:before {
+    content: $ta-torre; 
+  }
+}
+.ta-tubo-ensaio {
+  &:before {
+    content: $ta-tubo-ensaio; 
+  }
+}
+.ta-upload {
+  &:before {
+    content: $ta-upload; 
+  }
+}
+.ta-user-id {
+  &:before {
+    content: $ta-user-id; 
   }
 }
 .ta-user-o {

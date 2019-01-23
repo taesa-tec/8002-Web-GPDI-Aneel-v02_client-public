@@ -11,7 +11,9 @@
             <div role="main">
                 <table class="table table-borderless">
                     <tr *ngFor="let i of [0,0,0,0]">
-                        <td>Nome do Item</td>
+                        <td>
+                            <button class="btn btn-sm btn-link" (click)="openModal()">Nome do Item</button>
+                        </td>
                         <td>Etapa 3</td>
                         <td>Titulo</td>
                         <td>R$12.345,00</td>

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { UiService } from '@app/ui/ui.service';
+import { UiService } from '@app/shared/ui.service';
 
 @Component({
     selector: 'app-dashboard',

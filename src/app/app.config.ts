@@ -8,8 +8,8 @@ export interface AppConfig {
 export const APP_CONFIG = new InjectionToken<AppConfig>('app.config');
 
 export const APP_CONFIG_PROD: AppConfig = {
-    api_url: "https://xerminada.hopto.org:8081/api"
+    api_url: "https://taesagestor.azurewebsites.net/"
 };
 export const APP_CONFIG_DEV: AppConfig = {
-    api_url: "https://xerminada.hopto.org:8081/api"
+    api_url: "https://taesagestor.azurewebsites.net/"
 };

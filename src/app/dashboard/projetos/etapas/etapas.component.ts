@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProjetoService } from '@app/projetos/projeto.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EtapaFormComponent } from '@app/projetos/etapa-form/etapa-form.component';
-import { UiService } from '@app/ui/ui.service';
+import { UiService } from '@app/shared/ui.service';
 
 @Component({
     selector: 'app-etapas',

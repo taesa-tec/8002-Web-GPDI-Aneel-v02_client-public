@@ -8,24 +8,31 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoadingComponent } from './loading/loading.component';
 import { AccordionComponent } from './accordion/accordion.component';
+import { AlertComponent } from './alert/alert.component';
+import { ConfirmComponent } from './confirm/confirm.component';
+import { TipComponent } from './tip/tip.component';
 
 
 library.add(fas, far);
 
 @NgModule({
-    declarations: [LoadingComponent, AccordionComponent],
+    declarations: [LoadingComponent, AccordionComponent, AlertComponent, ConfirmComponent, TipComponent],
     imports: [
         CommonModule,
         FontAwesomeModule,
         NgbModule,
         HttpClientModule
     ],
+    entryComponents: [AlertComponent, ConfirmComponent],
     exports: [
         FontAwesomeModule,
         NgbModule,
         HttpClientModule,
         LoadingComponent,
-        AccordionComponent
+        AccordionComponent,
+        AlertComponent,
+        ConfirmComponent,
+        TipComponent,
     ]
 
 })
