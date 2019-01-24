@@ -1,4 +1,4 @@
-<h5 class="text-uppercase text-blue font-weight-normal my-3">Extrato Financeiro por empresas</h5>
+<h5 class="text-uppercase text-blue font-weight-normal mb-5">Extrato Financeiro por empresas</h5>
 <div class="row" *ngFor="let item of ['TAESA (7527)', 'ATE II (5012)']">
     <div class="col-12">
         <h6>{{item}}</h6>
@@ -25,9 +25,13 @@
 </div>
 <hr>
 <div class="row">
-    <div class="col-auto">
-        <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes</div>
     <div class="col text-right">
-
+        <h5 class="text-blue">
+            Total Geral: R$ 1.234.567,89
+        </h5>
+        <button class="btn btn-outline-blue">
+            <i class="ta-download fs-18"></i>
+            Gerar CSV
+        </button>
     </div>
 </div>

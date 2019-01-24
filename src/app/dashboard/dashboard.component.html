@@ -34,7 +34,7 @@
                                     <a class="dropdown-item" routerLink="/dashboard/meu-cadastro">
                                         <fa-icon icon="user" size="1x" [fixedWidth]="true"></fa-icon> Meu Cadastro
                                     </a>
-                                    <a class="dropdown-item" routerLink="/login">
+                                    <a (click)="logout()" class="dropdown-item" routerLink="/login">
                                         <fa-icon icon="sign-out-alt" [fixedWidth]="true" size="1x"></fa-icon> Logout
                                     </a>
                                 </div>

@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { User } from 'src/app/shared/user.model';
 import { Router } from '@angular/router';
+import { LoginRequest } from '@app/commons/requests';
+import { LoadingComponent } from '@app/shared/loading/loading.component';
 
+// @todo Inserir loading
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -10,30 +12,37 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
+    @ViewChild(LoadingComponent)
+    private loading: LoadingComponent;
 
-    user: User = {
-        userID: "",
-        password: ""
+    loginRequest: LoginRequest = {
+        email: "admin@taesa.com.br",
+        password: "AdminAPIGestor01!"
     };
-    // @todo Inserir loading
+
+    remember = false;
+
     constructor(protected authService: AuthService, private router: Router) { }
 
-    ngOnInit() {
-    }
-
     doLogin() {
-        const self = this;
 
-        this.authService.login(this.user).subscribe({
+        const self = this;
+        this.loading.show();
+        this.authService.login(this.loginRequest, this.remember).subscribe({
             next(result) {
-                console.log(result);
-                self.router.navigate(['/dashboard']);
+                self.loading.hide();
+                if (result) {
+                    self.router.navigate(['/dashboard']);
+                }
             },
             error(e) {
-                console.log(e);
-
+                self.loading.hide();
             }
         });
+
+    }
+
+    ngOnInit(): void {
 
     }
 }

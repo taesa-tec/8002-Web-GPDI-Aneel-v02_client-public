@@ -4,11 +4,14 @@ import { LoginComponent } from './login/login.component';
 import { AuthComponent } from './auth/auth.component';
 import { ForgetPassComponent } from './forget-pass/forget-pass.component';
 import { NewpassComponent } from './newpass/newpass.component';
+import { GuestGuard } from './guest.guard';
 
 const routes: Routes = [
     {
         path: 'login',
         component: AuthComponent,
+        canActivate: [GuestGuard],
+        canActivateChild: [GuestGuard],
         children: [
             { path: '', component: LoginComponent },
             { path: 'forget', component: ForgetPassComponent },

@@ -22,7 +22,7 @@ export class ProdutoFormComponent implements OnInit {
     }
     get buttonAction() {
         return typeof this.produto_id !== 'undefined' ? { text: "Salvar Alterações", icon: 'ta-save' } :
-            { text: "Criar Produto", icon: 'ta-plus' };
+            { text: "Criar Produto", icon: 'ta-plus-circle' };
     }
 
     ngOnInit() {

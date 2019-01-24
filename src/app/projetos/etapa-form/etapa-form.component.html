@@ -1,7 +1,7 @@
 <div class="modal-header">
     <div class="text-uppercase modal-title text-blue-light fs-24">Nova Etapa</div>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        <fa-icon icon="times-circle"></fa-icon>
+        <i class="ta-cancel-circle"></i>
     </button>
 </div>
 <div class="modal-body">
@@ -11,7 +11,7 @@
         <div class="text-right">300 caracteres sobrando</div>
     </div>
     <div class="form-group">
-        <label>PRODUTOS INTERMEDIÁRIOS ASSOCIADOS A ESTA ETAPA</label>
+        <label>PRODUTOS ASSOCIADOS A ESTA ETAPA</label>
         <div class="row" *ngFor="let item of etapaProdutos; let i = index;">
             <div class="col">
                 <select name="" id="" class="form-control mb-3">
@@ -28,7 +28,7 @@
         <div class="row mb-4">
             <div class="col">
                 <button class="btn p-0 hover-text-blue" (click)="adicionarProduto()">
-                    <i class="ta-plus fs-24 align-middle"></i>
+                    <i class="ta-plus-circle fs-24 align-middle"></i>
                     Adicionar Produto
                 </button>
             </div>
@@ -37,7 +37,7 @@
             <div class="col-12 text-right">
                 <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
                 <button class="btn btn-primary" (click)="submit()">
-                    <i class="ta-plus"></i>
+                    <i class="ta-plus-circle"></i>
                     Adicionar Etapa
                 </button>
             </div>

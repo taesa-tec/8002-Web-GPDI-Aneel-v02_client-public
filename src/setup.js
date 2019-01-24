@@ -37,7 +37,7 @@ function csvToLangTs(file) {
     }).on("end", function () {
         try {
             let json = JSON.stringify(messages, null, 4);
-            let content = `export const messages: { [propName: number]: string } = ${json}\n`;
+            let content = `const messages: { [propName: number]: string } = ${json}; \n export default messages; \n`;
             fs.writeFileSync(ff, content)
         } catch (e) {
             console.log(e.message);

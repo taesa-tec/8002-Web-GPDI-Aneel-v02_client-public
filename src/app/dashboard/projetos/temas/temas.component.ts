@@ -12,4 +12,6 @@ export class TemasComponent implements OnInit {
   ngOnInit() {
   }
 
+  // @todo Lista de subtemas deve ser filtrada para evitar repetição
+
 }

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -11,17 +12,19 @@ import { AccordionComponent } from './accordion/accordion.component';
 import { AlertComponent } from './alert/alert.component';
 import { ConfirmComponent } from './confirm/confirm.component';
 import { TipComponent } from './tip/tip.component';
+import { TextareaComponent } from './forms/textarea/textarea.component';
 
 
 library.add(fas, far);
 
 @NgModule({
-    declarations: [LoadingComponent, AccordionComponent, AlertComponent, ConfirmComponent, TipComponent],
+    declarations: [LoadingComponent, AccordionComponent, AlertComponent, ConfirmComponent, TipComponent, TextareaComponent],
     imports: [
         CommonModule,
         FontAwesomeModule,
         NgbModule,
-        HttpClientModule
+        HttpClientModule,
+        FormsModule
     ],
     entryComponents: [AlertComponent, ConfirmComponent],
     exports: [
@@ -33,6 +36,7 @@ library.add(fas, far);
         AlertComponent,
         ConfirmComponent,
         TipComponent,
+        TextareaComponent
     ]
 
 })

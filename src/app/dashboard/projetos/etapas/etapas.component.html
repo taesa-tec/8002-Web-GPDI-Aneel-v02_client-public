@@ -1,5 +1,16 @@
-<h5 class="text-uppercase text-blue font-weight-normal my-3">Etapas</h5>
-<div class="row">
+<div class="row justify-content-between">
+    <div class="col">
+        <h5 class="text-uppercase text-blue font-weight-normal my-3">Etapas</h5>
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-outline-primary" type="button" (click)="openModal()">
+            <i class="ta-plus-circle fs-24 align-middle align-middle"></i>
+            Nova Etapa
+        </button>
+    </div>
+</div>
+
+<div class="row my-5">
     <div class="col">
         <div class="form-group m-0">
             <label for="">Data Inicial Projeto</label>
@@ -11,13 +22,13 @@
             <select name="" id="" class="form-control">
                 <option value="">AAAA</option>
             </select>
+            <button class="mx-3 btn btn-primary py-2" type="button" (click)="openModal()">
+                <i class="ta-save fs-24 align-middle align-middle"></i>
+                Salvar
+            </button>
         </div>
-    </div>
-    <div class="col text-right">
-        <button class="btn btn-outline-primary" type="button" (click)="openModal()">
-            <i class="ta-plus fs-24 align-middle align-middle"></i>
-            Novo Etapa
-        </button>
+
+
     </div>
 </div>
 <div class="row mt-4">
@@ -65,9 +76,9 @@
                 <td>05/2019</td>
                 <td>11/2019</td>
                 <td>
-                    <button type="button" class="btn btn-primary" (click)="excluir(1)">
-                        <i class="ta-bin"></i>
-                        Excluir
+                    <button type="button" class="btn btn-primary" (click)="openModal(1)">
+                        <i class="ta-edit"></i>
+                        Editar
                     </button>
                 </td>
             </tr>
@@ -76,9 +87,9 @@
                 <td>11/2019</td>
                 <td>05/2020</td>
                 <td>
-                    <button type="button" class="btn btn-primary" (click)="excluir(1)">
-                        <i class="ta-bin"></i>
-                        Excluir
+                    <button type="button" class="btn btn-primary" (click)="openModal(1)">
+                        <i class="ta-edit"></i>
+                        Editar
                     </button>
                 </td>
             </tr>

@@ -1,4 +1,4 @@
-export const messages: { [propName: number]: string } = {
+const messages: { [propName: number]: string } = {
     "1": "Usuário insere o email de cadastro",
     "2": "Usuário insere a senha de cadastro",
     "3": "Usuário insere uma nova senha",
@@ -155,4 +155,5 @@ export const messages: { [propName: number]: string } = {
     "155": "Campo númerico. Livre",
     "156": "Campo de porcentagem. Livre.",
     "157": "Campo de Valor formatado já em R$."
-}
+}; 
+ export default messages; 

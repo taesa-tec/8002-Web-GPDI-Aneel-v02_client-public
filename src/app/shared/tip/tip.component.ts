@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { messages } from '../tooltips.messages';
+import messages from '@app/messages/tooltips.messages';
 
 @Component({
     selector: 'app-tip',

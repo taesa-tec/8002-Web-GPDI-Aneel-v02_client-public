@@ -3,9 +3,9 @@
 @font-face {
   font-family: '#{$icomoon-font-family}';
   src:
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?9bbck9') format('truetype'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?9bbck9') format('woff'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?9bbck9##{$icomoon-font-family}') format('svg');
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?4o13ku') format('truetype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?4o13ku') format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?4o13ku##{$icomoon-font-family}') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -45,39 +45,39 @@
     content: $ta-keyboard_arrow_up; 
   }
 }
-.ta-keyboard_arrow_down1 {
+.ta-arrow-down {
   &:before {
-    content: $ta-keyboard_arrow_down1; 
+    content: $ta-arrow-down; 
   }
 }
-.ta-keyboard_arrow_left1 {
+.ta-arrow-left {
   &:before {
-    content: $ta-keyboard_arrow_left1; 
+    content: $ta-arrow-left; 
   }
 }
-.ta-keyboard_arrow_right1 {
+.ta-arrow-right {
   &:before {
-    content: $ta-keyboard_arrow_right1; 
+    content: $ta-arrow-right; 
   }
 }
-.ta-keyboard_arrow_up1 {
+.ta-arrow-up {
   &:before {
-    content: $ta-keyboard_arrow_up1; 
+    content: $ta-arrow-up; 
   }
 }
-.ta-control_point {
+.ta-plus-circle {
   &:before {
-    content: $ta-control_point; 
+    content: $ta-plus-circle; 
   }
 }
-.ta-remove_circle_outline {
+.ta-remove-circle {
   &:before {
-    content: $ta-remove_circle_outline; 
+    content: $ta-remove-circle; 
   }
 }
-.ta-power_settings_new {
+.ta-power {
   &:before {
-    content: $ta-power_settings_new; 
+    content: $ta-power; 
   }
 }
 .ta-search {
@@ -110,9 +110,9 @@
     content: $ta-ampulheta; 
   }
 }
-.ta-bin {
+.ta-trash {
   &:before {
-    content: $ta-bin; 
+    content: $ta-trash; 
   }
 }
 .ta-blocked {

@@ -10,6 +10,7 @@ import { ProjetoComponent } from './projetos/projeto.component';
 import { projetoPlanejamentoRoutes } from '@app/dashboard/projetos/projeto.routes';
 import { NovoUsuarioComponent } from './gerenciar-usuarios/novo-usuario/novo-usuario.component';
 import { EditUsuarioComponent } from './gerenciar-usuarios/edit-usuario/edit-usuario.component';
+import { AuthGuard } from '@app/auth/auth.guard';
 
 
 
@@ -17,6 +18,8 @@ const routes: Routes = [
     {
         path: 'dashboard',
         component: DashboardComponent,
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
         children: [
             { path: '', component: MeusProjetosComponent, data: { title: "Meus Projetos" } },
             { path: 'meu-cadastro', component: MeuCadastroComponent, data: { title: "Meu Cadastro" } },

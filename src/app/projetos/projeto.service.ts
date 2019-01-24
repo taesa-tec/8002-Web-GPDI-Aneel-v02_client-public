@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
-import { Projeto, Resultado } from '@app/projetos/common';
+import { Projeto, } from '@app/projetos/common';
 import { projetos as projetosMockup } from "@mockup/projetos";
 
 @Injectable({
@@ -31,7 +31,7 @@ export class ProjetoService {
         return of(projetos);
     }
 
-    store(projeto: Projeto): Observable<Resultado> {
+    store(projeto: Projeto): Observable<any> {
         console.log(projeto);
         return of({
             acao: "acao",
@@ -40,7 +40,7 @@ export class ProjetoService {
         });
     }
 
-    update(projeto: Projeto): Observable<Resultado> {
+    update(projeto: Projeto): Observable<any> {
         return of({
             acao: "acao",
             sucesso: true,
@@ -48,7 +48,7 @@ export class ProjetoService {
         });
     }
 
-    delete(projeto: Projeto): Observable<Resultado> {
+    delete(projeto: Projeto): Observable<any> {
         return of({
             acao: "acao",
             sucesso: true,

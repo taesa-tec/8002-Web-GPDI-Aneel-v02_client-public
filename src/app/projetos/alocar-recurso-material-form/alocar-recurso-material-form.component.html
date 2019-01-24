@@ -43,7 +43,8 @@
         <div class="col-12">
             <div class="form-group">
                 <label for="">Justificativa do recurso nesta etapa</label>
-                <textarea name="" id="" cols="30" rows="4" class="form-control" placeholder="Por que o recurso é necessário nesta etapa?"></textarea>
+                <app-textarea name="" id="" cols="30" rows="4" class="form-control" placeholder="Por que o recurso é necessário nesta etapa?"
+                              maxlenght="1000"></app-textarea>
             </div>
         </div>
     </div>
@@ -51,7 +52,7 @@
         <div class="col-12 text-right">
             <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
             <button class="btn btn-primary" (click)="activeModal.close('temp')">
-                <i class="ta-plus"></i>
+                <i class="ta-plus-circle"></i>
                 Alocar Reucurso
             </button>
         </div>

@@ -40,8 +40,4 @@ export interface Projeto {
     produtos: Produto[];
 }
 
-export interface Resultado {
-    acao: string;
-    sucesso: boolean;
-    inconsistencias: string[];
-}
+
