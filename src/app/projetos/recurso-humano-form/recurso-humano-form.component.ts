@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProjetoService } from '../projeto.service';
+import { ProjetosService } from '@app/projetos.service';
 
 @Component({
     selector: 'app-recurso-humano-form',
@@ -8,5 +8,5 @@ import { ProjetoService } from '../projeto.service';
     styleUrls: ['./recurso-humano-form.component.scss']
 })
 export class RecursoHumanoFormComponent {
-    constructor(public activeModal: NgbActiveModal, private projetoService: ProjetoService) { }
+    constructor(public activeModal: NgbActiveModal, private projetoService: ProjetosService) { }
 }

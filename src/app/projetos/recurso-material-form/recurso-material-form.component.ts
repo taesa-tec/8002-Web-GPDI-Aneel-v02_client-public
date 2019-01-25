@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjetoService } from '../projeto.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ProjetosService } from '@app/projetos.service';
 
 @Component({
     selector: 'app-recurso-material-form',
@@ -9,5 +9,5 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class RecursoMaterialFormComponent {
 
-    constructor(public activeModal: NgbActiveModal, private projetoService: ProjetoService) { }
+    constructor(public activeModal: NgbActiveModal, private projetosService: ProjetosService) { }
 }

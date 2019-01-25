@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AlocarRecursoHumanoFormComponent } from '@app/projetos/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
-import { ProjetoService } from '@app/projetos/projeto.service';
+import { ProjetosService } from '@app/projetos.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -11,7 +11,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 })
 export class AlocacaoComponent {
 
-    constructor(protected projetoService: ProjetoService, protected modalService: NgbModal) { }
+    constructor(protected projetoService: ProjetosService, protected modalService: NgbModal) { }
 
     openModal(etapa_id: number) {
         const modalRef = this.modalService.open(AlocarRecursoHumanoFormComponent, { size: 'lg' });

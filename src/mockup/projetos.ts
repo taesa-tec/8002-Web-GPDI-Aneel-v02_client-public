@@ -1,4 +1,4 @@
-import { Projeto, ProjetoStatus } from "@app/projetos/common";
+import { Projeto, ProjetoStatus } from "@app/models";
 
 
 export const projetos: Projeto[] = [

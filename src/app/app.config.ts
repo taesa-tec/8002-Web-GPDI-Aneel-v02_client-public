@@ -8,8 +8,8 @@ export interface AppConfig {
 export const APP_CONFIG = new InjectionToken<AppConfig>('app.config');
 
 export const APP_CONFIG_PROD: AppConfig = {
-    api_url: "https://taesagestor.azurewebsites.net/"
+    api_url: "https://taesagestor.azurewebsites.net/api"
 };
 export const APP_CONFIG_DEV: AppConfig = {
-    api_url: "https://taesagestor.azurewebsites.net/"
+    api_url: "https://taesagestor.azurewebsites.net/api"
 };

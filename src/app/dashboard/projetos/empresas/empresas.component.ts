@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjetoService } from '@app/projetos/projeto.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EmpresaFormComponent } from '@app/projetos/empresa-form/empresa-form.component';
+import { ProjetosService } from '@app/projetos.service';
 
 @Component({
     selector: 'app-empresas',
@@ -10,7 +10,7 @@ import { EmpresaFormComponent } from '@app/projetos/empresa-form/empresa-form.co
 })
 export class EmpresasComponent {
 
-    constructor(protected projetoService: ProjetoService, protected modalService: NgbModal) { }
+    constructor(protected projetosService: ProjetosService, protected modalService: NgbModal) { }
 
     openModal(empresa_id: number) {
         const modalRef = this.modalService.open(EmpresaFormComponent, { size: 'lg' });

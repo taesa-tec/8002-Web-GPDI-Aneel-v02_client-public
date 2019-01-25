@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlocarRecursoMaterialFormComponent } from '@app/projetos/alocar-recurso-material-form/alocar-recurso-material-form.component';
-import { ProjetoService } from '@app/projetos/projeto.service';
+import { ProjetosService } from '@app/projetos.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -10,7 +10,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 })
 export class AlocacaoComponent {
 
-    constructor(protected projetoService: ProjetoService, protected modalService: NgbModal) { }
+    constructor(protected projetoService: ProjetosService, protected modalService: NgbModal) { }
 
     openModal(etapa_id: number) {
         const modalRef = this.modalService.open(AlocarRecursoMaterialFormComponent, { size: 'lg' });

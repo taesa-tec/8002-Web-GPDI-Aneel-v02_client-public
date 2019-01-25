@@ -34,6 +34,8 @@ import { LogProjetoComponent } from './projetos/log-projeto/log-projeto.componen
 import { LogComponent } from './projetos/log-projeto/log.component';
 import { NovoUsuarioComponent } from './gerenciar-usuarios/novo-usuario/novo-usuario.component';
 import { EditUsuarioComponent } from './gerenciar-usuarios/edit-usuario/edit-usuario.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from '@app/http-interceptors/auth-iterceptor';
 
 @NgModule({
     declarations: [
@@ -72,6 +74,9 @@ import { EditUsuarioComponent } from './gerenciar-usuarios/edit-usuario/edit-usu
         NgbModule,
         ProjetosModule,
         DashboardRoutingModule
+    ],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     ]
 })
 export class DashboardModule { }

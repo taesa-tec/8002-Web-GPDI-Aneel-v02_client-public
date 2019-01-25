@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ProjetoService } from '../projeto.service';
+import { ProjetosService } from '@app/projetos.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -10,7 +10,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class EmpresaFormComponent implements OnInit {
 
     @Input() empresa_id;
-    constructor(public activeModal: NgbActiveModal, private projetoService: ProjetoService) { }
+    constructor(public activeModal: NgbActiveModal, private projetoService: ProjetosService) { }
 
     ngOnInit() {
     }

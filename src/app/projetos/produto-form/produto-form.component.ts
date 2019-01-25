@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProjetoService } from '../projeto.service';
-import { Produto } from '../common';
+import { ProjetosService } from '@app/projetos.service';
+import { Produto } from '@app/models';
 
 @Component({
     selector: 'app-produto-form',
@@ -15,7 +15,7 @@ export class ProdutoFormComponent implements OnInit {
     // @todo Carregar o produto quando o id for alterado
     produto: Produto;
 
-    constructor(public activeModal: NgbActiveModal, private projetoService: ProjetoService) { }
+    constructor(public activeModal: NgbActiveModal, private projetoService: ProjetosService) { }
 
     get modalTitle() {
         return typeof this.produto_id !== 'undefined' ? "Editar Produto" : "Novo Produto";

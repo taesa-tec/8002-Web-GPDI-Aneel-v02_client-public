@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProjetoService } from '../projeto.service';
+import { ProjetosService } from '@app/projetos.service';
 
 @Component({
     selector: 'app-alocar-recurso-humano-form',
@@ -9,6 +9,6 @@ import { ProjetoService } from '../projeto.service';
 })
 export class AlocarRecursoHumanoFormComponent {
 
-    constructor(public activeModal: NgbActiveModal, private projetoService: ProjetoService) { }
+    constructor(public activeModal: NgbActiveModal, private projetoService: ProjetosService) { }
 
 }

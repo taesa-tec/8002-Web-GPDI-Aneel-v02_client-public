@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { LoginRequest } from '@app/commons/requests';
+import { LoginRequest } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 
 // @todo Inserir loading
@@ -15,6 +15,8 @@ export class LoginComponent implements OnInit {
     @ViewChild(LoadingComponent)
     private loading: LoadingComponent;
 
+    errorMessage: string;
+
     loginRequest: LoginRequest = {
         email: "admin@taesa.com.br",
         password: "AdminAPIGestor01!"
@@ -27,12 +29,18 @@ export class LoginComponent implements OnInit {
     doLogin() {
 
         const self = this;
+
         this.loading.show();
+
+        this.errorMessage = null;
+
         this.authService.login(this.loginRequest, this.remember).subscribe({
             next(result) {
                 self.loading.hide();
-                if (result) {
+                if (result.authenticated) {
                     self.router.navigate(['/dashboard']);
+                } else {
+                    self.errorMessage = result.message;
                 }
             },
             error(e) {

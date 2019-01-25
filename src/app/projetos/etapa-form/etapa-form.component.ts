@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProjetoService } from '../projeto.service';
-import { Produto } from '../common';
+import { ProjetosService } from '@app/projetos.service';
+import { Produto } from '@app/models';
+
 
 @Component({
     selector: 'app-etapa-form',
@@ -45,7 +46,7 @@ export class EtapaFormComponent {
     ];
 
 
-    constructor(public activeModal: NgbActiveModal, private projetoService: ProjetoService) { }
+    constructor(public activeModal: NgbActiveModal, private projetoService: ProjetosService) { }
     adicionarProduto() {
         this.etapaProdutos = [0, ...this.etapaProdutos];
     }

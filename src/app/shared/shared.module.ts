@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -31,6 +31,7 @@ library.add(fas, far);
         FontAwesomeModule,
         NgbModule,
         HttpClientModule,
+        FormsModule,
         LoadingComponent,
         AccordionComponent,
         AlertComponent,
@@ -38,6 +39,5 @@ library.add(fas, far);
         TipComponent,
         TextareaComponent
     ]
-
 })
 export class SharedModule { }

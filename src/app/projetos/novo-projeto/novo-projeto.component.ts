@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProjetoService } from '../projeto.service';
+import { ProjetosService } from '@app/projetos.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ProjetoStatus } from '@app/projetos/common';
+import { ProjetoStatus } from '@app/models';
 
 @Component({
     selector: 'app-novo-projeto',
@@ -11,7 +11,7 @@ import { ProjetoStatus } from '@app/projetos/common';
 })
 export class NovoProjetoComponent implements OnInit {
 
-    constructor(public activeModal: NgbActiveModal, private projetoService: ProjetoService) { }
+    constructor(public activeModal: NgbActiveModal, private projetoService: ProjetosService) { }
 
     maxTituloContent = 500;
     projetoForm = new FormGroup({
@@ -61,25 +61,7 @@ export class NovoProjetoComponent implements OnInit {
     }
 
     save() {
-        this.projetoService.store({
-            created: '',
-            projetoId: 1,
-            titulo: '',
-            tituloDesc: '',
-            numero: '',
-            empresaProponente: 1,
-            status: ProjetoStatus.Proposta,
-            segmentoId: 1,
-            avaliacaoInicial: '',
-            compartResultados: '',
-            motivacao: '',
-            originalidade: '',
-            aplicabilidade: '',
-            relevancia: '',
-            razoabilidade: '',
-            pesquisas: '',
-            produtos: []
-        });
+        
     }
 
 }

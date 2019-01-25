@@ -6,6 +6,9 @@
     <div class="form-group">
         <input type="password" class="form-control form-control-lg" placeholder="Senha" [(ngModel)]="loginRequest.password">
     </div>
+    <div class="alert border-red text-red font-weight-bold" *ngIf="errorMessage">
+        <i class="ta-cancel-circle"></i> {{errorMessage}}
+    </div>
     <div class="form-check">
         <input class="form-check-input" type="checkbox" value="" name="rememberme" [(ngModel)]="remember" id="defaultCheck1">
         <label class="form-check-label" for="defaultCheck1">

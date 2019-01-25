@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjetoService } from '@app/projetos/projeto.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ProdutoFormComponent } from '@app/projetos/produto-form/produto-form.component';
+import { ProjetosService } from '@app/projetos.service';
 
 @Component({
     selector: 'app-produtos',
@@ -10,7 +10,7 @@ import { ProdutoFormComponent } from '@app/projetos/produto-form/produto-form.co
 })
 export class ProdutosComponent {
 
-    constructor(protected projetoService: ProjetoService, protected modalService: NgbModal) { }
+    constructor(protected projetoService: ProjetosService, protected modalService: NgbModal) { }
 
     openModal(produto_id: number) {
         const modalRef = this.modalService.open(ProdutoFormComponent, { size: 'lg' });

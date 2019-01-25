@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ProjetoService } from '@app/projetos/projeto.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NovoProjetoComponent } from '@app/projetos/novo-projeto/novo-projeto.component';
-import { Projeto } from '@app/projetos/common';
+import { Projeto } from '@app/models';
+import { CatalogoService } from '@app/catalogo.service';
+import { Empresa } from '@app/models';
+import { ProjetosService } from '@app/projetos.service';
 
 @Component({
     selector: 'app-meus-projetos',
@@ -13,9 +15,18 @@ import { Projeto } from '@app/projetos/common';
 export class MeusProjetosComponent implements OnInit {
 
     projetos: Projeto[];
-    total_projetos = 0;
+    status: Array<any>;
 
-    constructor(protected projetoService: ProjetoService, protected modalService: NgbModal) {
+    empresas: Array<Empresa>;
+    empresaSelected = '';
+    total_projetos = 0;
+    meusProjetos: Array<any>;
+
+
+    constructor(
+        protected catalogo: CatalogoService,
+        protected projetoService: ProjetosService,
+        protected modalService: NgbModal) {
         this.projetos = [];
     }
 
@@ -24,8 +35,8 @@ export class MeusProjetosComponent implements OnInit {
     }
 
     getProjetos() {
-        this.projetoService.getProjetos().subscribe(projetos => {
-            this.projetos = projetos;
+        this.projetoService.meusProjetos().subscribe(p => {
+            this.projetos = p;
             this.total_projetos = this.projetos.length;
         });
     }
@@ -33,6 +44,16 @@ export class MeusProjetosComponent implements OnInit {
     ngOnInit() {
         // Carregar os projetos
         this.getProjetos();
+
+        this.catalogo.status().subscribe(r => {
+
+        });
+        this.catalogo.empresas().subscribe(r => {
+            this.empresas = r;
+        });
+
+       
+
     }
 
 }

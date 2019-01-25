@@ -3,11 +3,11 @@ import { Routes, Route, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import filter from "lodash-es/filter";
-import { ProjetoService } from '@app/projetos/projeto.service';
-import { Projeto, ProjetoStatus } from '@app/projetos/common';
+import { Projeto, ProjetoStatus } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 
 import { projetoPlanejamentoRoutes } from '@app/dashboard/projetos/projeto.routes';
+import { ProjetosService } from '@app/projetos.service';
 
 
 
@@ -24,7 +24,7 @@ export class ProjetoComponent implements OnInit, AfterViewInit {
     currentProjeto: Projeto;
 
 
-    constructor(private route: ActivatedRoute, private projetoService: ProjetoService) {
+    constructor(private route: ActivatedRoute, private projetoService: ProjetosService) {
         this.projetoPlanejamentoRoutes = filter(projetoPlanejamentoRoutes, (r => r.path !== "**" && r.path.length > 0));
     }
     get routes() {

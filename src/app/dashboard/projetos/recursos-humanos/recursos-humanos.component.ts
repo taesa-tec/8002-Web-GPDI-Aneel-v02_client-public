@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RecursoHumanoFormComponent } from '@app/projetos/recurso-humano-form/recurso-humano-form.component';
-import { ProjetoService } from '@app/projetos/projeto.service';
+import { ProjetosService } from '@app/projetos.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -10,7 +10,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 })
 export class RecursosHumanosComponent {
 
-    constructor(protected projetoService: ProjetoService, protected modalService: NgbModal) { }
+    constructor(protected projetoService: ProjetosService, protected modalService: NgbModal) { }
 
     openModal(recurso_id: number) {
         const modalRef = this.modalService.open(RecursoHumanoFormComponent, { size: 'lg' });

@@ -10,6 +10,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProjetosModule } from './projetos/projetos.module';
 import { SharedModule } from './shared/shared.module';
 import { APP_CONFIG, APP_CONFIG_DEV } from './app.config';
+import { CatalogoService } from './catalogo.service';
+import { UsersService } from './users.service';
+import { httpInterceptorProviders } from './http-interceptors';
 
 
 @NgModule({
@@ -28,7 +31,10 @@ import { APP_CONFIG, APP_CONFIG_DEV } from './app.config';
     ],
     exports: [SharedModule],
     providers: [
-        { provide: APP_CONFIG, useValue: APP_CONFIG_DEV }
+        { provide: APP_CONFIG, useValue: APP_CONFIG_DEV },
+        httpInterceptorProviders,
+        CatalogoService,
+        UsersService
     ],
     bootstrap: [AppComponent]
 })

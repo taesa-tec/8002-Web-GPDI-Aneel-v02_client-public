@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjetoService } from '@app/projetos/projeto.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EtapaFormComponent } from '@app/projetos/etapa-form/etapa-form.component';
 import { UiService } from '@app/shared/ui.service';
+import { ProjetosService } from '@app/projetos.service';
 
 @Component({
     selector: 'app-etapas',
@@ -12,7 +12,7 @@ import { UiService } from '@app/shared/ui.service';
 export class EtapasComponent {
 
     constructor(
-        protected projetoService: ProjetoService,
+        protected projetoService: ProjetosService,
         protected modalService: NgbModal,
         protected UI: UiService
 

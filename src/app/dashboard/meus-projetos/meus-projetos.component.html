@@ -25,8 +25,9 @@
         </div>
         <div class="col">
             <div class="form-group">
-                <select name="" id="" class="form-control">
+                <select name="" id="" class="form-control" [(ngModel)]="empresaSelected">
                     <option value="">Empresa Proponente</option>
+                    <option *ngFor="let item of empresas" [value]="item.id">{{item.nome}}</option>
                 </select>
             </div>
         </div>

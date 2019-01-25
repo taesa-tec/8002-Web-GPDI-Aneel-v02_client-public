@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjetoService } from '@app/projetos/projeto.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UiService } from '@app/shared/ui.service';
 import { RecursoHumanoFormComponent } from '@app/projetos/recurso-humano-form/recurso-humano-form.component';
+import { ProjetosService } from '@app/projetos.service';
 
 @Component({
     selector: 'app-extrato-financeiro-empresas',
@@ -12,7 +12,7 @@ import { RecursoHumanoFormComponent } from '@app/projetos/recurso-humano-form/re
 export class ExtratoFinanceiroEmpresasComponent implements OnInit {
 
     constructor(
-        protected projetoService: ProjetoService,
+        protected projetoService: ProjetosService,
         protected modalService: NgbModal,
         protected UI: UiService
 
