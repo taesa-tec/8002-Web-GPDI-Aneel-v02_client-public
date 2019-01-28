@@ -2,7 +2,9 @@ export interface LoginRequest {
     email: string;
     password: string;
 }
-
+export interface RecoverRequest {
+    email: string;
+}
 export interface CreateUserRequest {
     nomeCompleto: string;
     email: string;

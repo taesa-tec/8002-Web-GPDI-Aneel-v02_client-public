@@ -1,15 +1,37 @@
-<p class="text-center">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <p class="text-center">
     Insira abaixo seu e-mail de cadastro
     que enviaremos um link para a geração
     de uma nova senha.
-</p>
-<div class="form-group position-relative">
-    <input type="email" class="form-control form-control-lg" placeholder="Email">
+  </p>
+  <div class="form-group position-relative">
+    <input type="email" formControlName="email" class="form-control form-control-lg" placeholder="Email">
     <i class="ta-envelope position-absolute text-cinza fs-18" style="top: 0.8em; right: 1em;"></i>
-</div>
-<div class="py-3 d-flex justify-content-between">
-    <button type="submit" class="btn btn-blue btn-lg">Gerar nova senha</button>
+  </div>
+  <div class="alert border-success text-success font-weight-bold d-flex justify-content-center align-items-center"
+       *ngIf="resultadoResponse && resultadoResponse.sucesso">
+    <div class="px-2">
+      <div class="fs-32 ta-ok"></div>
+    </div>
+    <div>
+      Um e-mail com instruções de como redefinir a sua senha foi enviado para a sua conta.
+    </div>
+  </div>
+  <div class="alert border-danger text-danger font-weight-bold d-flex" *ngIf="resultadoResponse && !resultadoResponse.sucesso">
+    <div>
+      <div class="ta-cancel-circle fs-32"></div>
+    </div>
+    <div>
+      <ul class="mb-0">
+        <li *ngFor="let item of resultadoResponse.inconsistencias">{{item}}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="py-3 d-flex justify-content-between">
+    <button type="submit" class="btn btn-blue btn-lg" [disabled]="!form.valid" *ngIf="!resultadoResponse || (resultadoResponse && !resultadoResponse.sucesso)">Gerar nova senha</button>
     <a routerLink="/login" class="btn btn-link">
-        <strong>Fazer Login</strong>
+      <strong>Fazer Login</strong>
     </a>
-</div>
+  </div>
+  <app-loading type="fullparent" background-color="transparent" color="#03286a"></app-loading>
+</form>

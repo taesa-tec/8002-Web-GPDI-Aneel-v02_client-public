@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 import { NovoProjetoComponent } from './novo-projeto/novo-projeto.component';
 import { SharedModule } from '../shared/shared.module';
-import { ReactiveFormsModule } from '@angular/forms';
 import { ProjetoCardComponent } from './projeto-card/projeto-card.component';
-import { RouterModule } from '@angular/router';
 import { ProdutoFormComponent } from './produto-form/produto-form.component';
 import { EtapaFormComponent } from './etapa-form/etapa-form.component';
 import { EmpresaFormComponent } from './empresa-form/empresa-form.component';
@@ -41,7 +40,6 @@ import { AlocarRecursoMaterialFormComponent } from './alocar-recurso-material-fo
     imports: [
         CommonModule,
         SharedModule,
-        ReactiveFormsModule,
         RouterModule
     ],
     exports: [

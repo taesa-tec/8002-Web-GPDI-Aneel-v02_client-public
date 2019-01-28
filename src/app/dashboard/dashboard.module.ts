@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '@app/shared/shared.module';
 import { MeuCadastroComponent } from './meu-cadastro/meu-cadastro.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -34,7 +36,6 @@ import { LogProjetoComponent } from './projetos/log-projeto/log-projeto.componen
 import { LogComponent } from './projetos/log-projeto/log.component';
 import { NovoUsuarioComponent } from './gerenciar-usuarios/novo-usuario/novo-usuario.component';
 import { EditUsuarioComponent } from './gerenciar-usuarios/edit-usuario/edit-usuario.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '@app/http-interceptors/auth-iterceptor';
 
 @NgModule({

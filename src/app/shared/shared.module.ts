@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -24,7 +24,8 @@ library.add(fas, far);
         FontAwesomeModule,
         NgbModule,
         HttpClientModule,
-        FormsModule
+        FormsModule,
+        ReactiveFormsModule
     ],
     entryComponents: [AlertComponent, ConfirmComponent],
     exports: [
@@ -32,6 +33,7 @@ library.add(fas, far);
         NgbModule,
         HttpClientModule,
         FormsModule,
+        ReactiveFormsModule,
         LoadingComponent,
         AccordionComponent,
         AlertComponent,

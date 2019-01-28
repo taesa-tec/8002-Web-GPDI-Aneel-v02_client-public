@@ -1,15 +1,40 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+
+import { ResultadoResponse } from '@app/models';
+import { LoadingComponent } from '@app/shared/loading/loading.component';
+import { AuthService } from '../auth.service';
 
 @Component({
-  selector: 'app-forget-pass',
-  templateUrl: './forget-pass.component.html',
-  styleUrls: ['./forget-pass.component.scss']
+    selector: 'app-forget-pass',
+    templateUrl: './forget-pass.component.html',
+    styleUrls: ['./forget-pass.component.scss']
 })
 export class ForgetPassComponent implements OnInit {
 
-  constructor() { }
+    @ViewChild(LoadingComponent)
+    private loading: LoadingComponent;
 
-  ngOnInit() {
-  }
+    resultadoResponse: ResultadoResponse;
+
+    form = new FormGroup({
+        email: new FormControl('', [Validators.required, Validators.email])
+    });
+
+    constructor(protected authService: AuthService, private router: Router) { }
+
+    ngOnInit() {
+
+    }
+
+    onSubmit() {
+        this.loading.show();
+        this.resultadoResponse = null;
+        this.authService.recuperarSenha(this.form.value).subscribe(r => {
+            this.loading.hide();
+            this.resultadoResponse = r;
+        });
+    }
 
 }
