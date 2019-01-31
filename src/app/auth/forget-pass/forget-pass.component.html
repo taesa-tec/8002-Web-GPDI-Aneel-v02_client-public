@@ -4,7 +4,7 @@
     que enviaremos um link para a geração
     de uma nova senha.
   </p>
-  <div class="form-group position-relative">
+  <div class="form-group position-relative" *ngIf="!(resultadoResponse && resultadoResponse.sucesso)">
     <input type="email" formControlName="email" class="form-control form-control-lg" placeholder="Email">
     <i class="ta-envelope position-absolute text-cinza fs-18" style="top: 0.8em; right: 1em;"></i>
   </div>
@@ -27,8 +27,9 @@
       </ul>
     </div>
   </div>
-  <div class="py-3 d-flex justify-content-between">
-    <button type="submit" class="btn btn-blue btn-lg" [disabled]="!form.valid" *ngIf="!resultadoResponse || (resultadoResponse && !resultadoResponse.sucesso)">Gerar nova senha</button>
+  <div class="py-3 d-flex justify-content-center">
+    <button type="submit" class="btn btn-blue btn-lg" [disabled]="!form.valid" *ngIf="!resultadoResponse || (resultadoResponse && !resultadoResponse.sucesso)">Gerar
+      nova senha</button>
     <a routerLink="/login" class="btn btn-link">
       <strong>Fazer Login</strong>
     </a>

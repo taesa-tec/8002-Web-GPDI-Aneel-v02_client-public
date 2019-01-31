@@ -1,67 +1,67 @@
 <div class="modal-header">
-    <div class="text-uppercase modal-title text-blue-light fs-24">Novo Projeto</div>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        <i class="ta-cancel-circle"></i>
-    </button>
+  <div class="text-uppercase modal-title text-blue-light fs-24">Novo Projeto</div>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <i class="ta-cancel-circle"></i>
+  </button>
 </div>
 <div class="modal-body">
-    <form [formGroup]="projetoForm" (ngSubmit)="onSubmit()">
-        <div class="row mb-4">
-            <div class="col">
-                <div class="form-group">
-                    <label class="text-blue-light" for="">Número do projeto</label>
-                    <input type="text" class="form-control" formControlName="numero" required>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <label class="text-blue-light" for="">Titulo resumido do projeto</label>
-                    <input type="text" class="form-control" formControlName="titulo">
-                </div>
-            </div>
+  <form [formGroup]="projetoForm" (ngSubmit)="onSubmit()">
+    <div class="row mb-4">
+      <div class="col">
+        <div class="form-group">
+          <label class="text-blue-light" for="">Número do projeto <app-tip tipId="7" placement="bottom"></app-tip></label>
+          <input type="text" maxlength="6" mask="00000S" [patterns]="numeroPatterns" placeholder="00000X" class="form-control"
+                 formControlName="numero" required>
         </div>
-        <div class="row my-4">
-            <div class="col-12">
-                <div class="form-group">
-                    <label class="text-blue-light" for="">Título do projeto</label>
-                    <textarea name="" id="" cols="30" rows="4" class="form-control" formControlName="tituloDesc"></textarea>
-                    <div class="text-right text-blue-light">{{tituloDescRestante}} caracteres sobrando</div>
-                </div>
-            </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label class="text-blue-light" for="">Titulo resumido do projeto <app-tip tipId="8" placement="bottom"></app-tip></label>
+          <input type="text" class="form-control" maxlength="60" formControlName="titulo">
         </div>
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <label class="text-blue-light" for="">Empresa Proponente</label>
-                    <select name="" id="" class="form-control" formControlName="empresaProponente">
-                        <option value="">Selecione a empresa</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <label class="text-blue-light" for="">Status</label>
-                    <select name="" id="" class="form-control" formControlName="status">
-                        <option value="">Selecione</option>
-                    </select>
-                </div>
-            </div>
+      </div>
+    </div>
+    <div class="row my-4">
+      <div class="col-12">
+        <div class="form-group">
+          <label class="text-blue-light" for="">Título do projeto <app-tip tipId="9" placement="bottom"></app-tip></label>
+          <app-textarea maxlength="200" class="form-control" rows="4" formControlName="tituloDesc"></app-textarea>
         </div>
-        <div class="row" *ngIf="projetoForm.dirty && projetoForm.invalid">
-            <div class="col-12">
-                <ngb-alert [dismissible]="false" type="danger">
-                    <fa-icon icon="exclamation-circle"></fa-icon> Todos os campos são obrigatórios
-                </ngb-alert>
-            </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label class="text-blue-light" for="">Empresa Proponente <app-tip tipId="10" placement="bottom"></app-tip></label>
+          <select name="" id="" class="form-control" formControlName="empresaProponente">
+            <option value="">Selecione a empresa</option>
+          </select>
         </div>
-        <div class="row">
-            <div class="col-12 text-right">
-                <button type="button" class="btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</button>
-                <button type="submit" class="btn btn-primary">
-                    <fa-icon icon="plus-circle"></fa-icon>
-                    Criar Projeto
-                </button>
-            </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label class="text-blue-light" for="">Status</label>
+          <select name="" id="" class="form-control" formControlName="status">
+            <option value="">Selecione</option>
+          </select>
         </div>
-    </form>
+      </div>
+    </div>
+    <div class="row" *ngIf="projetoForm.dirty && projetoForm.invalid && false">
+      <div class="col-12">
+        <ngb-alert [dismissible]="false" type="danger">
+          <fa-icon icon="exclamation-circle"></fa-icon> Todos os campos são obrigatórios
+        </ngb-alert>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 text-right">
+        <button type="button" class="btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</button>
+        <button type="submit" class="btn btn-primary" [disabled]="projetoForm.invalid">
+          <fa-icon icon="plus-circle"></fa-icon>
+          Criar Projeto
+        </button>
+      </div>
+    </div>
+  </form>
 </div>

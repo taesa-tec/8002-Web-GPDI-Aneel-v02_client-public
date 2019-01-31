@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjetosService } from '@app/projetos.service';
+import { ProjetosService } from '@app/projetos/projetos.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { RecursoMaterialFormComponent } from '@app/projetos/recurso-material-form/recurso-material-form.component';
 

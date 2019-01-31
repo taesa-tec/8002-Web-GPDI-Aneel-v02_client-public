@@ -7,7 +7,7 @@ import { Projeto, ProjetoStatus } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 
 import { projetoPlanejamentoRoutes } from '@app/dashboard/projetos/projeto.routes';
-import { ProjetosService } from '@app/projetos.service';
+import { ProjetosService } from '@app/projetos/projetos.service';
 
 
 

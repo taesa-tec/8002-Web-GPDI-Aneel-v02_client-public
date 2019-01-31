@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { UiService } from '@app/shared/ui.service';
 import { AuthService } from '@app/auth/auth.service';
-import { UsersService } from '@app/users.service';
-import { CatalogoService } from '@app/catalogo.service';
-import { CurrentUser, Projeto } from '@app/models';
-import { ProjetosService } from '@app/projetos.service';
+import { UsersService } from '@app/users/users.service';
+import { CurrentUser } from '@app/models';
+import { ProjetosService } from '@app/projetos/projetos.service';
+import { CatalogsService } from '@app/catalogs/catalogs.service';
 
 @Component({
     selector: 'app-dashboard',
@@ -19,15 +20,16 @@ export class DashboardComponent implements OnInit {
     private loading: LoadingComponent;
 
     currentUser: CurrentUser;
-    
-    
+
+
 
     constructor(
         protected users: UsersService,
-        protected catalogo: CatalogoService,
+        protected catalogs: CatalogsService,
         protected uiService: UiService,
         protected projetos: ProjetosService,
-        protected auth: AuthService) { }
+        protected auth: AuthService
+    ) { }
 
     logout() {
         this.auth.logout();
@@ -37,8 +39,6 @@ export class DashboardComponent implements OnInit {
         this.users.me().subscribe(currentUser => {
             this.currentUser = currentUser;
         });
-        
-
     }
 
 }

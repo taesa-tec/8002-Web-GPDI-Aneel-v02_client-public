@@ -1,18 +1,13 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { APP_CONFIG, AppConfig } from '@app/app.config';
-import { AuthService } from './auth/auth.service';
-import { Empresa } from './models';
+import { Empresa } from '@app/models';
 
 @Injectable({
-    providedIn: 'root',
+    providedIn: 'root'
 })
-export class CatalogoService {
+export class CatalogsService {
 
-    constructor(
-        private http: HttpClient,
-        protected auth: AuthService,
-    ) { }
+    constructor(private http: HttpClient) { }
 
     permissoes() {
         return this.http.get(`catalogs/permissoes`);
@@ -37,6 +32,4 @@ export class CatalogoService {
     estados() {
         return this.http.get(`catalogs/Estados`);
     }
-
-
 }

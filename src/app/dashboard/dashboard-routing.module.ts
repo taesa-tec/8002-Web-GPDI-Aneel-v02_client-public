@@ -8,9 +8,9 @@ import { GerenciarUsuariosComponent } from './gerenciar-usuarios/gerenciar-usuar
 import { ProjetoComponent } from './projetos/projeto.component';
 
 import { projetoPlanejamentoRoutes } from '@app/dashboard/projetos/projeto.routes';
-import { NovoUsuarioComponent } from './gerenciar-usuarios/novo-usuario/novo-usuario.component';
-import { EditUsuarioComponent } from './gerenciar-usuarios/edit-usuario/edit-usuario.component';
 import { AuthGuard } from '@app/auth/auth.guard';
+import { NewUserComponent } from '@app/users/new-user/new-user.component';
+import { EditUserComponent } from '@app/users/edit-user/edit-user.component';
 
 
 
@@ -24,8 +24,8 @@ const routes: Routes = [
             { path: '', component: MeusProjetosComponent, data: { title: "Meus Projetos" } },
             { path: 'meu-cadastro', component: MeuCadastroComponent, data: { title: "Meu Cadastro" } },
             { path: 'gerenciar-usuarios', component: GerenciarUsuariosComponent, data: { title: "Meu Cadastro" }, },
-            { path: 'gerenciar-usuarios/novo', component: NovoUsuarioComponent, data: { title: "Novo Usuário" }, },
-            { path: 'gerenciar-usuarios/edit/:id', component: EditUsuarioComponent, data: { title: "Novo Usuário" }, },
+            { path: 'gerenciar-usuarios/novo', component: NewUserComponent, data: { title: "Novo Usuário" }, },
+            { path: 'gerenciar-usuarios/edit/:id', component: EditUserComponent, data: { title: "Novo Usuário" }, },
             { path: 'projeto', redirectTo: '', pathMatch: 'full' },
             { path: 'projeto/:id', component: ProjetoComponent, children: projetoPlanejamentoRoutes },
             { path: '**', component: NotFoundComponent, data: { title: "Não encontrado" } },

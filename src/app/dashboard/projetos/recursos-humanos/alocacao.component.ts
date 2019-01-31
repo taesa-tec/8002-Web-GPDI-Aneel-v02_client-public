@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AlocarRecursoHumanoFormComponent } from '@app/projetos/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
-import { ProjetosService } from '@app/projetos.service';
+import { ProjetosService } from '@app/projetos/projetos.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({

@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -34,9 +33,8 @@ import { AlterarStatusComponent } from './projetos/central-administrativa/altera
 import { UsuariosComponent } from './projetos/central-administrativa/usuarios/usuarios.component';
 import { LogProjetoComponent } from './projetos/log-projeto/log-projeto.component';
 import { LogComponent } from './projetos/log-projeto/log.component';
-import { NovoUsuarioComponent } from './gerenciar-usuarios/novo-usuario/novo-usuario.component';
-import { EditUsuarioComponent } from './gerenciar-usuarios/edit-usuario/edit-usuario.component';
 import { AuthInterceptor } from '@app/http-interceptors/auth-iterceptor';
+import { UsersModule } from '@app/users/users.module';
 
 @NgModule({
     declarations: [
@@ -66,15 +64,12 @@ import { AuthInterceptor } from '@app/http-interceptors/auth-iterceptor';
         UsuariosComponent,
         LogProjetoComponent,
         LogComponent,
-        NovoUsuarioComponent,
-        EditUsuarioComponent,
     ],
     imports: [
-        CommonModule,
         SharedModule,
-        NgbModule,
         ProjetosModule,
-        DashboardRoutingModule
+        UsersModule,
+        DashboardRoutingModule,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

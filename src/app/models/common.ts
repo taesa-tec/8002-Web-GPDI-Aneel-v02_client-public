@@ -1,29 +1,8 @@
-export interface CurrentUser {
-    catalogEmpresaId?: any;
-    status: number;
-    nomeCompleto?: any;
-    catalogEmpresa?: any;
-    razaoSocial?: any;
-    fotoPerfil?: any;
-    cpf?: any;
-    ultimoLogin: string;
-    dataCadastro: string;
-    dataAtualizacao: string;
-    id: string;
-    userName: string;
-    normalizedUserName: string;
-    email: string;
-    normalizedEmail: string;
-    emailConfirmed: boolean;
-    passwordHash: string;
-    securityStamp: string;
-    concurrencyStamp: string;
-    phoneNumber?: any;
-    phoneNumberConfirmed: boolean;
-    twoFactorEnabled: boolean;
-    lockoutEnd?: any;
-    lockoutEnabled: boolean;
-    accessFailedCount: number;
+
+export interface MessageAlert {
+    message: string;
+    type: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
+    icon?: string;
 }
 
 export interface UF {
@@ -88,4 +67,60 @@ export interface Projeto {
     razoabilidade: string;
     pesquisas: string;
     produtos: Produto[];
+}
+
+export interface User {
+    catalogEmpresaId?: any;
+    status: number;
+    nomeCompleto?: any;
+    catalogEmpresa?: any;
+    razaoSocial?: any;
+    fotoPerfil?: any;
+    cpf?: any;
+    ultimoLogin: string;
+    dataCadastro: string;
+    dataAtualizacao: string;
+    id: string;
+    userName: string;
+    normalizedUserName: string;
+    email: string;
+    normalizedEmail: string;
+    emailConfirmed: boolean;
+    passwordHash: string;
+    securityStamp: string;
+    concurrencyStamp: string;
+    phoneNumber?: any;
+    phoneNumberConfirmed: boolean;
+    twoFactorEnabled: boolean;
+    lockoutEnd?: any;
+    lockoutEnabled: boolean;
+    accessFailedCount: number;
+}
+
+export interface CurrentUser {
+    catalogEmpresaId?: any;
+    status: number;
+    nomeCompleto?: any;
+    catalogEmpresa?: any;
+    razaoSocial?: any;
+    fotoPerfil?: any;
+    cpf?: any;
+    ultimoLogin: string;
+    dataCadastro: string;
+    dataAtualizacao: string;
+    id: string;
+    userName: string;
+    normalizedUserName: string;
+    email: string;
+    normalizedEmail: string;
+    emailConfirmed: boolean;
+    passwordHash: string;
+    securityStamp: string;
+    concurrencyStamp: string;
+    phoneNumber?: any;
+    phoneNumberConfirmed: boolean;
+    twoFactorEnabled: boolean;
+    lockoutEnd?: any;
+    lockoutEnabled: boolean;
+    accessFailedCount: number;
 }

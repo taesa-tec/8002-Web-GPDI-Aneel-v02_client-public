@@ -1,11 +1,82 @@
 [
     {
         "type": "Directory",
-        "name": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app",
+        "name": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\models",
         "parent_id": null,
-        "fsPath": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app",
+        "fsPath": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\models",
         "workspaceRoot": null,
         "workspacePath": null,
-        "id": "sVjYQCrD0pxWancy"
+        "id": "J5wV0HvaPkUzgfTD"
+    },
+    {
+        "type": "Directory",
+        "name": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\dashboard",
+        "parent_id": null,
+        "fsPath": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\dashboard",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "RNJriAoUv9nz4gyD"
+    },
+    {
+        "type": "Directory",
+        "name": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\projetos",
+        "parent_id": null,
+        "fsPath": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\projetos",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "Jrmg1xkSyPHFG2TO"
+    },
+    {
+        "type": "Directory",
+        "name": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\shared",
+        "parent_id": null,
+        "fsPath": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\shared",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "mnpJtBPXcYw1gVka"
+    },
+    {
+        "type": "Group",
+        "name": "rotas",
+        "parent_id": null,
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "TEMBCQWOhvnP4uc6"
+    },
+    {
+        "type": "File",
+        "name": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\app-routing.module.ts",
+        "parent_id": "TEMBCQWOhvnP4uc6",
+        "fsPath": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\app-routing.module.ts",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "FWwvOJjQZhoDLXrd"
+    },
+    {
+        "type": "File",
+        "name": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\dashboard\\dashboard-routing.module.ts",
+        "parent_id": "TEMBCQWOhvnP4uc6",
+        "fsPath": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\dashboard\\dashboard-routing.module.ts",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "5tl2WGmCyn3o9vMz"
+    },
+    {
+        "type": "File",
+        "name": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\dashboard\\projetos\\projeto.routes.ts",
+        "parent_id": "TEMBCQWOhvnP4uc6",
+        "fsPath": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\dashboard\\projetos\\projeto.routes.ts",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "WjqbuC869HwfdcnS"
+    },
+    {
+        "type": "File",
+        "name": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\auth\\auth-routing.module.ts",
+        "parent_id": "TEMBCQWOhvnP4uc6",
+        "fsPath": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\auth\\auth-routing.module.ts",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "ImfvqCVNXtZyu6W9"
     }
 ]

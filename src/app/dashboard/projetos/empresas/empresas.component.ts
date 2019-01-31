@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EmpresaFormComponent } from '@app/projetos/empresa-form/empresa-form.component';
-import { ProjetosService } from '@app/projetos.service';
+import { ProjetosService } from '@app/projetos/projetos.service';
 
 @Component({
     selector: 'app-empresas',

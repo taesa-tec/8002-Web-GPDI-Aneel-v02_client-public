@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { APP_CONFIG, AppConfig } from '../app.config';
 import { Observable } from 'rxjs';
-import { LoginRequest, RecoverRequest, ResultadoResponse } from '@app/models';
+import { LoginRequest, RecoverRequest, ResultadoResponse, NewpassRequest } from '@app/models';
 import { LoginResponse } from '@app/models';
 import { Router } from '@angular/router';
 
@@ -88,6 +88,11 @@ export class AuthService {
     recuperarSenha(recoverRequest: RecoverRequest): Observable<ResultadoResponse> {
         return this.http.post<ResultadoResponse>('Login/recuperar-senha', recoverRequest);
     }
+
+    novaSenha(recoverRequest: NewpassRequest): Observable<ResultadoResponse> {
+        return this.http.post<ResultadoResponse>('Login/nova-senha', recoverRequest);
+    }
+
 
 
 }

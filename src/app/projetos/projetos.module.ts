@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { NovoProjetoComponent } from './novo-projeto/novo-projeto.component';
@@ -12,8 +11,7 @@ import { RecursoHumanoFormComponent } from './recurso-humano-form/recurso-humano
 import { AlocarRecursoHumanoFormComponent } from './alocar-recurso-humano-form/alocar-recurso-humano-form.component';
 import { RecursoMaterialFormComponent } from './recurso-material-form/recurso-material-form.component';
 import { AlocarRecursoMaterialFormComponent } from './alocar-recurso-material-form/alocar-recurso-material-form.component';
-
-
+import { ProjetosService } from './projetos.service';
 
 @NgModule({
     declarations: [
@@ -38,10 +36,10 @@ import { AlocarRecursoMaterialFormComponent } from './alocar-recurso-material-fo
         AlocarRecursoMaterialFormComponent,
     ],
     imports: [
-        CommonModule,
         SharedModule,
-        RouterModule
+        RouterModule,
     ],
+    providers: [ProjetosService],
     exports: [
         NovoProjetoComponent, ProjetoCardComponent
     ]

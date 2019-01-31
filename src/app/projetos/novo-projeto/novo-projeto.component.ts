@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProjetosService } from '@app/projetos.service';
+import { ProjetosService } from '@app/projetos/projetos.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProjetoStatus } from '@app/models';
 
@@ -14,11 +14,14 @@ export class NovoProjetoComponent implements OnInit {
     constructor(public activeModal: NgbActiveModal, private projetoService: ProjetosService) { }
 
     maxTituloContent = 500;
+
+    empresasProponentes = [];
+
     projetoForm = new FormGroup({
         numero: new FormControl('', [
             Validators.required,
-            Validators.minLength(3),
-            Validators.maxLength(10),
+            Validators.minLength(5),
+            Validators.maxLength(6),
         ]),
         titulo: new FormControl('', [
             Validators.maxLength(50),
@@ -31,6 +34,12 @@ export class NovoProjetoComponent implements OnInit {
         empresaProponente: new FormControl('', [Validators.required]),
         status: new FormControl('', [Validators.required]),
     });
+
+    public numeroPatterns = {
+        'S': { pattern: /[A-Za-z]/, optional: true },
+        '0': { pattern: /\d/, optional: false }
+    };
+
 
     get tituloDescRestante() {
         return this.maxTituloContent - this.tituloDesc.value.length;
@@ -53,7 +62,7 @@ export class NovoProjetoComponent implements OnInit {
         return this.projetoForm.get('status');
     }
     ngOnInit() {
-        console.log(this.projetoForm);
+        
     }
 
     onSubmit() {
@@ -61,7 +70,7 @@ export class NovoProjetoComponent implements OnInit {
     }
 
     save() {
-        
+
     }
 
 }

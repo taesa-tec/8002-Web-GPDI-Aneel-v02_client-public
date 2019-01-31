@@ -1,0 +1,69 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>
+        <div class="d-flex align-items-center">
+          <span class="mx-2">Nome</span>
+          <span class="d-flex flex-column">
+            <fa-icon icon="caret-up" class="d-inline-flex" size="1x" (click)="order('nomeCompleto','desc')"></fa-icon>
+            <fa-icon icon="caret-down" class="d-inline-flex" size="1x" (click)="order('nomeCompleto')"></fa-icon>
+          </span>
+        </div>
+      </th>
+      <th>
+        <div class="d-flex align-items-center">
+          <span class="mx-2">Empresa</span>
+          <span class="d-flex flex-column">
+            <fa-icon icon="caret-up" class="d-inline-flex" size="1x" (click)="order('catalogEmpresa.nome','desc')"></fa-icon>
+            <fa-icon icon="caret-down" class="d-inline-flex" size="1x" (click)="order('catalogEmpresa.nome')"></fa-icon>
+          </span>
+        </div>
+
+      </th>
+      <th>
+        <div class="d-flex align-items-center">
+          <span class="mx-2">Status</span>
+          <span class="d-flex flex-column">
+            <fa-icon icon="caret-up" class="d-inline-flex" size="1x" (click)="order('status','desc')"></fa-icon>
+            <fa-icon icon="caret-down" class="d-inline-flex" size="1x" (click)="order('status')"></fa-icon>
+          </span>
+        </div>
+      </th>
+      <th>
+        <div class="d-flex align-items-center">
+          <span class="mx-2">Data Cadastro</span>
+          <span class="d-flex flex-column">
+            <fa-icon icon="caret-up" class="d-inline-flex" size="1x" (click)="order('dataCadastro','desc')"></fa-icon>
+            <fa-icon icon="caret-down" class="d-inline-flex" size="1x" (click)="order('dataCadastro')"></fa-icon>
+          </span>
+        </div>
+      </th>
+      <th>
+        <div class="d-flex align-items-center">
+          <span class="mx-2">Ações</span>
+        </div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users | orderBy:orderByField:orderByDirection">
+      <td>
+        <span>{{ user.nomeCompleto | notDefined }}</span>
+      </td>
+      <td>
+        <span *ngIf="user.catalogEmpresa">{{ user.catalogEmpresa.nome }}</span>
+      </td>
+      <td>
+        <span>{{ user.status | userStatus }}</span>
+      </td>
+      <td>
+        <span>{{ user.dataCadastro }}</span>
+      </td>
+      <td>
+        <a [routerLink]="['/dashboard/gerenciar-usuarios/edit/', user.id]" class="btn btn-sm btn-block btn-primary">
+          <i class="ta-edit"></i> EDITAR
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>

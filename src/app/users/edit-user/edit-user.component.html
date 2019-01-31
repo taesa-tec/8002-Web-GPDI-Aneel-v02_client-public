@@ -1,0 +1,157 @@
+<div class="bg-light py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h3 class="text-uppercase text-dark">Editar usuário</h3>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container my-3 position-relative">
+  <app-loading type="fullscreen"></app-loading>
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-2">
+        <label class="rounded border d-block">
+          <div class="embed-responsive embed-responsive-1by1">
+            <div class="embed-responsive-item p-2">
+
+            </div>
+          </div>
+          <div class="text-cinza-claro text-center py-2">
+            <fa-icon icon="camera" size="1x"></fa-icon> Alterar Imagem
+          </div>
+          <input type="file" class="d-none">
+        </label>
+      </div>
+      <div class="col-10">
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label for="tipo">Tipo de usuário</label>
+              <select name="tipo" formControlName="role" id="tipo" class="form-control">
+                <option value="Padrao">Padrão</option>
+                <option value="Administrador">Administrador</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label for="nome-completo">Nome Completo</label>
+              <input type="text" formControlName="nomeCompleto" id="nome-completo" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" autocomplete="off" formControlName="email" class="form-control">
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label for="">Status</label>
+              <select name="status" id="status" formControlName="status" class="form-control">
+                <option value="1">Ativo</option>
+                <option value="0">Desativo</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label for="">Empresa</label>
+              <!-- formControlName="empresa" -->
+              <select name="" id="" class="form-control" formControlName="catalogEmpresaId" #empresa>
+                <option value="">Selecione</option>
+                <option *ngFor="let empresa of empresas | async" [value]="empresa.id">{{ empresa.nome }}</option>
+                <option value="0">Outra (Empresa Externa)</option>
+              </select>
+            </div>
+            <div class="form-group" *ngIf="form.value.catalogEmpresaId === '0'">
+              <label for="">Nome da Empresa</label>
+              <input type="text" class="form-control" formControlName="empresa">
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label for="">CPF Usuário</label>
+              <!-- formControlName="cpf" -->
+              <input type="text" mask="000.000.000-00" formControlName="cpf" placeholder="999.999.999-99" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-12">
+            <h5 class="text-blue">ACESSOS POR PROJETO</h5>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>
+                    <div class="d-flex align-items-center">
+                      <span class="mx-2">Número e tipo</span>
+                      <span class="d-flex flex-column">
+                        <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
+                        <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
+                      </span>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="d-flex align-items-center">
+                      <span class="mx-2">Nome</span>
+                      <span class="d-flex flex-column">
+                        <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
+                        <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
+                      </span>
+                    </div>
+
+                  </th>
+                  <th>
+                    <div class="d-flex align-items-center">
+                      <span class="mx-2">Nível de acesso</span>
+                      <span class="d-flex flex-column">
+                        <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
+                        <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
+                      </span>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+        <div class="row" *ngIf="resultado && !resultado.sucesso">
+          <div class="col-12">
+            <div class="alert border-danger text-danger font-weight-bold">
+              <ul class="m-0">
+                <li *ngFor="let item of resultado.inconsistencias">{{item}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <hr>
+            <div class="alert border-danger text-danger font-weight-bold d-flex align-items-center" *ngFor="let inconsistencia of inconsistencias | async">
+              <div>
+                <div class="ta-cancel-circle fs-32"></div>
+              </div>
+              <div class="px-3">
+                {{ inconsistencia }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 text-right">
+            <a routerLink="/dashboard/gerenciar-usuarios" class="btn btn-link">Cancelar</a>
+            <button class="btn btn-primary" [disabled]="form.invalid"><i class="ta-save"></i> Salvar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

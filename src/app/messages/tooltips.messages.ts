@@ -1,4 +1,4 @@
-const messages: { [propName: number]: string } = {
+const messages: { [propName: string]: string } = {
     "1": "Usuário insere o email de cadastro",
     "2": "Usuário insere a senha de cadastro",
     "3": "Usuário insere uma nova senha",

@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NovoProjetoComponent } from '@app/projetos/novo-projeto/novo-projeto.component';
 import { Projeto } from '@app/models';
-import { CatalogoService } from '@app/catalogo.service';
 import { Empresa } from '@app/models';
-import { ProjetosService } from '@app/projetos.service';
+import { ProjetosService } from '@app/projetos/projetos.service';
+import { CatalogsService } from '@app/catalogs/catalogs.service';
 
 @Component({
     selector: 'app-meus-projetos',
@@ -24,7 +24,7 @@ export class MeusProjetosComponent implements OnInit {
 
 
     constructor(
-        protected catalogo: CatalogoService,
+        protected catalogs: CatalogsService,
         protected projetoService: ProjetosService,
         protected modalService: NgbModal) {
         this.projetos = [];
@@ -43,12 +43,12 @@ export class MeusProjetosComponent implements OnInit {
 
     ngOnInit() {
         // Carregar os projetos
-        this.getProjetos();
+        // this.getProjetos();
 
-        this.catalogo.status().subscribe(r => {
+        this.catalogs.status().subscribe(r => {
 
         });
-        this.catalogo.empresas().subscribe(r => {
+        this.catalogs.empresas().subscribe(r => {
             this.empresas = r;
         });
 
