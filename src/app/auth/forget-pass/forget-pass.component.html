@@ -8,8 +8,7 @@
     <input type="email" formControlName="email" class="form-control form-control-lg" placeholder="Email">
     <i class="ta-envelope position-absolute text-cinza fs-18" style="top: 0.8em; right: 1em;"></i>
   </div>
-  <div class="alert border-success text-success font-weight-bold d-flex justify-content-center align-items-center"
-       *ngIf="resultadoResponse && resultadoResponse.sucesso">
+  <div class="alert border-success text-success font-weight-bold d-flex justify-content-center align-items-center" *ngIf="resultadoResponse && resultadoResponse.sucesso">
     <div class="px-2">
       <div class="fs-32 ta-ok"></div>
     </div>
@@ -22,9 +21,7 @@
       <div class="ta-cancel-circle fs-32"></div>
     </div>
     <div>
-      <ul class="mb-0">
-        <li *ngFor="let item of resultadoResponse.inconsistencias">{{item}}</li>
-      </ul>
+      <div *ngFor="let item of resultadoResponse.inconsistencias">{{item}}</div>
     </div>
   </div>
   <div class="py-3 d-flex justify-content-center">

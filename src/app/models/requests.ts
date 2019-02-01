@@ -1,28 +1,29 @@
 export interface LoginRequest {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
 export interface RecoverRequest {
-    email: string;
+  email: string;
 }
 export interface NewpassRequest {
-    email: string;
-    newPassword: string;
-    resetToken: string;
+  email: string;
+  newPassword: string;
+  resetToken: string;
 }
 export interface CreateUserRequest {
-    nomeCompleto: string;
-    email: string;
-    role: string;
-    status: 0 | 1;
-    password: string;
+  nomeCompleto: string;
+  cpf?: string;
+  email: string;
+  role: string;
+  status: 0 | 1;
+  
 }
 export interface CreateProjectRequest {
-    titulo: string;
-    tituloDesc: string;
-    numero: string;
-    catalogStatusId: number;
-    catalogEmpresaId: number;
+  titulo: string;
+  tituloDesc: string;
+  numero: string;
+  catalogStatusId: number;
+  catalogEmpresaId: number;
 }
 

@@ -1,0 +1,18 @@
+<label class="rounded border d-block" (drag)="onDrag($event)" (drop)="onDrop($event)" (dragover)="onDragover($event)">
+  <div class="embed-responsive embed-responsive-1by1">
+    <div class="embed-responsive-item p-2">
+      <i class="ta-cancel-circle position-absolute remove-image" [hidden]="!hasImage" (click)="remove($event)"></i>
+      <div class="align-items-center avatar d-flex justify-content-center p-3 rounded" [ngStyle]="style" [ngClass]="{'no-avatar': !hasImage}">
+        <div *ngIf="!hasImage" class="text-center">
+          <i class="ta-camera fs-72"></i>
+          <div>Arraste uma Imagem para aqui ou</div>
+          <span class="upload-btn">Selecione uma foto</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-cinza text-center py-2" [hidden]="!hasImage">
+    <i class="ta-camera"></i> Alterar Imagem
+  </div>
+  <input type="file" (name)="name" (disabled)="disabled" class="d-none" #input (change)=elOnChange($event)>
+</label>

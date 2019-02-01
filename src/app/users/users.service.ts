@@ -1,34 +1,34 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CurrentUser, CreateUserRequest, ResultadoResponse, User } from '@app/models';
+import { CreateUserRequest, ResultadoResponse, User } from '@app/models';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class UsersService {
 
-    private api: string;
+  private api: string;
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-    me() {
-        return this.http.get<CurrentUser>(`Users/me`);
-    }
+  me() {
+    return this.http.get<User>(`Users/me`);
+  }
 
 
-    all() {
-        return this.http.get<Array<User>>(`Users`);
-    }
+  all() {
+    return this.http.get<Array<User>>(`Users`);
+  }
 
-    byId(id: string) {
-        return this.http.get<User>(`Users/${id}`);
-    }
+  byId(id: string) {
+    return this.http.get<User>(`Users/${id}`);
+  }
 
-    create(user: CreateUserRequest) {
-        return this.http.post<ResultadoResponse>(`Users`, user);
-    }
+  create(user: CreateUserRequest) {
+    return this.http.post<ResultadoResponse>(`Users`, user);
+  }
 
-    edit(user: User) {
-        return this.http.put<ResultadoResponse>(`Users`, user);
-    }
+  edit(user: User) {
+    return this.http.put<ResultadoResponse>(`Users`, user);
+  }
 }

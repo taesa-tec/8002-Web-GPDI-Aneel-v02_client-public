@@ -1,41 +1,30 @@
 <table class="table">
   <thead>
     <tr>
+      <th width="1%"></th>
       <th>
         <div class="d-flex align-items-center">
           <span class="mx-2">Nome</span>
-          <span class="d-flex flex-column">
-            <fa-icon icon="caret-up" class="d-inline-flex" size="1x" (click)="order('nomeCompleto','desc')"></fa-icon>
-            <fa-icon icon="caret-down" class="d-inline-flex" size="1x" (click)="order('nomeCompleto')"></fa-icon>
-          </span>
+          <app-handler-order [current]="listOrder" field="nomeCompleto" (order)=order($event)></app-handler-order>
         </div>
       </th>
       <th>
         <div class="d-flex align-items-center">
           <span class="mx-2">Empresa</span>
-          <span class="d-flex flex-column">
-            <fa-icon icon="caret-up" class="d-inline-flex" size="1x" (click)="order('catalogEmpresa.nome','desc')"></fa-icon>
-            <fa-icon icon="caret-down" class="d-inline-flex" size="1x" (click)="order('catalogEmpresa.nome')"></fa-icon>
-          </span>
+          <app-handler-order [current]="listOrder" field="catalogEmpresa.nome" (order)=order($event)></app-handler-order>
         </div>
 
       </th>
       <th>
         <div class="d-flex align-items-center">
           <span class="mx-2">Status</span>
-          <span class="d-flex flex-column">
-            <fa-icon icon="caret-up" class="d-inline-flex" size="1x" (click)="order('status','desc')"></fa-icon>
-            <fa-icon icon="caret-down" class="d-inline-flex" size="1x" (click)="order('status')"></fa-icon>
-          </span>
+          <app-handler-order [current]="listOrder" field="status" (order)=order($event)></app-handler-order>
         </div>
       </th>
       <th>
         <div class="d-flex align-items-center">
           <span class="mx-2">Data Cadastro</span>
-          <span class="d-flex flex-column">
-            <fa-icon icon="caret-up" class="d-inline-flex" size="1x" (click)="order('dataCadastro','desc')"></fa-icon>
-            <fa-icon icon="caret-down" class="d-inline-flex" size="1x" (click)="order('dataCadastro')"></fa-icon>
-          </span>
+          <app-handler-order [current]="listOrder" field="dataCadastro" (order)=order($event)></app-handler-order>
         </div>
       </th>
       <th>
@@ -46,18 +35,22 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let user of users | orderBy:orderByField:orderByDirection">
+    <tr *ngFor="let user of users | orderBy:listOrder.field:listOrder.direction" class="align-middle">
+      <td>
+        <div class="d-block user-avatar" [ngStyle]="{'background-image': userAvatar(user)}"></div>
+      </td>
       <td>
         <span>{{ user.nomeCompleto | notDefined }}</span>
       </td>
       <td>
         <span *ngIf="user.catalogEmpresa">{{ user.catalogEmpresa.nome }}</span>
+        <span *ngIf="!user.catalogEmpresa && user.razaoSocial">{{ user.razaoSocial }}</span>
       </td>
       <td>
         <span>{{ user.status | userStatus }}</span>
       </td>
       <td>
-        <span>{{ user.dataCadastro }}</span>
+        <span>{{ user.dataCadastro | date:'dd/MM/yyyy' }}</span>
       </td>
       <td>
         <a [routerLink]="['/dashboard/gerenciar-usuarios/edit/', user.id]" class="btn btn-sm btn-block btn-primary">

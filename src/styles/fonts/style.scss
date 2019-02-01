@@ -3,9 +3,9 @@
 @font-face {
   font-family: '#{$icomoon-font-family}';
   src:
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?4o13ku') format('truetype'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?4o13ku') format('woff'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?4o13ku##{$icomoon-font-family}') format('svg');
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?xtwx4o') format('truetype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?xtwx4o') format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?xtwx4o##{$icomoon-font-family}') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -25,24 +25,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.ta-keyboard_arrow_down {
+.ta-camera {
   &:before {
-    content: $ta-keyboard_arrow_down; 
-  }
-}
-.ta-keyboard_arrow_left {
-  &:before {
-    content: $ta-keyboard_arrow_left; 
-  }
-}
-.ta-keyboard_arrow_right {
-  &:before {
-    content: $ta-keyboard_arrow_right; 
-  }
-}
-.ta-keyboard_arrow_up {
-  &:before {
-    content: $ta-keyboard_arrow_up; 
+    content: $ta-camera; 
   }
 }
 .ta-arrow-down {

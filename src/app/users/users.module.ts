@@ -4,10 +4,11 @@ import { NewUserComponent } from './new-user/new-user.component';
 import { ListUsersComponent } from './list-users/list-users.component';
 import { UserStatusPipe } from './user-status.pipe';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { FormComponent } from './form/form.component';
 
 
 @NgModule({
-    declarations: [NewUserComponent, ListUsersComponent, UserStatusPipe, EditUserComponent],
+    declarations: [NewUserComponent, ListUsersComponent, UserStatusPipe, EditUserComponent, FormComponent],
     imports: [
         SharedModule,
     ],

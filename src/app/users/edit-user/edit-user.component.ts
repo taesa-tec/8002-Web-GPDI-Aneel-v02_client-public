@@ -3,84 +3,63 @@ import { CatalogsService } from '@app/catalogs/catalogs.service';
 import { UsersService } from '../users.service';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Empresa, ResultadoResponse, User } from '@app/models';
+import { Empresa, ResultadoResponse, User, AppValidators } from '@app/models';
 import { Observable, Observer } from 'rxjs';
 import { ActivatedRouteSnapshot, ActivatedRoute, Router } from '@angular/router';
 
 
 
 @Component({
-    selector: 'app-edit-user',
-    templateUrl: './edit-user.component.html',
-    styleUrls: ['./edit-user.component.scss']
+  selector: 'app-edit-user',
+  templateUrl: './edit-user.component.html',
+  styleUrls: ['./edit-user.component.scss']
 })
 export class EditUserComponent implements OnInit {
 
-    form: FormGroup;
+  form: FormGroup;
 
-    empresas: Observable<Array<Empresa>>;
+  empresas: Observable<Array<Empresa>>;
 
-    resultado: ResultadoResponse;
+  resultado: ResultadoResponse;
 
-    user: User;
+  user: User;
 
-    inconsistencias: Observable<Array<string>>;
+  constructor(
+    protected catalog: CatalogsService,
+    protected usersService: UsersService,
+    protected route: ActivatedRoute,
+    protected router: Router
+  ) { }
 
-    inconsistenciasObserver: Observer<Array<string>>;
+  @ViewChild(LoadingComponent) loading: LoadingComponent;
 
+  ngOnInit() {
+    this.getUser();
+  }
+  protected getUser() {
+    this.loading.show();
+    this.usersService.byId(this.route.snapshot.params.id).subscribe(user => {
+      this.user = user; this.loading.hide();
+    });
+  }
 
-    constructor(
-        protected catalog: CatalogsService,
-        protected usersService: UsersService,
-        protected route: ActivatedRoute,
-        protected router: Router
-    ) {
-        this.inconsistencias = new Observable<Array<string>>(observer => { this.inconsistenciasObserver = observer; });
-    }
+  submit(value: any) {
+    return this.usersService.edit(value);
+  }
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+  onSubmited(value: ResultadoResponse) {
 
-    ngOnInit() {
-        
-        this.getUser();
-        this.empresas = this.catalog.empresas();
-    }
-    protected getUser() {
-        this.loading.show();
-        this.usersService.byId(this.route.snapshot.params.id).subscribe(user => { this.user = user; this.fillForm(); });
-    }
-    protected fillForm() {
-
-        const u = this.user;
-
-        this.form = new FormGroup({
-            id: new FormControl(u.id),
-            empresa: new FormControl(''),
-            nomeCompleto: new FormControl(u.nomeCompleto, [Validators.required]),
-            email: new FormControl(u.email, [Validators.email]),
-            cpf: new FormControl(u.cpf, [Validators.required]),
-            status: new FormControl(u.status, [Validators.required]),
-            role: new FormControl('Padrao', [Validators.required]),
-            catalogEmpresaId: new FormControl(u.catalogEmpresaId || '', [Validators.required]),
+    try {
+      if (value.sucesso) {
+        this.router.navigate(['/dashboard', 'gerenciar-usuarios'], {
+          queryParams: {
+            message: 'user-updated'
+          }
         });
+      }
+    } catch (e) {
 
-        this.loading.hide();
     }
 
-    onSubmit() {
-        this.loading.show();
-        this.inconsistenciasObserver.next([]);
-        this.usersService.edit(this.form.value).subscribe(r => {
-            this.loading.hide();
-            if (r.sucesso) {
-                this.router.navigate(['/dashboard', 'gerenciar-usuarios'], {
-                    queryParams: {
-                        message: 'user-updated'
-                    }
-                });
-            } else {
-                this.inconsistenciasObserver.next(r.inconsistencias);
-            }
-        });
-    }
+  }
 }

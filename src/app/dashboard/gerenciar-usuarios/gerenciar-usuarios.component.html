@@ -19,8 +19,8 @@
 
       <ngb-alert *ngIf="dashboardAlert" [type]="dashboardAlert.type" (close)="dashboardAlert=null">{{
         dashboardAlert.message }}</ngb-alert>
-
-      <app-list-users [users]="users | async"></app-list-users>
+      <app-list-users [users]="users"></app-list-users>
     </div>
   </div>
+  <app-loading></app-loading>
 </div>
