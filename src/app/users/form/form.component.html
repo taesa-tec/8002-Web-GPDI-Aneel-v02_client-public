@@ -70,7 +70,7 @@
           <table class="table">
             <thead>
               <tr>
-                <th>
+                <th class="w-25">
                   <div class="d-flex align-items-center">
                     <span class="mx-2">Número e tipo</span>
                     <span class="d-flex flex-column">
@@ -79,7 +79,7 @@
                         </span>
                   </div>
                 </th>
-                <th>
+                <th class="w-50">
                   <div class="d-flex align-items-center">
                     <span class="mx-2">Nome</span>
                     <span class="d-flex flex-column">
@@ -89,7 +89,7 @@
                   </div>
 
                 </th>
-                <th>
+                <th class="w-25">
                   <div class="d-flex align-items-center">
                     <span class="mx-2">Nível de acesso</span>
                     <span class="d-flex flex-column">
@@ -100,6 +100,32 @@
                 </th>
               </tr>
             </thead>
+
+            <tbody>
+              <tr *ngFor="let item of projetos">
+                <td class="align-middle">
+                  <div class="text-blue">
+                    {{item.numero}}
+                  </div>
+                  <div>
+                    {{item.titulo}}
+                  </div>
+                </td>
+                <td class="align-middle">
+                  {{item.tituloDesc}}
+                </td>
+                <td class="align-middle">
+                  <div class="form-group">
+                    <select name="" id="" class="form-control">
+                      <option [value]="nivel.value" *ngFor="let nivel of niveis">
+                        {{nivel.text}}
+                      </option>
+                    </select>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+
           </table>
         </div>
       </div>

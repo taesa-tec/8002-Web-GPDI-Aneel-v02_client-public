@@ -1,11 +1,15 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CatalogsService } from '@app/catalogs/catalogs.service';
-import { Empresa, ResultadoResponse, UserRole, Roles, AppValidators, User, CreateUserRequest } from '@app/models';
+import {
+  Empresa, ResultadoResponse, UserRole, Roles, AppValidators, User, CreateUserRequest,
+  Projeto, Projetos, NiveisAcessoProjeto
+} from '@app/models';
 import { UsersService } from '../users.service';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { Observable, Observer } from 'rxjs';
 import { Router } from '@angular/router';
+import { projetos } from '@mockup/projetos';
 
 @Component({
   selector: 'app-form',
@@ -29,6 +33,9 @@ export class FormComponent implements OnInit {
 
   @Input() user: User;
   @Input() handler: (value: any) => Observable<ResultadoResponse>;
+
+  projetos: Projetos = projetos;
+  niveis = NiveisAcessoProjeto;
 
   constructor(
     protected catalog: CatalogsService,

@@ -35,7 +35,7 @@ export class MeusProjetosComponent implements OnInit {
   }
 
   getProjetos() {
-    //this.projetoService.meusProjetos().subscribe(p => {
+    // this.projetoService.meusProjetos().subscribe(p => {
     this.projetoService.getProjetos().subscribe(p => {
       console.log(p);
       

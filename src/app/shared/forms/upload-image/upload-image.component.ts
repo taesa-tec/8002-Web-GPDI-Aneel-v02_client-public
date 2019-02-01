@@ -67,7 +67,7 @@ export class UploadImageComponent implements OnInit, ControlValueAccessor {
         "background-image": `url(${this.previewImage})`
       };
     }
-    return {}
+    return {};
   }
 
   ngOnInit() { }

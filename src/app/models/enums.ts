@@ -10,3 +10,10 @@ export enum ProjetoStatus {
   Iniciado = "2",
   Encerrado = "3"
 }
+
+export enum ProjetoAccess {
+  Administrador,
+  Aprovador,
+  LeituraEscrita,
+  Leitura
+}

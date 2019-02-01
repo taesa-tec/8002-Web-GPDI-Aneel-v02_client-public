@@ -1,4 +1,4 @@
-import { ProjetoStatus, UserRole } from './enums';
+import { ProjetoStatus, UserRole, ProjetoAccess } from './enums';
 
 export interface MessageAlert {
   message: string;
@@ -65,6 +65,8 @@ export interface Projeto {
   produtos: Produto[];
 }
 
+export type Projetos = Array<Projeto>;
+
 export interface User {
   id?: string;
   userName?: string;
@@ -97,5 +99,12 @@ export interface User {
 export const Roles: Array<{ text: string; value: UserRole }> = [
   { text: "Administrador", value: UserRole.Administrador },
   { text: "Usuário Padrão", value: UserRole.User }
-]
+];
 
+export const NiveisAcessoProjeto: Array<{ text: string; value: ProjetoAccess }> = [
+  { text: "Administrador", value: ProjetoAccess.Administrador },
+  { text: "Aprovador", value: ProjetoAccess.Aprovador },
+  { text: "Leitura e Escrita", value: ProjetoAccess.LeituraEscrita },
+  { text: "Leitura", value: ProjetoAccess.Leitura }
+
+];
