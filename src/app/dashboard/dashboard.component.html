@@ -1,49 +1,46 @@
 <header class="">
-    <div class="container-fluid py-4 text-white">
-        <div class="row">
-            <div class="col-12 d-flex justify-content-between px-5">
-                <div class="align-items-center d-flex">
-                    <div class="d-inline-block border-right border-white px-3 mr-3">
-                        <img src="/assets/logo.png" alt="TAESATEC">
+  <div class="container-fluid py-4 text-white">
+    <div class="row">
+      <div class="col-12 d-flex justify-content-between px-5">
+        <div class="align-items-center d-flex">
+          <div class="d-inline-block border-right border-white px-3 mr-3">
+            <img src="/assets/logo.png" alt="TAESATEC">
                     </div>
-                    <span class="fs-24">GESTOR P&D</span>
+            <span class="fs-24">GESTOR P&D</span>
+          </div>
+          <div *ngIf="currentUser">
+            <div class="d-flex flex-row">
+              <span><img [src]="avatar" width="48" height="48" alt="Avatar" class="rounded-circle img-fluid" /></span>
+              <div class="px-3 mr-3 border-right border-white">
+                <strong>{{currentUser.nomeCompleto}} </strong>
+                <br>
+                <span>{{empresa}}</span>
+              </div>
+              <div class="wrap-menu-dropdown">
+                <div ngbDropdown class="d-inline-block" #menuDrop="ngbDropdown" placement="bottom-right">
+                  <button class="btn text-white" id="menuDrop" ngbDropdownToggle>
+                    <div class="ta-gear fs-36"></div>
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <a class="dropdown-item" routerLink="/dashboard">
+                        <fa-icon icon="file-alt" size="1x" [fixedWidth]="true"></fa-icon> Meus Projetos
+                      </a>
+                    <a class="dropdown-item" routerLink="/dashboard/gerenciar-usuarios">
+                        <fa-icon icon="users" size="1x" [fixedWidth]="true"></fa-icon> Gerenciar Usuários
+                      </a>
+                    <a class="dropdown-item" routerLink="/dashboard/meu-cadastro">
+                        <fa-icon icon="user" size="1x" [fixedWidth]="true"></fa-icon> Meu Cadastro
+                      </a>
+                    <a (click)="logout()" class="dropdown-item" routerLink="/login">
+                        <fa-icon icon="sign-out-alt" [fixedWidth]="true" size="1x"></fa-icon> Logout
+                      </a>
+                  </div>
                 </div>
-                <div>
-                    <div class="d-flex flex-row">
-                        <div>
-                            <img src="/assets/temp-user.png" width="48" height="48" alt="" class="rounded-circle img-fluid">
-                        </div>
-                        <div class="px-3 mr-3 border-right border-white">
-                            <strong>Nome do usuário</strong>
-                            <br>
-                            <span>Descrição</span>
-                        </div>
-                        <div class="wrap-menu-dropdown">
-                            <div ngbDropdown class="d-inline-block" #menuDrop="ngbDropdown" placement="bottom-right">
-                                <button class="btn text-white" id="menuDrop" ngbDropdownToggle>
-                                    <div class="ta-gear fs-36"></div>
-                                </button>
-                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                    <a class="dropdown-item" routerLink="/dashboard">
-                                        <fa-icon icon="file-alt" size="1x" [fixedWidth]="true"></fa-icon> Meus Projetos
-                                    </a>
-                                    <a class="dropdown-item" routerLink="/dashboard/gerenciar-usuarios">
-                                        <fa-icon icon="users" size="1x" [fixedWidth]="true"></fa-icon> Gerenciar
-                                        Usuários
-                                    </a>
-                                    <a class="dropdown-item" routerLink="/dashboard/meu-cadastro">
-                                        <fa-icon icon="user" size="1x" [fixedWidth]="true"></fa-icon> Meu Cadastro
-                                    </a>
-                                    <a (click)="logout()" class="dropdown-item" routerLink="/login">
-                                        <fa-icon icon="sign-out-alt" [fixedWidth]="true" size="1x"></fa-icon> Logout
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
 </header>
 <app-loading type="fullscreen"></app-loading>

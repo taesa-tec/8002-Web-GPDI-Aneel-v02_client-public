@@ -1,5 +1,13 @@
 import { ProjetoStatus, UserRole, ProjetoAccess } from './enums';
 
+
+// export class Model {
+//   constructor(fields?: { [propName: string]: any }) {
+//     if (fields) {
+//       Object.assign(this, fields);
+//     }
+//   }
+// }
 export interface MessageAlert {
   message: string;
   type: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
@@ -78,8 +86,8 @@ export interface User {
   razaoSocial?: any;
   fotoPerfil?: any;
   cpf?: any;
-  catalogEmpresa?: any;
-  catalogEmpresaId?: any;
+  catalogEmpresa?: Empresa;
+  catalogEmpresaId?: number | '';
   ultimoLogin?: string;
   dataCadastro?: string;
   dataAtualizacao?: string;
