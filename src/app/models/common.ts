@@ -1,4 +1,4 @@
-import { ProjetoStatus, UserRole, ProjetoAccess } from './enums';
+import { UserRole, ProjetoAccess } from './enums';
 
 
 // export class Model {
@@ -53,24 +53,42 @@ export interface Produto {
   desc: string;
   projetoId: number;
 }
+export interface ProjetoStatus {
+  id: number;
+  status: string;
+}
 export interface Projeto {
   created: string;
-  projetoId: number;
+  id: number;
   titulo: string;
+  tipo: number;
+  dataInicio?: any;
+  codigo?: any;
   tituloDesc: string;
   numero: string;
-  empresaProponente: number;
-  status: ProjetoStatus;
-  segmentoId: number;
-  avaliacaoInicial: string;
-  compartResultados: string;
-  motivacao: string;
-  originalidade: string;
-  aplicabilidade: string;
-  relevancia: string;
-  razoabilidade: string;
-  pesquisas: string;
-  produtos: Produto[];
+  catalogEmpresaId: number;
+  catalogEmpresa?: any;
+  catalogStatusId: number;
+  catalogStatus?: ProjetoStatus;
+  catalogSegmentoId?: any;
+  catalogSegmento?: any;
+  avaliacaoInicial?: any;
+  compartResultados?: any;
+  motivacao?: any;
+  originalidade?: any;
+  aplicabilidade?: any;
+  relevancia?: any;
+  razoabilidade?: any;
+  pesquisas?: any;
+  produtos?: any;
+  recursosHumanos?: any;
+  alocacoesRh?: any;
+  recursosMateriais?: any;
+  alocacoesRm?: any;
+  etapas?: any;
+  tema?: any;
+  usersProjeto?: any;
+  empresas?: any;
 }
 
 export type Projetos = Array<Projeto>;
@@ -116,3 +134,4 @@ export const NiveisAcessoProjeto: Array<{ text: string; value: ProjetoAccess }> 
   { text: "Leitura", value: ProjetoAccess.Leitura }
 
 ];
+

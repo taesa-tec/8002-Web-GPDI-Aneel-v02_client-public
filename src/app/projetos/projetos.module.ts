@@ -12,36 +12,38 @@ import { AlocarRecursoHumanoFormComponent } from './alocar-recurso-humano-form/a
 import { RecursoMaterialFormComponent } from './recurso-material-form/recurso-material-form.component';
 import { AlocarRecursoMaterialFormComponent } from './alocar-recurso-material-form/alocar-recurso-material-form.component';
 import { ProjetosService } from './projetos.service';
+import { ListComponent } from './list/list.component';
 
 @NgModule({
-    declarations: [
-        NovoProjetoComponent,
-        ProjetoCardComponent,
-        ProdutoFormComponent,
-        EtapaFormComponent,
-        EmpresaFormComponent,
-        RecursoHumanoFormComponent,
-        AlocarRecursoHumanoFormComponent,
-        RecursoMaterialFormComponent,
-        AlocarRecursoMaterialFormComponent,
-    ],
-    entryComponents: [
-        NovoProjetoComponent,
-        ProdutoFormComponent,
-        EtapaFormComponent,
-        EmpresaFormComponent,
-        RecursoHumanoFormComponent,
-        AlocarRecursoHumanoFormComponent,
-        RecursoMaterialFormComponent,
-        AlocarRecursoMaterialFormComponent,
-    ],
-    imports: [
-        SharedModule,
-        RouterModule,
-    ],
-    providers: [ProjetosService],
-    exports: [
-        NovoProjetoComponent, ProjetoCardComponent
-    ]
+  declarations: [
+    NovoProjetoComponent,
+    ProjetoCardComponent,
+    ProdutoFormComponent,
+    EtapaFormComponent,
+    EmpresaFormComponent,
+    RecursoHumanoFormComponent,
+    AlocarRecursoHumanoFormComponent,
+    RecursoMaterialFormComponent,
+    AlocarRecursoMaterialFormComponent,
+    ListComponent,
+  ],
+  entryComponents: [
+    NovoProjetoComponent,
+    ProdutoFormComponent,
+    EtapaFormComponent,
+    EmpresaFormComponent,
+    RecursoHumanoFormComponent,
+    AlocarRecursoHumanoFormComponent,
+    RecursoMaterialFormComponent,
+    AlocarRecursoMaterialFormComponent,
+  ],
+  imports: [
+    SharedModule,
+    RouterModule,
+  ],
+  providers: [ProjetosService],
+  exports: [
+    NovoProjetoComponent, ProjetoCardComponent, ListComponent
+  ]
 })
 export class ProjetosModule { }

@@ -1,35 +1,63 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Empresa } from '@app/models';
+import { Empresa, ProjetoStatus } from '@app/models';
+import { of, Observable } from 'rxjs';
+import { map, share } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class CatalogsService {
 
-    constructor(private http: HttpClient) { }
 
-    permissoes() {
-        return this.http.get(`catalogs/permissoes`);
-    }
+  protected data: { [propName: string]: any } = {};
+  protected observables: { [propName: string]: Observable<any> } = {};
 
-    empresas() {
-        return this.http.get<Array<Empresa>>(`catalogs/empresas`);
-    }
+  constructor(private http: HttpClient) { }
 
-    status() {
-        return this.http.get(`catalogs/status`);
+  protected getData<T>(key: string, url: string) {
+    if (this.data[key]) {
+      return of(this.data[key]);
+    } else if (this.observables[key]) {
+      return this.observables[key];
+    } else {
+      this.observables[key] = this.http.get<T>(url)
+        .pipe(
+          map(r => {
+            this.data[key] = r; return r;
+          }),
+          share()
+        );
+      return this.observables[key];
     }
+  }
 
-    segmentos() {
-        return this.http.get(`catalogs/segmentos`);
-    }
+  permissoes() {
+    return this.getData<any>('permissoes', `catalogs/permissoes`);
+  }
 
-    temas() {
-        return this.http.get(`catalogs/temas`);
-    }
+  empresas() {
+    return this.getData<Array<Empresa>>('empresas', `catalogs/empresas`);
+    // return this.http.get<Array<Empresa>>(`catalogs/empresas`);
+  }
 
-    estados() {
-        return this.http.get(`catalogs/Estados`);
-    }
+  status() {
+    return this.getData<Array<ProjetoStatus>>('status', `catalogs/status`);
+    // return this.http.get<Array<ProjetoStatus>>(`catalogs/status`);
+  }
+
+  segmentos() {
+    return this.getData<any>('segmentos', `catalogs/segmentos`);
+    // return this.http.get(`catalogs/segmentos`);
+  }
+
+  temas() {
+    return this.getData<any>('temas', `catalogs/temas`);
+    // return this.http.get(`catalogs/temas`);
+  }
+
+  estados() {
+    return this.getData<any>('estados', `catalogs/Estados`);
+    // return this.http.get(`catalogs/Estados`);
+  }
 }

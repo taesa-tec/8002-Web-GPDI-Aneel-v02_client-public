@@ -37,7 +37,8 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   get avatar() {
-    return (this.currentUser && this.currentUser.fotoPerfil) ? this.currentUser.fotoPerfil : '/assets/default_avatar.png';
+    return (this.currentUser && this.currentUser.fotoPerfil) ?
+      `data:image/jpeg;base64,${this.currentUser.fotoPerfil}` : '/assets/default_avatar.png';
   }
   get empresa() {
     if (this.currentUser) {
@@ -55,6 +56,9 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.users.me().subscribe(currentUser => {
       this.currentUser = currentUser;
+    });
+    this.users.currentUserUpdated.subscribe(user => {
+      this.currentUser = user;
     });
   }
 

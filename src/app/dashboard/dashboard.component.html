@@ -8,10 +8,14 @@
                     </div>
             <span class="fs-24">GESTOR P&D</span>
           </div>
-          <div *ngIf="currentUser">
+          <div>
             <div class="d-flex flex-row">
-              <span><img [src]="avatar" width="48" height="48" alt="Avatar" class="rounded-circle img-fluid" /></span>
-              <div class="px-3 mr-3 border-right border-white">
+              <div style="width: 48px;">
+                <div *ngIf="currentUser" class="embed-responsive embed-responsive-1by1">
+                  <div class="embed-responsive-item rounded-circle" [ngStyle]="{'background-size':'cover', 'background-position':'center', 'background-image': 'url('+avatar +')'}"></div>
+                </div>
+              </div>
+              <div *ngIf="currentUser" class="px-3 mr-3 border-right border-white">
                 <strong>{{currentUser.nomeCompleto}} </strong>
                 <br>
                 <span>{{empresa}}</span>
@@ -22,13 +26,13 @@
                     <div class="ta-gear fs-36"></div>
                   </button>
                   <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                    <a class="dropdown-item" routerLink="/dashboard">
+                    <a class="dropdown-item" routerLink="/dashboard" *ngIf="currentUser">
                         <fa-icon icon="file-alt" size="1x" [fixedWidth]="true"></fa-icon> Meus Projetos
                       </a>
-                    <a class="dropdown-item" routerLink="/dashboard/gerenciar-usuarios">
+                    <a class="dropdown-item" routerLink="/dashboard/gerenciar-usuarios" *ngIf="currentUser">
                         <fa-icon icon="users" size="1x" [fixedWidth]="true"></fa-icon> Gerenciar Usuários
                       </a>
-                    <a class="dropdown-item" routerLink="/dashboard/meu-cadastro">
+                    <a class="dropdown-item" routerLink="/dashboard/meu-cadastro" *ngIf="currentUser">
                         <fa-icon icon="user" size="1x" [fixedWidth]="true"></fa-icon> Meu Cadastro
                       </a>
                     <a (click)="logout()" class="dropdown-item" routerLink="/login">

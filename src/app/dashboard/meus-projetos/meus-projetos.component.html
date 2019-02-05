@@ -1,53 +1,16 @@
 <div class="bg-light py-4">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="d-flex justify-content-between">
-                    <h3 class="text-uppercase text-dark">Meus Projetos</h3>
-                    <button type="button" (click)="openNovoProjeto()" class="btn btn-outline-primary">
-                        <fa-icon icon="plus-circle"></fa-icon>
-                        Novo Projeto
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Filtros -->
-<div class="container my-4">
+  <div class="container">
     <div class="row">
-        <div class="col">
-            <div class="form-group">
-                <select name="" id="" class="form-control">
-                    <option value="">Todos os Status</option>
-                </select>
-            </div>
+      <div class="col-12">
+        <div class="d-flex justify-content-between">
+          <h3 class="text-uppercase text-dark">Meus Projetos</h3>
+          <button type="button" (click)="openNovoProjeto()" class="btn btn-outline-primary">
+            <fa-icon icon="plus-circle"></fa-icon>
+            Novo Projeto
+          </button>
         </div>
-        <div class="col">
-            <div class="form-group">
-                <select name="" id="" class="form-control" [(ngModel)]="empresaSelected">
-                    <option value="">Empresa Proponente</option>
-                    <option *ngFor="let item of empresas" [value]="item.id">{{item.nome}}</option>
-                </select>
-            </div>
-        </div>
-        <div class="col">
-            <div class="form-group">
-                <input type="search" name="" id="" class="form-control" placeholder="Buscar">
-            </div>
-        </div>
-        <div class="col d-flex align-items-center">
-            <span class="d-block mb-3 text-right flex-grow-1">{{total_projetos}} projetos</span>
-        </div>
+      </div>
     </div>
+  </div>
 </div>
-<!-- Lista -->
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <div class="d-grid grid-2-1 grid-gap-4 wrap-projetos-cards">
-                <app-projeto-card *ngFor="let projeto of projetos" [projeto]="projeto"></app-projeto-card>
-            </div>
-        </div>
-    </div>
-</div>
+<app-projetos-list [projetos]="projetos"></app-projetos-list>

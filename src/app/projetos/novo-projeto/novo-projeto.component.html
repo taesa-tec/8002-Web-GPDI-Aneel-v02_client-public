@@ -5,19 +5,19 @@
   </button>
 </div>
 <div class="modal-body">
-  <form [formGroup]="projetoForm" (ngSubmit)="onSubmit()">
+  <app-loading type="fullscreen"></app-loading>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="row mb-4">
       <div class="col">
         <div class="form-group">
           <label class="text-blue-light" for="">Número do projeto <app-tip tipId="7" placement="bottom"></app-tip></label>
-          <input type="text" maxlength="6" mask="00000S" [patterns]="numeroPatterns" placeholder="00000X" class="form-control"
-                 formControlName="numero" required>
+          <input type="text" maxlength="6" mask="00000S" [patterns]="numeroPatterns" placeholder="00000X" class="form-control" formControlName="Numero" required>
         </div>
       </div>
       <div class="col">
         <div class="form-group">
           <label class="text-blue-light" for="">Titulo resumido do projeto <app-tip tipId="8" placement="bottom"></app-tip></label>
-          <input type="text" class="form-control" maxlength="60" formControlName="titulo">
+          <input type="text" class="form-control" maxlength="60" formControlName="Titulo">
         </div>
       </div>
     </div>
@@ -25,7 +25,7 @@
       <div class="col-12">
         <div class="form-group">
           <label class="text-blue-light" for="">Título do projeto <app-tip tipId="9" placement="bottom"></app-tip></label>
-          <app-textarea maxlength="200" class="form-control" rows="4" formControlName="tituloDesc"></app-textarea>
+          <app-textarea maxlength="200" class="form-control" rows="4" formControlName="TituloDesc"></app-textarea>
         </div>
       </div>
     </div>
@@ -33,31 +33,42 @@
       <div class="col">
         <div class="form-group">
           <label class="text-blue-light" for="">Empresa Proponente <app-tip tipId="10" placement="bottom"></app-tip></label>
-          <select name="" id="" class="form-control" formControlName="empresaProponente">
+          <select name="" id="" class="form-control" formControlName="CatalogEmpresaId">
             <option value="">Selecione a empresa</option>
+            <option *ngFor="let empresa of empresas | async" [value]="empresa.id">{{ empresa.nome }}</option>
           </select>
         </div>
       </div>
       <div class="col">
         <div class="form-group">
           <label class="text-blue-light" for="">Status</label>
-          <select name="" id="" class="form-control" formControlName="status">
+          <select name="" id="" class="form-control" formControlName="CatalogStatusId">
             <option value="">Selecione</option>
+            <option *ngFor="let s of status | async" [value]="s.id">{{s.status}}</option>
           </select>
         </div>
       </div>
     </div>
-    <div class="row" *ngIf="projetoForm.dirty && projetoForm.invalid && false">
+    <div class="row" *ngIf="form.dirty && form.invalid && false">
       <div class="col-12">
         <ngb-alert [dismissible]="false" type="danger">
           <fa-icon icon="exclamation-circle"></fa-icon> Todos os campos são obrigatórios
         </ngb-alert>
       </div>
     </div>
+    <div class="row" *ngIf="resultado && !resultado.sucesso">
+      <div class="col-12">
+        <ngb-alert [dismissible]="false" type="danger">
+          <div *ngFor="let i of resultado.inconsistencias" class="mb-1">{{i}}</div>
+        </ngb-alert>
+      </div>
+    </div>
+
+
     <div class="row">
       <div class="col-12 text-right">
         <button type="button" class="btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</button>
-        <button type="submit" class="btn btn-primary" [disabled]="projetoForm.invalid">
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
           <fa-icon icon="plus-circle"></fa-icon>
           Criar Projeto
         </button>

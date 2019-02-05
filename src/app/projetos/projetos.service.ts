@@ -1,12 +1,17 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CreateProjectRequest, Projeto } from '../models';
+import { CreateProjectRequest, Projeto, ResultadoResponse, ProjetoStatus } from '../models';
+import { Subject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjetosService {
 
+  protected projetoCreatedSource = new Subject<Projeto>();
+
+  projetoCreated = this.projetoCreatedSource.asObservable();
+  status: ProjetoStatus[];
 
   constructor(private http: HttpClient) { }
 
@@ -19,7 +24,7 @@ export class ProjetosService {
   }
 
   criarProjeto(projeto: CreateProjectRequest) {
-    return this.http.post('Projetos', projeto);
+    return this.http.post<ResultadoResponse>('Projetos', projeto);
   }
 
   getById(id: number) {

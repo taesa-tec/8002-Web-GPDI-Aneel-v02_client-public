@@ -16,7 +16,6 @@ export class MeusProjetosComponent implements OnInit {
 
   projetos: Projeto[];
   status: Array<any>;
-
   empresas: Array<Empresa>;
   empresaSelected = '';
   total_projetos = 0;
@@ -37,8 +36,6 @@ export class MeusProjetosComponent implements OnInit {
   getProjetos() {
     // this.projetoService.meusProjetos().subscribe(p => {
     this.projetoService.getProjetos().subscribe(p => {
-      console.log(p);
-      
       this.projetos = p;
       this.total_projetos = this.projetos.length;
     });
