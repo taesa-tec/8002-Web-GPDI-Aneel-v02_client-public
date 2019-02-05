@@ -11,30 +11,36 @@ import { projetoPlanejamentoRoutes } from '@app/dashboard/projetos/projeto.route
 import { AuthGuard } from '@app/auth/auth.guard';
 import { NewUserComponent } from '@app/users/new-user/new-user.component';
 import { EditUserComponent } from '@app/users/edit-user/edit-user.component';
+import { ProjetoResolverService } from '@app/projetos/projeto-resolver.service';
 
 
 
 const routes: Routes = [
-    {
-        path: 'dashboard',
-        component: DashboardComponent,
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
-        children: [
-            { path: '', component: MeusProjetosComponent, data: { title: "Meus Projetos" } },
-            { path: 'meu-cadastro', component: MeuCadastroComponent, data: { title: "Meu Cadastro" } },
-            { path: 'gerenciar-usuarios', component: GerenciarUsuariosComponent, data: { title: "Meu Cadastro" }, },
-            { path: 'gerenciar-usuarios/novo', component: NewUserComponent, data: { title: "Novo Usuário" }, },
-            { path: 'gerenciar-usuarios/edit/:id', component: EditUserComponent, data: { title: "Novo Usuário" }, },
-            { path: 'projeto', redirectTo: '', pathMatch: 'full' },
-            { path: 'projeto/:id', component: ProjetoComponent, children: projetoPlanejamentoRoutes },
-            { path: '**', component: NotFoundComponent, data: { title: "Não encontrado" } },
-        ]
-    }
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    children: [
+      { path: '', component: MeusProjetosComponent, data: { title: "Meus Projetos" } },
+      { path: 'meu-cadastro', component: MeuCadastroComponent, data: { title: "Meu Cadastro" } },
+      { path: 'gerenciar-usuarios', component: GerenciarUsuariosComponent, data: { title: "Meu Cadastro" }, },
+      { path: 'gerenciar-usuarios/novo', component: NewUserComponent, data: { title: "Novo Usuário" }, },
+      { path: 'gerenciar-usuarios/edit/:id', component: EditUserComponent, data: { title: "Novo Usuário" }, },
+      { path: 'projeto', redirectTo: '', pathMatch: 'full' },
+      {
+        path: 'projeto/:id', component: ProjetoComponent, children: projetoPlanejamentoRoutes,
+        resolve: {
+          projeto: ProjetoResolverService
+        }
+      },
+      { path: '**', component: NotFoundComponent, data: { title: "Não encontrado" } },
+    ]
+  }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class DashboardRoutingModule { }

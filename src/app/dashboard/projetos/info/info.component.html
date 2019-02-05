@@ -1,116 +1,130 @@
 <h5 class="text-uppercase text-blue font-weight-normal my-3">Projeto Base Pesquisa e Desenvolvimento</h5>
-<app-loading type="inline"></app-loading>
-<div class="row">
+<app-loading type="fullparent"></app-loading>
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="row">
     <div class="col-6">
-        <div class="form-group">
-            <label for="">Número projeto <app-tip [tipId]="7"></app-tip></label>
-            <input type="text" class="form-control">
-        </div>
+      <div class="form-group">
+        <label for="">Número projeto <app-tip [tipId]="7"></app-tip></label>
+        <input type="text" class="form-control" formControlName="numero">
+      </div>
     </div>
     <div class="col-6">
-        <div class="form-group">
-            <label for="">Empresa Proponente <app-tip [tipId]="10"></app-tip></label>
-            <select name="" id="" class="form-control"></select>
-        </div>
+      <div class="form-group">
+        <label for="">Empresa Proponente <app-tip [tipId]="10"></app-tip></label>
+        <select name="" id="" class="form-control" formControlName="catalogEmpresaId">
+          <option *ngFor="let empresa of empresas" [value]="empresa.id">{{empresa.nome}}</option>
+        </select>
+      </div>
     </div>
-</div>
-<div class="row">
+  </div>
+  <div class="row">
     <div class="col">
-        <div class="form-group">
-            <label for="">Titulo resumido projeto <app-tip [tipId]="8"></app-tip></label>
-            <input type="text" class="form-control">
-        </div>
+      <div class="form-group">
+        <label for="">Titulo resumido projeto <app-tip [tipId]="8"></app-tip></label>
+        <input type="text" class="form-control" formControlName="titulo">
+      </div>
     </div>
-</div>
-<div class="row">
+  </div>
+  <div class="row">
     <div class="col">
-        <div class="form-group">
-            <label for="">Titulo do projeto <app-tip [tipId]="9"></app-tip></label>
-            <app-textarea [maxlength]="1000" rows="4" class="form-control"></app-textarea>
-        </div>
+      <div class="form-group">
+        <label for="">Titulo do projeto <app-tip [tipId]="9"></app-tip></label>
+        <app-textarea [maxlength]="1000" rows="4" class="form-control" formControlName="tituloDesc"></app-textarea>
+      </div>
     </div>
-</div>
-<div class="row">
+  </div>
+  <div class="row">
     <div class="col-6">
-        <div class="form-group">
-            <label for="">Segmento</label>
-            <select name="" id="" class="form-control"></select>
-        </div>
-    </div>
-    <div class="col-6">
-        <div class="form-group">
-            <label for="">Avaliação inicial do projeto</label>
-            <select name="" id="" class="form-control"></select>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-6">
-        <div class="form-group">
-            <label for="">Compartilhamento dos resultados</label>
-            <select name="" id="" class="form-control"></select>
-        </div>
+      <div class="form-group">
+        <label for="">Segmento</label>
+        <select name="" id="" class="form-control" formControlName="catalogSegmentoId">
+          <option value="">Selecione o Segmento</option>
+          <option *ngFor="let segmento of segmentos" [value]="segmento.valor"> {{ segmento.nome }}</option>
+        </select>
+      </div>
     </div>
     <div class="col-6">
-        <div class="form-group">
-            <label for="">Código do projeto</label>
-            <input type="text" disabled class="form-control">
-        </div>
+      <div class="form-group">
+        <label for="">Avaliação inicial do projeto</label>
+        <select name="" id="" class="form-control" formControlName="avaliacaoInicial">
+          <option value="">A ANEEL DEVE AVALIAR O PROJETO?</option>
+          <option [value]="true">Sim</option>
+          <option [value]="false">Não</option>
+        </select>
+      </div>
     </div>
-</div>
-<div class="row">
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <label for="">Compartilhamento dos resultados</label>
+        <select name="" id="" class="form-control" formControlName="compartResultados">
+          <option value="">Selecione o tipo de Compartilhamento dos resultados</option>
+          <option *ngFor="let c of compartilhamentos" [value]="c.valor">{{c.nome }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="form-group">
+        <label for="">Código do projeto</label>
+        <input type="text" class="form-control" formControlName="codigo">
+      </div>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-12">
-        <div class="form-group">
-            <label for="">Motivação</label>
-            <app-textarea [maxlength]="1000" rows="4" class="form-control"></app-textarea>
-        </div>
+      <div class="form-group">
+        <label for="">Motivação</label>
+        <app-textarea [maxlength]="1000" rows="4" class="form-control" formControlName="motivacao"></app-textarea>
+      </div>
     </div>
-</div>
+  </div>
 
-<div class="row">
+  <div class="row">
     <div class="col-12">
-        <div class="form-group">
-            <label for="">Originalidade</label>
-            <app-textarea [maxlength]="1000" rows="4" class="form-control"></app-textarea>
-        </div>
+      <div class="form-group">
+        <label for="">Originalidade</label>
+        <app-textarea [maxlength]="1000" rows="4" class="form-control" formControlName="originalidade"></app-textarea>
+      </div>
     </div>
-</div>
+  </div>
 
-<div class="row">
+  <div class="row">
     <div class="col-12">
-        <div class="form-group">
-            <label for="">Aplicabilidade</label>
-            <app-textarea [maxlength]="1000" rows="4" class="form-control"></app-textarea>
-        </div>
+      <div class="form-group">
+        <label for="">Aplicabilidade</label>
+        <app-textarea [maxlength]="1000" rows="4" class="form-control" formControlName="aplicabilidade"></app-textarea>
+      </div>
     </div>
-</div>
-<div class="row">
+  </div>
+  <div class="row">
     <div class="col-12">
-        <div class="form-group">
-            <label for="">Relevância</label>
-            <app-textarea [maxlength]="1000" rows="4" class="form-control"></app-textarea>
-        </div>
+      <div class="form-group">
+        <label for="">Relevância</label>
+        <app-textarea [maxlength]="1000" rows="4" class="form-control" formControlName="relevancia"></app-textarea>
+      </div>
     </div>
-</div>
-<div class="row">
+  </div>
+  <div class="row">
     <div class="col-12">
-        <div class="form-group">
-            <label for="">Razoabilidade dos custos</label>
-            <app-textarea [maxlength]="1000" rows="4" class="form-control"></app-textarea>
-        </div>
+      <div class="form-group">
+        <label for="">Razoabilidade dos custos</label>
+        <app-textarea [maxlength]="1000" rows="4" class="form-control" formControlName="razoabilidade"></app-textarea>
+      </div>
     </div>
-</div>
-<div class="row">
+  </div>
+  <div class="row">
     <div class="col-12">
-        <div class="form-group">
-            <label for="">Pesquisas Correlatas</label>
-            <app-textarea [maxlength]="1000" rows="4" class="form-control"></app-textarea>
-        </div>
+      <div class="form-group">
+        <label for="">Pesquisas Correlatas</label>
+        <app-textarea [maxlength]="1000" rows="4" class="form-control" formControlName="pesquisas"></app-textarea>
+      </div>
     </div>
-</div>
-<hr>
-<div class="row">
+  </div>
+  <hr>
+  <div class="row">
     <div class="col-auto">
-        <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes</div>
+      <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes</div>
     <div class="col text-right"><button class="btn btn-primary">Salvar Dados</button></div>
-</div>
+  </div>
+</form>

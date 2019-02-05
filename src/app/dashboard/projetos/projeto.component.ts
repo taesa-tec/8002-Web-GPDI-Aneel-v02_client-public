@@ -21,7 +21,7 @@ export class ProjetoComponent implements OnInit, AfterViewInit {
   @ViewChildren(LoadingComponent) sidebarsLoading !: QueryList<LoadingComponent>;
 
   projetoPlanejamentoRoutes: Routes;
-  currentProjeto: Projeto;
+  projeto: Projeto;
 
 
   constructor(private route: ActivatedRoute, private projetoService: ProjetosService) {
@@ -31,10 +31,6 @@ export class ProjetoComponent implements OnInit, AfterViewInit {
     return this.projetoPlanejamentoRoutes;
   }
 
-  get status() {
-    return "REMOVA-ME";
-  }
-
   getProjeto() {
     const id = +this.route.snapshot.paramMap.get('id');
     const self = this;
@@ -42,7 +38,9 @@ export class ProjetoComponent implements OnInit, AfterViewInit {
 
       this.projetoService.getById(id).subscribe({
         next(projeto) {
-          self.currentProjeto = projeto;
+          console.log(projeto);
+
+          self.projeto = projeto;
           observer.next();
         },
         error() {
@@ -54,18 +52,18 @@ export class ProjetoComponent implements OnInit, AfterViewInit {
 
   }
   ngOnInit() {
-
+    this.route.data.subscribe((data: { projeto: Projeto }) => this.projeto = data.projeto);
 
   }
   ngAfterViewInit() {
-    setTimeout(() => {
-      if (this.sidebarsLoading) {
-        this.sidebarsLoading.forEach(l => l.show());
-      }
-      this.getProjeto().subscribe(() => {
-        this.sidebarsLoading.forEach(l => l.hide());
-      });
-    }, 0);
+    // setTimeout(() => {
+    //   if (this.sidebarsLoading) {
+    //     this.sidebarsLoading.forEach(l => l.show());
+    //   }
+    //   this.getProjeto().subscribe(() => {
+    //     this.sidebarsLoading.forEach(l => l.hide());
+    //   });
+    // }, 0);
   }
 
 }

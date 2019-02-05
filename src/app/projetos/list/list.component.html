@@ -34,6 +34,10 @@
       <div class="d-grid grid-2-1 grid-gap-4 wrap-projetos-cards">
         <app-projeto-card *ngFor="let projeto of projetosFiltered" [projeto]="projeto"></app-projeto-card>
       </div>
+      <ngb-alert [dismissible]="false" type="dark" *ngIf="projetosFiltered.length === 0 && projetos.length > 0">
+        <i class="ta-cancel-circle"></i> Lamentavelmente, sua busca não encontrou nenhum resultado. Favor tentar novamente com outros parâmetros.
+      </ngb-alert>
+
     </div>
   </div>
 </div>

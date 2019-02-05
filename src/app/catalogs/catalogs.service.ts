@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Empresa, ProjetoStatus } from '@app/models';
+import { Empresa, ProjetoStatus, Segmentos, ProjetoCompartilhamento } from '@app/models';
 import { of, Observable } from 'rxjs';
 import { map, share } from 'rxjs/operators';
 
@@ -15,7 +15,7 @@ export class CatalogsService {
 
   constructor(private http: HttpClient) { }
 
-  protected getData<T>(key: string, url: string) {
+  protected getData<T>(key: string, url: string): Observable<T> {
     if (this.data[key]) {
       return of(this.data[key]);
     } else if (this.observables[key]) {
@@ -47,7 +47,13 @@ export class CatalogsService {
   }
 
   segmentos() {
-    return this.getData<any>('segmentos', `catalogs/segmentos`);
+    return of([
+      { nome: "Geração", valor: Segmentos.Geracao },
+      { nome: "Transmissão", valor: Segmentos.Transmissao },
+      { nome: "Distribuição", valor: Segmentos.Distribuicao },
+      { nome: "Comercialização", valor: Segmentos.Comercializacao }
+    ]);
+    // return this.getData<any>('segmentos', `catalogs/segmentos`);
     // return this.http.get(`catalogs/segmentos`);
   }
 
@@ -59,5 +65,18 @@ export class CatalogsService {
   estados() {
     return this.getData<any>('estados', `catalogs/Estados`);
     // return this.http.get(`catalogs/Estados`);
+  }
+
+  tipoCompartilhamento() {
+    return of<Array<{ nome: string, valor: ProjetoCompartilhamento }>>([
+      { nome: "Domínio Público", valor: ProjetoCompartilhamento.DominioPublico },
+      { nome: "Exclusivo da(s) empresa(s) de energia elétrica", valor: ProjetoCompartilhamento.ExclusivoEmpresaEletrica },
+      { nome: "Exclusivo da(s) entidade(s) executora(s)", valor: ProjetoCompartilhamento.ExclusivoEmpresaExecutora },
+      {
+        nome: "Compartilhado entre as empresa(s) de energia elétrica e entidade(s) executora(s)",
+        valor: ProjetoCompartilhamento.Compartilhado
+      },
+
+    ]);
   }
 }

@@ -9,7 +9,7 @@ import { filter } from 'lodash-es';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
+export class ListComponent {
 
   total_projetos = 0;
   empresas = this.catalog.empresas();
@@ -25,10 +25,6 @@ export class ListComponent implements OnInit {
 
   constructor(protected catalog: CatalogsService) { }
 
-  ngOnInit() {
-   
-  }
-
   get projetosFiltered() {
     const value = this.filterForm.value;
     let projetos = this.projetos;
@@ -43,7 +39,9 @@ export class ListComponent implements OnInit {
     if (value.search.trim().length > 0) {
       const search = value.search.trim().toLowerCase();
       projetos = filter(this.projetos, (p: Projeto) => {
-        return p.titulo.toLowerCase().match(search) !== null || p.numero.match(search) !== null;
+        return (p.titulo.toLowerCase().match(search) !== null ||
+          p.numero.match(search) !== null ||
+          p.tituloDesc.toLowerCase().match(search) !== null);
       });
     }
 
