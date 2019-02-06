@@ -5,9 +5,10 @@ import { MeuCadastroComponent } from './meu-cadastro/meu-cadastro.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { MeusProjetosComponent } from '@app/dashboard/meus-projetos/meus-projetos.component';
 import { GerenciarUsuariosComponent } from './gerenciar-usuarios/gerenciar-usuarios.component';
-import { ProjetoComponent } from './projetos/projeto.component';
 
-import { projetoPlanejamentoRoutes } from '@app/dashboard/projetos/projeto.routes';
+import { projetoPlanejamentoRoutes } from '@app/projetos/projeto-routings';
+import { ProjetoComponent } from '@app/projetos/projeto/projeto.component';
+
 import { AuthGuard } from '@app/auth/auth.guard';
 import { NewUserComponent } from '@app/users/new-user/new-user.component';
 import { EditUserComponent } from '@app/users/edit-user/edit-user.component';

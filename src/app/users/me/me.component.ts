@@ -7,7 +7,7 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { projetos } from '@mockup/projetos';
 import { CatalogsService } from '@app/catalogs/catalogs.service';
 import { Router } from '@angular/router';
-import { UiService } from '@app/shared/ui.service';
+import { AppService } from '@app/app.service';
 
 @Component({
   selector: 'app-edit-me',
@@ -36,7 +36,7 @@ export class MeComponent implements OnInit {
     protected catalog: CatalogsService,
     protected usersService: UsersService,
     protected router: Router,
-    protected ui: UiService
+    protected ui: AppService
   ) { }
 
   get empresaControl(): FormControl {

@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProjetosService } from '@app/projetos/projetos.service';
-import { Projeto, Empresa, ProjetoCompartilhamento } from '@app/models';
+import { Projeto, Empresa, ProjetoCompartilhamento, Segmento } from '@app/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CatalogsService } from '@app/catalogs/catalogs.service';
 import { zip } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
+import { AppService } from '@app/app.service';
 
 @Component({
   selector: 'app-info',
@@ -19,12 +20,16 @@ export class InfoComponent implements OnInit {
   form: FormGroup;
   empresas: Array<Empresa>;
   compartilhamentos: Array<{ nome: string, valor: ProjetoCompartilhamento }>;
-  segmentos: Array<{ nome: string; valor: string; }>;
+  segmentos: Array<Segmento>;
 
   @ViewChild(LoadingComponent) loading: LoadingComponent;
 
 
-  constructor(private route: ActivatedRoute, private projetoService: ProjetosService, protected catalogo: CatalogsService) { }
+  constructor(
+    private app: AppService,
+    private route: ActivatedRoute,
+    private projetoService: ProjetosService,
+    protected catalogo: CatalogsService) { }
 
   ngOnInit() {
 
@@ -39,15 +44,17 @@ export class InfoComponent implements OnInit {
       this.segmentos = segmentos;
       this.compartilhamentos = compartilhamentos;
       this.projeto = p;
+
       this.form = new FormGroup({
         id: new FormControl(p.id, [Validators.required]),
         numero: new FormControl(p.numero, [Validators.required]),
         catalogEmpresaId: new FormControl(p.catalogEmpresaId, [Validators.required]),
+        catalogStatusId: new FormControl(p.catalogStatusId, [Validators.required]),
         titulo: new FormControl(p.titulo, [Validators.required]),
         tituloDesc: new FormControl(p.tituloDesc, [Validators.required]),
-        catalogSegmentoId: new FormControl(p.catalogSegmentoId || ''),
+        catalogSegmentoId: new FormControl(p.catalogSegmentoId || '', [Validators.required]),
         avaliacaoInicial: new FormControl(p.avaliacaoInicial || ''),
-        compartResultados: new FormControl(p.compartResultados || ''),
+        compartResultados: new FormControl(p.compartResultados || '', [Validators.required]),
         codigo: new FormControl({ value: p.codigo, disabled: true }),
         motivacao: new FormControl(p.motivacao),
         originalidade: new FormControl(p.originalidade),
@@ -64,7 +71,16 @@ export class InfoComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form.value);
+    if (this.form.valid) {
+      this.projetoService.editar(this.form.value).subscribe(resultado => {
+        if (resultado.sucesso) {
+          this.app.alert("Salvo com sucesso");
+          this.projeto = Object.assign(this.projeto, this.form.value);
+        } else {
+          this.app.alert(resultado.inconsistencias.join("<br>"));
+        }
+      });
+    }
   }
 
 }

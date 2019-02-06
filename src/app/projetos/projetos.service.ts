@@ -31,4 +31,8 @@ export class ProjetosService {
     return this.http.get<Projeto>(`Projetos/${id}`);
   }
 
+  editar(projeto: Projeto) {
+    return this.http.put<ResultadoResponse>(`Projetos`, projeto);
+  }
+
 }

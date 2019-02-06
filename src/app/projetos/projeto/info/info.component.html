@@ -39,7 +39,7 @@
         <label for="">Segmento</label>
         <select name="" id="" class="form-control" formControlName="catalogSegmentoId">
           <option value="">Selecione o Segmento</option>
-          <option *ngFor="let segmento of segmentos" [value]="segmento.valor"> {{ segmento.nome }}</option>
+          <option *ngFor="let segmento of segmentos" [value]="segmento.id"> {{ segmento.nome }}</option>
         </select>
       </div>
     </div>
@@ -125,6 +125,8 @@
   <div class="row">
     <div class="col-auto">
       <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes</div>
-    <div class="col text-right"><button class="btn btn-primary">Salvar Dados</button></div>
+    <div class="col text-right">
+      <button class="btn btn-primary" [disabled]="form.invalid || form.untouched">Salvar Dados</button>
+    </div>
   </div>
 </form>

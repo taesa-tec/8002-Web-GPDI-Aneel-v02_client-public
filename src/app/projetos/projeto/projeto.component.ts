@@ -6,9 +6,8 @@ import filter from "lodash-es/filter";
 import { Projeto, ProjetoStatus } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 
-import { projetoPlanejamentoRoutes } from '@app/dashboard/projetos/projeto.routes';
+import { projetoPlanejamentoRoutes } from '@app/projetos/projeto-routings';
 import { ProjetosService } from '@app/projetos/projetos.service';
-
 
 
 @Component({

@@ -12,28 +12,30 @@ import { APP_CONFIG, APP_CONFIG_DEV } from './app.config';
 import { httpInterceptorProviders } from './http-interceptors';
 import { UsersModule } from './users/users.module';
 import { CatalogsModule } from './catalogs/catalogs.module';
+import { AppService } from './app.service';
 
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        NotFoundComponent,
-    ],
-    imports: [
-        BrowserModule,
-        SharedModule,
-        AuthModule,
-        CatalogsModule,
-        DashboardModule,
-        UsersModule,
-        ProjetosModule,
-        AppRoutingModule,
-    ],
-    exports: [SharedModule],
-    providers: [
-        { provide: APP_CONFIG, useValue: APP_CONFIG_DEV },
-        httpInterceptorProviders,
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    NotFoundComponent,
+  ],
+  imports: [
+    BrowserModule,
+    SharedModule,
+    AuthModule,
+    CatalogsModule,
+    DashboardModule,
+    UsersModule,
+    ProjetosModule,
+    AppRoutingModule,
+  ],
+  exports: [SharedModule],
+  providers: [
+    { provide: APP_CONFIG, useValue: APP_CONFIG_DEV },
+    httpInterceptorProviders,
+    AppService
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

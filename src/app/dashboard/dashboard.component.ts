@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { UiService } from '@app/shared/ui.service';
+import { AppService } from '@app/app.service';
 import { AuthService } from '@app/auth/auth.service';
 import { UsersService } from '@app/users/users.service';
 import { ProjetosService } from '@app/projetos/projetos.service';
@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     protected users: UsersService,
     protected catalogs: CatalogsService,
-    protected uiService: UiService,
+    protected uiService: AppService,
     protected projetos: ProjetosService,
     protected auth: AuthService
   ) { }

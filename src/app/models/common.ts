@@ -19,7 +19,11 @@ export interface UF {
   nome: string;
   valor: string;
 }
-
+export interface Segmento {
+  id: number;
+  nome: string;
+  valor: string;
+}
 export interface Empresa {
   id: number;
   nome: string;

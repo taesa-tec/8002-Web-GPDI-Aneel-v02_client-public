@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Empresa, ProjetoStatus, Segmentos, ProjetoCompartilhamento } from '@app/models';
+import { Empresa, ProjetoStatus, Segmentos, ProjetoCompartilhamento, Segmento } from '@app/models';
 import { of, Observable } from 'rxjs';
 import { map, share, first } from 'rxjs/operators';
 
@@ -50,13 +50,13 @@ export class CatalogsService {
   }
 
   segmentos() {
-    return of([
-      { nome: "Geração", valor: Segmentos.Geracao },
-      { nome: "Transmissão", valor: Segmentos.Transmissao },
-      { nome: "Distribuição", valor: Segmentos.Distribuicao },
-      { nome: "Comercialização", valor: Segmentos.Comercializacao }
-    ]);
-    // return this.getData<any>('segmentos', `catalogs/segmentos`);
+    // return of([
+    //   { nome: "Geração", valor: Segmentos.Geracao },
+    //   { nome: "Transmissão", valor: Segmentos.Transmissao },
+    //   { nome: "Distribuição", valor: Segmentos.Distribuicao },
+    //   { nome: "Comercialização", valor: Segmentos.Comercializacao }
+    // ]);
+    return this.getData<Array<Segmento>>('segmentos', `catalogs/segmentos`);
     // return this.http.get(`catalogs/segmentos`);
   }
 

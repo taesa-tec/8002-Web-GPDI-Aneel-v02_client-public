@@ -31,7 +31,7 @@ export class NovoProjetoComponent implements OnInit {
       Validators.maxLength(6),
     ]),
     Titulo: new FormControl('', [
-      Validators.maxLength(50),
+      Validators.maxLength(60),
       Validators.required
     ]),
     TituloDesc: new FormControl('', [
@@ -85,7 +85,6 @@ export class NovoProjetoComponent implements OnInit {
         this.router.navigate(['dashboard', 'projeto'])
       }
     });
-    console.log(this.form.value);
   }
 
   save() {

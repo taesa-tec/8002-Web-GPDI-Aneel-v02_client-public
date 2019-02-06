@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EtapaFormComponent } from '@app/projetos/etapa-form/etapa-form.component';
-import { UiService } from '@app/shared/ui.service';
+import { AppService } from '@app/app.service';
 import { ProjetosService } from '@app/projetos/projetos.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class EtapasComponent {
     constructor(
         protected projetoService: ProjetosService,
         protected modalService: NgbModal,
-        protected UI: UiService
+        protected appService: AppService
 
     ) { }
 
@@ -24,11 +24,11 @@ export class EtapasComponent {
     }
 
     excluir(id: number) {
-        this.UI.confirm(`Tem certeza quer deseja excluir esta etapa?
+        this.appService.confirm(`Tem certeza quer deseja excluir esta etapa?
          Todos os produtos intermediários associados a ela perdrão sua associação.`
             , "Excluir Etapa").then(response => {
                 if (response) {
-                    this.UI.alert("Etapa Excluída");
+                    this.appService.alert("Etapa Excluída");
                 }
             });
     }

@@ -29,18 +29,26 @@ export class MeusProjetosComponent implements OnInit {
   }
 
   openNovoProjeto() {
-    const modalRef = this.modalService.open(NovoProjetoComponent, { size: 'lg' });
+    this.modalService.open(NovoProjetoComponent, { size: 'lg' }).result.then(value => {
+      if (value.sucesso) {
+        this.loadData();
+      }
+    }).catch(reason => {
+
+    });
+
   }
 
   ngOnInit() {
+    this.loadData();
+  }
+  loadData() {
     this.loading.show();
     zip(this.getProjetos()).subscribe(() => {
       this.loading.hide();
     });
-
-
-
   }
+
   getProjetos() {
     return new Observable((ob) => {
       // this.projetoService.meusProjetos().subscribe(p => {

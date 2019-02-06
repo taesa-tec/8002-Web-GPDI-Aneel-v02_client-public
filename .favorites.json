@@ -78,5 +78,31 @@
         "workspaceRoot": null,
         "workspacePath": null,
         "id": "ImfvqCVNXtZyu6W9"
+    },
+    {
+        "type": "Group",
+        "name": "services",
+        "parent_id": null,
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "4IjsnCqtT8c2exgB"
+    },
+    {
+        "type": "File",
+        "name": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\projetos\\projetos.service.ts",
+        "parent_id": "4IjsnCqtT8c2exgB",
+        "fsPath": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\projetos\\projetos.service.ts",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "cuehSYBXP5gnvRtQ"
+    },
+    {
+        "type": "File",
+        "name": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\catalogs\\catalogs.service.ts",
+        "parent_id": "4IjsnCqtT8c2exgB",
+        "fsPath": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\catalogs\\catalogs.service.ts",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "Gwt8ru7HJ4j32mTn"
     }
 ]
