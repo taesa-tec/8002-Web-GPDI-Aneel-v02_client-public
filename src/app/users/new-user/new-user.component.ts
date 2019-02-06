@@ -52,7 +52,7 @@ export class NewUserComponent implements OnInit {
       if (value.sucesso) {
         this.router.navigate(['/dashboard', 'gerenciar-usuarios'], {
           queryParams: {
-            message: 'user-updated'
+            message: 'user-created'
           }
         });
       }

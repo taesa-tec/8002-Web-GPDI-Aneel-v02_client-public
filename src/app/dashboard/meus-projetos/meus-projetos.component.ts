@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NovoProjetoComponent } from '@app/projetos/novo-projeto/novo-projeto.component';
@@ -6,6 +6,9 @@ import { Projeto } from '@app/models';
 import { Empresa } from '@app/models';
 import { ProjetosService } from '@app/projetos/projetos.service';
 import { CatalogsService } from '@app/catalogs/catalogs.service';
+import { LoadingComponent } from '@app/shared/loading/loading.component';
+import { of, merge, Observable, interval, zip } from 'rxjs';
+import { mapTo, delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-meus-projetos',
@@ -15,12 +18,8 @@ import { CatalogsService } from '@app/catalogs/catalogs.service';
 export class MeusProjetosComponent implements OnInit {
 
   projetos: Projeto[];
-  status: Array<any>;
-  empresas: Array<Empresa>;
-  empresaSelected = '';
-  total_projetos = 0;
-  meusProjetos: Array<any>;
 
+  @ViewChild(LoadingComponent) loading: LoadingComponent;
 
   constructor(
     protected catalogs: CatalogsService,
@@ -33,27 +32,25 @@ export class MeusProjetosComponent implements OnInit {
     const modalRef = this.modalService.open(NovoProjetoComponent, { size: 'lg' });
   }
 
-  getProjetos() {
-    // this.projetoService.meusProjetos().subscribe(p => {
-    this.projetoService.getProjetos().subscribe(p => {
-      this.projetos = p;
-      this.total_projetos = this.projetos.length;
-    });
-  }
-
   ngOnInit() {
-    // Carregar os projetos
-    this.getProjetos();
-
-    this.catalogs.status().subscribe(r => {
-
-    });
-    this.catalogs.empresas().subscribe(r => {
-      this.empresas = r;
+    this.loading.show();
+    zip(this.getProjetos()).subscribe(() => {
+      this.loading.hide();
     });
 
 
 
   }
+  getProjetos() {
+    return new Observable((ob) => {
+      // this.projetoService.meusProjetos().subscribe(p => {
+      this.projetoService.getProjetos()
+        .subscribe(p => {
+          this.projetos = p;
+          ob.next();
+        });
+    });
+  }
+
 
 }

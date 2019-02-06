@@ -40,6 +40,7 @@ export class InfoComponent implements OnInit {
       this.compartilhamentos = compartilhamentos;
       this.projeto = p;
       this.form = new FormGroup({
+        id: new FormControl(p.id, [Validators.required]),
         numero: new FormControl(p.numero, [Validators.required]),
         catalogEmpresaId: new FormControl(p.catalogEmpresaId, [Validators.required]),
         titulo: new FormControl(p.titulo, [Validators.required]),

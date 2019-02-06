@@ -11,7 +11,7 @@ import { filter } from 'lodash-es';
 })
 export class ListComponent {
 
-  total_projetos = 0;
+
   empresas = this.catalog.empresas();
   status = this.catalog.status();
 
@@ -44,12 +44,12 @@ export class ListComponent {
           p.tituloDesc.toLowerCase().match(search) !== null);
       });
     }
-
-
-
     return projetos;
   }
 
+  get total_projetos() {
+    return this.projetosFiltered.length || 0;
+  }
 
 
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Empresa, ProjetoStatus, Segmentos, ProjetoCompartilhamento } from '@app/models';
 import { of, Observable } from 'rxjs';
-import { map, share } from 'rxjs/operators';
+import { map, share, first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +39,9 @@ export class CatalogsService {
   empresas() {
     return this.getData<Array<Empresa>>('empresas', `catalogs/empresas`);
     // return this.http.get<Array<Empresa>>(`catalogs/empresas`);
+  }
+  empresa(id: number) {
+    return this.empresas().pipe(map(empresas => empresas.find(e => e.id === id)));
   }
 
   status() {

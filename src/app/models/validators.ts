@@ -4,6 +4,9 @@ import { ValidatorFn, AbstractControl, ValidationErrors, Validators } from '@ang
 export class AppValidators {
 
   static cpf(control: AbstractControl): ValidationErrors | null {
+    if (control.value === null || control.value === '') {
+      return null;
+    }
     const cpf = (control.value as string).replace(/\D/g, '');
     if (cpf.length !== 11) {
       return { cpf: true }

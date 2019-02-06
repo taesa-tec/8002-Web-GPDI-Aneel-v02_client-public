@@ -67,7 +67,7 @@ export interface Projeto {
   tituloDesc: string;
   numero: string;
   catalogEmpresaId: number;
-  catalogEmpresa?: any;
+  catalogEmpresa?: Empresa;
   catalogStatusId: number;
   catalogStatus?: ProjetoStatus;
   catalogSegmentoId?: any;

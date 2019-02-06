@@ -1,8 +1,9 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { CreateUserRequest, ResultadoResponse, User } from '@app/models';
 import { Observable, Subject } from 'rxjs';
 import { share } from 'rxjs/operators';
+import { AuthService } from '@app/auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class UsersService {
   protected currentUserUpdatedSource = new Subject<User>();
   currentUserUpdated = this.currentUserUpdatedSource.asObservable().pipe(share());
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, protected auth: AuthService) { }
 
   get currentUser() {
     return this._currentUser;
@@ -35,6 +36,11 @@ export class UsersService {
         this.currentUser = user;
         this.currentUserUpdatedSource.next(this.currentUser);
         subscriber.next(this.currentUser);
+      }, (error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.auth.logout();
+        }
+
       });
 
     });

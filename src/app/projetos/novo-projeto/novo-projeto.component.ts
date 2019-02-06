@@ -6,6 +6,7 @@ import { ProjetoStatus, Empresa, ResultadoResponse } from '@app/models';
 import { CatalogsService } from '@app/catalogs/catalogs.service';
 import { Observable } from 'rxjs';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-novo-projeto',
@@ -48,7 +49,8 @@ export class NovoProjetoComponent implements OnInit {
 
   @ViewChild(LoadingComponent) loading: LoadingComponent;
 
-  constructor(public activeModal: NgbActiveModal, private projetoService: ProjetosService, protected catalog: CatalogsService) { }
+  constructor(public activeModal: NgbActiveModal, private projetoService: ProjetosService,
+    protected catalog: CatalogsService, protected router: Router) { }
 
   get tituloDescRestante() {
     return this.maxTituloContent - this.tituloDesc.value.length;
@@ -80,6 +82,7 @@ export class NovoProjetoComponent implements OnInit {
       this.resultado = resultado;
       if (resultado.sucesso) {
         this.activeModal.close(resultado);
+        this.router.navigate(['dashboard', 'projeto'])
       }
     });
     console.log(this.form.value);
