@@ -6,13 +6,15 @@ import { UserStatusPipe } from './user-status.pipe';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { FormComponent } from './form/form.component';
 import { MeComponent } from './me/me.component';
+import { UserProjetosComponent } from './user-projetos/user-projetos.component';
 
 
 @NgModule({
-    declarations: [NewUserComponent, ListUsersComponent, UserStatusPipe, EditUserComponent, FormComponent, MeComponent],
-    imports: [
-        SharedModule,
-    ],
-    exports: [NewUserComponent, ListUsersComponent, MeComponent]
+  declarations: [NewUserComponent, ListUsersComponent, UserStatusPipe, EditUserComponent, FormComponent, MeComponent, UserProjetosComponent],
+  imports: [
+    SharedModule,
+
+  ],
+  exports: [NewUserComponent, ListUsersComponent, MeComponent]
 })
 export class UsersModule { }

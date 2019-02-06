@@ -14,7 +14,7 @@
         <div>{{projeto.tituloDesc}}</div>
         <div class="d-flex justify-content-between mt-3" *ngIf="empresa">
             <div class="text-blue-light">{{ empresa.nome }} - {{empresa.valor }}</div>
-            <div class="text-blue-light text-uppercase">{{ categoria }}</div>
+            <div class="text-blue-light text-uppercase">{{ projeto.numero | tipoProjeto }}</div>
         </div>
     </div>
 </a>

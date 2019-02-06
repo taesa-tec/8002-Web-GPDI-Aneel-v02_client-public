@@ -7,9 +7,9 @@ import {
 } from '@app/models';
 import { UsersService } from '../users.service';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, zip } from 'rxjs';
 import { Router } from '@angular/router';
-import { projetos } from '@mockup/projetos';
+import { ProjetosService } from '@app/projetos/projetos.service';
 
 @Component({
   selector: 'app-form',
@@ -22,24 +22,23 @@ export class FormComponent implements OnInit {
 
 
 
-  form: FormGroup;
-  roles = Roles;
-  empresas: Observable<Array<Empresa>>;
-  resultado: ResultadoResponse;
 
   @ViewChild(LoadingComponent) loading: LoadingComponent;
-
   @Output() submited: EventEmitter<ResultadoResponse> = new EventEmitter<ResultadoResponse>();
-
   @Input() user: User;
   @Input() handler: (value: any) => Observable<ResultadoResponse>;
 
-  projetos: Projetos = projetos;
+  form: FormGroup;
+  roles = Roles;
+  empresas: Array<Empresa>;
+  projetos: Projetos;
   niveis = NiveisAcessoProjeto;
+  resultado: ResultadoResponse;
 
   constructor(
     protected catalog: CatalogsService,
     protected usersService: UsersService,
+    protected projetoService: ProjetosService,
     protected router: Router
   ) { }
 
@@ -53,36 +52,45 @@ export class FormComponent implements OnInit {
 
 
   ngOnInit() {
-    this.empresas = this.catalog.empresas();
 
-    const u = this.user;
+    const empresas$ = this.catalog.empresas();
 
-    this.form = new FormGroup({
-      nomeCompleto: new FormControl(u.nomeCompleto, [Validators.required]),
-      email: new FormControl(u.email, [Validators.email, Validators.required]),
-      cpf: new FormControl(u.cpf, [Validators.required, AppValidators.cpf]),
-      status: new FormControl(u.status, [Validators.required]),
-      role: new FormControl(u.role, [Validators.required]),
-      catalogEmpresaId: new FormControl(u.catalogEmpresaId || (u.razaoSocial ? '0' : ''), [Validators.required]),
-      fotoPerfil: new FormControl(u.fotoPerfil),
-    });
+    zip(empresas$).subscribe(([empresas]) => {
+      this.empresas = empresas;
 
-    if (u.id) {
-      this.form.addControl('id', new FormControl(u.id));
-    }
-    if (u.catalogEmpresaId === null) {
-      this.form.addControl('razaoSocial', new FormControl(u.razaoSocial, [Validators.required]));
-    }
+      const u = this.user;
 
-    this.empresaControl.valueChanges.subscribe(r => {
-      if (r === "0") {
-        this.form.addControl('razaoSocial', new FormControl(u.razaoSocial, [Validators.required]));
-      } else {
-        this.form.removeControl('razaoSocial');
+      this.form = new FormGroup({
+        nomeCompleto: new FormControl(u.nomeCompleto, [Validators.required]),
+        email: new FormControl(u.email, [Validators.email, Validators.required]),
+        cpf: new FormControl(u.cpf, [Validators.required, AppValidators.cpf]),
+        status: new FormControl(u.status, [Validators.required]),
+        role: new FormControl(u.role, [Validators.required]),
+        catalogEmpresaId: new FormControl(u.catalogEmpresaId || (u.razaoSocial ? '0' : ''), [Validators.required]),
+        fotoPerfil: new FormControl(u.fotoPerfil),
+      });
+
+      if (u.id) {
+        this.form.addControl('id', new FormControl(u.id));
       }
-      this.form.updateValueAndValidity();
+      if (u.catalogEmpresaId === null) {
+        this.form.addControl('razaoSocial', new FormControl(u.razaoSocial, [Validators.required]));
+      }
 
+      this.empresaControl.valueChanges.subscribe(r => {
+        if (r === "0") {
+          this.form.addControl('razaoSocial', new FormControl(u.razaoSocial, [Validators.required]));
+        } else {
+          this.form.removeControl('razaoSocial');
+        }
+
+        this.form.updateValueAndValidity();
+
+      });
     });
+
+
+
   }
 
   onSubmit() {

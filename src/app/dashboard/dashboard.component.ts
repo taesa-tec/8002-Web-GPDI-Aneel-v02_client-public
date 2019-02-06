@@ -9,13 +9,6 @@ import { ProjetosService } from '@app/projetos/projetos.service';
 import { CatalogsService } from '@app/catalogs/catalogs.service';
 import { User } from '@app/models';
 
-class Teste {
-  a: string;
-  aa() {
-    return this.a + "aaaa";
-  }
-}
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',

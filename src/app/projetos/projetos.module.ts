@@ -39,6 +39,7 @@ import { LogProjetoComponent } from '@app/projetos/projeto/log-projeto/log-proje
 import { LogComponent } from '@app/projetos/projeto/log-projeto/log.component';
 
 
+
 @NgModule({
   declarations: [
     NovoProjetoComponent,

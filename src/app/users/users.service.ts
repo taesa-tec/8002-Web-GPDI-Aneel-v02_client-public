@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { CreateUserRequest, ResultadoResponse, User } from '@app/models';
+import { CreateUserRequest, ResultadoResponse, User, UserProjeto } from '@app/models';
 import { Observable, Subject } from 'rxjs';
 import { share } from 'rxjs/operators';
 import { AuthService } from '@app/auth/auth.service';
@@ -77,5 +77,9 @@ export class UsersService {
 
   edit(user: User) {
     return this.http.put<ResultadoResponse>(`Users`, user);
+  }
+
+  userProjetos(user: User) {
+    return this.http.get<Array<UserProjeto>>(`UserProjetos/${user.id}`);
   }
 }

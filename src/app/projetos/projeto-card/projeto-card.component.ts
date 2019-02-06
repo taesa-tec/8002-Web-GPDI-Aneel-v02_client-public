@@ -45,8 +45,4 @@ export class ProjetoCardComponent implements OnInit {
 
     }
   }
-  get categoria() {
-    return this.projeto.numero.match(/^9.+/) ? "Projeto Administrativo" : "Projeto Científico";
-  }
-
 }

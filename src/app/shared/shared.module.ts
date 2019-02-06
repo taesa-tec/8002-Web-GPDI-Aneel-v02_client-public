@@ -20,6 +20,7 @@ import { TipComponent } from './tip/tip.component';
 import { NotDefinedPipe } from './pipes/not-defined.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { OrdersComponent } from './helper/orders/orders.component';
+import { TipoProjetoPipe } from './pipes/tipo-projeto.pipe';
 
 
 library.add(fas, far);
@@ -31,9 +32,11 @@ library.add(fas, far);
     AlertComponent,
     ConfirmComponent,
     TipComponent,
+    OrdersComponent,
+    // Pipes
     NotDefinedPipe,
     OrderByPipe,
-    OrdersComponent,
+    TipoProjetoPipe,
   ],
   imports: [
     CommonModule,
@@ -62,8 +65,10 @@ library.add(fas, far);
     ConfirmComponent,
     TipComponent,
     OrdersComponent,
+    // Pipes
     NotDefinedPipe,
-    OrderByPipe
+    OrderByPipe,
+    TipoProjetoPipe
   ]
 })
 export class SharedModule { }

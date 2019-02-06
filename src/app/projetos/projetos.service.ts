@@ -20,7 +20,10 @@ export class ProjetosService {
   }
 
   getProjetos() {
-    return this.http.get<Array<any>>('Projetos');
+    return this.http.get<Array<Projeto>>('Projetos');
+  }
+  usersProjeto(id: number) {
+    return this.http.get<Projeto>(`Projetos/${id}/Usuarios`);
   }
 
   criarProjeto(projeto: CreateProjectRequest) {
@@ -34,5 +37,6 @@ export class ProjetosService {
   editar(projeto: Projeto) {
     return this.http.put<ResultadoResponse>(`Projetos`, projeto);
   }
+
 
 }

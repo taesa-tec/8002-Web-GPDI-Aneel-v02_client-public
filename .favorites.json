@@ -104,5 +104,14 @@
         "workspaceRoot": null,
         "workspacePath": null,
         "id": "Gwt8ru7HJ4j32mTn"
+    },
+    {
+        "type": "Directory",
+        "name": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\users",
+        "parent_id": null,
+        "fsPath": "e:\\Clientes\\Taesa\\gestor-ped\\src\\app\\users",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "BtnO2IFcVvhdsigp"
     }
 ]
