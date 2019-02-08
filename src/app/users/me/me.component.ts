@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import { User, Roles, Empresa, ResultadoResponse, Projetos, NiveisAcessoProjeto, AppValidators } from '@app/models';
+import { User, Roles, Empresa, ResultadoResponse, Projetos, AppValidators } from '@app/models';
 import { UsersService } from '../users.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -30,7 +30,6 @@ export class MeComponent implements OnInit {
   @Input() user: User;
 
   projetos: Projetos = projetos;
-  niveis = NiveisAcessoProjeto;
 
   constructor(
     protected catalog: CatalogsService,

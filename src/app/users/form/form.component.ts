@@ -3,13 +3,15 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CatalogsService } from '@app/catalogs/catalogs.service';
 import {
   Empresa, ResultadoResponse, UserRole, Roles, AppValidators, User, CreateUserRequest,
-  Projeto, Projetos, NiveisAcessoProjeto
+  Projeto, Projetos
 } from '@app/models';
 import { UsersService } from '../users.service';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { Observable, Observer, zip } from 'rxjs';
+import { Observable, Observer, zip, of, concat, throwError, timer, empty } from 'rxjs';
 import { Router } from '@angular/router';
 import { ProjetosService } from '@app/projetos/projetos.service';
+import { UserProjetosComponent } from '../user-projetos/user-projetos.component';
+import { mergeMap, last } from 'rxjs/operators';
 
 @Component({
   selector: 'app-form',
@@ -24,6 +26,9 @@ export class FormComponent implements OnInit {
 
 
   @ViewChild(LoadingComponent) loading: LoadingComponent;
+
+  @ViewChild(UserProjetosComponent) userProjetos: UserProjetosComponent;
+
   @Output() submited: EventEmitter<ResultadoResponse> = new EventEmitter<ResultadoResponse>();
   @Input() user: User;
   @Input() handler: (value: any) => Observable<ResultadoResponse>;
@@ -32,8 +37,10 @@ export class FormComponent implements OnInit {
   roles = Roles;
   empresas: Array<Empresa>;
   projetos: Projetos;
-  niveis = NiveisAcessoProjeto;
   resultado: ResultadoResponse;
+  userId: string;
+
+
 
   constructor(
     protected catalog: CatalogsService,
@@ -59,6 +66,8 @@ export class FormComponent implements OnInit {
       this.empresas = empresas;
 
       const u = this.user;
+
+      this.userId = u.id;
 
       this.form = new FormGroup({
         nomeCompleto: new FormControl(u.nomeCompleto, [Validators.required]),
@@ -96,30 +105,54 @@ export class FormComponent implements OnInit {
   onSubmit() {
     if (this.form.valid && this.handler) {
       this.loading.show();
-      const self = this;
+
       try {
         if (this.form.value.catalogEmpresaId === "0") {
           this.form.value.catalogEmpresaId = null;
         }
-        this.handler(this.form.value).subscribe({
-          next: result => {
-            self.loading.hide();
-            self.submited.emit(result);
-            self.resultado = result;
-          },
-          error: error => {
+
+        const requests = concat(this.handler(this.form.value).pipe(mergeMap(result => {
+
+          console.log(result);
+
+          if (result.sucesso) {
+
+            if (result.id) {
+              return this.userProjetos.updatePermissoes(result.id);
+            }
+            return of(result);
+          }
+          return throwError(result);
+
+        })), this.userId ? this.userProjetos.updatePermissoes(this.userId) : empty())
+          .pipe(last());
+
+
+
+        //this.handler(this.form.value)
+
+        requests.subscribe(result => {
+          console.log(result);
+          this.loading.hide();
+          this.submited.emit(result);
+          this.resultado = result;
+        },
+          error => {
+
+            console.log(error);
+
             const r = {
               acao: "",
               sucesso: false,
               inconsistencias: [error.message]
             };
-            self.submited.emit(r);
-            self.resultado = r;
-            self.loading.hide();
+            this.submited.emit(r);
+            this.resultado = r;
+            this.loading.hide();
           }
-        });
+        );
+
       } catch (error) {
-        console.error(error);
         this.loading.hide();
       }
     }

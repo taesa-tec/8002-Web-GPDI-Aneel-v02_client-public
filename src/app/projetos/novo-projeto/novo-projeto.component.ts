@@ -82,7 +82,11 @@ export class NovoProjetoComponent implements OnInit {
       this.resultado = resultado;
       if (resultado.sucesso) {
         this.activeModal.close(resultado);
-        this.router.navigate(['dashboard', 'projeto'])
+        if (resultado.id) {
+          this.router.navigate(['dashboard', 'projeto', resultado.id]);
+        } else {
+          this.router.navigate(['dashboard']);
+        }
       }
     });
   }

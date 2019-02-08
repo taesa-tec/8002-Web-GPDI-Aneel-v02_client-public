@@ -1,5 +1,5 @@
 <app-loading type="fullscreen"></app-loading>
-<form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="form">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="form" class="mb-3">
   <div class="row">
     <div class="col-3">
       <app-upload-image formControlName="fotoPerfil" name="fotoPerfil" [asBase64]="true"></app-upload-image>
@@ -82,7 +82,7 @@
       <div class="row">
         <div class="col-12">
           <hr>
-          <app-user-projetos [user]="user"></app-user-projetos>
+          <app-user-projetos [userId]="userId"></app-user-projetos>
         </div>
       </div>
       <div class="row">

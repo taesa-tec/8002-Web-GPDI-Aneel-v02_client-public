@@ -17,7 +17,7 @@ export interface CreateUserRequest {
   email: string;
   role: string;
   status: 0 | 1;
-  
+
 }
 export interface CreateProjectRequest {
   titulo: string;
@@ -27,3 +27,21 @@ export interface CreateProjectRequest {
   catalogEmpresaId: number;
 }
 
+export interface SubTemaRequest {
+  catalogSubTemaId: number;
+  outroDesc?: string;
+}
+
+export interface CreateTemaRequest {
+  projetoId: number;
+  catalogTemaId: number;
+  outroDesc: string;
+  subTemas: SubTemaRequest[];
+}
+
+export interface EditTemaRequest {
+  id: number;
+  catalogTemaid: number;
+  outroDesc: string;
+  subTemas: SubTemaRequest[];
+}

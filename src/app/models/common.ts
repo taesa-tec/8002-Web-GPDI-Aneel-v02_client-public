@@ -35,21 +35,6 @@ export interface Permissao {
   valor: string;
 }
 
-export interface SubTema {
-  subTemaId: number;
-  catalogTemaId: number;
-  nome: string;
-  valor: string;
-}
-
-export interface Tema {
-  id: number;
-  nome: string;
-  valor: string;
-  subTemas: SubTema[];
-}
-
-
 export interface Produto {
   created: string;
   produtoId: number;
@@ -126,21 +111,57 @@ export interface User {
   accessFailedCount?: number;
 }
 
-export interface UserProjeto {
-  userId: string;
-  projetoId: number;
-  catalogUserPermissaoId: number;
+export interface CatalogUserPermissao {
+  id: number;
+  valor: string;
+  nome: string;
 }
 
-export const Roles: Array<{ text: string; value: UserRole }> = [
-  { text: "Administrador", value: UserRole.Administrador },
-  { text: "Usuário Padrão", value: UserRole.User }
-];
+export interface UserProjeto {
+  id: number;
+  userId: string;
+  applicationUser?: any;
+  projetoId: number;
+  projeto: Projeto;
+  catalogUserPermissaoId: number;
+  catalogUserPermissao: CatalogUserPermissao;
+}
 
-export const NiveisAcessoProjeto: Array<{ text: string; value: ProjetoAccess }> = [
-  { text: "Leitura", value: ProjetoAccess.Leitura },
-  { text: "Leitura e Escrita", value: ProjetoAccess.LeituraEscrita },
-  { text: "Aprovador", value: ProjetoAccess.Aprovador },
-  { text: "Administrador", value: ProjetoAccess.Administrador },
-];
+export interface Tema {
+  id: number;
+  nome: string;
+  valor: string;
+  subTemas: SubTema[];
+}
 
+export interface CatalogTema {
+  id: number;
+  nome: string;
+  valor: string;
+  subTemas: SubTema[];
+}
+
+export interface CatalogSubTema {
+  subTemaId: number;
+  catalogTemaId: number;
+  nome: string;
+  valor: string;
+}
+
+export interface SubTema {
+  id: number;
+  temaId: number;
+  catalogSubTemaId: number;
+  catalogSubTema: CatalogSubTema;
+  outroDesc?: any;
+}
+
+export interface TemaProjeto {
+  id: number;
+  projetoId: number;
+  catalogTemaId: number;
+  catalogTema: CatalogTema;
+  outroDesc?: any;
+  subTemas: SubTema[];
+  uploads: any[];
+}

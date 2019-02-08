@@ -37,6 +37,7 @@ import { AlterarStatusComponent } from '@app/projetos/projeto/central-administra
 import { UsuariosComponent } from '@app/projetos/projeto/central-administrativa/usuarios/usuarios.component';
 import { LogProjetoComponent } from '@app/projetos/projeto/log-projeto/log-projeto.component';
 import { LogComponent } from '@app/projetos/projeto/log-projeto/log.component';
+import { SubTemasComponent } from './projeto/temas/sub-tema.component';
 
 
 
@@ -73,6 +74,7 @@ import { LogComponent } from '@app/projetos/projeto/log-projeto/log.component';
     UsuariosComponent,
     LogProjetoComponent,
     LogComponent,
+    SubTemasComponent,
   ],
   entryComponents: [
     NovoProjetoComponent,

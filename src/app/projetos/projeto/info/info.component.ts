@@ -29,7 +29,9 @@ export class InfoComponent implements OnInit {
     private app: AppService,
     private route: ActivatedRoute,
     private projetoService: ProjetosService,
-    protected catalogo: CatalogsService) { }
+    protected catalogo: CatalogsService) {
+
+  }
 
   ngOnInit() {
 

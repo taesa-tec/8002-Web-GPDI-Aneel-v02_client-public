@@ -51,10 +51,10 @@ export class MeusProjetosComponent implements OnInit {
 
   getProjetos() {
     return new Observable((ob) => {
-      // this.projetoService.meusProjetos().subscribe(p => {
-      this.projetoService.getProjetos()
-        .subscribe(p => {
-          this.projetos = p;
+      this.projetoService.meusProjetos()
+        // this.projetoService.getProjetos()
+        .subscribe(p$ => {
+          this.projetos = p$.map(p$ => p$.projeto);
           ob.next();
         });
     });

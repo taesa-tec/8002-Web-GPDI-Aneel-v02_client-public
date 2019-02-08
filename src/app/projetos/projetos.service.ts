@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CreateProjectRequest, Projeto, ResultadoResponse, ProjetoStatus } from '../models';
+import { CreateProjectRequest, Projeto, ResultadoResponse, ProjetoStatus, UserProjeto, CreateTemaRequest, EditTemaRequest, Tema, TemaProjeto } from '@app/models';
 import { Subject, Observable } from 'rxjs';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class ProjetosService {
   constructor(private http: HttpClient) { }
 
   meusProjetos() {
-    return this.http.get<Array<any>>('UserProjetos/me');
+    return this.http.get<Array<UserProjeto>>('UserProjetos/me');
   }
 
   getProjetos() {
@@ -37,6 +37,28 @@ export class ProjetosService {
   editar(projeto: Projeto) {
     return this.http.put<ResultadoResponse>(`Projetos`, projeto);
   }
+
+  // Temas
+
+
+
+
+  getTema(id: number) {
+    return this.http.get<TemaProjeto>(`Projeto/${id}/Temas`);
+  }
+
+  criarTema(tema: CreateTemaRequest) {
+    return this.http.post<ResultadoResponse>('projeto/Temas', tema);
+  }
+
+  editTema(tema: EditTemaRequest) {
+    return this.http.put<ResultadoResponse>('projeto/Temas', tema);
+  }
+
+  deleteTema(id: number) {
+    return this.http.delete<ResultadoResponse>(`Projeto/Temas/${id}`);
+  }
+
 
 
 }

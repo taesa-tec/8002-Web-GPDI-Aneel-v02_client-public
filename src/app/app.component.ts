@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { LoadingComponent } from './shared/loading/loading.component';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +9,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'sistema-ped';
+
+  @ViewChild(LoadingComponent) loading: LoadingComponent;
+
+  constructor(protected router: Router) {
+    this.router.events.pipe(filter(e => e instanceof NavigationStart)).subscribe(e => {
+      this.loading.show();
+    });
+    this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(e => {
+      this.loading.hide();
+    });
+  }
 }
