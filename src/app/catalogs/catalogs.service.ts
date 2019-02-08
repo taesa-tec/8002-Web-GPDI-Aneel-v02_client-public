@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Empresa, ProjetoStatus, Segmentos, ProjetoCompartilhamento, Segmento } from '@app/models';
+import { Empresa, ProjetoStatus, Segmento, TiposCompartilhamento, TextValue } from '@app/models';
 import { of, Observable } from 'rxjs';
 import { map, share, first } from 'rxjs/operators';
 
@@ -50,14 +50,7 @@ export class CatalogsService {
   }
 
   segmentos() {
-    // return of([
-    //   { nome: "Geração", valor: Segmentos.Geracao },
-    //   { nome: "Transmissão", valor: Segmentos.Transmissao },
-    //   { nome: "Distribuição", valor: Segmentos.Distribuicao },
-    //   { nome: "Comercialização", valor: Segmentos.Comercializacao }
-    // ]);
     return this.getData<Array<Segmento>>('segmentos', `catalogs/segmentos`);
-    // return this.http.get(`catalogs/segmentos`);
   }
 
   temas() {
@@ -71,15 +64,6 @@ export class CatalogsService {
   }
 
   tipoCompartilhamento() {
-    return of<Array<{ nome: string, valor: ProjetoCompartilhamento }>>([
-      { nome: "Domínio Público", valor: ProjetoCompartilhamento.DominioPublico },
-      { nome: "Exclusivo da(s) empresa(s) de energia elétrica", valor: ProjetoCompartilhamento.ExclusivoEmpresaEletrica },
-      { nome: "Exclusivo da(s) entidade(s) executora(s)", valor: ProjetoCompartilhamento.ExclusivoEmpresaExecutora },
-      {
-        nome: "Compartilhado entre as empresa(s) de energia elétrica e entidade(s) executora(s)",
-        valor: ProjetoCompartilhamento.Compartilhado
-      },
-
-    ]);
+    return of<Array<TextValue>>(TiposCompartilhamento);
   }
 }

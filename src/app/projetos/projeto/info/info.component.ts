@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProjetosService } from '@app/projetos/projetos.service';
-import { Projeto, Empresa, ProjetoCompartilhamento, Segmento } from '@app/models';
+import { Projeto, Empresa, Segmento, TextValue } from '@app/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CatalogsService } from '@app/catalogs/catalogs.service';
 import { zip } from 'rxjs';
@@ -19,7 +19,7 @@ export class InfoComponent implements OnInit {
   projeto: Projeto;
   form: FormGroup;
   empresas: Array<Empresa>;
-  compartilhamentos: Array<{ nome: string, valor: ProjetoCompartilhamento }>;
+  compartilhamentos: Array<TextValue>;
   segmentos: Array<Segmento>;
 
   @ViewChild(LoadingComponent) loading: LoadingComponent;
