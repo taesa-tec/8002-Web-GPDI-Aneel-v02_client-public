@@ -94,7 +94,7 @@ export class ProjetosService {
     return this.http.put<ResultadoResponse>('projeto/Etapas', etapa);
   }
 
-  getEtapa(id: number) {
+  getEtapas(id: number) {
     return this.http.get<any>(`Projeto/${id}/Etapas`);
   }
 

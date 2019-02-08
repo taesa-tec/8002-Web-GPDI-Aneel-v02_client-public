@@ -3,34 +3,98 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EtapaFormComponent } from '@app/projetos/etapa-form/etapa-form.component';
 import { AppService } from '@app/app.service';
 import { ProjetosService } from '@app/projetos/projetos.service';
+import { CatalogsService } from '@app/catalogs/catalogs.service';
+import { ActivatedRoute } from '@angular/router';
+import { zip } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Projeto } from '@app/models';
+import { FormGroup, FormControl } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
-    selector: 'app-etapas',
-    templateUrl: './etapas.component.html',
-    styleUrls: ['./etapas.component.scss']
+  selector: 'app-etapas',
+  templateUrl: './etapas.component.html',
+  styleUrls: ['./etapas.component.scss']
 })
-export class EtapasComponent {
+export class EtapasComponent implements OnInit {
 
-    constructor(
-        protected projetoService: ProjetosService,
-        protected modalService: NgbModal,
-        protected appService: AppService
+  projeto: Projeto;
+  etapas: Array<any>;
+  form: FormGroup;
+  dataInicio = new Date();
 
-    ) { }
+  get ano() {
+    return this.dataInicio.getFullYear();
+  }
+  set ano(value) {
+    this.dataInicio.setFullYear(value);
+    this.setControlData();
+  }
 
-    openModal(etapa_id: number) {
-        const modalRef = this.modalService.open(EtapaFormComponent, { size: 'lg' });
-        modalRef.componentInstance.etapa_id = etapa_id;
-    }
+  get mes() {
+    return this.dataInicio.getMonth();
+  }
+  set mes(value) {
+    this.dataInicio.setMonth(value);
+    this.setControlData();
+  }
 
-    excluir(id: number) {
-        this.appService.confirm(`Tem certeza quer deseja excluir esta etapa?
+
+
+  constructor(
+    private app: AppService,
+    private route: ActivatedRoute,
+    private projetoService: ProjetosService,
+    protected modalService: NgbModal,
+    protected catalogo: CatalogsService) {
+  }
+
+  protected setControlData() {
+    const d = new Date(this.ano, this.mes, 1);
+    const v = (new DatePipe('en-US')).transform(d, 'dd-MM-yyyy');
+    console.log(v);
+    this.form.get('dataInicio').setValue(v);
+
+  }
+
+
+  ngOnInit() {
+    const projeto$ = this.route.parent.data.pipe(map(d => d.projeto));
+
+    zip(projeto$).subscribe(([projeto]) => {
+      this.projeto = projeto;
+      this.form = new FormGroup({
+        id: new FormControl(this.projeto.id),
+        dataInicio: new FormControl(this.projeto.dataInicio)
+      });
+      this.setControlData();
+      this.loadEtapas();
+    });
+  }
+
+  loadEtapas() {
+    this.projetoService.getEtapas(this.projeto.id).subscribe(etapas => this.etapas = etapas);
+  }
+
+  openModal(etapa: any = {}) {
+    const modalRef = this.modalService.open(EtapaFormComponent, { size: 'lg' });
+    modalRef.componentInstance.etapa = etapa;
+    modalRef.componentInstance.projeto = this.projeto;
+    modalRef.result.then(r => {
+      this.loadEtapas();
+    }, e => {
+
+    });
+  }
+
+  excluir(id: number) {
+    this.app.confirm(`Tem certeza quer deseja excluir esta etapa?
          Todos os produtos intermediários associados a ela perdrão sua associação.`
-            , "Excluir Etapa").then(response => {
-                if (response) {
-                    this.appService.alert("Etapa Excluída");
-                }
-            });
-    }
+      , "Excluir Etapa").then(response => {
+        if (response) {
+          this.app.alert("Etapa Excluída");
+        }
+      });
+  }
 
 }
