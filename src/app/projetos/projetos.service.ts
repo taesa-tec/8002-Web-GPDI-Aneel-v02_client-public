@@ -1,6 +1,16 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CreateProjectRequest, Projeto, ResultadoResponse, ProjetoStatus, UserProjeto, CreateTemaRequest, EditTemaRequest, Tema, TemaProjeto } from '@app/models';
+import {
+  CreateProjectRequest,
+  Projeto, ResultadoResponse,
+  ProjetoStatus, UserProjeto, CreateTemaRequest, EditTemaRequest,
+  Tema, TemaProjeto, CreateProdutoRequest, EditProduto,
+  CreateEtapaRequest, EditEtapa, CreateEmpresaRequest, EditEmpresa,
+  CreateRHRequest, EditRH, CreateAlocacaoRHRequest, EditAlocacaoRH,
+  CreateRecursoMaterialRequest, EditRecursoMaterial, CreateAlocacaoRMRequest,
+  CreateLogProjetoRequest,
+  Produto
+} from '@app/models';
 import { Subject, Observable } from 'rxjs';
 
 @Injectable({
@@ -40,9 +50,6 @@ export class ProjetosService {
 
   // Temas
 
-
-
-
   getTema(id: number) {
     return this.http.get<TemaProjeto>(`Projeto/${id}/Temas`);
   }
@@ -59,6 +66,173 @@ export class ProjetosService {
     return this.http.delete<ResultadoResponse>(`Projeto/Temas/${id}`);
   }
 
+  criarProduto(produto: CreateProdutoRequest) {
+    return this.http.post<ResultadoResponse>('projeto/Produtos', produto);
+  }
+
+  editarProduto(produto: EditProduto) {
+    return this.http.put<ResultadoResponse>('projeto/Produtos', produto);
+  }
+
+  getProdutos(id: number) {
+    return this.http.get<Array<Produto>>(`Projeto/${id}/Produtos`);
+  }
+
+  delProdutos(id: number) {
+    return this.http.delete<any>(`Projeto/${id}/Produtos`);
+  }
+
+  /**
+   * Etapa Service
+   */
+
+  criarEtapa(etapa: CreateEtapaRequest) {
+    return this.http.post<ResultadoResponse>('projeto/Etapas', etapa);
+  }
+
+  editarEtapa(etapa: EditEtapa) {
+    return this.http.put<ResultadoResponse>('projeto/Etapas', etapa);
+  }
+
+  getEtapa(id: number) {
+    return this.http.get<any>(`Projeto/${id}/Etapas`);
+  }
+
+  delEtapa(id: number) {
+    return this.http.delete<any>(`Projeto/${id}/Etapas`);
+  }
+
+  /**
+   * Empresa Service
+   */
+
+  criarEmpresa(empresa: CreateEmpresaRequest) {
+    return this.http.post<ResultadoResponse>('projeto/Empresas', empresa);
+  }
+
+  editarEmpresa(empresa: EditEmpresa) {
+    return this.http.put<ResultadoResponse>('projeto/Empresas', empresa);
+  }
+
+  getEmpresa(id: number) {
+    return this.http.get<any>(`Projeto/${id}/Empresas`);
+  }
+
+  delEmpresa(id: number) {
+    return this.http.delete<any>(`Projeto/${id}/Empresas`);
+  }
+
+  /**
+   * Recurso Humano Service
+   */
+
+  criarRH(rh: CreateRHRequest) {
+    return this.http.post<ResultadoResponse>('projeto/RecursoHumanos', rh);
+  }
+
+  editarRH(rh: EditRH) {
+    return this.http.put<ResultadoResponse>('projeto/RecursoHumanos', rh);
+  }
+
+  getRH(id: number) {
+    return this.http.get<any>(`Projeto/${id}/RecursoHumanos`);
+  }
+
+  delRH(id: number) {
+    return this.http.delete<any>(`Projeto/${id}/RecursoHumanos`);
+  }
+
+  /**
+   * Alocação Recurso Humano Service
+   */
+
+  criarAlocacaoRH(alocacaorh: CreateAlocacaoRHRequest) {
+    return this.http.post<ResultadoResponse>('projeto/AlocacaoRhs', alocacaorh);
+  }
+
+  editarAlocacaoRH(alocacaorh: EditAlocacaoRH) {
+    return this.http.put<ResultadoResponse>('projeto/AlocacaoRhs', alocacaorh);
+  }
+
+  getAlocacaoRH(id: number) {
+    return this.http.get<any>(`Projeto/${id}/AlocacaoRhs`);
+  }
+
+  delAlocacaoRH(id: number) {
+    return this.http.delete<any>(`Projeto/${id}/AlocacaoRhs`);
+  }
+
+  /**
+   * Recurso Material Service
+   */
+
+  criarRecursoMaterial(recursomaterial: CreateRecursoMaterialRequest) {
+    return this.http.post<ResultadoResponse>('projeto/RecursoMateriais', recursomaterial);
+  }
+
+  editarRecursoMaterial(recursomaterial: EditRecursoMaterial) {
+    return this.http.put<ResultadoResponse>('projeto/RecursoMateriais', recursomaterial);
+  }
+
+  getRecursoMaterial(id: number) {
+    return this.http.get<any>(`Projeto/${id}/RecursoMateriais`);
+  }
+
+  delRecursoMaterial(id: number) {
+    return this.http.delete<any>(`Projeto/${id}/RecursoMateriais`);
+  }
+
+  /**
+   * Alocacao Recurso Material Service
+   */
+
+  criarAlocacaoRM(alocacaorm: CreateAlocacaoRMRequest) {
+    return this.http.post<ResultadoResponse>('projeto/AlocacaoRms', alocacaorm);
+  }
+
+  editarAlocacaoRM(alocacaorm: EditRecursoMaterial) {
+    return this.http.put<ResultadoResponse>('projeto/AlocacaoRms', alocacaorm);
+  }
+
+  getAlocacaoRM(id: number) {
+    return this.http.get<any>(`Projeto/${id}/AlocacaoRms`);
+  }
+
+  delAlocacaoRM(id: number) {
+    return this.http.delete<any>(`Projeto/${id}/AlocacaoRms`);
+  }
+
+  /**
+   * Extrato Financeiro Empresas
+   */
+
+  getExtratoFEm(id: number) {
+    return this.http.get<any>(`Projeto/${id}/ExtratoEmpresas`);
+  }
+
+  /**
+   * Extrato Financeiro Etapas
+   */
+
+  getExtratoFEt(id: number) {
+    return this.http.get<any>(`Projeto/${id}/ExtratoEtapas`);
+  }
+
+  /**
+   * Log Projeto Service
+   */
+
+  criarLogProjeto(logprojeto: CreateLogProjetoRequest) {
+    return this.http.post<ResultadoResponse>('projeto/LogProjetos', logprojeto);
+  }
+
+  getLogPorjeto(id: number) {
+    return this.http.get<any>(`projeto/${id}/Log`);
+  }
+
+  delLogPorjeto(id: number) {
+    return this.http.delete<any>(`projeto/LogProjetos/${id}`);
+  }
 
 
 }

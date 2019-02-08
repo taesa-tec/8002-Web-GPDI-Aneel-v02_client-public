@@ -8,6 +8,9 @@ import { UserRole, ProjetoAccess } from './enums';
 //     }
 //   }
 // }
+export interface TextValue {
+  text: string; value: any;
+}
 export interface MessageAlert {
   message: string;
   type: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
@@ -35,13 +38,6 @@ export interface Permissao {
   valor: string;
 }
 
-export interface Produto {
-  created: string;
-  produtoId: number;
-  titulo: string;
-  desc: string;
-  projetoId: number;
-}
 export interface ProjetoStatus {
   id: number;
   status: string;
@@ -164,4 +160,22 @@ export interface TemaProjeto {
   outroDesc?: any;
   subTemas: SubTema[];
   uploads: any[];
+}
+
+
+// Produtos
+
+export interface Produto {
+  created: string;
+  id: number;
+  projetoId: number;
+  titulo: string;
+  desc: string;
+  classificacao: number;
+  classificacaoValor: string;
+  tipo: number;
+  tipoValor: string;
+  faseCadeia: number;
+  faseCadeiaValor: string;
+  etapaProduto: any[];
 }

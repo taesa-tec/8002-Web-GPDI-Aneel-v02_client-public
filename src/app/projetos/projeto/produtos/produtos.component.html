@@ -1,87 +1,71 @@
 <div class="row">
-    <div class="col">
-        <h5 class="text-uppercase text-blue font-weight-normal my-3">
+  <div class="col">
+    <h5 class="text-uppercase text-blue font-weight-normal my-3">
             Produtos
         </h5>
-    </div>
-    <div class="col text-right">
-        <button class="btn btn-outline-primary" type="button" (click)="openModal()">
-            <i class="ta-plus-circle"></i>
-            Novo Produto
-        </button>
-    </div>
+  </div>
+  <div class="col text-right">
+    <button class="btn btn-outline-primary" type="button" (click)="openModal()">
+      <i class="ta-plus-circle"></i>
+      Novo Produto
+    </button>
+  </div>
 </div>
 <div class="row">
-    <div class="col-12">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Produto Intermediário</span>
-                            <span class="d-flex flex-column">
-                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
-                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
-                            </span>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Etapa Associada</span>
-                            <span class="d-flex flex-column">
-                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
-                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
-                            </span>
-                        </div>
+  <div class="col-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            <div class="d-flex align-items-center">
+              <span class="mx-2">Produto Intermediário</span>
+              <app-handler-order [current]="listOrder" field="titulo" (order)=order($event)></app-handler-order>
+            </div>
+          </th>
+          <th>
+            <div class="d-flex align-items-center">
+              <span class="mx-2">Etapa Associada</span>
+              <app-handler-order [current]="listOrder" field="faseCadeiaValor" (order)=order($event)></app-handler-order>
+            </div>
 
-                    </th>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Classificação</span>
-                            <span class="d-flex flex-column">
-                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
-                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
-                            </span>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Ações</span>
-                        </div>
-                    </th>
-                </tr>
-            </thead>
-            <tr>
-                <td>Titulo do produto</td>
-                <td>Etapa 01</td>
-                <td>Produto Intermediário</td>
-                <td>
-                    <button type="button" class="btn btn-primary btn-sm btn-block" (click)="openModal(1)">
-                        <i class="ta-edit"></i>
-                        EDITAR
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td>Titulo do produto</td>
-                <td>Etapa 01</td>
-                <td>Produto Intermediário</td>
-                <td>
-                    <button type="button" class="btn btn-primary btn-sm btn-block" (click)="openModal(2)">
-                        <i class="ta-edit"></i>
-                        EDITAR
-                    </button>
-                </td>
-            </tr>
-        </table>
-    </div>
+          </th>
+          <th>
+            <div class="d-flex align-items-center">
+              <span class="mx-2">Classificação</span>
+              <app-handler-order [current]="listOrder" field="classificacaoValor" (order)=order($event)></app-handler-order>
+
+            </div>
+          </th>
+          <th>
+            <div class="d-flex align-items-center">
+              <span class="mx-2">Ações</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tr *ngFor="let produto of produtos | orderBy:listOrder.field:listOrder.direction">
+        <td>{{produto.titulo}}</td>
+        <td>
+          ...
+        </td>
+        <td>Produto {{produto.classificacaoValor}}</td>
+        <td>
+          <button type="button" class="btn btn-primary btn-sm btn-block" (click)="openModal(produto)">
+            <i class="ta-edit"></i>
+            EDITAR
+          </button>
+        </td>
+      </tr>
+
+    </table>
+  </div>
 </div>
 
 <hr>
 <div class="row">
-    <div class="col-auto">
-        <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes</div>
-    <div class="col text-right">
+  <div class="col-auto">
+    <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes</div>
+  <div class="col text-right">
 
-    </div>
+  </div>
 </div>

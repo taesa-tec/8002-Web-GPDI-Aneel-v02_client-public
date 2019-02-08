@@ -30,7 +30,6 @@ export class InfoComponent implements OnInit {
     private route: ActivatedRoute,
     private projetoService: ProjetosService,
     protected catalogo: CatalogsService) {
-
   }
 
   ngOnInit() {

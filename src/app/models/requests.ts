@@ -45,3 +45,188 @@ export interface EditTemaRequest {
   outroDesc: string;
   subTemas: SubTemaRequest[];
 }
+
+/**
+ * Produto Request
+ */
+
+export interface CreateProdutoRequest {
+  projetoId: number;
+  titulo: string;
+  desc: string;
+  classificacao: string;
+  tipo: string;
+  faseCadeia: string;
+}
+
+export interface EditProduto {
+  id: number;
+  projetoId: number;
+  titulo: string;
+  desc: string;
+  classificacao: string;
+  tipo: string;
+  faseCadeia: string;
+}
+
+/**
+ * Etapa Request
+ */
+
+export interface EtapaProduto {
+  produtoId: number;
+}
+
+export interface CreateEtapaRequest {
+  projetoId: number;
+  desc: string;
+  etapaProdutos: EtapaProduto[];
+}
+
+export interface EditEtapa {
+  id: number;
+  desc: string;
+  etapaProdutos: EtapaProduto[];
+}
+
+/**
+ * Empresa Request
+ */
+
+export interface CreateEmpresaRequest {
+  projetoId: number;
+  classificacao: 'Energia' | 'Executora' | 'Parceira';
+  catalogEmpresaId: number;
+  catalogEstadoId: number;
+  cnpj: string;
+  razaoSocial: string;
+}
+
+export interface EditEmpresa {
+  id: number;
+  classificacao: 'Energia' | 'Executora' | 'Parceira';
+  catalogEmpresaId: number;
+  catalogEstadoId: number;
+  cnpj: string;
+  razaoSocial: string;
+}
+
+/**
+ * RH Request
+ */
+
+export interface CreateRHRequest {
+  projetoId: number;
+  empresaId: number;
+  valorHora: string;
+  nomeCompleto: string;
+  titulacao: string;
+  funcao: string;
+  nacionalidade: string;
+  cpf: string;
+  passaporte: string;
+  urlCurriculo: string;
+}
+
+export interface EditRH {
+  id: number;
+  empresaid: number;
+  valorHora: string;
+  nomeCompleto: string;
+  titulacao: string;
+  funcao: string;
+  nacionalidade: string;
+  cpf: string;
+  passaporte: string;
+  urlCurriculo: string;
+}
+
+/**
+ * Alocação RH Request
+ */
+
+export interface CreateAlocacaoRHRequest {
+  projetoId: number;
+  recursoHumanoId: number;
+  etapaId: number;
+  empresaId: number;
+  valorHora: string;
+  hrsMes1: number;
+  hrsMes2: number;
+  hrsMes3: number;
+  hrsMes4: number;
+  hrsMes5: number;
+  hrsMes6: number;
+  justificativa: string;
+}
+
+export interface EditAlocacaoRH {
+  id: number;
+  recursoHumanoId: number;
+  etapaId: number;
+  empresaId: number;
+  hrsMes1: number;
+  hrsMes2: number;
+  hrsMes3: number;
+  hrsMes4: number;
+  hrsMes5: number;
+  hrsMes6: number;
+  justificativa: string;
+}
+
+/**
+ * Recurso Material Request
+ */
+
+export interface CreateRecursoMaterialRequest {
+  projetoId: number;
+  nome: string;
+  categoriaContabil: string;
+  valorUnitario: string;
+  especificacao: string;
+}
+
+export interface EditRecursoMaterial {
+  id: number;
+  nome: string;
+  categoriaContabil: string;
+  valorUnitario: string;
+  especificacao: string;
+}
+
+/**
+ * Alocacao Recurso Material Request
+ */
+
+export interface CreateAlocacaoRMRequest {
+  projetoId: number;
+  recursoMaterialId: number;
+  etapaId: number;
+  empresaFinanciadoraId: number;
+  empresaRecebedoraId: number;
+  qtd: number;
+  justificativa: string;
+}
+
+export interface EditAlocacaoRM {
+  id: number;
+  recursoMaterialid: number;
+  etapaid: number;
+  empresaFinanciadoraid: number;
+  empresaRecebedoraid: number;
+  qtd: number;
+  justificativa: string;
+}
+
+/**
+ * Log Projeto Request
+ */
+
+export interface CreateLogProjetoRequest {
+  userId: string;
+  projetoId: number;
+  tela: string;
+  acao: string;
+  statusAnterior: string;
+  statusNovo: string;
+}

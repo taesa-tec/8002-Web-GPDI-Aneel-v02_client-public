@@ -14,36 +14,7 @@ export class EtapaFormComponent {
     @Input() etapa_id;
 
     etapaProdutos: Number[] = [0];
-    produtos: Produto[] = [
-        {
-            created: "2019-01-07",
-            desc: '',
-            produtoId: 1,
-            projetoId: 0,
-            titulo: 'Produto A'
-        },
-        {
-            created: "2019-01-07",
-            desc: '',
-            produtoId: 2,
-            projetoId: 0,
-            titulo: 'Produto B'
-        },
-        {
-            created: "2019-01-07",
-            desc: '',
-            produtoId: 3,
-            projetoId: 0,
-            titulo: 'Produto C'
-        },
-        {
-            created: "2019-01-07",
-            desc: '',
-            produtoId: 4,
-            projetoId: 0,
-            titulo: 'Produto D'
-        },
-    ];
+    produtos: Produto[] = [];
 
 
     constructor(public activeModal: NgbActiveModal, private projetoService: ProjetosService) { }
