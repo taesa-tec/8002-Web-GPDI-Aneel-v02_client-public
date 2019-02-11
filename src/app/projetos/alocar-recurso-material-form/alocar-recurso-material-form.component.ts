@@ -26,7 +26,7 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
         this.projetoService.getRecursoMaterial(this.projeto.id).subscribe(recursosMaterias => this.recursosMaterias = recursosMaterias || []);
     }
     loadEmpresaRecebdora() {
-        this.projetoService.getEmpresa(this.projeto.id).subscribe(empresaRecebdora => {
+        this.projetoService.getEmpresas(this.projeto.id).subscribe(empresaRecebdora => {
             console.log(empresaRecebdora);
 
             this.empresaRecebdora = empresaRecebdora || [];
