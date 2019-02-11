@@ -5,13 +5,14 @@ import {
   Projeto, ResultadoResponse,
   ProjetoStatus, UserProjeto, CreateTemaRequest, EditTemaRequest,
   Tema, TemaProjeto, CreateProdutoRequest, EditProduto,
-  CriarEtapaRequest, EditEtapaRequest, CreateEmpresaRequest, EditEmpresa,
+  CriarEtapaRequest, EditEtapaRequest, CreateEmpresaRequest,
   CreateRHRequest, EditRH, CreateAlocacaoRHRequest, EditAlocacaoRH,
   CreateRecursoMaterialRequest, EditRecursoMaterial, CreateAlocacaoRMRequest,
   CreateLogProjetoRequest,
   Produto,
   ProjetoDataInicio,
-  Etapa
+  Etapa,
+  EditEmpresaRequest
 } from '@app/models';
 import { Subject, Observable } from 'rxjs';
 
@@ -118,11 +119,11 @@ export class ProjetosService {
     return this.http.post<ResultadoResponse>('projeto/Empresas', empresa);
   }
 
-  editarEmpresa(empresa: EditEmpresa) {
+  editarEmpresa(empresa: EditEmpresaRequest) {
     return this.http.put<ResultadoResponse>('projeto/Empresas', empresa);
   }
 
-  getEmpresa(id: number) {
+  getEmpresas(id: number) {
     return this.http.get<any>(`Projeto/${id}/Empresas`);
   }
 

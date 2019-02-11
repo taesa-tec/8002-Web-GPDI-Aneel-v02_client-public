@@ -1,11 +1,11 @@
 <h5 class="text-uppercase text-blue font-weight-normal my-3">Projeto Base Pesquisa e Desenvolvimento</h5>
-<app-loading type="fullparent"></app-loading>
+<app-loading type="fullscreen"></app-loading>
 <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="row">
     <div class="col-6">
       <div class="form-group">
         <label for="">Número projeto <app-tip [tipId]="7"></app-tip></label>
-        <input type="text" class="form-control" formControlName="numero">
+        <input type="text" class="form-control" formControlName="numero" maxlength="6" mask="00000S" [patterns]="numeroPatterns" placeholder="00000X">
       </div>
     </div>
     <div class="col-6">
@@ -60,7 +60,7 @@
         <label for="">Compartilhamento dos resultados</label>
         <select name="" id="" class="form-control" formControlName="compartResultados">
           <option value="">Selecione o tipo de Compartilhamento dos resultados</option>
-          <option *ngFor="let c of compartilhamentos" [value]="c.valor">{{c.nome }}</option>
+          <option *ngFor="let c of compartilhamentos" [value]="c.value">{{c.text }}</option>
         </select>
       </div>
     </div>
@@ -126,7 +126,7 @@
     <div class="col-auto">
       <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes</div>
     <div class="col text-right">
-      <button class="btn btn-primary" [disabled]="form.invalid || form.untouched">Salvar Dados</button>
+      <button class="btn btn-primary" [disabled]="form.invalid">Salvar Dados</button>
     </div>
   </div>
 </form>
