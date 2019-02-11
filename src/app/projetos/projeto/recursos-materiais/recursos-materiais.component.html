@@ -1,76 +1,67 @@
 <div class="row mb-5">
-    <div class="col">
-        <h5 class="text-uppercase text-blue font-weight-normal my-3">
+  <div class="col">
+    <h5 class="text-uppercase text-blue font-weight-normal my-3">
             Recursos Materias
         </h5>
-    </div>
-    <div class="col text-right">
-        <button class="btn btn-outline-primary" type="button" (click)="openModal()">
-            <i class="ta-plus-circle fs-24 align-middle"></i>
-            Novo Recurso Material
-        </button>
-    </div>
+  </div>
+  <div class="col text-right">
+    <button class="btn btn-outline-primary" type="button" (click)="openModal()">
+      <i class="ta-plus-circle fs-24 align-middle"></i>
+      Novo Recurso Material
+    </button>
+  </div>
 </div>
 <div class="row">
-    <div class="col-12">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Nome do Recurso</span>
-                            <span class="d-flex flex-column">
-                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
-                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
-                            </span>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Entidade Recebedora</span>
-                            <span class="d-flex flex-column">
-                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
-                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
-                            </span>
-                        </div>
+  <div class="col-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            <div class="d-flex align-items-center">
+              <span class="mx-2">Nome do Recurso</span>
+              <app-handler-order [current]="listOrder" field="nome" (order)=order($event)></app-handler-order>
+            </div>
+          </th>
+          <th>
+            <div class="d-flex align-items-center">
+              <span class="mx-2">Entidade Recebedora</span>
+              <app-handler-order [current]="listOrder" field="categoriaContabilValor" (order)=order($event)></app-handler-order>
+            </div>
 
-                    </th>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Valor Unitário</span>
-                            <span class="d-flex flex-column">
-                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
-                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
-                            </span>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Ações</span>
-                        </div>
-                    </th>
-                </tr>
-            </thead>
-            <tr *ngFor="let item of [1,2,3,4]">
-                <td>Material {{item}}</td>
-                <td>Ivision Sistemas de Imagem e Visão S.A</td>
-                <td>R$1.0000</td>
-                <td>
-                    <button type="button" class="btn btn-primary btn-sm w-100" (click)="openModal(item)">
-                        <i class="ta-edit"></i>
-                        EDITAR
-                    </button>
-                </td>
-            </tr>
-        </table>
-    </div>
+          </th>
+          <th>
+            <div class="d-flex align-items-center">
+              <span class="mx-2">Valor Unitário</span>
+              <app-handler-order [current]="listOrder" field="valorUnitario" (order)=order($event)></app-handler-order>
+            </div>
+          </th>
+          <th>
+            <div class="d-flex align-items-center">
+              <span class="mx-2">Ações</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tr *ngFor="let recursosMateria of recursosMaterias | orderBy:listOrder.field:listOrder.direction">
+        <td>{{recursosMateria.nome}}</td>
+        <td>{{recursosMateria.categoriaContabilValor}}</td>
+        <td>{{recursosMateria.valorUnitario}}</td>
+        <td>
+          <button type="button" class="btn btn-primary btn-sm w-100" (click)="openModal(recursosMateria)">
+            <i class="ta-edit"></i>
+            EDITAR
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>
 
 <hr>
 <div class="row">
-    <div class="col-auto">
-        <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes</div>
-    <div class="col text-right">
+  <div class="col-auto">
+    <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes</div>
+  <div class="col text-right">
 
-    </div>
+  </div>
 </div>

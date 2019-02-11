@@ -1,50 +1,56 @@
 <div class="modal-header">
-    <div class="text-uppercase modal-title text-blue-light fs-24">Adicionar Recurso Material</div>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        <i class="ta-cancel-circle"></i>
-    </button>
+  <div class="text-uppercase modal-title text-blue-light fs-24">{{modalTitle}}</div>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <i class="ta-cancel-circle"></i>
+  </button>
 </div>
-<div class="modal-body">
-    <div class="row">
-        <div class="col-12">
-            <div class="form-group">
+<form class="modal-body" [formGroup]="form">
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
 
-                <label for="">Nome do recurso material</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
+        <label for="">Nome do recurso material</label>
+        <input type="text" class="form-control" formControlName="nome">
+      </div>
     </div>
-    <div class="row">
-        <div class="col-6">
-            <div class="form-group">
-                <label for="">Categorial Contábil</label>
-                <select name="" id="" class="form-control"></select>
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="form-group">
-                <label for="">Valor unitário</label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <label for="">Categorial Contábil</label>
+        <select name="" id="" class="form-control" formControlName="categoriaContabil">
+          <option value="">Selecione</option>
+          <option [value]="cat.value" *ngFor="let cat of categoriaContabel">{{cat.text}}</option>
+        </select>
+      </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="form-group">
-                <label for="">Especificação técninca detalhada do recurso</label>
-                <app-textarea name="" id="" maxlength="1000" cols="30" rows="3" class="form-control"></app-textarea>
+    <div class="col-6">
+      <div class="form-group">
+        <label for="">Valor unitário</label>
+        <input type="text" class="form-control" formControlName="valorUnitario">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label for="">Especificação técninca detalhada do recurso</label>
+        <app-textarea name="" id="" maxlength="1000" cols="30" rows="3" class="form-control" formControlName="especificacao"></app-textarea>
 
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 
-    <div class="row">
-        <div class="col-12 text-right">
-            <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
-            <button class="btn btn-primary" (click)="activeModal.close('temp')">
-                <i class="ta-plus-circle"></i>
-                Adicionar Recurso
-            </button>
-        </div>
+  <div class="row">
+    <div class="col-12 text-right">
+      <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
+
+      <button class="btn btn-primary" type="button" (click)="submit()" [disabled]="form.invalid">
+        <i [class]="buttonAction.icon"></i>
+        {{buttonAction.text}}
+      </button>
+
     </div>
-</div>
+  </div>
+</form>
+<app-loading type="fullscreen"></app-loading>

@@ -179,3 +179,13 @@ export interface Produto {
   faseCadeiaValor: string;
   etapaProduto: any[];
 }
+
+export interface RecursoMaterial {
+  id: number;
+  projetoId: number;
+  nome: string;
+  categoriaContabil: number;
+  categoriaContabilValor: string;
+  valorUnitario: string;
+  especificacao: string;
+}
