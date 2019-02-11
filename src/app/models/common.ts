@@ -179,3 +179,16 @@ export interface Produto {
   faseCadeiaValor: string;
   etapaProduto: any[];
 }
+
+export interface EmpresaProjeto {
+  id: number;
+  projetoId: number;
+  classificacao: number;
+  classificacaoValor: string;
+  catalogEmpresaId: number;
+  catalogEmpresa?: Empresa;
+  cnpj?: any;
+  catalogEstadoId?: any;
+  estado?: UF;
+  razaoSocial?: string;
+}

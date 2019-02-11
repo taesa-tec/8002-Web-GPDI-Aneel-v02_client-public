@@ -1,86 +1,65 @@
 <div class="row mb-5">
-    <div class="col">
-        <h5 class="text-uppercase text-blue font-weight-normal my-3">
+  <div class="col">
+    <h5 class="text-uppercase text-blue font-weight-normal my-3">
             Empresas
         </h5>
-    </div>
-    <div class="col text-right">
-        <button class="btn btn-outline-primary" type="button" (click)="openModal()">
-            <i class="ta-plus-circle fs-24 align-middle"></i>
-            Nova empresa
-        </button>
-    </div>
+  </div>
+  <div class="col text-right">
+    <button class="btn btn-outline-primary" type="button" (click)="openModal()">
+      <i class="ta-plus-circle fs-24 align-middle"></i>
+      Nova empresa
+    </button>
+  </div>
 </div>
 <div class="row">
-    <div class="col-12">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Nome ou Razão Social</span>
-                            <span class="d-flex flex-column">
-                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
-                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
-                            </span>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Classificação</span>
-                            <span class="d-flex flex-column">
-                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
-                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
-                            </span>
-                        </div>
+  <div class="col-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            <div class="d-flex align-items-center">
+              <span class="mx-2">Nome ou Razão Social</span>
+            </div>
+          </th>
+          <th>
+            <div class="d-flex align-items-center">
+              <span class="mx-2">Classificação</span>
+            </div>
 
-                    </th>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Ações</span>
-                        </div>
-                    </th>
-                </tr>
-            </thead>
-            <tr>
-                <td>Axxiom Soluções Tecnológicas S.A</td>
-                <td>Empresa Executora</td>
-                <td>
-                    <button type="button" class="btn btn-primary" (click)="openModal(1)">
-                        <i class="ta-edit"></i>
-                        EDITAR
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td>TAESA (7527)</td>
-                <td>Empresa de Energia Elétrica</td>
-                <td>
-                    <button type="button" class="btn btn-primary" (click)="openModal(1)">
-                        <i class="ta-edit"></i>
-                        EDITAR
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td>PATESA (3943)</td>
-                <td>Empresa de Energia Elétrica</td>
-                <td>
-                    <button type="button" class="btn btn-primary" (click)="openModal(1)">
-                        <i class="ta-edit"></i>
-                        EDITAR
-                    </button>
-                </td>
-            </tr>
-        </table>
-    </div>
+          </th>
+          <th>
+            <div class="d-flex align-items-center">
+              <span class="mx-2">Ações</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tr *ngFor="let empresa of empresas">
+        <td>
+          <span *ngIf="empresa.catalogEmpresa">
+            {{ empresa.catalogEmpresa.nome }}
+          </span>
+          <span>
+            {{empresa.razaoSocial}}
+          </span>
+        </td>
+        <td>Empresa {{ empresa.classificacaoValor }}</td>
+        <td>
+          <button type="button" class="btn btn-primary" [disabled]="empresa.classificacaoValor === 'Proponente'" (click)="openModal(empresa)">
+            <i class="ta-edit"></i>
+            EDITAR
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>
 
 <hr>
 <div class="row">
-    <div class="col-auto">
-        <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes</div>
-    <div class="col text-right">
+  <div class="col-auto">
+    <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes</div>
+  <div class="col text-right">
 
-    </div>
+  </div>
 </div>

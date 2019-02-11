@@ -120,13 +120,13 @@ export interface EditEtapaRequest {
 export interface CreateEmpresaRequest {
   projetoId: number;
   classificacao: 'Energia' | 'Executora' | 'Parceira';
-  catalogEmpresaId: number;
-  catalogEstadoId: number;
-  cnpj: string;
-  razaoSocial: string;
+  catalogEmpresaId?: number;
+  catalogEstadoId?: number;
+  cnpj?: string;
+  razaoSocial?: string;
 }
 
-export interface EditEmpresa {
+export interface EditEmpresaRequest {
   id: number;
   classificacao: 'Energia' | 'Executora' | 'Parceira';
   catalogEmpresaId: number;

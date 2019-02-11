@@ -24,19 +24,21 @@ export class InfoComponent implements OnInit {
 
   @ViewChild(LoadingComponent) loading: LoadingComponent;
 
+  public numeroPatterns = {
+    'S': { pattern: /[A-Za-z]/, optional: true },
+    '0': { pattern: /\d/, optional: false }
+  };
 
   constructor(
     private app: AppService,
-    private route: ActivatedRoute,
-    private projetoService: ProjetosService,
-    protected catalogo: CatalogsService) {
+    private route: ActivatedRoute) {
   }
 
   ngOnInit() {
 
-    const empresas$ = this.catalogo.empresas();
-    const segmentos$ = this.catalogo.segmentos();
-    const compartilhamentos$ = this.catalogo.tipoCompartilhamento();
+    const empresas$ = this.app.catalogo.empresas();
+    const segmentos$ = this.app.catalogo.segmentos();
+    const compartilhamentos$ = this.app.catalogo.tipoCompartilhamento();
     const projeto$ = this.route.parent.data.pipe(map(d => d.projeto));
     this.loading.show();
 
@@ -73,7 +75,7 @@ export class InfoComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      this.projetoService.editar(this.form.value).subscribe(resultado => {
+      this.app.projetos.editar(this.form.value).subscribe(resultado => {
         if (resultado.sucesso) {
           this.app.alert("Salvo com sucesso");
           this.projeto = Object.assign(this.projeto, this.form.value);
