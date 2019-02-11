@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EtapaFormComponent } from '@app/projetos/etapa-form/etapa-form.component';
 import { AppService } from '@app/app.service';
@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 import { Projeto } from '@app/models';
 import { FormGroup, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { LoadingComponent } from '@app/shared/loading/loading.component';
 
 @Component({
   selector: 'app-etapas',
@@ -22,6 +23,13 @@ export class EtapasComponent implements OnInit {
   etapas: Array<any>;
   form: FormGroup;
   dataInicio = new Date();
+
+  listOrder: { field: string; direction: 'asc' | 'desc'; } = {
+    field: 'id',
+    direction: 'asc'
+  };
+
+  @ViewChild(LoadingComponent) loading: LoadingComponent;
 
   get ano() {
     return this.dataInicio.getFullYear();
@@ -39,8 +47,6 @@ export class EtapasComponent implements OnInit {
     this.setControlData();
   }
 
-
-
   constructor(
     private app: AppService,
     private route: ActivatedRoute,
@@ -51,29 +57,33 @@ export class EtapasComponent implements OnInit {
 
   protected setControlData() {
     const d = new Date(this.ano, this.mes, 1);
-    const v = (new DatePipe('en-US')).transform(d, 'dd-MM-yyyy');
-    console.log(v);
+    const v = (new DatePipe('en-US')).transform(d, 'yyyy-MM-dd');
     this.form.get('dataInicio').setValue(v);
-
   }
 
 
   ngOnInit() {
     const projeto$ = this.route.parent.data.pipe(map(d => d.projeto));
-
     zip(projeto$).subscribe(([projeto]) => {
       this.projeto = projeto;
+
       this.form = new FormGroup({
         id: new FormControl(this.projeto.id),
-        dataInicio: new FormControl(this.projeto.dataInicio)
+        dataInicio: new FormControl('')
       });
-      this.setControlData();
+
+      const dataInicio = this.projeto.dataInicio ? new Date(this.projeto.dataInicio) : new Date();
+      this.mes = dataInicio.getMonth();
+      this.ano = dataInicio.getFullYear();
+
+      // this.setControlData();
       this.loadEtapas();
     });
   }
 
   loadEtapas() {
-    this.projetoService.getEtapas(this.projeto.id).subscribe(etapas => this.etapas = etapas);
+    this.projetoService.getEtapas(this.projeto.id)
+      .subscribe(etapas => this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; }));
   }
 
   openModal(etapa: any = {}) {
@@ -95,6 +105,17 @@ export class EtapasComponent implements OnInit {
           this.app.alert("Etapa Excluída");
         }
       });
+  }
+
+  setDataInicio() {
+
+    this.loading.show();
+    this.projetoService.editarDataInicio(this.form.value).subscribe(result => {
+      this.loading.hide();
+      this.loadEtapas();
+    });
+    // console.log(this.form.value);
+
   }
 
 }

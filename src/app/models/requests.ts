@@ -1,3 +1,7 @@
+/**
+ * Users Request
+ */
+
 export interface LoginRequest {
   email: string;
   password: string;
@@ -17,8 +21,11 @@ export interface CreateUserRequest {
   email: string;
   role: string;
   status: 0 | 1;
-
 }
+
+/**
+ * Projeto Requests
+ */
 export interface CreateProjectRequest {
   titulo: string;
   tituloDesc: string;
@@ -27,6 +34,14 @@ export interface CreateProjectRequest {
   catalogEmpresaId: number;
 }
 
+export interface ProjetoDataInicio {
+  id: number;
+  dataInicio: string;
+}
+
+/**
+ * Temas Requests
+ */
 export interface SubTemaRequest {
   catalogSubTemaId: number;
   outroDesc?: string;
@@ -73,17 +88,26 @@ export interface EditProduto {
  * Etapa Request
  */
 
+export interface Etapa {
+  id: number;
+  projetoId: number;
+  numeroEtapa?: number;
+  desc: string;
+  dataInicio: string;
+  dataFim: string;
+  etapaProdutos: EtapaProduto[];
+}
 export interface EtapaProduto {
   produtoId: number;
 }
 
-export interface CreateEtapaRequest {
+export interface CriarEtapaRequest {
   projetoId: number;
   desc: string;
   etapaProdutos: EtapaProduto[];
 }
 
-export interface EditEtapa {
+export interface EditEtapaRequest {
   id: number;
   desc: string;
   etapaProdutos: EtapaProduto[];

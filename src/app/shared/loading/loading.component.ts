@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class LoadingComponent implements OnInit {
 
-  @Input('type') loadingType: 'fullparent' | 'fullscreen' | 'inline' = 'fullparent';
+  @Input() type: 'fullparent' | 'fullscreen' | 'inline' = 'fullparent';
   @Input() timeout = 0;
   @Input() size = "2x";
   @Input() color = "white";
@@ -32,10 +32,10 @@ export class LoadingComponent implements OnInit {
   }
 
   get isFullscreen() {
-    return this.loadingType === 'fullscreen';
+    return this.type === 'fullscreen';
   }
   get typeclass() {
-    return this.loadingType;
+    return this.type;
   }
 
 

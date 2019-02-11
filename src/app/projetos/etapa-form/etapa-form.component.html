@@ -5,6 +5,7 @@
   </button>
 </div>
 <div class="modal-body">
+  <app-loading type="fullscreen"></app-loading>
   <div class="form-group" [formGroup]="form" *ngIf="form">
     <label>Descrição das atividades</label>
     <app-textarea cols="30" rows="2" formControlName="desc" class="form-control"></app-textarea>
@@ -36,8 +37,8 @@
       <div class="col-12 text-right">
         <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
         <button class="btn btn-primary" type="button" [disabled]="form && form.invalid" (click)="submit()">
-          <i class="ta-plus-circle"></i>
-          Adicionar Etapa
+          <i class="ta-save"></i>
+          {{btnTxt}}
         </button>
       </div>
     </div>

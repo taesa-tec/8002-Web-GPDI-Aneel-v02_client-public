@@ -5,11 +5,13 @@ import {
   Projeto, ResultadoResponse,
   ProjetoStatus, UserProjeto, CreateTemaRequest, EditTemaRequest,
   Tema, TemaProjeto, CreateProdutoRequest, EditProduto,
-  CreateEtapaRequest, EditEtapa, CreateEmpresaRequest, EditEmpresa,
+  CriarEtapaRequest, EditEtapaRequest, CreateEmpresaRequest, EditEmpresa,
   CreateRHRequest, EditRH, CreateAlocacaoRHRequest, EditAlocacaoRH,
   CreateRecursoMaterialRequest, EditRecursoMaterial, CreateAlocacaoRMRequest,
   CreateLogProjetoRequest,
-  Produto
+  Produto,
+  ProjetoDataInicio,
+  Etapa
 } from '@app/models';
 import { Subject, Observable } from 'rxjs';
 
@@ -48,6 +50,10 @@ export class ProjetosService {
     return this.http.put<ResultadoResponse>(`Projetos`, projeto);
   }
 
+  editarDataInicio(projetoDataInicio: ProjetoDataInicio) {
+    return this.http.put<ResultadoResponse>(`Projetos/dataInicio`, projetoDataInicio);
+  }
+
   // Temas
 
   getTema(id: number) {
@@ -66,6 +72,8 @@ export class ProjetosService {
     return this.http.delete<ResultadoResponse>(`Projeto/Temas/${id}`);
   }
 
+
+  // Produtos
   criarProduto(produto: CreateProdutoRequest) {
     return this.http.post<ResultadoResponse>('projeto/Produtos', produto);
   }
@@ -86,16 +94,16 @@ export class ProjetosService {
    * Etapa Service
    */
 
-  criarEtapa(etapa: CreateEtapaRequest) {
+  criarEtapa(etapa: CriarEtapaRequest) {
     return this.http.post<ResultadoResponse>('projeto/Etapas', etapa);
   }
 
-  editarEtapa(etapa: EditEtapa) {
+  editarEtapa(etapa: EditEtapaRequest) {
     return this.http.put<ResultadoResponse>('projeto/Etapas', etapa);
   }
 
   getEtapas(id: number) {
-    return this.http.get<any>(`Projeto/${id}/Etapas`);
+    return this.http.get<Array<Etapa>>(`Projeto/${id}/Etapas`);
   }
 
   delEtapa(id: number) {
@@ -233,6 +241,4 @@ export class ProjetosService {
   delLogPorjeto(id: number) {
     return this.http.delete<any>(`projeto/LogProjetos/${id}`);
   }
-
-
 }

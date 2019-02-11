@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProjetosService } from '@app/projetos/projetos.service';
-import { Produto, EtapaProduto, Projeto } from '@app/models';
+import { Produto, EtapaProduto, Projeto, EditEtapaRequest, CriarEtapaRequest } from '@app/models';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { zip, timer } from 'rxjs';
 import { AppService } from '@app/app.service';
+import { LoadingComponent } from '@app/shared/loading/loading.component';
 
 
 @Component({
@@ -14,15 +15,19 @@ import { AppService } from '@app/app.service';
 })
 export class EtapaFormComponent implements OnInit {
 
-  etapa;
+  etapa: any;
   projeto: Projeto;
   form: FormGroup;
   produtos: Produto[] = [];
   produtosGroup: FormArray = new FormArray([]);
 
+  @ViewChild(LoadingComponent) loading: LoadingComponent;
+
   constructor(public activeModal: NgbActiveModal, private projetoService: ProjetosService, protected app: AppService) { }
 
-
+  get btnTxt() {
+    return this.etapa.id ? "Salvar Etapa" : "Adicionar Etapa";
+  }
 
   ngOnInit() {
     const produtos$ = this.projetoService.getProdutos(this.projeto.id);
@@ -42,8 +47,11 @@ export class EtapaFormComponent implements OnInit {
     if (this.etapa.id) {
       this.form.addControl('id', new FormControl(this.etapa.id));
     }
-
-    timer(2000, 10000).subscribe(() => console.log(this.form.value));
+    if (this.etapa.etapaProdutos) {
+      (this.etapa.etapaProdutos as Array<EtapaProduto>).map(ep => {
+        this.produtosGroup.push(new FormGroup({ ProdutoId: new FormControl(ep.produtoId, Validators.required) }));
+      });
+    }
   }
 
   adicionarProduto(id: number) {
@@ -58,12 +66,16 @@ export class EtapaFormComponent implements OnInit {
     if (this.form.valid) {
       const v = this.form.value;
       const request = this.etapa.id ? this.projetoService.editarEtapa(v) : this.projetoService.criarEtapa(v);
+
+      this.loading.show();
+
       request.subscribe(r => {
         if (r.sucesso) {
           this.activeModal.close(r);
         } else {
           this.app.alert(r.inconsistencias.join(', '));
         }
+        this.loading.hide();
       });
     }
   }
