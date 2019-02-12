@@ -3,9 +3,10 @@ import { AlocarRecursoMaterialFormComponent } from '@app/projetos/alocar-recurso
 import { ProjetosService } from '@app/projetos/projetos.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
-import { Projeto } from '@app/models';
-import { zip } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+import { Projeto, AlocacaoRM } from '@app/models';
+import { zip, of } from 'rxjs';
+import { AppService } from '@app/app.service';
 
 @Component({
     selector: 'app-alocacao',
@@ -19,28 +20,35 @@ export class AlocacaoComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        protected projetoService: ProjetosService,
+        protected app: AppService,
         protected modalService: NgbModal) { }
 
     ngOnInit() {
-        const projeto$ = this.route.parent.data.pipe(map(d => d.projeto));
-        zip(projeto$).subscribe(([projeto]) => {
+        this.loadData();
+    }
+
+    loadData() {
+        const data$ = this.route.parent.data.pipe(
+            map(d => d.projeto),
+            mergeMap(p => zip(
+                of(p),
+                this.app.projetos.getAlocacaoRM(p.id),
+            ))
+        );
+
+        data$.subscribe(([projeto, alocacoes]) => {
             this.projeto = projeto;
-            this.loadAlocacao();
+            this.alocacoes = alocacoes;
         });
     }
 
-    loadAlocacao() {
-        this.projetoService.getAlocacaoRM(this.projeto.id).subscribe(alocacoes => this.alocacoes = alocacoes || []);
-    }
-
-    openModal(etapa_id: number) {
+    openModal(alocacao: AlocacaoRM | {} = {}) {
         const modalRef = this.modalService.open(AlocarRecursoMaterialFormComponent, { size: 'lg' });
-        //modalRef.componentInstance.etapa_id = etapa_id;
+        modalRef.componentInstance.alocacao = alocacao;
         modalRef.componentInstance.projeto = this.projeto;
 
         modalRef.result.then(result => {
-            this.loadAlocacao();
+            this.loadData();
 
         }, e => {
 

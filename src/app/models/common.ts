@@ -203,3 +203,18 @@ export interface RecursoMaterial {
   valorUnitario: string;
   especificacao: string;
 }
+
+export interface AlocacaoRM {
+  id: number;
+  etapaId: number;
+  etapa?: any;
+  projetoId: number;
+  recursoMaterialId: number;
+  recursoMaterial?: any;
+  empresaFinanciadoraId: number;
+  empresaFinanciadora?: any;
+  empresaRecebedoraId: number;
+  empresaRecebedora?: any;
+  qtd: number;
+  justificativa: string;
+}

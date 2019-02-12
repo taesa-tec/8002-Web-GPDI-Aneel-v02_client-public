@@ -1,86 +1,87 @@
 <div class="row mb-5">
-    <div class="col">
-        <h5 class="text-uppercase text-blue font-weight-normal my-3">
+  <div class="col">
+    <h5 class="text-uppercase text-blue font-weight-normal my-3">
             Alocar Recursos Materiais
         </h5>
-    </div>
-    <div class="col text-right">
-        <button class="btn btn-outline-primary" type="button" (click)="openModal()">
-            <i class="ta-alocacao-material fs-24 align-middle"></i>
-            Alocar Recurso Material
-        </button>
-    </div>
+  </div>
+  <div class="col text-right">
+    <button class="btn btn-outline-primary" type="button" (click)="openModal()">
+      <i class="ta-alocacao-material fs-24 align-middle"></i>
+      Alocar Recurso Material
+    </button>
+  </div>
 </div>
 <div class="row">
-    <div class="col-12">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Nome</span>
-                            <span class="d-flex flex-column">
+  <div class="col-12">
+    {{alocacoes|json}}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            <div class="d-flex align-items-center">
+              <span class="mx-2">Nome</span>
+              <span class="d-flex flex-column">
                                 <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
                                 <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
                             </span>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Empresa Financiadora</span>
-                            <span class="d-flex flex-column">
+            </div>
+          </th>
+          <th>
+            <div class="d-flex align-items-center">
+              <span class="mx-2">Empresa Financiadora</span>
+              <span class="d-flex flex-column">
                                 <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
                                 <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
                             </span>
-                        </div>
+            </div>
 
-                    </th>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Cat. Contábil</span>
-                            <span class="d-flex flex-column">
+          </th>
+          <th>
+            <div class="d-flex align-items-center">
+              <span class="mx-2">Cat. Contábil</span>
+              <span class="d-flex flex-column">
                                 <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
                                 <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
                             </span>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Valor</span>
-                            <span class="d-flex flex-column">
+            </div>
+          </th>
+          <th>
+            <div class="d-flex align-items-center">
+              <span class="mx-2">Valor</span>
+              <span class="d-flex flex-column">
                                 <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
                                 <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
                             </span>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Ações</span>
-                        </div>
-                    </th>
-                </tr>
-            </thead>
-            <tr *ngFor="let item of alocacoes">
-                <td>Material {{item}}</td>
-                <td>TAESA (7527)</td>
-                <td>Materiais</td>
-                <td>R$9.999,00</td>
-                <td>
-                    <button type="button" class="btn btn-primary btn-sm w-100" (click)="openModal(item)">
-                        <i class="ta-edit"></i>
-                        EDITAR
-                    </button>
-                </td>
-            </tr>
-        </table>
-    </div>
+            </div>
+          </th>
+          <th>
+            <div class="d-flex align-items-center">
+              <span class="mx-2">Ações</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tr *ngFor="let alocacao of alocacoes">
+        <td>Material</td>
+        <td>TAESA (7527)</td>
+        <td>Materiais</td>
+        <td>R$9.999,00</td>
+        <td>
+          <button type="button" class="btn btn-primary btn-sm w-100" (click)="openModal(alocacao)">
+            <i class="ta-edit"></i>
+            EDITAR
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>
 
 <hr>
 <div class="row">
-    <div class="col-auto">
-        <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes</div>
-    <div class="col text-right">
+  <div class="col-auto">
+    <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes</div>
+  <div class="col text-right">
 
-    </div>
+  </div>
 </div>

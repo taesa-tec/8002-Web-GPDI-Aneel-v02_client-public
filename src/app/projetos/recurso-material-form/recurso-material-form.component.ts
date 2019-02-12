@@ -4,6 +4,7 @@ import { ProjetosService } from '@app/projetos/projetos.service';
 import { CategoriaContabil, Projeto, RecursoMaterial } from '@app/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
+import { AppService } from '@app/app.service';
 
 @Component({
     selector: 'app-recurso-material-form',
@@ -12,7 +13,6 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 })
 export class RecursoMaterialFormComponent implements OnInit {
 
-    inconsistencias: string[];
     categoriaContabel = CategoriaContabil;
     form: FormGroup;
     projeto: Projeto;
@@ -20,7 +20,9 @@ export class RecursoMaterialFormComponent implements OnInit {
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
-    constructor(public activeModal: NgbActiveModal, private projetosService: ProjetosService) { }
+    constructor(
+        public activeModal: NgbActiveModal,
+        protected app: AppService) { }
 
     get modalTitle() {
         return typeof this.recursoMaterial.id !== 'undefined' ? "Editar Recurso Material" : "Adicionar Recurso Material";
@@ -53,14 +55,13 @@ export class RecursoMaterialFormComponent implements OnInit {
 
     submit() {
         if (this.form.valid) {
-            this.inconsistencias = [];
-            const request = this.recursoMaterial.id ? this.projetosService.editarRecursoMaterial(this.form.value) : this.projetosService.criarRecursoMaterial(this.form.value);
+            const request = this.recursoMaterial.id ? this.app.projetos.editarRecursoMaterial(this.form.value) : this.app.projetos.criarRecursoMaterial(this.form.value);
             this.loading.show();
             request.subscribe(result => {
                 if (result.sucesso) {
                     this.activeModal.close(result);
                 } else {
-                    this.inconsistencias = result.inconsistencias;
+                    this.app.alert(result.inconsistencias.join(', '));
                 }
                 this.loading.hide();
             });

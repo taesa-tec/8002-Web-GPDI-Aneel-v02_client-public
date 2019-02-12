@@ -103,7 +103,7 @@ export const TiposCompartilhamento: Array<TextValue> = [
 ];
 
 export const CategoriaContabil: Array<TextValue> = [
-  { text: "Recursos Humanos", value: "RH" },
+  //{ text: "Recursos Humanos", value: "RH" },
   { text: "Serviços de Terceiros", value: "ST" },
   { text: "Materiais de Consumo", value: "MC" },
   { text: "Materiais Permanentes e Equipamentos", value: "MP" },
