@@ -16,7 +16,7 @@
       <div class="col-11" [formGroup]="item">
         <select name="" id="" class="form-control" formControlName="ProdutoId">
           <option value="">Selecione</option>
-          <option *ngFor="let p of produtos" [value]="p.id">{{p.titulo}}</option>
+          <option *ngFor="let p of filtrarProdutos(item)" [value]="p.id">{{p.titulo}}</option>
         </select>
       </div>
       <div class="col-1 d-flex align-items-center">
@@ -25,7 +25,7 @@
         </button>
       </div>
     </div>
-    <div class="row mb-4">
+    <div class="row mb-4" *ngIf="produtosGroup.length < produtos.length">
       <div class="col">
         <button class="btn p-0 hover-text-blue" (click)="adicionarProduto()">
           <i class="ta-plus-circle fs-24 align-middle"></i>
