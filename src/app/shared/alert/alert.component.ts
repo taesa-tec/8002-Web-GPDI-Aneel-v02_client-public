@@ -11,7 +11,7 @@ export class AlertComponent implements OnInit {
     message: string;
     title: string;
 
-    constructor(protected activeModal: NgbActiveModal) { }
+    constructor(public activeModal: NgbActiveModal) { }
 
     ngOnInit() {
     }

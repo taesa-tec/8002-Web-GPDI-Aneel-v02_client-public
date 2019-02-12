@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { CatalogsService } from '@app/catalogs/catalogs.service';
 import { AppService } from '@app/app.service';
 import { ActivatedRoute } from '@angular/router';
 import { ProjetosService } from '@app/projetos/projetos.service';
-import { map } from 'rxjs/operators';
-import { zip } from 'rxjs';
-import { Projeto, Tema, SubTema, SubTemaRequest, TemaProjeto } from '@app/models';
+import { map, mergeMap, tap } from 'rxjs/operators';
+import { zip, of } from 'rxjs';
+import { Projeto, Tema, SubTema, SubTemaRequest, TemaProjeto, NoRequest } from '@app/models';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { SubTemasComponent } from './sub-tema.component';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
@@ -18,6 +18,7 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 export class TemasComponent implements OnInit {
 
     projeto: Projeto;
+
     temaProjeto: TemaProjeto;
 
     temas: Array<Tema>;
@@ -29,6 +30,7 @@ export class TemasComponent implements OnInit {
 
     @ViewChild(SubTemasComponent) subTemasComponent;
     @ViewChild(LoadingComponent) loading;
+    @ViewChild('file') file: ElementRef;
 
     get tema() {
         return this.temas ? this.temas.find(t => t.id === parseInt(this.temaControl.value, 10)) : null;
@@ -51,18 +53,27 @@ export class TemasComponent implements OnInit {
 
     ngOnInit() {
         this.loading.show();
+
         const temas$ = this.catalogo.temas();
         const projeto$ = this.route.parent.data.pipe(map(d => d.projeto));
 
         zip(temas$, projeto$).subscribe(([temas, projeto]) => {
             this.temas = temas;
             this.projeto = projeto;
-            this.projetoService.getTema(projeto.id).subscribe(temaProjeto => {
-                this.temaProjeto = temaProjeto;
-                this.setupForm(this.projeto, temaProjeto);
-                this.loading.hide();
-            });
+            this.load();
         });
+    }
+
+    load() {
+        this.projetoService.getTema(this.projeto.id).subscribe(temaProjeto => {
+            this.temaProjeto = temaProjeto;
+            this.setupForm(this.projeto, temaProjeto);
+            this.loading.hide();
+        });
+    }
+
+    changeFile(event) {
+        // console.log({ event });
     }
 
     protected setupForm(projeto: Projeto, temas: TemaProjeto = null) {
@@ -107,7 +118,6 @@ export class TemasComponent implements OnInit {
         }
     }
 
-
     addSubTema(subtema?: SubTema) {
 
         const id = subtema ? subtema.catalogSubTemaId || '' : '';
@@ -119,6 +129,7 @@ export class TemasComponent implements OnInit {
         });
         this.subTemasForms.push(f);
     }
+
     delete(i: number) {
         if (this.subTemasForms.length > 1) {
             this.subTemasForms.removeAt(i);
@@ -127,17 +138,49 @@ export class TemasComponent implements OnInit {
 
     updateTemas() {
         this.loading.show();
-        const request = this.temaProjeto ? this.projetoService.editTema(this.form.value) : this.projetoService.criarTema(this.form.value);
+
+        const request =
+            (this.temaProjeto ? this.projetoService.editTema(this.form.value) : this.projetoService.criarTema(this.form.value))
+                .pipe(mergeMap(result => {
+                    console.log({ result });
+
+                    if (result.sucesso) {
+                        if (result.id) {
+                            return this.sendFile(result.id);
+                        }
+                        return this.sendFile();
+
+                    }
+                    return of(result);
+                }));
 
         request.subscribe(resultado => {
             this.loading.hide();
             if (resultado.sucesso) {
+                this.load();
                 this.app.alert("Tema atualizado com sucesso");
             } else {
                 this.app.alert(resultado.inconsistencias.join(", "));
             }
         });
+    }
+    sendFile(id?) {
+        const el = this.file.nativeElement as HTMLInputElement;
+        const temaId = id || this.temaProjeto.id;
 
+        console.log({ temaId });
+
+        if (el.files.length > 0) {
+            return this.app.file.upload(el.files.item(0), new FormGroup({
+                temaId: new FormControl(temaId),
+            })).pipe(tap(result => {
+                if (result.sucesso) {
+                    this.file.nativeElement.value = "";
+                }
+            }));
+        }
+
+        return of(NoRequest);
     }
 
 }

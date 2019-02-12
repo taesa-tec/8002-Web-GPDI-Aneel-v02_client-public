@@ -24,6 +24,7 @@ export class ProjetosService {
     protected projetoCreatedSource = new Subject<Projeto>();
 
     projetoCreated = this.projetoCreatedSource.asObservable();
+    
     status: ProjetoStatus[];
 
     constructor(private http: HttpClient) { }

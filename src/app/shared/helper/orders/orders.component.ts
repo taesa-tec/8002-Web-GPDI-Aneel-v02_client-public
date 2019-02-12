@@ -33,7 +33,7 @@ export class OrdersComponent implements OnInit {
     return {};
   }
 
-  protected _order(direction: 'asc' | 'desc' = 'asc') {
+  _order(direction: 'asc' | 'desc' = 'asc') {
     this.order.emit({ field: this.field, direction });
   }
 
