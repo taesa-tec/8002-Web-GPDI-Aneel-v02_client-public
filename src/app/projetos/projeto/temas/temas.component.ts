@@ -87,8 +87,6 @@ export class TemasComponent implements OnInit {
             this.reset();
         });
 
-
-
         if (temas) {
             this.form.addControl('Id', new FormControl(temas.id));
             this.form.get('catalogTemaId').setValue(temas.catalogTemaId);
