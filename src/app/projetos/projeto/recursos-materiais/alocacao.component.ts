@@ -4,7 +4,7 @@ import { ProjetosService } from '@app/projetos/projetos.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
-import { Projeto, AlocacaoRM } from '@app/models';
+import { Projeto, AlocacaoRM, CategoriaContabil } from '@app/models';
 import { zip, of } from 'rxjs';
 import { AppService } from '@app/app.service';
 
@@ -15,6 +15,7 @@ import { AppService } from '@app/app.service';
 })
 export class AlocacaoComponent implements OnInit {
 
+    categoriaContabel = CategoriaContabil;
     alocacoes: Array<any>;
     projeto: Projeto;
 
@@ -28,6 +29,7 @@ export class AlocacaoComponent implements OnInit {
     }
 
     loadData() {
+
         const data$ = this.route.parent.data.pipe(
             map(d => d.projeto),
             mergeMap(p => zip(
@@ -37,8 +39,49 @@ export class AlocacaoComponent implements OnInit {
         );
 
         data$.subscribe(([projeto, alocacoes]) => {
+
             this.projeto = projeto;
-            this.alocacoes = alocacoes;
+
+            this.alocacoes = alocacoes.map(aloc => {
+
+                //this.loadRecursoMaterial(aloc);
+                //this.loadEmpresas(aloc);
+
+                return aloc;
+            });
+
+        });
+    }
+
+    /**
+     * Não vai rolar só pegar o id do projeto, eu queria pegar o id do material e retornar a material
+     * @param aloc 
+     */
+    loadRecursoMaterial(aloc) {
+
+        this.app.projetos.getRecursoMaterial(aloc.recursoMaterialId).subscribe(rec => {
+
+            aloc.recursoMaterial = rec;
+
+            aloc.recursoMaterial = rec.map(recM => {
+                recM.categoriaContabelNome = this.categoriaContabel.find(e => recM.categoriaContabilValor === e.value).text;
+                return recM;
+            });
+
+        });
+    }
+    /**
+     * Não vai rolar só pegar o id do projeto, eu queria pegar o id da empresa e retornar a empresa
+     * @param aloc 
+     */
+    loadEmpresas(aloc) {
+
+        this.app.projetos.getEmpresas(aloc.empresaFinanciadoraId).subscribe(rec => {
+            aloc.empresaFinanciadora = rec;
+        });
+
+        this.app.projetos.getEmpresas(aloc.empresaRecebedoraId).subscribe(rec => {
+            aloc.empresaRecebedora = rec;
         });
     }
 

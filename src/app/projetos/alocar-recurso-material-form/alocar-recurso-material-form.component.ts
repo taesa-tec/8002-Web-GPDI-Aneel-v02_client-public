@@ -62,7 +62,7 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
 
     submit() {
         if (this.form.valid) {
-            const request = this.alocacao.id ? this.app.projetos.editarAlocacaoRH(this.form.value) : this.app.projetos.criarAlocacaoRH(this.form.value);
+            const request = this.alocacao.id ? this.app.projetos.editarAlocacaoRM(this.form.value) : this.app.projetos.criarAlocacaoRM(this.form.value);
             this.loading.show();
             request.subscribe(result => {
                 console.log(result);
