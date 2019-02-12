@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
+import localeBr from '@angular/common/locales/pt';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,29 +14,34 @@ import { httpInterceptorProviders } from './http-interceptors';
 import { UsersModule } from './users/users.module';
 import { CatalogsModule } from './catalogs/catalogs.module';
 import { AppService } from './app.service';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(localeBr, 'pt');
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NotFoundComponent,
-  ],
-  imports: [
-    BrowserModule,
-    SharedModule,
-    AuthModule,
-    CatalogsModule,
-    DashboardModule,
-    UsersModule,
-    ProjetosModule,
-    AppRoutingModule,
-  ],
-  exports: [SharedModule],
-  providers: [
-    { provide: APP_CONFIG, useValue: APP_CONFIG_DEV },
-    httpInterceptorProviders,
-    AppService
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        NotFoundComponent,
+    ],
+    imports: [
+        BrowserModule,
+        SharedModule,
+        AuthModule,
+        CatalogsModule,
+        DashboardModule,
+        UsersModule,
+        ProjetosModule,
+        AppRoutingModule,
+        
+    ],
+    exports: [SharedModule],
+    providers: [
+        { provide: APP_CONFIG, useValue: APP_CONFIG_DEV },
+        { provide: LOCALE_ID, useValue: 'pt' },
+        httpInterceptorProviders,
+        AppService
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

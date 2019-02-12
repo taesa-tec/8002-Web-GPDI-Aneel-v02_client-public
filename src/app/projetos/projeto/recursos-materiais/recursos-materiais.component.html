@@ -45,7 +45,7 @@
       <tr *ngFor="let recursosMateria of recursosMaterias | orderBy:listOrder.field:listOrder.direction">
         <td>{{recursosMateria.nome}}</td>
         <td>{{recursosMateria.categoriaContabilValor}}</td>
-        <td>{{recursosMateria.valorUnitario}}</td>
+        <td>{{recursosMateria.valorUnitario | currency:'R$'}}</td>
         <td>
           <button type="button" class="btn btn-primary btn-sm w-100" (click)="openModal(recursosMateria)">
             <i class="ta-edit"></i>
