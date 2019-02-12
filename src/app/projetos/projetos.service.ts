@@ -24,7 +24,7 @@ export class ProjetosService {
     protected projetoCreatedSource = new Subject<Projeto>();
 
     projetoCreated = this.projetoCreatedSource.asObservable();
-    
+
     status: ProjetoStatus[];
 
     constructor(private http: HttpClient) { }
@@ -109,7 +109,7 @@ export class ProjetosService {
     }
 
     delEtapa(id: number) {
-        return this.http.delete<any>(`Projeto/${id}/Etapas`);
+        return this.http.delete<any>(`Projeto/Etapas/${id}`);
     }
 
     /**

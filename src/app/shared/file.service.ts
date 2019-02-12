@@ -29,7 +29,7 @@ export class FileService {
     }
 
     download(id: number) {
-        return this.http.get<any>(`upload/${id}/Download`);
+        return this.http.get<any>(`upload/download/${id}`);
     }
     downloadLogDuto(id: number) {
         return this.http.get<any>(`upload/${id}/ObterLogDuto`);
