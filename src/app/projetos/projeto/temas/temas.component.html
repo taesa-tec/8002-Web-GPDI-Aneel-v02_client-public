@@ -9,7 +9,7 @@
         </label>
         <select name="" id="" class="form-control w-50" formControlName="catalogTemaId">
           <option value="">Selecione</option>
-          <option [value]="tema.id" *ngFor="let tema of temas">{{tema.nome}}</option>
+          <option [value]="tema.id" *ngFor="let tema of temas | orderBy:'order'">{{tema.nome}}</option>
         </select>
       </div>
       <div class="form-group" *ngIf="tema && tema.valor === 'OU'">
@@ -19,11 +19,21 @@
     </form>
   </div>
 </div>
-<div class="row d-none">
+<div class="row">
   <div class="col-12">
     <div class="form-group">
-      <label for="">Arquivos relacionados a demanda <app-tip [tipId]="33"></app-tip></label>
-      <input type="file" name="" id="" class="form-control">
+      <label for="">
+        Arquivos relacionados a demanda <app-tip [tipId]="33"></app-tip>
+      </label>
+
+    </div>
+    <div *ngIf="formFile" [formGroup]="formFile">
+      <label class="text-primary">
+        <i class="ta-upload"></i>
+        <span>Selecionar arquivo </span>
+        <strong *ngFor="let file of file.files"> ({{file.name}})</strong>
+        <input type="file" name="" id="" class="form-control d-none" #file formControlName="file">
+      </label>
     </div>
   </div>
 </div>

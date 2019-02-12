@@ -23,6 +23,7 @@ export class TemasComponent implements OnInit {
     temas: Array<Tema>;
     // Form
     form: FormGroup;
+    formFile: FormGroup;
     temaControl = new FormControl('', [Validators.required]);
     subTemasForms = new FormArray([]);
 
@@ -73,8 +74,12 @@ export class TemasComponent implements OnInit {
             subTemas: this.subTemasForms
         });
 
+        this.formFile = new FormGroup({
+            file: new FormControl('')
+        });
+
         this.temaControl.valueChanges.subscribe(value => {
-            if (this.tema.valor === 'OU') {
+            if (this.tema && this.tema.valor === 'OU') {
                 this.form.addControl('outroDesc', new FormControl('', [Validators.required]));
             } else {
                 this.form.removeControl('outroDesc');

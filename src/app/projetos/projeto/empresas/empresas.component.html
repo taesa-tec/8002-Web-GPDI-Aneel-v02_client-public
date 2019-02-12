@@ -34,6 +34,11 @@
           </th>
         </tr>
       </thead>
+      <tr>
+        <td colspan="3" class="text-center p-0">
+          <app-loading type="inline"></app-loading>
+        </td>
+      </tr>
       <tr *ngFor="let empresa of empresas">
         <td>
           <span *ngIf="empresa.catalogEmpresa">
