@@ -21,54 +21,59 @@ import { NotDefinedPipe } from './pipes/not-defined.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { OrdersComponent } from './helper/orders/orders.component';
 import { TipoProjetoPipe } from './pipes/tipo-projeto.pipe';
+import { customCurrencyMaskConfig } from '@app/app.config';
+import { NgxCurrencyModule } from 'ngx-currency';
 
 
 library.add(fas, far);
 
 @NgModule({
-  declarations: [
-    LoadingComponent,
-    AccordionComponent,
-    AlertComponent,
-    ConfirmComponent,
-    TipComponent,
-    OrdersComponent,
-    // Pipes
-    NotDefinedPipe,
-    OrderByPipe,
-    TipoProjetoPipe,
-  ],
-  imports: [
-    CommonModule,
-    FontAwesomeModule,
-    NgbModule,
-    HttpClientModule,
-    FormsModule,
-    AppFormsModule,
-    ReactiveFormsModule,
-    NgxMaskModule.forRoot()
-  ],
-  entryComponents: [AlertComponent, ConfirmComponent],
-  exports: [
-    CommonModule,
-    HttpClientModule,
-    FormsModule,
-    RouterModule,
-    ReactiveFormsModule,
-    NgbModule,
-    NgxMaskModule,
-    FontAwesomeModule,
-    AppFormsModule,
-    LoadingComponent,
-    AccordionComponent,
-    AlertComponent,
-    ConfirmComponent,
-    TipComponent,
-    OrdersComponent,
-    // Pipes
-    NotDefinedPipe,
-    OrderByPipe,
-    TipoProjetoPipe
-  ]
+    declarations: [
+        LoadingComponent,
+        AccordionComponent,
+        AlertComponent,
+        ConfirmComponent,
+        TipComponent,
+        OrdersComponent,
+        // Pipes
+        NotDefinedPipe,
+        OrderByPipe,
+        TipoProjetoPipe,
+    ],
+    imports: [
+        CommonModule,
+        FontAwesomeModule,
+        NgbModule,
+        HttpClientModule,
+        FormsModule,
+        AppFormsModule,
+        ReactiveFormsModule,
+        NgxMaskModule.forRoot(),
+        NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
+    ],
+    entryComponents: [AlertComponent, ConfirmComponent],
+    exports: [
+        CommonModule,
+        HttpClientModule,
+        FormsModule,
+        RouterModule,
+        ReactiveFormsModule,
+        NgbModule,
+        NgxMaskModule,
+        NgxCurrencyModule,
+        FontAwesomeModule,
+        AppFormsModule,
+        // Coponentes
+        LoadingComponent,
+        AccordionComponent,
+        AlertComponent,
+        ConfirmComponent,
+        TipComponent,
+        OrdersComponent,
+        // Pipes
+        NotDefinedPipe,
+        OrderByPipe,
+        TipoProjetoPipe
+    ]
 })
 export class SharedModule { }
