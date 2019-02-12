@@ -26,7 +26,7 @@
         <label for="">Empresa Recebedora</label>
         <select name="" id="" class="form-control">
           <option value="">Selecione</option>
-          <option [value]="emR.id" *ngFor="let emR of empresaRecebdora">{{emR.razaoSocial}}</option>
+          <option [value]="emR.id" *ngFor="let emR of empresaRecebdora">{{emR.catalogEmpresa ? emR.catalogEmpresa.nome : emR.razaoSocial}}</option>
         </select>
       </div>
     </div>
@@ -35,7 +35,10 @@
     <div class="col-6">
       <div class="form-group">
         <label for="">Etapa</label>
-        <select name="" id="" class="form-control"></select>
+        <select name="" id="" class="form-control">
+          <option value="">Selecione</option>
+          <option value="" *ngFor="let etapa of etapas"></option>
+        </select>
       </div>
     </div>
     <div class="col-6">

@@ -12,6 +12,7 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
 
     recursosMaterias: Array<any>;
     empresaRecebdora: Array<any>;
+    etapas: Array<any>;
     projeto: Projeto;
 
     constructor(public activeModal: NgbActiveModal, private projetoService: ProjetosService) { }
@@ -19,12 +20,14 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
     ngOnInit() {
         this.loadRecursoMaterial();
         this.loadEmpresaRecebdora();
-        console.log(this.empresaRecebdora);
+        this.loadEtapas();
+
     }
 
     loadRecursoMaterial() {
         this.projetoService.getRecursoMaterial(this.projeto.id).subscribe(recursosMaterias => this.recursosMaterias = recursosMaterias || []);
     }
+
     loadEmpresaRecebdora() {
         this.projetoService.getEmpresas(this.projeto.id).subscribe(empresaRecebdora => {
             console.log(empresaRecebdora);
@@ -32,4 +35,10 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
             this.empresaRecebdora = empresaRecebdora || [];
         });
     }
+
+    loadEtapas() {
+        this.projetoService.getEtapas(this.projeto.id).subscribe(etapa => { this.etapas = etapa || []; console.log(etapa);
+         });
+    }
+
 }
