@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProjetosService } from '@app/projetos/projetos.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { RecursoMaterialFormComponent } from '@app/projetos/recurso-material-form/recurso-material-form.component';
-import { Projeto, RecursoMaterial } from '@app/models';
+import { Projeto, RecursoMaterial, CategoriaContabil } from '@app/models';
 import { ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
 import { zip, of } from 'rxjs';
@@ -16,6 +16,7 @@ import { AppService } from '@app/app.service';
 export class RecursosMateriaisComponent implements OnInit {
 
     recursosMaterias: Array<any>;
+    categoriaContabel = CategoriaContabil;
     projeto: Projeto;
     listOrder: { field: string; direction: 'asc' | 'desc'; } = {
         field: 'nome',
@@ -24,7 +25,6 @@ export class RecursosMateriaisComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private projetoService: ProjetosService,
         protected app: AppService,
         protected modalService: NgbModal) { }
 
@@ -44,7 +44,11 @@ export class RecursosMateriaisComponent implements OnInit {
 
         data$.subscribe(([projeto, recursosMaterias]) => {
             this.projeto = projeto;
-            this.recursosMaterias = recursosMaterias;
+            this.recursosMaterias = recursosMaterias.map(rec => {
+                rec.categoriaContabelNome = this.categoriaContabel.find(e => rec.categoriaContabilValor === e.value).text;
+                return rec;
+            });
+
         });
     }
 

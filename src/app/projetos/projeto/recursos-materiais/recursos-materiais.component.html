@@ -24,7 +24,7 @@
           </th>
           <th>
             <div class="d-flex align-items-center">
-              <span class="mx-2">Entidade Recebedora</span>
+              <span class="mx-2">Categoria Contábil</span>
               <app-handler-order [current]="listOrder" field="categoriaContabilValor" (order)=order($event)></app-handler-order>
             </div>
 
@@ -44,7 +44,7 @@
       </thead>
       <tr *ngFor="let recursosMateria of recursosMaterias | orderBy:listOrder.field:listOrder.direction">
         <td>{{recursosMateria.nome}}</td>
-        <td>{{recursosMateria.categoriaContabilValor}}</td>
+        <td>{{recursosMateria.categoriaContabelNome}}</td>
         <td>{{recursosMateria.valorUnitario | currency:'R$'}}</td>
         <td>
           <button type="button" class="btn btn-primary btn-sm w-100" (click)="openModal(recursosMateria)">
