@@ -13,7 +13,7 @@ export class AlocacaoComponent {
 
     constructor(protected projetoService: ProjetosService, protected modalService: NgbModal) { }
 
-    openModal(etapa_id: number) {
+    openModal(etapa_id: number = 0) {
         const modalRef = this.modalService.open(AlocarRecursoHumanoFormComponent, { size: 'lg' });
         modalRef.componentInstance.etapa_id = etapa_id;
     }

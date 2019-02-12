@@ -12,7 +12,7 @@ export class RecursosHumanosComponent {
 
     constructor(protected projetoService: ProjetosService, protected modalService: NgbModal) { }
 
-    openModal(recurso_id: number) {
+    openModal(recurso_id: number = 0) {
         const modalRef = this.modalService.open(RecursoHumanoFormComponent, { size: 'lg' });
         modalRef.componentInstance.recurso_id = recurso_id;
     }

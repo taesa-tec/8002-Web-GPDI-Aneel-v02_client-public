@@ -34,7 +34,7 @@ export class AlocacaoComponent implements OnInit {
         this.projetoService.getAlocacaoRM(this.projeto.id).subscribe(alocacoes => this.alocacoes = alocacoes || []);
     }
 
-    openModal(etapa_id: number) {
+    openModal() {
         const modalRef = this.modalService.open(AlocarRecursoMaterialFormComponent, { size: 'lg' });
         //modalRef.componentInstance.etapa_id = etapa_id;
         modalRef.componentInstance.projeto = this.projeto;

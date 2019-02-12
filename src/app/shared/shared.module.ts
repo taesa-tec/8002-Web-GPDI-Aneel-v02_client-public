@@ -23,6 +23,8 @@ import { OrdersComponent } from './helper/orders/orders.component';
 import { TipoProjetoPipe } from './pipes/tipo-projeto.pipe';
 import { customCurrencyMaskConfig } from '@app/app.config';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { FileService } from './file.service';
+import { DownloadFileDirective } from './download-file.directive';
 
 
 library.add(fas, far);
@@ -39,6 +41,7 @@ library.add(fas, far);
         NotDefinedPipe,
         OrderByPipe,
         TipoProjetoPipe,
+        DownloadFileDirective,
     ],
     imports: [
         CommonModule,
@@ -52,6 +55,7 @@ library.add(fas, far);
         NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     ],
     entryComponents: [AlertComponent, ConfirmComponent],
+    providers: [FileService],
     exports: [
         CommonModule,
         HttpClientModule,
@@ -73,7 +77,10 @@ library.add(fas, far);
         // Pipes
         NotDefinedPipe,
         OrderByPipe,
-        TipoProjetoPipe
+        TipoProjetoPipe,
+        // Directives
+        DownloadFileDirective
+
     ]
 })
 export class SharedModule { }

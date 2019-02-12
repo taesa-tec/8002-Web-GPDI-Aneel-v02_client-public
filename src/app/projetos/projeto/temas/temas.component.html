@@ -27,13 +27,17 @@
       </label>
 
     </div>
-    <div *ngIf="formFile" [formGroup]="formFile">
-      <label class="text-primary">
-        <i class="ta-upload"></i>
+    <div>
+      <label class="btn btn-link">
+        <i class="ta-upload mx-2 fs-22"></i>
         <span>Selecionar arquivo </span>
         <strong *ngFor="let file of file.files"> ({{file.name}})</strong>
-        <input type="file" name="" id="" class="form-control d-none" #file formControlName="file">
+        <input type="file" name="" id="" class="form-control d-none" #file (change)="changeFile($event)">
       </label>
+      <div *ngIf="temaProjeto">
+        <hr>
+        <span class="btn btn-link" [downloadFile]="file.id" *ngFor="let file of temaProjeto.uploads">{{file.nomeArquivo}}</span>
+      </div>
     </div>
   </div>
 </div>
