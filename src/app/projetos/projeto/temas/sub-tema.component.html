@@ -5,7 +5,7 @@
     </label>
     <select name="" id="" class="form-control" formControlName="catalogSubTemaId" #subtemacontrol>
       <option value="">Selecione</option>
-      <option [value]="subTema.subTemaId" *ngFor="let subTema of subTemas">{{subTema.nome}}</option>
+      <option [value]="subTema.subTemaId" *ngFor="let subTema of temas">{{subTema.nome}}</option>
     </select>
   </div>
   <div class="form-group" *ngIf="isOther">

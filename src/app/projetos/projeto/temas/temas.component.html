@@ -29,7 +29,7 @@
 </div>
 <div class="row">
   <div class="col-12">
-    <app-sub-tema *ngFor="let formSubtema of subTemasForms.controls; let i = index;" [subform]="formSubtema" [subTemas]="subTemas" (remove)="delete(i)" [index]="i"></app-sub-tema>
+    <app-sub-tema *ngFor="let formSubtema of subTemasForms.controls; let i = index;" [subform]="formSubtema" [selectedThemes]="selectedsThemes" [subTemas]="subTemas" (remove)="delete(i)" [index]="i"></app-sub-tema>
   </div>
   <div class="col-12 text-right" *ngIf="subTemas.length > 0">
     <button type="button" class="btn btn-outline-primary" (click)="addSubTema()">
