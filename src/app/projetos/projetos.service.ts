@@ -150,7 +150,7 @@ export class ProjetosService {
     }
 
     delRH(id: number) {
-        return this.http.delete<any>(`Projeto/${id}/RecursoHumanos`);
+        return this.http.delete<any>(`Projeto/RecursoHumanos/${id}`);
     }
 
     /**

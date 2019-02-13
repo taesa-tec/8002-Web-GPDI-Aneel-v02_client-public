@@ -1,87 +1,79 @@
 <div class="row mb-5">
-  <div class="col">
-    <h5 class="text-uppercase text-blue font-weight-normal my-3">
+    <div class="col">
+        <h5 class="text-uppercase text-blue font-weight-normal my-3">
             Recursos Humanos
         </h5>
-  </div>
-  <div class="col text-right">
-    <button class="btn btn-outline-primary" type="button" (click)="openModal()">
-      <i class="ta-plus-circle fs-24 align-middle"></i>
-      Nova pessoa
-    </button>
-  </div>
+    </div>
+    <div class="col text-right">
+        <button class="btn btn-outline-primary" type="button" (click)="openModal()">
+            <i class="ta-plus-circle fs-24 align-middle"></i>
+            Nova pessoa
+        </button>
+    </div>
 </div>
 <div class="row">
-  <div class="col-12">
-    {{recursosHumano|json}}
-    <table class="table">
-      <thead>
-        <tr>
-          <th>
-            <div class="d-flex align-items-center">
-              <span class="mx-2">Nome</span>
-              <span class="d-flex flex-column">
-                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
-                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
-                            </span>
-            </div>
-          </th>
-          <th>
-            <div class="d-flex align-items-center">
-              <span class="mx-2">Empresa</span>
-              <span class="d-flex flex-column">
-                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
-                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
-                            </span>
-            </div>
+    <div class="col-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">Nome</span>
+                            <app-handler-order [current]="listOrder" field="nomeCompleto" (order)=order($event)></app-handler-order>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">Empresa</span>
+                            <app-handler-order [current]="listOrder" field="empresaNome" (order)=order($event)></app-handler-order>
+                        </div>
 
-          </th>
-          <th>
-            <div class="d-flex align-items-center">
-              <span class="mx-2">Função</span>
-              <span class="d-flex flex-column">
-                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
-                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
-                            </span>
-            </div>
-          </th>
-          <th>
-            <div class="d-flex align-items-center">
-              <span class="mx-2">Título</span>
-              <span class="d-flex flex-column">
-                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
-                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
-                            </span>
-            </div>
-          </th>
-          <th>
-            <div class="d-flex align-items-center">
-              <span class="mx-2">Ações</span>
-            </div>
-          </th>
-        </tr>
-      </thead>
-      <tr *ngFor="let recursoHumano of recursosHumano">
-        <td>{{recursoHumano.nomeCompleto}}</td>
-        <td>Ivision Sistemas de Imagem e Visão S.A</td>
-        <td>{{recursoHumano.nomeCompleto}}</td>
-        <td>Doutor</td>
-        <td>
-          <button type="button" class="btn btn-primary btn-sm btn-block" (click)="openModal(recursoHumano)">
-            <i class="ta-edit"></i>
-            EDITAR
-          </button>
-        </td>
-      </tr>
-    </table>
-  </div>
+                    </th>
+                    <th>
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">Função</span>
+                            <app-handler-order [current]="listOrder" field="funcaoNome" (order)=order($event)></app-handler-order>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">Título</span>
+                            <app-handler-order [current]="listOrder" field="titulacaoNome" (order)=order($event)></app-handler-order>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">Ações</span>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tr>
+                <td colspan="5" class="text-center p-0">
+                    <app-loading type="inline"></app-loading>
+                </td>
+            </tr>
+            <tr *ngFor="let recursoHumano of recursosHumano | orderBy:listOrder.field:listOrder.direction">
+                <td>{{recursoHumano.nomeCompleto}}</td>
+                <td>{{recursoHumano.empresaNome}}</td>
+                <td>{{recursoHumano.funcaoNome}}</td>
+                <td>{{recursoHumano.titulacaoNome}}</td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-sm btn-block" (click)="openModal(recursoHumano)">
+                        <i class="ta-edit"></i>
+                        EDITAR
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 
 <hr>
 <div class="row">
-  <div class="col-auto">
-    <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes</div>
-  <div class="col text-right">
+    <div class="col-auto">
+        <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes</div>
+    <div class="col text-right">
 
-  </div>
+    </div>
 </div>

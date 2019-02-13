@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <div class="text-uppercase modal-title text-blue-light fs-24">Registrar Recurso Humano</div>
+  <div class="text-uppercase modal-title text-blue-light fs-24">{{modalTitle}}</div>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <i class="ta-cancel-circle"></i>
   </button>
@@ -80,13 +80,22 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-12 text-right">
-      <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
-      <button class="btn btn-primary" (click)="submit()" [disabled]="form.invalid">
-        <i class="ta-plus-circle"></i>
-        Salvar Pessoa
-      </button>
-    </div>
-  </div>
+        <div class="col-12">
+          <div class="d-flex justify-content-between">
+            <div>
+              <button class="btn btn-link" (click)="excluir()" *ngIf="recursoHumano.id"><i class="ta-cancel-circle"></i> Excluir</button>
+            </div>
+    
+            <div class="text-right">
+              <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
+    
+              <button class="btn btn-primary" type="button" (click)="submit()" [disabled]="form.invalid">
+                <i [class]="buttonAction.icon"></i>
+                {{buttonAction.text}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 </form>
 <app-loading type="fullscreen"></app-loading>

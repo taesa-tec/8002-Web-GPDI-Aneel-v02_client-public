@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Projeto, Funcao, Titulacao, EmpresaProjeto, Empresa, AppValidators } from '@app/models';
+import { Projeto, Funcao, Titulacao, EmpresaProjeto, Empresa, AppValidators, RecursosHumanos } from '@app/models';
 import { AppService } from '@app/app.service';
 import { zip } from 'rxjs';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-recurso-humano-form',
@@ -18,6 +19,7 @@ export class RecursoHumanoFormComponent implements OnInit {
     titulacao = Titulacao;
     empresas: EmpresaProjeto;
     empresasCatalog: Array<Empresa>;
+    recursoHumano: RecursosHumanos;
     nacionalidades = [{ value: 'Brasileiro', text: "Sim" }, { value: 'Estrangeiro', text: "Não" }];
     nacionalidade = new FormControl('', Validators.required);
     form: FormGroup;
@@ -28,6 +30,15 @@ export class RecursoHumanoFormComponent implements OnInit {
         public activeModal: NgbActiveModal,
         protected app: AppService) { }
 
+    get modalTitle() {
+        return typeof this.recursoHumano.id !== 'undefined' ? "Editar Recurso Humano" : "Registrar Recurso Humano";
+    }
+
+    get buttonAction() {
+        return typeof this.recursoHumano.id !== 'undefined' ? { text: "Editar Pessoa", icon: 'ta-save' } :
+            { text: "Salvar Pessoa", icon: 'ta-plus-circle' };
+    }
+
     ngOnInit() {
         this.setup();
         this.loadData();
@@ -35,19 +46,21 @@ export class RecursoHumanoFormComponent implements OnInit {
 
     setup() {
 
-        const cpfCtrl = new FormControl('', [Validators.required, AppValidators.cpf]);
-        const passaporte = new FormControl('', Validators.required);
+        const cpfCtrl = new FormControl(this.recursoHumano.cpf || '', [Validators.required, AppValidators.cpf]);
+        const passaporte = new FormControl(this.recursoHumano.passaporte || '', Validators.required);
 
         this.form = new FormGroup({
             projetoId: new FormControl(this.projeto.id, Validators.required),
-            empresaId: new FormControl('', Validators.required),
-            valorHora: new FormControl('', Validators.required),
-            nomeCompleto: new FormControl('', Validators.required),
-            titulacao: new FormControl('', Validators.required),
-            funcao: new FormControl('', Validators.required),
+            empresaId: new FormControl(this.recursoHumano.empresaId || '', Validators.required),
+            valorHora: new FormControl(this.recursoHumano.valorHora || '', Validators.required),
+            nomeCompleto: new FormControl(this.recursoHumano.nomeCompleto || '', Validators.required),
+            titulacao: new FormControl(this.recursoHumano.titulacaoValor || '', Validators.required),
+            funcao: new FormControl(this.recursoHumano.funcaoValor || '', Validators.required),
             nacionalidade: this.nacionalidade,
-            urlCurriculo: new FormControl('', [Validators.required, Validators.pattern(/^https?:\/\/(.+)\.(.+)/)]),
+            urlCurriculo: new FormControl(this.recursoHumano.urlCurriculo || '', [Validators.required, Validators.pattern(/^https?:\/\/(.+)\.(.+)/)]),
         });
+
+
 
         this.nacionalidade.valueChanges.subscribe(value => {
             if (value === 'Brasileiro') {
@@ -59,15 +72,16 @@ export class RecursoHumanoFormComponent implements OnInit {
             }
         });
 
+        this.nacionalidade.setValue(this.recursoHumano.nacionalidadeValor || '');
 
-        /* if (this.recursoMaterial.id !== undefined) {
-            this.form.addControl('id', new FormControl(this.recursoMaterial.id));
-        } */
+        if (this.recursoHumano.id !== undefined) {
+            this.form.addControl('id', new FormControl(this.recursoHumano.id));
+        }
     }
 
     submit() {
         if (this.form.valid) {
-            const request = this.app.projetos.criarRH(this.form.value);
+            const request = this.recursoHumano.id ? this.app.projetos.editarRH(this.form.value) : this.app.projetos.criarRH(this.form.value);
             this.loading.show();
             request.subscribe(result => {
                 console.log(result);
@@ -104,5 +118,26 @@ export class RecursoHumanoFormComponent implements OnInit {
 
             this.loading.hide();
         });
+    }
+
+    excluir() {
+        this.app.confirm("Tem certeza que deseja excluir esta etapa?", "Confirmar Exclusão")
+            .then(result => {
+                if (result) {
+                    this.loading.show();
+                    this.app.projetos.delRH(this.recursoHumano.id).subscribe(resultDelete => {
+                        this.loading.hide();
+                        if (resultDelete.sucesso) {
+                            this.activeModal.close('deleted');
+                        } else {
+                            this.app.alert(resultDelete.inconsistencias.join(', '));
+                        }
+                    }, (error: HttpErrorResponse) => {
+                        this.loading.hide();
+                        this.app.alert(error.message);
+                    });
+                }
+
+            });
     }
 }
