@@ -30,7 +30,7 @@ export class SubTemasComponent implements OnInit {
     }
 
     get isOther() {
-        return this.tema && this.tema.nome.match(/^Outro\.?$/g) !== null;
+        return this.tema && this.tema.nome.match(/^Outros?\.?$/g) !== null;
     }
     constructor() { }
 

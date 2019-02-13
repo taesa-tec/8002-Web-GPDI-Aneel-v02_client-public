@@ -123,6 +123,8 @@ export interface UserProjeto {
     catalogUserPermissao: CatalogUserPermissao;
 }
 
+
+
 export interface Tema {
     id: number;
     nome: string;
@@ -180,6 +182,23 @@ export interface Produto {
     etapaProduto: any[];
 }
 
+/**
+ * Etapa Request
+ */
+
+export interface Etapa {
+    id: number;
+    projetoId: number;
+    numeroEtapa?: number;
+    desc: string;
+    dataInicio: string;
+    dataFim: string;
+    etapaProdutos: EtapaProduto[];
+}
+export interface EtapaProduto {
+    produtoId: number;
+}
+
 export interface EmpresaProjeto {
     id: number;
     projetoId: number;
@@ -195,28 +214,28 @@ export interface EmpresaProjeto {
 
 
 export interface RecursoMaterial {
-  id: number;
-  projetoId: number;
-  nome: string;
-  categoriaContabil: number;
-  categoriaContabilValor: string;
-  valorUnitario: string;
-  especificacao: string;
+    id: number;
+    projetoId: number;
+    nome: string;
+    categoriaContabil: number;
+    categoriaContabilValor: string;
+    valorUnitario: string;
+    especificacao: string;
 }
 
 export interface AlocacaoRM {
-  id: number;
-  etapaId: number;
-  etapa?: any;
-  projetoId: number;
-  recursoMaterialId: number;
-  recursoMaterial?: any;
-  empresaFinanciadoraId: number;
-  empresaFinanciadora?: any;
-  empresaRecebedoraId: number;
-  empresaRecebedora?: any;
-  qtd: number;
-  justificativa: string;
+    id: number;
+    etapaId: number;
+    etapa?: any;
+    projetoId: number;
+    recursoMaterialId: number;
+    recursoMaterial?: any;
+    empresaFinanciadoraId: number;
+    empresaFinanciadora?: any;
+    empresaRecebedoraId: number;
+    empresaRecebedora?: any;
+    qtd: number;
+    justificativa: string;
 }
 
 export interface FileUploaded {
@@ -231,4 +250,32 @@ export interface FileUploaded {
     userId: string;
     user?: any;
     created: string;
+}
+
+export interface ExtratoItem {
+    alocacaoId: number;
+    desc: string;
+    etapa: Etapa;
+    valor: number;
+}
+
+export interface ExtratoRelatorio {
+    categoriaContabil: number;
+    desc: string;
+    items: ExtratoItem[];
+    total: number;
+    valor: number;
+}
+
+export interface ExtratoEmpresa {
+    nome: string;
+    relatorios: ExtratoRelatorio[];
+    total: number;
+    valor: number;
+}
+
+export interface ExtratosEmpresas {
+    empresas: ExtratoEmpresa[];
+    total: number;
+    valor: number;
 }
