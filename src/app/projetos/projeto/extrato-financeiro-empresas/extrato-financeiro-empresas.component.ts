@@ -6,7 +6,7 @@ import { AppService } from '@app/app.service';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { zip } from 'rxjs';
-import { Projeto, ExtratosEmpresas } from '@app/models';
+import { Projeto, ExtratosEmpresas, Etapa } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 
 @Component({
@@ -18,6 +18,7 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
 
     projeto: Projeto;
     extrato: ExtratosEmpresas;
+    etapas: { [propName: number]: Etapa } = {};
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
@@ -48,10 +49,18 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
 
     load() {
         this.loading.show();
+        const extratos$ = this.app.projetos.getExtratoEmpresas(this.projeto.id);
+        const etapas$ = this.app.projetos.getEtapas(this.projeto.id);
         this.app.projetos.getExtratoEmpresas(this.projeto.id).subscribe(result => {
-            this.extrato = result;
-            this.loading.hide();
+
         }, error => {
+            this.loading.hide();
+        });
+        zip(extratos$, etapas$).subscribe(([extrato, etapas]) => {
+            this.extrato = extrato;
+            etapas.forEach((etapa, index) => {
+                this.etapas[etapa.id] = Object.assign(etapa, { numeroEtapa: index + 1 });
+            });
             this.loading.hide();
         });
     }
