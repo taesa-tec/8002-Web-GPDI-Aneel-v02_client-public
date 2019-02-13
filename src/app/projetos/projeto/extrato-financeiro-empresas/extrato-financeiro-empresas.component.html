@@ -1,22 +1,27 @@
 <h5 class="text-uppercase text-blue font-weight-normal mb-5">Extrato Financeiro por empresas</h5>
-<div class="row" *ngFor="let item of ['TAESA (7527)', 'ATE II (5012)']">
+<div class="row">
+    <div class="col-12 text-center">
+        <app-loading type="inline"></app-loading>
+    </div>
+</div>
+<div class="row" *ngFor="let empresa of extratoEmpresas">
     <div class="col-12">
-        <h6>{{item}}</h6>
+        <h6>{{empresa.nome}}</h6>
     </div>
     <div class="col-12">
-        <app-accordion *ngFor="let itemExtrato of ['Recursos Humanos (RH)', 'Serviços de Terceiros (ST)', 'Materiais e Consumo (MC)', 'Materiais Permanentes e Equipamentos (MP)']">
+        <app-accordion *ngFor="let relatorio of empresa.relatorios">
             <header role="heading" class="d-flex justify-content-between">
-                <span>{{itemExtrato}}</span><span>R$12.345,00</span>
+                <span>{{relatorio.desc}}</span><span>{{relatorio.valor | currency:'R$'}}</span>
             </header>
             <div role="main">
                 <table class="table table-borderless">
-                    <tr *ngFor="let i of [0,0,0,0]">
+                    <tr *ngFor="let i of relatorio.items">
                         <td>
-                            <button class="btn btn-sm btn-link" (click)="openModal()">Nome do Item</button>
+                            <button class="btn btn-sm btn-link" (click)="openModal()">{{i.desc}}</button>
                         </td>
-                        <td>Etapa 3</td>
-                        <td>Titulo</td>
-                        <td>R$12.345,00</td>
+                        <td>{{ i.etapa.desc }}</td>
+                        <td>???</td>
+                        <td>{{i.valor | currency:'R$'}}</td>
                     </tr>
                 </table>
             </div>
@@ -24,10 +29,10 @@
     </div>
 </div>
 <hr>
-<div class="row">
+<div class="row" *ngIf="extrato">
     <div class="col text-right">
         <h5 class="text-blue">
-            Total Geral: R$ 1.234.567,89
+            Total Geral: {{ totalGeral | currency:'R$' }}
         </h5>
         <button class="btn btn-outline-blue">
             <i class="ta-download fs-18"></i>

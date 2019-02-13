@@ -12,7 +12,8 @@ import {
     Produto,
     ProjetoDataInicio,
     Etapa,
-    EditEmpresaRequest
+    EditEmpresaRequest,
+    ExtratosEmpresas
 } from '@app/models';
 import { Subject, Observable } from 'rxjs';
 
@@ -129,7 +130,7 @@ export class ProjetosService {
     }
 
     delEmpresa(id: number) {
-        return this.http.delete<any>(`Projeto/${id}/Empresas`);
+        return this.http.delete<any>(`Projeto/Empresas/${id}`);
     }
 
     /**
@@ -216,15 +217,15 @@ export class ProjetosService {
      * Extrato Financeiro Empresas
      */
 
-    getExtratoFEm(id: number) {
-        return this.http.get<any>(`Projeto/${id}/ExtratoEmpresas`);
+    getExtratoEmpresas(id: number) {
+        return this.http.get<ExtratosEmpresas>(`Projeto/${id}/ExtratoEmpresas`);
     }
 
     /**
      * Extrato Financeiro Etapas
      */
 
-    getExtratoFEt(id: number) {
+    getExtratoEtapas(id: number) {
         return this.http.get<any>(`Projeto/${id}/ExtratoEtapas`);
     }
 

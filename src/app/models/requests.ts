@@ -1,3 +1,5 @@
+import { EtapaProduto } from './common';
+
 /**
  * Users Request
  */
@@ -84,22 +86,7 @@ export interface EditProduto {
   faseCadeia: string;
 }
 
-/**
- * Etapa Request
- */
 
-export interface Etapa {
-  id: number;
-  projetoId: number;
-  numeroEtapa?: number;
-  desc: string;
-  dataInicio: string;
-  dataFim: string;
-  etapaProdutos: EtapaProduto[];
-}
-export interface EtapaProduto {
-  produtoId: number;
-}
 
 export interface CriarEtapaRequest {
   projetoId: number;

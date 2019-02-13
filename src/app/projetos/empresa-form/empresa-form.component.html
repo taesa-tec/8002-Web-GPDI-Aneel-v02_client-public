@@ -1,101 +1,123 @@
 <div class="modal-header">
-  <div class="text-uppercase modal-title text-blue-light fs-24">Registrar empresa</div>
-  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-    <i class="ta-cancel-circle"></i>
-  </button>
+    <div class="text-uppercase modal-title text-blue-light fs-24">Registrar empresa</div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <i class="ta-cancel-circle"></i>
+    </button>
 </div>
 <div class="modal-body">
-  <ngb-tabset justify="justified" type="bar-row" (tabChange)="beforeChangeTab($event)">
-    <ngb-tab title="Empresa Cooperada" id="cooperada">
-      <ng-template ngbTabContent>
-        <div class="row my-5" *ngIf="formCooperada" [formGroup]="formCooperada">
-          <div class="col-12">
-            <div class="form-group">
-              <label for="">Empresa Cooperada</label>
-              <select name="" id="" class="form-control" formControlName="catalogEmpresaId">
-                <option value="">Selecione</option>
-                <option value="" *ngFor="let empresa of empresas" [value]="empresa.id">{{empresa.nome}}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 text-right">
-            <div class="button btn btn-link">Cancelar</div>
-            <button class="btn btn-primary" type="button" (click)="submit('Energia')">
-              <i class="ta-plus-circle fs-24 align-middle"></i>
-              Salvar Empresa
-            </button>
-          </div>
-        </div>
-      </ng-template>
-    </ngb-tab>
-    <ngb-tab title="Empresa Executora" id="executora">
-      <ng-template ngbTabContent>
-        <div class="row my-5" *ngIf="formExecutora" [formGroup]="formExecutora">
-          <div class="col-6">
-            <div class="form-group">
-              <label for="">CNPJ</label>
-              <input type="text" class="form-control" formControlName="cnpj">
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="form-group">
-              <label for="">UF de cadastro na fazenda</label>
-              <select name="" id="" class="form-control" formControlName="catalogEstadoId">
-                <option value="">Selecione</option>
-                <option value="" *ngFor="let estado of estados" [value]="estado.id">{{estado.nome}}</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-12">
-            <div class="form-group">
-              <label for="">Razão social</label>
-              <input type="text" class="form-control" formControlName="razaoSocial">
-            </div>
-          </div>
-        </div>
+    <ngb-tabset justify="justified" type="bar-row" (tabChange)="beforeChangeTab($event)">
+        <ngb-tab title="Empresa Cooperada" id="cooperada">
+            <ng-template ngbTabContent>
+                <div class="row my-5" *ngIf="formCooperada" [formGroup]="formCooperada">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="">Empresa Cooperada</label>
+                            <select name="" id="" class="form-control" formControlName="catalogEmpresaId">
+                                <option value="">Selecione</option>
+                                <option value="" *ngFor="let empresa of empresas" [value]="empresa.id">{{empresa.nome}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="row">
-          <div class="col-12 text-right">
-            <div class="button btn btn-link">Cancelar</div>
-            <button class="btn btn-primary" type="button" (click)="submit('Executora')">
-              <i class="ta-plus-circle fs-24 align-middle"></i>
-              Salvar Empresa
-            </button>
-          </div>
-        </div>
-      </ng-template>
-    </ngb-tab>
-    <ngb-tab title="Empresa Parceira" id="parceira">
-      <ng-template ngbTabContent>
-        <div class="row my-5" *ngIf="formParceira" [formGroup]="formParceira">
-          <div class="col-6">
-            <div class="form-group">
-              <label for="">CNPJ</label>
-              <input type="text" class="form-control" formControlName="cnpj">
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="form-group">
-              <div class="form-group">
-                <label for="">Razão social</label>
-                <input type="text" class="form-control" formControlName="razaoSocial">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 text-right">
-            <div class="button btn btn-link">Cancelar</div>
-            <button class="btn btn-primary" type="button" (click)="submit('Parceira')">
-              <i class="ta-plus-circle fs-24 align-middle"></i>
-              Salvar Empresa
-            </button>
-          </div>
-        </div>
-      </ng-template>
-    </ngb-tab>
-  </ngb-tabset>
-  <app-loading type="fullparent"></app-loading>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <button class="btn btn-link" (click)="excluirEmpresa()" [hidden]="empresa.id === undefined"><i class="ta-cancel-circle"></i> Excluir</button>
+                            </div>
+                            <div class="text-right">
+                                <div class="button btn btn-link">Cancelar</div>
+                                <button class="btn btn-primary" type="button" (click)="submit('Energia')">
+                                    <i class="ta-plus-circle fs-24 align-middle"></i>
+                                    Salvar Empresa
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Empresa Executora" id="executora">
+            <ng-template ngbTabContent>
+                <div class="row my-5" *ngIf="formExecutora" [formGroup]="formExecutora">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="">CNPJ</label>
+                            <input type="text" class="form-control"  mask="00.000.000/0000-00" formControlName="cnpj">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="">UF de cadastro na fazenda</label>
+                            <select name="" id="" class="form-control" formControlName="catalogEstadoId">
+                                <option value="">Selecione</option>
+                                <option value="" *ngFor="let estado of estados" [value]="estado.id">{{estado.nome}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="">Razão social</label>
+                            <input type="text" class="form-control" formControlName="razaoSocial">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <button class="btn btn-link" (click)="excluirEmpresa()" [hidden]="empresa.id === undefined"><i class="ta-cancel-circle"></i> Excluir</button>
+                            </div>
+                            <div class="text-right">
+                                <div class="button btn btn-link">Cancelar</div>
+                                <button class="btn btn-primary" type="button" (click)="submit('Executora')">
+                                    <i class="ta-plus-circle fs-24 align-middle"></i>
+                                    Salvar Empresa
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Empresa Parceira" id="parceira">
+            <ng-template ngbTabContent>
+                <div class="row my-5" *ngIf="formParceira" [formGroup]="formParceira">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="">CNPJ</label>
+                            <input type="text" class="form-control" mask="00.000.000/0000-00" formControlName="cnpj">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="">Razão social</label>
+                                <input type="text" class="form-control" formControlName="razaoSocial">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <button class="btn btn-link" (click)="excluirEmpresa()" [hidden]="empresa.id === undefined"><i class="ta-cancel-circle"></i> Excluir</button>
+                            </div>
+                            <div class="text-right">
+                                <div class="button btn btn-link">Cancelar</div>
+                                <button class="btn btn-primary" type="button" (click)="submit('Parceira')">
+                                    <i class="ta-plus-circle fs-24 align-middle"></i>
+                                    Salvar Empresa
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-tab>
+    </ngb-tabset>
+    <app-loading type="fullparent"></app-loading>
 </div>
