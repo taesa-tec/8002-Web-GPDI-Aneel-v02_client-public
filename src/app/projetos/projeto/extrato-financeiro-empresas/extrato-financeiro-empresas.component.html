@@ -14,14 +14,18 @@
                 <span>{{relatorio.desc}}</span><span>{{relatorio.valor | currency:'R$'}}</span>
             </header>
             <div role="main">
-                <table class="table table-borderless">
+                <table class="table table-borderless m-0">
                     <tr *ngFor="let i of relatorio.items">
-                        <td>
-                            <button class="btn btn-sm btn-link" (click)="openModal()">{{i.desc}}</button>
+                        <td width="25%">
+                            <span>{{i.desc}}</span>
                         </td>
-                        <td>{{ i.etapa.desc }}</td>
-                        <td>???</td>
-                        <td>{{i.valor | currency:'R$'}}</td>
+                        <td width="15%">
+                            <span *ngIf="etapas[i.etapa.id]" [title]="etapas[i.etapa.id].desc"> Etapa {{etapas[i.etapa.id].numeroEtapa}}</span>
+                        </td>
+                        <td>
+                            {{ i.etapa.desc }}
+                        </td>
+                        <td class="text-right" width="15%">{{i.valor | currency:'R$'}}</td>
                     </tr>
                 </table>
             </div>
