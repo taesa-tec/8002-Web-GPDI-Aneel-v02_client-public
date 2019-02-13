@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ProjetosService } from '@app/projetos/projetos.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { RecursoMaterialFormComponent } from '@app/projetos/recurso-material-form/recurso-material-form.component';
-import { Projeto, RecursoMaterial } from '@app/models';
+import { Projeto, RecursoMaterial, CategoriaContabil } from '@app/models';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
-import { zip } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+import { zip, of } from 'rxjs';
+import { AppService } from '@app/app.service';
 
 @Component({
     selector: 'app-recursos-materiais',
@@ -15,6 +16,7 @@ import { zip } from 'rxjs';
 export class RecursosMateriaisComponent implements OnInit {
 
     recursosMaterias: Array<any>;
+    categoriaContabel = CategoriaContabil;
     projeto: Projeto;
     listOrder: { field: string; direction: 'asc' | 'desc'; } = {
         field: 'nome',
@@ -23,16 +25,31 @@ export class RecursosMateriaisComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private projetoService: ProjetosService,
+        protected app: AppService,
         protected modalService: NgbModal) { }
 
     ngOnInit() {
-        const projeto$ = this.route.parent.data.pipe(map(d => d.projeto));
-        zip(projeto$).subscribe(([projeto]) => {
-            this.projeto = projeto;
-            this.loadRecursoMaterial();
-        });
+        this.loadData();
 
+    }
+
+    loadData() {
+        const data$ = this.route.parent.data.pipe(
+            map(d => d.projeto),
+            mergeMap(p => zip(
+                of(p),
+                this.app.projetos.getRecursoMaterial(p.id),
+            ))
+        );
+
+        data$.subscribe(([projeto, recursosMaterias]) => {
+            this.projeto = projeto;
+            this.recursosMaterias = recursosMaterias.map(rec => {
+                rec.categoriaContabelNome = this.categoriaContabel.find(e => rec.categoriaContabilValor === e.value).text;
+                return rec;
+            });
+
+        });
     }
 
     openModal(recursoMaterial: RecursoMaterial | {} = {}) {
@@ -41,7 +58,7 @@ export class RecursosMateriaisComponent implements OnInit {
         modalRef.componentInstance.projeto = this.projeto;
 
         modalRef.result.then(result => {
-            this.loadRecursoMaterial();
+            this.loadData();
         }, e => {
 
         });
@@ -50,10 +67,5 @@ export class RecursosMateriaisComponent implements OnInit {
 
     order(data: { field: string; direction: 'asc' | 'desc'; }) {
         this.listOrder = data;
-    }
-
-    loadRecursoMaterial() {
-        this.projetoService.getRecursoMaterial(this.projeto.id).subscribe(recursosMaterias => this.recursosMaterias = recursosMaterias || []);
-
     }
 }
