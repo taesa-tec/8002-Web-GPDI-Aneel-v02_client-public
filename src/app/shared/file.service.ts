@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { ResultadoResponse } from '@app/models';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { ResultadoResponse, FileUploaded } from '@app/models';
 import { FormGroup } from '@angular/forms';
 
 @Injectable({
@@ -28,8 +28,26 @@ export class FileService {
         return this.http.post<ResultadoResponse>('upload', formData);
     }
 
-    download(id: number) {
-        return this.http.get<any>(`upload/download/${id}`);
+    download(file: FileUploaded) {
+        this.http.get(`upload/download/${file.id}`, {
+            observe: "response",
+            responseType: "blob"
+        }).subscribe((response: HttpResponse<any>) => {
+
+
+            const f = new Blob([response.body], {
+                type: "image/jpeg",
+            });
+            const a = document.createElement('a');
+            const blobUrl = URL.createObjectURL(f);
+            // PQP que gambiarra 
+            a.href = blobUrl;
+            a.setAttribute('download', file.nomeArquivo);
+            a.click();
+            URL.revokeObjectURL(blobUrl);
+        }, (error: HttpErrorResponse) => {
+
+        });
     }
     downloadLogDuto(id: number) {
         return this.http.get<any>(`upload/${id}/ObterLogDuto`);
