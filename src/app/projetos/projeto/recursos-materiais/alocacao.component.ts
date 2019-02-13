@@ -3,9 +3,10 @@ import { AlocarRecursoMaterialFormComponent } from '@app/projetos/alocar-recurso
 import { ProjetosService } from '@app/projetos/projetos.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
-import { Projeto } from '@app/models';
-import { zip } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+import { Projeto, AlocacaoRM, CategoriaContabil } from '@app/models';
+import { zip, of } from 'rxjs';
+import { AppService } from '@app/app.service';
 
 @Component({
     selector: 'app-alocacao',
@@ -14,33 +15,88 @@ import { zip } from 'rxjs';
 })
 export class AlocacaoComponent implements OnInit {
 
+    categoriaContabel = CategoriaContabil;
     alocacoes: Array<any>;
     projeto: Projeto;
 
     constructor(
         private route: ActivatedRoute,
-        protected projetoService: ProjetosService,
+        protected app: AppService,
         protected modalService: NgbModal) { }
 
     ngOnInit() {
-        const projeto$ = this.route.parent.data.pipe(map(d => d.projeto));
-        zip(projeto$).subscribe(([projeto]) => {
+        this.loadData();
+    }
+
+    loadData() {
+
+        const data$ = this.route.parent.data.pipe(
+            map(d => d.projeto),
+            mergeMap(p => zip(
+                of(p),
+                this.app.projetos.getAlocacaoRM(p.id),
+                this.app.catalogo.empresas()
+            ))
+        );
+
+        data$.subscribe(([projeto, alocacoes, empresas]) => {
+
             this.projeto = projeto;
-            this.loadAlocacao();
+
+            this.alocacoes = alocacoes.map(aloc => {
+
+                if (aloc.empresaFinanciadoraId) {
+                    aloc.empresaFinanciadoraNome = empresas.find(e => aloc.empresaFinanciadoraId === e.id).nome;
+                }
+
+                //this.loadRecursoMaterial(aloc);
+                //this.loadEmpresas(aloc);
+
+                return aloc;
+            });
+
         });
     }
 
-    loadAlocacao() {
-        this.projetoService.getAlocacaoRM(this.projeto.id).subscribe(alocacoes => this.alocacoes = alocacoes || []);
+    /**
+     * Não vai rolar, eu queria entregar o id do material e retornar o material
+     * @param aloc 
+     */
+    loadRecursoMaterial(aloc) {
+
+        this.app.projetos.getRecursoMaterial(aloc.recursoMaterialId).subscribe(rec => {
+
+            aloc.recursoMaterial = rec;
+
+            aloc.recursoMaterial = rec.map(recM => {
+                recM.categoriaContabelNome = this.categoriaContabel.find(e => recM.categoriaContabilValor === e.value).text;
+                return recM;
+            });
+
+        });
+    }
+    /**
+     * Não vai rolar, eu queria entregar o id da empresa e retornar a empresa
+     * @param aloc 
+     */
+    loadEmpresas(aloc) {
+
+        this.app.projetos.getEmpresas(aloc.empresaFinanciadoraId).subscribe(rec => {
+            aloc.empresaFinanciadora = rec;
+        });
+
+        this.app.projetos.getEmpresas(aloc.empresaRecebedoraId).subscribe(rec => {
+            aloc.empresaRecebedora = rec;
+        });
     }
 
-    openModal() {
+    openModal(alocacao: AlocacaoRM | {} = {}) {
         const modalRef = this.modalService.open(AlocarRecursoMaterialFormComponent, { size: 'lg' });
-        //modalRef.componentInstance.etapa_id = etapa_id;
+        modalRef.componentInstance.alocacao = alocacao;
         modalRef.componentInstance.projeto = this.projeto;
 
         modalRef.result.then(result => {
-            this.loadAlocacao();
+            this.loadData();
 
         }, e => {
 
