@@ -57,7 +57,7 @@ export class InfoComponent implements OnInit {
         tituloDesc: new FormControl(p.tituloDesc, [Validators.required]),
         catalogSegmentoId: new FormControl(p.catalogSegmentoId || '', [Validators.required]),
         avaliacaoInicial: new FormControl(p.avaliacaoInicial || ''),
-        compartResultados: new FormControl(p.compartResultados || '', [Validators.required]),
+        compartResultadosValor: new FormControl(p.compartResultadosValor || '', [Validators.required]),
         codigo: new FormControl({ value: p.codigo, disabled: true }),
         motivacao: new FormControl(p.motivacao),
         originalidade: new FormControl(p.originalidade),
