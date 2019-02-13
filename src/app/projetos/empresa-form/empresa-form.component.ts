@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { NgbActiveModal, NgbTabChangeEvent, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
-import { EmpresaProjeto, Projeto, Empresa, UF } from '@app/models';
+import { EmpresaProjeto, Projeto, Empresa, UF, AppValidators } from '@app/models';
 import { AppService } from '@app/app.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
@@ -50,7 +50,6 @@ export class EmpresaFormComponent implements OnInit, AfterViewInit {
                     break;
                 default:
                     this.tabFixed = false;
-
             }
         }
 
@@ -68,7 +67,7 @@ export class EmpresaFormComponent implements OnInit, AfterViewInit {
     setupForm(empresa: EmpresaProjeto | any = {}) {
 
         const projetoId = new FormControl(this.projeto.id);
-        const cnpj = new FormControl(empresa.cnpj || '');
+        const cnpj = new FormControl(empresa.cnpj || '', AppValidators.cnpj);
         const razaoSocial = new FormControl(empresa.razaoSocial || '');
         const catalogEstadoId = new FormControl(empresa.catalogEstadoId || '');
         const catalogEmpresaId = new FormControl(empresa.catalogEmpresaId || '');
