@@ -36,7 +36,7 @@
       </label>
       <div *ngIf="temaProjeto">
         <hr>
-        <span class="btn btn-link" [downloadFile]="file.id" *ngFor="let file of temaProjeto.uploads">{{file.nomeArquivo}}</span>
+        <span class="btn btn-link" [downloadFile]="file" *ngFor="let file of temaProjeto.uploads">{{file.nomeArquivo}}</span>
       </div>
     </div>
   </div>
