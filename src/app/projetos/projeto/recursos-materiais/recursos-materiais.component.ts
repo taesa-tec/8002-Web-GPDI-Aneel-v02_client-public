@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProjetosService } from '@app/projetos/projetos.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { RecursoMaterialFormComponent } from '@app/projetos/recurso-material-form/recurso-material-form.component';
@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
 import { zip, of } from 'rxjs';
 import { AppService } from '@app/app.service';
+import { LoadingComponent } from '@app/shared/loading/loading.component';
 
 @Component({
     selector: 'app-recursos-materiais',
@@ -14,6 +15,8 @@ import { AppService } from '@app/app.service';
     styleUrls: ['./recursos-materiais.component.scss']
 })
 export class RecursosMateriaisComponent implements OnInit {
+
+    @ViewChild(LoadingComponent) loading: LoadingComponent;
 
     recursosMaterias: Array<any>;
     categoriaContabel = CategoriaContabil;
@@ -34,6 +37,7 @@ export class RecursosMateriaisComponent implements OnInit {
     }
 
     loadData() {
+        this.loading.show();
         const data$ = this.route.parent.data.pipe(
             map(d => d.projeto),
             mergeMap(p => zip(
@@ -48,7 +52,7 @@ export class RecursosMateriaisComponent implements OnInit {
                 rec.categoriaContabelNome = this.categoriaContabel.find(e => rec.categoriaContabilValor === e.value).text;
                 return rec;
             });
-
+            this.loading.hide();
         });
     }
 

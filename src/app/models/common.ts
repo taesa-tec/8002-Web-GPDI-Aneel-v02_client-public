@@ -279,3 +279,21 @@ export interface ExtratosEmpresas {
     total: number;
     valor: number;
 }
+
+export interface RecursosHumanos {
+    id: number;
+    projetoId: number;
+    empresaId: number;
+    empresa?: any;
+    valorHora: number;
+    nomeCompleto: string;
+    titulacao: number;
+    titulacaoValor: string;
+    funcao: number;
+    funcaoValor: string;
+    nacionalidade: number;
+    nacionalidadeValor: string;
+    cpf: string;
+    passaporte?: any;
+    urlCurriculo: string;
+}

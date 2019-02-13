@@ -19,38 +19,26 @@
           <th>
             <div class="d-flex align-items-center">
               <span class="mx-2">Nome</span>
-              <span class="d-flex flex-column">
-                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
-                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
-                            </span>
+              <app-handler-order [current]="listOrder" field="recursoMaterial.nome" (order)=order($event)></app-handler-order>
             </div>
           </th>
           <th>
             <div class="d-flex align-items-center">
               <span class="mx-2">Empresa Financiadora</span>
-              <span class="d-flex flex-column">
-                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
-                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
-                            </span>
+              <app-handler-order [current]="listOrder" field="empresaFinanciadoraNome" (order)=order($event)></app-handler-order>
             </div>
 
           </th>
           <th>
             <div class="d-flex align-items-center">
               <span class="mx-2">Cat. Contábil</span>
-              <span class="d-flex flex-column">
-                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
-                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
-                            </span>
+              <app-handler-order [current]="listOrder" field="categoriaContabelNome" (order)=order($event)></app-handler-order>
             </div>
           </th>
           <th>
             <div class="d-flex align-items-center">
               <span class="mx-2">Valor</span>
-              <span class="d-flex flex-column">
-                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
-                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
-                            </span>
+              <app-handler-order [current]="listOrder" field="recursoMaterial.valorUnitario" (order)=order($event)></app-handler-order>
             </div>
           </th>
           <th>
@@ -60,11 +48,16 @@
           </th>
         </tr>
       </thead>
-      <tr *ngFor="let alocacao of alocacoes">
-        <td>Material</td>
+      <tr>
+        <td colspan="5" class="text-center p-0">
+          <app-loading type="inline"></app-loading>
+        </td>
+      </tr>
+      <tr *ngFor="let alocacao of alocacoes | orderBy:listOrder.field:listOrder.direction">
+        <td>{{alocacao.recursoMaterial.nome}}</td>
         <td>{{alocacao.empresaFinanciadoraNome}}</td>
-        <td>Materiais</td>
-        <td>R$9.999,00</td>
+        <td>{{alocacao.categoriaContabelNome}}</td>
+        <td>{{alocacao.recursoMaterial.valorUnitario | currency:'R$'}}</td>
         <td>
           <button type="button" class="btn btn-primary btn-sm w-100" (click)="openModal(alocacao)">
             <i class="ta-edit"></i>

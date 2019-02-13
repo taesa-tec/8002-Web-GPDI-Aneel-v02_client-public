@@ -5,6 +5,7 @@ import { CategoriaContabil, Projeto, RecursoMaterial } from '@app/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { AppService } from '@app/app.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-recurso-material-form',
@@ -66,5 +67,26 @@ export class RecursoMaterialFormComponent implements OnInit {
                 this.loading.hide();
             });
         }
+    }
+
+    excluir() {
+        this.app.confirm("Tem certeza que deseja excluir esta etapa?", "Confirmar Exclusão")
+            .then(result => {
+                if (result) {
+                    this.loading.show();
+                    this.app.projetos.delRecursoMaterial(this.recursoMaterial.id).subscribe(resultDelete => {
+                        this.loading.hide();
+                        if (resultDelete.sucesso) {
+                            this.activeModal.close('deleted');
+                        } else {
+                            this.app.alert(resultDelete.inconsistencias.join(', '));
+                        }
+                    }, (error: HttpErrorResponse) => {
+                        this.loading.hide();
+                        this.app.alert(error.message);
+                    });
+                }
+
+            });
     }
 }
