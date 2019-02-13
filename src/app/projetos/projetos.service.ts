@@ -189,7 +189,7 @@ export class ProjetosService {
     }
 
     delRecursoMaterial(id: number) {
-        return this.http.delete<any>(`Projeto/${id}/RecursoMateriais`);
+        return this.http.delete<any>(`Projeto/RecursoMateriais/${id}`);
     }
 
     /**
@@ -209,7 +209,7 @@ export class ProjetosService {
     }
 
     delAlocacaoRM(id: number) {
-        return this.http.delete<any>(`Projeto/${id}/AlocacaoRms`);
+        return this.http.delete<any>(`Projeto/AlocacaoRms/${id}`);
     }
 
     /**

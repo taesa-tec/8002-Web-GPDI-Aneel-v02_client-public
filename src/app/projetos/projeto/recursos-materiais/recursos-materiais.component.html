@@ -42,6 +42,11 @@
           </th>
         </tr>
       </thead>
+      <tr>
+          <td colspan="4" class="text-center p-0">
+            <app-loading type="inline"></app-loading>
+          </td>
+        </tr>
       <tr *ngFor="let recursosMateria of recursosMaterias | orderBy:listOrder.field:listOrder.direction">
         <td>{{recursosMateria.nome}}</td>
         <td>{{recursosMateria.categoriaContabelNome}}</td>

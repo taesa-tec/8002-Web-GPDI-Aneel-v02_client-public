@@ -6,6 +6,7 @@ import { AppService } from '@app/app.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { zip } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-alocar-recurso-material-form',
@@ -39,8 +40,8 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.loadData();
         this.setup();
+        this.loadData();
     }
 
     setup() {
@@ -63,15 +64,6 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
 
     submit() {
         if (this.form.valid) {
-
-            /* const empresaFID = this.form.get("empresaFinanciadoraId").value;
-            const empresaRID = this.form.get("empresaRecebedoraId").value;
-
-            if (empresaFID && empresaRID) {
-                this.form.addControl('empresaFinanciadora', new FormControl(this.empresasCatalog.find(e => e.id === empresaFID)));
-                this.form.addControl('empresaRecebedora', new FormControl(this.empresasCatalog.find(e => e.id === empresaRID)));
-            } */
-
             const request = this.alocacao.id ? this.app.projetos.editarAlocacaoRM(this.form.value) : this.app.projetos.criarAlocacaoRM(this.form.value);
             this.loading.show();
             request.subscribe(result => {
@@ -119,6 +111,27 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
 
             this.loading.hide();
         });
+    }
+
+    excluir() {
+        this.app.confirm("Tem certeza que deseja excluir esta etapa?", "Confirmar Exclusão")
+            .then(result => {
+                if (result) {
+                    this.loading.show();
+                    this.app.projetos.delAlocacaoRM(this.alocacao.id).subscribe(resultDelete => {
+                        this.loading.hide();
+                        if (resultDelete.sucesso) {
+                            this.activeModal.close('deleted');
+                        } else {
+                            this.app.alert(resultDelete.inconsistencias.join(', '));
+                        }
+                    }, (error: HttpErrorResponse) => {
+                        this.loading.hide();
+                        this.app.alert(error.message);
+                    });
+                }
+
+            });
     }
 
 }

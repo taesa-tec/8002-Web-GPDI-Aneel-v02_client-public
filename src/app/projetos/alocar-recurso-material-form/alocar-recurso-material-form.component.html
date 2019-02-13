@@ -60,15 +60,25 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-12 text-right">
-      <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
+    <div class="col-12">
+      <div class="d-flex justify-content-between">
+        <div>
+          <button class="btn btn-link" (click)="excluir()" *ngIf="alocacao.id"><i class="ta-cancel-circle"></i> Excluir</button>
+        </div>
 
-      <button class="btn btn-primary" type="button" (click)="submit()" [disabled]="form.invalid">
-        <i [class]="buttonAction.icon"></i>
-        {{buttonAction.text}}
-      </button>
+        <div class="text-right">
+          <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
 
+          <button class="btn btn-primary" type="button" (click)="submit()" [disabled]="form.invalid">
+            <i [class]="buttonAction.icon"></i>
+            {{buttonAction.text}}
+          </button>
+
+        </div>
+      </div>
     </div>
+
+
   </div>
 </form>
 <app-loading type="fullscreen"></app-loading>
