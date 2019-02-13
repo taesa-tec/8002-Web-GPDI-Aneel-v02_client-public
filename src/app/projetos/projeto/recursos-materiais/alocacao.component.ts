@@ -35,14 +35,19 @@ export class AlocacaoComponent implements OnInit {
             mergeMap(p => zip(
                 of(p),
                 this.app.projetos.getAlocacaoRM(p.id),
+                this.app.catalogo.empresas()
             ))
         );
 
-        data$.subscribe(([projeto, alocacoes]) => {
+        data$.subscribe(([projeto, alocacoes, empresas]) => {
 
             this.projeto = projeto;
 
             this.alocacoes = alocacoes.map(aloc => {
+
+                if (aloc.empresaFinanciadoraId) {
+                    aloc.empresaFinanciadoraNome = empresas.find(e => aloc.empresaFinanciadoraId === e.id).nome;
+                }
 
                 //this.loadRecursoMaterial(aloc);
                 //this.loadEmpresas(aloc);
@@ -54,7 +59,7 @@ export class AlocacaoComponent implements OnInit {
     }
 
     /**
-     * Não vai rolar só pegar o id do projeto, eu queria pegar o id do material e retornar a material
+     * Não vai rolar, eu queria entregar o id do material e retornar o material
      * @param aloc 
      */
     loadRecursoMaterial(aloc) {
@@ -71,7 +76,7 @@ export class AlocacaoComponent implements OnInit {
         });
     }
     /**
-     * Não vai rolar só pegar o id do projeto, eu queria pegar o id da empresa e retornar a empresa
+     * Não vai rolar, eu queria entregar o id da empresa e retornar a empresa
      * @param aloc 
      */
     loadEmpresas(aloc) {

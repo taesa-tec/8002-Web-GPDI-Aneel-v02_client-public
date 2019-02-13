@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProjetosService } from '@app/projetos/projetos.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { RecursoMaterial, Projeto, AlocacaoRM } from '@app/models';
+import { RecursoMaterial, Projeto, AlocacaoRM, Empresa } from '@app/models';
 import { AppService } from '@app/app.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
@@ -17,6 +17,7 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
     recursosMaterias: Array<any>;
     empresaRecebdora: Array<any>;
     empresaFinanciadora: Array<any>;
+    empresasCatalog: Array<Empresa>;
     etapas: Array<any>;
     alocacao: AlocacaoRM;
     projeto: Projeto;
@@ -62,10 +63,18 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
 
     submit() {
         if (this.form.valid) {
+
+            /* const empresaFID = this.form.get("empresaFinanciadoraId").value;
+            const empresaRID = this.form.get("empresaRecebedoraId").value;
+
+            if (empresaFID && empresaRID) {
+                this.form.addControl('empresaFinanciadora', new FormControl(this.empresasCatalog.find(e => e.id === empresaFID)));
+                this.form.addControl('empresaRecebedora', new FormControl(this.empresasCatalog.find(e => e.id === empresaRID)));
+            } */
+
             const request = this.alocacao.id ? this.app.projetos.editarAlocacaoRM(this.form.value) : this.app.projetos.criarAlocacaoRM(this.form.value);
             this.loading.show();
             request.subscribe(result => {
-                console.log(result);
 
                 if (result.sucesso) {
                     this.activeModal.close(result);
@@ -84,15 +93,25 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
         const recm$ = this.app.projetos.getRecursoMaterial(this.projeto.id);
         const empresa$ = this.app.projetos.getEmpresas(this.projeto.id);
         const etapa$ = this.app.projetos.getEtapas(this.projeto.id);
+        const empresas_catalog$ = this.app.catalogo.empresas();
 
-        zip(recm$, empresa$, etapa$).subscribe(([recursosMaterias, empresas, etapas]) => {
+        zip(recm$, empresa$, etapa$, empresas_catalog$).subscribe(([recursosMaterias, empresas, etapas, empresas_catalog]) => {
 
             this.recursosMaterias = recursosMaterias || [];
 
             this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; });
 
+            this.empresasCatalog = empresas_catalog;
+
             this.empresaRecebdora = empresas.map((emR, i) => {
-                emR.nomeConjunto = "Empresa " + (i + 1);
+
+                emR.Empresa = emR.razaoSocial ? emR.razaoSocial : '';
+
+                if (emR.catalogEmpresaId) {
+                    emR.catalogEmpresa = empresas_catalog.find(e => emR.catalogEmpresaId === e.id);
+                    emR.Empresa = emR.catalogEmpresa.nome;
+                }
+
                 return emR;
             });
 
