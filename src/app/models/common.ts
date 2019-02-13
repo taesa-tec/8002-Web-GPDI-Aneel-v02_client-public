@@ -195,13 +195,13 @@ export interface EmpresaProjeto {
 
 
 export interface RecursoMaterial {
-    id: number;
-    projetoId: number;
-    nome: string;
-    categoriaContabil: number;
-    categoriaContabilValor: string;
-    valorUnitario: string;
-    especificacao: string;
+  id: number;
+  projetoId: number;
+  nome: string;
+  categoriaContabil: number;
+  categoriaContabilValor: string;
+  valorUnitario: string;
+  especificacao: string;
 }
 
 export interface AlocacaoRM {

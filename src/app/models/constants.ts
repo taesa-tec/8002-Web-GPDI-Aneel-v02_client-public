@@ -74,10 +74,10 @@ export const IndicadoresSocioambientais: Array<TextValue> = [
 ];
 
 export const PropriedadeIntelectual: Array<TextValue> = [
-  { text: "Patente de Invenção", value: "PI" },
-  { text: "Patente de Modelo de Utilidade", value: "PU" },
-  { text: "Registro de Software", value: "RS" },
-  { text: "Registro de Desenho Industrial", value: "RD" },
+    { text: "Patente de Invenção", value: "PI" },
+    { text: "Patente de Modelo de Utilidade", value: "PU" },
+    { text: "Registro de Software", value: "RS" },
+    { text: "Registro de Desenho Industrial", value: "RD" },
 ];
 
 export const TipoProducaoTC: Array<TextValue> = [
