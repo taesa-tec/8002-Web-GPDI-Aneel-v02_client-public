@@ -63,6 +63,8 @@ export class AlocacaoComponent implements OnInit {
                     aloc.categoriaContabelNome = this.categoriaContabel.find(e => aloc.recursoMaterial.categoriaContabilValor === e.value).text;
                 }
 
+                aloc.valorTotal = aloc.qtd * aloc.recursoMaterial.valorUnitario;
+
                 return aloc;
             });
             this.loading.hide();

@@ -57,16 +57,27 @@ export class RecursosHumanosComponent implements OnInit {
             mergeMap(p => zip(
                 of(p),
                 this.app.projetos.getRH(p.id),
-                this.app.catalogo.empresas()
+                this.app.catalogo.empresas(),
+                this.app.projetos.getEmpresas(p.id)
             ))
         );
 
-        data$.subscribe(([projeto, recurso_humano, empresas]) => {
+        data$.subscribe(([projeto, recurso_humano, catalog_empresas, empresas]) => {
             this.projeto = projeto;
             this.recursosHumano = recurso_humano.map(rec => {
+
                 rec.funcaoNome = this.funcoes.find(e => rec.funcaoValor === e.value).text;
                 rec.titulacaoNome = this.titualcoes.find(e => rec.titulacaoValor === e.value).text;
-                rec.empresaNome = empresas.find(e => rec.empresaId === e.id).nome;
+
+                rec.catalogEmpresaId = empresas.find(e => rec.empresaId === e.id).catalogEmpresaId;
+
+                rec.EmpresaNome = empresas.razaoSocial ? empresas.razaoSocial : '';
+
+                if (rec.catalogEmpresaId) {
+                    rec.catalogEmpresa = catalog_empresas.find(e => rec.catalogEmpresaId === e.id);
+                    rec.EmpresaNome = rec.catalogEmpresa.nome;
+                }
+
                 return rec;
             });
             this.loading.hide();
