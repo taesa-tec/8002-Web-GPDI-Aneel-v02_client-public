@@ -5,8 +5,11 @@ import { zip } from 'rxjs';
 
 import { RecursoHumanoFormComponent } from '@app/projetos/recurso-humano-form/recurso-humano-form.component';
 import { AppService } from '@app/app.service';
-import { Projeto, Etapa, TextValue, CategoriaContabil, ExtratosEtapas } from '@app/models';
+import { Projeto, Etapa, TextValue, CategoriaContabil, ExtratosEtapas, ExtratoItem } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { AlocarRecursoHumanoFormComponent } from '@app/projetos/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
+import { AlocarRecursoMaterialFormComponent } from '@app/projetos/alocar-recurso-material-form/alocar-recurso-material-form.component';
 
 @Component({
     selector: 'app-extrato-financeiro-etapas',
@@ -21,6 +24,9 @@ export class ExtratoFinanceiroEtapasComponent implements OnInit {
     categoriasContabeis: { [propName: string]: TextValue } = {
         "RH": { text: "Recursos Humanos", value: "RH" }
     };
+
+    alocacoesRH: Array<any> = [];
+    alocacoesRM: Array<any> = [];
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
@@ -46,10 +52,7 @@ export class ExtratoFinanceiroEtapasComponent implements OnInit {
         return '';
     }
 
-    openModal(id: number) {
-        const modalRef = this.app.modal.open(RecursoHumanoFormComponent, { size: 'lg' });
-        modalRef.componentInstance.recurso_id = id;
-    }
+
 
     ngOnInit() {
         const projeto$ = this.route.parent.data.pipe(map(d => d.projeto));
@@ -64,17 +67,44 @@ export class ExtratoFinanceiroEtapasComponent implements OnInit {
         const extratos$ = this.app.projetos.getExtratoEtapas(this.projeto.id);
         const etapas$ = this.app.projetos.getEtapas(this.projeto.id);
 
-        zip(extratos$, etapas$).subscribe(([extrato, etapas]) => {
-
-            console.log({ extrato });
-
+        zip(extratos$,
+            etapas$,
+            this.app.projetos.getAlocacaoRH(this.projeto.id),
+            this.app.projetos.getAlocacaoRM(this.projeto.id)
+        ).subscribe(([extrato, etapas, alocacoesRH, alocacoesRM]) => {
             this.extrato = extrato;
+            this.alocacoesRH = alocacoesRH;
+            this.alocacoesRM = alocacoesRM;
 
             etapas.forEach((etapa, index) => {
                 this.etapas[etapa.id] = Object.assign(etapa, { numeroEtapa: index + 1 });
             });
+
             this.loading.hide();
         });
     }
 
+    openModal(item: ExtratoItem) {
+        let modal: NgbModalRef;
+
+        if (item.recursoHumano) {
+            const alocacao = this.alocacoesRH.find(a => a.id === item.alocacaoId);
+            modal = this.app.modal.open(AlocarRecursoHumanoFormComponent, { size: 'lg' });
+            modal.componentInstance.alocacao = alocacao;
+
+        } else if (item.recursoMaterial) {
+            const alocacao = this.alocacoesRM.find(a => a.id === item.alocacaoId);
+            modal = this.app.modal.open(AlocarRecursoMaterialFormComponent, { size: 'lg' });
+            modal.componentInstance.alocacao = alocacao;
+        }
+
+        if (modal) {
+            modal.componentInstance.projeto = this.projeto;
+            modal.result.then(result => {
+                console.log(result);
+            }, error => {
+
+            });
+        }
+    }
 }

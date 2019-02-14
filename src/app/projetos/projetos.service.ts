@@ -16,16 +16,19 @@ import {
     ExtratosEmpresas,
     ExtratosEtapas
 } from '@app/models';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import { tap, share } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProjetosService {
 
-    protected projetoCreatedSource = new Subject<Projeto>();
+    protected projetoCreatedSource = new Subject<CreateProjectRequest>();
+    protected projetoLoadedSource = new BehaviorSubject<Projeto>(null);
 
     projetoCreated = this.projetoCreatedSource.asObservable();
+    projetoLoaded = this.projetoLoadedSource.asObservable();
 
     status: ProjetoStatus[];
 
@@ -43,23 +46,21 @@ export class ProjetosService {
     }
 
     criarProjeto(projeto: CreateProjectRequest) {
-        return this.http.post<ResultadoResponse>('Projetos', projeto);
+        return this.http.post<ResultadoResponse>('Projetos', projeto).pipe(tap(r => this.projetoCreatedSource.next(projeto)), share());
     }
 
     getById(id: number) {
-        return this.http.get<Projeto>(`Projetos/${id}`);
+        return this.http.get<Projeto>(`Projetos/${id}`).pipe(tap(p => this.projetoLoadedSource.next(p)), share());
     }
 
     editar(projeto: Projeto) {
         return this.http.put<ResultadoResponse>(`Projetos`, projeto);
     }
-
     editarDataInicio(projetoDataInicio: ProjetoDataInicio) {
         return this.http.put<ResultadoResponse>(`Projetos/dataInicio`, projetoDataInicio);
     }
 
     // Temas
-
     getTema(id: number) {
         return this.http.get<TemaProjeto>(`Projeto/${id}/Temas`);
     }
@@ -167,7 +168,7 @@ export class ProjetosService {
     }
 
     getAlocacaoRH(id: number) {
-        return this.http.get<any>(`Projeto/${id}/AlocacaoRhs`);
+        return this.http.get<Array<any>>(`Projeto/${id}/AlocacaoRhs`);
     }
 
     delAlocacaoRH(id: number) {
@@ -251,16 +252,16 @@ export class ProjetosService {
      * @description Gerar XML's
      */
     gerarXmlProjetoPed(id: number, versao: number) {
-        return this.http.get<any>(`projeto/${id}/XmlProjetoPed/${versao}`);
+        return this.http.get<ResultadoResponse>(`projeto/${id}/XmlProjetoPed/${versao}`);
     }
-    XmlInteresseExecucao(id: number, versao: number) {
-        return this.http.get<any>(`projeto/${id}/XmlInteresseExecucao/${versao}`);
+    gerarXmlInteresseExecucao(id: number, versao: number) {
+        return this.http.get<ResultadoResponse>(`projeto/${id}/XmlInteresseExecucao/${versao}`);
     }
-    XmlInicioExecucao(id: number, versao: number) {
-        return this.http.get<any>(`projeto/${id}/XmlInicioExecucao/${versao}`);
+    gerarXmlInicioExecucao(id: number, versao: number) {
+        return this.http.get<ResultadoResponse>(`projeto/${id}/XmlInicioExecucao/${versao}`);
     }
-    XmlProrrogacao(id: number, versao: number) {
-        return this.http.get<any>(`projeto/${id}/XmlProrrogacao/${versao}`);
+    gerarXmlProrrogacao(id: number, versao: number) {
+        return this.http.get<ResultadoResponse>(`projeto/${id}/XmlProrrogacao/${versao}`);
     }
 
 }

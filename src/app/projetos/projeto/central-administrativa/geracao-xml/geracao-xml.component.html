@@ -1,53 +1,56 @@
-<h5>GERAR XML DO PROJETO DE PeD</h5>
-<div class="rounded bg-cinza-claro p-3">
-    <div class="form-group">
-        <label class="d-block">Versão</label>
-        <div class="d-inline-flex">
-            <input type="text" class="form-control h-auto">
-            <button class="btn btn-primary mx-3" style="white-space: nowrap;">
-                <i class="ta-download fs-18"></i> Gerar XML
-            </button>
+<app-loading type="fullscreen"></app-loading>
+<div [formGroup]="form">
+    <h5>GERAR XML DO PROJETO DE PeD</h5>
+    <div class="rounded bg-cinza-claro p-3">
+        <div class="form-group">
+            <label class="d-block">Versão</label>
+            <div class="d-inline-flex">
+                <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlProjetoPed">
+                <button class="btn btn-primary mx-3" [disabled]="XmlProjetoPed.invalid" style="white-space: nowrap;" (click)="gerarXmlProjetoPed()">
+                    <i class="ta-download fs-18"></i> Gerar XML
+                </button>
+            </div>
+        </div>
+        <div class="text-success  d-none">
+            <i class="ta-ok fs-24 align-middle"></i>
+            Todos os campos necessários para a geraçao deste XML estão preenchidos
         </div>
     </div>
-    <div class="text-success">
-        <i class="ta-ok fs-24 align-middle"></i>
-        Todos os campos necessários para a geraçao deste XML estão preenchidos
-    </div>
-</div>
 
-<br>
-<br>
-<h5>GERAR XML DE INTERESSE NA EXECUÇÃO DE PROJETOS DE PeD</h5>
-<div class="rounded bg-cinza-claro p-3">
-    <div class="form-group">
-        <label class="d-block">Versão</label>
-        <div class="d-inline-flex">
-            <input type="text" class="form-control h-auto">
-            <button class="btn btn-primary mx-3" disabled style="white-space: nowrap;">
-                <i class="ta-download fs-18"></i> Gerar XML
-            </button>
+    <br>
+    <br>
+    <h5>GERAR XML DE INTERESSE NA EXECUÇÃO DE PROJETOS DE PeD</h5>
+    <div class="rounded bg-cinza-claro p-3">
+        <div class="form-group">
+            <label class="d-block">Versão</label>
+            <div class="d-inline-flex">
+                <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlInteresseExecucao">
+                <button class="btn btn-primary mx-3" [disabled]="XmlInteresseExecucao.invalid" style="white-space: nowrap;">
+                    <i class="ta-download fs-18"></i> Gerar XML
+                </button>
+            </div>
+        </div>
+        <div class="text-danger d-none">
+            <i class="ta-cancel-circle fs-24 align-middle"></i>
+            O campo "CÓDIGO DO PROJETO" não foi definido
         </div>
     </div>
-    <div class="text-danger">
-        <i class="ta-cancel-circle fs-24 align-middle"></i>
-        O campo "CÓDIGO DO PROJETO" não foi definido
-    </div>
-</div>
-<br>
-<br>
-<h5>GERAR  XML DE INICIO EXECUÇÃO PROJETO</h5>
-<div class="rounded bg-cinza-claro p-3">
-    <div class="form-group">
-        <label class="d-block">Versão</label>
-        <div class="d-inline-flex">
-            <input type="text" class="form-control h-auto">
-            <button class="btn btn-primary mx-3" disabled style="white-space: nowrap;">
-                <i class="ta-download fs-18"></i> Gerar XML
-            </button>
+    <br>
+    <br>
+    <h5>GERAR  XML DE INICIO EXECUÇÃO PROJETO</h5>
+    <div class="rounded bg-cinza-claro p-3">
+        <div class="form-group">
+            <label class="d-block">Versão</label>
+            <div class="d-inline-flex">
+                <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlInicioExecucao">
+                <button class="btn btn-primary mx-3" [disabled]="XmlInicioExecucao.invalid" style="white-space: nowrap;">
+                    <i class="ta-download fs-18"></i> Gerar XML
+                </button>
+            </div>
         </div>
-    </div>
-    <div class="text-danger">
-        <i class="ta-cancel-circle fs-24 align-middle"></i>
-        Os campos "CÓDIGO DO PROJETO"  e DATA INÍCIAL PROJETO não foram definidos.
+        <div class="text-danger d-none">
+            <i class="ta-cancel-circle fs-24 align-middle"></i>
+            Os campos "CÓDIGO DO PROJETO" e DATA INÍCIAL PROJETO não foram definidos.
+        </div>
     </div>
 </div>

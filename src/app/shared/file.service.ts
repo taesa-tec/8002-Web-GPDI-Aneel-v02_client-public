@@ -27,9 +27,15 @@ export class FileService {
 
         return this.http.post<ResultadoResponse>('upload', formData);
     }
+    download(file: FileUploaded);
+    download(file: number | string, name: string);
+    download(file, name?: string) {
 
-    download(file: FileUploaded) {
-        this.http.get(`upload/download/${file.id}`, {
+        const id = typeof file === 'object' ? file.id : file;
+
+        const filename = name ? name : file.nomeArquivo;
+
+        this.http.get(`upload/download/${id}`, {
             observe: "response",
             responseType: "blob"
         }).subscribe((response: HttpResponse<any>) => {
@@ -42,7 +48,7 @@ export class FileService {
             const blobUrl = URL.createObjectURL(f);
             // PQP que gambiarra 
             a.href = blobUrl;
-            a.setAttribute('download', file.nomeArquivo);
+            a.setAttribute('download', filename);
             a.click();
             URL.revokeObjectURL(blobUrl);
         }, (error: HttpErrorResponse) => {
