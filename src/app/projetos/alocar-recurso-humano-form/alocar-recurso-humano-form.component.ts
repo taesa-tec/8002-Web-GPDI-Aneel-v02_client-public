@@ -2,10 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProjetosService } from '@app/projetos/projetos.service';
 import { AppService } from '@app/app.service';
-import { Projeto, RecursosHumanos, Etapa, EmpresaProjeto } from '@app/models';
+import { Projeto, Etapa, EmpresaProjeto, RecursoHumano, AlocacaoRH } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { zip } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-alocar-recurso-humano-form',
@@ -15,24 +16,32 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class AlocarRecursoHumanoFormComponent implements OnInit {
 
     projeto: Projeto;
-    recursosHumano: RecursosHumanos;
+    recursosHumano: RecursoHumano;
     etapas: Array<Etapa>;
     empresasFinanciadora: EmpresaProjeto;
     form: FormGroup;
     horasAlocadas: Array<any> = [];
     etapaMarcada = false;
+    alocacao: AlocacaoRH;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
     constructor(
         public activeModal: NgbActiveModal,
-        protected app: AppService,
-        private projetoService: ProjetosService) { }
+        protected app: AppService) { }
+
+    get modalTitle() {
+        return typeof this.alocacao.id !== 'undefined' ? "Editar Alocamento Recurso Humano" : "Alocar Recurso Humano";
+    }
+
+    get buttonAction() {
+        return typeof this.alocacao.id !== 'undefined' ? { text: "Salvar Alterações", icon: 'ta-save' } :
+            { text: "Alocar Recurso Humano", icon: 'ta-plus-circle' };
+    }
 
     ngOnInit() {
-        this._horaAlocadas();
-        this.loadData();
         this.setup();
+        this.loadData();
     }
 
     _horaAlocadas(duracao: number = 6, etapa?: Etapa) {
@@ -51,6 +60,13 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
                 dataInicio.setMonth(dataInicio.getMonth() + (i - 1));
                 horas = { text: monthNames[dataInicio.getMonth()], name: "hrsMes" + i, form: new FormControl('', Validators.required) };
 
+            } else if (this.alocacao.id !== undefined && this.etapas !== undefined) {
+
+                const etapaVal = this.etapas.find(e => e.id === this.alocacao.etapaId);
+                const dataInicio = new Date(etapaVal.dataInicio);
+                dataInicio.setMonth(dataInicio.getMonth() + (i - 1));
+                horas = { text: monthNames[dataInicio.getMonth()], name: "hrsMes" + i, form: new FormControl(this.alocacao["hrsMes" + i] || '', Validators.required) };
+
             }
 
             this.horasAlocadas.push(horas);
@@ -62,24 +78,25 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
         this.horasAlocadas.forEach((value) => {
             this.form.removeControl(value.name);
             this.form.addControl(value.name, value.form);
+
         });
     }
 
     setup() {
 
-        const etapa = new FormControl('', Validators.required);
+        const etapa = new FormControl(this.alocacao.etapaId || '', Validators.required);
 
         this.form = new FormGroup({
             projetoId: new FormControl(this.projeto.id, Validators.required),
-            recursoHumanoId: new FormControl('', Validators.required),
+            recursoHumanoId: new FormControl(this.alocacao.recursoHumanoId || '', Validators.required),
             etapaId: etapa,
-            empresaId: new FormControl('', Validators.required),
-            justificativa: new FormControl('', Validators.required),
+            empresaId: new FormControl(this.alocacao.empresaId || '', Validators.required),
+            justificativa: new FormControl(this.alocacao.justificativa || '', Validators.required),
             //valorHora: new FormControl('',Validators.required),
             //hrsMes1: new FormControl('',Validators.required), esta na funções horasAlocadas()
         });
 
-
+        this._horaAlocadas();
         this._form_horaAlocadas();
 
         etapa.valueChanges.subscribe(value => {
@@ -94,9 +111,9 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
 
         });
 
-        /* if (this.alocacao.id !== undefined) {
+        if (this.alocacao.id !== undefined) {
             this.form.addControl('id', new FormControl(this.alocacao.id));
-        } */
+        }
     }
 
     loadData() {
@@ -110,15 +127,15 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
             this.recursosHumano = rh;
             this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; });
             this.empresasFinanciadora = empresas.filter(item => item.classificacaoValor !== "Executora");
-
+            this._horaAlocadas();
+            this._form_horaAlocadas();
             this.loading.hide();
         });
     }
 
     submit() {
         if (this.form.valid) {
-            //const request = this.alocacao.id ? this.app.projetos.editarAlocacaoRH(this.form.value) : this.app.projetos.criarAlocacaoRH(this.form.value);
-            const request = this.app.projetos.criarAlocacaoRH(this.form.value);
+            const request = this.alocacao.id ? this.app.projetos.editarAlocacaoRH(this.form.value) : this.app.projetos.criarAlocacaoRH(this.form.value);
             this.loading.show();
             request.subscribe(result => {
                 console.log(result);
@@ -131,6 +148,27 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
                 this.loading.hide();
             });
         }
+    }
+
+    excluir() {
+        this.app.confirm("Tem certeza que deseja excluir este alocamento do recurso humano?", "Confirmar Exclusão")
+            .then(result => {
+                if (result) {
+                    this.loading.show();
+                    this.app.projetos.delAlocacaoRH(this.alocacao.id).subscribe(resultDelete => {
+                        this.loading.hide();
+                        if (resultDelete.sucesso) {
+                            this.activeModal.close('deleted');
+                        } else {
+                            this.app.alert(resultDelete.inconsistencias.join(', '));
+                        }
+                    }, (error: HttpErrorResponse) => {
+                        this.loading.hide();
+                        this.app.alert(error.message);
+                    });
+                }
+
+            });
     }
 
 }

@@ -8,7 +8,7 @@ import { AppService } from '@app/app.service';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { map, mergeMap } from 'rxjs/operators';
 import { zip, of } from 'rxjs';
-import { Projeto } from '@app/models';
+import { Projeto, AlocacaoRH, Etapa, Empresa } from '@app/models';
 
 @Component({
     selector: 'app-alocacao',
@@ -18,10 +18,12 @@ import { Projeto } from '@app/models';
 export class AlocacaoComponent implements OnInit {
 
     alocacoes: Array<any>;
+    etapas: Array<Etapa>;
     projeto: Projeto;
+    catalogEmpresa: Array<Empresa>;
 
     listOrder: { field: string; direction: 'asc' | 'desc'; } = {
-        field: 'nomeCompleto',
+        field: 'recursoHumano.nomeCompleto',
         direction: 'asc'
     };
 
@@ -32,10 +34,16 @@ export class AlocacaoComponent implements OnInit {
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
-    openModal(etapa_id: number = 0) {
+    openModal(alocacao: AlocacaoRH | any = {}) {
         const modalRef = this.modalService.open(AlocarRecursoHumanoFormComponent, { size: 'lg' });
-        // modalRef.componentInstance.etapa_id = etapa_id;
+        modalRef.componentInstance.alocacao = alocacao;
         modalRef.componentInstance.projeto = this.projeto;
+
+        modalRef.result.then(result => {
+            this.loadData();
+        }, e => {
+
+        });
     }
 
     ngOnInit() {
@@ -50,12 +58,41 @@ export class AlocacaoComponent implements OnInit {
             mergeMap(p => zip(
                 of(p),
                 this.app.projetos.getAlocacaoRH(p.id),
+                this.app.projetos.getEtapas(p.id),
+                this.app.catalogo.empresas(),
             ))
         );
 
-        data$.subscribe(([projeto, alocacoes]) => {
+        data$.subscribe(([projeto, alocacoes, etapas, catalog_empresa]) => {
             this.projeto = projeto;
-            this.alocacoes = alocacoes;
+
+            this.catalogEmpresa = catalog_empresa;
+
+            this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; });
+
+            this.alocacoes = alocacoes.map(aloc => {
+
+                aloc.currentEtapa = this.etapas.find(eta => eta.id === aloc.etapaId);
+
+                aloc.Empresa = aloc.empresa.razaoSocial ? aloc.empresa.razaoSocial : '';
+
+                if (aloc.empresa.catalogEmpresaId) {
+                    aloc.catalogEmpresa = catalog_empresa.find(e => aloc.empresa.catalogEmpresaId === e.id);
+                    aloc.Empresa = aloc.catalogEmpresa.nome;
+                }
+
+                aloc.horasTotal = 0;
+
+                for (let i = 1; i <= 6; i++) {
+                    aloc.horasTotal += aloc["hrsMes" + i];
+                }
+
+                aloc.valorTotal = aloc.horasTotal * aloc.recursoHumano.valorHora;
+
+                aloc.valorTotal = Math.round(aloc.valorTotal * 100) / 100;
+
+                return aloc;
+            });
 
             console.log(alocacoes);
 

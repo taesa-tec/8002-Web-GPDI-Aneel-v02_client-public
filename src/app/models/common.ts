@@ -293,3 +293,21 @@ export interface RecursoHumano {
     passaporte?: any;
     urlCurriculo: string;
 }
+
+export interface AlocacaoRH {
+    id: number;
+    etapaId: number;
+    etapa?: any;
+    projetoId: number;
+    recursoHumanoId: number;
+    recursoHumano: RecursoHumano;
+    empresaId: number;
+    empresa: Empresa;
+    hrsMes1: number;
+    hrsMes2: number;
+    hrsMes3: number;
+    hrsMes4: number;
+    hrsMes5: number;
+    hrsMes6: number;
+    justificativa: string;
+}
