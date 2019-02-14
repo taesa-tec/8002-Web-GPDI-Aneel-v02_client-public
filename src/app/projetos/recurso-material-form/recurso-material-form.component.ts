@@ -70,7 +70,7 @@ export class RecursoMaterialFormComponent implements OnInit {
     }
 
     excluir() {
-        this.app.confirm("Tem certeza que deseja excluir esta etapa?", "Confirmar Exclusão")
+        this.app.confirm("Tem certeza que deseja excluir este recurso material?", "Confirmar Exclusão")
             .then(result => {
                 if (result) {
                     this.loading.show();

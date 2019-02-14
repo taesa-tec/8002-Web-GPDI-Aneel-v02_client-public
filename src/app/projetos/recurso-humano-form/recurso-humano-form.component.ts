@@ -121,7 +121,7 @@ export class RecursoHumanoFormComponent implements OnInit {
     }
 
     excluir() {
-        this.app.confirm("Tem certeza que deseja excluir esta etapa?", "Confirmar Exclusão")
+        this.app.confirm("Tem certeza que deseja excluir esta pessoa?", "Confirmar Exclusão")
             .then(result => {
                 if (result) {
                     this.loading.show();

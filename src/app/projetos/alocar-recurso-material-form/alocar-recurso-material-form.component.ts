@@ -114,7 +114,7 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
     }
 
     excluir() {
-        this.app.confirm("Tem certeza que deseja excluir esta etapa?", "Confirmar Exclusão")
+        this.app.confirm("Tem certeza que deseja excluir este alocamento do recurso material?", "Confirmar Exclusão")
             .then(result => {
                 if (result) {
                     this.loading.show();
