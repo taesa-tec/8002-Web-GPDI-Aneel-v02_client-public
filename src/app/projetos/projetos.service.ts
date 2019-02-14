@@ -170,7 +170,7 @@ export class ProjetosService {
     }
 
     delAlocacaoRH(id: number) {
-        return this.http.delete<any>(`Projeto/${id}/AlocacaoRhs`);
+        return this.http.delete<any>(`Projeto/AlocacaoRhs/${id}`);
     }
 
     /**

@@ -13,6 +13,7 @@
 </div>
 <div class="row">
     <div class="col-12">
+        {{alocacoes|json}}
         <table class="table">
             <thead>
                 <tr>
@@ -61,13 +62,18 @@
                     </th>
                 </tr>
             </thead>
-            <tr *ngFor="let item of [0,1,2,3]">
+            <tr>
+                <td colspan="5" class="text-center p-0">
+                    <app-loading type="inline"></app-loading>
+                </td>
+            </tr>
+            <tr *ngFor="let alocacao of alocacoes">
                 <td>Frederico Souto dos Santos</td>
                 <td>Etapa 3</td>
                 <td>TAESA (7527)</td>
                 <td>R$9.999,00</td>
                 <td>
-                    <button type="button" class="btn btn-primary btn-sm btn-block" (click)="openModal(1)">
+                    <button type="button" class="btn btn-primary btn-sm btn-block" (click)="openModal(alocacao)">
                         <i class="ta-edit"></i>
                         EDITAR
                     </button>
