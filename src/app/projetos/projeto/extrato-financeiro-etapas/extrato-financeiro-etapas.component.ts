@@ -5,7 +5,7 @@ import { zip } from 'rxjs';
 
 import { RecursoHumanoFormComponent } from '@app/projetos/recurso-humano-form/recurso-humano-form.component';
 import { AppService } from '@app/app.service';
-import { Projeto, ExtratosEmpresas, Etapa, TextValue, CategoriaContabil } from '@app/models';
+import { Projeto, Etapa, TextValue, CategoriaContabil, ExtratosEtapas } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 
 @Component({
@@ -16,14 +16,16 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 export class ExtratoFinanceiroEtapasComponent implements OnInit {
 
     projeto: Projeto;
-    extrato: ExtratosEmpresas;
+    extrato: ExtratosEtapas;
     etapas: { [propName: number]: Etapa } = {};
-    categoriasContabeis: { [propName: string]: TextValue } = {};
+    categoriasContabeis: { [propName: string]: TextValue } = {
+        "RH": { text: "Recursos Humanos", value: "RH" }
+    };
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
-    get extratoEmpresas() {
-        return this.extrato ? this.extrato.empresas.filter(e => e.total > 0) : [];
+    get extratoEtapas() {
+        return this.extrato ? this.extrato.etapas.filter(e => e.total > 0) : [];
     }
     get totalGeral() {
         return this.extrato ? this.extrato.valor : 0;
@@ -63,7 +65,7 @@ export class ExtratoFinanceiroEtapasComponent implements OnInit {
         const etapas$ = this.app.projetos.getEtapas(this.projeto.id);
 
         zip(extratos$, etapas$).subscribe(([extrato, etapas]) => {
-            
+
             console.log({ extrato });
 
             this.extrato = extrato;

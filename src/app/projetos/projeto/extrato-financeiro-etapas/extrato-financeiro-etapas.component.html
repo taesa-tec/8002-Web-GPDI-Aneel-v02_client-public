@@ -1,28 +1,39 @@
 <h5 class="text-uppercase text-blue font-weight-normal mb-5">Extrato Financeiro por etapas</h5>
-<div class="row" *ngFor="let item of ['Etapa 01', 'Etapa 02', 'Etapa 03']">
+<div class="row" *ngFor="let etapa of extratoEtapas">
     <div class="col-12">
-        <h6>{{item}}</h6>
+        <h6>{{etapa.nome}}</h6>
     </div>
     <div class="col-12">
-        <app-accordion *ngFor="let itemExtrato of ['TAESA (7527)', 'ATE II (5012)']">
+        <app-accordion *ngFor="let empresa of etapa.empresas">
             <header role="heading" class="d-flex justify-content-between">
-                <span>{{itemExtrato}}</span><span>R$12.345,00</span>
+                <span> {{ empresa.desc }} </span><span>{{ empresa.valor | currency:'R$' }}</span>
             </header>
             <div role="main">
                 <table class="table table-borderless">
-                    <tr *ngFor="let i of [0,0,0,0]">
+                    <tr *ngFor="let item of empresa.items">
                         <td>
-                            <button class="btn btn-sm btn-link" (click)="openModal()">Nome do Item</button>
+                            <span class="btn btn-sm btn-link"> {{item.desc}} </span>
                         </td>
-                        <td>Etapa 3</td>
-                        <td>Titulo</td>
-                        <td>R$12.345,00</td>
+                        <td width="30%">{{categoriaPorCod(item.categoriaContabil) }}</td>
+                        <td width="15%"> {{ item.valor | currency:'R$' }} </td>
                     </tr>
                 </table>
             </div>
         </app-accordion>
     </div>
 </div>
+<div class="row" *ngIf="extrato">
+    <div class="col text-right">
+        <h5 class="text-blue">
+            Total Geral: {{ totalGeral | currency:'R$' }}
+        </h5>
+        <button class="btn btn-outline-blue">
+            <i class="ta-download fs-18"></i>
+            Gerar CSV
+        </button>
+    </div>
+</div>
+
 <hr>
 <div class="row">
     <div class="col-auto">
