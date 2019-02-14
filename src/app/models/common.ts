@@ -293,6 +293,41 @@ export interface ExtratosEmpresas {
     total: number;
     valor: number;
 }
+export interface RecursoHumano {
+    id: number;
+    projetoId: number;
+    empresaId: number;
+    empresa?: any;
+    valorHora: number;
+    nomeCompleto: string;
+    titulacao: number;
+    titulacaoValor: string;
+    funcao: number;
+    funcaoValor: string;
+    nacionalidade: number;
+    nacionalidadeValor: string;
+    cpf: string;
+    passaporte?: any;
+    urlCurriculo: string;
+}
+
+export interface AlocacaoRH {
+    id: number;
+    etapaId: number;
+    etapa?: any;
+    projetoId: number;
+    recursoHumanoId: number;
+    recursoHumano: RecursoHumano;
+    empresaId: number;
+    empresa: Empresa;
+    hrsMes1: number;
+    hrsMes2: number;
+    hrsMes3: number;
+    hrsMes4: number;
+    hrsMes5: number;
+    hrsMes6: number;
+    justificativa: string;
+}
 
 // Extrato por Etapas
 export interface ExtratoEtapa {
