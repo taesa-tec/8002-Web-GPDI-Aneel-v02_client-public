@@ -293,7 +293,6 @@ export interface ExtratosEmpresas {
     total: number;
     valor: number;
 }
-<<<<<<< HEAD
 export interface RecursoHumano {
     id: number;
     projetoId: number;
@@ -329,7 +328,6 @@ export interface AlocacaoRH {
     hrsMes6: number;
     justificativa: string;
 }
-=======
 
 // Extrato por Etapas
 export interface ExtratoEtapa {
@@ -345,4 +343,3 @@ export interface ExtratosEtapas {
     valor: number;
 }
 // -----------------------------
->>>>>>> origin
