@@ -244,4 +244,22 @@ export class ProjetosService {
     delLogPorjeto(id: number) {
         return this.http.delete<any>(`projeto/LogProjetos/${id}`);
     }
+
+
+    /**
+     * @description Gerar XML's
+     */
+    gerarXmlProjetoPed(id: number, versao: number) {
+        return this.http.get<any>(`projeto/${id}/XmlProjetoPed/${versao}`);
+    }
+    XmlInteresseExecucao(id: number, versao: number) {
+        return this.http.get<any>(`projeto/${id}/XmlInteresseExecucao/${versao}`);
+    }
+    XmlInicioExecucao(id: number, versao: number) {
+        return this.http.get<any>(`projeto/${id}/XmlInicioExecucao/${versao}`);
+    }
+    XmlProrrogacao(id: number, versao: number) {
+        return this.http.get<any>(`projeto/${id}/XmlProrrogacao/${versao}`);
+    }
+
 }

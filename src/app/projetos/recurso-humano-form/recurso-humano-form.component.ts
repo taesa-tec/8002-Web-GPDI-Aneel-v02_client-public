@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Projeto, Funcao, Titulacao, EmpresaProjeto, Empresa, AppValidators, RecursosHumanos } from '@app/models';
+import { Projeto, Funcao, Titulacao, EmpresaProjeto, Empresa, AppValidators, RecursoHumano } from '@app/models';
 import { AppService } from '@app/app.service';
 import { zip } from 'rxjs';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
@@ -19,7 +19,7 @@ export class RecursoHumanoFormComponent implements OnInit {
     titulacao = Titulacao;
     empresas: EmpresaProjeto;
     empresasCatalog: Array<Empresa>;
-    recursoHumano: RecursosHumanos;
+    recursoHumano: RecursoHumano;
     nacionalidades = [{ value: 'Brasileiro', text: "Sim" }, { value: 'Estrangeiro', text: "Não" }];
     nacionalidade = new FormControl('', Validators.required);
     form: FormGroup;

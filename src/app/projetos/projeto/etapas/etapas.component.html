@@ -72,7 +72,7 @@
         </tr>
       </thead>
       <tr *ngFor="let etapa of etapas | orderBy:listOrder.field:listOrder.direction; let i = index">
-        <td>Etapa {{ etapa.numeroEtapa }}</td>
+        <td> <span [ngbTooltip]="etapa.desc"> Etapa {{ etapa.numeroEtapa }}  </span></td>
         <td>{{ etapa.dataInicio | date:'dd/MM/yyyy' }}</td>
         <td>{{ etapa.dataFim | date:'dd/MM/yyyy' }}</td>
         <td>
