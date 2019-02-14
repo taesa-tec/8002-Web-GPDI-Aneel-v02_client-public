@@ -31,7 +31,7 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
         protected app: AppService) { }
 
     get modalTitle() {
-        return typeof this.alocacao.id !== 'undefined' ? "Editar Alocamento Recurso Humano" : "Alocar Recurso Humano";
+        return typeof this.alocacao.id !== 'undefined' ? "Editar Alocação Recurso Humano" : "Alocar Recurso Humano";
     }
 
     get buttonAction() {
@@ -151,7 +151,7 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
     }
 
     excluir() {
-        this.app.confirm("Tem certeza que deseja excluir este alocamento do recurso humano?", "Confirmar Exclusão")
+        this.app.confirm("Tem certeza que deseja excluir esta alocação do recurso humano?", "Confirmar Exclusão")
             .then(result => {
                 if (result) {
                     this.loading.show();
