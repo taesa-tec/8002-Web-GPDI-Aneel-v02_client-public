@@ -7,7 +7,7 @@ import { CatalogsService } from '@app/catalogs/catalogs.service';
 import { ActivatedRoute } from '@angular/router';
 import { zip } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Projeto } from '@app/models';
+import { Projeto, Etapa } from '@app/models';
 import { FormGroup, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
@@ -20,7 +20,7 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 export class EtapasComponent implements OnInit {
 
   projeto: Projeto;
-  etapas: Array<any>;
+  etapas: Array<Etapa>;
   form: FormGroup;
   dataInicio = new Date();
 

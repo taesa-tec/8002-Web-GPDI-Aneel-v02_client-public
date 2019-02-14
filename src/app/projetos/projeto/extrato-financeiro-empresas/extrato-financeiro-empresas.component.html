@@ -11,13 +11,13 @@
     <div class="col-12">
         <app-accordion *ngFor="let relatorio of empresa.relatorios">
             <header role="heading" class="d-flex justify-content-between">
-                <span>{{relatorio.desc}}</span><span>{{relatorio.valor | currency:'R$'}}</span>
+                <span>{{ categoriaPorCod(relatorio.desc) }}</span><span>{{relatorio.valor | currency:'R$'}}</span>
             </header>
             <div role="main">
                 <table class="table table-borderless m-0">
                     <tr *ngFor="let i of relatorio.items">
                         <td width="25%">
-                            <span>{{i.desc}}</span>
+                            <span class="btn btn-link" (click)="openModal(i)">{{i.desc}}</span>
                         </td>
                         <td width="15%">
                             <span *ngIf="etapas[i.etapa.id]" [title]="etapas[i.etapa.id].desc"> Etapa {{etapas[i.etapa.id].numeroEtapa}}</span>

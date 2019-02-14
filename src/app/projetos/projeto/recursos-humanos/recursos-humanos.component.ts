@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
 import { AppService } from '@app/app.service';
 import { zip, of } from 'rxjs';
-import { Projeto, RecursosHumanos, Funcao, Titulacao } from '@app/models';
+import { Projeto, RecursoHumano, Funcao, Titulacao } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 
 @Component({
@@ -34,7 +34,7 @@ export class RecursosHumanosComponent implements OnInit {
         protected app: AppService,
         protected modalService: NgbModal) { }
 
-    openModal(recurso_humano: RecursosHumanos | any = {}) {
+    openModal(recurso_humano: RecursoHumano | any = {}) {
         const modalRef = this.modalService.open(RecursoHumanoFormComponent, { size: 'lg' });
         modalRef.componentInstance.recursoHumano = recurso_humano;
         modalRef.componentInstance.projeto = this.projeto;

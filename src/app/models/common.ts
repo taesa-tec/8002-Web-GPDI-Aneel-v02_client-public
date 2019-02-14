@@ -16,7 +16,19 @@ export interface MessageAlert {
     type: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
     icon?: string;
 }
-
+export interface FileUploaded {
+    id: number;
+    nomeArquivo: string;
+    url: string;
+    projetoId?: any;
+    temaId: number;
+    registroFinanceiroId?: any;
+    categoria: number;
+    categoriaValor?: any;
+    userId: string;
+    user?: any;
+    created: string;
+}
 export interface UF {
     id: number;
     nome: string;
@@ -123,8 +135,6 @@ export interface UserProjeto {
     catalogUserPermissao: CatalogUserPermissao;
 }
 
-
-
 export interface Tema {
     id: number;
     nome: string;
@@ -163,10 +173,7 @@ export interface TemaProjeto {
     subTemas: SubTema[];
     uploads: FileUploaded[];
 }
-
-
 // Produtos
-
 export interface Produto {
     created: string;
     id: number;
@@ -196,6 +203,8 @@ export interface Etapa {
     etapaProdutos: EtapaProduto[];
 }
 export interface EtapaProduto {
+    id: number;
+    etapaId: number;
     produtoId: number;
 }
 
@@ -238,24 +247,12 @@ export interface AlocacaoRM {
     justificativa: string;
 }
 
-export interface FileUploaded {
-    id: number;
-    nomeArquivo: string;
-    url: string;
-    projetoId?: any;
-    temaId: number;
-    registroFinanceiroId?: any;
-    categoria: number;
-    categoriaValor?: any;
-    userId: string;
-    user?: any;
-    created: string;
-}
-
 export interface ExtratoItem {
     alocacaoId: number;
     desc: string;
     etapa: Etapa;
+    recursoHumano?: any;
+    recursoMaterial?: RecursoMaterial;
     valor: number;
 }
 
@@ -279,8 +276,7 @@ export interface ExtratosEmpresas {
     total: number;
     valor: number;
 }
-
-export interface RecursosHumanos {
+export interface RecursoHumano {
     id: number;
     projetoId: number;
     empresaId: number;

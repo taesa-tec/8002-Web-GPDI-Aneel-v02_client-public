@@ -6,6 +6,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { AppService } from '@app/app.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { zip } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-recurso-material-form',
@@ -36,10 +39,10 @@ export class RecursoMaterialFormComponent implements OnInit {
 
     ngOnInit() {
         this.setup();
+
     }
 
     setup() {
-
         this.form = new FormGroup({
             projetoId: new FormControl(this.projeto.id, Validators.required),
             nome: new FormControl(this.recursoMaterial.nome || '', [Validators.required]),

@@ -4,7 +4,7 @@
     <i class="ta-cancel-circle"></i>
   </button>
 </div>
-<form class="modal-body" [formGroup]="form">
+<form class="modal-body" *ngIf="form" [formGroup]="form">
   <div class="row">
     <div class="col-12">
       <div class="form-group">

@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { RecursoHumanoFormComponent } from '@app/projetos/recurso-humano-form/recurso-humano-form.component';
-import { ProjetosService } from '@app/projetos/projetos.service';
-import { AppService } from '@app/app.service';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { zip } from 'rxjs';
-import { Projeto, ExtratosEmpresas, Etapa } from '@app/models';
+
+import { RecursoHumanoFormComponent } from '@app/projetos/recurso-humano-form/recurso-humano-form.component';
+import { AppService } from '@app/app.service';
+import { Projeto, ExtratosEmpresas, Etapa, TextValue, CategoriaContabil, ExtratoItem } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
+import { RecursoMaterialFormComponent } from '@app/projetos/recurso-material-form/recurso-material-form.component';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-extrato-financeiro-empresas',
@@ -19,6 +20,7 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
     projeto: Projeto;
     extrato: ExtratosEmpresas;
     etapas: { [propName: number]: Etapa } = {};
+    categoriasContabeis: { [propName: string]: TextValue } = {};
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
@@ -29,14 +31,43 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
         return this.extrato ? this.extrato.valor : 0;
     }
 
+
+
     constructor(
         protected app: AppService,
         private route: ActivatedRoute
-    ) { }
+    ) {
+        CategoriaContabil.forEach(c => {
+            this.categoriasContabeis[c.value] = c;
+        });
+    }
+    categoriaPorCod(cod) {
+        if (this.categoriasContabeis[cod]) {
+            return this.categoriasContabeis[cod].text;
+        }
+        return '';
+    }
 
-    openModal(id: number) {
-        const modalRef = this.app.modal.open(RecursoHumanoFormComponent, { size: 'lg' });
-        modalRef.componentInstance.recurso_id = id;
+    openModal(item: ExtratoItem) {
+        let modal: NgbModalRef;
+
+        if (item.recursoHumano) {
+            modal = this.app.modal.open(RecursoHumanoFormComponent, { size: 'lg' });
+            modal.componentInstance.recursoHumano = item.recursoHumano;
+        } else if (item.recursoMaterial) {
+            modal = this.app.modal.open(RecursoMaterialFormComponent, { size: 'lg' });
+            modal.componentInstance.recursoMaterial = item.recursoMaterial;
+        }
+
+
+        if (modal) {
+            modal.componentInstance.projeto = this.projeto;
+            modal.result.then(result => {
+                console.log(result);
+            }, error => {
+                
+            });
+        }
     }
 
     ngOnInit() {
@@ -51,11 +82,7 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
         this.loading.show();
         const extratos$ = this.app.projetos.getExtratoEmpresas(this.projeto.id);
         const etapas$ = this.app.projetos.getEtapas(this.projeto.id);
-        this.app.projetos.getExtratoEmpresas(this.projeto.id).subscribe(result => {
 
-        }, error => {
-            this.loading.hide();
-        });
         zip(extratos$, etapas$).subscribe(([extrato, etapas]) => {
             this.extrato = extrato;
             etapas.forEach((etapa, index) => {
