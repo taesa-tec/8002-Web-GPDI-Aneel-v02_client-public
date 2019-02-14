@@ -20,7 +20,9 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
     projeto: Projeto;
     extrato: ExtratosEmpresas;
     etapas: { [propName: number]: Etapa } = {};
-    categoriasContabeis: { [propName: string]: TextValue } = {};
+    categoriasContabeis: { [propName: string]: TextValue } = {
+        "RH": { text: "Recursos Humanos", value: "RH" }
+    };
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
@@ -65,7 +67,7 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
             modal.result.then(result => {
                 console.log(result);
             }, error => {
-                
+
             });
         }
     }

@@ -13,7 +13,8 @@ import {
     ProjetoDataInicio,
     Etapa,
     EditEmpresaRequest,
-    ExtratosEmpresas
+    ExtratosEmpresas,
+    ExtratosEtapas
 } from '@app/models';
 import { Subject, Observable } from 'rxjs';
 
@@ -226,7 +227,7 @@ export class ProjetosService {
      */
 
     getExtratoEtapas(id: number) {
-        return this.http.get<any>(`Projeto/${id}/ExtratoEtapas`);
+        return this.http.get<ExtratosEtapas>(`Projeto/${id}/ExtratoEtapas`);
     }
 
     /**

@@ -246,6 +246,23 @@ export interface AlocacaoRM {
     qtd: number;
     justificativa: string;
 }
+export interface RecursoHumano {
+    id: number;
+    projetoId: number;
+    empresaId: number;
+    empresa?: any;
+    valorHora: number;
+    nomeCompleto: string;
+    titulacao: number;
+    titulacaoValor: string;
+    funcao: number;
+    funcaoValor: string;
+    nacionalidade: number;
+    nacionalidadeValor: string;
+    cpf: string;
+    passaporte?: any;
+    urlCurriculo: string;
+}
 
 export interface ExtratoItem {
     alocacaoId: number;
@@ -276,20 +293,18 @@ export interface ExtratosEmpresas {
     total: number;
     valor: number;
 }
-export interface RecursoHumano {
-    id: number;
-    projetoId: number;
-    empresaId: number;
-    empresa?: any;
-    valorHora: number;
-    nomeCompleto: string;
-    titulacao: number;
-    titulacaoValor: string;
-    funcao: number;
-    funcaoValor: string;
-    nacionalidade: number;
-    nacionalidadeValor: string;
-    cpf: string;
-    passaporte?: any;
-    urlCurriculo: string;
+
+// Extrato por Etapas
+export interface ExtratoEtapa {
+    nome: string;
+    etapa: Etapa;
+    empresas: ExtratoEmpresa[];
+    total: number;
+    valor: number;
 }
+export interface ExtratosEtapas {
+    etapas: ExtratoEtapa[];
+    total: number;
+    valor: number;
+}
+// -----------------------------
