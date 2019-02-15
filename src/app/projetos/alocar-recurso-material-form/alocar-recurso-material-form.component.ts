@@ -31,7 +31,7 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
         protected app: AppService) { }
 
     get modalTitle() {
-        return typeof this.alocacao.id !== 'undefined' ? "Editar Alocamento Recurso Material" : "Alocar Recurso Material";
+        return typeof this.alocacao.id !== 'undefined' ? "Editar Alocação Recurso Material" : "Alocar Recurso Material";
     }
 
     get buttonAction() {
