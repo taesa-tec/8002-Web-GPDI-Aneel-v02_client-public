@@ -319,7 +319,7 @@ export interface AlocacaoRH {
     recursoHumanoId: number;
     recursoHumano: RecursoHumano;
     empresaId: number;
-    empresa: Empresa;
+    empresa: EmpresaProjeto;
     hrsMes1: number;
     hrsMes2: number;
     hrsMes3: number;

@@ -94,9 +94,6 @@ export class AlocacaoComponent implements OnInit {
                 return aloc;
             });
 
-            console.log(alocacoes);
-
-
             this.loading.hide();
         });
 
