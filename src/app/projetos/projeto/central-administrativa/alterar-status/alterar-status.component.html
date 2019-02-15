@@ -1,23 +1,27 @@
 <div class="row">
-    <div class="col-6">
-        <div class="form-group">
-            <label for="">Modo de visualização</label>
-            <select name="" id="" class="form-control">
-                <option value="">Selecione</option>
-            </select>
-        </div>
-    </div>
-    <div class="col-6">
+    <div class="col-12">
         <div class="form-group">
             <label for="">Status</label>
-            <select name="" id="" class="form-control">
-                <option value="">Selecione</option>
-            </select>
+
         </div>
     </div>
 </div>
 <div class="row">
+    <div class="col-6">
+        <div *ngIf="form" class="d-flex" [formGroup]="form">
+            <select name="" id="" class="form-control flex-grow-1" formControlName="catalogStatusId">
+                <option value="">Selecione</option>
+                <option [value]="item.id" *ngFor="let item of status">{{ item.status }}</option>
+            </select>
+            <button class="btn btn-primary btn-sm mx-3 text-nowrap" (click)="save()">
+                <i class="ta-save"></i> Salvar Alterações
+            </button>
+        </div>
+    </div>
+
+</div>
+<div class="row">
     <div class="col-12">
-        <button class="btn btn-primary"><i class="ta-save"></i>Salvar Alterações</button>
+
     </div>
 </div>

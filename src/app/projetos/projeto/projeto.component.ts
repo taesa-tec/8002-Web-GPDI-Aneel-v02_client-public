@@ -27,7 +27,7 @@ export class ProjetoComponent implements OnInit {
     constructor(private route: ActivatedRoute, protected app: AppService) {
         this.projetoPlanejamentoRoutes = filter(projetoPlanejamentoRoutes, (r => r.path !== "**" && r.path.length > 0));
     }
-    
+
     get routes() {
         return this.projetoPlanejamentoRoutes;
     }
@@ -35,7 +35,6 @@ export class ProjetoComponent implements OnInit {
 
     ngOnInit() {
         this.route.data.subscribe((data: { projeto: Projeto }) => this.projeto = data.projeto);
-
     }
 
 }

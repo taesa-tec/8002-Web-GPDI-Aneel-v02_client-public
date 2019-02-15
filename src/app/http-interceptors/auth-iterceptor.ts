@@ -23,10 +23,6 @@ export class AuthInterceptor implements HttpInterceptor {
             });
         }
 
-        return next.handle(apiReq).pipe(tap(event => {
-            if (event instanceof HttpResponse && event.status === 401) {
-                this.auth.logout();
-            }
-        }));
+        return next.handle(apiReq);
     }
 }
