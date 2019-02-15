@@ -1,5 +1,8 @@
 <app-loading type="fullscreen"></app-loading>
-<div [formGroup]="form">
+<ngb-alert [dismissible]="false" type="danger" *ngFor="let item of inconsistencias">
+    {{item}}
+</ngb-alert>
+<div [formGroup]="form" *ngIf="avaliacaoResult && avaliacaoResult.sucesso">
     <h5>GERAR XML DO PROJETO DE PeD</h5>
     <div class="rounded bg-cinza-claro p-3">
         <div class="form-group">

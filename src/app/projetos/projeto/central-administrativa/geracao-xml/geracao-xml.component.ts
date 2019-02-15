@@ -2,9 +2,10 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { AppService } from '@app/app.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Projeto } from '@app/models';
+import { Projeto, ResultadoResponse } from '@app/models';
 import { Subscription } from 'rxjs';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
+import { tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-geracao-xml',
@@ -21,10 +22,15 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
     XmlInteresseExecucao: FormControl = new FormControl('', [Validators.required]);
     XmlInicioExecucao: FormControl = new FormControl('', [Validators.required]);
 
+    avaliacaoResult: ResultadoResponse;
+
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
     protected projetoLoaded: Subscription;
 
+    get inconsistencias() {
+        return this.avaliacaoResult ? this.avaliacaoResult.inconsistencias : [];
+    }
 
     constructor(protected app: AppService) { }
 
@@ -39,6 +45,17 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
             this.projeto = projeto;
         });
 
+        this.validar().subscribe(result => {
+            
+        });
+
+
+    }
+
+    validar() {
+        return this.app.projetos.validarDados(this.projeto.id).pipe(tap(result => {
+            this.avaliacaoResult = result;
+        }));
     }
     ngOnDestroy() {
         if (this.projetoLoaded) {
@@ -48,6 +65,7 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
 
     gerarXmlProjetoPed() {
         this.loading.show();
+
         this.app.projetos.gerarXmlProjetoPed(this.projeto.id, this.XmlProjetoPed.value).subscribe(result => {
             this.loading.hide();
             if (result.sucesso) {

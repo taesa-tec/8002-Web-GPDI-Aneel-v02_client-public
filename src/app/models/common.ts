@@ -128,11 +128,11 @@ export interface CatalogUserPermissao {
 export interface UserProjeto {
     id: number;
     userId: string;
-    applicationUser?: any;
+    applicationUser?: User;
     projetoId: number;
-    projeto: Projeto;
-    catalogUserPermissaoId: number;
-    catalogUserPermissao: CatalogUserPermissao;
+    projeto?: Projeto;
+    catalogUserPermissaoId: any;
+    catalogUserPermissao?: CatalogUserPermissao;
 }
 
 export interface Tema {

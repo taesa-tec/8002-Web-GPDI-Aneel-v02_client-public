@@ -14,7 +14,8 @@ import {
     Etapa,
     EditEmpresaRequest,
     ExtratosEmpresas,
-    ExtratosEtapas
+    ExtratosEtapas,
+    FileUploaded
 } from '@app/models';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { tap, share } from 'rxjs/operators';
@@ -42,7 +43,7 @@ export class ProjetosService {
         return this.http.get<Array<Projeto>>('Projetos');
     }
     usersProjeto(id: number) {
-        return this.http.get<Projeto>(`Projetos/${id}/Usuarios`);
+        return this.http.get<Array<UserProjeto>>(`Projetos/${id}/Usuarios`);
     }
 
     criarProjeto(projeto: CreateProjectRequest) {
@@ -248,9 +249,15 @@ export class ProjetosService {
     }
 
 
+    validarDados(id: number) {
+        return this.http.get<ResultadoResponse>(`projeto/${id}/XmlProjetoPed/ValidaDados`);
+    }
     /**
      * @description Gerar XML's
      */
+    obterXmls(id: number) {
+        return this.http.get<Array<FileUploaded>>(`projeto/${id}/ObterXmls`);
+    }
     gerarXmlProjetoPed(id: number, versao: number) {
         return this.http.get<ResultadoResponse>(`projeto/${id}/XmlProjetoPed/${versao}`);
     }
