@@ -16,13 +16,15 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class AlocarRecursoHumanoFormComponent implements OnInit {
 
     projeto: Projeto;
-    recursosHumano: RecursoHumano;
+    recursosHumano: Array<RecursoHumano>;
     etapas: Array<Etapa>;
-    empresasFinanciadora: EmpresaProjeto;
+    empresasFinanciadora: Array<EmpresaProjeto>;
+    empresas: Array<EmpresaProjeto>;
     form: FormGroup;
     horasAlocadas: Array<any> = [];
     etapaMarcada = false;
     alocacao: AlocacaoRH;
+    maxHora = 160;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
@@ -52,20 +54,38 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
 
         for (let i = 1; i <= duracao; i++) {
 
-            let horas = { text: "Mês " + i, name: "hrsMes" + i, form: new FormControl({ value: '', disabled: true }, Validators.required) };
+            let horas = { text: "Mês " + i, name: "hrsMes" + i, form: new FormControl({ value: '', disabled: true }, [Validators.required]) };
 
-            if (etapa && etapa.dataInicio) {
+            if (etapa && etapa.dataInicio || this.alocacao.id !== undefined) {
 
-                const dataInicio = new Date(etapa.dataInicio);
+                let dataInicio = new Date();
+                let val = '';
+
+                if (this.alocacao.id !== undefined) {
+
+                    dataInicio = new Date(this.alocacao.etapa.dataInicio);
+                    val = this.alocacao["hrsMes" + i];
+
+                    const empresa = this.alocacao.empresa;
+
+                    if (empresa.classificacaoValor !== undefined && (empresa.classificacaoValor === 'Proponente' || empresa.classificacaoValor === 'Energia')) {
+                        this.maxHora = 172;
+                    }
+
+                }
+
+                if (etapa && etapa.dataInicio) {
+                    dataInicio = new Date(etapa.dataInicio);
+                    val = '';
+                }
+
                 dataInicio.setMonth(dataInicio.getMonth() + (i - 1));
-                horas = { text: monthNames[dataInicio.getMonth()], name: "hrsMes" + i, form: new FormControl('', Validators.required) };
 
-            } else if (this.alocacao.id !== undefined && this.etapas !== undefined) {
-
-                const etapaVal = this.etapas.find(e => e.id === this.alocacao.etapaId);
-                const dataInicio = new Date(etapaVal.dataInicio);
-                dataInicio.setMonth(dataInicio.getMonth() + (i - 1));
-                horas = { text: monthNames[dataInicio.getMonth()], name: "hrsMes" + i, form: new FormControl(this.alocacao["hrsMes" + i] || '', Validators.required) };
+                horas = {
+                    text: monthNames[dataInicio.getMonth()],
+                    name: "hrsMes" + i,
+                    form: new FormControl(val, [Validators.required, Validators.max(this.maxHora), Validators.min(1)])
+                };
 
             }
 
@@ -85,10 +105,11 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
     setup() {
 
         const etapa = new FormControl(this.alocacao.etapaId || '', Validators.required);
+        const recursoHumano = new FormControl(this.alocacao.recursoHumanoId || '', Validators.required);
 
         this.form = new FormGroup({
             projetoId: new FormControl(this.projeto.id, Validators.required),
-            recursoHumanoId: new FormControl(this.alocacao.recursoHumanoId || '', Validators.required),
+            recursoHumanoId: recursoHumano,
             etapaId: etapa,
             empresaId: new FormControl(this.alocacao.empresaId || '', Validators.required),
             justificativa: new FormControl(this.alocacao.justificativa || '', Validators.required),
@@ -111,6 +132,18 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
 
         });
 
+        recursoHumano.valueChanges.subscribe(value => {
+
+            const rh = this.recursosHumano.find(e => e.id === parseInt(value, 10));
+
+            const empresa = this.empresas.find(e => e.id === rh.empresaId);
+
+            if (empresa.classificacaoValor !== undefined && (empresa.classificacaoValor === 'Proponente' || empresa.classificacaoValor === 'Energia')) {
+                this.maxHora = 172;
+            }
+
+        });
+
         if (this.alocacao.id !== undefined) {
             this.form.addControl('id', new FormControl(this.alocacao.id));
         }
@@ -126,9 +159,8 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
 
             this.recursosHumano = rh;
             this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; });
+            this.empresas = empresas;
             this.empresasFinanciadora = empresas.filter(item => item.classificacaoValor !== "Executora");
-            this._horaAlocadas();
-            this._form_horaAlocadas();
             this.loading.hide();
         });
     }
@@ -138,8 +170,6 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
             const request = this.alocacao.id ? this.app.projetos.editarAlocacaoRH(this.form.value) : this.app.projetos.criarAlocacaoRH(this.form.value);
             this.loading.show();
             request.subscribe(result => {
-                console.log(result);
-
                 if (result.sucesso) {
                     this.activeModal.close(result);
                 } else {
