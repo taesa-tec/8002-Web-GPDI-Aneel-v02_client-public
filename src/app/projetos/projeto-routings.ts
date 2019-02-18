@@ -19,6 +19,11 @@ import { AlterarStatusComponent } from '@app/projetos/projeto/central-administra
 import { UsuariosComponent } from '@app/projetos/projeto/central-administrativa/usuarios/usuarios.component';
 import { LogProjetoComponent } from '@app/projetos/projeto/log-projeto/log-projeto.component';
 import { ProjetoResolverService } from './projeto-resolver.service';
+import { RefpInserirComponent } from './projeto/iniciado/refp-inserir/refp-inserir.component';
+import { RefpListComponent } from './projeto/iniciado/refp-list/refp-list.component';
+import { RefpExtratoComponent } from './projeto/iniciado/refp-extrato/refp-extrato.component';
+import { AlterarProjetoComponent } from './projeto/iniciado/alterar-projeto/alterar-projeto.component';
+import { ConsultarDadosComponent } from './projeto/iniciado/consultar-dados/consultar-dados.component';
 
 export const centralPlanejamentoRoutes: Routes = [{
     path: "",
@@ -46,52 +51,7 @@ export const centralPlanejamentoRoutes: Routes = [{
     data: { text: 'Usuários' }
 }];
 
-export const projetoPlanejamentoRoutes: Routes = [
-    { path: '', redirectTo: 'info', pathMatch: 'full' },
-    {
-        path: 'info', component: InfoComponent,
-        data: { text: "Projeto", icon: "ta-projeto" }
-    },
-    {
-        path: 'temas', component: TemasComponent,
-        data: { text: "Temas", icon: "ta-chat" }
-    },
-    {
-        path: 'produtos', component: ProdutosComponent,
-        data: { text: "Produtos", icon: "ta-box" }
-    },
-    {
-        path: 'etapas', component: EtapasComponent,
-        data: { text: "Etapas", icon: "ta-etapas" }
-    },
-    {
-        path: 'empresas', component: EmpresasComponent,
-        data: { text: "Empresas", icon: "ta-empresas" }
-    },
-    {
-        path: 'recursos-humanos', component: RecursosHumanosComponent,
-        data: { text: "Recursos Humanos", icon: "ta-group" }
-    },
-    {
-        path: 'alocacao-recursos-humanos', component: AlocacaoHComponent,
-        data: { text: "Alocação de recursos", icon: "ta-alocacao-rh" }
-    },
-    {
-        path: 'recursos-materiais', component: RecursosMateriaisComponent,
-        data: { text: "Recursos Materiais", icon: "ta-recurso-material" }
-    },
-    {
-        path: 'alocacao-recursos-materiais', component: AlocacaoMComponent,
-        data: { text: "Alocação de recursos Materias", icon: "ta-alocacao-material" }
-    },
-    {
-        path: 'extrato-financeiro-empresas', component: ExtratoFinanceiroEmpresasComponent,
-        data: { text: "Extrato Financeiro Empresas", icon: "ta-extrato" }
-    },
-    {
-        path: 'extrato-financeiro-etapas', component: ExtratoFinanceiroEtapasComponent,
-        data: { text: "Extrato Financeiro Etapas", icon: "ta-table" }
-    },
+export const projetoCommonsRoutes: Routes = [
     {
         path: 'central-administrativa',
         component: CentralAdministrativaComponent,
@@ -100,7 +60,91 @@ export const projetoPlanejamentoRoutes: Routes = [
         resolve: {
             // projeto: ProjetoResolverService
         }
+    }, { path: 'logs', component: LogProjetoComponent, data: { text: "Log Projeto", icon: "ta-log" } }
+];
+
+export const projetoPlanejamentoRoutes: Routes = [
+    { path: '', redirectTo: 'info', pathMatch: 'full' },
+    {
+        path: 'info', component: InfoComponent,
     },
-    { path: 'logs', component: LogProjetoComponent, data: { text: "Log Projeto", icon: "ta-log" } },
+    {
+        path: 'temas', component: TemasComponent,
+    },
+    {
+        path: 'produtos', component: ProdutosComponent,
+    },
+    {
+        path: 'etapas', component: EtapasComponent,
+    },
+    {
+        path: 'empresas', component: EmpresasComponent,
+    },
+    {
+        path: 'recursos-humanos', component: RecursosHumanosComponent,
+    },
+    {
+        path: 'alocacao-recursos-humanos', component: AlocacaoHComponent,
+    },
+    {
+        path: 'recursos-materiais', component: RecursosMateriaisComponent,
+    },
+    {
+        path: 'alocacao-recursos-materiais', component: AlocacaoMComponent,
+    },
+    {
+        path: 'extrato-financeiro-empresas', component: ExtratoFinanceiroEmpresasComponent,
+    },
+    {
+        path: 'extrato-financeiro-etapas', component: ExtratoFinanceiroEtapasComponent,
+    },
     { path: '**', redirectTo: 'info', pathMatch: 'full' }
 ];
+
+export const projetoIniciadoRoutes: Routes = [
+    {
+        path: '', redirectTo: "refp-inserir", pathMatch: 'full'
+    },
+    {
+        path: 'refp', redirectTo: "refp-inserir", pathMatch: 'full'
+    },
+    {
+        path: 'refp-inserir', component: RefpInserirComponent,
+    },
+    {
+        path: 'refp-extrato', component: RefpExtratoComponent,
+    },
+    {
+        path: 'refp/:status', component: RefpListComponent,
+    },
+    {
+        path: 'alterar', component: AlterarProjetoComponent,
+    },
+    {
+        path: 'consultar', component: ConsultarDadosComponent,
+    },
+];
+
+export const projetoRoutes: Routes = [].concat([
+    {
+        path: "proposta",
+        children: projetoPlanejamentoRoutes,
+        resolve: {
+            projeto: ProjetoResolverService
+        }
+    },
+    {
+        path: "iniciado",
+        children: projetoIniciadoRoutes,
+        resolve: {
+            projeto: ProjetoResolverService
+        }
+    },
+    {
+        path: "finalizado",
+        children: projetoIniciadoRoutes,
+        resolve: {
+            projeto: ProjetoResolverService
+        }
+    },
+]).concat(projetoCommonsRoutes);

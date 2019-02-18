@@ -17,7 +17,11 @@ export class ProjetoResolverService implements Resolve<Projeto>{
     constructor(protected app: AppService, protected router: Router) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Projeto | Observable<Projeto> | Promise<Projeto> {
-        const id = parseInt(route.paramMap.get('id'), 10);
+        const id = parseInt(route.params.id || route.parent.params.id, 10);
+        if (isNaN(id)) {
+            this.router.navigate(['/dashboard']);
+            return EMPTY;
+        }
         return this.app.projetos.getById(id).pipe(
             take(1),
             mergeMap(projeto => {
