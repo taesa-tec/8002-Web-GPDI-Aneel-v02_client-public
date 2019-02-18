@@ -17,7 +17,7 @@ export class AppComponent {
             this.loading.show();
         });
         this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(e => {
-            console.log(e);
+            // console.log(e);
             this.loading.hide();
         });
     }

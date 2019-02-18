@@ -7,6 +7,8 @@ import { ProjetosService } from './projetos/projetos.service';
 import { AuthService } from './auth/auth.service';
 import { FileService } from './shared/file.service';
 import { UsersService } from './users/users.service';
+import { PromptComponent } from './shared/prompt/prompt.component';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -19,7 +21,8 @@ export class AppService {
         public projetos: ProjetosService,
         public users: UsersService,
         public file: FileService,
-        public auth: AuthService) { }
+        public auth: AuthService,
+        public router: Router) { }
 
     alert(message: string, title: string = "Alerta") {
         const ref = this.modal.open(AlertComponent);
@@ -38,6 +41,12 @@ export class AppService {
         ref.componentInstance.message = message;
         ref.componentInstance.title = title;
         ref.componentInstance.options = options;
+        return ref.result;
+    }
+    prompt(message: string, title: string = "Confirme") {
+        const ref = this.modal.open(PromptComponent, { backdrop: 'static' });
+        ref.componentInstance.message = message;
+        ref.componentInstance.title = title;
         return ref.result;
     }
 }

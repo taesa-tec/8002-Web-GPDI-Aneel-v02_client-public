@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <div class="text-uppercase modal-title text-blue-light fs-24">{{title}}</div>
+</div>
+<div class="modal-body">
+    <div class="mb-3">
+        {{message}}
+    </div>
+    <div class="form-group" [formGroup]="form">
+        <app-textarea formControlName="response" rows="2" class="form-control"></app-textarea>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-primary" (click)="activeModal.close(null)">Cancelar</button>
+    <button type="button" class="btn btn-primary" [disabled]="form.invalid" (click)="activeModal.close(response.value)">Ok</button>
+</div>

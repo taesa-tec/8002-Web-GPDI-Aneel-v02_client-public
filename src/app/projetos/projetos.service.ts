@@ -57,6 +57,11 @@ export class ProjetosService {
     editar(projeto: Projeto) {
         return this.http.put<ResultadoResponse>(`Projetos`, projeto);
     }
+
+    removerProjeto(id) {
+        return this.http.delete<ResultadoResponse>(`Projetos/${id}`);
+    }
+
     editarDataInicio(projetoDataInicio: ProjetoDataInicio) {
         return this.http.put<ResultadoResponse>(`Projetos/dataInicio`, projetoDataInicio);
     }

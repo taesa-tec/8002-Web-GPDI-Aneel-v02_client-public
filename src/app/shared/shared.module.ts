@@ -25,6 +25,7 @@ import { customCurrencyMaskConfig } from '@app/app.config';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { FileService } from './file.service';
 import { DownloadFileDirective } from './download-file.directive';
+import { PromptComponent } from './prompt/prompt.component';
 
 
 library.add(fas, far);
@@ -42,6 +43,7 @@ library.add(fas, far);
         OrderByPipe,
         TipoProjetoPipe,
         DownloadFileDirective,
+        PromptComponent,
     ],
     imports: [
         CommonModule,
@@ -54,7 +56,7 @@ library.add(fas, far);
         NgxMaskModule.forRoot(),
         NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     ],
-    entryComponents: [AlertComponent, ConfirmComponent],
+    entryComponents: [AlertComponent, ConfirmComponent, PromptComponent],
     providers: [FileService],
     exports: [
         CommonModule,
@@ -72,6 +74,7 @@ library.add(fas, far);
         AccordionComponent,
         AlertComponent,
         ConfirmComponent,
+        PromptComponent,
         TipComponent,
         OrdersComponent,
         // Pipes

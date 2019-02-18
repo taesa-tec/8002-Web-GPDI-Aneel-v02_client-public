@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '@app/app.service';
-import { ProjetoStatus, Projeto } from '@app/models';
+import { ProjetoStatus, Projeto, ResultadoResponse } from '@app/models';
 import { zip } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
 
@@ -35,10 +35,7 @@ export class AlterarStatusComponent implements OnInit {
         });
     }
 
-
     save() {
-        console.log(this.form.value);
-        
         this.app.projetos.editar(this.form.value).subscribe(result => {
             if (result.sucesso) {
                 this.projeto.catalogStatus = this.status.find(s => s.id === parseInt(this.catalogFC.value, 10));
@@ -46,6 +43,20 @@ export class AlterarStatusComponent implements OnInit {
             } else {
                 this.app.alert(result.inconsistencias.join(', '), 'Erro!');
             }
+        });
+    }
+
+    deletarProjeto() {
+        this.app.prompt("Escreva DELETAR para excluir esse projeto", "Tem certeza?").then(response => {
+            if (response === "DELETAR") {
+                this.app.projetos.removerProjeto(this.projeto.id).subscribe(result => {
+                    if (result.sucesso) {
+                        this.app.router.navigate(['dashboard']);
+                    }
+                });
+            }
+        }, error => {
+
         });
     }
 
