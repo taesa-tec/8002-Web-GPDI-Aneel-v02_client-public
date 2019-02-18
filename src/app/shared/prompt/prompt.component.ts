@@ -17,7 +17,7 @@ export class PromptComponent implements OnInit {
 
     @Input() validators: ValidatorFn | ValidatorFn[] = [];
 
-    constructor(protected activeModal: NgbActiveModal) { }
+    constructor(public activeModal: NgbActiveModal) { }
 
     ngOnInit() {
         this.response = new FormControl('', this.validators);
