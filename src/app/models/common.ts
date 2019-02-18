@@ -342,4 +342,27 @@ export interface ExtratosEtapas {
     total: number;
     valor: number;
 }
-// -----------------------------
+// -------------- ---------------
+/**
+ * Registro REFP 
+ */
+
+export interface RegistroREFP {
+    projetoId: number;
+    tipo: string;
+    status: string;
+    recursoHumanoId: number;
+    mes: string;
+    qtdHrs: number;
+    empresaFinanciadoraId: number;
+    tipoDocumento: string;
+    numeroDocumento: string;
+    dataDocumento: string;
+    atividadeRealizada: string;
+    obsIternas: { texto: string }[];
+}
+
+export interface RegistroREFPEdit {
+    id: number,
+    status: 'Pendente' | 'Aprovado' | 'Reprovado'
+}

@@ -15,7 +15,9 @@ import {
     EditEmpresaRequest,
     ExtratosEmpresas,
     ExtratosEtapas,
-    FileUploaded
+    FileUploaded,
+    RegistroREFP,
+    RegistroREFPEdit
 } from '@app/models';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { tap, share } from 'rxjs/operators';
@@ -274,6 +276,26 @@ export class ProjetosService {
     }
     gerarXmlProrrogacao(id: number, versao: number) {
         return this.http.get<ResultadoResponse>(`projeto/${id}/XmlProrrogacao/${versao}`);
+    }
+
+    /**
+     * Registro REFP
+     */
+    criarRegistroREFP(registro: RegistroREFP) {
+        return this.http.post<ResultadoResponse>(`projeto/RegistroFinanceiro`, registro);
+    }
+    editarRegistroREFP(registro: RegistroREFPEdit) {
+        return this.http.put<ResultadoResponse>(`projeto/RegistroFinanceiro`, registro);
+    }
+
+    listarRegistroAprovados(id: number) {
+        return this.http.get<ResultadoResponse>(`projeto/${id}/RegistroFinanceiro/Aprovado`);
+    }
+    listarRegistroReprovados(id: number) {
+        return this.http.get<ResultadoResponse>(`projeto/${id}/RegistroFinanceiro/Reprovado`);
+    }
+    listarRegistroPendente(id: number) {
+        return this.http.get<ResultadoResponse>(`projeto/${id}/RegistroFinanceiro/Pendente`);
     }
 
 }
