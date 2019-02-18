@@ -17,7 +17,7 @@ export class RecursoHumanoFormComponent implements OnInit {
     projeto: Projeto;
     funcoes = Funcao;
     titulacao = Titulacao;
-    empresas: EmpresaProjeto;
+    empresas: Array<EmpresaProjeto>;
     empresasCatalog: Array<Empresa>;
     recursoHumano: RecursoHumano;
     nacionalidades = [{ value: 'Brasileiro', text: "Sim" }, { value: 'Estrangeiro', text: "Não" }];
@@ -79,14 +79,87 @@ export class RecursoHumanoFormComponent implements OnInit {
         }
     }
 
+    logProjeto(tela: string, acao?: string) {
+
+        const logProjeto = {
+            userId: this.app.users.currentUser.id,
+            projetoId: this.projeto.id,
+            tela,
+            acao: acao || "Criação",
+            statusAnterior: "",
+            statusNovo: ""
+        };
+
+        const empresa = this.empresas.find(e => e.id === parseInt(this.form.get("empresaId").value, 10));
+        const titulo = this.titulacao.find(t => t.value === this.form.get("titulacao").value).text;
+        const funcao = this.funcoes.find(f => f.value === this.form.get("funcao").value).text;
+
+        logProjeto.statusNovo = "<b>Empresa:</b> " + empresa["EmpresaNome"] + "<br>";
+        logProjeto.statusNovo += "<b>Valor Hora:</b> " + this.form.get("valorHora").value + "<br>";
+        logProjeto.statusNovo += "<b>Nome Completo:</b> " + this.form.get("nomeCompleto").value + "<br>";
+        logProjeto.statusNovo += "<b>Titulo:</b> " + titulo + "<br>";
+        logProjeto.statusNovo += "<b>Função:</b> " + funcao + "<br>";
+        logProjeto.statusNovo += "<b>Nacionalidade:</b> " + this.form.get("nacionalidade").value + "<br>";
+
+        if (this.form.get("cpf")) {
+            logProjeto.statusNovo += "<b>CPF:</b> " + this.form.get("cpf").value + "<br>";
+        }
+        if (this.form.get("passaporte")) {
+            logProjeto.statusNovo += "<b>Passaporte:</b> " + this.form.get("passaporte").value + "<br>";
+        }
+
+        logProjeto.statusNovo += "<b>Endereço Currículo Lattes:</b> " + this.form.get("urlCurriculo").value + "<br>";
+
+        if (acao === "Exclusão") {
+            logProjeto.statusNovo = "";
+        }
+
+        if (this.recursoHumano.id !== undefined) {
+
+            const _empresa = this.empresas.find(e => e.id === this.recursoHumano.empresaId);
+            const _titulo = this.titulacao.find(t => t.value === this.recursoHumano.titulacaoValor).text;
+            const _funcao = this.funcoes.find(f => f.value === this.recursoHumano.funcaoValor).text;
+
+            logProjeto.statusAnterior = "<b>Empresa:</b> " + _empresa["EmpresaNome"] + "<br>";
+            logProjeto.statusAnterior += "<b>Valor Hora:</b> " + this.recursoHumano.valorHora + "<br>";
+            logProjeto.statusAnterior += "<b>Nome Completo:</b> " + this.recursoHumano.nomeCompleto + "<br>";
+            logProjeto.statusAnterior += "<b>Titulo:</b> " + _titulo + "<br>";
+            logProjeto.statusAnterior += "<b>Função:</b> " + _funcao + "<br>";
+            logProjeto.statusAnterior += "<b>Nacionalidade:</b> " + this.recursoHumano.nacionalidadeValor + "<br>";
+
+            if (this.recursoHumano.cpf) {
+                logProjeto.statusAnterior += "<b>CPF:</b> " + this.recursoHumano.cpf + "<br>";
+            }
+            if (this.recursoHumano.passaporte) {
+                logProjeto.statusAnterior += "<b>Passaporte:</b> " + this.recursoHumano.passaporte + "<br>";
+            }
+
+            logProjeto.statusAnterior += "<b>Endereço Currículo Lattes:</b> " + this.recursoHumano.urlCurriculo + "<br>";
+
+            logProjeto.acao = acao || "Edição";
+        }
+
+        const request = this.app.projetos.criarLogProjeto(logProjeto);
+
+        request.subscribe(result => {
+            if (result.sucesso) {
+                this.activeModal.close(result);
+            } else {
+                this.app.alert(result.inconsistencias.join(', '));
+            }
+        });
+
+    }
+
     submit() {
         if (this.form.valid) {
+
             const request = this.recursoHumano.id ? this.app.projetos.editarRH(this.form.value) : this.app.projetos.criarRH(this.form.value);
             this.loading.show();
             request.subscribe(result => {
-                console.log(result);
                 if (result.sucesso) {
                     this.activeModal.close(result);
+                    this.logProjeto("Recurso Humano");
                 } else {
                     this.app.alert(result.inconsistencias.join(', '));
                 }
@@ -128,6 +201,7 @@ export class RecursoHumanoFormComponent implements OnInit {
                     this.app.projetos.delRH(this.recursoHumano.id).subscribe(resultDelete => {
                         this.loading.hide();
                         if (resultDelete.sucesso) {
+                            this.logProjeto("Recurso Humano", "Exclusão");
                             this.activeModal.close('deleted');
                         } else {
                             this.app.alert(resultDelete.inconsistencias.join(', '));

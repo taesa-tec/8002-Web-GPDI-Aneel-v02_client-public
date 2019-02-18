@@ -72,7 +72,7 @@
 
                 <div class="text-right">
                     <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
-                    <button class="btn btn-primary" type="button" (click)="submit()" [disabled]="form.invalid">
+                    <button class="btn btn-primary" type="button" (click)="submit()" [disabled]="form.invalid || !form.touched || !form.dirty">
                         <i [class]="buttonAction.icon"></i>
                         {{buttonAction.text}}
                     </button>

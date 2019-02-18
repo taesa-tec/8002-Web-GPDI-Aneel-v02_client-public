@@ -165,12 +165,78 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
         });
     }
 
+    logProjeto(tela: string, acao?: string) {
+
+        const logProjeto = {
+            userId: this.app.users.currentUser.id,
+            projetoId: this.projeto.id,
+            tela,
+            acao: acao || "Criação",
+            statusAnterior: "",
+            statusNovo: ""
+        };
+
+        let horas_string = "";
+
+        const rh = this.recursosHumano.find(e => e.id === parseInt(this.form.get("recursoHumanoId").value, 10));
+        const empresa = this.empresas.find(e => e.id === parseInt(this.form.get("empresaId").value, 10));
+        const etapa = this.etapas.find(e => e.id === parseInt(this.form.get("etapaId").value, 10));
+        const justificativa = this.form.get("justificativa").value;
+
+        this.horasAlocadas.forEach(horas => {
+            horas_string += horas.form.value + "h ";
+        });
+
+        logProjeto.statusNovo = `<b>Recurso Humano:</b> ${rh.nomeCompleto}<br>
+        <b>Etapa Número:</b> ${etapa.numeroEtapa}<br>
+        <b>Empresa Financiadora:</b> ${empresa.catalogEmpresa ? empresa.catalogEmpresa.nome : empresa.razaoSocial}<br>
+        <b>Horas:</b> ${horas_string}<br>
+        <b>Justificativa do Recurso:</b> ${justificativa}<br>`;
+
+        if (acao === "Exclusão") {
+            logProjeto.statusNovo = "";
+        }
+
+        if (this.alocacao.id !== undefined) {
+
+            const _rh = this.recursosHumano.find(e => e.id === this.alocacao.recursoHumanoId);
+            const _empresa = this.empresas.find(e => e.id === this.alocacao.empresaId);
+            const _etapa = this.etapas.find(e => e.id === this.alocacao.etapaId);
+            const _justificativa = this.alocacao.justificativa;
+
+            horas_string = "";
+            for (let i = 1; i <= 6; i++) {
+                horas_string += this.alocacao["hrsMes" + i] + "h ";
+            }
+
+
+            logProjeto.statusAnterior = `<b>Recurso Humano:</b> ${_rh.nomeCompleto}<br>
+        <b>Etapa:</b> ${_etapa.numeroEtapa}<br>
+        <b>Empresa Financiadora:</b> ${_empresa.catalogEmpresa ? _empresa.catalogEmpresa.nome : _empresa.razaoSocial}<br>
+        <b>Horas:</b> ${horas_string}<br>
+        <b>Justificativa do Recurso:</b> ${_justificativa}<br>`;
+
+            logProjeto.acao = acao || "Edição";
+        }
+
+        const request = this.app.projetos.criarLogProjeto(logProjeto);
+
+        request.subscribe(result => {
+            if (result.sucesso) {
+                this.activeModal.close(result);
+            } else {
+                this.app.alert(result.inconsistencias.join(', '));
+            }
+        });
+    }
+
     submit() {
         if (this.form.valid) {
             const request = this.alocacao.id ? this.app.projetos.editarAlocacaoRH(this.form.value) : this.app.projetos.criarAlocacaoRH(this.form.value);
             this.loading.show();
             request.subscribe(result => {
                 if (result.sucesso) {
+                    this.logProjeto("Alocação de Recurso Humano");
                     this.activeModal.close(result);
                 } else {
                     this.app.alert(result.inconsistencias.join(', '));
@@ -188,6 +254,7 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
                     this.app.projetos.delAlocacaoRH(this.alocacao.id).subscribe(resultDelete => {
                         this.loading.hide();
                         if (resultDelete.sucesso) {
+                            this.logProjeto("Alocação de Recurso Humano", "Exclusão");
                             this.activeModal.close('deleted');
                         } else {
                             this.app.alert(resultDelete.inconsistencias.join(', '));

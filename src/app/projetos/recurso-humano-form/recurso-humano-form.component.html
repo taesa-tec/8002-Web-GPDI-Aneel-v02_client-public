@@ -1,101 +1,101 @@
 <div class="modal-header">
-  <div class="text-uppercase modal-title text-blue-light fs-24">{{modalTitle}}</div>
-  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-    <i class="ta-cancel-circle"></i>
-  </button>
+    <div class="text-uppercase modal-title text-blue-light fs-24">{{modalTitle}}</div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <i class="ta-cancel-circle"></i>
+    </button>
 </div>
 <form class="modal-body" [formGroup]="form">
-  <div class="row">
-    <div class="col-6">
-      <div class="form-group">
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
 
-        <label for="">Empresa</label>
-        <select name="" id="" class="form-control" formControlName="empresaId">
-          <option value="">Selecione</option>
-          <option [value]="empresa.id" *ngFor="let empresa of empresas">{{empresa.EmpresaNome}}</option>
-        </select>
-      </div>
-    </div>
-    <div class="col-6">
-      <div class="form-group">
-
-        <label for="">Valor Hora</label>
-        <input type="text" currencyMask formControlName="valorHora" class="form-control">
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <div class="form-group">
-
-        <label for="">Nome Completo</label>
-        <input type="text" class="form-control" formControlName="nomeCompleto">
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-6">
-      <div class="form-group">
-        <label for="">Titulo</label>
-        <select name="" id="" class="form-control" formControlName="titulacao">
-          <option value="">Selecione</option>
-          <option [value]="titulo.value" *ngFor="let titulo of titulacao">{{titulo.text}}</option>
-        </select>
-      </div>
-    </div>
-    <div class="col-6">
-      <div class="form-group">
-        <label for="">Função</label>
-        <select name="" id="" class="form-control" formControlName="funcao">
-          <option value="">Selecione</option>
-          <option [value]="funcao.value" *ngFor="let funcao of funcoes">{{funcao.text}}</option>
-        </select>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-6">
-      <div class="form-group">
-        <label for="">Brasileiro</label>
-        <select name="" id="" class="form-control" formControlName="nacionalidade">
-          <option value="">Selecione</option>
-          <option [value]="nac.value" *ngFor="let nac of nacionalidades">{{nac.text}}</option>
-        </select>
-      </div>
-    </div>
-    <div class="col-6">
-      <div class="form-group">
-        <label for="">CPF ou Passaporte</label>
-        <input type="text" formControlName="cpf" mask="000.000.000-00" class="form-control" *ngIf="nacionalidade.value === 'Brasileiro'">
-        <input type="text" formControlName="passaporte" class="form-control"*ngIf="nacionalidade.value === 'Estrangeiro'">
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <div class="form-group">
-        <label for="">Endereço Currículo Lattes</label>
-        <input type="text" class="form-control" formControlName="urlCurriculo">
-      </div>
-    </div>
-  </div>
-  <div class="row">
-        <div class="col-12">
-          <div class="d-flex justify-content-between">
-            <div>
-              <button class="btn btn-link" (click)="excluir()" *ngIf="recursoHumano.id"><i class="ta-cancel-circle"></i> Excluir</button>
+                <label for="">Empresa</label>
+                <select name="" id="" class="form-control" formControlName="empresaId">
+                    <option value="">Selecione</option>
+                    <option [value]="empresa.id" *ngFor="let empresa of empresas">{{empresa["EmpresaNome"]}}</option>
+                </select>
             </div>
-    
-            <div class="text-right">
-              <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
-    
-              <button class="btn btn-primary" type="button" (click)="submit()" [disabled]="form.invalid">
-                <i [class]="buttonAction.icon"></i>
-                {{buttonAction.text}}
-              </button>
-            </div>
-          </div>
         </div>
-      </div>
+        <div class="col-6">
+            <div class="form-group">
+
+                <label for="">Valor Hora</label>
+                <input type="text" currencyMask formControlName="valorHora" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+
+                <label for="">Nome Completo</label>
+                <input type="text" class="form-control" formControlName="nomeCompleto">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">Titulo</label>
+                <select name="" id="" class="form-control" formControlName="titulacao">
+                    <option value="">Selecione</option>
+                    <option [value]="titulo.value" *ngFor="let titulo of titulacao">{{titulo.text}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">Função</label>
+                <select name="" id="" class="form-control" formControlName="funcao">
+                    <option value="">Selecione</option>
+                    <option [value]="funcao.value" *ngFor="let funcao of funcoes">{{funcao.text}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">Brasileiro</label>
+                <select name="" id="" class="form-control" formControlName="nacionalidade">
+                    <option value="">Selecione</option>
+                    <option [value]="nac.value" *ngFor="let nac of nacionalidades">{{nac.text}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">CPF ou Passaporte</label>
+                <input type="text" formControlName="cpf" mask="000.000.000-00" class="form-control" *ngIf="nacionalidade.value === 'Brasileiro'">
+                <input type="text" formControlName="passaporte" class="form-control" *ngIf="nacionalidade.value === 'Estrangeiro'">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">Endereço Currículo Lattes</label>
+                <input type="text" class="form-control" formControlName="urlCurriculo">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <button class="btn btn-link" (click)="excluir()" *ngIf="recursoHumano.id"><i class="ta-cancel-circle"></i> Excluir</button>
+                </div>
+
+                <div class="text-right">
+                    <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
+
+                    <button class="btn btn-primary" type="button" (click)="submit()" [disabled]="form.invalid || !form.touched || !form.dirty">
+                        <i [class]="buttonAction.icon"></i>
+                        {{buttonAction.text}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
 <app-loading type="fullscreen"></app-loading>

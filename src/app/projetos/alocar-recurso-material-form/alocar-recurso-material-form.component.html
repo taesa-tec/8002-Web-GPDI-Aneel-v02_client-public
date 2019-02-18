@@ -1,84 +1,84 @@
 <div class="modal-header">
-  <div class="text-uppercase modal-title text-blue-light fs-24">{{modalTitle}}</div>
+    <div class="text-uppercase modal-title text-blue-light fs-24">{{modalTitle}}</div>
 </div>
 <form class="modal-body" [formGroup]="form">
-  <div class="row">
-    <div class="col-12">
-      <div class="form-group">
-        <label for="">Selecione um recurso material</label>
-        <select name="" id="" class="form-control" formControlName="recursoMaterialId">
-          <option value="">Selecione</option>
-          <option [value]="rec.id" *ngFor="let rec of recursosMaterias">{{rec.nome}}</option>
-        </select>
-      </div>
-    </div>
-
-  </div>
-  <div class="row">
-    <div class="col-6">
-      <div class="form-group">
-        <label for="">Empresa Financiadora</label>
-        <select name="" id="" class="form-control" formControlName="empresaFinanciadoraId">
-          <option value="">Selecione</option>
-          <option [value]="empresa.id" *ngFor="let empresa of empresaFinanciadora">{{empresa.Empresa}}</option>
-        </select>
-      </div>
-    </div>
-    <div class="col-6">
-      <div class="form-group">
-        <label for="">Empresa Recebedora</label>
-        <select name="" id="" class="form-control" formControlName="empresaRecebedoraId">
-          <option value="">Selecione</option>
-          <option [value]="emR.id" *ngFor="let emR of empresaRecebdora">{{emR.Empresa}}</option>
-        </select>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-6">
-      <div class="form-group">
-        <label for="">Etapa</label>
-        <select name="" id="" class="form-control" formControlName="etapaId">
-          <option value="">Selecione</option>
-          <option [value]="etapa.id" *ngFor="let etapa of etapas">Etapa {{ etapa.numeroEtapa }}</option>
-        </select>
-      </div>
-    </div>
-    <div class="col-6">
-      <div class="form-group">
-        <label for="">Quantidade</label>
-        <input type="number" class="form-control" formControlName="qtd">
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <div class="form-group">
-        <label for="">Justificativa do recurso nesta etapa</label>
-        <app-textarea name="" formControlName="justificativa" id="" cols="30" rows="4" class="form-control" placeholder="Por que o recurso é necessário nesta etapa?" maxlenght="1000"></app-textarea>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <div class="d-flex justify-content-between">
-        <div>
-          <button class="btn btn-link" (click)="excluir()" *ngIf="alocacao.id"><i class="ta-cancel-circle"></i> Excluir</button>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">Selecione um recurso material</label>
+                <select name="" id="" class="form-control" formControlName="recursoMaterialId">
+                    <option value="">Selecione</option>
+                    <option [value]="rec.id" *ngFor="let rec of recursosMaterias">{{rec.nome}}</option>
+                </select>
+            </div>
         </div>
 
-        <div class="text-right">
-          <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
-
-          <button class="btn btn-primary" type="button" (click)="submit()" [disabled]="form.invalid">
-            <i [class]="buttonAction.icon"></i>
-            {{buttonAction.text}}
-          </button>
-
-        </div>
-      </div>
     </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">Empresa Financiadora</label>
+                <select name="" id="" class="form-control" formControlName="empresaFinanciadoraId">
+                    <option value="">Selecione</option>
+                    <option [value]="empresa.id" *ngFor="let empresa of empresaFinanciadora">{{empresa.Empresa}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">Empresa Recebedora</label>
+                <select name="" id="" class="form-control" formControlName="empresaRecebedoraId">
+                    <option value="">Selecione</option>
+                    <option [value]="emR.id" *ngFor="let emR of empresaRecebdora">{{emR.Empresa}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">Etapa</label>
+                <select name="" id="" class="form-control" formControlName="etapaId">
+                    <option value="">Selecione</option>
+                    <option [value]="etapa.id" *ngFor="let etapa of etapas">Etapa {{ etapa.numeroEtapa }}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">Quantidade</label>
+                <input type="number" class="form-control" formControlName="qtd">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">Justificativa do recurso nesta etapa</label>
+                <app-textarea name="" formControlName="justificativa" id="" cols="30" rows="4" class="form-control" placeholder="Por que o recurso é necessário nesta etapa?" maxlenght="1000"></app-textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <button class="btn btn-link" (click)="excluir()" *ngIf="alocacao.id"><i class="ta-cancel-circle"></i> Excluir</button>
+                </div>
+
+                <div class="text-right">
+                    <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
+
+                    <button class="btn btn-primary" type="button" (click)="submit()" [disabled]="form.invalid || !form.touched || !form.dirty">
+                        <i [class]="buttonAction.icon"></i>
+                        {{buttonAction.text}}
+                    </button>
+
+                </div>
+            </div>
+        </div>
 
 
-  </div>
+    </div>
 </form>
 <app-loading type="fullscreen"></app-loading>
