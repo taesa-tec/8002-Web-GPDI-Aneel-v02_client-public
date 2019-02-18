@@ -1,4 +1,4 @@
-<a [routerLink]="['/dashboard/projeto',projeto.id]" class="card w-100">
+<a [routerLink]="['/dashboard/projeto',projeto.id, status.status.toLocaleLowerCase()]" class="card w-100">
     <div class="card-header bg-blue-light text-white d-flex justify-content-between">
         <span class="text-uppercase text-white d-flex align-items-center">
             {{projeto.numero}} - {{projeto.titulo}}

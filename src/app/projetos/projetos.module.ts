@@ -38,6 +38,11 @@ import { UsuariosComponent } from '@app/projetos/projeto/central-administrativa/
 import { LogProjetoComponent } from '@app/projetos/projeto/log-projeto/log-projeto.component';
 import { LogComponent } from '@app/projetos/projeto/log-projeto/log.component';
 import { SubTemasComponent } from './projeto/temas/sub-tema.component';
+import { RefpInserirComponent } from './projeto/iniciado/refp-inserir/refp-inserir.component';
+import { RefpListComponent } from './projeto/iniciado/refp-list/refp-list.component';
+import { RefpExtratoComponent } from './projeto/iniciado/refp-extrato/refp-extrato.component';
+import { AlterarProjetoComponent } from './projeto/iniciado/alterar-projeto/alterar-projeto.component';
+import { ConsultarDadosComponent } from './projeto/iniciado/consultar-dados/consultar-dados.component';
 
 
 
@@ -75,6 +80,11 @@ import { SubTemasComponent } from './projeto/temas/sub-tema.component';
     LogProjetoComponent,
     LogComponent,
     SubTemasComponent,
+    RefpInserirComponent,
+    RefpListComponent,
+    RefpExtratoComponent,
+    AlterarProjetoComponent,
+    ConsultarDadosComponent,
   ],
   entryComponents: [
     NovoProjetoComponent,
