@@ -3,7 +3,7 @@ import { AppService } from '@app/app.service';
 import { ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
 import { zip, of } from 'rxjs';
-import { Projeto } from '@app/models';
+import { Projeto, LogProjeto } from '@app/models';
 
 @Component({
   selector: 'app-log-projeto',
@@ -13,18 +13,7 @@ import { Projeto } from '@app/models';
 export class LogProjetoComponent implements OnInit {
 
   projeto: Projeto;
-  logsProjeto: Array<{
-    id: number;
-    projetoId: number;
-    projeto?: any;
-    userId: string;
-    applicationUser?: any;
-    tela: string;
-    acao: string;
-    statusAnterior: string;
-    statusNovo: string;
-    created: string;
-  }>;
+  logsProjeto: Array<LogProjeto>;
 
   constructor(protected app: AppService, protected route: ActivatedRoute) { }
 

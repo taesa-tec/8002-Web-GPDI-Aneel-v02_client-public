@@ -17,7 +17,8 @@ import {
     ExtratosEtapas,
     FileUploaded,
     RegistroREFP,
-    RegistroREFPEdit
+    RegistroREFPEdit,
+    LogProjeto
 } from '@app/models';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { tap, share } from 'rxjs/operators';
@@ -248,7 +249,7 @@ export class ProjetosService {
     }
 
     getLogPorjeto(id: number) {
-        return this.http.get<any>(`projeto/${id}/Log`);
+        return this.http.get<Array<LogProjeto>>(`projeto/${id}/Log`);
     }
 
     delLogPorjeto(id: number) {
