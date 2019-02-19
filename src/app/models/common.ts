@@ -99,7 +99,7 @@ export interface User {
     role: UserRole;
     status: number;
     razaoSocial?: any;
-    fotoPerfil?: any;
+    fotoPerfil?: { file: string; id: number; userId?: any };
     cpf?: any;
     catalogEmpresa?: Empresa;
     catalogEmpresaId?: number | '';
