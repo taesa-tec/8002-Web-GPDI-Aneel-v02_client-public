@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
 
   get avatar() {
     return (this.currentUser && this.currentUser.fotoPerfil) ?
-      `data:image/jpeg;base64,${this.currentUser.fotoPerfil}` : '/assets/default_avatar.png';
+      `data:image/jpeg;base64,${this.currentUser.fotoPerfil.file}` : '/assets/default_avatar.png';
   }
   get empresa() {
     if (this.currentUser) {

@@ -1,137 +1,72 @@
 <div class="container my-3 position-relative">
-  <app-loading type="fullscreen"></app-loading>
-  <form [formGroup]="form" *ngIf="form" (ngSubmit)="onSubmit()">
-    <div class="row">
-      <div class="col-3">
-        <app-upload-image formControlName="fotoPerfil" name="fotoPerfil" [asBase64]="true"></app-upload-image>
-      </div>
-      <div class="col-9">
+    <app-loading type="fullscreen"></app-loading>
+    <form [formGroup]="form" *ngIf="form" (ngSubmit)="onSubmit()">
         <div class="row">
-          <div class="col-6">
-            <div class="form-group">
-              <label for="nome-completo">Nome Completo</label>
-              <input type="text" formControlName="nomeCompleto" id="nome-completo" class="form-control">
+            <div class="col-3" [formGroup]="fotoPerfil">
+                <app-upload-image formControlName="file" name="file" [asBase64]="true"></app-upload-image>
             </div>
-          </div>
-          <div class="col-6">
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" id="email" autocomplete="off" formControlName="email" class="form-control">
+            <div class="col-9">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="nome-completo">Nome Completo</label>
+                            <input type="text" formControlName="nomeCompleto" id="nome-completo" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" autocomplete="off" formControlName="email" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="">Empresa</label>
+                            <!-- formControlName="empresa" -->
+                            <select name="catalogEmpresaId" id="" class="form-control" formControlName="catalogEmpresaId" readonly #empresa>
+                                <option value="">Selecione</option>
+                                <option *ngFor="let empresa of empresas" [value]="empresa.id">{{ empresa.nome }}</option>
+                                <option value="0">Outra (Empresa Externa)</option>
+                            </select>
+                        </div>
+                        <div class="form-group" *ngIf="razaoSocial">
+                            <label for="">Nome da Empresa</label>
+                            <input type="text" class="form-control" formControlName="razaoSocial">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="">CPF Usuário</label>
+                            <!-- formControlName="cpf" -->
+                            <input type="text" mask="000.000.000-00" formControlName="cpf" placeholder="999.999.999-99" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="resultado && !resultado.sucesso">
+                    <div class="col-12">
+                        <div class="alert border-danger text-danger font-weight-bold">
+                            <ul class="m-0">
+                                <li *ngFor="let item of resultado.inconsistencias">{{item}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <hr>
+                        <app-user-projetos [userId]="user.id" [readonly]="true"></app-user-projetos>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-right">
+                        <a routerLink="/dashboard/gerenciar-usuarios" class="btn btn-link">Cancelar</a>
+                        <button class="btn btn-primary" [disabled]="form.invalid"><i class="ta-save"></i> Salvar</button>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-        <div class="row">
-          <div class="col-6">
-            <div class="form-group">
-              <label for="">Empresa</label>
-              <!-- formControlName="empresa" -->
-              <select name="catalogEmpresaId" id="" class="form-control" formControlName="catalogEmpresaId" readonly #empresa>
-                <option value="">Selecione</option>
-                <option *ngFor="let empresa of empresas" [value]="empresa.id">{{ empresa.nome }}</option>
-                <option value="0">Outra (Empresa Externa)</option>
-              </select>
-            </div>
-            <div class="form-group" *ngIf="razaoSocial">
-              <label for="">Nome da Empresa</label>
-              <input type="text" class="form-control" formControlName="razaoSocial">
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="form-group">
-              <label for="">CPF Usuário</label>
-              <!-- formControlName="cpf" -->
-              <input type="text" mask="000.000.000-00" formControlName="cpf" placeholder="999.999.999-99" class="form-control">
-            </div>
-          </div>
-        </div>
-        <div class="row mt-5">
-          <div class="col-12">
-            <h5 class="text-blue">ACESSOS POR PROJETO</h5>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th class="w-25">
-                    <div class="d-flex align-items-center">
-                      <span class="mx-2">Número e tipo</span>
-                      <span class="d-flex flex-column">
-                            <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
-                            <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
-                          </span>
-                    </div>
-                  </th>
-                  <th class="w-50">
-                    <div class="d-flex align-items-center">
-                      <span class="mx-2">Nome</span>
-                      <span class="d-flex flex-column">
-                            <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
-                            <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
-                          </span>
-                    </div>
-
-                  </th>
-                  <th class="w-25">
-                    <div class="d-flex align-items-center">
-                      <span class="mx-2">Nível de acesso</span>
-                      <span class="d-flex flex-column">
-                            <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
-                            <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
-                          </span>
-                    </div>
-                  </th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr *ngFor="let item of projetos">
-                  <td class="align-middle">
-                    <div class="text-blue">
-                      {{item.numero}}
-                    </div>
-                    <div>
-                      {{item.titulo}}
-                    </div>
-                  </td>
-                  <td class="align-middle">
-                    {{item.tituloDesc}}
-                  </td>
-                  <td class="align-middle">
-                    <div class="form-group">
-                      <select name="" id="" class="form-control">
-                        <option [value]="nivel.value" *ngFor="let nivel of niveis">
-                          {{nivel.text}}
-                        </option>
-                      </select>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-
-            </table>
-          </div>
-        </div>
-        <div class="row" *ngIf="resultado && !resultado.sucesso">
-          <div class="col-12">
-            <div class="alert border-danger text-danger font-weight-bold">
-              <ul class="m-0">
-                <li *ngFor="let item of resultado.inconsistencias">{{item}}</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-12">
-            <hr>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 text-right">
-            <a routerLink="/dashboard/gerenciar-usuarios" class="btn btn-link">Cancelar</a>
-            <button class="btn btn-primary" [disabled]="form.invalid"><i class="ta-save"></i> Salvar</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </form>
+    </form>
 
 </div>
