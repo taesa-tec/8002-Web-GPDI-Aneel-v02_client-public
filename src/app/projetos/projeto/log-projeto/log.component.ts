@@ -14,7 +14,7 @@ export class LogComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.log);
-    
+
   }
 
 }

@@ -372,6 +372,7 @@ export interface LogProjeto {
     projetoId: number;
     projeto?: any;
     userId: string;
+    user: User;
     applicationUser?: any;
     tela: string;
     acao: string;
