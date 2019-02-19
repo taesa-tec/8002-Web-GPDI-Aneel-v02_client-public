@@ -1,45 +1,52 @@
 <div class="card my-3">
-        <div class="card-header bg-blue-light text-white d-flex justify-content-between">
-            <div>
-                <img src="assets/temp-user.png" width="32" height="32" alt="" class="rounded-circle mr-3">
-                <span>Andressa Moraes - 16.02.2019 às 19:30</span>
-            </div>
-            <div>
-                ID:001
-            </div>
+    <div class="card-header bg-blue-light text-white d-flex justify-content-between">
+        <div>
+            <img src="assets/temp-user.png" width="32" height="32" alt="" class="rounded-circle mr-3">
+            <span>Andressa Moraes - 16.02.2019 às 19:30</span>
         </div>
-        <table class="table table-bordered mb-0">
-            <tr>
-                <td class="w-50">
-                    <strong class="text-blue">Tela:</strong> Projeto
-                </td>
-                <td class="w-50">
-                    <strong class="text-blue">Ação:</strong> Edição
-                </td>
-            </tr>
-            <tr>
-                <td class="w-50">
-                    <strong class="text-blue-light mb-3 d-inline-block">
+        <div>
+            ID:001
+        </div>
+    </div>
+    <table class="table table-bordered mb-0">
+        <tr>
+            <td class="w-50">
+                <strong class="text-blue">Tela:</strong> {{log.tela}}
+            </td>
+            <td class="w-50">
+                <strong class="text-blue">Ação:</strong> {{log.acao}}
+            </td>
+        </tr>
+        <tr>
+            <td class="w-50">
+                <strong class="text-blue-light mb-3 d-inline-block">
                         Status Anterior
                     </strong>
-                    <div class="text-blue">Titulo do Projeto:</div>
+                <div>
+                    {{log.statusAnterior}}
+                </div>
+
+                <!-- <div class="text-blue">Titulo do Projeto:</div>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem, minima.</p>
                     <div class="text-blue">Motivação:</div>
                     <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta nihil necessitatibus
                         inventore recusandae natus, minus provident quidem non sapiente, ipsa, atque perferendis
-                        sit dolorum?</p>
-                </td>
-                <td>
-                    <strong class="text-blue-light  mb-3 d-inline-block">
+                        sit dolorum?</p> -->
+            </td>
+            <td>
+                <strong class="text-blue-light  mb-3 d-inline-block">
                         Novo Status
                     </strong>
-                    <div class="text-blue">Titulo do Projeto:</div>
+                <div>
+                    {{log.statusNovo}}
+                </div>
+                <!-- <div class="text-blue">Titulo do Projeto:</div>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem, minima.</p>
                     <div class="text-blue">Motivação:</div>
                     <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta nihil necessitatibus
                         inventore recusandae natus, minus provident quidem non sapiente, ipsa, atque perferendis
-                        sit dolorum?</p>
-                </td>
-            </tr>
-        </table>
-    </div>
+                        sit dolorum?</p> -->
+            </td>
+        </tr>
+    </table>
+</div>

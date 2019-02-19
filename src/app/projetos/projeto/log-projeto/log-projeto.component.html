@@ -22,10 +22,7 @@
 </div>
 <div class="row">
     <div class="col-12">
-        <app-log-item></app-log-item>
-        <app-log-item></app-log-item>
-        <app-log-item></app-log-item>
-        <app-log-item></app-log-item>
+        <app-log-item *ngFor="let log of logsProjeto" [log]="log"></app-log-item>
     </div>
 </div>
 <div class="row">
