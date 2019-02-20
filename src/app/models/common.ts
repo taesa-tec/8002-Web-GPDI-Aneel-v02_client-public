@@ -388,7 +388,6 @@ export interface RegistroREFPEdit {
     status: 'Pendente' | 'Aprovado' | 'Reprovado';
 }
 
-<<<<<<< HEAD
 export interface LogProjeto {
     id: number;
     projetoId: number;
@@ -402,7 +401,4 @@ export interface LogProjeto {
     statusNovo: string;
     created: string;
 }
-=======
-
->>>>>>> origin
 

@@ -18,11 +18,8 @@ import {
     FileUploaded,
     RegistroREFP,
     RegistroREFPEdit,
-<<<<<<< HEAD
-    LogProjeto
-=======
+    LogProjeto,
     EmpresaProjeto
->>>>>>> origin
 } from '@app/models';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { tap, share } from 'rxjs/operators';
