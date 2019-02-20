@@ -62,7 +62,7 @@ export class ProjetosService {
 
     editar(projeto: Projeto) {
         return this.http.put<ResultadoResponse>(`Projetos`, projeto).pipe(tap(result => {
-            if(result.sucesso){
+            if (result.sucesso) {
                 this.projetoUpdatedSource.next(projeto);
             }
         }));
@@ -255,8 +255,18 @@ export class ProjetosService {
         return this.http.post<ResultadoResponse>('projeto/LogProjetos', logprojeto);
     }
 
-    getLogPorjeto(id: number) {
-        return this.http.get<Array<LogProjeto>>(`projeto/${id}/Log`);
+    getLogPorjeto(id: number, args?: { [propName: string]: any }) {
+        let query = '';
+        if (args) {
+            const urlParams = new URLSearchParams();
+            for (let k in args) {
+                if (args[k]) {
+                    urlParams.append(k, args[k]);
+                }
+            }
+            query = `?${urlParams.toString()}`;
+        }
+        return this.http.get<Array<LogProjeto>>(`projeto/${id}/Log${query}`);
     }
 
     delLogPorjeto(id: number) {

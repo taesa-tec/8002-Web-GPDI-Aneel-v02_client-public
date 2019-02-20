@@ -397,6 +397,7 @@ export interface LogProjeto {
     applicationUser?: any;
     tela: string;
     acao: string;
+    acaoValor: string;
     statusAnterior: string;
     statusNovo: string;
     created: string;
