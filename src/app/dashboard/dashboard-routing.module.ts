@@ -82,9 +82,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class DashboardRoutingModule {
-    constructor() {
-        console.log({ rotas: projetoRoutes });
-
-    }
-}
+export class DashboardRoutingModule { }

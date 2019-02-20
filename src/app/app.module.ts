@@ -15,8 +15,10 @@ import { UsersModule } from './users/users.module';
 import { CatalogsModule } from './catalogs/catalogs.module';
 import { AppService } from './app.service';
 import { registerLocaleData } from '@angular/common';
+import * as moment from 'moment';
 
 registerLocaleData(localeBr, 'pt');
+moment.locale('pt-br');
 
 
 @NgModule({

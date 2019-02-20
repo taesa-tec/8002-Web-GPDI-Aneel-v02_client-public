@@ -76,6 +76,10 @@ export class ProjetoFacade {
         this.REFP = new ProjetoREFP(this.projeto.id, this.service);
     }
 
+    get id() {
+        return this.projeto.id;
+    }
+
     getOrcamentoEmpresas() {
         this.service.getExtratoEmpresas(this.projeto.id);
     }

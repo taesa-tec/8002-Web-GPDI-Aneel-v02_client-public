@@ -4,7 +4,7 @@ import { ProjetosService } from '@app/projetos/projetos.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
-import { Projeto, AlocacaoRM, CategoriaContabil } from '@app/models';
+import { Projeto, AlocacaoRM, CategoriasContabeis } from '@app/models';
 import { zip, of } from 'rxjs';
 import { AppService } from '@app/app.service';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
@@ -16,7 +16,7 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 })
 export class AlocacaoComponent implements OnInit {
 
-    categoriaContabel = CategoriaContabil;
+    categoriaContabel = CategoriasContabeis;
     alocacoes: Array<any>;
     projeto: Projeto;
 

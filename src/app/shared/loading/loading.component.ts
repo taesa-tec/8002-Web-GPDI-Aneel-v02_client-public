@@ -25,6 +25,10 @@ export class LoadingComponent implements OnInit {
         }
     }
 
+    /**
+     * @description Tempo de exibição do loading. 0 = sem fim
+     * @param timeout 
+     */
     show(timeout = 0) {
         this.isLoading = true;
         if (this.timeout > 0 || timeout > 0) {

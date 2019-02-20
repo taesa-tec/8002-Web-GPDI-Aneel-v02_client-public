@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProjetosService } from '@app/projetos/projetos.service';
-import { CategoriaContabil, Projeto, RecursoMaterial } from '@app/models';
+import { CategoriasContabeis, Projeto, RecursoMaterial } from '@app/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { AppService } from '@app/app.service';
@@ -17,7 +17,7 @@ import { map } from 'rxjs/operators';
 })
 export class RecursoMaterialFormComponent implements OnInit {
 
-    categoriaContabel = CategoriaContabil;
+    categoriaContabel = CategoriasContabeis;
     form: FormGroup;
     projeto: Projeto;
     recursoMaterial: RecursoMaterial;
