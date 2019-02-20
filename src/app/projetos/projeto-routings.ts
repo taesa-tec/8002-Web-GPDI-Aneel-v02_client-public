@@ -1,24 +1,31 @@
 import { Routes } from '@angular/router';
+import { ProjetoResolverService } from './projeto-resolver.service';
 
-import { InfoComponent } from '@app/projetos/projeto/info/info.component';
-import { TemasComponent } from '@app/projetos/projeto/temas/temas.component';
-import { ProdutosComponent } from '@app/projetos/projeto/produtos/produtos.component';
-import { EtapasComponent } from '@app/projetos/projeto/etapas/etapas.component';
-import { EmpresasComponent } from '@app/projetos/projeto/empresas/empresas.component';
-import { RecursosHumanosComponent } from '@app/projetos/projeto/recursos-humanos/recursos-humanos.component';
-import { RecursosMateriaisComponent } from '@app/projetos/projeto/recursos-materiais/recursos-materiais.component';
-import { AlocacaoComponent as AlocacaoHComponent } from '@app/projetos/projeto/recursos-humanos/alocacao.component';
-import { AlocacaoComponent as AlocacaoMComponent } from '@app/projetos/projeto/recursos-materiais/alocacao.component';
-import { ExtratoFinanceiroEmpresasComponent } from '@app/projetos/projeto/extrato-financeiro-empresas/extrato-financeiro-empresas.component';
-import { ExtratoFinanceiroEtapasComponent } from '@app/projetos/projeto/extrato-financeiro-etapas/extrato-financeiro-etapas.component';
+// Logs
+import { LogProjetoComponent } from '@app/projetos/projeto/log-projeto/log-projeto.component';
+
+// Central Administrativa
 import { CentralAdministrativaComponent } from '@app/projetos/projeto/central-administrativa/central-administrativa.component';
 import { GeracaoXmlComponent } from '@app/projetos/projeto/central-administrativa/geracao-xml/geracao-xml.component';
 import { LogsDutoComponent } from '@app/projetos/projeto/central-administrativa/logs-duto/logs-duto.component';
 import { RepositorioXmlComponent } from '@app/projetos/projeto/central-administrativa/repositorio-xml/repositorio-xml.component';
 import { AlterarStatusComponent } from '@app/projetos/projeto/central-administrativa/alterar-status/alterar-status.component';
 import { UsuariosComponent } from '@app/projetos/projeto/central-administrativa/usuarios/usuarios.component';
-import { LogProjetoComponent } from '@app/projetos/projeto/log-projeto/log-projeto.component';
-import { ProjetoResolverService } from './projeto-resolver.service';
+
+// Proposta
+import { InfoComponent } from '@app/projetos/projeto/proposta/info/info.component';
+import { TemasComponent } from '@app/projetos/projeto/proposta/temas/temas.component';
+import { ProdutosComponent } from '@app/projetos/projeto/proposta/produtos/produtos.component';
+import { EtapasComponent } from '@app/projetos/projeto/proposta/etapas/etapas.component';
+import { EmpresasComponent } from '@app/projetos/projeto/proposta/empresas/empresas.component';
+import { RecursosHumanosComponent } from '@app/projetos/projeto/proposta/recursos-humanos/recursos-humanos.component';
+import { RecursosMateriaisComponent } from '@app/projetos/projeto/proposta/recursos-materiais/recursos-materiais.component';
+import { AlocacaoComponent as AlocacaoHComponent } from '@app/projetos/projeto/proposta/recursos-humanos/alocacao.component';
+import { AlocacaoComponent as AlocacaoMComponent } from '@app/projetos/projeto/proposta/recursos-materiais/alocacao.component';
+import { ExtratoFinanceiroEmpresasComponent } from '@app/projetos/projeto/proposta/extrato-financeiro-empresas/extrato-financeiro-empresas.component';
+import { ExtratoFinanceiroEtapasComponent } from '@app/projetos/projeto/proposta/extrato-financeiro-etapas/extrato-financeiro-etapas.component';
+
+// Iniciado
 import { RefpInserirComponent } from './projeto/iniciado/refp-inserir/refp-inserir.component';
 import { RefpListComponent } from './projeto/iniciado/refp-list/refp-list.component';
 import { RefpExtratoComponent } from './projeto/iniciado/refp-extrato/refp-extrato.component';
