@@ -43,6 +43,8 @@ import { RefpListComponent } from './projeto/iniciado/refp-list/refp-list.compon
 import { RefpExtratoComponent } from './projeto/iniciado/refp-extrato/refp-extrato.component';
 import { AlterarProjetoComponent } from './projeto/iniciado/alterar-projeto/alterar-projeto.component';
 import { ConsultarDadosComponent } from './projeto/iniciado/consultar-dados/consultar-dados.component';
+import { RecursoHumanoComponent } from './projeto/iniciado/refp-inserir/recurso-humano.component';
+import { RecursoMaterialComponent } from './projeto/iniciado/refp-inserir/recurso-material.component';
 
 
 
@@ -85,6 +87,8 @@ import { ConsultarDadosComponent } from './projeto/iniciado/consultar-dados/cons
     RefpExtratoComponent,
     AlterarProjetoComponent,
     ConsultarDadosComponent,
+    RecursoHumanoComponent,
+    RecursoMaterialComponent,
   ],
   entryComponents: [
     NovoProjetoComponent,

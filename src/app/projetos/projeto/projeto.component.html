@@ -23,17 +23,17 @@
     </div>
     <nav class="side-nav">
         <app-loading type="fullparent" background="transparent"></app-loading>
-        <a *ngFor="let route of routes.routes" [routerLink]="route.path" class="side-nav-item" routerLinkActive="active"
+        <a *ngFor="let route of menu" [routerLink]="['/dashboard','projeto',projeto.id, pstatus,route.path]" class="side-nav-item" routerLinkActive="active"
            [hidden]="!projeto">
             <span class="fs-24 mr-3">
                 <i [class]="route.icon"></i>
             </span>
             {{route.text}}
         </a>
-        <a routerLink="central-administrativa" class="side-nav-item" routerLinkActive="active">
+        <a [routerLink]="['/dashboard','projeto',projeto.id,'central-administrativa']" class="side-nav-item" routerLinkActive="active">
             <span class="fs-24 mr-3"><i class="ta-central-admin"></i></span>Central Administrativa
         </a>
-        <a routerLink="logs" class="side-nav-item" routerLinkActive="active">
+        <a [routerLink]="['/dashboard','projeto',projeto.id,'logs']" class="side-nav-item" routerLinkActive="active">
             <span class="fs-24 mr-3"><i class="ta-log"></i></span> Logs
         </a>
     </nav>

@@ -17,7 +17,8 @@ import {
     ExtratosEtapas,
     FileUploaded,
     RegistroREFP,
-    RegistroREFPEdit
+    RegistroREFPEdit,
+    EmpresaProjeto
 } from '@app/models';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { tap, share } from 'rxjs/operators';
@@ -28,9 +29,11 @@ import { tap, share } from 'rxjs/operators';
 export class ProjetosService {
 
     protected projetoCreatedSource = new Subject<CreateProjectRequest>();
+    protected projetoUpdatedSource = new Subject<Projeto>();
     protected projetoLoadedSource = new BehaviorSubject<Projeto>(null);
 
     projetoCreated = this.projetoCreatedSource.asObservable();
+    projetoUpdated = this.projetoUpdatedSource.asObservable();
     projetoLoaded = this.projetoLoadedSource.asObservable();
 
     status: ProjetoStatus[];
@@ -57,7 +60,11 @@ export class ProjetosService {
     }
 
     editar(projeto: Projeto) {
-        return this.http.put<ResultadoResponse>(`Projetos`, projeto);
+        return this.http.put<ResultadoResponse>(`Projetos`, projeto).pipe(tap(result => {
+            if(result.sucesso){
+                this.projetoUpdatedSource.next(projeto);
+            }
+        }));
     }
 
     removerProjeto(id) {
@@ -136,7 +143,7 @@ export class ProjetosService {
     }
 
     getEmpresas(id: number) {
-        return this.http.get<any>(`Projeto/${id}/Empresas`);
+        return this.http.get<Array<EmpresaProjeto>>(`Projeto/${id}/Empresas`);
     }
 
     delEmpresa(id: number) {
@@ -294,7 +301,7 @@ export class ProjetosService {
     listarRegistroReprovados(id: number) {
         return this.http.get<ResultadoResponse>(`projeto/${id}/RegistroFinanceiro/Reprovado`);
     }
-    listarRegistroPendente(id: number) {
+    listarRegistroPendentes(id: number) {
         return this.http.get<ResultadoResponse>(`projeto/${id}/RegistroFinanceiro/Pendente`);
     }
 

@@ -24,6 +24,8 @@ import { RefpListComponent } from './projeto/iniciado/refp-list/refp-list.compon
 import { RefpExtratoComponent } from './projeto/iniciado/refp-extrato/refp-extrato.component';
 import { AlterarProjetoComponent } from './projeto/iniciado/alterar-projeto/alterar-projeto.component';
 import { ConsultarDadosComponent } from './projeto/iniciado/consultar-dados/consultar-dados.component';
+import { RecursoHumanoComponent as REFP_RH_Component } from './projeto/iniciado/refp-inserir/recurso-humano.component';
+import { RecursoMaterialComponent as REFP_RC_Component } from './projeto/iniciado/refp-inserir/recurso-material.component';
 
 export const centralPlanejamentoRoutes: Routes = [{
     path: "",
@@ -60,7 +62,8 @@ export const projetoCommonsRoutes: Routes = [
         resolve: {
             // projeto: ProjetoResolverService
         }
-    }, { path: 'logs', component: LogProjetoComponent, data: { text: "Log Projeto", icon: "ta-log" } }
+    }, 
+    { path: 'logs', component: LogProjetoComponent, data: { text: "Log Projeto", icon: "ta-log" } }
 ];
 
 export const projetoPlanejamentoRoutes: Routes = [
@@ -110,6 +113,11 @@ export const projetoIniciadoRoutes: Routes = [
     },
     {
         path: 'refp-inserir', component: RefpInserirComponent,
+        children: [
+            { path: '', redirectTo: 'recurso-humano', pathMatch: 'full' },
+            { path: 'recurso-material', component: REFP_RC_Component },
+            { path: 'recurso-humano', component: REFP_RH_Component }
+        ]
     },
     {
         path: 'refp-extrato', component: RefpExtratoComponent,

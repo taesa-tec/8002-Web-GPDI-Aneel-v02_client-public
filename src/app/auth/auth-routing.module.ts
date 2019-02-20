@@ -16,7 +16,8 @@ const routes: Routes = [
         children: [
             { path: '', component: LoginComponent },
             { path: 'forget', component: ForgetPassComponent },
-            { path: 'newpass', component: NewpassComponent, canActivate: [NewpassGuard] }
+            { path: 'newpass', component: NewpassComponent, canActivate: [NewpassGuard] },
+            { path: 'nova-senha', component: NewpassComponent, canActivate: [NewpassGuard] }
         ]
     }
 ];

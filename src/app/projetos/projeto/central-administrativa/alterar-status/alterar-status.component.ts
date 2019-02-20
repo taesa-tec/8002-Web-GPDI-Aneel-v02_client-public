@@ -31,15 +31,21 @@ export class AlterarStatusComponent implements OnInit {
                 id: new FormControl(this.projeto.id),
                 catalogStatusId: this.catalogFC
             });
-            this.catalogFC.valueChanges.subscribe(v => this.projeto.catalogStatusId = parseInt(v, 10));
+            this.catalogFC.valueChanges.subscribe(v => {
+                this.projeto.catalogStatusId = parseInt(v, 10);
+            });
         });
     }
 
     save() {
-        this.app.projetos.editar(this.form.value).subscribe(result => {
+        this.app.projetos.editar(this.projeto).subscribe(result => {
             if (result.sucesso) {
                 this.projeto.catalogStatus = this.status.find(s => s.id === parseInt(this.catalogFC.value, 10));
+
                 this.app.alert("Status alterado com sucesso");
+
+                this.app.router.navigate(['dashboard', 'projeto', this.projeto.id, 'central-administrativa']);
+                
             } else {
                 this.app.alert(result.inconsistencias.join(', '), 'Erro!');
             }

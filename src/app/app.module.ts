@@ -29,9 +29,9 @@ registerLocaleData(localeBr, 'pt');
         SharedModule,
         AuthModule,
         CatalogsModule,
+        ProjetosModule,
         DashboardModule,
         UsersModule,
-        ProjetosModule,
         AppRoutingModule,
         
     ],

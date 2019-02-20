@@ -349,20 +349,44 @@ export interface ExtratosEtapas {
 
 export interface RegistroREFP {
     projetoId: number;
-    tipo: string;
-    status: string;
-    recursoHumanoId: number;
+    tipo: 'RH' | 'RM';
     mes: string;
-    qtdHrs: number;
     empresaFinanciadoraId: number;
     tipoDocumento: string;
     numeroDocumento: string;
     dataDocumento: string;
+    obsInternas: { texto: string }[];
+}
+
+
+export interface RegistroRefpRH extends RegistroREFP {
+    tipo: 'RH';
+    recursoHumanoId: number;
+    qtdHrs: number;
     atividadeRealizada: string;
-    obsIternas: { texto: string }[];
+}
+
+export interface RegistroRefpRM extends RegistroREFP {
+    tipo: 'RM';
+    nomeItem: string;
+    recursoMaterialId: number;
+    empresaRecebedoraId: number;
+    beneficiado: string;
+    cnpjBeneficiado: string;
+    categoriaContabil: string;
+    equiparLabExistente: boolean;
+    equiparLabNovo: boolean;
+    itemNacional: boolean;
+    qtdItens: number;
+    valorUnitario: number;
+    especificacaoTecnica: string;
+    funcaoRecurso: string;
 }
 
 export interface RegistroREFPEdit {
-    id: number,
-    status: 'Pendente' | 'Aprovado' | 'Reprovado'
+    id: number;
+    status: 'Pendente' | 'Aprovado' | 'Reprovado';
 }
+
+
+

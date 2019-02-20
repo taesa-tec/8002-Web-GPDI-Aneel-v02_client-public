@@ -53,7 +53,7 @@ export class MeComponent implements OnInit {
         this.usersService.me().subscribe(u => {
             this.user = u;
             this.fotoPerfil = new FormGroup({
-                file: new FormControl(u.fotoPerfil)
+                file: new FormControl(u.fotoPerfil ? u.fotoPerfil.file : '')
             });
 
             this.form = new FormGroup({
@@ -86,6 +86,7 @@ export class MeComponent implements OnInit {
     }
 
     onSubmit() {
+
         if (this.form.valid) {
             this.loading.show();
             try {
@@ -97,7 +98,7 @@ export class MeComponent implements OnInit {
                 this.usersService.editMe(this.form.value).subscribe(resultado => {
                     this.loading.hide();
                     if (resultado.sucesso) {
-                        this.ui.alert("Suas informaçõs foram atualizadas com sucesso");
+                        this.ui.alert("Suas informações foram atualizadas com sucesso");
                         this.usersService.me(true);
                     } else {
                         this.ui.alert(resultado.inconsistencias.join('<br>'));

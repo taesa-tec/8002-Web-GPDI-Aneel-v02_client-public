@@ -11,12 +11,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
     selector: 'app-alocar-recurso-material-form',
     templateUrl: './alocar-recurso-material-form.component.html',
-    styleUrls: ['./alocar-recurso-material-form.component.scss']
+    styles: []
 })
 export class AlocarRecursoMaterialFormComponent implements OnInit {
 
     recursosMaterias: Array<any>;
-    empresaRecebdora: Array<any>;
+    empresaRecebedora: Array<any>;
     empresaFinanciadora: Array<any>;
     empresasCatalog: Array<Empresa>;
     etapas: Array<any>;
@@ -75,7 +75,7 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
 
         const rm = this.recursosMaterias.find(r => r.id === parseInt(this.form.get("recursoMaterialId").value, 10));
         const emf = this.empresaFinanciadora.find(f => f.id === parseInt(this.form.get("empresaFinanciadoraId").value, 10));
-        const emr = this.empresaRecebdora.find(er => er.id === parseInt(this.form.get("empresaRecebedoraId").value, 10));
+        const emr = this.empresaRecebedora.find(er => er.id === parseInt(this.form.get("empresaRecebedoraId").value, 10));
         const etapa = this.etapas.find(et => et.id === parseInt(this.form.get("etapaId").value, 10));
         const qtd = this.form.get("qtd").value;
         const justificativa = this.form.get("justificativa").value;
@@ -146,29 +146,32 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
         const recm$ = this.app.projetos.getRecursoMaterial(this.projeto.id);
         const empresa$ = this.app.projetos.getEmpresas(this.projeto.id);
         const etapa$ = this.app.projetos.getEtapas(this.projeto.id);
-        const empresas_catalog$ = this.app.catalogo.empresas();
+        const empresasCatalog$ = this.app.catalogo.empresas();
 
-        zip(recm$, empresa$, etapa$, empresas_catalog$).subscribe(([recursosMaterias, empresas, etapas, empresas_catalog]) => {
+        zip(recm$, empresa$, etapa$, empresasCatalog$).subscribe(([recursosMaterias, empresas, etapas, empresasCatalog]) => {
+
+            const _empresas = empresas.map(empresa => {
+                const em = Object.assign({
+                    Empresa: empresa.razaoSocial ? empresa.razaoSocial : '',
+                    catalogEmpresa: null
+                }, empresa);
+                
+                if (empresa.catalogEmpresaId) {
+                    em.catalogEmpresa = empresasCatalog.find(e => empresa.catalogEmpresaId === e.id);
+                    em.Empresa = empresa.catalogEmpresa.nome;
+                }
+                return em;
+            });
 
             this.recursosMaterias = recursosMaterias || [];
 
             this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; });
 
-            this.empresasCatalog = empresas_catalog;
+            this.empresasCatalog = empresasCatalog;
 
-            this.empresaRecebdora = empresas.map((emR, i) => {
+            this.empresaRecebedora = _empresas;
 
-                emR.Empresa = emR.razaoSocial ? emR.razaoSocial : '';
-
-                if (emR.catalogEmpresaId) {
-                    emR.catalogEmpresa = empresas_catalog.find(e => emR.catalogEmpresaId === e.id);
-                    emR.Empresa = emR.catalogEmpresa.nome;
-                }
-
-                return emR;
-            });
-
-            this.empresaFinanciadora = empresas.filter(item => item.classificacaoValor !== "Executora");
+            this.empresaFinanciadora = _empresas.filter(item => item.classificacaoValor !== "Executora");
 
             this.loading.hide();
         });

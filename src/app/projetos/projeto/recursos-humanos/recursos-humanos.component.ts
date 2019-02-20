@@ -64,14 +64,17 @@ export class RecursosHumanosComponent implements OnInit {
 
         data$.subscribe(([projeto, recurso_humano, catalog_empresas, empresas]) => {
             this.projeto = projeto;
-            this.recursosHumano = recurso_humano.map(rec => {
+
+            this.recursosHumano = recurso_humano.map(_rec => {
+
+                let rec = Object.assign({}, _rec);
 
                 rec.funcaoNome = this.funcoes.find(e => rec.funcaoValor === e.value).text;
                 rec.titulacaoNome = this.titualcoes.find(e => rec.titulacaoValor === e.value).text;
 
                 rec.catalogEmpresaId = empresas.find(e => rec.empresaId === e.id).catalogEmpresaId;
 
-                rec.EmpresaNome = empresas.razaoSocial ? empresas.razaoSocial : '';
+                // rec.EmpresaNome = empresas.razaoSocial ? empresas.razaoSocial : '';
 
                 if (rec.catalogEmpresaId) {
                     rec.catalogEmpresa = catalog_empresas.find(e => rec.catalogEmpresaId === e.id);
