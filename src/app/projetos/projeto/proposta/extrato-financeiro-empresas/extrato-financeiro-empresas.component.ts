@@ -5,7 +5,7 @@ import { zip } from 'rxjs';
 
 import { RecursoHumanoFormComponent } from '@app/projetos/recurso-humano-form/recurso-humano-form.component';
 import { AppService } from '@app/app.service';
-import { Projeto, ExtratosEmpresas, Etapa, TextValue, CategoriaContabil, ExtratoItem } from '@app/models';
+import { Projeto, ExtratosEmpresas, Etapa, TextValue, CategoriasContabeis, ExtratoItem } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { RecursoMaterialFormComponent } from '@app/projetos/recurso-material-form/recurso-material-form.component';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -40,7 +40,7 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
     }
 
     constructor(protected app: AppService, private route: ActivatedRoute) {
-        CategoriaContabil.forEach(c => {
+        CategoriasContabeis.forEach(c => {
             this.categoriasContabeis[c.value] = c;
         });
     }

@@ -23,7 +23,7 @@
     </div>
     <nav class="side-nav">
         <app-loading type="fullparent" background="transparent"></app-loading>
-        <a *ngFor="let route of menu" [routerLink]="['/dashboard','projeto',projeto.id, pstatus,route.path]" class="side-nav-item" routerLinkActive="active"
+        <a *ngFor="let route of menu" [routerLink]="route2link(route)" class="side-nav-item" routerLinkActive="active"
            [hidden]="!projeto">
             <span class="fs-24 mr-3">
                 <i [class]="route.icon"></i>

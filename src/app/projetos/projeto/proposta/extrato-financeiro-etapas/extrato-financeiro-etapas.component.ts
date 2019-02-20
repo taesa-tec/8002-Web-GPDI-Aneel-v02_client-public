@@ -5,7 +5,7 @@ import { zip } from 'rxjs';
 
 import { RecursoHumanoFormComponent } from '@app/projetos/recurso-humano-form/recurso-humano-form.component';
 import { AppService } from '@app/app.service';
-import { Projeto, Etapa, TextValue, CategoriaContabil, ExtratosEtapas, ExtratoItem } from '@app/models';
+import { Projeto, Etapa, TextValue, CategoriasContabeis, ExtratosEtapas, ExtratoItem } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AlocarRecursoHumanoFormComponent } from '@app/projetos/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
@@ -41,7 +41,7 @@ export class ExtratoFinanceiroEtapasComponent implements OnInit {
         protected app: AppService,
         private route: ActivatedRoute
     ) {
-        CategoriaContabil.forEach(c => {
+        CategoriasContabeis.forEach(c => {
             this.categoriasContabeis[c.value] = c;
         });
     }

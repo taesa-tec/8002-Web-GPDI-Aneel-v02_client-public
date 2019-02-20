@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProjetosService } from '@app/projetos/projetos.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { RecursoMaterialFormComponent } from '@app/projetos/recurso-material-form/recurso-material-form.component';
-import { Projeto, RecursoMaterial, CategoriaContabil } from '@app/models';
+import { Projeto, RecursoMaterial, CategoriasContabeis } from '@app/models';
 import { ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
 import { zip, of } from 'rxjs';
@@ -19,7 +19,7 @@ export class RecursosMateriaisComponent implements OnInit {
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
     recursosMaterias: Array<any>;
-    categoriaContabel = CategoriaContabil;
+    categoriaContabel = CategoriasContabeis;
     projeto: Projeto;
     listOrder: { field: string; direction: 'asc' | 'desc'; } = {
         field: 'nome',

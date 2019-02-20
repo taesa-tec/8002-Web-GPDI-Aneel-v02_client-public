@@ -49,7 +49,6 @@ export class RecursoHumanoComponent implements OnInit {
     }
 
     ngOnInit() {
-        
         this.loadData();
     }
 
@@ -110,11 +109,6 @@ export class RecursoHumanoComponent implements OnInit {
                 }
 
             }
-
-            console.log(this.mesesRef);
-
-
-
         });
 
         this.form = new FormGroup({

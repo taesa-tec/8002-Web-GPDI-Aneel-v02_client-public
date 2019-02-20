@@ -59,8 +59,10 @@ export class ProjetoComponent implements OnInit {
     get pstatus() {
         return this.projeto.catalogStatus.status.toLocaleLowerCase();
     }
-    constructor(private route: ActivatedRoute, protected app: AppService) {
+    constructor(private route: ActivatedRoute, protected app: AppService) { }
 
+    route2link(r: { text: string, icon: string, path: string }) {
+        return ['/dashboard', 'projeto', this.projeto.id, this.pstatus].concat(r.path.split('/'));
     }
 
     ngOnInit() {

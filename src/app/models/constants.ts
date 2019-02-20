@@ -103,7 +103,7 @@ export const TiposCompartilhamento: Array<TextValue> = [
     { text: "Compartilhado entre as empresa(s) de energia elétrica e entidade(s) executora(s)", value: "CE" },
 ];
 
-export const CategoriaContabil: Array<TextValue> = [
+export const CategoriasContabeis: Array<TextValue> = [
     // { text: "Recursos Humanos", value: "RH" },
     { text: "Serviços de Terceiros", value: "ST" },
     { text: "Materiais de Consumo", value: "MC" },
