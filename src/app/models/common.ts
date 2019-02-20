@@ -388,5 +388,17 @@ export interface RegistroREFPEdit {
     status: 'Pendente' | 'Aprovado' | 'Reprovado';
 }
 
-
+export interface LogProjeto {
+    id: number;
+    projetoId: number;
+    projeto?: any;
+    userId: string;
+    user: User;
+    applicationUser?: any;
+    tela: string;
+    acao: string;
+    statusAnterior: string;
+    statusNovo: string;
+    created: string;
+}
 

@@ -2,10 +2,10 @@
     <div class="card-header bg-blue-light text-white d-flex justify-content-between">
         <div>
             <img src="assets/temp-user.png" width="32" height="32" alt="" class="rounded-circle mr-3">
-            <span>Andressa Moraes - 16.02.2019 às 19:30</span>
+            <span>{{log.user.nomeCompleto}} - {{log.created | date:'short'}}</span>
         </div>
         <div>
-            ID:001
+            ID: {{log.id}}
         </div>
     </div>
     <table class="table table-bordered mb-0">
@@ -18,13 +18,11 @@
             </td>
         </tr>
         <tr>
-            <td class="w-50">
+            <td *ngIf="log.statusAnterior !== ''" [class]="log.statusAnterior !== '' ? 'w-50': ''" [attr.colspan]="log.statusNovo === '' ? 2 : ''">
                 <strong class="text-blue-light mb-3 d-inline-block">
                         Status Anterior
                     </strong>
-                <div>
-                    {{log.statusAnterior}}
-                </div>
+                <div [innerHTML]="log.statusAnterior"></div>
 
                 <!-- <div class="text-blue">Titulo do Projeto:</div>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem, minima.</p>
@@ -33,13 +31,11 @@
                         inventore recusandae natus, minus provident quidem non sapiente, ipsa, atque perferendis
                         sit dolorum?</p> -->
             </td>
-            <td>
+            <td *ngIf="log.statusNovo !== ''" [attr.colspan]="log.statusAnterior === '' ? 2 : ''">
                 <strong class="text-blue-light  mb-3 d-inline-block">
                         Novo Status
                     </strong>
-                <div>
-                    {{log.statusNovo}}
-                </div>
+                <div [innerHTML]="log.statusNovo"></div>
                 <!-- <div class="text-blue">Titulo do Projeto:</div>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem, minima.</p>
                     <div class="text-blue">Motivação:</div>

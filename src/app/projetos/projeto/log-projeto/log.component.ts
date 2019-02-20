@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { LogProjeto } from '@app/models';
 
 @Component({
   selector: 'app-log-item',
@@ -7,24 +8,13 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class LogComponent implements OnInit {
 
-  @Input() log: {
-    id: number;
-    projetoId: number;
-    projeto?: any;
-    userId: string;
-    applicationUser?: any;
-    tela: string;
-    acao: string;
-    statusAnterior: string;
-    statusNovo: string;
-    created: string;
-  };
+  @Input() log: LogProjeto;
 
   constructor() { }
 
   ngOnInit() {
     console.log(this.log);
-    
+
   }
 
 }

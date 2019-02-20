@@ -64,10 +64,13 @@
             </div>
         </div>
         <div class="col-6">
-            <div class="form-group">
-                <label for="">CPF ou Passaporte</label>
-                <input type="text" formControlName="cpf" mask="000.000.000-00" class="form-control" *ngIf="nacionalidade.value === 'Brasileiro'">
-                <input type="text" formControlName="passaporte" class="form-control" *ngIf="nacionalidade.value === 'Estrangeiro'">
+            <div class="form-group" *ngIf="nacionalidade.value === 'Brasileiro'">
+                <label for="">CPF</label>
+                <input type="text" formControlName="cpf" mask="000.000.000-00" class="form-control">
+            </div>
+            <div class="form-group" *ngIf="nacionalidade.value === 'Estrangeiro'">
+                <label for="">Passaporte</label>
+                <input type="text" formControlName="passaporte" class="form-control">
             </div>
         </div>
     </div>

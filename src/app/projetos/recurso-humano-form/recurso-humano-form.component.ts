@@ -17,7 +17,7 @@ export class RecursoHumanoFormComponent implements OnInit {
     projeto: Projeto;
     funcoes = Funcao;
     titulacao = Titulacao;
-    empresas: Array<{ id: number; EmpresaNome: string }>;
+    empresas: Array<any>;
     empresasCatalog: Array<Empresa>;
     recursoHumano: RecursoHumano;
     nacionalidades = [{ value: 'Brasileiro', text: "Sim" }, { value: 'Estrangeiro', text: "Não" }];
@@ -46,12 +46,13 @@ export class RecursoHumanoFormComponent implements OnInit {
 
     setup() {
 
-        const cpfCtrl = new FormControl(this.recursoHumano.cpf || '', [Validators.required, AppValidators.cpf]);
+        const cpf = new FormControl(this.recursoHumano.cpf || '', [Validators.required, AppValidators.cpf]);
         const passaporte = new FormControl(this.recursoHumano.passaporte || '', Validators.required);
+        const empresaCtrl = new FormControl(this.recursoHumano.empresaId || '', Validators.required);
 
         this.form = new FormGroup({
             projetoId: new FormControl(this.projeto.id, Validators.required),
-            empresaId: new FormControl(this.recursoHumano.empresaId || '', Validators.required),
+            empresaId: empresaCtrl,
             valorHora: new FormControl(this.recursoHumano.valorHora || '', Validators.required),
             nomeCompleto: new FormControl(this.recursoHumano.nomeCompleto || '', Validators.required),
             titulacao: new FormControl(this.recursoHumano.titulacaoValor || '', Validators.required),
@@ -61,10 +62,14 @@ export class RecursoHumanoFormComponent implements OnInit {
         });
 
 
+        empresaCtrl.valueChanges.subscribe(value => {
+            console.log(value, this.empresas);
+
+        });
 
         this.nacionalidade.valueChanges.subscribe(value => {
             if (value === 'Brasileiro') {
-                this.form.addControl('cpf', cpfCtrl);
+                this.form.addControl('cpf', cpf);
                 this.form.removeControl('passaporte');
             } else {
                 this.form.removeControl('cpf');
@@ -171,26 +176,26 @@ export class RecursoHumanoFormComponent implements OnInit {
     loadData() {
         this.loading.show();
         const empresas$ = this.app.projetos.getEmpresas(this.projeto.id);
-        const catalog_empresas$ = this.app.catalogo.empresas();
+        const empresasCatalog$ = this.app.catalogo.empresas();
 
-        zip(empresas$, catalog_empresas$).subscribe(([empresas, catalog_empresas]) => {
+        zip(empresas$, empresasCatalog$).subscribe(([empresas, empresasCatalog]) => {
 
-            this.empresasCatalog = catalog_empresas;
+            this.empresasCatalog = empresasCatalog;
 
-            this.empresas = empresas.map((_emR, i) => {
+            const _empresas = empresas.map(empresa => {
+                const em = Object.assign({
+                    Empresa: empresa.razaoSocial ? empresa.razaoSocial : '',
+                    catalogEmpresa: null
+                }, empresa);
 
-                let emR = Object.assign({}, _emR);
-                let EmpresaNome = emR.razaoSocial ? emR.razaoSocial : '';
-                if (emR.catalogEmpresaId) {
-                    emR.catalogEmpresa = catalog_empresas.find(e => emR.catalogEmpresaId === e.id);
-                    EmpresaNome = emR.catalogEmpresa.nome;
+                if (empresa.catalogEmpresaId) {
+                    em.catalogEmpresa = empresasCatalog.find(e => empresa.catalogEmpresaId === e.id);
+                    em.Empresa = empresa.catalogEmpresa.nome;
                 }
-
-                return {
-                    id: emR.id,
-                    EmpresaNome
-                };
+                return em;
             });
+
+            this.empresas = _empresas;
 
             this.loading.hide();
         });

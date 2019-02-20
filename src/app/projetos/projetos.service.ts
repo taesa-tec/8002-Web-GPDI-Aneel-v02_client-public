@@ -18,6 +18,7 @@ import {
     FileUploaded,
     RegistroREFP,
     RegistroREFPEdit,
+    LogProjeto,
     EmpresaProjeto
 } from '@app/models';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
@@ -255,7 +256,7 @@ export class ProjetosService {
     }
 
     getLogPorjeto(id: number) {
-        return this.http.get<any>(`projeto/${id}/Log`);
+        return this.http.get<Array<LogProjeto>>(`projeto/${id}/Log`);
     }
 
     delLogPorjeto(id: number) {
