@@ -178,11 +178,11 @@ export const NoRequest: ResultadoResponse = {
 }
 
 export const TiposDoc: Array<TextValue> = [
-    { text: "Cupom Fiscal", value: "Cupom Fiscal" },
-    { text: "Declaração de Horas", value: "Declaração de Horas" },
+    { text: "Cupom Fiscal", value: "Cupom" },
+    { text: "Declaração de Horas", value: "Declaracao" },
     { text: "Fatura", value: "Fatura" },
-    { text: "Guia de NFS-e", value: "Guia de NFS-e" },
-    { text: "Nota Fiscal", value: "Nota Fiscal" },
+    { text: "Guia de NFS-e", value: "Guia" },
+    { text: "Nota Fiscal", value: "Nota" },
     { text: "Recibo", value: "Recibo" },
     { text: "Reserva", value: "Reserva" },
 ]

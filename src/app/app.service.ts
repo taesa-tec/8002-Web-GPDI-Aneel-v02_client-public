@@ -15,6 +15,8 @@ import { Router } from '@angular/router';
 })
 export class AppService {
 
+    moment: any;
+
     constructor(
         public modal: NgbModal,
         public catalogo: CatalogsService,
