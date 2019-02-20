@@ -17,7 +17,7 @@ export class RecursoHumanoFormComponent implements OnInit {
     projeto: Projeto;
     funcoes = Funcao;
     titulacao = Titulacao;
-    empresas: Array<EmpresaProjeto>;
+    empresas: Array<{ id: number; EmpresaNome: string }>;
     empresasCatalog: Array<Empresa>;
     recursoHumano: RecursoHumano;
     nacionalidades = [{ value: 'Brasileiro', text: "Sim" }, { value: 'Estrangeiro', text: "Não" }];
@@ -177,16 +177,19 @@ export class RecursoHumanoFormComponent implements OnInit {
 
             this.empresasCatalog = catalog_empresas;
 
-            this.empresas = empresas.map((emR, i) => {
+            this.empresas = empresas.map((_emR, i) => {
 
-                emR.EmpresaNome = emR.razaoSocial ? emR.razaoSocial : '';
-
+                let emR = Object.assign({}, _emR);
+                let EmpresaNome = emR.razaoSocial ? emR.razaoSocial : '';
                 if (emR.catalogEmpresaId) {
                     emR.catalogEmpresa = catalog_empresas.find(e => emR.catalogEmpresaId === e.id);
-                    emR.EmpresaNome = emR.catalogEmpresa.nome;
+                    EmpresaNome = emR.catalogEmpresa.nome;
                 }
 
-                return emR;
+                return {
+                    id: emR.id,
+                    EmpresaNome
+                };
             });
 
             this.loading.hide();

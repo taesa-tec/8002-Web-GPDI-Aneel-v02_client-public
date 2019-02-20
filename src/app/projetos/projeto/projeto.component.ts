@@ -25,59 +25,62 @@ export class ProjetoComponent implements OnInit {
     projetoRotas = projetoRoutes;
     projeto: Projeto;
 
-    menu = {
+    menus: { [propName: string]: Array<{ text: string, icon: string, path: string }> } = {
         proposta: [
-            { text: "Projeto", icon: "ta-projeto", path: 'proposta/info' },
-            { text: "Temas", icon: "ta-chat", path: 'proposta/temas' },
-            { text: "Produtos", icon: "ta-box", path: 'proposta/produtos' },
-            { text: "Etapas", icon: "ta-etapas", path: 'proposta/etapas' },
-            { text: "Empresas", icon: "ta-empresas", path: 'proposta/empresas' },
-            { text: "Recursos Humanos", icon: "ta-group", path: 'proposta/recursos-humanos' },
-            { text: "Alocação de recursos", icon: "ta-alocacao-rh", path: 'proposta/alocaco-recursos-humanos' },
-            { text: "Recursos Materiais", icon: "ta-recurso-material", path: 'proposta/recursos-materias' },
-            { text: "Alocação de recursos Materias", icon: "ta-alocacao-material", path: 'proposta/alocaco-recursos-materiais' },
-            { text: "Extrato Financeiro Empresas", icon: "ta-extrato", path: 'proposta/extrato-financeiro-empresas' },
-            { text: "Extrato Financeiro Etapas", icon: "ta-table", path: 'proposta/extrato-financeiro-etapas' }
+            { text: "Projeto", icon: "ta-projeto", path: 'info' },
+            { text: "Temas", icon: "ta-chat", path: 'temas' },
+            { text: "Produtos", icon: "ta-box", path: 'produtos' },
+            { text: "Etapas", icon: "ta-etapas", path: 'etapas' },
+            { text: "Empresas", icon: "ta-empresas", path: 'empresas' },
+            { text: "Recursos Humanos", icon: "ta-group", path: 'recursos-humanos' },
+            { text: "Alocação de recursos", icon: "ta-alocacao-rh", path: 'alocacao-recursos-humanos' },
+            { text: "Recursos Materiais", icon: "ta-recurso-material", path: 'recursos-materiais' },
+            { text: "Alocação de recursos Materias", icon: "ta-alocacao-material", path: 'alocacao-recursos-materiais' },
+            { text: "Extrato Financeiro Empresas", icon: "ta-extrato", path: 'extrato-financeiro-empresas' },
+            { text: "Extrato Financeiro Etapas", icon: "ta-table", path: 'extrato-financeiro-etapas' }
         ],
         iniciado: [
-            { text: "Inserir Registro REFP", icon: "ta-edit", path: 'iniciado/refp-inserir' },
-            { text: "Registros Pendentes REFP", icon: "ta-ampulheta", path: 'iniciado/refp/pendentes' },
-            { text: "Registros Reprovados REFP", icon: "ta-cancel-circle", path: 'iniciado/refp/reprovados' },
-            { text: "Registros Aprovados REFP", icon: "ta-ok", path: 'iniciado/refp/aprovados' },
-            { text: "Extrato Financeiro Empresas", icon: "ta-extrato", path: 'iniciado/refp-extrato' },
-            { text: "Alterar Projeto", icon: "ta-warning", path: 'iniciado/alterar' },
-            { text: "Consultar Dados Planejamento Projeto", icon: "ta-eye", path: 'iniciado/consultar' },
+            { text: "Inserir Registro REFP", icon: "ta-edit", path: 'refp-inserir' },
+            { text: "Registros Pendentes REFP", icon: "ta-ampulheta", path: 'refp/pendentes' },
+            { text: "Registros Reprovados REFP", icon: "ta-cancel-circle", path: 'refp/reprovados' },
+            { text: "Registros Aprovados REFP", icon: "ta-ok", path: 'refp/aprovados' },
+            { text: "Extrato Financeiro Empresas", icon: "ta-extrato", path: 'refp-extrato' },
+            { text: "Alterar Projeto", icon: "ta-warning", path: 'alterar' },
+            { text: "Consultar Dados Planejamento Projeto", icon: "ta-eye", path: 'consultar' },
         ],
         finalizado: [
             { text: "Em desenvolvimento", icon: "ta-warning", path: "" }
         ]
     };
 
+    menu: Array<{ text: string, icon: string, path: string }>;
 
+
+    get pstatus() {
+        return this.projeto.catalogStatus.status.toLocaleLowerCase();
+    }
     constructor(private route: ActivatedRoute, protected app: AppService) {
 
     }
 
-    get routes() {
-        switch (this.projeto.catalogStatus.status) {
-            case 'proposta':
-            case 'Proposta':
-                return { prefix: 'proposta', routes: this.menu.proposta };
-            case 'iniciado':
-            case 'Iniciado':
-                return { prefix: 'iniciado', routes: this.menu.iniciado };
-            default:
-                return {
-                    prefix: '', routes: []
-                };
-        }
-    }
-
-
     ngOnInit() {
         this.route.data.subscribe((data: { projeto: Projeto }) => {
             this.projeto = data.projeto;
+            this.setMenu();
+            this.app.projetos.projetoUpdated.subscribe(projeto => {
+                this.setMenu();
+            });
         });
+    }
+    setMenu() {
+        switch (this.projeto.catalogStatus.status.toLocaleLowerCase()) {
+            case 'proposta':
+                this.menu = this.menus.proposta;
+                break;
+            case 'iniciado':
+                this.menu = this.menus.iniciado;
+                break;
+        }
     }
 
 }
