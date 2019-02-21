@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col">
-        <h5 class="text-uppercase text-blue font-weight-normal my-3">REGISTROS PENDENTES - REFP</h5>
+        <h5 class="text-uppercase text-blue font-weight-normal my-3">REGISTROS {{status}} - REFP</h5>
     </div>
 </div>
 
@@ -18,40 +18,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>GJ de Faria & Cia Ltda ME</td>
-                        <td>Recursos Humanos</td>
-                        <td>Novatrans - 2609</td>
-                        <td>R$12.4559,00</td>
+                    <tr *ngFor="let registro of tableRegistro">
+                        <td>{{ registro.nome }}</td>
+                        <td>{{ registro.categoria }}</td>
+                        <td>{{ registro.empresa }}</td>
+                        <td>{{ registro.valor | currency:'R$' }}</td>
                         <td>
                             <button class="btn btn-primary btn-sm" type="button"><i class="ta-edit"></i> Ver Detalhes</button>
                         </td>
                     </tr>
-                    <tr>
-                        <td>GJ de Faria & Cia Ltda ME</td>
-                        <td>Recursos Humanos</td>
-                        <td>Novatrans - 2609</td>
-                        <td>R$12.4559,00</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm" type="button"><i class="ta-edit"></i> Ver Detalhes</button>
+                    <tr [hidden]="!loading.isLoading">
+                        <td colspan="5" class="text-center">
+                            <app-loading type="inline"></app-loading>
                         </td>
                     </tr>
-                    <tr>
-                        <td>GJ de Faria & Cia Ltda ME</td>
-                        <td>Recursos Humanos</td>
-                        <td>Novatrans - 2609</td>
-                        <td>R$12.4559,00</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm" type="button"><i class="ta-edit"></i> Ver Detalhes</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>GJ de Faria & Cia Ltda ME</td>
-                        <td>Recursos Humanos</td>
-                        <td>Novatrans - 2609</td>
-                        <td>R$12.4559,00</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm" type="button"><i class="ta-edit"></i> Ver Detalhes</button>
+                    <tr *ngIf="tableRegistro && tableRegistro.length === 0 && !loading.isLoading">
+                        <td colspan="5" class="text-center">
+                            Nenhum Registro encontrado
                         </td>
                     </tr>
                 </tbody>

@@ -313,13 +313,13 @@ export class ProjetosService {
     }
 
     listarRegistrosAprovados(id: number) {
-        return this.http.get<ResultadoResponse>(`projeto/${id}/RegistroFinanceiro/Aprovado`);
+        return this.http.get<Array<RegistroREFP>>(`projeto/${id}/RegistroFinanceiro/Aprovado`);
     }
     listarRegistrosReprovados(id: number) {
-        return this.http.get<ResultadoResponse>(`projeto/${id}/RegistroFinanceiro/Reprovado`);
+        return this.http.get<Array<RegistroREFP>>(`projeto/${id}/RegistroFinanceiro/Reprovado`);
     }
     listarRegistrosPendentes(id: number) {
-        return this.http.get<ResultadoResponse>(`projeto/${id}/RegistroFinanceiro/Pendente`);
+        return this.http.get<Array<RegistroREFP>>(`projeto/${id}/RegistroFinanceiro/Pendente`);
     }
 
 }

@@ -347,40 +347,49 @@ export interface ExtratosEtapas {
  * Registro REFP 
  */
 
+
+export interface REFPObsInterna {
+    id: number;
+    registroFinanceiroId: number;
+    created: string;
+    userId: string;
+    user: User;
+    texto: string;
+}
 export interface RegistroREFP {
+    id: number;
     projetoId: number;
     tipo: 'RH' | 'RM';
+    tipoValor: 'RH' | 'RM';
+    status: number;
+    statusValor: string;
+    recursoHumanoId: number;
+    recursoHumano?: any;
     mes: string;
+    qtdHrs: number;
     empresaFinanciadoraId: number;
-    tipoDocumento: string;
+    empresaFinanciadora?: any;
+    tipoDocumento: number;
     numeroDocumento: string;
     dataDocumento: string;
-    obsInternas: { texto: string }[];
-}
-
-
-export interface RegistroRefpRH extends RegistroREFP {
-    tipo: 'RH';
-    recursoHumanoId: number;
-    qtdHrs: number;
     atividadeRealizada: string;
-}
-
-export interface RegistroRefpRM extends RegistroREFP {
-    tipo: 'RM';
-    nomeItem: string;
-    recursoMaterialId: number;
-    empresaRecebedoraId: number;
-    beneficiado: string;
-    cnpjBeneficiado: string;
-    categoriaContabil: string;
-    equiparLabExistente: boolean;
-    equiparLabNovo: boolean;
-    itemNacional: boolean;
-    qtdItens: number;
-    valorUnitario: number;
-    especificacaoTecnica: string;
-    funcaoRecurso: string;
+    obsInternas: REFPObsInterna[];
+    nomeItem?: any;
+    recursoMaterialId?: any;
+    recursoMaterial?: any;
+    empresaRecebedoraId?: any;
+    empresaRecebedora?: any;
+    beneficiado?: any;
+    cnpjBeneficiado?: any;
+    categoriaContabil: number;
+    equiparLabExistente?: any;
+    equiparLabNovo?: any;
+    itemNacional?: any;
+    qtdItens?: any;
+    valorUnitario?: any;
+    especificacaoTecnica?: any;
+    funcaoRecurso?: any;
+    uploads: any[];
 }
 
 export interface RegistroREFPEdit {
@@ -402,4 +411,3 @@ export interface LogProjeto {
     statusNovo: string;
     created: string;
 }
-

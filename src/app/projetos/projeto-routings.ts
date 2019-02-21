@@ -130,7 +130,7 @@ export const projetoIniciadoRoutes: Routes = [
         path: 'refp-extrato', component: RefpExtratoComponent,
     },
     {
-        path: 'refp/:status', component: RefpListComponent,
+        path: 'refp/:status', component: RefpListComponent
     },
     {
         path: 'alterar', component: AlterarProjetoComponent,

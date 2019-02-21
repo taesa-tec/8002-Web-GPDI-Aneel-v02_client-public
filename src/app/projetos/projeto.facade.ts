@@ -3,7 +3,7 @@ import { Projeto, Empresa, ProjetoStatus } from '@app/models';
 
 
 abstract class ProjetoModule {
-    constructor(public id: number, protected service: ProjetosService) { }
+    constructor(protected id: number, protected service: ProjetosService) { }
 }
 
 class ProjetoTema extends ProjetoModule {
@@ -121,7 +121,7 @@ export class ProjetoFacade implements Projeto {
     obterXmls() {
         return this.service.obterXmls(this.id);
     }
-    obterLogDuto(){
+    obterLogDuto() {
         return this.service.obterLogDuto(this.id);
     }
     gerarXmlProjetoPed(versao: number) {
