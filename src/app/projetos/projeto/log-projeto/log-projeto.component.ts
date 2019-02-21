@@ -19,7 +19,7 @@ export class LogProjetoComponent implements OnInit {
   usuarios: Array<User>;
   status = AcaoLog;
   total = 0;
-  args: { page: number, size: number, acao?: string };
+  args: { page: number, size: number, acao?: string, user?: string };
 
   @ViewChild(LoadingComponent) loading: LoadingComponent;
 
@@ -32,25 +32,25 @@ export class LogProjetoComponent implements OnInit {
   mudarStatus(value: string) {
     if (value !== '') {
       this.args.acao = value;
-      this.loadData(true);
+    } else {
+      delete this.args.acao;
     }
+    this.reLoadData();
   }
 
   mudarUsuario(value: string) {
     if (value !== '') {
-      // this.args.acao = value;
-      // this.loadData(true);
+      this.args.user = value;
+    } else {
+      delete this.args.user;
     }
+    this.reLoadData();
   }
 
-  loadData(reload?: boolean | false) {
+  loadData() {
 
     this.loading.show();
-
-    if (!reload) {
-      this.args = { page: 1, size: 10 };
-
-    }
+    this.args = { page: 1, size: 10 };
 
     const data$ = this.route.parent.data.pipe(
       map(d => d.projeto),
@@ -66,6 +66,36 @@ export class LogProjetoComponent implements OnInit {
       this.projeto = projeto;
       this.total = logsProjeto.total;
       this.usuarios = usuarios;
+
+      console.log(logsProjeto);
+
+      this.logsProjeto = logsProjeto.itens.map(log => {
+        log.acaoValor = this.status.find(stat => stat.value === log.acaoValor).text;
+        return log;
+      });
+
+      this.loading.hide();
+
+    });
+
+  }
+
+  reLoadData() {
+
+    this.loading.show();
+
+    const data$ = this.route.parent.data.pipe(
+      map(d => d.projeto),
+      mergeMap(p =>
+        zip(
+          of(p),
+          this.app.projetos.getLogPorjeto(p.id, this.args),
+        ))
+    );
+
+    data$.subscribe(([projeto, logsProjeto]) => {
+      this.projeto = projeto;
+      this.total = logsProjeto.total;
 
       console.log(logsProjeto);
 
