@@ -45,63 +45,96 @@ class ProjetoRM extends ProjetoModule {
 }
 class ProjetoREFP extends ProjetoModule {
     registrosAprovados() {
-        return this.service.listarRegistroAprovados(this.id);
+        return this.service.listarRegistrosAprovados(this.id);
     }
     registrosReprovados() {
-        return this.service.listarRegistroReprovados(this.id);
+        return this.service.listarRegistrosReprovados(this.id);
     }
     registrosPendentes() {
-        return this.service.listarRegistroPendentes(this.id);
+        return this.service.listarRegistrosPendentes(this.id);
     }
 }
-export class ProjetoFacade {
+export class ProjetoFacade implements Projeto {
+    created: string;
+    id: number;
+    titulo: string;
+    tipo: number;
+    dataInicio?: any;
+    codigo?: any;
+    tituloDesc: string;
+    numero: string;
+    catalogEmpresaId: number;
+    catalogEmpresa?: Empresa;
+    catalogStatusId: number;
+    catalogStatus?: ProjetoStatus;
+    catalogSegmentoId?: any;
+    catalogSegmento?: any;
+    avaliacaoInicial?: any;
+    compartResultados?: any;
+    motivacao?: any;
+    originalidade?: any;
+    aplicabilidade?: any;
+    relevancia?: any;
+    razoabilidade?: any;
+    pesquisas?: any;
+    produtos?: any;
+    recursosHumanos?: any;
+    alocacoesRh?: any;
+    recursosMateriais?: any;
+    alocacoesRm?: any;
+    etapas?: any;
+    tema?: any;
+    usersProjeto?: any;
+    empresas?: any;
 
-    data: Projeto;
+    relations: {
+        tema: ProjetoTema;
+        etapas: ProjetoEtapas;
+        produtos: ProjetoProdutos;
+        empresas: ProjetoEmpresas;
+        recursosHumanos: ProjetoRH;
+        recursosMateriais: ProjetoRM;
+        REFP: ProjetoREFP;
+    };
 
-    tema: ProjetoTema;
-    etapas: ProjetoEtapas;
-    produtos: ProjetoProdutos;
-    empresas: ProjetoEmpresas;
-    recursosHumanos: ProjetoRH;
-    recursosMateriais: ProjetoRM;
-    REFP: ProjetoREFP;
-
-    constructor(public projeto: Projeto, protected service: ProjetosService) {
-        this.tema = new ProjetoTema(this.projeto.id, this.service);
-        this.etapas = new ProjetoEtapas(this.projeto.id, this.service);
-        this.produtos = new ProjetoProdutos(this.projeto.id, this.service);
-        this.empresas = new ProjetoEmpresas(this.projeto.id, this.service);
-        this.recursosHumanos = new ProjetoRH(this.projeto.id, this.service);
-        this.recursosMateriais = new ProjetoRM(this.projeto.id, this.service);
-        this.REFP = new ProjetoREFP(this.projeto.id, this.service);
-    }
-
-    get id() {
-        return this.projeto.id;
+    constructor(projeto: Projeto, protected service: ProjetosService) {
+        Object.assign(this, projeto);
+        this.relations = {
+            tema: new ProjetoTema(this.id, this.service),
+            etapas: new ProjetoEtapas(this.id, this.service),
+            produtos: new ProjetoProdutos(this.id, this.service),
+            empresas: new ProjetoEmpresas(this.id, this.service),
+            recursosHumanos: new ProjetoRH(this.id, this.service),
+            recursosMateriais: new ProjetoRM(this.id, this.service),
+            REFP: new ProjetoREFP(this.id, this.service),
+        };
     }
 
     getOrcamentoEmpresas() {
-        this.service.getExtratoEmpresas(this.projeto.id);
+        this.service.getExtratoEmpresas(this.aplicabilidade.id);
     }
 
     getOrcamentoEtapas() {
-        this.service.getExtratoEtapas(this.projeto.id);
+        this.service.getExtratoEtapas(this.id);
     }
 
     obterXmls() {
-        return this.service.obterXmls(this.projeto.id);
+        return this.service.obterXmls(this.id);
+    }
+    obterLogDuto(){
+        return this.service.obterLogDuto(this.id);
     }
     gerarXmlProjetoPed(versao: number) {
-        return this.service.gerarXmlProjetoPed(this.projeto.id, versao);
+        return this.service.gerarXmlProjetoPed(this.id, versao);
     }
     gerarXmlInteresseExecucao(versao: number) {
-        return this.service.gerarXmlInteresseExecucao(this.projeto.id, versao);
+        return this.service.gerarXmlInteresseExecucao(this.id, versao);
     }
     gerarXmlInicioExecucao(versao: number) {
-        return this.service.gerarXmlInicioExecucao(this.projeto.id, versao);
+        return this.service.gerarXmlInicioExecucao(this.id, versao);
     }
     gerarXmlProrrogacao(versao: number) {
-        return this.service.gerarXmlProrrogacao(this.projeto.id, versao);
+        return this.service.gerarXmlProrrogacao(this.id, versao);
     }
 
 }

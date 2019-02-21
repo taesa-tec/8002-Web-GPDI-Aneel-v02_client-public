@@ -36,7 +36,7 @@ export class LogProjetoComponent implements OnInit {
       mergeMap(p =>
         zip(
           of(p),
-          this.app.projetos.getLogPorjeto(p.id),
+          this.app.projetos.getLogProjeto(p.id),
           this.app.users.all()
         ))
     );

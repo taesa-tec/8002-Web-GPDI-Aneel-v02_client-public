@@ -71,7 +71,6 @@ export class UsuariosComponent implements OnInit {
 
                     return { user, formGroup }
                 });
-
                 this.loading.hide();
             });
         });

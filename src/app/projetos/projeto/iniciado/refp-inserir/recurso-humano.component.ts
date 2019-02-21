@@ -55,11 +55,11 @@ export class RecursoHumanoComponent implements OnInit {
     loadData() {
         this.app.projetos.projetoLoaded.subscribe(projeto => {
 
-            this.projeto = new ProjetoFacade(projeto, this.app.projetos);
+            this.projeto = projeto;
 
-            const recursos$ = this.projeto.recursosHumanos.get();
-            const empresas$ = this.projeto.empresas.get();
-            const etapas$ = this.projeto.etapas.get();
+            const recursos$ = this.projeto.relations.recursosHumanos.get();
+            const empresas$ = this.projeto.relations.empresas.get();
+            const etapas$ = this.projeto.relations.etapas.get();
 
             this.loading.show(1000);
             zip(recursos$, empresas$, etapas$).subscribe(([recursos, empresas, etapas]) => {

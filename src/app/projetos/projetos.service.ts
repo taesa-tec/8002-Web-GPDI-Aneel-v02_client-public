@@ -23,6 +23,7 @@ import {
 } from '@app/models';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { tap, share } from 'rxjs/operators';
+import { ProjetoFacade } from './projeto.facade';
 
 @Injectable({
     providedIn: 'root'
@@ -31,7 +32,7 @@ export class ProjetosService {
 
     protected projetoCreatedSource = new Subject<CreateProjectRequest>();
     protected projetoUpdatedSource = new Subject<Projeto>();
-    protected projetoLoadedSource = new BehaviorSubject<Projeto>(null);
+    protected projetoLoadedSource = new BehaviorSubject<ProjetoFacade>(null);
 
     projetoCreated = this.projetoCreatedSource.asObservable();
     projetoUpdated = this.projetoUpdatedSource.asObservable();
@@ -57,12 +58,12 @@ export class ProjetosService {
     }
 
     getById(id: number) {
-        return this.http.get<Projeto>(`Projetos/${id}`).pipe(tap(p => this.projetoLoadedSource.next(p)), share());
+        return this.http.get<Projeto>(`Projetos/${id}`).pipe(tap(p => this.projetoLoadedSource.next(new ProjetoFacade(p, this))), share());
     }
 
     editar(projeto: Projeto) {
         return this.http.put<ResultadoResponse>(`Projetos`, projeto).pipe(tap(result => {
-            if(result.sucesso){
+            if (result.sucesso) {
                 this.projetoUpdatedSource.next(projeto);
             }
         }));
@@ -255,11 +256,11 @@ export class ProjetosService {
         return this.http.post<ResultadoResponse>('projeto/LogProjetos', logprojeto);
     }
 
-    getLogPorjeto(id: number) {
+    getLogProjeto(id: number) {
         return this.http.get<Array<LogProjeto>>(`projeto/${id}/Log`);
     }
 
-    delLogPorjeto(id: number) {
+    delLogProjeto(id: number) {
         return this.http.delete<any>(`projeto/LogProjetos/${id}`);
     }
 
@@ -272,6 +273,9 @@ export class ProjetosService {
      */
     obterXmls(id: number) {
         return this.http.get<Array<FileUploaded>>(`projeto/${id}/ObterXmls`);
+    }
+    obterLogDuto(id: number) {
+        return this.http.get<Array<FileUploaded>>(`upload/${id}/obterlogduto`);
     }
     gerarXmlProjetoPed(id: number, versao: number) {
         return this.http.get<ResultadoResponse>(`projeto/${id}/XmlProjetoPed/${versao}`);
@@ -286,6 +290,8 @@ export class ProjetosService {
         return this.http.get<ResultadoResponse>(`projeto/${id}/XmlProrrogacao/${versao}`);
     }
 
+
+
     /**
      * Registro REFP
      */
@@ -296,13 +302,13 @@ export class ProjetosService {
         return this.http.put<ResultadoResponse>(`projeto/RegistroFinanceiro`, registro);
     }
 
-    listarRegistroAprovados(id: number) {
+    listarRegistrosAprovados(id: number) {
         return this.http.get<ResultadoResponse>(`projeto/${id}/RegistroFinanceiro/Aprovado`);
     }
-    listarRegistroReprovados(id: number) {
+    listarRegistrosReprovados(id: number) {
         return this.http.get<ResultadoResponse>(`projeto/${id}/RegistroFinanceiro/Reprovado`);
     }
-    listarRegistroPendentes(id: number) {
+    listarRegistrosPendentes(id: number) {
         return this.http.get<ResultadoResponse>(`projeto/${id}/RegistroFinanceiro/Pendente`);
     }
 
