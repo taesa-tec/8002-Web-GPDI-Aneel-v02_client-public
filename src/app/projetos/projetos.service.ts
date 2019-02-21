@@ -19,7 +19,8 @@ import {
     RegistroREFP,
     RegistroREFPEdit,
     LogProjeto,
-    EmpresaProjeto
+    EmpresaProjeto,
+    TotalLog
 } from '@app/models';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { tap, share } from 'rxjs/operators';
@@ -272,7 +273,7 @@ export class ProjetosService {
             }
             query = `?${urlParams.toString()}`;
         }
-        return this.http.get<Array<LogProjeto>>(`projeto/${id}/Log${query}`);
+        return this.http.get<TotalLog>(`projeto/${id}/Log${query}`);
     }
 
     delLogProjeto(id: number) {

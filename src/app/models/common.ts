@@ -397,6 +397,11 @@ export interface RegistroREFPEdit {
     status: 'Pendente' | 'Aprovado' | 'Reprovado';
 }
 
+export interface TotalLog {
+    itens: Array<LogProjeto>;
+    total: number;
+}
+
 export interface LogProjeto {
     id: number;
     projetoId: number;
