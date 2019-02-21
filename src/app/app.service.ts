@@ -26,10 +26,10 @@ export class AppService {
         public auth: AuthService,
         public router: Router) { }
 
-    alert(message: string, title: string = "Alerta") {
+    alert(message: string | Array<string>, title: string = "Alerta") {
         const ref = this.modal.open(AlertComponent);
         ref.componentInstance.title = title;
-        ref.componentInstance.message = message;
+        ref.componentInstance.setMessage(message);
         return ref.result;
     }
 
@@ -40,14 +40,14 @@ export class AppService {
                 { text: "Ok", value: true, cssClass: 'btn-primary' }
             ]) {
         const ref = this.modal.open(ConfirmComponent, { backdrop: 'static' });
-        ref.componentInstance.message = message;
+        ref.componentInstance.setMessage(message);
         ref.componentInstance.title = title;
         ref.componentInstance.options = options;
         return ref.result;
     }
     prompt(message: string, title: string = "Confirme") {
         const ref = this.modal.open(PromptComponent, { backdrop: 'static' });
-        ref.componentInstance.message = message;
+        ref.componentInstance.setMessage(message);
         ref.componentInstance.title = title;
         return ref.result;
     }

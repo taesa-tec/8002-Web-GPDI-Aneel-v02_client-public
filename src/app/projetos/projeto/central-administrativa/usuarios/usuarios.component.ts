@@ -31,6 +31,7 @@ export class UsuariosComponent implements OnInit {
 
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild('saving') loadingSaving: LoadingComponent;
 
     constructor(protected app: AppService) { }
 
@@ -74,6 +75,24 @@ export class UsuariosComponent implements OnInit {
                 this.loading.hide();
             });
         });
+    }
+
+    save() {
+        const formData = (this.formArray.value as Array<any>).filter(d => d.catalogUserPermissaoId !== '');
+        this.loadingSaving.show();
+        if (this.formArray.length === 0) {
+            this.app.alert("Não é possivel salvar");
+        } else {
+
+            this.app.projetos.projetoUsers(formData).subscribe(result => {
+                this.loadingSaving.hide();
+                if (result.sucesso) {
+                    this.app.alert("Alterações salvas com sucesso!");
+                } else {
+                    this.app.alert(result.inconsistencias);
+                }
+            });
+        }
     }
 
 }

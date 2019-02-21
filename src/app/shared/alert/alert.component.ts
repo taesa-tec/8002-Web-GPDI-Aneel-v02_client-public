@@ -15,5 +15,10 @@ export class AlertComponent implements OnInit {
 
     ngOnInit() {
     }
+    
+    setMessage(message: string | Array<string>) {
+        const messageMerge = message instanceof Array ? message.join('<br>') : message;
+        this.message = messageMerge;
+    }
 
 }

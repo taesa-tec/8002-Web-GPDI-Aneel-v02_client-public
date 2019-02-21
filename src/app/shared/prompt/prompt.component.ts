@@ -24,4 +24,9 @@ export class PromptComponent implements OnInit {
         this.form = new FormGroup({ response: this.response });
     }
 
+    setMessage(message: string | Array<string>) {
+        const messageMerge = message instanceof Array ? message.join('<br>') : message;
+        this.message = messageMerge;
+    }
+
 }

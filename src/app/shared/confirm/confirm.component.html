@@ -1,9 +1,7 @@
 <div class="modal-header">
     <div class="text-uppercase modal-title text-blue-light fs-24">{{title}}</div>
 </div>
-<div class="modal-body">
-    {{message}}
-</div>
+<div class="modal-body" [innerHTML]="message"></div>
 <div class="modal-footer">
     <button *ngFor="let item of options" type="button" class="btn" (click)="activeModal.close(item.value)" [ngClass]="item.cssClass">{{item.text}}</button>
 </div>

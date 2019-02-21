@@ -1,9 +1,4 @@
-<div class="row" [hidden]="!loading.isLoading">
-    <div class="col-12 text-center py-4">
-        <app-loading type="inline"></app-loading>
-    </div>
-</div>
-<div class="row" [hidden]="loading.isLoading">
+<div class="row">
     <div class="col-12">
         <table class="table">
             <thead>
@@ -34,32 +29,42 @@
                     </th>
                 </tr>
             </thead>
-            <tr *ngFor="let userPermissao of usersPermissao">
-                <td> {{userPermissao.user.nomeCompleto}} </td>
-                <td>
-                    <span *ngIf="userPermissao.user.catalogEmpresa">
+            <tbody>
+                <tr>
+                    <td [hidden]="!loading.isLoading" colspan="3" class="text-center">
+                        <app-loading type="inline"></app-loading>
+                    </td>
+                </tr>
+                <tr *ngFor="let userPermissao of usersPermissao">
+                    <td> {{userPermissao.user.nomeCompleto}} </td>
+                    <td>
+                        <span *ngIf="userPermissao.user.catalogEmpresa">
                         {{userPermissao.user.catalogEmpresa.nome}} 
                     </span>
-                    <span>
+                        <span>
                         {{userPermissao.user.razaoSocial}} 
                     </span>
-                </td>
-                <td class="w-25">
-                    <form [formGroup]="userPermissao.formGroup">
-                        <select name="" id="" class="form-control" formControlName="catalogUserPermissaoId">
-                            <option value="">Sem Permissão</option>
-                            <option [value]="nivel.id" *ngFor="let nivel of permissoes">
-                                {{nivel.nome}}
-                            </option>
-                        </select>
-                    </form>
-                </td>
-            </tr>
+                    </td>
+                    <td class="w-25">
+                        <form [formGroup]="userPermissao.formGroup">
+                            <select name="" id="" class="form-control" formControlName="catalogUserPermissaoId">
+                                <option value="">Sem Permissão</option>
+                                <option [value]="nivel.id" *ngFor="let nivel of permissoes">
+                                    {{nivel.nome}}
+                                </option>
+                            </select>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </div>
 <div class="row">
     <div class="col-12 text-right">
-        <button class="btn btn-primary" ngbTooltip="Em desenvolvimento"><i class="ta-save"></i> Salvar</button>
+        <button class="btn btn-primary" (click)="save()" [disabled]="loadingSaving.isLoading">
+            <i class="ta-save"></i> Salvar
+        </button>
     </div>
 </div>
+<app-loading #saving type="fullscreen"></app-loading>

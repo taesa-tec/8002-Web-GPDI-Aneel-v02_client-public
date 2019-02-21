@@ -46,6 +46,11 @@ export class ProjetosService {
         return this.http.get<Array<UserProjeto>>('UserProjetos/me');
     }
 
+    projetoUsers(permissoes: Array<UserProjeto>) {
+        console.log(permissoes);
+        return this.http.post<ResultadoResponse>('ProjetoUsers', permissoes);
+    }
+
     getProjetos() {
         return this.http.get<Array<Projeto>>('Projetos');
     }
