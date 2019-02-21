@@ -7,15 +7,15 @@
 </div>
 <div class="row mb-5">
     <div class="col">
-        <select name="" id="" class="form-control">
+        <select (change)="mudarUsuario($event.target.value)" name="" id="" class="form-control">
             <option value="">Todos os usuários</option>
             <option [value]="user.id" *ngFor="let user of usuarios">{{user.nomeCompleto}}</option>
         </select>
     </div>
     <div class="col">
-        <select name="" id="" class="form-control">
+        <select (change)="mudarStatus($event.target.value)" name="" id="" class="form-control">
             <option value="">Todas as ações</option>
-            <option [value]="s" *ngFor="let s of status">{{s}}</option>
+            <option [value]="s.value" *ngFor="let s of status">{{s.text}}</option>
         </select>
     </div>
     <div class="col text-right">

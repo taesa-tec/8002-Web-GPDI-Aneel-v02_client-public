@@ -171,7 +171,7 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
             userId: this.app.users.currentUser.id,
             projetoId: this.projeto.id,
             tela,
-            acao: acao || "Criação",
+            acao: acao || "Create",
             statusAnterior: "",
             statusNovo: ""
         };
@@ -193,7 +193,7 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
         <b>Horas:</b> ${horas_string}<br>
         <b>Justificativa do Recurso:</b> ${justificativa}<br>`;
 
-        if (acao === "Exclusão") {
+        if (acao === "Delete") {
             logProjeto.statusNovo = "";
         }
 
@@ -216,7 +216,7 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
         <b>Horas:</b> ${horas_string}<br>
         <b>Justificativa do Recurso:</b> ${_justificativa}<br>`;
 
-            logProjeto.acao = acao || "Edição";
+            logProjeto.acao = acao || "Update";
         }
 
         const request = this.app.projetos.criarLogProjeto(logProjeto);
@@ -254,7 +254,7 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
                     this.app.projetos.delAlocacaoRH(this.alocacao.id).subscribe(resultDelete => {
                         this.loading.hide();
                         if (resultDelete.sucesso) {
-                            this.logProjeto("Alocação de Recurso Humano", "Exclusão");
+                            this.logProjeto("Alocação de Recurso Humano", "Delete");
                             this.activeModal.close('deleted');
                         } else {
                             this.app.alert(resultDelete.inconsistencias.join(', '));

@@ -186,3 +186,9 @@ export const TiposDoc: Array<TextValue> = [
     { text: "Recibo", value: "Recibo" },
     { text: "Reserva", value: "Reserva" },
 ]
+
+export const AcaoLog: Array<TextValue> = [
+    { text: "Criação", value: "Create" },
+    { text: "Edição", value: "Update" },
+    { text: "Exclusão", value: "Delete" }
+];

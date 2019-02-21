@@ -63,7 +63,7 @@ export class RecursoMaterialFormComponent implements OnInit {
             userId: this.app.users.currentUser.id,
             projetoId: this.projeto.id,
             tela,
-            acao: acao || "Criação",
+            acao: acao || "Create",
             statusAnterior: "",
             statusNovo: ""
         };
@@ -78,7 +78,7 @@ export class RecursoMaterialFormComponent implements OnInit {
         <b>Valor Unitário:</b> ${valor}<br>
         <b>Especificação:</b> ${especificacao}<br>`;
 
-        if (acao === "Exclusão") {
+        if (acao === "Delete") {
             logProjeto.statusNovo = "";
         }
 
@@ -94,7 +94,7 @@ export class RecursoMaterialFormComponent implements OnInit {
             <b>Valor Unitário:</b> ${_valor}<br>
             <b>Especificação:</b> ${_especificacao}<br>`;
 
-            logProjeto.acao = acao || "Edição";
+            logProjeto.acao = acao || "Update";
         }
 
         const request = this.app.projetos.criarLogProjeto(logProjeto);
@@ -132,7 +132,7 @@ export class RecursoMaterialFormComponent implements OnInit {
                     this.app.projetos.delRecursoMaterial(this.recursoMaterial.id).subscribe(resultDelete => {
                         this.loading.hide();
                         if (resultDelete.sucesso) {
-                            this.logProjeto("Recursos Materiais", "Exclusão");
+                            this.logProjeto("Recursos Materiais", "Delete");
                             this.activeModal.close('deleted');
                         } else {
                             this.app.alert(resultDelete.inconsistencias.join(', '));

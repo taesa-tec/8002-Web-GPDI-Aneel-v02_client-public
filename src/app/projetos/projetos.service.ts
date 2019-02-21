@@ -256,8 +256,18 @@ export class ProjetosService {
         return this.http.post<ResultadoResponse>('projeto/LogProjetos', logprojeto);
     }
 
-    getLogProjeto(id: number) {
-        return this.http.get<Array<LogProjeto>>(`projeto/${id}/Log`);
+    getLogPorjeto(id: number, args?: { [propName: string]: any }) {
+        let query = '';
+        if (args) {
+            const urlParams = new URLSearchParams();
+            for (let k in args) {
+                if (args[k]) {
+                    urlParams.append(k, args[k]);
+                }
+            }
+            query = `?${urlParams.toString()}`;
+        }
+        return this.http.get<Array<LogProjeto>>(`projeto/${id}/Log${query}`);
     }
 
     delLogProjeto(id: number) {

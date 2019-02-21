@@ -3,7 +3,7 @@ import { AppService } from '@app/app.service';
 import { ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
 import { zip, of } from 'rxjs';
-import { Projeto, LogProjeto, User } from '@app/models';
+import { Projeto, LogProjeto, User, AcaoLog } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 
 @Component({
@@ -16,8 +16,9 @@ export class LogProjetoComponent implements OnInit {
   projeto: Projeto;
   logsProjeto: Array<LogProjeto>;
   usuarios: Array<User>;
-  status = ['Criação', 'Edição', 'Exclusão'];
+  status = AcaoLog;
   totalLog = 0;
+  args: { page: number, size: number, acao?: string };
 
   @ViewChild(LoadingComponent) loading: LoadingComponent;
 
@@ -27,26 +28,45 @@ export class LogProjetoComponent implements OnInit {
     this.loadData();
   }
 
-  loadData() {
+  mudarStatus(value: string) {
+    if (value !== '') {
+      this.args.acao = value;
+      this.loadData(true);
+    }
+  }
+
+  mudarUsuario(value: string) {
+    if (value !== '') {
+      // this.args.acao = value;
+      // this.loadData(true);
+    }
+  }
+
+  loadData(reload?: boolean | false) {
 
     this.loading.show();
+
+    if (!reload) {
+      this.args = { page: 1, size: 10 };
+
+    }
 
     const data$ = this.route.parent.data.pipe(
       map(d => d.projeto),
       mergeMap(p =>
         zip(
           of(p),
-          this.app.projetos.getLogProjeto(p.id),
+          this.app.projetos.getLogPorjeto(p.id, this.args),
           this.app.users.all()
         ))
     );
 
     data$.subscribe(([projeto, logsProjeto, usuarios]) => {
       this.projeto = projeto;
-      this.totalLog = logsProjeto.length; // talvez mude
+      this.totalLog = logsProjeto.length; // vai mudar mais tarde
       this.usuarios = usuarios;
       this.logsProjeto = logsProjeto.map(log => {
-        log.user = usuarios.find(user => user.id === log.userId);
+        log.acaoValor = this.status.find(stat => stat.value === log.acaoValor).text;
         return log;
       });
       this.loading.hide();
