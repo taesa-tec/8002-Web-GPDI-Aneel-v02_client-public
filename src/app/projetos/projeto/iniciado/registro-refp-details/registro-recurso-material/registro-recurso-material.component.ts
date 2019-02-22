@@ -1,21 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 
 import * as moment from 'moment';
-import { zip } from 'rxjs';
+import { zip, Observable } from 'rxjs';
 
 import { AppService } from '@app/app.service';
-import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RecursoMaterial, AppValidators, CategoriasContabeis } from '@app/models';
+import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RecursoMaterial, AppValidators, CategoriasContabeis, RegistroREFP, ResultadoResponse } from '@app/models';
 import { ProjetoFacade } from '@app/projetos/projeto.facade';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 
 @Component({
-    selector: 'app-recurso-material',
-    templateUrl: './recurso-material.component.html',
+    selector: 'app-registro-recurso-material',
+    templateUrl: './registro-recurso-material.component.html',
     styles: []
 })
-export class RecursoMaterialComponent implements OnInit {
-
+export class RegistroRecursoMaterialComponent implements OnInit {
     etapas: Array<Etapa>;
     projeto: ProjetoFacade;
     recursos: Array<RecursoMaterial>;
@@ -29,6 +28,10 @@ export class RecursoMaterialComponent implements OnInit {
     obsInternas: FormGroup;
     mesesRef: Array<TextValue>;
     categoriasContabeis = CategoriasContabeis;
+
+    @Input() registro: RegistroREFP;
+
+    @Output() registroAlterado: EventEmitter<void> = new EventEmitter();
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
@@ -50,6 +53,10 @@ export class RecursoMaterialComponent implements OnInit {
             return parseFloat(this.qtdItens.value) * parseFloat(this.valorUnitario.value);
         }
         return 0;
+    }
+
+    get isPendente() {
+        return this.registro.statusValor === 'Pendente';
     }
 
     constructor(protected app: AppService) { }
@@ -92,11 +99,10 @@ export class RecursoMaterialComponent implements OnInit {
     }
 
     buildForm() {
-        this.obsInternas = new FormGroup({
-            texto: new FormControl('')
-        });
+        const mes = moment(this.registro.mes).format('YYYY-MM-DD');
+        const dataDocumento = moment(this.registro.dataDocumento).format('YYYY-MM-DD');
 
-        this.recurso = new FormControl('', [Validators.required]);
+        this.recurso = new FormControl(this.registro.recursoMaterialId, [Validators.required]);
 
         this.mesesRef = [];
 
@@ -120,28 +126,31 @@ export class RecursoMaterialComponent implements OnInit {
         this.form = new FormGroup({
             projetoId: new FormControl(this.projeto.id),
             tipo: new FormControl("RM"),
-            tipoDocumento: new FormControl('', [Validators.required]),
-            numeroDocumento: new FormControl('', [Validators.required]),
-            dataDocumento: new FormControl('', [Validators.required]),
-            nomeItem: new FormControl('', [Validators.required]),
+            tipoDocumento: new FormControl(this.registro.tipoDocumentoValor, [Validators.required]),
+            numeroDocumento: new FormControl(this.registro.numeroDocumento, [Validators.required]),
+            dataDocumento: new FormControl(dataDocumento, [Validators.required]),
+            nomeItem: new FormControl(this.registro.nomeItem, [Validators.required]),
             recursoMaterialId: this.recurso,
-            empresaFinanciadoraId: new FormControl('', [Validators.required]),
-            empresaRecebedoraId: new FormControl('', [Validators.required]),
-            beneficiado: new FormControl('', [Validators.required]),
-            cnpjBeneficiado: new FormControl('', [Validators.required, AppValidators.cnpj]),
-            categoriaContabil: new FormControl(''),
+            empresaFinanciadoraId: new FormControl(this.registro.empresaFinanciadoraId, [Validators.required]),
+            empresaRecebedoraId: new FormControl(this.registro.empresaRecebedoraId, [Validators.required]),
+            beneficiado: new FormControl(this.registro.beneficiado, [Validators.required]),
+            cnpjBeneficiado: new FormControl(this.registro.cnpjBeneficiado, [Validators.required, AppValidators.cnpj]),
+            categoriaContabil: new FormControl(this.registro.categoriaContabilValor),
             // 
-            equiparLabExistente: new FormControl(''),
-            equiparLabNovo: new FormControl(''),
-            itemNacional: new FormControl(''),
+            equiparLabExistente: new FormControl(this.registro.equiparLabExistente),
+            equiparLabNovo: new FormControl(this.registro.equiparLabNovo),
+            itemNacional: new FormControl(this.registro.itemNacional),
             //
-            qtdItens: new FormControl(''),
-            mes: new FormControl('', [Validators.required]),
-            valorUnitario: new FormControl('', [Validators.required]),
-            especificacaoTecnica: new FormControl('', [Validators.required]),
-            funcaoRecurso: new FormControl('', [Validators.required]),
-            obsInternas: new FormArray([this.obsInternas])
+            qtdItens: new FormControl(this.registro.qtdItens),
+            mes: new FormControl(mes, [Validators.required]),
+            valorUnitario: new FormControl(this.registro.valorUnitario, [Validators.required]),
+            especificacaoTecnica: new FormControl(this.registro.especificacaoTecnica, [Validators.required]),
+            funcaoRecurso: new FormControl(this.registro.funcaoRecurso, [Validators.required]),
         });
+        
+        if (this.isPendente) {
+            this.form.disable();
+        }
 
         this.categoriaContabil.valueChanges.subscribe(value => {
             if (value === 'MP') {
@@ -154,8 +163,9 @@ export class RecursoMaterialComponent implements OnInit {
                 this.form.removeControl('itemNacional');
             }
             this.form.updateValueAndValidity();
-        });
 
+        });
+        
         this.form.updateValueAndValidity();
     }
 
@@ -165,13 +175,54 @@ export class RecursoMaterialComponent implements OnInit {
             this.app.projetos.criarRegistroREFP(this.form.value).subscribe(result => {
                 this.loading.hide();
                 if (result.sucesso) {
-                    this.form.reset();
                     this.app.alert("Salvo com sucesso!");
                 } else {
                     this.app.alert(result.inconsistencias.join(', '));
                 }
             });
         }
+    }
+
+    saveStatus(status: 'aprovado' | 'reprovado') {
+        const request = (): Observable<ResultadoResponse> => {
+            switch (status) {
+                case 'aprovado':
+                    return this.projeto.relations.REFP.aprovarRegistro(this.registro.id);
+                case 'reprovado':
+                    return new Observable(subscribe => {
+                        this.app.prompt('Motivo da reprovação (será adicionado as observações internas)', 'Reprovar Registro')
+                            .then(motivo => {
+                                this.projeto.relations.REFP.reprovarRegistro(this.registro.id, motivo)
+                                    .subscribe(r => subscribe.next(r), e => subscribe.error(e));
+                            }, error => {
+                                subscribe.error(error);
+                            });
+                    });
+
+            }
+        };
+
+        request().subscribe(result => {
+            if (result.sucesso) {
+
+                this.registroAlterado.emit();
+
+                this.app.alert("Alterado com sucesso!");
+            } else {
+                this.app.alert(result.inconsistencias);
+            }
+
+        });
+    }
+
+    removerRegistro() {
+        this.projeto.relations.REFP.removerRegistro(this.registro.id).subscribe(result => {
+            if (result.sucesso) {
+                this.app.alert("Excluído com sucesso!");
+            } else {
+                this.app.alert(result.inconsistencias.join(', '));
+            }
+        });
     }
 
 }

@@ -92,8 +92,6 @@ export const TiposCapitacao: Array<TextValue> = [
     { text: "Doutorado (Stricto Sensu)", value: "DO" },
     { text: "Mestrado (Stricto Sensu)", value: "ME" },
     { text: "Especialização (Lato Sensu)", value: "ES" },
-
-
 ];
 
 export const TiposCompartilhamento: Array<TextValue> = [

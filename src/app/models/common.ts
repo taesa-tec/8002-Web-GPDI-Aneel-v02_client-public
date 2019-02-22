@@ -370,6 +370,7 @@ export interface RegistroREFP {
     empresaFinanciadoraId: number;
     empresaFinanciadora?: any;
     tipoDocumento: number;
+    tipoDocumentoValor: string;
     numeroDocumento: string;
     dataDocumento: string;
     atividadeRealizada: string;
@@ -382,6 +383,7 @@ export interface RegistroREFP {
     beneficiado?: any;
     cnpjBeneficiado?: any;
     categoriaContabil: number;
+    categoriaContabilValor: string;
     equiparLabExistente?: any;
     equiparLabNovo?: any;
     itemNacional?: any;

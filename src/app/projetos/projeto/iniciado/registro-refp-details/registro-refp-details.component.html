@@ -7,5 +7,5 @@
 <div class="modal-body" [ngSwitch]="tipo">
     <app-registro-recurso-humano *ngSwitchCase="'RH'" [registro]="registro.registro" (registroAlterado)="activeModal.close('updated')"></app-registro-recurso-humano>
 
-    <app-recurso-material *ngSwitchCase="'RM'"></app-recurso-material>
+    <app-registro-recurso-material *ngSwitchCase="'RM'" [registro]="registro.registro" (registroAlterado)="activeModal.close('updated')"></app-registro-recurso-material>
 </div>
