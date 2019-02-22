@@ -1,5 +1,6 @@
 import { ProjetosService } from './projetos.service';
 import { Projeto, Empresa, ProjetoStatus } from '@app/models';
+import { throwError } from 'rxjs';
 
 
 abstract class ProjetoModule {
@@ -52,6 +53,30 @@ class ProjetoREFP extends ProjetoModule {
     }
     registrosPendentes() {
         return this.service.listarRegistrosPendentes(this.id);
+    }
+    aprovarRegistro(id: number) {
+        return this.service.editarRegistroREFP({
+            id,
+            status: 'Aprovado',
+            obsInternas: []
+        });
+    }
+    reprovarRegistro(id: number, motivo: string) {
+        if (motivo.trim().length === 0) {
+            return throwError("O motivo não pode ser vazio");
+        }
+
+        return this.service.editarRegistroREFP({
+            id,
+            status: 'Reprovado',
+            obsInternas: [{
+                texto: motivo
+            }]
+        });
+    }
+
+    removerRegistro(id: number) {
+        return this.service.removerRegistroREFP(id);
     }
 }
 export class ProjetoFacade implements Projeto {

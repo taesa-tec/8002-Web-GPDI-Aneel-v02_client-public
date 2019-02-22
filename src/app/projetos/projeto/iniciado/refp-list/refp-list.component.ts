@@ -5,6 +5,7 @@ import { ProjetoFacade } from '@app/projetos/projeto.facade';
 import { Observable, zip, EMPTY } from 'rxjs';
 import { RegistroREFP, RecursoHumano, RecursoMaterial, Empresa, EmpresaProjeto, CategoriasContabeis } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
+import { RegistroRefpDetailsComponent } from '@app/projetos/projeto/iniciado/registro-refp-details/registro-refp-details.component';
 
 @Component({
     selector: 'app-refp-list',
@@ -22,6 +23,7 @@ export class RefpListComponent implements OnInit {
     empresas: Array<EmpresaProjeto>;
 
     tableRegistro: Array<{
+        registro: RegistroREFP,
         nome: string;
         categoria: string;
         empresa: string;
@@ -79,13 +81,11 @@ export class RefpListComponent implements OnInit {
 
     fillTable() {
         this.tableRegistro = this.registros.map(registro => {
-
-
-
             let empresa: any = this.empresas.find(e => e.id === registro.empresaFinanciadoraId);
             empresa = empresa.catalogEmpresa ? empresa.catalogEmpresa.nome : empresa.razaoSocial;
 
             const registroItem = {
+                registro,
                 nome: '',
                 categoria: '',
                 empresa,
@@ -109,8 +109,14 @@ export class RefpListComponent implements OnInit {
 
             return registroItem;
         });
-        console.log(this.tableRegistro);
+    }
 
+    openDetails(registro) {
+        const ref = this.app.modal.open(RegistroRefpDetailsComponent, { size: 'lg' });
+        ref.componentInstance.setRegistro(registro);
+        ref.result.then(r => {
+            this.load();
+        });
     }
 
 }

@@ -1,0 +1,124 @@
+<app-loading type="fullscreen"></app-loading>
+<form [formGroup]="form" *ngIf="form">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">BENEFICIÁRIO (RECURSO HUMANO)</label>
+                <select name="" id="" class="form-control" formControlName="recursoHumanoId">
+                    <option value="">Selecionar</option>
+                    <option [value]="r.id" *ngFor="let r of recursos">{{ r.nomeCompleto }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+
+            <div class="form-group">
+                <label for="">MÊS REFERÊNCIA</label>
+                <select name="" id="" class="form-control" formControlName="mes">
+                    <option value="">Selecione</option>
+                    <option [value]="item.value" *ngFor="let item of mesesRef">{{item.text}}</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="col-4">
+            <div class="form-group">
+                <label for="">QUANTIDADE HORAS</label>
+                <input type="text" class="form-control" maxlength="3" value="" placeholder="000" mask="0*" formControlName="qtdHrs">
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="form-group">
+                <label for="">EMPRESA FINACIADORA</label>
+                <select name="" id="" class="form-control" formControlName="empresaFinanciadoraId">
+                    <option value="">Selecionar Empresa</option>
+                    <option [value]="e.id" *ngFor="let e of empresas">{{e.nome}} </option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <label for="">TIPO DE DOCUMENTO?</label>
+                <select name="" id="" class="form-control" formControlName="tipoDocumento">
+                    <option value="">Selecionar</option>
+                    <option [value]="t.value" *ngFor="let t of tipoDocs">{{ t.text }}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label for="">NÚMERO DE DOCUMENTO</label>
+                <input type="text" class="form-control" value="" formControlName="numeroDocumento">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label for="">DATA DO DOCUMENTO</label>
+                <input type="date" class="form-control" value="" placeholder="dd/mm/aaaa" formControlName="dataDocumento">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">VALOR FINAL (CÁLCULO AUTOMÁTICO)</label>
+                <input type="text" disabled class="form-control" [value]="valorFinal | currency:'R$'">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">ATIVIDADE REALIZADA NA ETAPA PELA PESSOA</label>
+                <textarea name="" id="" cols="30" rows="4" class="form-control" formControlName="atividadeRealizada"></textarea>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">OBSERVAÇÕES INTERNAS</label>
+                <textarea name="" id="" cols="30" rows="4" class="form-control" *ngFor="let obs of registro.obsInternas" disabled [innerHTML]="obs.texto"></textarea>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <label for="">COMPROVANTE DE DESPESA</label>
+            </div>
+        </div>
+        <div class="col-4">&nbsp;</div>
+        <div class="col-4">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 d-flex justify-content-around">
+            <button class="btn btn-danger" (click)="saveStatus('reprovado')">
+                <i class="ta-cancel-circle"></i>
+                Reprovar Registro
+            </button>
+            <button class="btn btn-success" (click)="saveStatus('aprovado')">
+                <i class="ta-ok"></i>
+                Aprovar registro
+            </button>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <button class="btn btn-link" (click)="removerRegistro()">
+                <i class="ta-cancel-circle"></i>
+                Excluir Registro
+            </button>
+        </div>
+    </div>
+</form>

@@ -349,11 +349,11 @@ export interface ExtratosEtapas {
 
 
 export interface REFPObsInterna {
-    id: number;
-    registroFinanceiroId: number;
-    created: string;
-    userId: string;
-    user: User;
+    id?: number;
+    registroFinanceiroId?: number;
+    created?: string;
+    userId?: string;
+    user?: User;
     texto: string;
 }
 export interface RegistroREFP {
@@ -395,6 +395,7 @@ export interface RegistroREFP {
 export interface RegistroREFPEdit {
     id: number;
     status: 'Pendente' | 'Aprovado' | 'Reprovado';
+    obsInternas?: REFPObsInterna[];
 }
 
 export interface TotalLog {

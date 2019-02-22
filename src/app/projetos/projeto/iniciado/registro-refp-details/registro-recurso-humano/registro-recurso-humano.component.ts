@@ -1,18 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { AppService } from '@app/app.service';
-import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue } from '@app/models';
+import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RegistroREFP, ResultadoResponse } from '@app/models';
 import { ProjetoFacade } from '@app/projetos/projeto.facade';
-import { zip } from 'rxjs';
+import { zip, Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import * as moment from 'moment';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 
 @Component({
-    selector: 'app-recurso-humano',
-    templateUrl: './recurso-humano.component.html',
+    selector: 'app-registro-recurso-humano',
+    templateUrl: './registro-recurso-humano.component.html',
     styles: []
 })
-export class RecursoHumanoComponent implements OnInit {
+export class RegistroRecursoHumanoComponent implements OnInit {
+
 
 
     etapas: Array<Etapa>;
@@ -23,8 +24,12 @@ export class RecursoHumanoComponent implements OnInit {
     empresas: Array<{ id: number; nome: string; }>;
     tipoDocs = TiposDoc;
     form: FormGroup;
-    obsInternas: FormGroup;
+    obsInternas: FormArray;
     mesesRef: Array<TextValue>;
+
+    @Input() registro: RegistroREFP;
+
+    @Output() registroAlterado: EventEmitter<void> = new EventEmitter();
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
@@ -33,19 +38,23 @@ export class RecursoHumanoComponent implements OnInit {
     get valorFinal() {
 
         if (this.recurso) {
+            const qtdHrs = this.qtdHrs.value;
             const recursoHumanoId = parseInt(this.recurso.value, 10);
             const recurso = this.recursos.find(r => {
                 return r.id === recursoHumanoId;
             });
-
-
-            if (recurso && this.qtdHrs.value.length > 0) {
-                return parseInt(this.qtdHrs.value, 10) * recurso.valorHora;
+            if (recurso && qtdHrs > 0) {
+                return qtdHrs * recurso.valorHora;
             }
         }
 
 
+
         return 0;
+    }
+
+    get isPendente() {
+        return this.registro.statusValor === 'Pendente';
     }
 
     ngOnInit() {
@@ -81,18 +90,18 @@ export class RecursoHumanoComponent implements OnInit {
     }
 
     buildForm() {
-        this.obsInternas = new FormGroup({
-            texto: new FormControl('')
-        });
+        const mes = moment(this.registro.mes).format('YYYY-MM-DD');
+        const dataDocumento = moment(this.registro.dataDocumento).format('YYYY-MM-DD');
 
-        this.recurso = new FormControl('', [Validators.required]);
+        this.recurso = new FormControl(this.registro.recursoHumanoId, [Validators.required]);
 
-        this.qtdHrs = new FormControl('', [Validators.required]);
+        this.qtdHrs = new FormControl(this.registro.qtdHrs, [Validators.required]);
 
         this.mesesRef = [];
 
         this.etapas.map(etapa => {
-            const start = moment(etapa.dataInicio);
+
+            let start = moment(etapa.dataInicio);
             const end = moment(etapa.dataFim);
 
             while (start.isBefore(end)) {
@@ -112,31 +121,77 @@ export class RecursoHumanoComponent implements OnInit {
             projetoId: new FormControl(this.projeto.id),
             tipo: new FormControl("RH"),
             recursoHumanoId: this.recurso,
-            empresaFinanciadoraId: new FormControl('', [Validators.required]),
-            mes: new FormControl('', [Validators.required]),
+            empresaFinanciadoraId: new FormControl(this.registro.empresaFinanciadoraId, [Validators.required]),
+            mes: new FormControl(mes, [Validators.required]),
             qtdHrs: this.qtdHrs,
             tipoDocumento: new FormControl('', [Validators.required]),
-            numeroDocumento: new FormControl('', [Validators.required]),
-            dataDocumento: new FormControl('', [Validators.required]),
-            atividadeRealizada: new FormControl('', [Validators.required]),
-            obsInternas: new FormArray([this.obsInternas])
+            numeroDocumento: new FormControl(this.registro.numeroDocumento, [Validators.required]),
+            dataDocumento: new FormControl(dataDocumento, [Validators.required]),
+            atividadeRealizada: new FormControl(this.registro.atividadeRealizada, [Validators.required])
         });
+
+        if (this.isPendente) {
+            this.form.disable();
+        }
     }
 
     submit() {
+
         if (this.form.valid) {
             this.loading.show();
             this.app.projetos.criarRegistroREFP(this.form.value).subscribe(result => {
                 this.loading.hide();
                 if (result.sucesso) {
                     this.app.alert("Salvo com sucesso!");
-                    this.form.reset();
-                    // this.app.router.navigate(['dashboard', 'projeto', this.projeto.id, 'iniciado', 'refp', 'pendentes']);
                 } else {
                     this.app.alert(result.inconsistencias.join(', '));
                 }
             });
         }
+
     }
+
+    saveStatus(status: 'aprovado' | 'reprovado') {
+        const request = (): Observable<ResultadoResponse> => {
+            switch (status) {
+                case 'aprovado':
+                    return this.projeto.relations.REFP.aprovarRegistro(this.registro.id);
+                case 'reprovado':
+                    return new Observable(subscribe => {
+                        this.app.prompt('Motivo da reprovação (será adicionado as observações internas)', 'Reprovar Registro')
+                            .then(motivo => {
+                                this.projeto.relations.REFP.reprovarRegistro(this.registro.id, motivo)
+                                    .subscribe(r => subscribe.next(r), e => subscribe.error(e));
+                            }, error => {
+                                subscribe.error(error);
+                            });
+                    });
+
+            }
+        };
+
+        request().subscribe(result => {
+            if (result.sucesso) {
+
+                this.registroAlterado.emit();
+
+                this.app.alert("Alterado com sucesso!");
+            } else {
+                this.app.alert(result.inconsistencias);
+            }
+
+        });
+    }
+
+    removerRegistro() {
+        this.projeto.relations.REFP.removerRegistro(this.registro.id).subscribe(result => {
+            if (result.sucesso) {
+                this.app.alert("Excluído com sucesso!");
+            } else {
+                this.app.alert(result.inconsistencias.join(', '));
+            }
+        });
+    }
+
 
 }
