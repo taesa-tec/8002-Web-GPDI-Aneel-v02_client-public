@@ -26,6 +26,8 @@ import { NgxCurrencyModule } from 'ngx-currency';
 import { FileService } from './file.service';
 import { DownloadFileDirective } from './download-file.directive';
 import { PromptComponent } from './prompt/prompt.component';
+import { DynamicHostDirective } from './dynamic-host.directive';
+import { N2arrayPipe } from './pipes/n2array.pipe';
 
 
 library.add(fas, far);
@@ -44,6 +46,8 @@ library.add(fas, far);
         TipoProjetoPipe,
         DownloadFileDirective,
         PromptComponent,
+        DynamicHostDirective,
+        N2arrayPipe,
     ],
     imports: [
         CommonModule,
@@ -69,6 +73,7 @@ library.add(fas, far);
         NgxCurrencyModule,
         FontAwesomeModule,
         AppFormsModule,
+
         // Coponentes
         LoadingComponent,
         AccordionComponent,
@@ -77,12 +82,17 @@ library.add(fas, far);
         PromptComponent,
         TipComponent,
         OrdersComponent,
+
         // Pipes
         NotDefinedPipe,
         OrderByPipe,
         TipoProjetoPipe,
+        N2arrayPipe,
+
         // Directives
+        DynamicHostDirective,
         DownloadFileDirective
+
 
     ]
 })

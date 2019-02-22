@@ -316,6 +316,9 @@ export class ProjetosService {
     editarRegistroREFP(registro: RegistroREFPEdit) {
         return this.http.put<ResultadoResponse>(`projeto/RegistroFinanceiro`, registro);
     }
+    removerRegistroREFP(id: number) {
+        return this.http.delete<ResultadoResponse>(`projeto/RegistroFinanceiro/${id}`);
+    }
 
     listarRegistrosAprovados(id: number) {
         return this.http.get<Array<RegistroREFP>>(`projeto/${id}/RegistroFinanceiro/Aprovado`);

@@ -3,7 +3,6 @@
         <h5 class="text-uppercase text-blue font-weight-normal my-3">REGISTROS {{status}} - REFP</h5>
     </div>
 </div>
-
 <div class="row">
     <div class="col-12">
         <div class="table-responsive">
@@ -24,7 +23,9 @@
                         <td>{{ registro.empresa }}</td>
                         <td>{{ registro.valor | currency:'R$' }}</td>
                         <td>
-                            <button class="btn btn-primary btn-sm" type="button"><i class="ta-edit"></i> Ver Detalhes</button>
+                            <button class="btn btn-primary btn-sm" type="button" (click)="openDetails(registro)">
+                                <i class="ta-edit"></i> Ver Detalhes
+                            </button>
                         </td>
                     </tr>
                     <tr [hidden]="!loading.isLoading">
