@@ -19,7 +19,10 @@ export class LogProjetoComponent implements OnInit {
   usuarios: Array<User>;
   status = AcaoLog;
   total = 0;
-  args: { page: number, size: number, acao?: string, user?: string };
+  paginas = [1];
+  currentPagina = 1;
+  size = 10;
+  args: { pag: number, size: number, acao?: string, user?: string };
 
   @ViewChild(LoadingComponent) loading: LoadingComponent;
 
@@ -30,27 +33,39 @@ export class LogProjetoComponent implements OnInit {
   }
 
   mudarStatus(value: string) {
+
     if (value !== '') {
       this.args.acao = value;
     } else {
       delete this.args.acao;
     }
+
+    delete this.args.pag;
+    this.paginas = [1];
+    this.currentPagina = 1;
     this.reLoadData();
   }
 
   mudarUsuario(value: string) {
+
     if (value !== '') {
       this.args.user = value;
     } else {
       delete this.args.user;
     }
+
+    delete this.args.pag;
+    this.paginas = [1];
+    this.currentPagina = 1;
     this.reLoadData();
   }
 
   loadData() {
 
     this.loading.show();
-    this.args = { page: 1, size: 10 };
+    this.args = { pag: this.currentPagina, size: this.size };
+
+    console.log(this.args);
 
     const data$ = this.route.parent.data.pipe(
       map(d => d.projeto),
@@ -65,9 +80,13 @@ export class LogProjetoComponent implements OnInit {
     data$.subscribe(([projeto, logsProjeto, usuarios]) => {
       this.projeto = projeto;
       this.total = logsProjeto.total;
+
+      const paginas = Math.ceil(this.total / this.size);
+      this.paginas = Array(paginas).fill(0).map((x, i) => i + 1);
+
       this.usuarios = usuarios;
 
-      console.log(logsProjeto);
+      console.log(this.paginas);
 
       this.logsProjeto = logsProjeto.itens.map(log => {
         log.acaoValor = this.status.find(stat => stat.value === log.acaoValor).text;
@@ -81,6 +100,8 @@ export class LogProjetoComponent implements OnInit {
   }
 
   reLoadData() {
+
+    this.logsProjeto = [];
 
     this.loading.show();
 
@@ -97,6 +118,9 @@ export class LogProjetoComponent implements OnInit {
       this.projeto = projeto;
       this.total = logsProjeto.total;
 
+      const paginas = Math.ceil(this.total / this.size);
+      this.paginas = Array(paginas).fill(0).map((x, i) => i + 1);
+
       console.log(logsProjeto);
 
       this.logsProjeto = logsProjeto.itens.map(log => {
@@ -107,6 +131,16 @@ export class LogProjetoComponent implements OnInit {
       this.loading.hide();
 
     });
+
+  }
+
+  mudarPagina(pagina: number) {
+    if (pagina !== this.currentPagina) {
+      this.currentPagina = pagina;
+      this.args.pag = pagina;
+      this.reLoadData();
+
+    }
 
   }
 
