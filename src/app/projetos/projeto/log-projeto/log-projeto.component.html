@@ -19,7 +19,7 @@
         </select>
     </div>
     <div class="col text-right">
-        {{totalLog}} logs
+        {{total}} logs
     </div>
 </div>
 <div class="row">
@@ -31,16 +31,24 @@
         <app-log-item *ngFor="let log of logsProjeto | orderBy:'created':'desc'" [log]="log"></app-log-item>
     </div>
 </div>
-<div class="row">
+<div *ngIf="paginas.length > 1" class="row">
     <div class="col-12">
         <nav aria-label="Page navigation example" class="text-center">
+
             <ul class="pagination d-inline-flex">
+                <li *ngFor="let pag of paginas" class="page-item" [ngClass]="{'active':pag===currentPagina}">
+                    <span class="page-link" (click)="mudarPagina(pag)">{{pag}}</span>
+                </li>
+            </ul>
+
+            <!-- <ul class="pagination d-inline-flex">
                 <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
                 <li class="page-item active"><a class="page-link" href="#">1</a></li>
                 <li class="page-item"><a class="page-link" href="#">2</a></li>
                 <li class="page-item"><a class="page-link" href="#">3</a></li>
                 <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
-            </ul>
+            </ul> -->
+
         </nav>
     </div>
 </div>

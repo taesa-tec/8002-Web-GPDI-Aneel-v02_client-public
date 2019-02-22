@@ -400,6 +400,11 @@ export interface RegistroREFPEdit {
     obsInternas?: REFPObsInterna[];
 }
 
+export interface TotalLog {
+    itens: Array<LogProjeto>;
+    total: number;
+}
+
 export interface LogProjeto {
     id: number;
     projetoId: number;

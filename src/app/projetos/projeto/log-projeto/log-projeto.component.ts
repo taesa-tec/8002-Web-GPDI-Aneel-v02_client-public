@@ -3,7 +3,7 @@ import { AppService } from '@app/app.service';
 import { ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
 import { zip, of } from 'rxjs';
-import { Projeto, LogProjeto, User, AcaoLog } from '@app/models';
+import { Projeto, LogProjeto, User, AcaoLog, TotalLog } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 
 @Component({
@@ -14,11 +14,15 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 export class LogProjetoComponent implements OnInit {
 
   projeto: Projeto;
+  totalLog: TotalLog;
   logsProjeto: Array<LogProjeto>;
   usuarios: Array<User>;
   status = AcaoLog;
-  totalLog = 0;
-  args: { page: number, size: number, acao?: string };
+  total = 0;
+  paginas = [1];
+  currentPagina = 1;
+  size = 10;
+  args: { pag: number, size: number, acao?: string, user?: string };
 
   @ViewChild(LoadingComponent) loading: LoadingComponent;
 
@@ -29,27 +33,39 @@ export class LogProjetoComponent implements OnInit {
   }
 
   mudarStatus(value: string) {
+
     if (value !== '') {
       this.args.acao = value;
-      this.loadData(true);
+    } else {
+      delete this.args.acao;
     }
+
+    delete this.args.pag;
+    this.paginas = [1];
+    this.currentPagina = 1;
+    this.reLoadData();
   }
 
   mudarUsuario(value: string) {
+
     if (value !== '') {
-      // this.args.acao = value;
-      // this.loadData(true);
+      this.args.user = value;
+    } else {
+      delete this.args.user;
     }
+
+    delete this.args.pag;
+    this.paginas = [1];
+    this.currentPagina = 1;
+    this.reLoadData();
   }
 
-  loadData(reload?: boolean | false) {
+  loadData() {
 
     this.loading.show();
+    this.args = { pag: this.currentPagina, size: this.size };
 
-    if (!reload) {
-      this.args = { page: 1, size: 10 };
-
-    }
+    console.log(this.args);
 
     const data$ = this.route.parent.data.pipe(
       map(d => d.projeto),
@@ -63,15 +79,68 @@ export class LogProjetoComponent implements OnInit {
 
     data$.subscribe(([projeto, logsProjeto, usuarios]) => {
       this.projeto = projeto;
-      this.totalLog = logsProjeto.length; // vai mudar mais tarde
+      this.total = logsProjeto.total;
+
+      const paginas = Math.ceil(this.total / this.size);
+      this.paginas = Array(paginas).fill(0).map((x, i) => i + 1);
+
       this.usuarios = usuarios;
-      this.logsProjeto = logsProjeto.map(log => {
+
+      console.log(this.paginas);
+
+      this.logsProjeto = logsProjeto.itens.map(log => {
         log.acaoValor = this.status.find(stat => stat.value === log.acaoValor).text;
         return log;
       });
+
       this.loading.hide();
 
     });
+
+  }
+
+  reLoadData() {
+
+    this.logsProjeto = [];
+
+    this.loading.show();
+
+    const data$ = this.route.parent.data.pipe(
+      map(d => d.projeto),
+      mergeMap(p =>
+        zip(
+          of(p),
+          this.app.projetos.getLogPorjeto(p.id, this.args),
+        ))
+    );
+
+    data$.subscribe(([projeto, logsProjeto]) => {
+      this.projeto = projeto;
+      this.total = logsProjeto.total;
+
+      const paginas = Math.ceil(this.total / this.size);
+      this.paginas = Array(paginas).fill(0).map((x, i) => i + 1);
+
+      console.log(logsProjeto);
+
+      this.logsProjeto = logsProjeto.itens.map(log => {
+        log.acaoValor = this.status.find(stat => stat.value === log.acaoValor).text;
+        return log;
+      });
+
+      this.loading.hide();
+
+    });
+
+  }
+
+  mudarPagina(pagina: number) {
+    if (pagina !== this.currentPagina) {
+      this.currentPagina = pagina;
+      this.args.pag = pagina;
+      this.reLoadData();
+
+    }
 
   }
 
