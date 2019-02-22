@@ -99,6 +99,8 @@ export class RegistroRecursoMaterialComponent implements OnInit {
     }
 
     buildForm() {
+        console.log(this.registro);
+        
         const mes = moment(this.registro.mes).format('YYYY-MM-DD');
         const dataDocumento = moment(this.registro.dataDocumento).format('YYYY-MM-DD');
 
@@ -147,7 +149,7 @@ export class RegistroRecursoMaterialComponent implements OnInit {
             especificacaoTecnica: new FormControl(this.registro.especificacaoTecnica, [Validators.required]),
             funcaoRecurso: new FormControl(this.registro.funcaoRecurso, [Validators.required]),
         });
-        
+
         if (this.isPendente) {
             this.form.disable();
         }

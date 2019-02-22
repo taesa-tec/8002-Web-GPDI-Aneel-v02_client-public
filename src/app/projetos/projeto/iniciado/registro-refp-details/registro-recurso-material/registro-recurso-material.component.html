@@ -188,8 +188,14 @@
     <div class="row">
         <div class="col-12">
             <div class="form-group">
-                <label for="">OBSERVAÇÕES INTERNAS(OPCIONAL)</label>
-                <textarea name="" id="" cols="30" rows="4" class="form-control" *ngFor="let obs of registro.obsInternas" disabled [innerHTML]="obs.texto"></textarea>
+                <label for="">OBSERVAÇÕES INTERNAS</label>
+                <div *ngFor="let obs of registro.obsInternas">
+                    <div class="border border-cinza bg-cinza-claro rounded my-3 p-3">{{obs.texto}}</div>
+                    <div class="text-right">
+                        <span>{{obs.created | date:'medium'}}</span>
+                        <span> por {{obs.user.nomeCompleto}}</span>
+                    </div>
+                </div>
             </div>
 
         </div>
