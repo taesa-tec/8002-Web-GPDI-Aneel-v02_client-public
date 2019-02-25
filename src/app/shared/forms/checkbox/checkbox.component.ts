@@ -34,9 +34,11 @@ export class CheckboxComponent implements ControlValueAccessor {
     }
 
     set value(val) {
-        this.val = val;
-        this.onChange(val);
-        this.onTouched();
+        if (!this.disabled) {
+            this.val = val;
+            this.onChange(val);
+            this.onTouched();
+        }
     }
     get inputClass() {
         return this.value ? 'ta-checkbox-checked' : 'ta-checkbox-unchecked';
@@ -66,4 +68,8 @@ export class CheckboxComponent implements ControlValueAccessor {
     registerOnTouched(fn: any) {
         this.onTouched = fn;
     }
+    setDisabledState(isDisabled: boolean) {
+        this.disabled = isDisabled;
+    }
+    
 }

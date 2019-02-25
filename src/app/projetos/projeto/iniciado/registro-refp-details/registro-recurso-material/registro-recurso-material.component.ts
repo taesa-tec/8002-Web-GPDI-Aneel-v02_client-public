@@ -98,6 +98,8 @@ export class RegistroRecursoMaterialComponent extends RegistroRecursoBase {
             //
         });
 
+        this.toggleMaterialPermanente(this.categoriaContabil.value === 'MP');
+        
         if (!this.isEditable) {
             this.form.disable();
         } else {
