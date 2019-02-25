@@ -1,5 +1,5 @@
 import { ProjetosService } from './projetos.service';
-import { Projeto, Empresa, ProjetoStatus } from '@app/models';
+import { Projeto, Empresa, ProjetoStatus, RegistroREFP } from '@app/models';
 import { throwError } from 'rxjs';
 
 
@@ -73,6 +73,21 @@ class ProjetoREFP extends ProjetoModule {
                 texto: motivo
             }]
         });
+    }
+    reenviarAprovacaoRegistro(registro: RegistroREFP, respostas: string) {
+
+        if (respostas.trim().length === 0) {
+            return throwError("A resposta não pode ser vazia");
+        }
+
+        const requestData = Object.assign({}, registro, {
+            status: 'Pendente',
+            obsInternas: [{
+                texto: respostas
+            }]
+        });
+        
+        return this.service.editarRegistroREFP(requestData);
     }
 
     removerRegistro(id: number) {

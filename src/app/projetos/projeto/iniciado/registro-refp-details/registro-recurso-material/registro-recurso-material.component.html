@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-12">
 
-            <div class="form-group">
+            <div>
                 <label for="">RECURSO MATERIAL ASSOCIADO</label>
                 <select name="" id="" class="form-control" formControlName="recursoMaterialId">
                     <option value="">Selecionar</option>
@@ -24,8 +24,7 @@
     </div>
 
     <div class="row">
-        <div class="col-4">
-
+        <div class="col-6">
             <div class="form-group">
                 <label for="">EMPRESA FINACIADORA</label>
                 <select name="" id="" class="form-control" formControlName="empresaFinanciadoraId">
@@ -33,10 +32,8 @@
                     <option [value]="item.id" *ngFor="let item of empresasFinanciadoras">{{item.nome}}</option>
                 </select>
             </div>
-
         </div>
-
-        <div class="col-4">
+        <div class="col-6">
             <div class="form-group">
                 <label for="">EMPRESA RECEBEDORA</label>
                 <select name="" id="" class="form-control" formControlName="empresaRecebedoraId">
@@ -46,17 +43,17 @@
             </div>
         </div>
 
-        <div class="col-4">
+
+    </div>
+
+    <div class="row">
+        <div class="col-6">
             <div class="form-group">
                 <label for="">BENEFÍCIADO</label>
                 <input type="text" class="form-control" formControlName="beneficiado">
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-4">
-
+        <div class="col-6">
             <div class="form-group">
                 <label for="">CNPJ BENEFICIADO</label>
                 <input type="text" class="form-control" mask="00.000.000/0000-00" placeholder="00.000.000/0000-00" value="cnpjBeneficiado" formControlName="cnpjBeneficiado">
@@ -64,7 +61,11 @@
 
         </div>
 
-        <div class="col-8">
+
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-6">
             <div class="form-group">
                 <label for="">CATEGORIA CONTÁBIL</label>
                 <select name="" id="" class="form-control" formControlName="categoriaContabil">
@@ -73,42 +74,28 @@
                 </select>
             </div>
         </div>
-    </div>
-
-    <div class="row" *ngIf="categoriaContabil.value === 'MP'">
-        <div class="col-4">
-            <div class="form-group">
-                <label for="">IRÁ EQUIPAR LABORATÓRIO EXISTENTE?</label>
-                <select name="" id="" class="form-control" formControlName="equiparLabExistente">
-                    <option value="">Selecionar</option>
-                    <option [value]="true">Sim</option>
-                    <option [value]="false">Não</option>
-                </select>
+        <ng-container *ngIf="categoriaContabil.value === 'MP'">
+            <div class="col-6">
+                <div>
+                    <label>
+                        <app-checkbox formControlName="equiparLabExistente" class="d-inline-block"></app-checkbox>
+                        IRÁ EQUIPAR LABORATÓRIO EXISTENTE?
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <app-checkbox formControlName="equiparLabNovo" class="d-inline-block"></app-checkbox>
+                        IRÁ EQUIPAR LABORATÓRIO NOVO?
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <app-checkbox formControlName="itemNacional" class="d-inline-block"></app-checkbox>
+                        ITEM NACIONAL?
+                    </label>
+                </div>
             </div>
-
-        </div>
-
-        <div class="col-4">
-            <div class="form-group">
-                <label for="">IRÁ EQUIPAR LABORATÓRIO NOVO?</label>
-                <select name="" id="" class="form-control" formControlName="equiparLabNovo">
-                    <option value="">Selecionar</option>
-                    <option [value]="true">Sim</option>
-                    <option [value]="false">Não</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="col-4">
-            <div class="form-group">
-                <label for="">ITEM NACIONAL?</label>
-                <select name="" id="" class="form-control" formControlName="itemNacional">
-                    <option value="">Selecionar</option>
-                    <option [value]="true">Sim</option>
-                    <option [value]="false">Não</option>
-                </select>
-            </div>
-        </div>
+        </ng-container>
     </div>
 
     <div class="row">
@@ -188,6 +175,14 @@
     <div class="row">
         <div class="col-12">
             <div class="form-group">
+                <label for="">VALOR FINAL (CÁLCULO AUTOMÁTICO)</label>
+                <input type="text" disabled class="form-control" [value]="valorFinal|currency:'R$'">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
                 <label for="">OBSERVAÇÕES INTERNAS</label>
                 <div *ngFor="let obs of registro.obsInternas">
                     <div class="border border-cinza bg-cinza-claro rounded my-3 p-3">{{obs.texto}}</div>
@@ -200,14 +195,7 @@
 
         </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="form-group">
-                <label for="">VALOR FINAL (CÁLCULO AUTOMÁTICO)</label>
-                <input type="text" disabled class="form-control" [value]="valorFinal|currency:'R$'">
-            </div>
-        </div>
-    </div>
+
 
     <div class="row">
         <div class="col-12">
@@ -217,25 +205,67 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-12 d-flex justify-content-around">
-            <button class="btn btn-danger" (click)="saveStatus('reprovado')">
-                <i class="ta-cancel-circle"></i>
-                Reprovar Registro
-            </button>
-            <button class="btn btn-success" (click)="saveStatus('aprovado')">
-                <i class="ta-ok"></i>
-                Aprovar registro
-            </button>
-        </div>
-    </div>
-    <div class="row mt-4">
-        <div class="col-12">
-            <button class="btn btn-link" (click)="removerRegistro()">
-                <i class="ta-cancel-circle"></i>
-                Excluir Registro
-            </button>
-        </div>
-    </div>
+    <ng-container [ngSwitch]="status">
+        <ng-container *ngSwitchCase="'pendente'">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-around">
+                    <button class="btn btn-danger" (click)="saveStatus('reprovado')">
+                        <i class="ta-cancel-circle"></i>
+                        Reprovar Registro
+                    </button>
+                    <button class="btn btn-success" (click)="saveStatus('aprovado')">
+                        <i class="ta-ok"></i>
+                        Aprovar registro
+                    </button>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <button class="btn btn-link" (click)="removerRegistro()">
+                        <i class="ta-cancel-circle"></i>
+                        Excluir Registro
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'reprovado'">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group" [formGroup]="obsInternas">
+                        <label for="">RESPOSTA QUESTIONAMENTOS (SERÁ ADICIONADO AS OBSERVAÇÕES INTERNAS)</label>
+                        <textarea name="" id="" cols="30" rows="4" class="form-control" formControlName="texto"></textarea>
+                    </div>
+                    <div class="text-right">
+                        <button class="btn btn-primary" [disabled]="obsInternas.invalid" (click)="enviarAprovacao()">
+                            <i class="ta-plus-circle"></i>
+                            Reenviar para Aprovação
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <button class="btn btn-link" (click)="removerRegistro()">
+                        <i class="ta-cancel-circle"></i>
+                        Excluir Registro
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'aprovado'">
+            <div class="row mt-4">
+                <div class="col-12">
+                    <button class="btn btn-link" (click)="editarRegistro()">
+                        <i class="ta-edit"></i>
+                        Editar Registro
+                    </button>
+                    <button class="btn btn-link" (click)="removerRegistro()">
+                        <i class="ta-cancel-circle"></i>
+                        Excluir Registro
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
 
 </form>

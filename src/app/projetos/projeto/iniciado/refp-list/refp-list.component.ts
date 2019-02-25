@@ -112,10 +112,12 @@ export class RefpListComponent implements OnInit {
     }
 
     openDetails(registro) {
-        const ref = this.app.modal.open(RegistroRefpDetailsComponent, { size: 'lg' });
+        const ref = this.app.modal.open(RegistroRefpDetailsComponent, { size: 'lg', backdrop: 'static' });
         ref.componentInstance.setRegistro(registro);
         ref.result.then(r => {
             this.load();
+        }, e => {
+            // Só cancelou nada a fazer
         });
     }
 

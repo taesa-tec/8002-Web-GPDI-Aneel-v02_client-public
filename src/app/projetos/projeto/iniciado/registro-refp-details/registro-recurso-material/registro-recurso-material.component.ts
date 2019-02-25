@@ -8,15 +8,15 @@ import { AppService } from '@app/app.service';
 import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RecursoMaterial, AppValidators, CategoriasContabeis, RegistroREFP, ResultadoResponse } from '@app/models';
 import { ProjetoFacade } from '@app/projetos/projeto.facade';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
+import { RegistroRecursoBase } from '../registro-recurso-base';
 
 @Component({
     selector: 'app-registro-recurso-material',
     templateUrl: './registro-recurso-material.component.html',
     styles: []
 })
-export class RegistroRecursoMaterialComponent implements OnInit {
-    etapas: Array<Etapa>;
-    projeto: ProjetoFacade;
+export class RegistroRecursoMaterialComponent extends RegistroRecursoBase {
+
     recursos: Array<RecursoMaterial>;
     recurso: FormControl;
 
@@ -47,7 +47,6 @@ export class RegistroRecursoMaterialComponent implements OnInit {
         return this.form.get('valorUnitario');
     }
 
-
     get valorFinal() {
         if (this.qtdItens && this.valorUnitario) {
             return parseFloat(this.qtdItens.value) * parseFloat(this.valorUnitario.value);
@@ -55,77 +54,26 @@ export class RegistroRecursoMaterialComponent implements OnInit {
         return 0;
     }
 
-    get isPendente() {
-        return this.registro.statusValor === 'Pendente';
+
+
+    constructor(protected app: AppService) {
+        super(app);
     }
 
-    constructor(protected app: AppService) { }
-
-    ngOnInit() {
-        this.loadData();
-    }
-
-    loadData() {
-        this.app.projetos.projetoLoaded.subscribe(projeto => {
-
-            this.projeto = projeto;
-
-            const recursos$ = this.projeto.relations.recursosMateriais.get();
-            const empresas$ = this.projeto.relations.empresas.get();
-            const etapas$ = this.projeto.relations.etapas.get();
-
-            this.loading.show(1000);
-            zip(recursos$, empresas$, etapas$).subscribe(([recursos, empresas, etapas]) => {
-                this.etapas = etapas;
-                this.recursos = recursos;
-                this.empresas = empresas.map(e => {
-
-                    return {
-                        id: e.id,
-                        nome: e.catalogEmpresaId ? `${e.catalogEmpresa.nome} - ${e.catalogEmpresa.valor}` : e.razaoSocial,
-                        classificacao: e.classificacaoValor
-                    };
-
-
-                });
-                this.empresasFinanciadoras = this.empresas.filter(e => e.classificacao !== "Executora");
-                this.empresasRecebedoras = this.empresas;
-
-                this.buildForm();
-            });
-            // const empresas = this.app.projetos
-
-        });
+    protected getRecursos(projeto: ProjetoFacade) {
+        return projeto.relations.recursosMateriais.get();
     }
 
     buildForm() {
-        console.log(this.registro);
-        
+        super.buildForm();
+
         const mes = moment(this.registro.mes).format('YYYY-MM-DD');
         const dataDocumento = moment(this.registro.dataDocumento).format('YYYY-MM-DD');
 
         this.recurso = new FormControl(this.registro.recursoMaterialId, [Validators.required]);
 
-        this.mesesRef = [];
-
-        this.etapas.map(etapa => {
-            let start = moment(etapa.dataInicio);
-            const end = moment(etapa.dataFim);
-
-            while (start.isBefore(end)) {
-                this.mesesRef.push({
-                    text: start.format('MMMM YYYY'),
-                    value: start.format('YYYY-MM-DD')
-                });
-                start.add(1, 'M');
-                if (this.mesesRef.length > 10) {
-                    break;
-                }
-
-            }
-        });
-
         this.form = new FormGroup({
+            id: new FormControl(this.registro.id),
             projetoId: new FormControl(this.projeto.id),
             tipo: new FormControl("RM"),
             tipoDocumento: new FormControl(this.registro.tipoDocumentoValor, [Validators.required]),
@@ -138,93 +86,53 @@ export class RegistroRecursoMaterialComponent implements OnInit {
             beneficiado: new FormControl(this.registro.beneficiado, [Validators.required]),
             cnpjBeneficiado: new FormControl(this.registro.cnpjBeneficiado, [Validators.required, AppValidators.cnpj]),
             categoriaContabil: new FormControl(this.registro.categoriaContabilValor),
-            // 
-            equiparLabExistente: new FormControl(this.registro.equiparLabExistente),
-            equiparLabNovo: new FormControl(this.registro.equiparLabNovo),
-            itemNacional: new FormControl(this.registro.itemNacional),
-            //
             qtdItens: new FormControl(this.registro.qtdItens),
             mes: new FormControl(mes, [Validators.required]),
             valorUnitario: new FormControl(this.registro.valorUnitario, [Validators.required]),
             especificacaoTecnica: new FormControl(this.registro.especificacaoTecnica, [Validators.required]),
             funcaoRecurso: new FormControl(this.registro.funcaoRecurso, [Validators.required]),
+            // 
+            equiparLabExistente: new FormControl(this.registro.equiparLabExistente),
+            equiparLabNovo: new FormControl(this.registro.equiparLabNovo),
+            itemNacional: new FormControl(this.registro.itemNacional),
+            //
         });
 
-        if (this.isPendente) {
+        if (!this.isEditable) {
             this.form.disable();
+        } else {
+            this.obsInternas = new FormGroup({
+                texto: new FormControl('', Validators.required)
+            });
+            this.form.addControl('obsInternas', new FormArray([this.obsInternas]));
         }
 
         this.categoriaContabil.valueChanges.subscribe(value => {
-            if (value === 'MP') {
-                this.form.addControl('equiparLabExistente', new FormControl('', [Validators.required]));
-                this.form.addControl('equiparLabNovo', new FormControl('', [Validators.required]));
-                this.form.addControl('itemNacional', new FormControl('', [Validators.required]));
-            } else {
-                this.form.removeControl('equiparLabExistente');
-                this.form.removeControl('equiparLabNovo');
-                this.form.removeControl('itemNacional');
-            }
+
+            this.toggleMaterialPermanente(value === 'MP');
             this.form.updateValueAndValidity();
 
         });
-        
+
         this.form.updateValueAndValidity();
     }
 
-    submit() {
-        if (this.form.valid) {
-            this.loading.show();
-            this.app.projetos.criarRegistroREFP(this.form.value).subscribe(result => {
-                this.loading.hide();
-                if (result.sucesso) {
-                    this.app.alert("Salvo com sucesso!");
-                } else {
-                    this.app.alert(result.inconsistencias.join(', '));
-                }
-            });
+
+    protected toggleMaterialPermanente(ativo: boolean) {
+        if (ativo) {
+            this.form.addControl('equiparLabExistente', new FormControl('', [Validators.required]));
+            this.form.addControl('equiparLabNovo', new FormControl('', [Validators.required]));
+            this.form.addControl('itemNacional', new FormControl('', [Validators.required]));
+        } else {
+            this.form.removeControl('equiparLabExistente');
+            this.form.removeControl('equiparLabNovo');
+            this.form.removeControl('itemNacional');
         }
     }
 
-    saveStatus(status: 'aprovado' | 'reprovado') {
-        const request = (): Observable<ResultadoResponse> => {
-            switch (status) {
-                case 'aprovado':
-                    return this.projeto.relations.REFP.aprovarRegistro(this.registro.id);
-                case 'reprovado':
-                    return new Observable(subscribe => {
-                        this.app.prompt('Motivo da reprovação (será adicionado as observações internas)', 'Reprovar Registro')
-                            .then(motivo => {
-                                this.projeto.relations.REFP.reprovarRegistro(this.registro.id, motivo)
-                                    .subscribe(r => subscribe.next(r), e => subscribe.error(e));
-                            }, error => {
-                                subscribe.error(error);
-                            });
-                    });
-
-            }
-        };
-
-        request().subscribe(result => {
-            if (result.sucesso) {
-
-                this.registroAlterado.emit();
-
-                this.app.alert("Alterado com sucesso!");
-            } else {
-                this.app.alert(result.inconsistencias);
-            }
-
-        });
-    }
-
-    removerRegistro() {
-        this.projeto.relations.REFP.removerRegistro(this.registro.id).subscribe(result => {
-            if (result.sucesso) {
-                this.app.alert("Excluído com sucesso!");
-            } else {
-                this.app.alert(result.inconsistencias.join(', '));
-            }
-        });
+    editarRegistro() {
+        this.toggleMaterialPermanente(this.categoriaContabil.value === 'MP');
+        super.editarRegistro();
     }
 
 }

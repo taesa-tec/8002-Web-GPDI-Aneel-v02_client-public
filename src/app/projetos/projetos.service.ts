@@ -314,7 +314,7 @@ export class ProjetosService {
     criarRegistroREFP(registro: RegistroREFP) {
         return this.http.post<ResultadoResponse>(`projeto/RegistroFinanceiro`, registro);
     }
-    editarRegistroREFP(registro: RegistroREFPEdit) {
+    editarRegistroREFP(registro: RegistroREFP | RegistroREFPEdit) {
         return this.http.put<ResultadoResponse>(`projeto/RegistroFinanceiro`, registro);
     }
     removerRegistroREFP(id: number) {

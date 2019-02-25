@@ -361,7 +361,7 @@ export interface RegistroREFP {
     projetoId: number;
     tipo: 'RH' | 'RM';
     tipoValor: 'RH' | 'RM';
-    status: number;
+    status: number | string;
     statusValor: string;
     recursoHumanoId: number;
     recursoHumano?: any;
