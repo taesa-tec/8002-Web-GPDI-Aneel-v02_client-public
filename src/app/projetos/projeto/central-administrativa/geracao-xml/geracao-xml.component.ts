@@ -6,6 +6,7 @@ import { Projeto, ResultadoResponse } from '@app/models';
 import { Subscription } from 'rxjs';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { tap } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-geracao-xml',
@@ -46,7 +47,7 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
         });
 
         this.validar().subscribe(result => {
-            
+
         });
 
 
@@ -69,37 +70,45 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
         this.app.projetos.gerarXmlProjetoPed(this.projeto.id, this.XmlProjetoPed.value).subscribe(result => {
             this.loading.hide();
             if (result.sucesso) {
-                this.app.file.download(result.id, 'projeto-ped.xml');
+                this.app.file.download(result.id, `projeto-ped-${this.projeto.id}.xml`);
             } else {
                 this.app.alert(result.inconsistencias.join(', '));
             }
-            console.log(result);
+
+        }, (error: HttpErrorResponse) => {
+            this.app.alert(error.message);
+            this.loading.hide();
         });
     }
 
     gerarXmlInteresseExecucao() {
         this.loading.show();
-        this.app.projetos.gerarXmlInteresseExecucao(this.projeto.id, this.XmlProjetoPed.value).subscribe(result => {
+        this.app.projetos.gerarXmlInteresseExecucao(this.projeto.id, this.XmlInteresseExecucao.value).subscribe(result => {
             this.loading.hide();
             if (result.sucesso) {
-                this.app.file.download(result.id);
+                this.app.file.download(result.id, `projeto-${this.projeto.id}-interesse-execucao.xml`);
             } else {
                 this.app.alert(result.inconsistencias.join(', '));
             }
             console.log(result);
+        }, (error: HttpErrorResponse) => {
+            this.app.alert(error.message);
+            this.loading.hide();
         });
     }
 
     gerarXmlInicioExecucao() {
         this.loading.show();
-        this.app.projetos.gerarXmlInicioExecucao(this.projeto.id, this.XmlProjetoPed.value).subscribe(result => {
+        this.app.projetos.gerarXmlInicioExecucao(this.projeto.id, this.XmlInicioExecucao.value).subscribe(result => {
             this.loading.hide();
             if (result.sucesso) {
-                this.app.file.download(result.id);
+                this.app.file.download(result.id, `projeto-${this.projeto.id}-inicio-execucao.xml`);
             } else {
                 this.app.alert(result.inconsistencias.join(', '));
             }
-            console.log(result);
+        }, (error: HttpErrorResponse) => {
+            this.app.alert(error.message);
+            this.loading.hide();
         });
     }
 

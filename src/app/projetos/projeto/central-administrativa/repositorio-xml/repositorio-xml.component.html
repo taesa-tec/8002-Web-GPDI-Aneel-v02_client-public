@@ -3,7 +3,7 @@
         <tr>
             <th>
                 <div class="d-flex align-items-center">
-                    <span class="mx-2">XML REFERÊNCIA</span>
+                    <span class="mx-2">NOME XML</span>
                     <app-handler-order [current]="listOrder" field="nomeArquivo" (order)="listOrder=$event"></app-handler-order>
                 </div>
             </th>
@@ -23,11 +23,16 @@
             </th>
             <th>
                 <div class="d-flex align-items-center">
-                    <span class="mx-2">Ações</span>
+                    <span class="mx-2">AÇÕES</span>
                 </div>
             </th>
         </tr>
     </thead>
+    <tr [hidden]="!loading.isLoading">
+        <td colspan="4" class="text-center">
+            <app-loading type="inline"></app-loading>
+        </td>
+    </tr>
     <tr *ngFor="let file of xmls | orderBy:listOrder.field:listOrder.direction">
         <td>{{ file.nomeArquivo }}</td>
         <td>Nome do usuário</td>

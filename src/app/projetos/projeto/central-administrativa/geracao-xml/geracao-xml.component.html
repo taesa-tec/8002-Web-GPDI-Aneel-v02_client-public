@@ -28,7 +28,7 @@
             <label class="d-block">Versão</label>
             <div class="d-inline-flex">
                 <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlInteresseExecucao">
-                <button class="btn btn-primary mx-3" [disabled]="XmlInteresseExecucao.invalid" style="white-space: nowrap;">
+                <button class="btn btn-primary mx-3" [disabled]="XmlInteresseExecucao.invalid" style="white-space: nowrap;" (click)="gerarXmlInteresseExecucao()">
                     <i class="ta-download fs-18"></i> Gerar XML
                 </button>
             </div>
@@ -46,7 +46,7 @@
             <label class="d-block">Versão</label>
             <div class="d-inline-flex">
                 <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlInicioExecucao">
-                <button class="btn btn-primary mx-3" [disabled]="XmlInicioExecucao.invalid" style="white-space: nowrap;">
+                <button class="btn btn-primary mx-3" [disabled]="XmlInicioExecucao.invalid" style="white-space: nowrap;" (click)="gerarXmlInicioExecucao()">
                     <i class="ta-download fs-18"></i> Gerar XML
                 </button>
             </div>

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '@app/app.service';
 import { Subscription } from 'rxjs';
 import { Projeto, FileUploaded } from '@app/models';
+import { LoadingComponent } from '@app/shared/loading/loading.component';
 
 @Component({
     selector: 'app-repositorio-xml',
@@ -17,6 +18,9 @@ export class RepositorioXmlComponent implements OnInit {
         field: 'created',
         direction: 'asc'
     };
+
+    @ViewChild(LoadingComponent) loading: LoadingComponent;
+
     constructor(protected app: AppService) { }
 
     ngOnInit() {
@@ -27,10 +31,12 @@ export class RepositorioXmlComponent implements OnInit {
         });
     }
     loadXmlList() {
+        this.loading.show();
         this.app.projetos.obterXmls(this.projeto.id).subscribe(result => {
+            this.loading.hide();
             this.xmls = result;
         }, error => {
-            console.log(error);
+            this.loading.hide();
         });
     }
 
