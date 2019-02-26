@@ -59,6 +59,7 @@ import { RegistroRefpDetailsComponent } from './projeto/iniciado/registro-refp-d
 import { RegistroRecursoHumanoComponent } from './projeto/iniciado/registro-refp-details/registro-recurso-humano/registro-recurso-humano.component';
 import { RegistroRecursoMaterialComponent } from './projeto/iniciado/registro-refp-details/registro-recurso-material/registro-recurso-material.component';
 import { ProrrogarComponent } from './projeto/iniciado/prorrogar/prorrogar.component';
+import { PropostaBaseComponent } from './projeto/iniciado/proposta-base/proposta-base.component';
 
 
 
@@ -107,6 +108,7 @@ import { ProrrogarComponent } from './projeto/iniciado/prorrogar/prorrogar.compo
         RegistroRecursoHumanoComponent,
         RegistroRecursoMaterialComponent,
         ProrrogarComponent,
+        PropostaBaseComponent,
     ],
     entryComponents: [
         NovoProjetoComponent,

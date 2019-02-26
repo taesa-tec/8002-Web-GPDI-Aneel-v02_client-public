@@ -1,3 +1,26 @@
-<p>
-  consultar-dados works!
-</p>
+<div class="row">
+    <div class="col">
+        <h4 class="text-uppercase text-blue font-weight-normal my-3">CONSULTAR DADOS PLANEJAMENTO</h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <ul class="nav nav-bar-row nav-justified pt-3">
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['./base']" routerLinkActive="active" >Projeto Base</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['./extrato-financeiro-empresas']" routerLinkActive="active">Extrato Financeiro Empresas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['./extrato-financeiro-etapas']" routerLinkActive="active">Extrato Financeiro Etapas</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-12">
+        <router-outlet></router-outlet>
+    </div>
+</div>

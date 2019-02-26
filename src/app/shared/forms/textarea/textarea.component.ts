@@ -75,4 +75,7 @@ export class TextareaComponent implements ControlValueAccessor {
     registerOnTouched(fn: any) {
         this.onTouched = fn;
     }
+    setDisabledState(state: boolean) {
+        this.disabled = state;
+    }
 }

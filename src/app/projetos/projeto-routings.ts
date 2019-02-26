@@ -37,6 +37,8 @@ import { ConsultarDadosComponent } from './projeto/iniciado/consultar-dados/cons
 import { RecursoHumanoComponent as REFP_RH_Component } from './projeto/iniciado/refp-inserir/recurso-humano.component';
 import { RecursoMaterialComponent as REFP_RC_Component } from './projeto/iniciado/refp-inserir/recurso-material.component';
 import { ProrrogarComponent } from './projeto/iniciado/prorrogar/prorrogar.component';
+import { PropostaBaseComponent } from './projeto/iniciado/proposta-base/proposta-base.component';
+
 
 export const centralPlanejamentoRoutes: Routes = [{
     path: "",
@@ -148,6 +150,12 @@ export const projetoIniciadoRoutes: Routes = [
     },
     {
         path: 'consultar', component: ConsultarDadosComponent,
+        children: [
+            { path: '', redirectTo: 'base', pathMatch: 'full' },
+            { path: 'base', component: PropostaBaseComponent },
+            { path: 'extrato-financeiro-empresas', component: ExtratoFinanceiroEmpresasComponent },
+            { path: 'extrato-financeiro-etapas', component: ExtratoFinanceiroEtapasComponent }
+        ]
     },
 ];
 

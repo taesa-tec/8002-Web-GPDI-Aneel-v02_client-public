@@ -25,7 +25,8 @@ export class AppService {
         public users: UsersService,
         public file: FileService,
         public auth: AuthService,
-        public router: Router) { }
+        public router: Router
+        ) { }
 
     alert(message: string | Array<string>, title: string = "Alerta") {
         const ref = this.modal.open(AlertComponent);
