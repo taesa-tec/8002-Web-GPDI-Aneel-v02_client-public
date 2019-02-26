@@ -7,141 +7,139 @@ import { Projeto, LogProjeto, User, AcaoLog, TotalLog } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 
 @Component({
-  selector: 'app-log-projeto',
-  templateUrl: './log-projeto.component.html',
-  styleUrls: ['./log-projeto.component.scss']
+    selector: 'app-log-projeto',
+    templateUrl: './log-projeto.component.html',
+    styleUrls: ['./log-projeto.component.scss']
 })
 export class LogProjetoComponent implements OnInit {
 
-  projeto: Projeto;
-  totalLog: TotalLog;
-  logsProjeto: Array<LogProjeto>;
-  usuarios: Array<User>;
-  status = AcaoLog;
-  total = 0;
-  paginas = [1];
-  currentPagina = 1;
-  size = 10;
-  args: { pag: number, size: number, acao?: string, user?: string };
+    projeto: Projeto;
+    totalLog: TotalLog;
+    logsProjeto: Array<LogProjeto>;
+    usuarios: Array<User>;
+    status = AcaoLog;
+    total = 0;
+    paginas = [1];
+    currentPagina = 1;
+    size = 10;
+    args: { pag: number, size: number, acao?: string, user?: string };
 
-  @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent) loading: LoadingComponent;
 
-  constructor(protected app: AppService, protected route: ActivatedRoute) { }
+    constructor(protected app: AppService, protected route: ActivatedRoute) { }
 
-  ngOnInit() {
-    this.loadData();
-  }
-
-  mudarStatus(value: string) {
-
-    if (value !== '') {
-      this.args.acao = value;
-    } else {
-      delete this.args.acao;
+    ngOnInit() {
+        this.loadData();
     }
 
-    delete this.args.pag;
-    this.paginas = [1];
-    this.currentPagina = 1;
-    this.reLoadData();
-  }
+    mudarStatus(value: string) {
 
-  mudarUsuario(value: string) {
+        if (value !== '') {
+            this.args.acao = value;
+        } else {
+            delete this.args.acao;
+        }
 
-    if (value !== '') {
-      this.args.user = value;
-    } else {
-      delete this.args.user;
+        delete this.args.pag;
+        this.paginas = [1];
+        this.currentPagina = 1;
+        this.reLoadData();
     }
 
-    delete this.args.pag;
-    this.paginas = [1];
-    this.currentPagina = 1;
-    this.reLoadData();
-  }
+    mudarUsuario(value: string) {
 
-  loadData() {
+        if (value !== '') {
+            this.args.user = value;
+        } else {
+            delete this.args.user;
+        }
 
-    this.loading.show();
-    this.args = { pag: this.currentPagina, size: this.size };
+        delete this.args.pag;
+        this.paginas = [1];
+        this.currentPagina = 1;
+        this.reLoadData();
+    }
 
-    console.log(this.args);
+    loadData() {
 
-    const data$ = this.route.parent.data.pipe(
-      map(d => d.projeto),
-      mergeMap(p =>
-        zip(
-          of(p),
-          this.app.projetos.getLogPorjeto(p.id, this.args),
-          this.app.users.all()
-        ))
-    );
+        this.loading.show();
+        this.args = { pag: this.currentPagina, size: this.size };
 
-    data$.subscribe(([projeto, logsProjeto, usuarios]) => {
-      this.projeto = projeto;
-      this.total = logsProjeto.total;
+        console.log(this.args);
 
-      const paginas = Math.ceil(this.total / this.size);
-      this.paginas = Array(paginas).fill(0).map((x, i) => i + 1);
+        const data$ = this.app.projetos.projetoLoaded.pipe(
+            mergeMap(p =>
+                zip(
+                    of(p),
+                    this.app.projetos.getLogPorjeto(p.id, this.args),
+                    this.app.users.all()
+                ))
+        );
 
-      this.usuarios = usuarios;
+        data$.subscribe(([projeto, logsProjeto, usuarios]) => {
+            this.projeto = projeto;
+            this.total = logsProjeto.total;
 
-      console.log(this.paginas);
+            const paginas = Math.ceil(this.total / this.size);
+            this.paginas = Array(paginas).fill(0).map((x, i) => i + 1);
 
-      this.logsProjeto = logsProjeto.itens.map(log => {
-        log.acaoValor = this.status.find(stat => stat.value === log.acaoValor).text;
-        return log;
-      });
+            this.usuarios = usuarios;
 
-      this.loading.hide();
+            console.log(this.paginas);
 
-    });
+            this.logsProjeto = logsProjeto.itens.map(log => {
+                log.acaoValor = this.status.find(stat => stat.value === log.acaoValor).text;
+                return log;
+            });
 
-  }
+            this.loading.hide();
 
-  reLoadData() {
-
-    this.logsProjeto = [];
-
-    this.loading.show();
-
-    const data$ = this.route.parent.data.pipe(
-      map(d => d.projeto),
-      mergeMap(p =>
-        zip(
-          of(p),
-          this.app.projetos.getLogPorjeto(p.id, this.args),
-        ))
-    );
-
-    data$.subscribe(([projeto, logsProjeto]) => {
-      this.projeto = projeto;
-      this.total = logsProjeto.total;
-
-      const paginas = Math.ceil(this.total / this.size);
-      this.paginas = Array(paginas).fill(0).map((x, i) => i + 1);
-
-      console.log(logsProjeto);
-
-      this.logsProjeto = logsProjeto.itens.map(log => {
-        log.acaoValor = this.status.find(stat => stat.value === log.acaoValor).text;
-        return log;
-      });
-
-      this.loading.hide();
-
-    });
-
-  }
-
-  mudarPagina(pagina: number) {
-    if (pagina !== this.currentPagina) {
-      this.currentPagina = pagina;
-      this.args.pag = pagina;
-      this.reLoadData();
+        });
 
     }
 
-  }
+    reLoadData() {
+
+        this.logsProjeto = [];
+
+        this.loading.show();
+
+        const data$ = this.app.projetos.projetoLoaded.pipe(
+            mergeMap(p =>
+                zip(
+                    of(p),
+                    this.app.projetos.getLogPorjeto(p.id, this.args),
+                ))
+        );
+
+        data$.subscribe(([projeto, logsProjeto]) => {
+            this.projeto = projeto;
+            this.total = logsProjeto.total;
+
+            const paginas = Math.ceil(this.total / this.size);
+            this.paginas = Array(paginas).fill(0).map((x, i) => i + 1);
+
+            console.log(logsProjeto);
+
+            this.logsProjeto = logsProjeto.itens.map(log => {
+                log.acaoValor = this.status.find(stat => stat.value === log.acaoValor).text;
+                return log;
+            });
+
+            this.loading.hide();
+
+        });
+
+    }
+
+    mudarPagina(pagina: number) {
+        if (pagina !== this.currentPagina) {
+            this.currentPagina = pagina;
+            this.args.pag = pagina;
+            this.reLoadData();
+
+        }
+
+    }
 
 }

@@ -40,8 +40,7 @@ export class AlocacaoComponent implements OnInit {
 
         this.loading.show();
 
-        const data$ = this.route.parent.data.pipe(
-            map(d => d.projeto),
+        const data$ = this.app.projetos.projetoLoaded.pipe(
             mergeMap(p => zip(
                 of(p),
                 this.app.projetos.getAlocacaoRM(p.id),

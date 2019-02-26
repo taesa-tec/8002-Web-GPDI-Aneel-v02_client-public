@@ -71,6 +71,7 @@ export interface Projeto {
     catalogSegmento?: any;
     avaliacaoInicial?: any;
     compartResultados?: any;
+    compartResultadosValor?: any;
     motivacao?: any;
     originalidade?: any;
     aplicabilidade?: any;

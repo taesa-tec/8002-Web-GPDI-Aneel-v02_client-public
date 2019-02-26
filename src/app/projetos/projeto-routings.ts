@@ -36,6 +36,7 @@ import { AlterarProjetoComponent } from './projeto/iniciado/alterar-projeto/alte
 import { ConsultarDadosComponent } from './projeto/iniciado/consultar-dados/consultar-dados.component';
 import { RecursoHumanoComponent as REFP_RH_Component } from './projeto/iniciado/refp-inserir/recurso-humano.component';
 import { RecursoMaterialComponent as REFP_RC_Component } from './projeto/iniciado/refp-inserir/recurso-material.component';
+import { ProrrogarComponent } from './projeto/iniciado/prorrogar/prorrogar.component';
 
 export const centralPlanejamentoRoutes: Routes = [{
     path: "",
@@ -139,9 +140,9 @@ export const projetoIniciadoRoutes: Routes = [
         path: 'alterar', component: AlterarProjetoComponent,
         children: [
             { path: '', redirectTo: 'prorrogar', pathMatch: 'full' },
-            { path: 'prorrogar', component: RecursosHumanosComponent },
+            { path: 'prorrogar', component: ProrrogarComponent },
             { path: 'recursos-humanos', component: RecursosHumanosComponent },
-            { path: 'recursos-materias', component: RecursosMateriaisComponent }
+            { path: 'recursos-materiais', component: RecursosMateriaisComponent }
 
         ]
     },

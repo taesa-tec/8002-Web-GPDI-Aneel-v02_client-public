@@ -54,7 +54,7 @@ export class ExtratoFinanceiroEtapasComponent implements OnInit {
 
 
     ngOnInit() {
-        const projeto$ = this.route.parent.data.pipe(map(d => d.projeto));
+        const projeto$ =this.app.projetos.projetoLoaded;
         zip(projeto$).subscribe(([projeto]) => {
             this.projeto = projeto;
             this.load();

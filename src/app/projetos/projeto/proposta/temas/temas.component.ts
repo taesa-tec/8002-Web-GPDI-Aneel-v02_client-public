@@ -55,7 +55,7 @@ export class TemasComponent implements OnInit {
         this.loading.show();
 
         const temas$ = this.catalogo.temas();
-        const projeto$ = this.route.parent.data.pipe(map(d => d.projeto));
+        const projeto$ = this.app.projetos.projetoLoaded;
 
         zip(temas$, projeto$).subscribe(([temas, projeto]) => {
             this.temas = temas;

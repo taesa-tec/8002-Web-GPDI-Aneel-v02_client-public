@@ -86,7 +86,7 @@ class ProjetoREFP extends ProjetoModule {
                 texto: respostas
             }]
         });
-        
+
         return this.service.editarRegistroREFP(requestData);
     }
 
@@ -111,6 +111,7 @@ export class ProjetoFacade implements Projeto {
     catalogSegmento?: any;
     avaliacaoInicial?: any;
     compartResultados?: any;
+    compartResultadosValor?: any;
     motivacao?: any;
     originalidade?: any;
     aplicabilidade?: any;

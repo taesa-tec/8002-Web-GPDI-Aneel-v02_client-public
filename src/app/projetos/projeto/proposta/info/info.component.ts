@@ -39,7 +39,7 @@ export class InfoComponent implements OnInit {
     const empresas$ = this.app.catalogo.empresas();
     const segmentos$ = this.app.catalogo.segmentos();
     const compartilhamentos$ = this.app.catalogo.tipoCompartilhamento();
-    const projeto$ = this.route.parent.data.pipe(map(d => d.projeto));
+    const projeto$ = this.app.projetos.projetoLoaded;
     this.loading.show();
 
     zip(empresas$, segmentos$, projeto$, compartilhamentos$).subscribe(([empresas, segmentos, p, compartilhamentos]) => {

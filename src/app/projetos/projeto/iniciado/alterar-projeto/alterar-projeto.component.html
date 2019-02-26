@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col">
-        <h5 class="text-uppercase text-blue font-weight-normal my-3">ALTERAÇÕES PROJETO</h5>
+        <h4 class="text-uppercase text-blue font-weight-normal my-3">ALTERAÇÕES PROJETO</h4>
     </div>
 </div>
 
@@ -8,110 +8,19 @@
     <div class="col-12">
         <ul class="nav nav-bar-row nav-justified pt-3">
             <li class="nav-item">
-                <a class="nav-link active" href="#">Prorrogar Projeto</a>
+                <a class="nav-link" [routerLink]="['./prorrogar']" routerLinkActive="active" >Prorrogar Projeto</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Alterar Recursos Humanos</a>
+                <a class="nav-link" [routerLink]="['./recursos-humanos']" routerLinkActive="active">Alterar Recursos Humanos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Alterar Recursos Materiais</a>
+                <a class="nav-link" [routerLink]="['./recursos-materiais']" routerLinkActive="active">Alterar Recursos Materiais</a>
             </li>
         </ul>
     </div>
 </div>
-
-<div class="row mt-5">
+<div class="row mt-4">
     <div class="col-12">
-        <div class="form-group">
-            <label for="">NOVA DATA FINAL DO PROJETO</label>
-            <div class="row">
-                <div class="col-3">
-                    <select name="" id="" class="form-control">
-                    </select>
-                </div>
-                <div class="col-3">
-                    <select name="" id="" class="form-control">
-                    </select>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="alert alert-danger"><i class="ta-warning"></i> Será criada uma nova Etapa no projeto chamada "Prorrogação" contendo a duração que será acrescentada ao projeto.</div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="form-group">
-            <label for="">PRODUTOS INTERMEDIÁRIOS ASSOCIADOS A ESTA ETAPA</label>
-            <div class="row mb-2">
-                <div class="col-10">
-                    <select name="" id="" class="form-control"></select>
-                </div>
-                <div class="col-2">
-                    <button class="btn btn-link"><i class="ta-plus-circle"></i></button>
-                    <button class="btn btn-link"><i class="ta-remove-circle"></i></button>
-                </div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-10">
-                    <select name="" id="" class="form-control"></select>
-                </div>
-                <div class="col-2">&nbsp;</div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="form-group">
-            <label for="">DESCRIÇÃO DAS ATIVIDADES</label>
-            <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
-        </div>
-
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12 text-right">
-        <button class="btn btn-link">Cancelar</button>
-        <button class="btn btn-primary"><i class="ta-sync"></i> Prorrogar Projeto</button>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <h5>GERAR XML DE PRORROGAÇÃO PROJETO</h5>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="bg-cinza-claro my-3 p-3 rounded">
-
-            <div class="form-group">
-                <label for="">VERSÃO</label>
-                <div class="row">
-                    <div class="col-2">
-                        <input type="text" class="form-control">
-
-                    </div>
-                    <div class="col-10">
-                        <button class="btn btn-primary"><i class="ta-download"></i> Gerar XML</button>
-
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                <p class="text-success"><i class="ta-ok"></i> Todos os campos necessários para a geração deste XML estão preenchidos.</p>
-            </div>
-        </div>
+        <router-outlet></router-outlet>
     </div>
 </div>
