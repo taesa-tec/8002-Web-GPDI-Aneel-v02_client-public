@@ -3,14 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { zip } from 'rxjs';
 
-import { RecursoHumanoFormComponent } from '@app/projetos/recurso-humano-form/recurso-humano-form.component';
 import { AppService } from '@app/app.service';
 import { Projeto, ExtratosEmpresas, Etapa, TextValue, CategoriasContabeis, ExtratoItem } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { RecursoMaterialFormComponent } from '@app/projetos/recurso-material-form/recurso-material-form.component';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { AlocarRecursoHumanoFormComponent } from '@app/projetos/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
-import { AlocarRecursoMaterialFormComponent } from '@app/projetos/alocar-recurso-material-form/alocar-recurso-material-form.component';
+import { AlocarRecursoHumanoFormComponent } from '@app/projetos/projeto/common/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
+import { AlocarRecursoMaterialFormComponent } from '@app/projetos/projeto/common/alocar-recurso-material-form/alocar-recurso-material-form.component';
 
 @Component({
     selector: 'app-extrato-financeiro-empresas',

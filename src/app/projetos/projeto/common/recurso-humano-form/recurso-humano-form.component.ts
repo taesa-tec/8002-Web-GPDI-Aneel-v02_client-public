@@ -11,7 +11,7 @@ import { CurrencyPipe } from '@angular/common';
 @Component({
     selector: 'app-recurso-humano-form',
     templateUrl: './recurso-humano-form.component.html',
-    styleUrls: ['./recurso-humano-form.component.scss']
+    styles: []
 })
 export class RecursoHumanoFormComponent implements OnInit {
 

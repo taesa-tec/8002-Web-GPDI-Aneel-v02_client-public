@@ -1,11 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { EmpresaFormComponent } from '@app/projetos/empresa-form/empresa-form.component';
-import { ProjetosService } from '@app/projetos/projetos.service';
+import { EmpresaFormComponent } from '@app/projetos/projeto/common/empresa-form/empresa-form.component';
 import { AppService } from '@app/app.service';
 import { Empresa, Projeto, EmpresaProjeto, UF } from '@app/models';
 import { ActivatedRoute } from '@angular/router';
-import { map, concatMap, mergeMap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { zip, of } from 'rxjs';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 

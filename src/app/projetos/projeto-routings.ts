@@ -12,14 +12,17 @@ import { RepositorioXmlComponent } from '@app/projetos/projeto/central-administr
 import { AlterarStatusComponent } from '@app/projetos/projeto/central-administrativa/alterar-status/alterar-status.component';
 import { UsuariosComponent } from '@app/projetos/projeto/central-administrativa/usuarios/usuarios.component';
 
+// Common
+import { RecursosHumanosComponent } from '@app/projetos/projeto/common/recursos-humanos/recursos-humanos.component';
+import { RecursosMateriaisComponent } from '@app/projetos/projeto/common/recursos-materiais/recursos-materiais.component';
+
+
 // Proposta
 import { InfoComponent } from '@app/projetos/projeto/proposta/info/info.component';
 import { TemasComponent } from '@app/projetos/projeto/proposta/temas/temas.component';
 import { ProdutosComponent } from '@app/projetos/projeto/proposta/produtos/produtos.component';
 import { EtapasComponent } from '@app/projetos/projeto/proposta/etapas/etapas.component';
 import { EmpresasComponent } from '@app/projetos/projeto/proposta/empresas/empresas.component';
-import { RecursosHumanosComponent } from '@app/projetos/projeto/proposta/recursos-humanos/recursos-humanos.component';
-import { RecursosMateriaisComponent } from '@app/projetos/projeto/proposta/recursos-materiais/recursos-materiais.component';
 import { AlocacaoComponent as AlocacaoHComponent } from '@app/projetos/projeto/proposta/recursos-humanos/alocacao.component';
 import { AlocacaoComponent as AlocacaoMComponent } from '@app/projetos/projeto/proposta/recursos-materiais/alocacao.component';
 import { ExtratoFinanceiroEmpresasComponent } from '@app/projetos/projeto/proposta/extrato-financeiro-empresas/extrato-financeiro-empresas.component';
@@ -69,7 +72,7 @@ export const projetoCommonsRoutes: Routes = [
         resolve: {
             // projeto: ProjetoResolverService
         }
-    }, 
+    },
     { path: 'logs', component: LogProjetoComponent, data: { text: "Log Projeto", icon: "ta-log" } }
 ];
 
@@ -134,6 +137,13 @@ export const projetoIniciadoRoutes: Routes = [
     },
     {
         path: 'alterar', component: AlterarProjetoComponent,
+        children: [
+            { path: '', redirectTo: 'prorrogar', pathMatch: 'full' },
+            { path: 'prorrogar', component: RecursosHumanosComponent },
+            { path: 'recursos-humanos', component: RecursosHumanosComponent },
+            { path: 'recursos-materias', component: RecursosMateriaisComponent }
+
+        ]
     },
     {
         path: 'consultar', component: ConsultarDadosComponent,

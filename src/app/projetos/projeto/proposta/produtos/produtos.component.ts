@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ProdutoFormComponent } from '@app/projetos/produto-form/produto-form.component';
-import { ProjetosService } from '@app/projetos/projetos.service';
-import { CatalogsService } from '@app/catalogs/catalogs.service';
+import { ProdutoFormComponent } from '@app/projetos/projeto/common/produto-form/produto-form.component';
 import { ActivatedRoute } from '@angular/router';
 import { AppService } from '@app/app.service';
 import { map } from 'rxjs/operators';

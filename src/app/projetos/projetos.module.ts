@@ -6,19 +6,22 @@ import { SharedModule } from '../shared/shared.module';
 import { ProjetosService } from './projetos.service';
 
 import { ProjetoCardComponent } from './projeto-card/projeto-card.component';
-import { ProdutoFormComponent } from './produto-form/produto-form.component';
-import { EtapaFormComponent } from './etapa-form/etapa-form.component';
-import { EmpresaFormComponent } from './empresa-form/empresa-form.component';
-import { RecursoHumanoFormComponent } from './recurso-humano-form/recurso-humano-form.component';
-import { AlocarRecursoHumanoFormComponent } from './alocar-recurso-humano-form/alocar-recurso-humano-form.component';
-import { RecursoMaterialFormComponent } from './recurso-material-form/recurso-material-form.component';
-import { AlocarRecursoMaterialFormComponent } from './alocar-recurso-material-form/alocar-recurso-material-form.component';
 import { ListComponent } from './list/list.component';
 
 // Projeto Page
 import { ProjetoComponent } from '@app/projetos/projeto/projeto.component';
 
 
+// Common
+import { AlocarRecursoHumanoFormComponent } from '@app/projetos/projeto/common/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
+import { AlocarRecursoMaterialFormComponent } from '@app/projetos/projeto/common/alocar-recurso-material-form/alocar-recurso-material-form.component';
+import { EmpresaFormComponent } from '@app/projetos/projeto/common/empresa-form/empresa-form.component';
+import { EtapaFormComponent } from '@app/projetos/projeto/common/etapa-form/etapa-form.component';
+import { ProdutoFormComponent } from '@app/projetos/projeto/common/produto-form/produto-form.component';
+import { RecursoHumanoFormComponent } from '@app/projetos/projeto/common/recurso-humano-form/recurso-humano-form.component';
+import { RecursoMaterialFormComponent } from '@app/projetos/projeto/common/recurso-material-form/recurso-material-form.component';
+import { RecursosHumanosComponent } from '@app/projetos/projeto/common/recursos-humanos/recursos-humanos.component';
+import { RecursosMateriaisComponent } from '@app/projetos/projeto/common/recursos-materiais/recursos-materiais.component';
 
 // Projeto Central Administrativa
 import { CentralAdministrativaComponent } from '@app/projetos/projeto/central-administrativa/central-administrativa.component';
@@ -30,6 +33,8 @@ import { UsuariosComponent } from '@app/projetos/projeto/central-administrativa/
 import { LogProjetoComponent } from '@app/projetos/projeto/log-projeto/log-projeto.component';
 import { LogComponent } from '@app/projetos/projeto/log-projeto/log.component';
 
+
+
 // Projeto Proposta
 import { InfoComponent } from '@app/projetos/projeto/proposta/info/info.component';
 import { TemasComponent } from '@app/projetos/projeto/proposta/temas/temas.component';
@@ -37,9 +42,7 @@ import { SubTemasComponent } from './projeto/proposta/temas/sub-tema.component';
 import { ProdutosComponent } from '@app/projetos/projeto/proposta/produtos/produtos.component';
 import { EtapasComponent } from '@app/projetos/projeto/proposta/etapas/etapas.component';
 import { EmpresasComponent } from '@app/projetos/projeto/proposta/empresas/empresas.component';
-import { RecursosHumanosComponent } from '@app/projetos/projeto/proposta/recursos-humanos/recursos-humanos.component';
 import { AlocacaoComponent as AlocacaoHumanoComponent } from '@app/projetos/projeto/proposta/recursos-humanos/alocacao.component';
-import { RecursosMateriaisComponent } from '@app/projetos/projeto/proposta/recursos-materiais/recursos-materiais.component';
 import { AlocacaoComponent as AlocacaoMaterialComponent } from '@app/projetos/projeto/proposta/recursos-materiais/alocacao.component';
 import { ExtratoFinanceiroEmpresasComponent } from '@app/projetos/projeto/proposta/extrato-financeiro-empresas/extrato-financeiro-empresas.component';
 import { ExtratoFinanceiroEtapasComponent } from '@app/projetos/projeto/proposta/extrato-financeiro-etapas/extrato-financeiro-etapas.component';

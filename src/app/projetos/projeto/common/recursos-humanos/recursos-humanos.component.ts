@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { RecursoHumanoFormComponent } from '@app/projetos/recurso-humano-form/recurso-humano-form.component';
+import { RecursoHumanoFormComponent } from '@app/projetos/projeto/common/recurso-humano-form/recurso-humano-form.component';
 import { ProjetosService } from '@app/projetos/projetos.service';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
 import { AppService } from '@app/app.service';
@@ -12,7 +12,7 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 @Component({
     selector: 'app-recursos-humanos',
     templateUrl: './recursos-humanos.component.html',
-    styleUrls: ['./recursos-humanos.component.scss']
+    styles: []
 })
 export class RecursosHumanosComponent implements OnInit {
 

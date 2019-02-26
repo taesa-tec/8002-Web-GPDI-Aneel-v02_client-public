@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
 @Component({
     selector: 'app-recurso-material-form',
     templateUrl: './recurso-material-form.component.html',
-    styleUrls: ['./recurso-material-form.component.scss']
+    styles: []
 })
 export class RecursoMaterialFormComponent implements OnInit {
 

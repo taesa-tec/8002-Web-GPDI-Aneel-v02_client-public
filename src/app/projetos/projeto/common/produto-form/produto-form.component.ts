@@ -9,7 +9,7 @@ import { AppService } from '@app/app.service';
 @Component({
     selector: 'app-produto-form',
     templateUrl: './produto-form.component.html',
-    styleUrls: ['./produto-form.component.scss']
+    styles: []
 })
 export class ProdutoFormComponent implements OnInit {
 

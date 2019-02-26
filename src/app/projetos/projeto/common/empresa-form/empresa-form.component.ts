@@ -9,7 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
     selector: 'app-empresa-form',
     templateUrl: './empresa-form.component.html',
-    styleUrls: ['./empresa-form.component.scss']
+    styles: []
 })
 export class EmpresaFormComponent implements OnInit, AfterViewInit {
 

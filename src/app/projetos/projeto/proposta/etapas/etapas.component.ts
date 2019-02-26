@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { EtapaFormComponent } from '@app/projetos/etapa-form/etapa-form.component';
+import { EtapaFormComponent } from '@app/projetos/projeto/common/etapa-form/etapa-form.component';
 import { AppService } from '@app/app.service';
 import { ProjetosService } from '@app/projetos/projetos.service';
 import { CatalogsService } from '@app/catalogs/catalogs.service';

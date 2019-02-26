@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
     selector: 'app-etapa-form',
     templateUrl: './etapa-form.component.html',
-    styleUrls: ['./etapa-form.component.scss']
+    styles: []
 })
 export class EtapaFormComponent implements OnInit {
 
