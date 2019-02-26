@@ -35,7 +35,7 @@
     </tr>
     <tr *ngFor="let file of xmls | orderBy:listOrder.field:listOrder.direction">
         <td>{{ file.nomeArquivo }}</td>
-        <td>Nome do usuário</td>
+        <td>{{file.user.nomeCompleto}}</td>
         <td>{{ file.created | date:'dd/MM/yyyy' }}</td>
         <td>
             <button type="button" class="btn btn-primary" [downloadFile]="file">

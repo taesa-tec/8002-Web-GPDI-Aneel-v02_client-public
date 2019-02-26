@@ -16,7 +16,7 @@ export class EventInterceptor implements HttpInterceptor {
     constructor(protected app: AppService, protected cache: RequestCacheService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        
+
         const cachedResponse = this.cache.get(req);
         const request = cachedResponse ? of(cachedResponse) : this.sendRequest(req, next, this.cache);
 
@@ -34,14 +34,10 @@ export class EventInterceptor implements HttpInterceptor {
     }
 
     sendRequest(req: HttpRequest<any>, next: HttpHandler, cache: RequestCacheService): Observable<HttpEvent<any>> {
-        return next.handle(req).pipe(
-            tap(event => {
-                if (event instanceof HttpResponse) {
-
-                    cache.put(req, event);
-                    console.log({ req, cache });
-                }
-            })
-        );
+        return next.handle(req).pipe(tap(event => {
+            if (event instanceof HttpResponse) {
+                cache.put(req, event);
+            }
+        }));
     }
 }
