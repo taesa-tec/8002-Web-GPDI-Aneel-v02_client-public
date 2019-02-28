@@ -27,35 +27,45 @@ export class FileService {
 
         return this.http.post<ResultadoResponse>('upload', formData);
     }
-    download(file: FileUploaded);
+
+    protected doDownload(file: File, filename?: string) {
+        const a = document.createElement('a');
+        const blobUrl = URL.createObjectURL(file);
+        // PQP que gambiarra 
+        a.href = blobUrl;
+        a.setAttribute('download', filename || file.name);
+        a.click();
+        URL.revokeObjectURL(blobUrl);
+    }
+
+    download(file: File | FileUploaded);
     download(file: number | string, name: string);
     download(file, name?: string) {
 
-        const id = typeof file === 'object' ? file.id : file;
-
-        const filename = name ? name : file.nomeArquivo;
-
-        this.http.get(`upload/download/${id}`, {
-            observe: "response",
-            responseType: "blob"
-        }).subscribe((response: HttpResponse<any>) => {
-
-
-            const f = new Blob([response.body], {
-                type: "image/jpeg",
+        if (file instanceof File) {
+            this.doDownload(file);
+        } else {
+            const id = typeof file === 'object' ? file.id : file;
+            const filename = name ? name : file.nomeArquivo;
+            this.http.get(`upload/download/${id}`, {
+                responseType: "blob"
+            }).subscribe((filedata: Blob) => {
+                const f = new File([filedata], filename);
+                this.doDownload(f);
+            }, (error: HttpErrorResponse) => {
+                console.log(error);
             });
-            const a = document.createElement('a');
-            const blobUrl = URL.createObjectURL(f);
-            // PQP que gambiarra 
-            a.href = blobUrl;
-            a.setAttribute('download', filename);
-            a.click();
-            URL.revokeObjectURL(blobUrl);
-        }, (error: HttpErrorResponse) => {
-
-        });
+        }
     }
     downloadLogDuto(id: number) {
         return this.http.get<any>(`upload/${id}/ObterLogDuto`);
+    }
+
+
+    remover(file: FileUploaded);
+    remover(file: number);
+    remover(file) {
+        const id = typeof file === 'object' ? file.id : file;
+        this.http.delete(`upload/${id}`);
     }
 }

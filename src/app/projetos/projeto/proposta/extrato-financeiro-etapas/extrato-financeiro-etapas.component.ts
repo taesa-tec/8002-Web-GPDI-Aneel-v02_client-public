@@ -9,6 +9,7 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AlocarRecursoHumanoFormComponent } from '@app/projetos/projeto/common/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
 import { AlocarRecursoMaterialFormComponent } from '@app/projetos/projeto/common/alocar-recurso-material-form/alocar-recurso-material-form.component';
+import { ProjetoFacade } from '@app/projetos/projeto.facade';
 
 @Component({
     selector: 'app-extrato-financeiro-etapas',
@@ -17,7 +18,7 @@ import { AlocarRecursoMaterialFormComponent } from '@app/projetos/projeto/common
 })
 export class ExtratoFinanceiroEtapasComponent implements OnInit {
 
-    projeto: Projeto;
+    projeto: ProjetoFacade;
     extrato: ExtratosEtapas;
     etapas: { [propName: number]: Etapa } = {};
     categoriasContabeis: { [propName: string]: TextValue } = {
@@ -54,7 +55,7 @@ export class ExtratoFinanceiroEtapasComponent implements OnInit {
 
 
     ngOnInit() {
-        const projeto$ =this.app.projetos.projetoLoaded;
+        const projeto$ = this.app.projetos.projetoLoaded;
         zip(projeto$).subscribe(([projeto]) => {
             this.projeto = projeto;
             this.load();

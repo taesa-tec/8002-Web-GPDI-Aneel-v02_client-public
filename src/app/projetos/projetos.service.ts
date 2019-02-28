@@ -25,6 +25,7 @@ import {
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { tap, share } from 'rxjs/operators';
 import { ProjetoFacade } from './projeto.facade';
+import { FileService } from '@app/shared/file.service';
 
 @Injectable({
     providedIn: 'root'
@@ -41,7 +42,7 @@ export class ProjetosService {
 
     status: ProjetoStatus[];
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, protected fileService: FileService) { }
 
     meusProjetos() {
         return this.http.get<Array<UserProjeto>>('UserProjetos/me');
@@ -246,6 +247,16 @@ export class ProjetosService {
         return this.http.get<ExtratosEmpresas>(`Projeto/${id}/ExtratoEmpresas`);
     }
 
+    exportarExtratoEmpresas(id: number) {
+        this.http.get(`Projeto/${id}/ExtratoEmpresas/exportar`, {
+            responseType: "blob"
+        }).subscribe(filedata => {
+            this.fileService.download(new File([filedata], `projeto-${id}-extrato-financeiro.csv`));
+        }, error => {
+            console.error(error);
+        });
+    }
+
     /**
      * Extrato Financeiro Etapas
      */
@@ -329,6 +340,11 @@ export class ProjetosService {
     }
     listarRegistrosPendentes(id: number) {
         return this.http.get<Array<RegistroREFP>>(`projeto/${id}/RegistroFinanceiro/Pendente`);
+    }
+    exportarExtratoREFP(id: number) {
+        return this.http.get(`projeto/${id}/ExtratoREFP/exportar`, {
+            responseType: "blob"
+        });
     }
 
 }

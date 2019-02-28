@@ -29,7 +29,9 @@ export class EventInterceptor implements HttpInterceptor {
                 }
             }
         }, error => {
-            console.log({ error });
+            if (error.status === 401) {
+                this.app.auth.logout();
+            }
         }));
     }
 

@@ -38,7 +38,7 @@
         <h5 class="text-blue">
             Total Geral: {{ totalGeral | currency:'R$' }}
         </h5>
-        <button class="btn btn-outline-blue">
+        <button class="btn btn-outline-blue" (click)="projeto.orcamentoGerarCSV()">
             <i class="ta-download fs-18"></i>
             Gerar CSV
         </button>

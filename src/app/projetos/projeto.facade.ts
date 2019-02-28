@@ -177,5 +177,8 @@ export class ProjetoFacade implements Projeto {
     gerarXmlProrrogacao(versao: number) {
         return this.service.gerarXmlProrrogacao(this.id, versao);
     }
+    orcamentoGerarCSV() {
+        return this.service.exportarExtratoEmpresas(this.id);
+    }
 
 }

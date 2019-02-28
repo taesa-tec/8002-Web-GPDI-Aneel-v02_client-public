@@ -4,11 +4,12 @@ import { map } from 'rxjs/operators';
 import { zip } from 'rxjs';
 
 import { AppService } from '@app/app.service';
-import { Projeto, ExtratosEmpresas, Etapa, TextValue, CategoriasContabeis, ExtratoItem } from '@app/models';
+import { Projeto, ExtratosEmpresas, Etapa, TextValue, CategoriasContabeis, ExtratoItem, ResultadoResponse } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AlocarRecursoHumanoFormComponent } from '@app/projetos/projeto/common/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
 import { AlocarRecursoMaterialFormComponent } from '@app/projetos/projeto/common/alocar-recurso-material-form/alocar-recurso-material-form.component';
+import { ProjetoFacade } from '@app/projetos/projeto.facade';
 
 @Component({
     selector: 'app-extrato-financeiro-empresas',
@@ -17,7 +18,7 @@ import { AlocarRecursoMaterialFormComponent } from '@app/projetos/projeto/common
 })
 export class ExtratoFinanceiroEmpresasComponent implements OnInit {
 
-    projeto: Projeto;
+    projeto: ProjetoFacade;
     extrato: ExtratosEmpresas;
     etapas: { [propName: number]: Etapa } = {};
 
@@ -101,5 +102,4 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
             });
         }
     }
-
 }
