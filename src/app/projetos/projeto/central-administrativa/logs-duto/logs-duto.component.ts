@@ -49,8 +49,15 @@ export class LogsDutoComponent implements OnInit {
         const files = input.files;
 
         if (files && files.length > 0) {
-            this.sendFileLoading.show();
+            
             const file = files.item(0);
+            if (file.type.match(/^text\/plain$/) === null) {
+                this.app.alert("Somente arquivos .txt");
+                event.preventDefault();
+                return;
+            }
+
+            this.sendFileLoading.show();
             this.app.file.upload(file, new FormGroup({
                 projetoId: new FormControl(this.projeto.id),
                 categoria: new FormControl('LogDuto'),

@@ -13,14 +13,15 @@ import {
     ProjetoDataInicio,
     Etapa,
     EditEmpresaRequest,
-    ExtratosEmpresas,
+    OrcamentosEmpresas,
     ExtratosEtapas,
     FileUploaded,
     RegistroREFP,
     RegistroREFPEdit,
     LogProjeto,
     EmpresaProjeto,
-    TotalLog
+    TotalLog,
+    ExtratosEmpresas
 } from '@app/models';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { tap, share } from 'rxjs/operators';
@@ -243,8 +244,8 @@ export class ProjetosService {
      * Extrato Financeiro Empresas
      */
 
-    getExtratoEmpresas(id: number) {
-        return this.http.get<ExtratosEmpresas>(`Projeto/${id}/ExtratoEmpresas`);
+    getOrcamentoEmpresas(id: number) {
+        return this.http.get<OrcamentosEmpresas>(`Projeto/${id}/ExtratoEmpresas`);
     }
 
     exportarExtratoEmpresas(id: number) {
@@ -261,7 +262,7 @@ export class ProjetosService {
      * Extrato Financeiro Etapas
      */
 
-    getExtratoEtapas(id: number) {
+    getOrcamentoEtapas(id: number) {
         return this.http.get<ExtratosEtapas>(`Projeto/${id}/ExtratoEtapas`);
     }
 
@@ -341,9 +342,16 @@ export class ProjetosService {
     listarRegistrosPendentes(id: number) {
         return this.http.get<Array<RegistroREFP>>(`projeto/${id}/RegistroFinanceiro/Pendente`);
     }
+    extratoREFP(id: number) {
+        return this.http.get<ExtratosEmpresas>(`projeto/${id}/ExtratoREFP`);
+    }
     exportarExtratoREFP(id: number) {
-        return this.http.get(`projeto/${id}/ExtratoREFP/exportar`, {
+        this.http.get(`projeto/${id}/ExtratoREFP/exportar`, {
             responseType: "blob"
+        }).subscribe(filedata => {
+            this.fileService.download(new File([filedata], `projeto-${id}-extrato-financeiro.csv`));
+        }, error => {
+            console.error(error);
         });
     }
 

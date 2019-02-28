@@ -29,6 +29,9 @@ export class EtapaFormComponent implements OnInit {
     get btnTxt() {
         return this.etapa.id ? "Salvar Etapa" : "Adicionar Etapa";
     }
+    get tituloTxt() {
+        return this.etapa.id ? "Editar Etapa" : "Nova Etapa";
+    }
 
     ngOnInit() {
         const produtos$ = this.projetoService.getProdutos(this.projeto.id);

@@ -44,8 +44,8 @@ import { EtapasComponent } from '@app/projetos/projeto/proposta/etapas/etapas.co
 import { EmpresasComponent } from '@app/projetos/projeto/proposta/empresas/empresas.component';
 import { AlocacaoComponent as AlocacaoHumanoComponent } from '@app/projetos/projeto/proposta/recursos-humanos/alocacao.component';
 import { AlocacaoComponent as AlocacaoMaterialComponent } from '@app/projetos/projeto/proposta/recursos-materiais/alocacao.component';
-import { ExtratoFinanceiroEmpresasComponent } from '@app/projetos/projeto/proposta/extrato-financeiro-empresas/extrato-financeiro-empresas.component';
-import { ExtratoFinanceiroEtapasComponent } from '@app/projetos/projeto/proposta/extrato-financeiro-etapas/extrato-financeiro-etapas.component';
+import { OrcamentoEmpresasComponent } from '@app/projetos/projeto/proposta/orcamento-empresas/orcamento-empresas.component';
+import { OrcamentoEtapasComponent } from '@app/projetos/projeto/proposta/orcamento-etapas/orcamento-etapas.component';
 
 // Projeto Iniciado
 import { RefpInserirComponent } from './projeto/iniciado/refp-inserir/refp-inserir.component';
@@ -60,6 +60,7 @@ import { RegistroRecursoHumanoComponent } from './projeto/iniciado/registro-refp
 import { RegistroRecursoMaterialComponent } from './projeto/iniciado/registro-refp-details/registro-recurso-material/registro-recurso-material.component';
 import { ProrrogarComponent } from './projeto/iniciado/prorrogar/prorrogar.component';
 import { PropostaBaseComponent } from './projeto/iniciado/proposta-base/proposta-base.component';
+import { ExtratoFinanceiroEmpresasComponent } from './projeto/iniciado/extrato-financeiro-empresas/extrato-financeiro-empresas.component';
 
 
 
@@ -86,8 +87,8 @@ import { PropostaBaseComponent } from './projeto/iniciado/proposta-base/proposta
         AlocacaoHumanoComponent,
         RecursosMateriaisComponent,
         AlocacaoMaterialComponent,
-        ExtratoFinanceiroEmpresasComponent,
-        ExtratoFinanceiroEtapasComponent,
+        OrcamentoEmpresasComponent,
+        OrcamentoEtapasComponent,
         CentralAdministrativaComponent,
         GeracaoXmlComponent,
         LogsDutoComponent,
@@ -109,6 +110,7 @@ import { PropostaBaseComponent } from './projeto/iniciado/proposta-base/proposta
         RegistroRecursoMaterialComponent,
         ProrrogarComponent,
         PropostaBaseComponent,
+        ExtratoFinanceiroEmpresasComponent,
     ],
     entryComponents: [
         NovoProjetoComponent,
@@ -138,8 +140,8 @@ import { PropostaBaseComponent } from './projeto/iniciado/proposta-base/proposta
         AlocacaoHumanoComponent,
         RecursosMateriaisComponent,
         AlocacaoMaterialComponent,
-        ExtratoFinanceiroEmpresasComponent,
-        ExtratoFinanceiroEtapasComponent,
+        OrcamentoEmpresasComponent,
+        OrcamentoEtapasComponent,
         CentralAdministrativaComponent,
         GeracaoXmlComponent,
         LogsDutoComponent,

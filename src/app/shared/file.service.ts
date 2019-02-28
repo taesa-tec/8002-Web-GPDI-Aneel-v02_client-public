@@ -66,6 +66,6 @@ export class FileService {
     remover(file: number);
     remover(file) {
         const id = typeof file === 'object' ? file.id : file;
-        this.http.delete(`upload/${id}`);
+        return this.http.delete(`upload/${id}`);
     }
 }

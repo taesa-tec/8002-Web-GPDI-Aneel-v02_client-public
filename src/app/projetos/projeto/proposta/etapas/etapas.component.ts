@@ -15,7 +15,7 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 @Component({
   selector: 'app-etapas',
   templateUrl: './etapas.component.html',
-  styleUrls: ['./etapas.component.scss']
+  styles: []
 })
 export class EtapasComponent implements OnInit {
 

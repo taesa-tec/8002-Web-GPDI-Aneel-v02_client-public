@@ -70,7 +70,8 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
         this.app.projetos.gerarXmlProjetoPed(this.projeto.id, this.XmlProjetoPed.value).subscribe(result => {
             this.loading.hide();
             if (result.sucesso) {
-                this.app.file.download(result.id, `projeto-ped-${this.projeto.id}.xml`);
+                this.downloadFile(result.id);
+                // this.app.file.download(result.id, `projeto-ped-${this.projeto.id}.xml`);
             } else {
                 this.app.alert(result.inconsistencias.join(', '));
             }
@@ -86,7 +87,8 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
         this.app.projetos.gerarXmlInteresseExecucao(this.projeto.id, this.XmlInteresseExecucao.value).subscribe(result => {
             this.loading.hide();
             if (result.sucesso) {
-                this.app.file.download(result.id, `projeto-${this.projeto.id}-interesse-execucao.xml`);
+                this.downloadFile(result.id);
+                // this.app.file.download(result.id, `projeto-${this.projeto.id}-interesse-execucao.xml`);
             } else {
                 this.app.alert(result.inconsistencias.join(', '));
             }
@@ -102,12 +104,28 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
         this.app.projetos.gerarXmlInicioExecucao(this.projeto.id, this.XmlInicioExecucao.value).subscribe(result => {
             this.loading.hide();
             if (result.sucesso) {
-                this.app.file.download(result.id, `projeto-${this.projeto.id}-inicio-execucao.xml`);
+                this.downloadFile(result.id);
+                // this.app.file.download(result.id, `projeto-${this.projeto.id}-inicio-execucao.xml`);
             } else {
                 this.app.alert(result.inconsistencias.join(', '));
             }
         }, (error: HttpErrorResponse) => {
             this.app.alert(error.message);
+            this.loading.hide();
+        });
+    }
+
+    downloadFile(file_id) {
+        this.app.requestCache.clear();
+        this.app.projetos.obterXmls(this.projeto.id).subscribe(result => {
+            const file = result.find(f => f.id === parseInt(file_id, 10));
+            if (file) {
+                this.app.file.download(file);
+            } else {
+                this.app.alert("Arquivo não encontrdo", 'Erro');
+            }
+            this.loading.hide();
+        }, error => {
             this.loading.hide();
         });
     }

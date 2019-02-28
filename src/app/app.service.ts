@@ -10,6 +10,7 @@ import { UsersService } from './users/users.service';
 import { PromptComponent } from './shared/prompt/prompt.component';
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
+import { RequestCacheService } from './request-cache.service';
 
 @Injectable({
     providedIn: 'root'
@@ -25,8 +26,9 @@ export class AppService {
         public users: UsersService,
         public file: FileService,
         public auth: AuthService,
-        public router: Router
-        ) { }
+        public router: Router,
+        public requestCache: RequestCacheService
+    ) { }
 
     alert(message: string | Array<string>, title: string = "Alerta") {
         const ref = this.modal.open(AlertComponent);

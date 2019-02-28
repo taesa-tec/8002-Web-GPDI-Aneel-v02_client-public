@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProjetosService } from '@app/projetos/projetos.service';
 import { map, mergeMap, tap } from 'rxjs/operators';
 import { zip, of } from 'rxjs';
-import { Projeto, Tema, SubTema, SubTemaRequest, TemaProjeto, NoRequest } from '@app/models';
+import { Projeto, Tema, SubTema, SubTemaRequest, TemaProjeto, NoRequest, ResultadoResponse } from '@app/models';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { SubTemasComponent } from './sub-tema.component';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
@@ -13,7 +13,7 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 @Component({
     selector: 'app-temas',
     templateUrl: './temas.component.html',
-    styleUrls: ['./temas.component.scss']
+    styles: []
 })
 export class TemasComponent implements OnInit {
 
@@ -164,11 +164,10 @@ export class TemasComponent implements OnInit {
             }
         });
     }
+
     sendFile(id?) {
         const el = this.file.nativeElement as HTMLInputElement;
         const temaId = id || this.temaProjeto.id;
-
-        console.log({ temaId });
 
         if (el.files.length > 0) {
             return this.app.file.upload(el.files.item(0), new FormGroup({
@@ -181,6 +180,21 @@ export class TemasComponent implements OnInit {
         }
 
         return of(NoRequest);
+    }
+
+    deletarArquivo(file) {
+        this.loading.show();
+        this.temaProjeto.uploads.splice(this.temaProjeto.uploads.indexOf(file), 1);
+        this.app.file.remover(file).subscribe((result: ResultadoResponse) => {
+            this.loading.hide();
+            if (result.sucesso) {
+                this.app.alert("Excluido com sucesso");
+            } else {
+                this.app.alert(result.inconsistencias, 'Erro');
+            }
+        }, error => {
+            this.loading.hide();
+        });
     }
 
 }

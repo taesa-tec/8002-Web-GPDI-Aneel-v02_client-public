@@ -3,8 +3,8 @@
         <app-loading type="inline" class="p-0" #sendFile size="1x"></app-loading>
         <label class="btn btn-outline-primary" [formGroup]="form">
             <i class="ta-plus-circle" *ngIf="!sendFile.isLoading"></i>
-            Novo Log
-            <input type="file" formControlName="file" (change)="sendLogFile($event)" class="d-none">
+            Novo Log - Arquivos .txt
+            <input type="file" formControlName="file" accept=".txt" (change)="sendLogFile($event)" class="d-none">
         </label>
     </div>
 </div>

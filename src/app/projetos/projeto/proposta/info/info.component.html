@@ -5,7 +5,7 @@
     <div class="col-6">
       <div class="form-group">
         <label for="">Número projeto <app-tip [tipId]="7"></app-tip></label>
-        <input type="text" class="form-control" formControlName="numero" maxlength="6" mask="00000S" [patterns]="numeroPatterns" placeholder="00000X">
+        <input type="text" class="form-control" formControlName="numero" maxlength="6" mask="0000S" [patterns]="numeroPatterns" placeholder="00000X">
       </div>
     </div>
     <div class="col-6">
@@ -124,7 +124,7 @@
   <hr>
   <div class="row">
     <div class="col-auto">
-      <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes</div>
+      <!-- <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes --> </div>
     <div class="col text-right">
       <button class="btn btn-primary" [disabled]="form.invalid">Salvar Dados</button>
     </div>

@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { zip } from 'rxjs';
 
 import { AppService } from '@app/app.service';
-import { Projeto, ExtratosEmpresas, Etapa, TextValue, CategoriasContabeis, ExtratoItem, ResultadoResponse } from '@app/models';
+import { Projeto, Etapa, TextValue, CategoriasContabeis, ExtratosEtapas, ExtratoItem } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AlocarRecursoHumanoFormComponent } from '@app/projetos/projeto/common/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
@@ -12,38 +12,39 @@ import { AlocarRecursoMaterialFormComponent } from '@app/projetos/projeto/common
 import { ProjetoFacade } from '@app/projetos/projeto.facade';
 
 @Component({
-    selector: 'app-extrato-financeiro-empresas',
-    templateUrl: './extrato-financeiro-empresas.component.html',
+    selector: 'app-orcamento-etapas',
+    templateUrl: './orcamento-etapas.component.html',
     styles: []
 })
-export class ExtratoFinanceiroEmpresasComponent implements OnInit {
+export class OrcamentoEtapasComponent implements OnInit {
 
     projeto: ProjetoFacade;
-    extrato: ExtratosEmpresas;
+    extrato: ExtratosEtapas;
     etapas: { [propName: number]: Etapa } = {};
-
-    alocacoesRH: Array<any> = [];
-    alocacoesRM: Array<any> = [];
-
     categoriasContabeis: { [propName: string]: TextValue } = {
         "RH": { text: "Recursos Humanos", value: "RH" }
     };
 
+    alocacoesRH: Array<any> = [];
+    alocacoesRM: Array<any> = [];
+
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
-    get extratoEmpresas() {
-        return this.extrato ? this.extrato.empresas.filter(e => e.total > 0) : [];
+    get extratoEtapas() {
+        return this.extrato ? this.extrato.etapas.filter(e => e.total > 0) : [];
     }
     get totalGeral() {
         return this.extrato ? this.extrato.valor : 0;
     }
 
-    constructor(protected app: AppService, private route: ActivatedRoute) {
+    constructor(
+        protected app: AppService,
+        private route: ActivatedRoute
+    ) {
         CategoriasContabeis.forEach(c => {
             this.categoriasContabeis[c.value] = c;
         });
     }
-
     categoriaPorCod(cod) {
         if (this.categoriasContabeis[cod]) {
             return this.categoriasContabeis[cod].text;
@@ -63,20 +64,24 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
 
     load() {
         this.loading.show();
-        const extratos$ = this.app.projetos.getExtratoEmpresas(this.projeto.id);
+        const extratos$ = this.app.projetos.getOrcamentoEtapas(this.projeto.id);
         const etapas$ = this.app.projetos.getEtapas(this.projeto.id);
-        zip(extratos$, etapas$, this.app.projetos.getAlocacaoRH(this.projeto.id), this.app.projetos.getAlocacaoRM(this.projeto.id))
-            .subscribe(([extrato, etapas, alocacoesRH, alocacoesRM]) => {
-                this.extrato = extrato;
-                this.alocacoesRH = alocacoesRH;
-                this.alocacoesRM = alocacoesRM;
 
-                etapas.forEach((etapa, index) => {
-                    this.etapas[etapa.id] = Object.assign(etapa, { numeroEtapa: index + 1 });
-                });
+        zip(extratos$,
+            etapas$,
+            this.app.projetos.getAlocacaoRH(this.projeto.id),
+            this.app.projetos.getAlocacaoRM(this.projeto.id)
+        ).subscribe(([extrato, etapas, alocacoesRH, alocacoesRM]) => {
+            this.extrato = extrato;
+            this.alocacoesRH = alocacoesRH;
+            this.alocacoesRM = alocacoesRM;
 
-                this.loading.hide();
+            etapas.forEach((etapa, index) => {
+                this.etapas[etapa.id] = Object.assign(etapa, { numeroEtapa: index + 1 });
             });
+
+            this.loading.hide();
+        });
     }
 
     openModal(item: ExtratoItem) {

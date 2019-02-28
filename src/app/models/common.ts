@@ -282,18 +282,28 @@ export interface ExtratoRelatorio {
     valor: number;
 }
 
-export interface ExtratoEmpresa {
+export interface OrcamentoEmpresa {
     nome: string;
     relatorios: ExtratoRelatorio[];
     total: number;
     valor: number;
 }
+export interface ExtratoEmpresa extends OrcamentoEmpresa {
+    desvio: number;
+    totalAprovado: number;
+    valorAprovado: number;
+}
 
-export interface ExtratosEmpresas {
-    empresas: ExtratoEmpresa[];
+export interface OrcamentosEmpresas {
+    empresas: OrcamentoEmpresa[];
     total: number;
     valor: number;
 }
+
+export interface ExtratosEmpresas extends OrcamentosEmpresas {
+    empresas: ExtratoEmpresa[];
+}
+
 export interface RecursoHumano {
     id: number;
     projetoId: number;
@@ -334,7 +344,7 @@ export interface AlocacaoRH {
 export interface ExtratoEtapa {
     nome: string;
     etapa: Etapa;
-    empresas: ExtratoEmpresa[];
+    empresas: OrcamentoEmpresa[];
     total: number;
     valor: number;
 }

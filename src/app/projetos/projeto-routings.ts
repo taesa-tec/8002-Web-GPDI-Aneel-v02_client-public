@@ -25,8 +25,8 @@ import { EtapasComponent } from '@app/projetos/projeto/proposta/etapas/etapas.co
 import { EmpresasComponent } from '@app/projetos/projeto/proposta/empresas/empresas.component';
 import { AlocacaoComponent as AlocacaoHComponent } from '@app/projetos/projeto/proposta/recursos-humanos/alocacao.component';
 import { AlocacaoComponent as AlocacaoMComponent } from '@app/projetos/projeto/proposta/recursos-materiais/alocacao.component';
-import { ExtratoFinanceiroEmpresasComponent } from '@app/projetos/projeto/proposta/extrato-financeiro-empresas/extrato-financeiro-empresas.component';
-import { ExtratoFinanceiroEtapasComponent } from '@app/projetos/projeto/proposta/extrato-financeiro-etapas/extrato-financeiro-etapas.component';
+import { OrcamentoEmpresasComponent } from '@app/projetos/projeto/proposta/orcamento-empresas/orcamento-empresas.component';
+import { OrcamentoEtapasComponent } from '@app/projetos/projeto/proposta/orcamento-etapas/orcamento-etapas.component';
 
 // Iniciado
 import { RefpInserirComponent } from './projeto/iniciado/refp-inserir/refp-inserir.component';
@@ -38,6 +38,7 @@ import { RecursoHumanoComponent as REFP_RH_Component } from './projeto/iniciado/
 import { RecursoMaterialComponent as REFP_RC_Component } from './projeto/iniciado/refp-inserir/recurso-material.component';
 import { ProrrogarComponent } from './projeto/iniciado/prorrogar/prorrogar.component';
 import { PropostaBaseComponent } from './projeto/iniciado/proposta-base/proposta-base.component';
+import { ExtratoFinanceiroEmpresasComponent } from './projeto/iniciado/extrato-financeiro-empresas/extrato-financeiro-empresas.component';
 
 
 export const centralPlanejamentoRoutes: Routes = [{
@@ -109,10 +110,10 @@ export const projetoPlanejamentoRoutes: Routes = [
         path: 'alocacao-recursos-materiais', component: AlocacaoMComponent,
     },
     {
-        path: 'extrato-financeiro-empresas', component: ExtratoFinanceiroEmpresasComponent,
+        path: 'extrato-financeiro-empresas', component: OrcamentoEmpresasComponent,
     },
     {
-        path: 'extrato-financeiro-etapas', component: ExtratoFinanceiroEtapasComponent,
+        path: 'extrato-financeiro-etapas', component: OrcamentoEtapasComponent,
     },
     { path: '**', redirectTo: 'info', pathMatch: 'full' }
 ];
@@ -133,7 +134,7 @@ export const projetoIniciadoRoutes: Routes = [
         ]
     },
     {
-        path: 'refp-extrato', component: RefpExtratoComponent,
+        path: 'extrato-financeiro', component: ExtratoFinanceiroEmpresasComponent,
     },
     {
         path: 'refp/:status', component: RefpListComponent
@@ -153,8 +154,8 @@ export const projetoIniciadoRoutes: Routes = [
         children: [
             { path: '', redirectTo: 'base', pathMatch: 'full' },
             { path: 'base', component: PropostaBaseComponent },
-            { path: 'extrato-financeiro-empresas', component: ExtratoFinanceiroEmpresasComponent },
-            { path: 'extrato-financeiro-etapas', component: ExtratoFinanceiroEtapasComponent }
+            { path: 'orcamento-empresas', component: OrcamentoEmpresasComponent },
+            { path: 'orcamento-etapas', component: OrcamentoEtapasComponent }
         ]
     },
 ];

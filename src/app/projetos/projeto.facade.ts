@@ -152,11 +152,11 @@ export class ProjetoFacade implements Projeto {
     }
 
     getOrcamentoEmpresas() {
-        this.service.getExtratoEmpresas(this.aplicabilidade.id);
+        this.service.getOrcamentoEmpresas(this.aplicabilidade.id);
     }
 
     getOrcamentoEtapas() {
-        this.service.getExtratoEtapas(this.id);
+        this.service.getOrcamentoEtapas(this.id);
     }
 
     obterXmls() {
@@ -179,6 +179,9 @@ export class ProjetoFacade implements Projeto {
     }
     orcamentoGerarCSV() {
         return this.service.exportarExtratoEmpresas(this.id);
+    }
+    extratoGerarCSV() {
+        return this.service.exportarExtratoREFP(this.id);
     }
 
 }
