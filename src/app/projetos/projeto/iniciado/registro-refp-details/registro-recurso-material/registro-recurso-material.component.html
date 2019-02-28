@@ -202,6 +202,20 @@
             <div class="form-group">
                 <label for="">COMPROVANTE DE DESPESA</label>
             </div>
+            <div *ngIf="registro">
+                <div class="btn btn-link" [downloadFile]="file" *ngFor="let file of registro.uploads">
+                    {{file.nomeArquivo}}
+                    <!-- <i class="ta-cancel-circle" (click)="deletarArquivo(file)"></i> -->
+                </div>
+            </div>
+            <div *ngIf="isEditable">
+                <label class="btn btn-link">
+                    <i class="ta-upload mx-2 fs-22"></i>
+                    <span>Selecionar arquivo </span>
+                    <strong *ngFor="let file of file.files"> ({{file.name}})</strong>
+                    <input type="file" name="" id="" class="form-control d-none" #file (change)="changeFile($event)">
+                </label>
+            </div>
         </div>
     </div>
 

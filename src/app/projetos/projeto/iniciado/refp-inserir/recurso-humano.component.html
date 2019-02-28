@@ -95,10 +95,14 @@
         <div class="col-4">
             <div class="form-group">
                 <label for="">COMPROVANTE DE DESPESA</label>
-                <div>
-                    <input type="file">
-                    <div><i class="ta"></i> Anexar (ID86)</div>
-                </div>
+            </div>
+            <div>
+                <label class="btn btn-link">
+                    <i class="ta-upload mx-2 fs-22"></i>
+                    <span>Selecionar arquivo </span>
+                    <strong *ngFor="let file of file.files"> ({{file.name}})</strong>
+                    <input type="file" name="" id="" class="form-control d-none" #file (change)="changeFile($event)">
+                </label>
             </div>
         </div>
         <div class="col-4">&nbsp;</div>

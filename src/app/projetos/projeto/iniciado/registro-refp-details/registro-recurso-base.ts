@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, ElementRef } from '@angular/core';
 import { AppService } from '@app/app.service';
-import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RegistroREFP, ResultadoResponse } from '@app/models';
+import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RegistroREFP, ResultadoResponse, NoRequest } from '@app/models';
 import { ProjetoFacade } from '@app/projetos/projeto.facade';
-import { zip, Observable } from 'rxjs';
+import { zip, Observable, of } from 'rxjs';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import * as moment from 'moment';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
+import { tap } from 'rxjs/operators';
 
 export abstract class RegistroRecursoBase implements OnInit {
 
@@ -27,6 +28,7 @@ export abstract class RegistroRecursoBase implements OnInit {
     @Output() registroAlterado: EventEmitter<void> = new EventEmitter();
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild('file') file: ElementRef;
 
     constructor(protected app: AppService) { }
 
@@ -157,8 +159,10 @@ export abstract class RegistroRecursoBase implements OnInit {
         this.projeto.relations.REFP.reenviarAprovacaoRegistro(this.form.value, this.obsInternas.get('texto').value).subscribe(resultado => {
             this.loading.hide();
             if (resultado.sucesso) {
-                this.app.alert("Enviado para a aprovação");
-                this.registroAlterado.emit();
+                this.sendFile(this.registro.id).subscribe(_result => {
+                    this.app.alert("Enviado para a aprovação");
+                    this.registroAlterado.emit();
+                });
             } else {
                 this.app.alert(resultado.inconsistencias)
             }
@@ -172,4 +176,37 @@ export abstract class RegistroRecursoBase implements OnInit {
         this.form.enable();
         this.form.updateValueAndValidity();
     }
+
+    deletarArquivo(file) {
+        this.loading.show();
+        this.registro.uploads.splice(this.registro.uploads.indexOf(file), 1);
+        this.app.file.remover(file).subscribe((result: ResultadoResponse) => {
+            this.loading.hide();
+            if (result.sucesso) {
+                this.app.alert("Excluido com sucesso");
+            } else {
+                this.app.alert(result.inconsistencias, 'Erro');
+            }
+        }, error => {
+            this.loading.hide();
+        });
+    }
+
+    changeFile(event) { }
+    sendFile(id?) {
+        const el = this.file.nativeElement as HTMLInputElement;
+
+        if (el.files.length > 0) {
+            return this.app.file.upload(el.files.item(0), new FormGroup({
+                RegistroFinanceiroId: new FormControl(id),
+            })).pipe(tap(result => {
+                if (result.sucesso) {
+                    this.file.nativeElement.value = "";
+                }
+            }));
+        }
+
+        return of(NoRequest);
+    }
+
 }

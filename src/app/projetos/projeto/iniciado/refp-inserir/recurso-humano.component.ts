@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AppService } from '@app/app.service';
-import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue } from '@app/models';
+import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, NoRequest } from '@app/models';
 import { ProjetoFacade } from '@app/projetos/projeto.facade';
-import { zip } from 'rxjs';
+import { zip, of } from 'rxjs';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import * as moment from 'moment';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
+import { tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-recurso-humano',
@@ -27,6 +28,7 @@ export class RecursoHumanoComponent implements OnInit {
     mesesRef: Array<TextValue>;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild('file') file: ElementRef;
 
     constructor(protected app: AppService) { }
 
@@ -123,20 +125,39 @@ export class RecursoHumanoComponent implements OnInit {
         });
     }
 
+    
     submit() {
         if (this.form.valid) {
             this.loading.show();
             this.app.projetos.criarRegistroREFP(this.form.value).subscribe(result => {
-                this.loading.hide();
                 if (result.sucesso) {
-                    this.app.alert("Salvo com sucesso!");
-                    this.form.reset();
-                    // this.app.router.navigate(['dashboard', 'projeto', this.projeto.id, 'iniciado', 'refp', 'pendentes']);
+                    this.sendFile(result.id).subscribe(_result => {
+                        this.loading.hide();
+                        this.form.reset();
+                        this.app.alert("Salvo com sucesso!");
+                    });
                 } else {
+                    this.loading.hide();
                     this.app.alert(result.inconsistencias.join(', '));
                 }
             });
         }
+    }
+    changeFile(event) { }
+    sendFile(id?) {
+        const el = this.file.nativeElement as HTMLInputElement;
+
+        if (el.files.length > 0) {
+            return this.app.file.upload(el.files.item(0), new FormGroup({
+                RegistroFinanceiroId: new FormControl(id),
+            })).pipe(tap(result => {
+                if (result.sucesso) {
+                    this.file.nativeElement.value = "";
+                }
+            }));
+        }
+
+        return of(NoRequest);
     }
 
 }
