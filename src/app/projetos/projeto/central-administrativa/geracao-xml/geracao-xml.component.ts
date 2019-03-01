@@ -44,6 +44,9 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
 
         this.projetoLoaded = this.app.projetos.projetoLoaded.subscribe(projeto => {
             this.projeto = projeto;
+            if (this.projeto.catalogStatus.status !== 'Proposta') {
+                this.app.router.navigate(['dashboard', 'projeto', projeto.id, 'central-administrativa', 'logs-duto']);
+            }
         });
 
         this.validar().subscribe(result => {

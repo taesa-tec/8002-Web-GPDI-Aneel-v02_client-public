@@ -21,12 +21,14 @@ import {
     LogProjeto,
     EmpresaProjeto,
     TotalLog,
-    ExtratosEmpresas
+    ExtratosEmpresas,
+    ProrrogarProjetoRequest
 } from '@app/models';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { tap, share } from 'rxjs/operators';
 import { ProjetoFacade } from './projeto.facade';
 import { FileService } from '@app/shared/file.service';
+import { RequestCacheService } from '@app/request-cache.service';
 
 @Injectable({
     providedIn: 'root'
@@ -43,7 +45,7 @@ export class ProjetosService {
 
     status: ProjetoStatus[];
 
-    constructor(private http: HttpClient, protected fileService: FileService) { }
+    constructor(private http: HttpClient, protected fileService: FileService, protected requestCache: RequestCacheService) { }
 
     meusProjetos() {
         return this.http.get<Array<UserProjeto>>('UserProjetos/me');
@@ -317,8 +319,28 @@ export class ProjetosService {
     gerarXmlProrrogacao(id: number, versao: number) {
         return this.http.get<ResultadoResponse>(`projeto/${id}/XmlProrrogacao/${versao}`);
     }
+    downloadXML(projeto_id, file_id) {
+        const o = new Subject<boolean>();
+        this.requestCache.clear();
+        this.obterXmls(projeto_id).subscribe(result => {
+            const file = result.find(f => f.id === parseInt(file_id, 10));
+            if (file) {
+                this.fileService.download(file);
+
+                o.next(true);
+            }
+            o.next(false);
+        }, error => {
+            o.error(error);
+        });
+
+        return o.asObservable();
+    }
 
 
+    prorrogarProjeto(prorrogar: ProrrogarProjetoRequest) {
+        return this.http.post<ResultadoResponse>(`projetos/prorrogar`, prorrogar);
+    }
 
     /**
      * Registro REFP

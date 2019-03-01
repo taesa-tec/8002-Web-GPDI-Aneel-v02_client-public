@@ -1,5 +1,5 @@
 import { ProjetosService } from './projetos.service';
-import { Projeto, Empresa, ProjetoStatus, RegistroREFP } from '@app/models';
+import { Projeto, Empresa, ProjetoStatus, RegistroREFP, ProrrogarProjetoRequest } from '@app/models';
 import { throwError } from 'rxjs';
 
 
@@ -151,14 +151,15 @@ export class ProjetoFacade implements Projeto {
         };
     }
 
+    prorrogar(prorrogacao: ProrrogarProjetoRequest) {
+        return this.service.prorrogarProjeto(prorrogacao);
+    }
     getOrcamentoEmpresas() {
-        this.service.getOrcamentoEmpresas(this.aplicabilidade.id);
+        return this.service.getOrcamentoEmpresas(this.aplicabilidade.id);
     }
-
     getOrcamentoEtapas() {
-        this.service.getOrcamentoEtapas(this.id);
+        return this.service.getOrcamentoEtapas(this.id);
     }
-
     obterXmls() {
         return this.service.obterXmls(this.id);
     }
@@ -176,6 +177,9 @@ export class ProjetoFacade implements Projeto {
     }
     gerarXmlProrrogacao(versao: number) {
         return this.service.gerarXmlProrrogacao(this.id, versao);
+    }
+    downloadXml(id) {
+        return this.service.downloadXML(this.id, id);
     }
     orcamentoGerarCSV() {
         return this.service.exportarExtratoEmpresas(this.id);

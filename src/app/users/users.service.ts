@@ -82,4 +82,7 @@ export class UsersService {
     criarUserProjeto(userProjetos: Array<UserProjeto>) {
         return this.http.post<ResultadoResponse>(`UserProjetos`, userProjetos);
     }
+    userAvatar(id: string) {
+        return this.http.get<any>(`Users/${id}/avatar`);
+    }
 }

@@ -1,7 +1,7 @@
 <div class="card my-3">
     <div class="card-header bg-blue-light text-white d-flex justify-content-between">
         <div>
-            <img src="assets/temp-user.png" width="32" height="32" alt="" class="rounded-circle mr-3">
+            <img [src]="avatar" width="32" height="32" alt="" class="rounded-circle mr-3">
             <span>{{log.user.nomeCompleto}} - {{log.created | date:'short'}}</span>
         </div>
         <div>

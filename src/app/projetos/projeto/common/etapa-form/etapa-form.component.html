@@ -1,53 +1,53 @@
 <div class="modal-header">
-  <div class="text-uppercase modal-title text-blue-light fs-24">{{tituloTxt}}</div>
-  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-    <i class="ta-cancel-circle"></i>
-  </button>
+    <div class="text-uppercase modal-title text-blue-light fs-24">{{tituloTxt}}</div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <i class="ta-cancel-circle"></i>
+    </button>
 </div>
 <div class="modal-body">
-  <app-loading type="fullscreen"></app-loading>
-  <div class="form-group" [formGroup]="form" *ngIf="form">
-    <label>Descrição das atividades</label>
-    <app-textarea cols="30" rows="2" formControlName="desc" class="form-control"></app-textarea>
-  </div>
-  <div class="form-group">
-    <label>PRODUTOS ASSOCIADOS A ESTA ETAPA</label>
-    <div class="row mb-3" *ngFor="let item of produtosGroup.controls; let i = index;">
-      <div class="col-11" [formGroup]="item">
-        <select name="" id="" class="form-control" formControlName="ProdutoId">
-          <option value="">Selecione</option>
-          <option *ngFor="let p of filtrarProdutos(item)" [value]="p.id">{{p.titulo}}</option>
-        </select>
-      </div>
-      <div class="col-1 d-flex align-items-center">
-        <button class="btn p-0 hover-text-blue" type="button" (click)="removerProduto(i)">
-          <i class="ta-remove-circle fs-24"></i>
-        </button>
-      </div>
+    <app-loading type="fullscreen"></app-loading>
+    <div class="form-group" [formGroup]="form" *ngIf="form">
+        <label>Descrição das atividades</label>
+        <app-textarea cols="30" rows="2" formControlName="desc" class="form-control"></app-textarea>
     </div>
-    <div class="row mb-4" *ngIf="produtosGroup.length < produtos.length">
-      <div class="col">
-        <button class="btn p-0 hover-text-blue" (click)="adicionarProduto()">
-          <i class="ta-plus-circle fs-24 align-middle"></i>
-          Adicionar Produto
-        </button>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <div class="d-flex justify-content-between">
-          <div>
-            <button class="btn btn-link" (click)="excluirEtapa()" *ngIf="etapa.id"><i class="ta-cancel-circle"></i> Excluir</button>
-          </div>
-          <div class="text-right">
-            <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
-            <button class="btn btn-primary" type="button" [disabled]="form && form.invalid" (click)="submit()">
-              <i class="ta-save"></i>
-              {{btnTxt}}
-            </button>
-          </div>
+    <div class="form-group">
+        <label>PRODUTOS ASSOCIADOS A ESTA ETAPA</label>
+        <div class="row mb-3" *ngFor="let item of produtosGroup.controls; let i = index;">
+            <div class="col-11" [formGroup]="item">
+                <select name="" id="" class="form-control" formControlName="ProdutoId">
+                    <option value="">Selecione</option>
+                    <option *ngFor="let p of filtrarProdutos(item)" [value]="p.id">{{p.titulo}}</option>
+                </select>
+            </div>
+            <div class="col-1 d-flex align-items-center">
+                <button class="btn p-0 hover-text-blue" type="button" (click)="removerProduto(i)">
+                    <i class="ta-remove-circle fs-24"></i>
+                </button>
+            </div>
         </div>
-      </div>
+        <div class="row mb-4" *ngIf="produtosGroup.length < produtos.length">
+            <div class="col">
+                <button class="btn p-0 hover-text-blue" (click)="adicionarProduto()">
+                    <i class="ta-plus-circle fs-24 align-middle"></i>
+                    Adicionar Produto
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <button class="btn btn-link" (click)="excluirEtapa()" *ngIf="etapa.id"><i class="ta-cancel-circle"></i> Excluir</button>
+                    </div>
+                    <div class="text-right">
+                        <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
+                        <button class="btn btn-primary" type="button" [disabled]="form && form.invalid" (click)="submit()">
+                            <i class="ta-save"></i>
+                            {{btnTxt}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

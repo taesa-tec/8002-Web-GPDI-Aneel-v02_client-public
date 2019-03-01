@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertComponent } from './shared/alert/alert.component';
 import { ConfirmComponent } from './shared/confirm/confirm.component';
@@ -11,6 +11,7 @@ import { PromptComponent } from './shared/prompt/prompt.component';
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { RequestCacheService } from './request-cache.service';
+import { AppConfig, APP_CONFIG } from './app.config';
 
 @Injectable({
     providedIn: 'root'
@@ -27,7 +28,8 @@ export class AppService {
         public file: FileService,
         public auth: AuthService,
         public router: Router,
-        public requestCache: RequestCacheService
+        public requestCache: RequestCacheService,
+        @Inject(APP_CONFIG) public config: AppConfig
     ) { }
 
     alert(message: string | Array<string>, title: string = "Alerta") {

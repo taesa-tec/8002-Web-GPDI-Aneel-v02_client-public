@@ -1,20 +1,29 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { LogProjeto } from '@app/models';
+import { AppService } from '@app/app.service';
+import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-log-item',
-  templateUrl: './log.component.html',
-  styles: []
+    selector: 'app-log-item',
+    templateUrl: './log.component.html',
+    styles: []
 })
 export class LogComponent implements OnInit {
 
-  @Input() log: LogProjeto;
+    @Input() log: LogProjeto;
 
-  constructor() { }
+    avatar: SafeUrl;
 
-  ngOnInit() {
-    console.log(this.log);
+    constructor(protected app: AppService) { }
 
-  }
+    ngOnInit() {
+        console.log(this.log);
+        this.app.file.toBlob(`/Users/${this.log.userId}/avatar`, this.log.userId).subscribe(avatar => {
+            this.avatar = avatar;
+
+        });
+
+
+    }
 
 }

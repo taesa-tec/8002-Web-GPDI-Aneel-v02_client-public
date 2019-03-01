@@ -1,13 +1,5 @@
 import { UserRole, ProjetoAccess } from './enums';
 
-
-// export class Model {
-//   constructor(fields?: { [propName: string]: any }) {
-//     if (fields) {
-//       Object.assign(this, fields);
-//     }
-//   }
-// }
 export interface TextValue {
     text: string; value: any;
 }

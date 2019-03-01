@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ResultadoResponse, FileUploaded } from '@app/models';
 import { FormGroup } from '@angular/forms';
+import { mapTo, map } from 'rxjs/operators';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Injectable({
     providedIn: 'root'
@@ -9,7 +11,7 @@ import { FormGroup } from '@angular/forms';
 export class FileService {
 
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, protected sanatizer: DomSanitizer) { }
 
     upload(file: File, form?: FormGroup) {
         const formData = new FormData();
@@ -59,6 +61,14 @@ export class FileService {
     }
     downloadLogDuto(id: number) {
         return this.http.get<any>(`upload/${id}/ObterLogDuto`);
+    }
+
+    toBlob(url: string, name: string = "blob") {
+        return this.http.get(url, {
+            responseType: "blob"
+        }).pipe(map(value => {
+            return this.sanatizer.bypassSecurityTrustUrl(URL.createObjectURL(new File([value], name)));
+        }));
     }
 
 
