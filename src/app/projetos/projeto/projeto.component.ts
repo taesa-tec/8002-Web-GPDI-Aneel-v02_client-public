@@ -49,7 +49,14 @@ export class ProjetoComponent implements OnInit {
             { text: "Consultar Dados Planejamento Projeto", icon: "ta-eye", path: 'consultar' },
         ],
         finalizado: [
-            { text: "Em desenvolvimento", icon: "ta-warning", path: "" }
+            { text: "Relatório Final e Auditoria", icon: "ta-edit", path: "" },
+            { text: "Relatório Etapas Projeto", icon: "ta-etapas", path: "" },
+            { text: "Resultados Capacitação", icon: "ta-user-id", path: "" },
+            { text: "Resultados Apoio a Infra-estrutura", icon: "ta-tubo-ensaio", path: "" },
+            { text: "Resultados Produção Técnico Cientifica", icon: "ta-torre", path: "" },
+            { text: "Resultados Propriedade Intelectual", icon: "ta-lamp", path: "" },
+            { text: "Resultados Socioambientais", icon: "ta-ambiente", path: "" },
+            { text: "Resultados Indicadores Econômicos", icon: "ta-chart", path: "" },
         ]
     };
 
