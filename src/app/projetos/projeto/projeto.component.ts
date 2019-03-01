@@ -34,9 +34,9 @@ export class ProjetoComponent implements OnInit {
             { text: "Etapas", icon: "ta-etapas", path: 'etapas' },
             { text: "Empresas", icon: "ta-empresas", path: 'empresas' },
             { text: "Recursos Humanos", icon: "ta-group", path: 'recursos-humanos' },
-            { text: "Alocação de recursos Humanos", icon: "ta-alocacao-rh", path: 'alocacao-recursos-humanos' },
+            { text: "Alocação de Recursos Humanos", icon: "ta-alocacao-rh", path: 'alocacao-recursos-humanos' },
             { text: "Recursos Materiais", icon: "ta-recurso-material", path: 'recursos-materiais' },
-            { text: "Alocação de recursos Materias", icon: "ta-alocacao-material", path: 'alocacao-recursos-materiais' },
+            { text: "Alocação de Recursos Materias", icon: "ta-alocacao-material", path: 'alocacao-recursos-materiais' },
             { text: "Extrato Financeiro Empresas", icon: "ta-extrato", path: 'extrato-financeiro-empresas' },
             { text: "Extrato Financeiro Etapas", icon: "ta-table", path: 'extrato-financeiro-etapas' }
         ],
