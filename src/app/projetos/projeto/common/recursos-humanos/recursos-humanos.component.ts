@@ -42,6 +42,7 @@ export class RecursosHumanosComponent implements OnInit {
         modalRef.result.then(result => {
             this.loadData();
         }, e => {
+            console.log(e);
 
         });
     }

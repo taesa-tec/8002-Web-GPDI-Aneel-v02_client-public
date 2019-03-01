@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Routes, ActivatedRoute } from '@angular/router';
-import { filter } from 'lodash-es';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 import { zip } from 'rxjs';
 import { Projeto } from '@app/models';
 import { AppService } from '@app/app.service';
+import { ProjetoFacade } from '@app/projetos/projeto.facade';
 
 @Component({
     selector: 'app-central-administrativa',
@@ -14,7 +14,7 @@ import { AppService } from '@app/app.service';
 export class CentralAdministrativaComponent implements OnInit {
 
     routes: Routes;
-    projeto: Projeto;
+    projeto: ProjetoFacade;
 
     menus: { [propName: string]: Array<{ text: string, path: string }> } = {
         proposta: [
@@ -40,30 +40,30 @@ export class CentralAdministrativaComponent implements OnInit {
 
     menu: Array<{ text: string, path: string }>;
 
-    constructor(private route: ActivatedRoute, protected app: AppService) {
-
-
-        const projeto$ = this.app.projetos.projetoLoaded;
-
-        const rotas$ = this.route.data.pipe(map(d => d.routes.filter(r => r.path !== "**" && r.path.length > 0)));
-
-        zip(projeto$, rotas$).subscribe(([projeto, rotas]) => {
-            this.routes = rotas;
-            this.projeto = projeto;
-        });
-    }
+    constructor(private route: ActivatedRoute, protected app: AppService) { }
 
     ngOnInit() {
-        this.setMenu();
+        const projeto$ = this.app.projetos.projetoLoaded;
+        zip(projeto$).subscribe(([projeto]) => {
+            this.projeto = projeto;
+            this.projeto.onUpdate
+                .pipe(filter(event => event.prop === 'catalogStatus'))
+                .subscribe((event) => {
+                    this.setMenu(event.value.status);
+                });
+            this.setMenu(this.projeto.catalogStatus.status);
+        });
     }
-    setMenu() {
-        switch (this.projeto.catalogStatus.status.toLocaleLowerCase()) {
+    setMenu(status) {
+        switch (status.toLocaleLowerCase()) {
             case 'proposta':
                 this.menu = this.menus.proposta;
                 break;
             case 'iniciado':
                 this.menu = this.menus.iniciado;
                 break;
+            case 'encerrado':
+                this.menu = this.menus.finalizado;
         }
     }
 

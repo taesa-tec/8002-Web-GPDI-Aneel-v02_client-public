@@ -28,6 +28,8 @@ import { DownloadFileDirective } from './download-file.directive';
 import { PromptComponent } from './prompt/prompt.component';
 import { DynamicHostDirective } from './dynamic-host.directive';
 import { N2arrayPipe } from './pipes/n2array.pipe';
+import { ErrorComponent } from './screens/error.component';
+import { DebugComponent } from './screens/debug.component';
 
 
 library.add(fas, far);
@@ -48,6 +50,8 @@ library.add(fas, far);
         PromptComponent,
         DynamicHostDirective,
         N2arrayPipe,
+        ErrorComponent,
+        DebugComponent,
     ],
     imports: [
         CommonModule,
@@ -82,6 +86,8 @@ library.add(fas, far);
         PromptComponent,
         TipComponent,
         OrdersComponent,
+        ErrorComponent,
+        DebugComponent,
 
         // Pipes
         NotDefinedPipe,

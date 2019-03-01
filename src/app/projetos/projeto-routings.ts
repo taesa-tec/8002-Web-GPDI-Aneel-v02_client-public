@@ -39,6 +39,7 @@ import { RecursoMaterialComponent as REFP_RC_Component } from './projeto/iniciad
 import { ProrrogarComponent } from './projeto/iniciado/prorrogar/prorrogar.component';
 import { PropostaBaseComponent } from './projeto/iniciado/proposta-base/proposta-base.component';
 import { ExtratoFinanceiroEmpresasComponent } from './projeto/iniciado/extrato-financeiro-empresas/extrato-financeiro-empresas.component';
+import { ErrorComponent } from '@app/shared/screens/error.component';
 
 
 export const centralPlanejamentoRoutes: Routes = [{
@@ -160,6 +161,19 @@ export const projetoIniciadoRoutes: Routes = [
     },
 ];
 
+export const projetoEncerradoRoutes: Routes = [
+    { path: '', redirectTo: "relatorio-final-auditoria", pathMatch: 'full' },
+    { path: 'relatorio-final-auditoria', component: ErrorComponent },
+    { path: 'relatorio-etapas-projeto', component: ErrorComponent },
+    { path: 'resultados-capacitacao', component: ErrorComponent },
+    { path: 'resultados-cientificos', component: ErrorComponent },
+    { path: 'resultados-infra-estrutura', component: ErrorComponent },
+    { path: 'resultados-propriedade-intelectual', component: ErrorComponent },
+    { path: 'resultados-socioambientais', component: ErrorComponent },
+    { path: 'resultados-economicos', component: ErrorComponent },
+]
+
+
 export const projetoRoutes: Routes = [].concat([
     {
         path: "proposta",
@@ -176,8 +190,8 @@ export const projetoRoutes: Routes = [].concat([
         }
     },
     {
-        path: "finalizado",
-        children: projetoIniciadoRoutes,
+        path: "encerrado",
+        children: projetoEncerradoRoutes,
         resolve: {
             projeto: ProjetoResolverService
         }

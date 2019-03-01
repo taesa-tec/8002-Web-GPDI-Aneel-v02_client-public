@@ -95,9 +95,13 @@ export class RefpListComponent implements OnInit {
 
             if (registro.tipoValor === "RH") {
                 const recurso = this.recursosHumanos.find(r => r.id === registro.recursoHumanoId);
-                registroItem.nome = recurso.nomeCompleto;
-                registroItem.categoria = "Recursos Humanos";
-                registroItem.valor = recurso.valorHora * registro.qtdHrs;
+                if (recurso) {
+                    registroItem.nome = recurso.nomeCompleto;
+                    registroItem.categoria = "Recursos Humanos";
+                    registroItem.valor = recurso.valorHora * registro.qtdHrs;
+                } else {
+                    registroItem.nome = "Não encontrado";
+                }
 
             } else {
                 const recurso = this.recursosMateriais.find(r => r.id === registro.recursoMaterialId);

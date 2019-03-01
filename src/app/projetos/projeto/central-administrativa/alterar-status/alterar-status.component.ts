@@ -3,6 +3,7 @@ import { AppService } from '@app/app.service';
 import { ProjetoStatus, Projeto, ResultadoResponse } from '@app/models';
 import { zip } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
+import { ProjetoFacade } from '@app/projetos/projeto.facade';
 
 @Component({
     selector: 'app-alterar-status',
@@ -12,7 +13,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class AlterarStatusComponent implements OnInit {
 
     status: Array<ProjetoStatus>;
-    projeto: Projeto;
+    projeto: ProjetoFacade;
 
     form: FormGroup;
     catalogFC: FormControl;
@@ -38,14 +39,14 @@ export class AlterarStatusComponent implements OnInit {
     }
 
     save() {
-        this.app.projetos.editar(this.projeto).subscribe(result => {
+        this.projeto.save().subscribe(result => {
             if (result.sucesso) {
                 this.projeto.catalogStatus = this.status.find(s => s.id === parseInt(this.catalogFC.value, 10));
 
                 this.app.alert("Status alterado com sucesso");
 
                 this.app.router.navigate(['dashboard', 'projeto', this.projeto.id, 'central-administrativa']);
-                
+
             } else {
                 this.app.alert(result.inconsistencias.join(', '), 'Erro!');
             }

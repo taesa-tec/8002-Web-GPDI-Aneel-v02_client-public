@@ -1,6 +1,7 @@
 import { ProjetosService } from './projetos.service';
 import { Projeto, Empresa, ProjetoStatus, RegistroREFP, ProrrogarProjetoRequest } from '@app/models';
-import { throwError } from 'rxjs';
+import { throwError, Subject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 
 abstract class ProjetoModule {
@@ -94,6 +95,7 @@ class ProjetoREFP extends ProjetoModule {
         return this.service.removerRegistroREFP(id);
     }
 }
+
 export class ProjetoFacade implements Projeto {
     created: string;
     id: number;
@@ -138,54 +140,86 @@ export class ProjetoFacade implements Projeto {
         REFP: ProjetoREFP;
     };
 
-    constructor(projeto: Projeto, protected service: ProjetosService) {
-        Object.assign(this, projeto);
+    onUpdate = new Subject<{ prop: string; value: any; prev: any }>();
+    onSave = new Subject<Projeto>();
+
+    constructor(protected _projeto: Projeto, protected _service: ProjetosService) {
+
+        Object.keys(_projeto).forEach(key => {
+            Object.defineProperty(this, key, {
+                get: () => this._projeto[key],
+                set: (value) => {
+                    const prev = this._projeto[key];
+                    this._projeto[key] = value;
+                    this.onUpdate.next({ prop: key, value, prev });
+                }
+            });
+        });
+
         this.relations = {
-            tema: new ProjetoTema(this.id, this.service),
-            etapas: new ProjetoEtapas(this.id, this.service),
-            produtos: new ProjetoProdutos(this.id, this.service),
-            empresas: new ProjetoEmpresas(this.id, this.service),
-            recursosHumanos: new ProjetoRH(this.id, this.service),
-            recursosMateriais: new ProjetoRM(this.id, this.service),
-            REFP: new ProjetoREFP(this.id, this.service),
+            tema: new ProjetoTema(this.id, this._service),
+            etapas: new ProjetoEtapas(this.id, this._service),
+            produtos: new ProjetoProdutos(this.id, this._service),
+            empresas: new ProjetoEmpresas(this.id, this._service),
+            recursosHumanos: new ProjetoRH(this.id, this._service),
+            recursosMateriais: new ProjetoRM(this.id, this._service),
+            REFP: new ProjetoREFP(this.id, this._service),
         };
+
+    }
+
+    save() {
+        const projeto = Object.assign({}, this._projeto);
+        if (this.id) {
+            return this._service.editar(projeto).pipe(tap(r => this.onSave.next(projeto)));
+        } else {
+            return this._service.criarProjeto(projeto).pipe(tap(r => this.onSave.next(projeto)));
+        }
+    }
+    delete() {
+        if (this.id) {
+            return this._service.removerProjeto(this.id);
+        }
+    }
+    toRequest() {
+        return Object.assign({}, this._projeto);
     }
 
     prorrogar(prorrogacao: ProrrogarProjetoRequest) {
-        return this.service.prorrogarProjeto(prorrogacao);
+        return this._service.prorrogarProjeto(prorrogacao);
     }
     getOrcamentoEmpresas() {
-        return this.service.getOrcamentoEmpresas(this.aplicabilidade.id);
+        return this._service.getOrcamentoEmpresas(this.aplicabilidade.id);
     }
     getOrcamentoEtapas() {
-        return this.service.getOrcamentoEtapas(this.id);
+        return this._service.getOrcamentoEtapas(this.id);
     }
     obterXmls() {
-        return this.service.obterXmls(this.id);
+        return this._service.obterXmls(this.id);
     }
     obterLogDuto() {
-        return this.service.obterLogDuto(this.id);
+        return this._service.obterLogDuto(this.id);
     }
     gerarXmlProjetoPed(versao: number) {
-        return this.service.gerarXmlProjetoPed(this.id, versao);
+        return this._service.gerarXmlProjetoPed(this.id, versao);
     }
     gerarXmlInteresseExecucao(versao: number) {
-        return this.service.gerarXmlInteresseExecucao(this.id, versao);
+        return this._service.gerarXmlInteresseExecucao(this.id, versao);
     }
     gerarXmlInicioExecucao(versao: number) {
-        return this.service.gerarXmlInicioExecucao(this.id, versao);
+        return this._service.gerarXmlInicioExecucao(this.id, versao);
     }
     gerarXmlProrrogacao(versao: number) {
-        return this.service.gerarXmlProrrogacao(this.id, versao);
+        return this._service.gerarXmlProrrogacao(this.id, versao);
     }
     downloadXml(id) {
-        return this.service.downloadXML(this.id, id);
+        return this._service.downloadXML(this.id, id);
     }
     orcamentoGerarCSV() {
-        return this.service.exportarExtratoEmpresas(this.id);
+        return this._service.exportarExtratoEmpresas(this.id);
     }
     extratoGerarCSV() {
-        return this.service.exportarExtratoREFP(this.id);
+        return this._service.exportarExtratoREFP(this.id);
     }
 
 }

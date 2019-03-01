@@ -2,12 +2,13 @@ import { Component, OnInit, ViewChild, ViewChildren, QueryList, AfterViewInit } 
 import { Routes, Route, ActivatedRoute, RouterOutlet } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import filter from "lodash-es/filter";
 import { Projeto, ProjetoStatus } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 
 import { projetoPlanejamentoRoutes, projetoRoutes, projetoIniciadoRoutes } from '@app/projetos/projeto-routings';
 import { AppService } from '@app/app.service';
+import { ProjetoFacade } from '../projeto.facade';
+import { filter } from 'rxjs/operators';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class ProjetoComponent implements OnInit {
     projetoPlanejamentoRoutes: Routes;
     projetoIniciadoRoutes: Routes;
     projetoRotas = projetoRoutes;
-    projeto: Projeto;
+    projeto: ProjetoFacade;
 
     menus: { [propName: string]: Array<{ text: string, icon: string, path: string }> } = {
         proposta: [
@@ -49,14 +50,14 @@ export class ProjetoComponent implements OnInit {
             { text: "Consultar Dados Planejamento Projeto", icon: "ta-eye", path: 'consultar' },
         ],
         finalizado: [
-            { text: "Relatório Final e Auditoria", icon: "ta-edit", path: "" },
-            { text: "Relatório Etapas Projeto", icon: "ta-etapas", path: "" },
-            { text: "Resultados Capacitação", icon: "ta-user-id", path: "" },
-            { text: "Resultados Apoio a Infra-estrutura", icon: "ta-tubo-ensaio", path: "" },
-            { text: "Resultados Produção Técnico Cientifica", icon: "ta-torre", path: "" },
-            { text: "Resultados Propriedade Intelectual", icon: "ta-lamp", path: "" },
-            { text: "Resultados Socioambientais", icon: "ta-ambiente", path: "" },
-            { text: "Resultados Indicadores Econômicos", icon: "ta-chart", path: "" },
+            { text: "Relatório Final e Auditoria", icon: "ta-edit", path: "relatorio-final-auditoria" },
+            { text: "Relatório Etapas Projeto", icon: "ta-etapas", path: "relatorio-etapas-projeto" },
+            { text: "Resultados Capacitação", icon: "ta-user-id", path: "resultados-capacitacao" },
+            { text: "Resultados Apoio a Infra-estrutura", icon: "ta-tubo-ensaio", path: "resultados-infra-estrutura" },
+            { text: "Resultados Produção Técnico Cientifica", icon: "ta-torre", path: "resultados-cientificos" },
+            { text: "Resultados Propriedade Intelectual", icon: "ta-lamp", path: "resultados-propriedade-intelectual" },
+            { text: "Resultados Socioambientais", icon: "ta-ambiente", path: "resultados-socioambientais" },
+            { text: "Resultados Indicadores Econômicos", icon: "ta-chart", path: "resultados-economicos" },
         ]
     };
 
@@ -73,21 +74,29 @@ export class ProjetoComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.route.data.subscribe((data: { projeto: Projeto }) => {
-            this.projeto = data.projeto;
-            this.setMenu();
-            this.app.projetos.projetoUpdated.subscribe(projeto => {
-                this.setMenu();
-            });
+        this.app.projetos.projetoLoaded.subscribe(projeto => {
+            this.projeto = projeto;
+            this.setMenu(this.projeto.catalogStatus.status);
+            this.projeto.onUpdate
+                .pipe(filter(event => event.prop === 'catalogStatus'))
+                .subscribe((event) => {
+                    this.setMenu(event.value.status);
+                });
+
         });
     }
-    setMenu() {
-        switch (this.projeto.catalogStatus.status.toLocaleLowerCase()) {
-            case 'proposta':
-                this.menu = this.menus.proposta;
-                break;
+    setMenu(status: string) {
+
+        switch (status.toLocaleLowerCase()) {
+
             case 'iniciado':
                 this.menu = this.menus.iniciado;
+                break;
+            case 'encerrado':
+                this.menu = this.menus.finalizado;
+                break;
+            default:
+                this.menu = this.menus.proposta;
                 break;
         }
     }

@@ -6,7 +6,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { MeusProjetosComponent } from '@app/dashboard/meus-projetos/meus-projetos.component';
 import { GerenciarUsuariosComponent } from './gerenciar-usuarios/gerenciar-usuarios.component';
 
-import { projetoPlanejamentoRoutes, projetoRoutes, projetoIniciadoRoutes, centralPlanejamentoRoutes } from '@app/projetos/projeto-routings';
+import { projetoPlanejamentoRoutes, projetoRoutes, projetoIniciadoRoutes, centralPlanejamentoRoutes, projetoEncerradoRoutes } from '@app/projetos/projeto-routings';
 import { ProjetoComponent } from '@app/projetos/projeto/projeto.component';
 
 import { AuthGuard } from '@app/auth/auth.guard';
@@ -45,7 +45,7 @@ const routes: Routes = [
 
             },
             {
-                path: 'projeto/:id/finalizado', component: ProjetoComponent, children: projetoRoutes,
+                path: 'projeto/:id/encerrado', component: ProjetoComponent, children: projetoEncerradoRoutes,
                 resolve: {
                     projeto: ProjetoResolverService
                 },

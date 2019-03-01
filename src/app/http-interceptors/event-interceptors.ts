@@ -18,7 +18,8 @@ export class EventInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         const cachedResponse = this.cache.get(req);
-        const request = cachedResponse ? of(cachedResponse) : this.sendRequest(req, next, this.cache);
+        // const request = cachedResponse ? of(cachedResponse) : this.sendRequest(req, next, this.cache);
+        const request = this.sendRequest(req, next, this.cache);
 
         return request.pipe(tap(event => {
             if (event instanceof HttpResponse) {
