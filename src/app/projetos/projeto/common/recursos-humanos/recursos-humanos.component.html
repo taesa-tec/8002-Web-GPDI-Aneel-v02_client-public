@@ -25,7 +25,7 @@
                     <th>
                         <div class="d-flex align-items-center">
                             <span class="mx-2">Empresa</span>
-                            <app-handler-order [current]="listOrder" field="EmpresaNome" (order)=order($event)></app-handler-order>
+                            <app-handler-order [current]="listOrder" field="empresa.nome" (order)=order($event)></app-handler-order>
                         </div>
 
                     </th>
@@ -55,7 +55,7 @@
             </tr>
             <tr *ngFor="let recursoHumano of recursosHumano | orderBy:listOrder.field:listOrder.direction">
                 <td>{{recursoHumano.nomeCompleto}}</td>
-                <td>{{recursoHumano.EmpresaNome}}</td>
+                <td>{{recursoHumano.empresa.nome}}</td>
                 <td>{{recursoHumano.funcaoNome}}</td>
                 <td>{{recursoHumano.titulacaoNome}}</td>
                 <td>

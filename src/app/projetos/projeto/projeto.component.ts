@@ -7,7 +7,7 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 
 import { projetoPlanejamentoRoutes, projetoRoutes, projetoIniciadoRoutes } from '@app/projetos/projeto-routings';
 import { AppService } from '@app/app.service';
-import { ProjetoFacade } from '../projeto.facade';
+import { ProjetoFacade } from '@app/facades';
 import { filter } from 'rxjs/operators';
 
 

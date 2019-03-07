@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Projeto, Funcao, Titulacao, EmpresaProjeto, Empresa, AppValidators, RecursoHumano } from '@app/models';
+import { Projeto, Funcoes, Graduacoes, EmpresaProjeto, Empresa, AppValidators, RecursoHumano } from '@app/models';
 import { AppService } from '@app/app.service';
 import { zip } from 'rxjs';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
@@ -16,8 +16,8 @@ import { CurrencyPipe } from '@angular/common';
 export class RecursoHumanoFormComponent implements OnInit {
 
     projeto: Projeto;
-    funcoes = Funcao;
-    titulacao = Titulacao;
+    funcoes = Funcoes;
+    titulacao = Graduacoes;
     empresas: Array<any>;
     empresasCatalog: Array<Empresa>;
     recursoHumano: RecursoHumano;

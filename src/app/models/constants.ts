@@ -111,7 +111,7 @@ export const CategoriasContabeis: Array<TextValue> = [
 
 ];
 
-export const Funcao: Array<TextValue> = [
+export const Funcoes: Array<TextValue> = [
     { text: "Coordenador", value: "CO" },
     { text: "Gerente", value: "GE" },
     { text: "Pesquisador", value: "PE" },
@@ -120,7 +120,7 @@ export const Funcao: Array<TextValue> = [
     { text: "Auxiliar Administrativo", value: "AA" }
 ];
 
-export const Titulacao: Array<TextValue> = [
+export const Graduacoes: Array<TextValue> = [
     { text: "Doutor", value: "DO" },
     { text: "Mestre", value: "ME" },
     { text: "Especialista", value: "ES" },

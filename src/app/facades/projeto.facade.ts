@@ -1,8 +1,10 @@
 import { ProjetosService } from '../projetos/projetos.service';
 import { Projeto, Empresa, ProjetoStatus, RegistroREFP, ProrrogarProjetoRequest } from '@app/models';
 import { throwError, Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { GenericFacade } from './generic.facade';
+import { EmpresaProjetoFacade } from './empresa.facade';
+import { RecursoHumanoFacade } from './recurso-humano.facade';
 
 
 abstract class ProjetoModule {
@@ -26,13 +28,16 @@ class ProjetoProdutos extends ProjetoModule {
 }
 class ProjetoEmpresas extends ProjetoModule {
     get() {
-        return this.service.getEmpresas(this.id);
+        return this.service.getEmpresas(this.id)
+            .pipe(map(empresas => empresas.map(e => new EmpresaProjetoFacade(e))));
     }
 }
 
 class ProjetoRH extends ProjetoModule {
     get() {
-        return this.service.getRH(this.id);
+        return this.service.getRH(this.id).pipe()
+            .pipe(map(rh => rh.map(r => new RecursoHumanoFacade(r))));
+
     }
     getAlocacao() {
         return this.service.getAlocacaoRH(this.id);

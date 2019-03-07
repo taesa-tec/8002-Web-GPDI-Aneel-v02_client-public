@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
 import { AppService } from '@app/app.service';
 import { zip, of } from 'rxjs';
-import { Projeto, RecursoHumano, Funcao, Titulacao } from '@app/models';
+import { Projeto, RecursoHumano, Funcoes, Graduacoes } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 
 @Component({
@@ -16,9 +16,7 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 })
 export class RecursosHumanosComponent implements OnInit {
 
-    recursosHumano: Array<any>;
-    funcoes = Funcao;
-    titualcoes = Titulacao;
+    recursosHumano: Array<RecursoHumano>;
     projeto: Projeto;
 
     listOrder: { field: string; direction: 'asc' | 'desc'; } = {
@@ -56,31 +54,17 @@ export class RecursosHumanosComponent implements OnInit {
         const data$ = this.app.projetos.projetoLoaded.pipe(
             mergeMap(p => zip(
                 of(p),
-                this.app.projetos.getRH(p.id),
+                p.relations.recursosHumanos.get(),
+                p.relations.empresas.get(),
                 this.app.catalogo.empresas(),
-                this.app.projetos.getEmpresas(p.id)
             ))
         );
 
-        data$.subscribe(([projeto, recurso_humano, catalog_empresas, empresas]) => {
+        data$.subscribe(([projeto, recursos_humanos, empresas, catalog_empresas]) => {
             this.projeto = projeto;
-
-            this.recursosHumano = recurso_humano.map(_rec => {
-
-                let rec = Object.assign({}, _rec);
-
-                rec.funcaoNome = this.funcoes.find(e => rec.funcaoValor === e.value).text;
-                rec.titulacaoNome = this.titualcoes.find(e => rec.titulacaoValor === e.value).text;
-
-                rec.catalogEmpresaId = empresas.find(e => rec.empresaId === e.id).catalogEmpresaId;
-
-                // rec.EmpresaNome = empresas.razaoSocial ? empresas.razaoSocial : '';
-
-                if (rec.catalogEmpresaId) {
-                    rec.catalogEmpresa = catalog_empresas.find(e => rec.catalogEmpresaId === e.id);
-                    rec.EmpresaNome = rec.catalogEmpresa.nome;
-                }
-
+            this.recursosHumano = recursos_humanos.map(rec => {
+                rec.funcaoNome = Funcoes.find(e => rec.funcaoValor === e.value).text;
+                rec.titulacaoNome = Graduacoes.find(e => rec.titulacaoValor === e.value).text;
                 return rec;
             });
             this.loading.hide();

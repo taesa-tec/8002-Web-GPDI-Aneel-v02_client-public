@@ -26,7 +26,7 @@ import {
 } from '@app/models';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { tap, share, map } from 'rxjs/operators';
-import { ProjetoFacade } from './projeto.facade';
+import { ProjetoFacade } from '@app/facades';
 import { FileService } from '@app/shared/file.service';
 import { RequestCacheService } from '@app/request-cache.service';
 import { EmpresaProjetoFacade } from '@app/facades';
