@@ -4,7 +4,7 @@
         <i class="ta-cancel-circle"></i>
     </button>
 </div>
-<form class="modal-body" [formGroup]="form">
+<form class="modal-body" [formGroup]="form" *ngIf="form">
     <div class="row">
         <div class="col-6">
             <div class="form-group">
@@ -12,7 +12,7 @@
                 <label for="">Empresa</label>
                 <select name="" id="" class="form-control" formControlName="empresaId">
                     <option value="">Selecione</option>
-                    <option [value]="empresa.id" *ngFor="let empresa of empresas">{{empresa.Empresa}}</option>
+                    <option [value]="empresa.id" *ngFor="let empresa of empresas">{{empresa.nome}}</option>
                 </select>
             </div>
         </div>

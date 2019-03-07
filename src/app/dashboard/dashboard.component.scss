@@ -1,6 +1,20 @@
-header {
-    background: url("/assets/fundo.png") no-repeat center;
-    background-size: 100%;
+:host {
+    height: 100%;
+    grid-template-areas: 'header''content';
+    grid-template-rows: 110px auto;
+    display: grid;
+
+    header {
+        background: url("/assets/fundo.png") no-repeat center;
+        background-size: 100%;
+        grid-area: header;
+
+    }
+
+    .wrap-outlet {
+        grid-area: content;
+
+    }
 }
 
 .wrap-menu-dropdown {

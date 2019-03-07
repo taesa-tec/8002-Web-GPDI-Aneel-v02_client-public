@@ -7,7 +7,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { zip } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { EmpresaProjetoFacade } from '@app/facades';
+import { EmpresaProjetoFacade, ProjetoFacade } from '@app/facades';
 
 @Component({
     selector: 'app-alocar-recurso-material-form',
@@ -23,7 +23,7 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
     empresas: Array<EmpresaProjetoFacade>;
     etapas: Array<any>;
     alocacao: AlocacaoRM;
-    projeto: Projeto;
+    projeto: ProjetoFacade;
     form: FormGroup;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
@@ -111,8 +111,8 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
         this.loading.show();
 
         const recm$ = this.app.projetos.getRecursoMaterial(this.projeto.id);
-        const empresa$ = this.app.projetos.getEmpresas(this.projeto.id);
-        const etapa$ = this.app.projetos.getEtapas(this.projeto.id);
+        const empresa$ = this.projeto.relations.empresas.get();
+        const etapa$ = this.projeto.relations.etapas.get();
         const empresasCatalog$ = this.app.catalogo.empresas();
 
         zip(recm$, empresa$, etapa$, empresasCatalog$).subscribe(([recursosMaterias, empresas, etapas, empresasCatalog]) => {

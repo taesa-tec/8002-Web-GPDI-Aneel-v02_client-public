@@ -7,6 +7,7 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CurrencyPipe } from '@angular/common';
+import { ProjetoFacade } from '@app/facades';
 
 @Component({
     selector: 'app-recurso-humano-form',
@@ -15,7 +16,7 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class RecursoHumanoFormComponent implements OnInit {
 
-    projeto: Projeto;
+    projeto: ProjetoFacade;
     funcoes = Funcoes;
     titulacao = Graduacoes;
     empresas: Array<any>;
@@ -41,12 +42,25 @@ export class RecursoHumanoFormComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.setup();
+
         this.loadData();
     }
 
-    setup() {
+    loadData() {
+        this.loading.show();
+        const empresas$ = this.projeto.relations.empresas.get();
+        const empresasCatalog$ = this.app.catalogo.empresas();
 
+        zip(empresas$, empresasCatalog$).subscribe(([empresas, empresasCatalog]) => {
+
+            this.empresasCatalog = empresasCatalog;
+            this.empresas = empresas;
+            this.setup();
+            this.loading.hide();
+        });
+    }
+
+    setup() {
         const cpf = new FormControl(this.recursoHumano.cpf || '', [Validators.required, AppValidators.cpf]);
         const passaporte = new FormControl(this.recursoHumano.passaporte || '', Validators.required);
         const empresaCtrl = new FormControl(this.recursoHumano.empresaId || '', Validators.required);
@@ -61,10 +75,9 @@ export class RecursoHumanoFormComponent implements OnInit {
             nacionalidade: this.nacionalidade,
             urlCurriculo: new FormControl(this.recursoHumano.urlCurriculo || '', [Validators.required, Validators.pattern(/^https?:\/\/(.+)\.(.+)/)]),
         });
-
-
         empresaCtrl.valueChanges.subscribe(value => {
             const _empresa = this.empresas.find(e => e.id === parseInt(value, 10));
+
             if (_empresa.classificacaoValor !== "Executora") {
                 this.nacionalidade.reset({ value: 'Brasileiro', disabled: true });
             } else {
@@ -93,6 +106,49 @@ export class RecursoHumanoFormComponent implements OnInit {
         if (this.recursoHumano.id !== undefined) {
             this.form.addControl('id', new FormControl(this.recursoHumano.id));
         }
+    }
+
+
+
+    submit() {
+        if (this.form.valid) {
+
+            const request = this.recursoHumano.id ? this.app.projetos.editarRH(this.form.value) : this.app.projetos.criarRH(this.form.value);
+            this.loading.show();
+            request.subscribe(result => {
+                if (result.sucesso) {
+                    this.activeModal.close(result);
+                    this.logProjeto("Recurso Humano");
+                } else {
+                    this.app.alert(result.inconsistencias.join(', '));
+                }
+                this.loading.hide();
+            });
+        }
+    }
+
+
+
+    excluir() {
+        this.app.confirm("Tem certeza que deseja excluir esta pessoa?", "Confirmar Exclusão")
+            .then(result => {
+                if (result) {
+                    this.loading.show();
+                    this.app.projetos.delRH(this.recursoHumano.id).subscribe(resultDelete => {
+                        this.loading.hide();
+                        if (resultDelete.sucesso) {
+                            this.logProjeto("Recurso Humano", "Delete");
+                            this.activeModal.close('deleted');
+                        } else {
+                            this.app.alert(resultDelete.inconsistencias.join(', '));
+                        }
+                    }, (error: HttpErrorResponse) => {
+                        this.loading.hide();
+                        this.app.alert(error.message);
+                    });
+                }
+
+            });
     }
 
     logProjeto(tela: string, acao?: string) {
@@ -167,72 +223,5 @@ export class RecursoHumanoFormComponent implements OnInit {
             }
         });
 
-    }
-
-    submit() {
-        if (this.form.valid) {
-
-            const request = this.recursoHumano.id ? this.app.projetos.editarRH(this.form.value) : this.app.projetos.criarRH(this.form.value);
-            this.loading.show();
-            request.subscribe(result => {
-                if (result.sucesso) {
-                    this.activeModal.close(result);
-                    this.logProjeto("Recurso Humano");
-                } else {
-                    this.app.alert(result.inconsistencias.join(', '));
-                }
-                this.loading.hide();
-            });
-        }
-    }
-
-    loadData() {
-        this.loading.show();
-        const empresas$ = this.app.projetos.getEmpresas(this.projeto.id);
-        const empresasCatalog$ = this.app.catalogo.empresas();
-
-        zip(empresas$, empresasCatalog$).subscribe(([empresas, empresasCatalog]) => {
-
-            this.empresasCatalog = empresasCatalog;
-
-            const _empresas = empresas.map(empresa => {
-                const em = Object.assign({
-                    Empresa: empresa.razaoSocial ? empresa.razaoSocial : '',
-                    catalogEmpresa: null
-                }, empresa);
-
-                if (empresa.catalogEmpresaId) {
-                    em.catalogEmpresa = empresasCatalog.find(e => empresa.catalogEmpresaId === e.id);
-                    em.Empresa = empresa.catalogEmpresa.nome;
-                }
-                return em;
-            });
-
-            this.empresas = _empresas;
-
-            this.loading.hide();
-        });
-    }
-
-    excluir() {
-        this.app.confirm("Tem certeza que deseja excluir esta pessoa?", "Confirmar Exclusão")
-            .then(result => {
-                if (result) {
-                    this.loading.show();
-                    this.app.projetos.delRH(this.recursoHumano.id).subscribe(resultDelete => {
-                        this.loading.hide();
-                        if (resultDelete.sucesso) {
-                            this.logProjeto("Recurso Humano", "Delete");
-                            this.activeModal.close('deleted');
-                        } else {
-                            this.app.alert(resultDelete.inconsistencias.join(', '));
-                        }
-                    }, (error: HttpErrorResponse) => {
-                        this.loading.hide();
-                        this.app.alert(error.message);
-                    });
-                }
-
-            });
     }
 }

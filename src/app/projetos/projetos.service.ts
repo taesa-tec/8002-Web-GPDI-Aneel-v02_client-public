@@ -156,8 +156,8 @@ export class ProjetosService {
     }
 
     getEmpresas(id: number) {
-        return this.http.get<Array<EmpresaProjeto>>(`Projeto/${id}/Empresas`)
-            .pipe(map(empresas => empresas.map(e => new EmpresaProjetoFacade(e))));
+        return this.http.get<Array<EmpresaProjeto>>(`Projeto/${id}/Empresas`);
+            
     }
 
     delEmpresa(id: number) {

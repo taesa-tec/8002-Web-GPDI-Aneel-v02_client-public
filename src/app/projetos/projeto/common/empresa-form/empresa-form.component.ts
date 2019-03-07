@@ -5,6 +5,7 @@ import { AppService } from '@app/app.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ProjetoFacade } from '@app/facades';
 
 @Component({
     selector: 'app-empresa-form',
@@ -16,7 +17,7 @@ export class EmpresaFormComponent implements OnInit, AfterViewInit {
 
     @Input() empresa: EmpresaProjeto;
 
-    projeto: Projeto;
+    projeto: ProjetoFacade;
     projetos_empresas: Array<EmpresaProjeto> = [];
     empresas: Array<Empresa>;
     estados: Array<UF>;

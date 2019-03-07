@@ -6,7 +6,7 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { zip } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { EmpresaProjetoFacade } from '@app/facades';
+import { EmpresaProjetoFacade, ProjetoFacade } from '@app/facades';
 
 @Component({
     selector: 'app-alocar-recurso-humano-form',
@@ -15,7 +15,7 @@ import { EmpresaProjetoFacade } from '@app/facades';
 })
 export class AlocarRecursoHumanoFormComponent implements OnInit {
 
-    projeto: Projeto;
+    projeto: ProjetoFacade;
     recursosHumanos: Array<RecursoHumano>;
     recursoHumano: RecursoHumano;
     etapas: Array<Etapa>;
@@ -174,9 +174,9 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
 
     loadData() {
         this.loading.show();
-        const recursosHumanos$ = this.app.projetos.getRH(this.projeto.id);
-        const etapas$ = this.app.projetos.getEtapas(this.projeto.id);
-        const empresas$ = this.app.projetos.getEmpresas(this.projeto.id);
+        const recursosHumanos$ = this.projeto.relations.recursosHumanos.get();
+        const etapas$ = this.projeto.relations.etapas.get(); // this.app.projetos.getEtapas(this.projeto.id);
+        const empresas$ = this.projeto.relations.empresas.get();
 
         zip(recursosHumanos$, etapas$, empresas$).subscribe(([recursosHumanos, etapas, empresas]) => {
             this.recursosHumanos = recursosHumanos;
