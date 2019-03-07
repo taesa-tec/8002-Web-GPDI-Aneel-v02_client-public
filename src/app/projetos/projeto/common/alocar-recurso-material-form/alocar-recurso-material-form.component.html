@@ -20,7 +20,7 @@
                 <label for="">Empresa Financiadora</label>
                 <select name="" id="" class="form-control" formControlName="empresaFinanciadoraId">
                     <option value="">Selecione</option>
-                    <option [value]="empresa.id" *ngFor="let empresa of empresaFinanciadora">{{empresa.Empresa}}</option>
+                    <option [value]="empresa.id" *ngFor="let empresa of empresasFinanciadoras">{{empresa.nome}} ({{empresa.id}})</option>
                 </select>
             </div>
         </div>
@@ -29,7 +29,7 @@
                 <label for="">Empresa Recebedora</label>
                 <select name="" id="" class="form-control" formControlName="empresaRecebedoraId">
                     <option value="">Selecione</option>
-                    <option [value]="emR.id" *ngFor="let emR of empresaRecebedora">{{emR.Empresa}}</option>
+                    <option [value]="emR.id" *ngFor="let emR of empresasRecebedoras">{{emR.nome}}</option>
                 </select>
             </div>
         </div>

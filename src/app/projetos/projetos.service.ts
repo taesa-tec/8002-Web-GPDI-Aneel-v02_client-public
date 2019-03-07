@@ -25,10 +25,11 @@ import {
     ProrrogarProjetoRequest
 } from '@app/models';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
-import { tap, share } from 'rxjs/operators';
+import { tap, share, map } from 'rxjs/operators';
 import { ProjetoFacade } from './projeto.facade';
 import { FileService } from '@app/shared/file.service';
 import { RequestCacheService } from '@app/request-cache.service';
+import { EmpresaProjetoFacade } from '@app/facades';
 
 @Injectable({
     providedIn: 'root'
@@ -155,7 +156,8 @@ export class ProjetosService {
     }
 
     getEmpresas(id: number) {
-        return this.http.get<Array<EmpresaProjeto>>(`Projeto/${id}/Empresas`);
+        return this.http.get<Array<EmpresaProjeto>>(`Projeto/${id}/Empresas`)
+            .pipe(map(empresas => empresas.map(e => new EmpresaProjetoFacade(e))));
     }
 
     delEmpresa(id: number) {

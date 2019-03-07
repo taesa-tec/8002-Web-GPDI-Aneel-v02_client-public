@@ -3,7 +3,7 @@ import { AppService } from '@app/app.service';
 import { ProjetoStatus, Projeto, ResultadoResponse } from '@app/models';
 import { zip } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
-import { ProjetoFacade } from '@app/projetos/projeto.facade';
+import { ProjetoFacade } from '@app/facades';
 
 @Component({
     selector: 'app-alterar-status',
@@ -26,6 +26,7 @@ export class AlterarStatusComponent implements OnInit {
 
         zip(status$, projeto$).subscribe(([status, projeto]) => {
             this.projeto = projeto;
+
             this.status = status;
             this.catalogFC = new FormControl(this.projeto.catalogStatusId);
             this.form = new FormGroup({

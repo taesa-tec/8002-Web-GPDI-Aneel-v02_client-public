@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '@app/app.service';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ProjetoFacade } from '@app/projetos/projeto.facade';
+import { ProjetoFacade } from '@app/facades';
 import { FormControl, Validators, FormGroup, FormArray } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Produto, EtapaProduto } from '@app/models';

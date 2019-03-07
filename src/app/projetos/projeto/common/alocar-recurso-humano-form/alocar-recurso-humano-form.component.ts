@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProjetosService } from '@app/projetos/projetos.service';
 import { AppService } from '@app/app.service';
 import { Projeto, Etapa, EmpresaProjeto, RecursoHumano, AlocacaoRH } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { zip } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { EmpresaProjetoFacade } from '@app/facades';
 
 @Component({
     selector: 'app-alocar-recurso-humano-form',
@@ -16,10 +16,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class AlocarRecursoHumanoFormComponent implements OnInit {
 
     projeto: Projeto;
-    recursosHumano: Array<RecursoHumano>;
+    recursosHumanos: Array<RecursoHumano>;
+    recursoHumano: RecursoHumano;
     etapas: Array<Etapa>;
-    empresasFinanciadora: Array<EmpresaProjeto>;
-    empresas: Array<EmpresaProjeto>;
+    // empresasFinanciadoras: Array<EmpresaProjetoFacade>;
+    empresas: Array<EmpresaProjetoFacade>;
     form: FormGroup;
     horasAlocadas: Array<any> = [];
     etapaMarcada = false;
@@ -41,8 +42,20 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
             { text: "Alocar Recurso Humano", icon: 'ta-plus-circle' };
     }
 
+    get empresasFinanciadoras() {
+        if (this.recursoHumano) {
+            return this.empresas.filter(item => {
+                if (this.recursoHumano.empresa !== undefined && this.recursoHumano.empresa.classificacaoValor !== "Executora") {
+                    return this.recursoHumano.empresa.id === item.id;
+                }
+                return item.classificacaoValor !== "Executora";
+            });
+        }
+        return [];
+    }
+
     ngOnInit() {
-        this.setup();
+
         this.loadData();
     }
 
@@ -113,8 +126,8 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
             etapaId: etapa,
             empresaId: new FormControl(this.alocacao.empresaId || '', Validators.required),
             justificativa: new FormControl(this.alocacao.justificativa || '', Validators.required),
-            //valorHora: new FormControl('',Validators.required),
-            //hrsMes1: new FormControl('',Validators.required), esta na funções horasAlocadas()
+            // valorHora: new FormControl('',Validators.required),
+            // hrsMes1: new FormControl('',Validators.required), esta na funções horasAlocadas()
         });
 
         this._horaAlocadas();
@@ -134,101 +147,56 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
 
         recursoHumano.valueChanges.subscribe(value => {
 
-            const rh = this.recursosHumano.find(e => e.id === parseInt(value, 10));
+            this.form.get('empresaId').setValue('');
 
-            const empresa = this.empresas.find(e => e.id === rh.empresaId);
+            if (value !== '') {
 
-            if (empresa.classificacaoValor !== undefined && (empresa.classificacaoValor === 'Proponente' || empresa.classificacaoValor === 'Energia')) {
-                this.maxHora = 172;
+                const rh = this.recursosHumanos.find(e => e.id === parseInt(value, 10));
+
+                const empresa = this.empresas.find(e => e.id === rh.empresaId);
+
+                if (empresa.classificacaoValor !== undefined && (empresa.classificacaoValor === 'Proponente' || empresa.classificacaoValor === 'Energia')) {
+                    this.maxHora = 172;
+                }
             }
+            this.setRecurso();
+
 
         });
 
         if (this.alocacao.id !== undefined) {
             this.form.addControl('id', new FormControl(this.alocacao.id));
         }
+
+        this.setRecurso();
+        this.form.updateValueAndValidity();
     }
 
     loadData() {
         this.loading.show();
-        const rh$ = this.app.projetos.getRH(this.projeto.id);
+        const recursosHumanos$ = this.app.projetos.getRH(this.projeto.id);
         const etapas$ = this.app.projetos.getEtapas(this.projeto.id);
         const empresas$ = this.app.projetos.getEmpresas(this.projeto.id);
 
-        zip(rh$, etapas$, empresas$).subscribe(([rh, etapas, empresas]) => {
-
-            this.recursosHumano = rh;
+        zip(recursosHumanos$, etapas$, empresas$).subscribe(([recursosHumanos, etapas, empresas]) => {
+            this.recursosHumanos = recursosHumanos;
             this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; });
             this.empresas = empresas;
-            this.empresasFinanciadora = empresas.filter(item => item.classificacaoValor !== "Executora");
             this.loading.hide();
+            this.setup();
         });
     }
 
-    logProjeto(tela: string, acao?: string) {
-
-        const logProjeto = {
-            userId: this.app.users.currentUser.id,
-            projetoId: this.projeto.id,
-            tela,
-            acao: acao || "Create",
-            statusAnterior: "",
-            statusNovo: ""
-        };
-
-        let horas_string = "";
-
-        const rh = this.recursosHumano.find(e => e.id === parseInt(this.form.get("recursoHumanoId").value, 10));
-        const empresa = this.empresas.find(e => e.id === parseInt(this.form.get("empresaId").value, 10));
-        const etapa = this.etapas.find(e => e.id === parseInt(this.form.get("etapaId").value, 10));
-        const justificativa = this.form.get("justificativa").value;
-
-        this.horasAlocadas.forEach(horas => {
-            horas_string += horas.form.value + "h ";
-        });
-
-        logProjeto.statusNovo = `<b>Recurso Humano:</b> ${rh.nomeCompleto}<br>
-        <b>Etapa Número:</b> ${etapa.numeroEtapa}<br>
-        <b>Empresa Financiadora:</b> ${empresa.catalogEmpresa ? empresa.catalogEmpresa.nome : empresa.razaoSocial}<br>
-        <b>Horas:</b> ${horas_string}<br>
-        <b>Justificativa do Recurso:</b> ${justificativa}<br>`;
-
-        if (acao === "Delete") {
-            logProjeto.statusNovo = "";
+    setRecurso() {
+        const recursoHumano = this.form.get('recursoHumanoId');
+        if (recursoHumano.value !== '' && this.recursosHumanos) {
+            this.recursoHumano = this.recursosHumanos.find(r => r.id === parseInt(recursoHumano.value, 10));
+        } else {
+            this.recursoHumano = null;
         }
 
-        if (this.alocacao.id !== undefined) {
-
-            const _rh = this.recursosHumano.find(e => e.id === this.alocacao.recursoHumanoId);
-            const _empresa = this.empresas.find(e => e.id === this.alocacao.empresaId);
-            const _etapa = this.etapas.find(e => e.id === this.alocacao.etapaId);
-            const _justificativa = this.alocacao.justificativa;
-
-            horas_string = "";
-            for (let i = 1; i <= 6; i++) {
-                horas_string += this.alocacao["hrsMes" + i] + "h ";
-            }
-
-
-            logProjeto.statusAnterior = `<b>Recurso Humano:</b> ${_rh.nomeCompleto}<br>
-        <b>Etapa:</b> ${_etapa.numeroEtapa}<br>
-        <b>Empresa Financiadora:</b> ${_empresa.catalogEmpresa ? _empresa.catalogEmpresa.nome : _empresa.razaoSocial}<br>
-        <b>Horas:</b> ${horas_string}<br>
-        <b>Justificativa do Recurso:</b> ${_justificativa}<br>`;
-
-            logProjeto.acao = acao || "Update";
-        }
-
-        const request = this.app.projetos.criarLogProjeto(logProjeto);
-
-        request.subscribe(result => {
-            if (result.sucesso) {
-                this.activeModal.close(result);
-            } else {
-                this.app.alert(result.inconsistencias.join(', '));
-            }
-        });
     }
+
 
     submit() {
         if (this.form.valid) {
@@ -266,6 +234,71 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
                 }
 
             });
+    }
+
+    logProjeto(tela: string, acao?: string) {
+
+        const logProjeto = {
+            userId: this.app.users.currentUser.id,
+            projetoId: this.projeto.id,
+            tela,
+            acao: acao || "Create",
+            statusAnterior: "",
+            statusNovo: ""
+        };
+
+        let horas_string = "";
+
+        const rh = this.recursosHumanos.find(e => e.id === parseInt(this.form.get("recursoHumanoId").value, 10));
+        const empresa = this.empresas.find(e => e.id === parseInt(this.form.get("empresaId").value, 10));
+        const etapa = this.etapas.find(e => e.id === parseInt(this.form.get("etapaId").value, 10));
+        const justificativa = this.form.get("justificativa").value;
+
+        this.horasAlocadas.forEach(horas => {
+            horas_string += horas.form.value + "h ";
+        });
+
+        logProjeto.statusNovo = `<b>Recurso Humano:</b> ${rh.nomeCompleto}<br>
+        <b>Etapa Número:</b> ${etapa.numeroEtapa}<br>
+        <b>Empresa Financiadora:</b> ${empresa.catalogEmpresa ? empresa.catalogEmpresa.nome : empresa.razaoSocial}<br>
+        <b>Horas:</b> ${horas_string}<br>
+        <b>Justificativa do Recurso:</b> ${justificativa}<br>`;
+
+        if (acao === "Delete") {
+            logProjeto.statusNovo = "";
+        }
+
+        if (this.alocacao.id !== undefined) {
+
+            const _rh = this.recursosHumanos.find(e => e.id === this.alocacao.recursoHumanoId);
+            const _empresa = this.empresas.find(e => e.id === this.alocacao.empresaId);
+            const _etapa = this.etapas.find(e => e.id === this.alocacao.etapaId);
+            const _justificativa = this.alocacao.justificativa;
+
+            horas_string = "";
+            for (let i = 1; i <= 6; i++) {
+                horas_string += this.alocacao["hrsMes" + i] + "h ";
+            }
+
+
+            logProjeto.statusAnterior = `<b>Recurso Humano:</b> ${_rh.nomeCompleto}<br>
+        <b>Etapa:</b> ${_etapa.numeroEtapa}<br>
+        <b>Empresa Financiadora:</b> ${_empresa.catalogEmpresa ? _empresa.catalogEmpresa.nome : _empresa.razaoSocial}<br>
+        <b>Horas:</b> ${horas_string}<br>
+        <b>Justificativa do Recurso:</b> ${_justificativa}<br>`;
+
+            logProjeto.acao = acao || "Update";
+        }
+
+        const request = this.app.projetos.criarLogProjeto(logProjeto);
+
+        request.subscribe(result => {
+            if (result.sucesso) {
+                this.activeModal.close(result);
+            } else {
+                this.app.alert(result.inconsistencias.join(', '));
+            }
+        });
     }
 
 }

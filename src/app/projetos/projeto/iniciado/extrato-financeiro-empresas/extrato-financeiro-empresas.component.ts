@@ -9,7 +9,7 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AlocarRecursoHumanoFormComponent } from '@app/projetos/projeto/common/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
 import { AlocarRecursoMaterialFormComponent } from '@app/projetos/projeto/common/alocar-recurso-material-form/alocar-recurso-material-form.component';
-import { ProjetoFacade } from '@app/projetos/projeto.facade';
+import { ProjetoFacade } from '@app/facades';
 import { RegistroRefpDetailsComponent } from '../registro-refp-details/registro-refp-details.component';
 
 @Component({

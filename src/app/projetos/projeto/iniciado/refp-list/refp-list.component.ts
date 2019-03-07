@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppService } from '@app/app.service';
-import { ProjetoFacade } from '@app/projetos/projeto.facade';
+import { ProjetoFacade } from '@app/facades';
 import { Observable, zip, EMPTY } from 'rxjs';
 import { RegistroREFP, RecursoHumano, RecursoMaterial, Empresa, EmpresaProjeto, CategoriasContabeis } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';

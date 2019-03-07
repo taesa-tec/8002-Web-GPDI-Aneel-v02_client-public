@@ -4,7 +4,7 @@ import { map, filter } from 'rxjs/operators';
 import { zip } from 'rxjs';
 import { Projeto } from '@app/models';
 import { AppService } from '@app/app.service';
-import { ProjetoFacade } from '@app/projetos/projeto.facade';
+import { ProjetoFacade } from '@app/facades';
 
 @Component({
     selector: 'app-central-administrativa',

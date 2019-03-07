@@ -6,7 +6,7 @@ import { zip, Observable } from 'rxjs';
 
 import { AppService } from '@app/app.service';
 import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RecursoMaterial, AppValidators, CategoriasContabeis, RegistroREFP, ResultadoResponse } from '@app/models';
-import { ProjetoFacade } from '@app/projetos/projeto.facade';
+import { ProjetoFacade } from '@app/facades';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { RegistroRecursoBase } from '../registro-recurso-base';
 

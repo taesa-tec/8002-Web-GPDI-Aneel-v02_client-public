@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '@app/app.service';
-import { ProjetoFacade } from '@app/projetos/projeto.facade';
+import { ProjetoFacade } from '@app/facades';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { FileUploaded } from '@app/models';

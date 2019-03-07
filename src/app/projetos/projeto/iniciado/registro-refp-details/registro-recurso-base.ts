@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter, ElementRef } from '@angular/core';
 import { AppService } from '@app/app.service';
 import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RegistroREFP, ResultadoResponse, NoRequest } from '@app/models';
-import { ProjetoFacade } from '@app/projetos/projeto.facade';
+import { ProjetoFacade } from '@app/facades';
 import { zip, Observable, of } from 'rxjs';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import * as moment from 'moment';

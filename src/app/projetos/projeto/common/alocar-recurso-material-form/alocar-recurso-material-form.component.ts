@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProjetosService } from '@app/projetos/projetos.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { RecursoMaterial, Projeto, AlocacaoRM, Empresa } from '@app/models';
+import { RecursoMaterial, Projeto, AlocacaoRM, Empresa, EmpresaProjeto } from '@app/models';
 import { AppService } from '@app/app.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { zip } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { EmpresaProjetoFacade } from '@app/facades';
 
 @Component({
     selector: 'app-alocar-recurso-material-form',
@@ -16,9 +17,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class AlocarRecursoMaterialFormComponent implements OnInit {
 
     recursosMaterias: Array<any>;
-    empresaRecebedora: Array<any>;
-    empresaFinanciadora: Array<any>;
+
+    empresasFinanciadoras: Array<EmpresaProjetoFacade>;
     empresasCatalog: Array<Empresa>;
+    empresas: Array<EmpresaProjetoFacade>;
     etapas: Array<any>;
     alocacao: AlocacaoRM;
     projeto: Projeto;
@@ -39,6 +41,20 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
             { text: "Alocar Recurso Material", icon: 'ta-plus-circle' };
     }
 
+    get empresasRecebedoras(): Array<EmpresaProjetoFacade> {
+        if (this.empresas === undefined) {
+            return [];
+        }
+        return this.empresas.filter(empresa => {
+            if (empresa.classificacaoValor === 'Energia') {
+                const financiadora = this.form.get('empresaFinanciadoraId');
+                return empresa.id === parseInt(financiadora.value, 10);
+            } else {
+                return empresa.classificacaoValor === "Executora";
+            }
+        });
+    }
+
     ngOnInit() {
         this.setup();
         this.loadData();
@@ -46,12 +62,15 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
 
     setup() {
 
+        const empresaFinanciadoraControl = new FormControl(this.alocacao.empresaFinanciadoraId || '', [Validators.required]);
+        const empresaRecebedoraControl = new FormControl(this.alocacao.empresaRecebedoraId || '', [Validators.required]);
+
         this.form = new FormGroup({
             projetoId: new FormControl(this.projeto.id, Validators.required),
             recursoMaterialId: new FormControl(this.alocacao.recursoMaterialId || '', [Validators.required]),
             etapaId: new FormControl(this.alocacao.etapaId || '', [Validators.required]),
-            empresaFinanciadoraId: new FormControl(this.alocacao.empresaFinanciadoraId || '', [Validators.required]),
-            empresaRecebedoraId: new FormControl(this.alocacao.empresaRecebedoraId || '', [Validators.required]),
+            empresaFinanciadoraId: empresaFinanciadoraControl,
+            empresaRecebedoraId: empresaRecebedoraControl,
             qtd: new FormControl(this.alocacao.qtd || '', [Validators.required]),
             justificativa: new FormControl(this.alocacao.justificativa || '', [Validators.required]),
         });
@@ -60,7 +79,79 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
             this.form.addControl('id', new FormControl(this.alocacao.id));
         }
 
+        empresaFinanciadoraControl.valueChanges.subscribe(v => {
+            empresaRecebedoraControl.setValue('');
+            this.form.updateValueAndValidity();
+        });
+
     }
+
+
+
+    submit() {
+        if (this.form.valid) {
+
+            const request = this.alocacao.id ? this.app.projetos.editarAlocacaoRM(this.form.value) : this.app.projetos.criarAlocacaoRM(this.form.value);
+            this.loading.show();
+            request.subscribe(result => {
+
+                if (result.sucesso) {
+                    this.logProjeto("Alocação de recursos Materias");
+                    this.activeModal.close(result);
+                } else {
+                    this.app.alert(result.inconsistencias.join(', '));
+                }
+                this.loading.hide();
+            });
+        }
+    }
+
+    loadData() {
+
+        this.loading.show();
+
+        const recm$ = this.app.projetos.getRecursoMaterial(this.projeto.id);
+        const empresa$ = this.app.projetos.getEmpresas(this.projeto.id);
+        const etapa$ = this.app.projetos.getEtapas(this.projeto.id);
+        const empresasCatalog$ = this.app.catalogo.empresas();
+
+        zip(recm$, empresa$, etapa$, empresasCatalog$).subscribe(([recursosMaterias, empresas, etapas, empresasCatalog]) => {
+            this.empresas = empresas;
+
+            this.recursosMaterias = recursosMaterias || [];
+
+            this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; });
+
+            this.empresasCatalog = empresasCatalog;
+
+            this.empresasFinanciadoras = empresas.filter(item => item.classificacaoValor !== "Executora");
+
+            this.loading.hide();
+        });
+    }
+
+    excluir() {
+        this.app.confirm("Tem certeza que deseja excluir esta alocação do recurso material?", "Confirmar Exclusão")
+            .then(result => {
+                if (result) {
+                    this.loading.show();
+                    this.app.projetos.delAlocacaoRM(this.alocacao.id).subscribe(resultDelete => {
+                        this.loading.hide();
+                        if (resultDelete.sucesso) {
+                            this.logProjeto("Alocação de recursos Materias", "Delete");
+                            this.activeModal.close('deleted');
+                        } else {
+                            this.app.alert(resultDelete.inconsistencias.join(', '));
+                        }
+                    }, (error: HttpErrorResponse) => {
+                        this.loading.hide();
+                        this.app.alert(error.message);
+                    });
+                }
+
+            });
+    }
+
 
     logProjeto(tela: string, acao?: string) {
 
@@ -74,8 +165,8 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
         };
 
         const rm = this.recursosMaterias.find(r => r.id === parseInt(this.form.get("recursoMaterialId").value, 10));
-        const emf = this.empresaFinanciadora.find(f => f.id === parseInt(this.form.get("empresaFinanciadoraId").value, 10));
-        const emr = this.empresaRecebedora.find(er => er.id === parseInt(this.form.get("empresaRecebedoraId").value, 10));
+        const emf = this.empresasFinanciadoras.find(f => f.id === parseInt(this.form.get("empresaFinanciadoraId").value, 10));
+        const emr = this.empresasRecebedoras.find(er => er.id === parseInt(this.form.get("empresaRecebedoraId").value, 10));
         const etapa = this.etapas.find(et => et.id === parseInt(this.form.get("etapaId").value, 10));
         const qtd = this.form.get("qtd").value;
         const justificativa = this.form.get("justificativa").value;
@@ -120,83 +211,4 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
             }
         });
     }
-
-    submit() {
-        if (this.form.valid) {
-
-            const request = this.alocacao.id ? this.app.projetos.editarAlocacaoRM(this.form.value) : this.app.projetos.criarAlocacaoRM(this.form.value);
-            this.loading.show();
-            request.subscribe(result => {
-
-                if (result.sucesso) {
-                    this.logProjeto("Alocação de recursos Materias");
-                    this.activeModal.close(result);
-                } else {
-                    this.app.alert(result.inconsistencias.join(', '));
-                }
-                this.loading.hide();
-            });
-        }
-    }
-
-    loadData() {
-
-        this.loading.show();
-
-        const recm$ = this.app.projetos.getRecursoMaterial(this.projeto.id);
-        const empresa$ = this.app.projetos.getEmpresas(this.projeto.id);
-        const etapa$ = this.app.projetos.getEtapas(this.projeto.id);
-        const empresasCatalog$ = this.app.catalogo.empresas();
-
-        zip(recm$, empresa$, etapa$, empresasCatalog$).subscribe(([recursosMaterias, empresas, etapas, empresasCatalog]) => {
-
-            const _empresas = empresas.map(empresa => {
-                const em = Object.assign({
-                    Empresa: empresa.razaoSocial ? empresa.razaoSocial : '',
-                    catalogEmpresa: null
-                }, empresa);
-                
-                if (empresa.catalogEmpresaId) {
-                    em.catalogEmpresa = empresasCatalog.find(e => empresa.catalogEmpresaId === e.id);
-                    em.Empresa = empresa.catalogEmpresa.nome;
-                }
-                return em;
-            });
-
-            this.recursosMaterias = recursosMaterias || [];
-
-            this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; });
-
-            this.empresasCatalog = empresasCatalog;
-
-            this.empresaRecebedora = _empresas;
-
-            this.empresaFinanciadora = _empresas.filter(item => item.classificacaoValor !== "Executora");
-
-            this.loading.hide();
-        });
-    }
-
-    excluir() {
-        this.app.confirm("Tem certeza que deseja excluir esta alocação do recurso material?", "Confirmar Exclusão")
-            .then(result => {
-                if (result) {
-                    this.loading.show();
-                    this.app.projetos.delAlocacaoRM(this.alocacao.id).subscribe(resultDelete => {
-                        this.loading.hide();
-                        if (resultDelete.sucesso) {
-                            this.logProjeto("Alocação de recursos Materias", "Delete");
-                            this.activeModal.close('deleted');
-                        } else {
-                            this.app.alert(resultDelete.inconsistencias.join(', '));
-                        }
-                    }, (error: HttpErrorResponse) => {
-                        this.loading.hide();
-                        this.app.alert(error.message);
-                    });
-                }
-
-            });
-    }
-
 }

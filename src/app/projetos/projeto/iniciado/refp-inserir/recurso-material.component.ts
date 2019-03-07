@@ -6,7 +6,7 @@ import { zip, of } from 'rxjs';
 
 import { AppService } from '@app/app.service';
 import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RecursoMaterial, AppValidators, CategoriasContabeis, NoRequest } from '@app/models';
-import { ProjetoFacade } from '@app/projetos/projeto.facade';
+import { ProjetoFacade } from '@app/facades';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { tap } from 'rxjs/operators';
 

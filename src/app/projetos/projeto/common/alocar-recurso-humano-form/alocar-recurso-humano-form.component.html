@@ -1,7 +1,7 @@
 <div class="modal-header">
     <div class="text-uppercase modal-title text-blue-light fs-24">{{modalTitle}}</div>
 </div>
-<form class="modal-body" [formGroup]="form">
+<form class="modal-body" [formGroup]="form" *ngIf="form">
     <div class="row">
         <div class="col-12">
             <div class="form-group">
@@ -9,7 +9,7 @@
                 <label for="">Recurso Humano</label>
                 <select name="" id="" class="form-control" formControlName="recursoHumanoId">
                     <option value="">Selecione</option>
-                    <option [value]="rh.id" *ngFor="let rh of recursosHumano">{{rh.nomeCompleto}}</option>
+                    <option [value]="rh.id" *ngFor="let rh of recursosHumanos">{{rh.nomeCompleto}}</option>
                 </select>
             </div>
         </div>
@@ -32,7 +32,7 @@
                 <label for="">Empresa Financiadora</label>
                 <select name="" id="" class="form-control" formControlName="empresaId">
                     <option value="">Selecione</option>
-                    <option [value]="empresa.id" *ngFor="let empresa of empresasFinanciadora">{{empresa.catalogEmpresa.nome}}</option>
+                    <option [value]="empresa.id" *ngFor="let empresa of empresasFinanciadoras">{{empresa.nome}}</option>
                 </select>
             </div>
         </div>
