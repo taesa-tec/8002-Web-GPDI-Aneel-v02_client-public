@@ -81,11 +81,11 @@
 
         </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="observacoes.length > 0">
         <div class="col-12">
             <div class="form-group">
                 <label for="">OBSERVAÇÕES INTERNAS</label>
-                <div *ngFor="let obs of registro.obsInternas">
+                <div *ngFor="let obs of observacoes">
                     <div class="border border-cinza bg-cinza-claro rounded my-3 p-3">{{obs.texto}}</div>
                     <div class="text-right">
                         <span>{{obs.created | date:'medium'}}</span>

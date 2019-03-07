@@ -261,8 +261,9 @@ export interface ExtratoItem {
     alocacaoId: number;
     desc: string;
     etapa: Etapa;
-    recursoHumano?: any;
+    recursoHumano?: RecursoHumano;
     recursoMaterial?: RecursoMaterial;
+    registroFinanceiro: RegistroREFP;
     valor: number;
 }
 

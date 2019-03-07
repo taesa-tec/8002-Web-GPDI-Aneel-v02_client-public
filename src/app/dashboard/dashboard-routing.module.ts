@@ -72,8 +72,8 @@ const routes: Routes = [
                 resolve: {
                     projeto: ProjetoResolverService
                 }
-            }
-            // { path: '**', component: NotFoundComponent, data: { title: "Não encontrado" } },
+            },
+            { path: '**', component: NotFoundComponent, data: { title: "Não encontrado" } },
         ]
     }
 ];

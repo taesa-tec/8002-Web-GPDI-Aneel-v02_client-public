@@ -11,7 +11,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class RegistroRefpDetailsComponent implements OnInit {
 
     registro: {
-        registro: RegistroREFP,
+        registro: RegistroREFP;
         nome: string;
         categoria: string;
         empresa: string;
@@ -26,6 +26,7 @@ export class RegistroRefpDetailsComponent implements OnInit {
         return '';
     }
     get tipo() {
+
         if (this.registro) {
             return this.registro.tipo;
         }
@@ -42,7 +43,7 @@ export class RegistroRefpDetailsComponent implements OnInit {
     }
 
     buildForm() {
-        
+
     }
 
 

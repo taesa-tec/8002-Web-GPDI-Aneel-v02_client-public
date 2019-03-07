@@ -13,7 +13,7 @@ import { RegistroRecursoBase } from '../registro-recurso-base';
     templateUrl: './registro-recurso-humano.component.html',
     styles: []
 })
-export class RegistroRecursoHumanoComponent extends RegistroRecursoBase  {
+export class RegistroRecursoHumanoComponent extends RegistroRecursoBase {
 
 
 
@@ -36,6 +36,9 @@ export class RegistroRecursoHumanoComponent extends RegistroRecursoBase  {
             }
         }
         return 0;
+    }
+    get observacoes() {
+        return this.registro.obsInternas.filter(obs => obs.texto.length > 0);
     }
 
     protected getRecursos(projeto: ProjetoFacade) {
@@ -73,4 +76,5 @@ export class RegistroRecursoHumanoComponent extends RegistroRecursoBase  {
             this.buildFormObs();
         }
     }
+
 }

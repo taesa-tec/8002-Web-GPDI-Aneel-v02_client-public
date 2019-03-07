@@ -10,6 +10,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AlocarRecursoHumanoFormComponent } from '@app/projetos/projeto/common/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
 import { AlocarRecursoMaterialFormComponent } from '@app/projetos/projeto/common/alocar-recurso-material-form/alocar-recurso-material-form.component';
 import { ProjetoFacade } from '@app/projetos/projeto.facade';
+import { RegistroRefpDetailsComponent } from '../registro-refp-details/registro-refp-details.component';
 
 @Component({
     selector: 'app-extrato-financeiro-empresas',
@@ -86,26 +87,44 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
     }
 
     openModal(item: ExtratoItem) {
-        let modal: NgbModalRef;
+        console.log(item);
+        const registro = item.registroFinanceiro;
+        const empresa = item.registroFinanceiro.empresaFinanciadora;
+        const recurso = item.registroFinanceiro.recursoHumano || item.registroFinanceiro.recursoMaterial;
 
-        if (item.recursoHumano) {
-            const alocacao = this.alocacoesRH.find(a => a.id === item.alocacaoId);
-            modal = this.app.modal.open(AlocarRecursoHumanoFormComponent, { size: 'lg' });
-            modal.componentInstance.alocacao = alocacao;
+        const registroItem = {
+            registro,
+            nome: '',
+            categoria: '',
+            empresa,
+            valor: 0,
+            tipo: registro.tipoValor
+        };
 
-        } else if (item.recursoMaterial) {
-            const alocacao = this.alocacoesRM.find(a => a.id === item.alocacaoId);
-            modal = this.app.modal.open(AlocarRecursoMaterialFormComponent, { size: 'lg' });
-            modal.componentInstance.alocacao = alocacao;
+        if (registro.tipoValor === "RH") {
+            if (recurso) {
+                registroItem.nome = recurso.nomeCompleto;
+                registroItem.categoria = "Recursos Humanos";
+                registroItem.valor = recurso.valorHora * registro.qtdHrs;
+            } else {
+                registroItem.nome = "Não encontrado";
+            }
+
+        } else {
+            const categoriaContabil = CategoriasContabeis.find(c => c.value === recurso.categoriaContabilValor);
+            registroItem.nome = registro.nomeItem;
+            registroItem.categoria = categoriaContabil.text;
+            registroItem.valor = registro.qtdItens * registro.valorUnitario;
         }
 
-        if (modal) {
-            modal.componentInstance.projeto = this.projeto;
-            modal.result.then(result => {
-                console.log(result);
-            }, error => {
+        const ref = this.app.modal.open(RegistroRefpDetailsComponent, { size: 'lg', backdrop: 'static' });
 
-            });
-        }
+        ref.componentInstance.setRegistro(registroItem);
+
+        ref.result.then(r => {
+            this.load();
+        }, e => {
+            // Só cancelou nada a fazer
+        });
     }
 }
