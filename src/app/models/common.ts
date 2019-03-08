@@ -423,3 +423,19 @@ export interface LogProjeto {
     statusNovo: string;
     created: string;
 }
+
+export interface RelatorioFinal {
+    id?: number;
+    produtoAlcancado: boolean;
+    justificativaProduto: string;
+    especificacaoProduto: string;
+    tecnicaPrevista: boolean;
+    justificativaTecnica: string;
+    descTecnica: string;
+    aplicabilidadePrevista: boolean;
+    justificativaAplicabilidade: string;
+    descTestes: string;
+    descAbrangencia: string;
+    descAmbito: string;
+    descAtividades: string;
+}

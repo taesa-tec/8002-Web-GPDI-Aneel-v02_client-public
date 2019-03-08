@@ -1,14 +1,109 @@
 import { ProjetosService } from '../projetos/projetos.service';
-import { Projeto, Empresa, ProjetoStatus, RegistroREFP, ProrrogarProjetoRequest } from '@app/models';
-import { throwError, Subject } from 'rxjs';
+import { Projeto, Empresa, ProjetoStatus, RegistroREFP, ProrrogarProjetoRequest, ResultadoResponse } from '@app/models';
+import { throwError, Subject, Observable } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { GenericFacade } from './generic.facade';
 import { EmpresaProjetoFacade } from './empresa.facade';
 import { RecursoHumanoFacade } from './recurso-humano.facade';
 
+const projetoComponents = [
+    "Temas",
+    "Produtos",
+    "Etapas",
+    "Empresas",
+    "RecursoHumanos",
+    "AlocacaoRhs",
+    "RecursoMateriais",
+    "AlocacaoRms",
+    "RelatorioFinal",
+    "ResultadoCapacitacao",
+    "ResultadoProducao",
+    "ResultadoInfra",
+    "ResultadoIntelectual",
+    "ResultadoSocioAmbiental",
+    "ResultadoEconomico",
+];
+interface REST {
+    Temas: ProjetoREST;
+    Produtos: ProjetoREST;
+    Etapas: ProjetoREST;
+    Empresas: ProjetoREST;
+    RecursoHumanos: ProjetoREST;
+    AlocacaoRhs: ProjetoREST;
+    RecursoMateriais: ProjetoREST;
+    AlocacaoRms: ProjetoREST;
+    RelatorioFinal: ProjetoREST;
+    ResultadoCapacitacao: ProjetoREST;
+    ResultadoProducao: ProjetoREST;
+    ResultadoInfra: ProjetoREST;
+    ResultadoIntelectual: ProjetoREST;
+    ResultadoSocioAmbiental: ProjetoREST;
+    ResultadoEconomico: ProjetoREST;
+
+}
 
 abstract class ProjetoModule {
     constructor(protected id: number, protected service: ProjetosService) { }
+}
+
+class ProjetoREST {
+    constructor(protected path: string, protected projeto: ProjetoFacade, protected service: ProjetosService) { }
+
+    listar<T>(): Observable<T> {
+        try {
+            if (this.service[this.path]) {
+                return this.service[this.path].listar<T>(this.projeto.id);
+            }
+            return throwError('Relação não existente');
+        } catch (error) {
+            return throwError(error);
+        }
+    }
+    criar(data: any): Observable<ResultadoResponse>;
+    criar<T>(data: T): Observable<T> {
+        try {
+            if (this.service[this.path]) {
+                return this.service[this.path].criar<T>(data);
+            }
+            return throwError('Relação não existente');
+        } catch (error) {
+            return throwError(error);
+        }
+    }
+
+    obter<T>(id_item: number): Observable<T> {
+        try {
+            if (this.service[this.path]) {
+                return this.service[this.path].obter<T>(id_item);
+            }
+            return throwError('Relação não existente');
+        } catch (error) {
+            return throwError(error);
+        }
+    }
+
+    editar(data: any): Observable<ResultadoResponse>;
+    editar<T>(data: T): Observable<T> {
+        try {
+            if (this.service[this.path]) {
+                return this.service[this.path].editar(data);
+            }
+            return throwError('Relação não existente');
+        } catch (error) {
+            return throwError(error);
+        }
+    }
+
+    remover(id_item: any): Observable<ResultadoResponse> {
+        try {
+            if (this.service[this.path]) {
+                return this.service[this.path].remover(id_item);
+            }
+            return throwError('Relação não existente');
+        } catch (error) {
+            return throwError(error);
+        }
+    }
 }
 
 class ProjetoTema extends ProjetoModule {
@@ -102,11 +197,7 @@ class ProjetoREFP extends ProjetoModule {
     }
 }
 
-class ProjetoRelatorio extends ProjetoModule {
-    criar(relatorio: any) {
-        // return this.service.
-    }
-}
+
 
 export class ProjetoFacade extends GenericFacade<Projeto> implements Projeto {
     created: string;
@@ -151,6 +242,7 @@ export class ProjetoFacade extends GenericFacade<Projeto> implements Projeto {
         recursosMateriais: ProjetoRM;
         REFP: ProjetoREFP;
     };
+    REST: REST;
 
     onUpdate = new Subject<{ prop: string; value: any; prev: any }>();
     onSave = new Subject<Projeto>();
@@ -166,6 +258,11 @@ export class ProjetoFacade extends GenericFacade<Projeto> implements Projeto {
             recursosMateriais: new ProjetoRM(this.id, this._service),
             REFP: new ProjetoREFP(this.id, this._service),
         };
+        const rest = {};
+        projetoComponents.forEach(path => {
+            rest[path] = new ProjetoREST(path, this, this._service);
+        });
+        this.REST = <REST>rest;
     }
 
     save() {

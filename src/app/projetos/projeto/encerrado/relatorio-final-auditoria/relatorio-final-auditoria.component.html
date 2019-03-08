@@ -1,185 +1,178 @@
-<div class="row">
-    <div class="col">
-        <h5 class="text-uppercase text-blue font-weight-normal my-3">RELATÓRIO FINAL E AUDITORIA</h5>
-    </div>
-</div>
+<pre class="debug" *ngIf="form">{{form.value|json}}</pre>
+<form *ngIf="form" [formGroup]="form">
 
-<div class="row">
-    <div class="col-12">
-        <div class="form-group">
-            <div>
-                <label for="">PRODUTO PRINCIPAL PREVISTO FOI ALCANÇADO OU SUPERADO?</label>
+
+    <div class="row">
+        <div class="col">
+            <h5 class="text-uppercase text-blue font-weight-normal my-3">RELATÓRIO FINAL E AUDITORIA</h5>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label>PRODUTO PRINCIPAL PREVISTO FOI ALCANÇADO OU SUPERADO?</label>
+                <select class="form-control" formControlName="produtoAlcancado">
+                    <option value="">Selecione</option>
+                    <option value="1">Sim</option>
+                    <option value="0">Não</option>
+                </select>
             </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                <label class="form-check-label" for="inlineRadio1">1</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                <label class="form-check-label" for="inlineRadio2">2</label>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">JUSTIFICATIVA PELO NÃO ALCANCE DO PRODUTO PRINCIPAL PREVISTO</label>
+                <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
+                <div class="text-right">
+                    <small>1.000 caracteres sobrando</small>
+                </div>
             </div>
         </div>
-
     </div>
-</div>
 
-<div class="row">
-    <div class="col-12">
-        <div class="form-group">
-            <label for="">JUSTIFICATIVA PELO NÃO ALCANCE DO PRODUTO PRINCIPAL PREVISTO</label>
-            <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">ESPECIFICAÇÃO TÉCNICA DO PRODUTO PRINCIPAL OBTIDO</label>
+                <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
+                <div class="text-right">
+                    <small>1.000 caracteres sobrando</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <div>
+                    <label for="">TÉCNICA PREVISTA FOI IMPLEMENTADA?</label>
+                    <select class="form-control" formControlName="tecnicaPrevista">
+                        <option value="">Selecione</option>
+                        <option value="1">Sim</option>
+                        <option value="0">Não</option>
+                    </select>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">JUSTIFICATIVA PELA NÃO IMPLEMENTAÇÃO DA TÉCNICA PREVISTA</label>
+                <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
+                <div class="text-right">
+                    <small>1.000 caracteres sobrando</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">DESCRIÇÃO, SUCINTA, DA TÉCNICA EMPREGADA</label>
+                <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
+                <div class="text-right">
+                    <small>1.000 caracteres sobrando</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <div>
+                    <label for="">APLICABILIDADE PREVISTA FOI ALCANÇADA OU SUPERADA?</label>
+                    <select class="form-control" formControlName="aplicabilidadePrevista">
+                        <option value="">Selecione</option>
+                        <option value="1">Sim</option>
+                        <option value="0">Não</option>
+                    </select>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">JUSTIFICATIVA PELO NÃO ALCANCE DA APLICABILIDADE PREVISTA</label>
+                <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
+                <div class="text-right">
+                    <small>1.000 caracteres sobrando</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">DESCRIÇÃO, SUCINTA, DOS RESULTADOS DOS TESTES DE FUNCIONALIDADE DO PRODUTO PRINCIPAL E SUAS RESTRIÇÕES</label>
+                <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
+                <div class="text-right">
+                    <small>1.000 caracteres sobrando</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">DESCRIÇÃO DA ABRANGÊNCIA DE APLICAÇÃO DO PRODUTO PRINCIPAL E SUAS RESTRIÇÕES</label>
+                <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
+                <div class="text-right">
+                    <small>1.000 caracteres sobrando</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">DESCRIÇÃO DO ÂMBITO DE APLICAÇÃO DO PRODUTO PRINCIPAL E SUAS RESTRIÇÕES</label>
+                <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
+                <div class="text-right">
+                    <small>1.000 caracteres sobrando</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">DESCRIÇÃO, SUCINTA, DAS ATIVIDADES RELACIONADAS À TRANSFERÊNCIA/DIFUSÃO TECNOLÓGICA</label>
+                <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
+                <div class="text-right">
+                    <small>1.000 caracteres sobrando</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row mt-5">
+        <div class="col-6">
+        </div>
+        <div class="col-6">
             <div class="text-right">
-                <small>1.000 caracteres sobrando</small>
+                <button class="btn btn-primary"><i class="ta-save"></i> Salvar Dados</button>
             </div>
         </div>
     </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="form-group">
-            <label for="">ESPECIFICAÇÃO TÉCNICA DO PRODUTO PRINCIPAL OBTIDO</label>
-            <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
-            <div class="text-right">
-                <small>1.000 caracteres sobrando</small>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="form-group">
-            <div>
-                <label for="">TÉCNICA PREVISTA FOI IMPLEMENTADA?</label>
-
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                <label class="form-check-label" for="inlineRadio1">1</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                <label class="form-check-label" for="inlineRadio2">2</label>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="form-group">
-            <label for="">JUSTIFICATIVA PELA NÃO IMPLEMENTAÇÃO DA TÉCNICA PREVISTA</label>
-            <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
-            <div class="text-right">
-                <small>1.000 caracteres sobrando</small>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="form-group">
-            <label for="">DESCRIÇÃO, SUCINTA, DA TÉCNICA EMPREGADA</label>
-            <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
-            <div class="text-right">
-                <small>1.000 caracteres sobrando</small>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="form-group">
-            <div>
-                <label for="">APLICABILIDADE PREVISTA FOI ALCANÇADA OU SUPERADA?</label>
-
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                <label class="form-check-label" for="inlineRadio1">1</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                <label class="form-check-label" for="inlineRadio2">2</label>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="form-group">
-            <label for="">JUSTIFICATIVA PELO NÃO ALCANCE DA APLICABILIDADE PREVISTA</label>
-            <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
-            <div class="text-right">
-                <small>1.000 caracteres sobrando</small>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="form-group">
-            <label for="">DESCRIÇÃO, SUCINTA, DOS RESULTADOS DOS TESTES DE FUNCIONALIDADE DO PRODUTO PRINCIPAL E SUAS RESTRIÇÕES</label>
-            <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
-            <div class="text-right">
-                <small>1.000 caracteres sobrando</small>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="form-group">
-            <label for="">DESCRIÇÃO DA ABRANGÊNCIA DE APLICAÇÃO DO PRODUTO PRINCIPAL E SUAS RESTRIÇÕES</label>
-            <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
-            <div class="text-right">
-                <small>1.000 caracteres sobrando</small>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="form-group">
-            <label for="">DESCRIÇÃO DO ÂMBITO DE APLICAÇÃO DO PRODUTO PRINCIPAL E SUAS RESTRIÇÕES</label>
-            <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
-            <div class="text-right">
-                <small>1.000 caracteres sobrando</small>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="form-group">
-            <label for="">DESCRIÇÃO, SUCINTA, DAS ATIVIDADES RELACIONADAS À TRANSFERÊNCIA/DIFUSÃO TECNOLÓGICA</label>
-            <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
-            <div class="text-right">
-                <small>1.000 caracteres sobrando</small>
-            </div>
-        </div>
-    </div>
-</div>
-
-<hr>
-
-<div class="row mt-5">
-    <div class="col-6">
-        <p><i class="ta-user-o"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes</p>
-    </div>
-    <div class="col-6">
-        <div class="text-right">
-            <button class="btn btn-primary"><i class="ta-save"></i> Salvar Dados</button>
-        </div>
-    </div>
-</div>
+</form>

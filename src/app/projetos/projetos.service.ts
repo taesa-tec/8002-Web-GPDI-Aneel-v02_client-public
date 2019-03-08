@@ -44,8 +44,8 @@ class ProjetoREST {
     }
 
     criar(data: any): Observable<any>;
-    criar<R, D>(data: D) {
-        return this.http.post<R>(`projeto/${this.projetoComponentPath}`, data);
+    criar<D>(data: D) {
+        return this.http.post<ResultadoResponse>(`projeto/${this.projetoComponentPath}`, data);
     }
 
     obter(id_item: number): Observable<any>;
@@ -53,14 +53,13 @@ class ProjetoREST {
         return this.http.get<T>(`projeto/${this.projetoComponentPath}/${id_item}`);
     }
 
-    editar<R, D>(data: D): Observable<any>;
-    editar<R, D>(data: D) {
-        return this.http.put<R>(`projeto/${this.projetoComponentPath}`, data);
+    editar(data: any): Observable<any>;
+    editar<D>(data: D) {
+        return this.http.put<ResultadoResponse>(`projeto/${this.projetoComponentPath}`, data);
     }
 
-    remover(id_item: any): Observable<any>;
-    remover<T>(id_item: any) {
-        return this.http.delete<T>(`projeto/${this.projetoComponentPath}/${id_item}`);
+    remover(id_item: any) {
+        return this.http.delete<ResultadoResponse>(`projeto/${this.projetoComponentPath}/${id_item}`);
     }
 
 
@@ -79,6 +78,15 @@ export class ProjetosService {
     projetoCreated = this.projetoCreatedSource.asObservable();
     projetoUpdated = this.projetoUpdatedSource.asObservable();
     projetoLoaded = this.projetoLoadedSource.asObservable();
+
+    Temas: ProjetoREST;
+    Produtos: ProjetoREST;
+    Etapas: ProjetoREST;
+    Empresas: ProjetoREST;
+    RecursoHumanos: ProjetoREST;
+    AlocacaoRhs: ProjetoREST;
+    RecursoMateriais: ProjetoREST;
+    AlocacaoRms: ProjetoREST;
     RelatorioFinal: ProjetoREST;
     ResultadoCapacitacao: ProjetoREST;
     ResultadoProducao: ProjetoREST;
@@ -89,13 +97,12 @@ export class ProjetosService {
     status: ProjetoStatus[];
 
     constructor(protected http: HttpClient, protected fileService: FileService, protected requestCache: RequestCacheService) {
-        this.RelatorioFinal = new ProjetoREST("RelatorioFinal", this.http);
-        this.ResultadoCapacitacao = new ProjetoREST("ResultadoCapacitacao", this.http);
-        this.ResultadoProducao = new ProjetoREST("ResultadoProducao", this.http);
-        this.ResultadoInfra = new ProjetoREST("ResultadoInfra", this.http);
-        this.ResultadoIntelectual = new ProjetoREST("ResultadoIntelectual", this.http);
-        this.ResultadoSocioAmbiental = new ProjetoREST("ResultadoSocioAmbiental", this.http);
-        this.ResultadoEconomico = new ProjetoREST("ResultadoEconomico", this.http);
+        const rest = "Temas|Produtos|Etapas|Empresas|RecursoHumanos|AlocacaoRhs|RecursoMateriais|AlocacaoRms|RelatorioFinal|ResultadoCapacitacao|ResultadoProducao|ResultadoInfra|ResultadoIntelectual|ResultadoSocioAmbiental|ResultadoEconomico";
+        rest.split('|').forEach(path => {
+            const projetoRest = new ProjetoREST(path, this.http);
+            Object.defineProperty(this, path, { get: () => projetoRest });
+        });
+
     }
 
     meusProjetos() {
