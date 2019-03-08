@@ -30,49 +30,7 @@ const routes: Routes = [
             { path: 'gerenciar-usuarios', component: GerenciarUsuariosComponent, data: { title: "Meu Cadastro" }, },
             { path: 'gerenciar-usuarios/novo', component: NewUserComponent, data: { title: "Novo Usuário" }, },
             { path: 'gerenciar-usuarios/edit/:id', component: EditUserComponent, data: { title: "Novo Usuário" }, },
-            {
-                path: 'projeto/:id/proposta', component: ProjetoComponent, children: projetoPlanejamentoRoutes,
-                resolve: {
-                    projeto: ProjetoResolverService
-                },
-
-            },
-            {
-                path: 'projeto/:id/iniciado', component: ProjetoComponent, children: projetoIniciadoRoutes,
-                resolve: {
-                    projeto: ProjetoResolverService
-                },
-
-            },
-            {
-                path: 'projeto/:id/encerrado', component: ProjetoComponent, children: projetoEncerradoRoutes,
-                resolve: {
-                    projeto: ProjetoResolverService
-                },
-
-            },
-            {
-                path: 'projeto/:id/central-administrativa',
-                component: ProjetoComponent,
-                children: [
-                    {
-                        path: '', component: CentralAdministrativaComponent, children: centralPlanejamentoRoutes,
-                        data: { text: "Central Adminstrativa", icon: "ta-central-admin", routes: centralPlanejamentoRoutes }
-                    }
-                ],
-                resolve: {
-                    projeto: ProjetoResolverService
-                }
-            },
-            {
-                path: 'projeto/:id/logs', component: ProjetoComponent,
-                children: [{
-                    path: '', component: LogProjetoComponent
-                }],
-                resolve: {
-                    projeto: ProjetoResolverService
-                }
-            },
+            
             { path: '**', component: NotFoundComponent, data: { title: "Não encontrado" } },
         ]
     }

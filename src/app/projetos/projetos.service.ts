@@ -29,7 +29,43 @@ import { tap, share, map } from 'rxjs/operators';
 import { ProjetoFacade } from '@app/facades';
 import { FileService } from '@app/shared/file.service';
 import { RequestCacheService } from '@app/request-cache.service';
-import { EmpresaProjetoFacade } from '@app/facades';
+
+abstract class ProjetoServiceModule {
+    constructor(protected http: HttpClient) { }
+}
+// 
+
+class ProjetoREST {
+    constructor(protected projetoComponentPath: string, protected http: HttpClient) { }
+
+    listar(id_projeto: any): Observable<any>;
+    listar<T>(id_projeto: any) {
+        return this.http.get<T>(`projeto/${id_projeto}/${this.projetoComponentPath}`);
+    }
+
+    criar(data: any): Observable<any>;
+    criar<R, D>(data: D) {
+        return this.http.post<R>(`projeto/${this.projetoComponentPath}`, data);
+    }
+
+    obter(id_item: number): Observable<any>;
+    obter<T>(id_item: number) {
+        return this.http.get<T>(`projeto/${this.projetoComponentPath}/${id_item}`);
+    }
+
+    editar<R, D>(data: D): Observable<any>;
+    editar<R, D>(data: D) {
+        return this.http.put<R>(`projeto/${this.projetoComponentPath}`, data);
+    }
+
+    remover(id_item: any): Observable<any>;
+    remover<T>(id_item: any) {
+        return this.http.delete<T>(`projeto/${this.projetoComponentPath}/${id_item}`);
+    }
+
+
+}
+
 
 @Injectable({
     providedIn: 'root'
@@ -43,17 +79,30 @@ export class ProjetosService {
     projetoCreated = this.projetoCreatedSource.asObservable();
     projetoUpdated = this.projetoUpdatedSource.asObservable();
     projetoLoaded = this.projetoLoadedSource.asObservable();
-
+    RelatorioFinal: ProjetoREST;
+    ResultadoCapacitacao: ProjetoREST;
+    ResultadoProducao: ProjetoREST;
+    ResultadoInfra: ProjetoREST;
+    ResultadoIntelectual: ProjetoREST;
+    ResultadoSocioAmbiental: ProjetoREST;
+    ResultadoEconomico: ProjetoREST;
     status: ProjetoStatus[];
 
-    constructor(private http: HttpClient, protected fileService: FileService, protected requestCache: RequestCacheService) { }
+    constructor(protected http: HttpClient, protected fileService: FileService, protected requestCache: RequestCacheService) {
+        this.RelatorioFinal = new ProjetoREST("RelatorioFinal", this.http);
+        this.ResultadoCapacitacao = new ProjetoREST("ResultadoCapacitacao", this.http);
+        this.ResultadoProducao = new ProjetoREST("ResultadoProducao", this.http);
+        this.ResultadoInfra = new ProjetoREST("ResultadoInfra", this.http);
+        this.ResultadoIntelectual = new ProjetoREST("ResultadoIntelectual", this.http);
+        this.ResultadoSocioAmbiental = new ProjetoREST("ResultadoSocioAmbiental", this.http);
+        this.ResultadoEconomico = new ProjetoREST("ResultadoEconomico", this.http);
+    }
 
     meusProjetos() {
         return this.http.get<Array<UserProjeto>>('UserProjetos/me');
     }
 
     projetoUsers(permissoes: Array<UserProjeto>) {
-        console.log(permissoes);
         return this.http.post<ResultadoResponse>('ProjetoUsers', permissoes);
     }
 
@@ -157,7 +206,7 @@ export class ProjetosService {
 
     getEmpresas(id: number) {
         return this.http.get<Array<EmpresaProjeto>>(`Projeto/${id}/Empresas`);
-            
+
     }
 
     delEmpresa(id: number) {
@@ -378,5 +427,4 @@ export class ProjetosService {
             console.error(error);
         });
     }
-
 }

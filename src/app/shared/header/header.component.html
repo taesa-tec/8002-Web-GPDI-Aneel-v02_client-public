@@ -1,0 +1,51 @@
+<header class="dashboard-header">
+    <div class="container-fluid py-4 text-white">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-between px-5">
+                <div class="align-items-center d-flex">
+                    <div class="d-inline-block border-right border-white px-3 mr-3">
+                        <a routerLink="/dashboard">
+              <img src="/assets/logo.png" alt="TAESATEC">
+            </a>
+                    </div>
+                    <span class="fs-24">GESTOR P&D</span>
+                </div>
+                <div>
+                    <div class="d-flex flex-row">
+                        <div style="width: 48px;">
+                            <div *ngIf="currentUser" class="embed-responsive embed-responsive-1by1">
+                                <div class="embed-responsive-item rounded-circle" [ngStyle]="{'background-size':'cover', 'background-position':'center', 'background-image': 'url('+avatar +')'}"></div>
+                            </div>
+                        </div>
+                        <div *ngIf="currentUser" class="px-3 mr-3 border-right border-white">
+                            <strong>{{currentUser.nomeCompleto}} </strong>
+                            <br>
+                            <span>{{empresa}}</span>
+                        </div>
+                        <div class="wrap-menu-dropdown">
+                            <div ngbDropdown class="d-inline-block" #menuDrop="ngbDropdown" placement="bottom-right">
+                                <button class="btn text-white" id="menuDrop" ngbDropdownToggle>
+                                    <div class="ta-gear fs-36"></div>
+                                </button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                    <a class="dropdown-item" routerLink="/dashboard" *ngIf="currentUser">
+                        <fa-icon icon="file-alt" size="1x" [fixedWidth]="true"></fa-icon> Meus Projetos
+                      </a>
+                                    <a class="dropdown-item" routerLink="/dashboard/gerenciar-usuarios" *ngIf="currentUser && currentUser.role === 'Admin-APIGestor'">
+                        <fa-icon icon="users" size="1x" [fixedWidth]="true"></fa-icon> Gerenciar Usuários
+                      </a>
+                                    <a class="dropdown-item" routerLink="/dashboard/meu-cadastro" *ngIf="currentUser">
+                        <fa-icon icon="user" size="1x" [fixedWidth]="true"></fa-icon> Meu Cadastro
+                      </a>
+                                    <a (click)="logout()" class="dropdown-item" routerLink="/login">
+                        <fa-icon icon="sign-out-alt" [fixedWidth]="true" size="1x"></fa-icon> Logout
+                      </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

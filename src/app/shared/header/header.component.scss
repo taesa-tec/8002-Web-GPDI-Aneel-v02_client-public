@@ -1,0 +1,12 @@
+:host {
+    background: url("/assets/fundo.png") no-repeat center;
+    background-size: 100%;
+    grid-area: header;
+
+}
+
+.wrap-menu-dropdown {
+    .dropdown-toggle::after {
+        display: none;
+    }
+}

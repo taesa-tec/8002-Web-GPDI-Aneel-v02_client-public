@@ -12,6 +12,7 @@ import { AlocacaoComponent as AlocacaoHumanoComponent } from '@app/projetos/proj
 import { AlocacaoComponent as AlocacaoMaterialComponent } from '@app/projetos/projeto/proposta/recursos-materiais/alocacao.component';
 import { OrcamentoEmpresasComponent } from '@app/projetos/projeto/proposta/orcamento-empresas/orcamento-empresas.component';
 import { OrcamentoEtapasComponent } from '@app/projetos/projeto/proposta/orcamento-etapas/orcamento-etapas.component';
+import { PropostaRoutingModule } from './proposta-routing.module';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import { OrcamentoEtapasComponent } from '@app/projetos/projeto/proposta/orcamen
         OrcamentoEtapasComponent,
     ],
     imports: [
-        SharedModule
+        SharedModule,
+        PropostaRoutingModule
     ],
     exports: [
         ProdutosComponent,

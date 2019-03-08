@@ -30,6 +30,7 @@ import { DynamicHostDirective } from './dynamic-host.directive';
 import { N2arrayPipe } from './pipes/n2array.pipe';
 import { ErrorComponent } from './screens/error.component';
 import { DebugComponent } from './screens/debug.component';
+import { HeaderComponent } from './header/header.component';
 
 
 library.add(fas, far);
@@ -37,6 +38,7 @@ library.add(fas, far);
 @NgModule({
     declarations: [
         LoadingComponent,
+        HeaderComponent,
         AccordionComponent,
         AlertComponent,
         ConfirmComponent,
@@ -80,6 +82,7 @@ library.add(fas, far);
 
         // Coponentes
         LoadingComponent,
+        HeaderComponent,
         AccordionComponent,
         AlertComponent,
         ConfirmComponent,

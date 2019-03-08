@@ -171,7 +171,7 @@ export const projetoEncerradoRoutes: Routes = [
     { path: 'resultados-propriedade-intelectual', component: ErrorComponent },
     { path: 'resultados-socioambientais', component: ErrorComponent },
     { path: 'resultados-economicos', component: ErrorComponent },
-]
+];
 
 
 export const projetoRoutes: Routes = [].concat([

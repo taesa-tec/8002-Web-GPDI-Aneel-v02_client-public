@@ -16,22 +16,23 @@ import { ProjetosModule } from '@app/projetos/projetos.module';
 import { AuthInterceptor } from '@app/http-interceptors/auth-iterceptor';
 import { UsersModule } from '@app/users/users.module';
 
+
 @NgModule({
-  declarations: [
-    DashboardComponent,
-    MeuCadastroComponent,
-    NotFoundComponent,
-    GerenciarUsuariosComponent,
-    MeusProjetosComponent,
-  ],
-  imports: [
-    SharedModule,
-    ProjetosModule,
-    UsersModule,
-    DashboardRoutingModule,
-  ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-  ]
+    declarations: [
+        DashboardComponent,
+        MeuCadastroComponent,
+        NotFoundComponent,
+        GerenciarUsuariosComponent,
+        MeusProjetosComponent,
+    ],
+    imports: [
+        SharedModule,
+        ProjetosModule,
+        UsersModule,
+        DashboardRoutingModule,
+    ],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    ]
 })
 export class DashboardModule { }

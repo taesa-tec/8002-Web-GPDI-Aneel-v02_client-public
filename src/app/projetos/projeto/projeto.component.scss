@@ -1,6 +1,15 @@
 @import "components-base";
 
 :host {
+    height: 100%;
+    grid-template-areas: 'header''content';
+    grid-template-rows: 110px auto;
+    display: grid;
+}
+
+
+.wrap-outlet-projeto {
+    grid-area: content;
     display: grid;
     grid-template-columns: 256px auto;
     height: 100%;
@@ -30,7 +39,8 @@
             border-bottom: solid 2px white;
             transition: all ease-in 200ms;
 
-            &:hover, &.active {
+            &:hover,
+            &.active {
                 text-decoration: none;
                 background: $blue;
                 color: white;

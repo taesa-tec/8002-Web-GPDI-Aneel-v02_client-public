@@ -1,11 +1,8 @@
 import { Component, OnInit, ViewChild, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
-import { Routes, Route, ActivatedRoute, RouterOutlet } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Routes, ActivatedRoute, RouterOutlet } from '@angular/router';
 
-import { Projeto, ProjetoStatus } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 
-import { projetoPlanejamentoRoutes, projetoRoutes, projetoIniciadoRoutes } from '@app/projetos/projeto-routings';
 import { AppService } from '@app/app.service';
 import { ProjetoFacade } from '@app/facades';
 import { filter } from 'rxjs/operators';
@@ -23,7 +20,6 @@ export class ProjetoComponent implements OnInit {
 
     projetoPlanejamentoRoutes: Routes;
     projetoIniciadoRoutes: Routes;
-    projetoRotas = projetoRoutes;
     projeto: ProjetoFacade;
 
     menus: { [propName: string]: Array<{ text: string, icon: string, path: string }> } = {

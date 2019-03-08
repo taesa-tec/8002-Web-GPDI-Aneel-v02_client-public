@@ -102,6 +102,12 @@ class ProjetoREFP extends ProjetoModule {
     }
 }
 
+class ProjetoRelatorio extends ProjetoModule {
+    criar(relatorio: any) {
+        // return this.service.
+    }
+}
+
 export class ProjetoFacade extends GenericFacade<Projeto> implements Projeto {
     created: string;
     id: number;

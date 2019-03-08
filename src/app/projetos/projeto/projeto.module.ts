@@ -5,12 +5,14 @@ import { IniciadoModule } from './iniciado/iniciado.module';
 import { CommonModule } from './common/common.module';
 import { PropostaModule } from './proposta/proposta.module';
 import { EncerradoModule } from './encerrado/encerrado.module';
+import { CentralAdministrativaModule } from './central-administrativa/central-administrativa.module';
 
 @NgModule({
     declarations: [],
     imports: [
         SharedModule,
         CommonModule,
+        CentralAdministrativaModule,
         PropostaModule,
         IniciadoModule,
         EncerradoModule
