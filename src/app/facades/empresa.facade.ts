@@ -17,6 +17,7 @@ export class EmpresaProjetoFacade extends GenericFacade<EmpresaProjeto> implemen
     catalogEstadoId?: any;
     estado?: UF;
     razaoSocial?: string;
+    nome: string;
 
     constructor(_empresa: EmpresaProjeto) {
         super(_empresa);
