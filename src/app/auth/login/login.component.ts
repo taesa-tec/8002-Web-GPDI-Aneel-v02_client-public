@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { LoginRequest } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 
-// @todo Inserir loading
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -40,7 +39,7 @@ export class LoginComponent implements OnInit {
         if (!result.authenticated) {
           self.errorMessage = result.message;
         } else {
-          //self.router.navigate(['/dashboard']);
+          self.router.navigate(['/dashboard']);
         }
       },
       error(e) {
