@@ -354,7 +354,7 @@ export class ProjetosService {
 
 
     validarDados(id: number) {
-        return this.http.get<ResultadoResponse>(`projeto/${id}/XmlProjetoPed/ValidaDados`);
+        return this.http.get<ResultadoResponse>(`projeto/${id}/Xml/ProjetoPed/ValidaDados`);
     }
     /**
      * @description Gerar XML's
@@ -366,16 +366,16 @@ export class ProjetosService {
         return this.http.get<Array<FileUploaded>>(`upload/${id}/obterlogduto`);
     }
     gerarXmlProjetoPed(id: number, versao: number) {
-        return this.http.get<ResultadoResponse>(`projeto/${id}/XmlProjetoPed/${versao}`);
+        return this.http.get<ResultadoResponse>(`projeto/${id}/Xml/ProjetoPed/${versao}`);
     }
     gerarXmlInteresseExecucao(id: number, versao: number) {
-        return this.http.get<ResultadoResponse>(`projeto/${id}/XmlInteresseExecucao/${versao}`);
+        return this.http.get<ResultadoResponse>(`projeto/${id}/Xml/InteresseProjetoPed/${versao}`);
     }
     gerarXmlInicioExecucao(id: number, versao: number) {
-        return this.http.get<ResultadoResponse>(`projeto/${id}/XmlInicioExecucao/${versao}`);
+        return this.http.get<ResultadoResponse>(`projeto/${id}/Xml/InicioExecucaoProjeto/${versao}`);
     }
     gerarXmlProrrogacao(id: number, versao: number) {
-        return this.http.get<ResultadoResponse>(`projeto/${id}/XmlProrrogacao/${versao}`);
+        return this.http.get<ResultadoResponse>(`projeto/${id}/Xml/ProrrogaExecucaoProjeto/${versao}`);
     }
     downloadXML(projeto_id, file_id) {
         const o = new Subject<boolean>();

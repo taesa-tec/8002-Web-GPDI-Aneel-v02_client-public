@@ -106,28 +106,42 @@ class ProjetoREST {
     }
 }
 
+/**
+ * @deprecated Use o ProjetoREST
+ */
 class ProjetoTema extends ProjetoModule {
     get() {
         return this.service.getTema(this.id);
     }
 }
+/**
+ * @deprecated Use o ProjetoREST
+ */
 class ProjetoEtapas extends ProjetoModule {
     get() {
         return this.service.getEtapas(this.id);
     }
 }
+/**
+ * @deprecated Use o ProjetoREST
+ */
 class ProjetoProdutos extends ProjetoModule {
     get() {
         return this.service.getProdutos(this.id);
     }
 }
+/**
+ * @deprecated Use o ProjetoREST
+ */
 class ProjetoEmpresas extends ProjetoModule {
     get() {
         return this.service.getEmpresas(this.id)
             .pipe(map(empresas => empresas.map(e => new EmpresaProjetoFacade(e))));
     }
 }
-
+/**
+ * @deprecated Use o ProjetoREST
+ */
 class ProjetoRH extends ProjetoModule {
     get() {
         return this.service.getRH(this.id).pipe()
@@ -138,6 +152,9 @@ class ProjetoRH extends ProjetoModule {
         return this.service.getAlocacaoRH(this.id);
     }
 }
+/**
+ * @deprecated Use o ProjetoREST
+ */
 class ProjetoRM extends ProjetoModule {
     get() {
         return this.service.getRecursoMaterial(this.id);
@@ -146,6 +163,9 @@ class ProjetoRM extends ProjetoModule {
         return this.service.getAlocacaoRM(this.id);
     }
 }
+/**
+ * @deprecated Use o ProjetoREST
+ */
 class ProjetoREFP extends ProjetoModule {
     registrosAprovados() {
         return this.service.listarRegistrosAprovados(this.id);
@@ -196,8 +216,6 @@ class ProjetoREFP extends ProjetoModule {
         return this.service.removerRegistroREFP(id);
     }
 }
-
-
 
 export class ProjetoFacade extends GenericFacade<Projeto> implements Projeto {
     created: string;

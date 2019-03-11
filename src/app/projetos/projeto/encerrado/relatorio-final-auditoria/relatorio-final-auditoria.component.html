@@ -1,51 +1,38 @@
-<pre class="debug" *ngIf="form">{{form.value|json}}</pre>
+<app-loading type="fullscreen"></app-loading>
 <form *ngIf="form" [formGroup]="form">
-
-
     <div class="row">
         <div class="col">
             <h5 class="text-uppercase text-blue font-weight-normal my-3">RELATÓRIO FINAL E AUDITORIA</h5>
         </div>
     </div>
-
     <div class="row">
         <div class="col-12">
             <div class="form-group">
                 <label>PRODUTO PRINCIPAL PREVISTO FOI ALCANÇADO OU SUPERADO?</label>
-                <select class="form-control" formControlName="produtoAlcancado">
+                <select class="form-control" formControlName="produtoAlcancado" #produtoAlcancado>
                     <option value="">Selecione</option>
-                    <option value="1">Sim</option>
-                    <option value="0">Não</option>
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
                 </select>
             </div>
-
         </div>
     </div>
-
-    <div class="row">
+    <div class="row" *ngIf="dynamicForm['justificativaProduto']">
         <div class="col-12">
             <div class="form-group">
                 <label for="">JUSTIFICATIVA PELO NÃO ALCANCE DO PRODUTO PRINCIPAL PREVISTO</label>
-                <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
-                <div class="text-right">
-                    <small>1.000 caracteres sobrando</small>
-                </div>
+                <app-textarea class="form-control" rows="4" formControlName="justificativaProduto" maxlength="1000"></app-textarea>
             </div>
         </div>
     </div>
-
-    <div class="row">
+    <div class="row" *ngIf="dynamicForm['especificacaoProduto']">
         <div class="col-12">
             <div class="form-group">
                 <label for="">ESPECIFICAÇÃO TÉCNICA DO PRODUTO PRINCIPAL OBTIDO</label>
-                <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
-                <div class="text-right">
-                    <small>1.000 caracteres sobrando</small>
-                </div>
+                <app-textarea class="form-control" rows="4" formControlName="especificacaoProduto" maxlength="1000"></app-textarea>
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-12">
             <div class="form-group">
@@ -53,8 +40,8 @@
                     <label for="">TÉCNICA PREVISTA FOI IMPLEMENTADA?</label>
                     <select class="form-control" formControlName="tecnicaPrevista">
                         <option value="">Selecione</option>
-                        <option value="1">Sim</option>
-                        <option value="0">Não</option>
+                        <option value="true">Sim</option>
+                        <option value="false">Não</option>
                     </select>
                 </div>
 
@@ -62,31 +49,22 @@
 
         </div>
     </div>
-
-    <div class="row">
+    <div class="row" *ngIf="dynamicForm['justificativaTecnica']">
         <div class="col-12">
             <div class="form-group">
                 <label for="">JUSTIFICATIVA PELA NÃO IMPLEMENTAÇÃO DA TÉCNICA PREVISTA</label>
-                <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
-                <div class="text-right">
-                    <small>1.000 caracteres sobrando</small>
-                </div>
+                <app-textarea class="form-control" rows="4" formControlName="justificativaTecnica" maxlength="1000"></app-textarea>
             </div>
         </div>
     </div>
-
-    <div class="row">
+    <div class="row" *ngIf="dynamicForm['descTecnica']">
         <div class="col-12">
             <div class="form-group">
                 <label for="">DESCRIÇÃO, SUCINTA, DA TÉCNICA EMPREGADA</label>
-                <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
-                <div class="text-right">
-                    <small>1.000 caracteres sobrando</small>
-                </div>
+                <app-textarea class="form-control" rows="4" formControlName="descTecnica" maxlength="1000"></app-textarea>
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-12">
             <div class="form-group">
@@ -94,60 +72,43 @@
                     <label for="">APLICABILIDADE PREVISTA FOI ALCANÇADA OU SUPERADA?</label>
                     <select class="form-control" formControlName="aplicabilidadePrevista">
                         <option value="">Selecione</option>
-                        <option value="1">Sim</option>
-                        <option value="0">Não</option>
+                        <option value="true">Sim</option>
+                        <option value="false">Não</option>
                     </select>
                 </div>
-
             </div>
-
         </div>
     </div>
-
-    <div class="row">
+    <div class="row" *ngIf="dynamicForm['justificativaAplicabilidade']">
         <div class="col-12">
             <div class="form-group">
                 <label for="">JUSTIFICATIVA PELO NÃO ALCANCE DA APLICABILIDADE PREVISTA</label>
-                <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
-                <div class="text-right">
-                    <small>1.000 caracteres sobrando</small>
-                </div>
+                <app-textarea class="form-control" rows="4" formControlName="justificativaAplicabilidade" maxlength="1000"></app-textarea>
             </div>
         </div>
     </div>
-
-    <div class="row">
+    <div class="row" *ngIf="dynamicForm['descTestes']">
         <div class="col-12">
             <div class="form-group">
                 <label for="">DESCRIÇÃO, SUCINTA, DOS RESULTADOS DOS TESTES DE FUNCIONALIDADE DO PRODUTO PRINCIPAL E SUAS RESTRIÇÕES</label>
-                <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
-                <div class="text-right">
-                    <small>1.000 caracteres sobrando</small>
-                </div>
+                <app-textarea class="form-control" rows="4" formControlName="descTestes" maxlength="1000"></app-textarea>
             </div>
         </div>
     </div>
-
-    <div class="row">
+    <div class="row" *ngIf="dynamicForm['descAbrangencia']">
         <div class="col-12">
             <div class="form-group">
                 <label for="">DESCRIÇÃO DA ABRANGÊNCIA DE APLICAÇÃO DO PRODUTO PRINCIPAL E SUAS RESTRIÇÕES</label>
-                <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
-                <div class="text-right">
-                    <small>1.000 caracteres sobrando</small>
-                </div>
+                <app-textarea class="form-control" rows="4" formControlName="descAbrangencia" maxlength="1000"></app-textarea>
             </div>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="dynamicForm['descAmbito']">
         <div class="col-12">
             <div class="form-group">
                 <label for="">DESCRIÇÃO DO ÂMBITO DE APLICAÇÃO DO PRODUTO PRINCIPAL E SUAS RESTRIÇÕES</label>
-                <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
-                <div class="text-right">
-                    <small>1.000 caracteres sobrando</small>
-                </div>
+                <app-textarea class="form-control" rows="4" formControlName="descAmbito" maxlength="1000"></app-textarea>
             </div>
         </div>
     </div>
@@ -156,10 +117,7 @@
         <div class="col-12">
             <div class="form-group">
                 <label for="">DESCRIÇÃO, SUCINTA, DAS ATIVIDADES RELACIONADAS À TRANSFERÊNCIA/DIFUSÃO TECNOLÓGICA</label>
-                <textarea name="" id="" cols="30" rows="4" class="form-control"></textarea>
-                <div class="text-right">
-                    <small>1.000 caracteres sobrando</small>
-                </div>
+                <app-textarea class="form-control" rows="4" formControlName="descAtividades" maxlength="1000"></app-textarea>
             </div>
         </div>
     </div>
@@ -171,7 +129,7 @@
         </div>
         <div class="col-6">
             <div class="text-right">
-                <button class="btn btn-primary"><i class="ta-save"></i> Salvar Dados</button>
+                <button class="btn btn-primary" (click)="submit()" [disabled]="form.invalid"><i class="ta-save"></i> Salvar Dados</button>
             </div>
         </div>
     </div>

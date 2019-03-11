@@ -118,7 +118,7 @@
                 <label for="">MÊS REFERÊNCIA</label>
                 <select name="" id="" class="form-control" formControlName="mes">
                     <option value="">Selecione</option>
-                    <option [value]="item.value" *ngFor="let item of mesesRef">{{item.text}}</option>
+                    <option [value]="item.value" *ngFor="let item of mesesRef" [innerHTML]="item.text"></option>
                 </select>
             </div>
 

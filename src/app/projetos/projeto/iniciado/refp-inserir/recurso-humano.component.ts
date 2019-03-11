@@ -93,19 +93,25 @@ export class RecursoHumanoComponent implements OnInit {
 
         this.mesesRef = [];
 
+
         this.etapas.map(etapa => {
             const start = moment(etapa.dataInicio);
             const end = moment(etapa.dataFim);
 
+
             while (start.isBefore(end)) {
+
+                const ano = start.format('YYYY');
+                const mes = start.format('MMMM'); // .padEnd(9, '*').replace(/\*/g, '&nbsp;');
+
                 this.mesesRef.push({
-                    text: start.format('MMMM YYYY'),
+                    text: `${mes} - ${ano}`,
                     value: start.format('YYYY-MM-DD')
                 });
-                start.add(1, 'M');
-                if (this.mesesRef.length > 10) {
-                    break;
-                }
+                start.add(1, 'months');
+                // if (this.mesesRef.length > 10) {
+                //     break;
+                // }
 
             }
         });
@@ -125,7 +131,7 @@ export class RecursoHumanoComponent implements OnInit {
         });
     }
 
-    
+
     submit() {
         if (this.form.valid) {
             this.loading.show();
