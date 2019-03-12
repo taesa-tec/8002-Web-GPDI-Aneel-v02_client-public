@@ -18,15 +18,15 @@
                     <tr>
                         <th>Membro da Equipe</th>
                         <th>Capacitação</th>
-                        <th>Atividade Cadastradas?</th>
+                        <th>Arquivo Cadastrado?</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let resultado of resultados">
-                        <td>André Moraes</td>
-                        <td>Pós Doutorado</td>
-                        <td>Sim</td>
+                        <td>{{resultado.recursoHumano.nomeCompleto}}</td>
+                        <td>{{capacitacao(resultado.tipoValor)}}</td>
+                        <td>{{resultado.uploads.length > 0?'Sim':'Não'}}</td>
                         <td>
                             <button class="btn btn-primary btn-sm" type="button" (click)="editar(resultado)"><i class="ta-edit"></i> Editar</button>
                         </td>

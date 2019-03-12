@@ -3,6 +3,7 @@ import { AppService } from '@app/app.service';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { ProjetoFacade, ProjetoREST } from '@app/facades';
 import { Observable } from 'rxjs';
+import { EditorResultado } from '../common/editors/editor-resultado-base';
 
 export abstract class ResultadoBase<T> implements OnInit {
 
@@ -59,7 +60,12 @@ export abstract class ResultadoBase<T> implements OnInit {
     editar(relatorio?: T) {
         if (this.editor) {
             const ref = this.app.modal.open(this.editor, { size: 'lg' });
-            ref.componentInstance.relatorio = relatorio;
+            try {
+                (<EditorResultado<any>>ref.componentInstance).setEditable(relatorio);
+            } catch (e) {
+                console.log(e);
+
+            }
         } else {
             throw new Error('Editor não configurado ou encontrado');
         }

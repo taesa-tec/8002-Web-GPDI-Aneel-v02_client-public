@@ -87,7 +87,7 @@ export const TipoProducaoTC: Array<TextValue> = [
     { text: "Anais de Evento Internacional", value: "AI" }
 ];
 
-export const TiposCapitacao: Array<TextValue> = [
+export const TiposCapacitacao: Array<TextValue> = [
     { text: "PósDoutorado (Stricto Sensu)", value: "PD" },
     { text: "Doutorado (Stricto Sensu)", value: "DO" },
     { text: "Mestrado (Stricto Sensu)", value: "ME" },

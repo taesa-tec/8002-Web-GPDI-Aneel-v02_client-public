@@ -11,6 +11,8 @@ import { RecursoMaterialFormComponent } from '@app/projetos/projeto/common/recur
 import { RecursosHumanosComponent } from '@app/projetos/projeto/common/recursos-humanos/recursos-humanos.component';
 import { RecursosMateriaisComponent } from '@app/projetos/projeto/common/recursos-materiais/recursos-materiais.component';
 import { EtapaAtividadesFormComponent } from './etapa-atividades-form/etapa-atividades-form.component';
+import { EditorsModule } from './editors/editors.module';
+
 
 @NgModule({
     declarations: [
@@ -23,7 +25,7 @@ import { EtapaAtividadesFormComponent } from './etapa-atividades-form/etapa-ativ
         AlocarRecursoMaterialFormComponent,
         RecursosHumanosComponent,
         RecursosMateriaisComponent,
-        EtapaAtividadesFormComponent
+        EtapaAtividadesFormComponent,
     ],
     entryComponents: [
         ProdutoFormComponent,
@@ -36,9 +38,11 @@ import { EtapaAtividadesFormComponent } from './etapa-atividades-form/etapa-ativ
         AlocarRecursoMaterialFormComponent
     ],
     imports: [
-        SharedModule
+        SharedModule,
+        EditorsModule
     ],
     exports: [
+        EditorsModule,
         RecursosHumanosComponent,
         RecursosMateriaisComponent,
     ]

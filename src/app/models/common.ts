@@ -440,3 +440,18 @@ export interface RelatorioFinal {
     descAmbito: string;
     descAtividades: string;
 }
+
+export interface ResultadoCapacitacao {
+    id: number;
+    projetoId: number;
+    recursoHumanoId: number;
+    recursoHumano: RecursoHumano;
+    tipo: number;
+    tipoValor: string;
+    conclusao: boolean;
+    dataConclusao: string;
+    cnpjInstituicao: string;
+    areaPesquisa: string;
+    tituloTrabalho: string;
+    uploads: Array<FileUploaded>;
+}

@@ -110,6 +110,7 @@ export class EtapaFormComponent implements OnInit {
                             this.app.alert(resultDelete.inconsistencias.join(', '));
                         }
                     }, (error: HttpErrorResponse) => {
+                        this.loading.hide();
                         this.app.alert(error.message);
                     });
                 }

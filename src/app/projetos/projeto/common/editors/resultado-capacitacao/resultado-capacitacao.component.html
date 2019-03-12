@@ -1,0 +1,101 @@
+<div class="modal-header">
+    <h5 class="modal-title">REGISTRAR CAPACITAÇÃO PROFISSIONAL</h5>
+    <button type="button" class="close" (click)="close()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" [formGroup]="form" *ngIf="form">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">RECURSO HUMANO</label>
+                <select name="" id="" class="form-control" formControlName="recursoHumanoId">
+                    <option value="">Selecione o Recurso Humano</option>
+                    <option [value]="recurso.id" *ngFor="let recurso of recursosHumanos">{{recurso.nomeCompleto}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">TIPO DE CAPACITAÇÃO</label>
+                <select name="" id="" class="form-control" formControlName="tipo">
+                    <option value="">Selecione</option>
+                    <option *ngFor="let capacitacao of tiposCapacitacao" [value]="capacitacao.value">{{capacitacao.text}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">CONCLUSÃO DA CAPACITAÇÃO?</label>
+                <select name="" id="" class="form-control" formControlName="conclusao">
+                    <option value="">Selecione</option>
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">DATA DE CONCLUSÃO CAPACITAÇÃO</label>
+                <input type="date" class="form-control" formControlName="dataConclusao">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">CNPJ INSTITUIÇÃO</label>
+                <input type="text" class="form-control" formControlName="cnpjInstituicao" mask="00.000.000/0000-00">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">ÁREA DA PESQUISA DE CAPTAÇÃO PROFISSIONAL</label>
+                <app-textarea formControlName="areaPesquisa" class="form-control" maxlength="50" rows="1"></app-textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">TÍTULO DO TRABALHO QUE DEU ORIGEM À CAPACITAÇÃO PROFISSIONAL</label>
+                <app-textarea formControlName="tituloTrabalho" class="form-control" maxlength="200" rows="4"></app-textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group mb-0">
+                <label for="">ARQUIVO DO TRABALHO QUE DEU ORIGEM A CAPTAÇÃO PROFISSIONAL (EM PDF)</label>
+                <span class="btn btn-link" *ngFor="let file of editable.uploads" [downloadFile]="file">{{file.nomeArquivo}}</span>
+            </div>
+            <label class="btn btn-link">
+                <i class="ta-upload mx-2 fs-22"></i>
+                <span>Selecionar arquivo </span>
+                <strong *ngFor="let file of file.files"> ({{file.name}})</strong>
+                <input type="file" accept=".pdf" class="form-control d-none" #file (change)="changeFile($event)">
+            </label>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="text-right">
+                <button class="btn btn-link" (click)="close()"><i class="ta-cancel-circle"></i> Cancelar</button>
+                <button class="btn btn-primary" (click)="submit()" [disabled]="form.invalid"><i class="ta-plus-circle"></i> Salvar Captação Profissional</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<app-loading type="fullscreen"></app-loading>
