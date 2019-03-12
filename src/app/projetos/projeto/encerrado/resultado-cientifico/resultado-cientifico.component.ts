@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { ResultadoBase } from '../resultado-base';
+import { AppService } from '@app/app.service';
 
 @Component({
-  selector: 'app-resultado-cientifico',
-  templateUrl: './resultado-cientifico.component.html',
-  styleUrls: ['./resultado-cientifico.component.scss']
+    selector: 'app-resultado-cientifico',
+    templateUrl: './resultado-cientifico.component.html',
+    styleUrls: []
 })
-export class ResultadoCientificoComponent implements OnInit {
+export class ResultadoCientificoComponent extends ResultadoBase<any> {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+    constructor(app: AppService) { super(app, "ResultadoProducao"); }
 
 }
+

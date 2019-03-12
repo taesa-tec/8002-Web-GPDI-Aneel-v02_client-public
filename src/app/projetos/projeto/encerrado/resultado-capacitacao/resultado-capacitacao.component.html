@@ -6,7 +6,7 @@
 
 <div class="row mt-5">
     <div class="col-12 text-right">
-        <button class="btn btn-outline-primary"><i class="ta-plus-circle"></i> Registrar Capacitação Profissional</button>
+        <button class="btn btn-outline-primary" (click)="criar()"><i class="ta-plus-circle"></i> Registrar Capacitação Profissional</button>
     </div>
 </div>
 
@@ -15,38 +15,30 @@
         <div class="table-responsive">
             <table class="table">
                 <thead>
-                <tr>
-                    <th>Membro da Equipe</th>
-                    <th>Capacitação</th>
-                    <th>Atividade Cadastradas?</th>
-                    <th>Ações</th>
-                </tr>
+                    <tr>
+                        <th>Membro da Equipe</th>
+                        <th>Capacitação</th>
+                        <th>Atividade Cadastradas?</th>
+                        <th>Ações</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>André Moraes</td>
-                    <td>Pós Doutorado</td>
-                    <td>Sim</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" type="button"><i class="ta-edit"></i> Editar</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>André Moraes</td>
-                    <td>Pós Doutorado</td>
-                    <td>Sim</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" type="button"><i class="ta-edit"></i> Editar</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>André Moraes</td>
-                    <td>Pós Doutorado</td>
-                    <td>Sim</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" type="button"><i class="ta-edit"></i> Editar</button>
-                    </td>
-                </tr>
+                    <tr *ngFor="let resultado of resultados">
+                        <td>André Moraes</td>
+                        <td>Pós Doutorado</td>
+                        <td>Sim</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" type="button" (click)="editar(resultado)"><i class="ta-edit"></i> Editar</button>
+                        </td>
+                    </tr>
+                    <tr [hidden]="!loading.isLoading">
+                        <td colspan="4" class="text-center">
+                            <app-loading type="inline"></app-loading>
+                        </td>
+                    </tr>
+                    <tr *ngIf="resultados.length === 0 && !loading.isLoading">
+                        <td colspan="4" class="text-center">Nenhum Resultado Encontrado</td>
+                    </tr>
                 </tbody>
             </table>
         </div>

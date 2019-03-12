@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { ResultadoBase } from '../resultado-base';
+import { AppService } from '@app/app.service';
 
 @Component({
-  selector: 'app-resultado-infra-estrutura',
-  templateUrl: './resultado-infra-estrutura.component.html',
-  styles: []
+    selector: 'app-resultado-infra-estrutura',
+    templateUrl: './resultado-infra-estrutura.component.html',
+    styles: []
 })
-export class ResultadoInfraEstruturaComponent implements OnInit {
+export class ResultadoInfraEstruturaComponent extends ResultadoBase<any> {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+    constructor(app: AppService) { super(app, "ResultadoInfra"); }
 
 }

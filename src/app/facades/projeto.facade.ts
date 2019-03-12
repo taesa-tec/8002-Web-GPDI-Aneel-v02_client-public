@@ -46,7 +46,7 @@ abstract class ProjetoModule {
     constructor(protected id: number, protected service: ProjetosService) { }
 }
 
-class ProjetoREST {
+export class ProjetoREST {
     constructor(protected path: string, protected projeto: ProjetoFacade, protected service: ProjetosService) { }
 
     listar<T>(): Observable<T> {

@@ -6,7 +6,7 @@
 
 <div class="row mt-5">
     <div class="col-12 text-right">
-        <button class="btn btn-outline-primary"><i class="ta-plus-circle"></i> Registrar Propriedade Intelectual</button>
+        <button class="btn btn-outline-primary" (click)="criar()"><i class="ta-plus-circle"></i> Registrar Propriedade Intelectual</button>
     </div>
 </div>
 
@@ -23,21 +23,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr *ngFor="let resultado of resultados">
                         <td>Laboratório Novo em Instituição de Ensino Superior</td>
                         <td>138442020001</td>
                         <td>05/01/2019</td>
                         <td>
-                            <button class="btn btn-primary btn-sm" type="button"><i class="ta-edit"></i> Editar</button>
+                            <button class="btn btn-primary btn-sm" type="button" (click)="editar(resultado)"><i class="ta-edit"></i> Editar</button>
                         </td>
                     </tr>
-                    <tr>
-                        <td>Laboratório Novo em Instituição de Ensino Superior</td>
-                        <td>138442020001</td>
-                        <td>05/01/2019</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm" type="button"><i class="ta-edit"></i> Editar</button>
+                    <tr [hidden]="!loading.isLoading">
+                        <td colspan="4" class="text-center">
+                            <app-loading type="inline"></app-loading>
                         </td>
+                    </tr>
+                    <tr *ngIf="resultados.length === 0 && !loading.isLoading">
+                        <td colspan="4" class="text-center">Nenhum Resultado Encontrado</td>
                     </tr>
                 </tbody>
             </table>
