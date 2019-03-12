@@ -193,6 +193,7 @@ export interface Etapa {
     desc: string;
     dataInicio: string;
     dataFim: string;
+    atividadesRealizadas?: any;
     etapaProdutos: EtapaProduto[];
 }
 export interface EtapaProduto {

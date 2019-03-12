@@ -1,3 +1,4 @@
+<app-loading type="fullscreen"></app-loading>
 <div class="row">
     <div class="col">
         <h5 class="text-uppercase text-blue font-weight-normal my-3">RELATÓRIO ETAPAS PROJETO</h5>
@@ -18,40 +19,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Etapa 01</td>
-                        <td>05/2019</td>
-                        <td>11/2019</td>
-                        <td>Sim</td>
+                    <tr *ngFor="let etapa of etapas; let i = index">
+                        <td>Etapa {{i+1}}</td>
+                        <td>{{etapa.dataInicio | date:'MM/yyyy'}}</td>
+                        <td>{{etapa.dataFim | date:'MM/yyyy'}}</td>
+                        <td>{{etapa.atividadesRealizadas?'Sim':'Não'}}</td>
                         <td>
-                            <button class="btn btn-primary btn-sm" type="button"><i class="ta-edit"></i> Editar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Etapa 01</td>
-                        <td>05/2019</td>
-                        <td>11/2019</td>
-                        <td>Sim</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm" type="button"><i class="ta-edit"></i> Editar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Etapa 01</td>
-                        <td>05/2019</td>
-                        <td>11/2019</td>
-                        <td>Sim</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm" type="button"><i class="ta-edit"></i> Editar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Etapa 01</td>
-                        <td>05/2019</td>
-                        <td>11/2019</td>
-                        <td>Sim</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm" type="button"><i class="ta-edit"></i> Editar</button>
+                            <button class="btn btn-primary btn-sm" type="button" (click)="editar(etapa)">
+                                <i class="ta-edit"></i>
+                                Editar
+                            </button>
                         </td>
                     </tr>
                 </tbody>

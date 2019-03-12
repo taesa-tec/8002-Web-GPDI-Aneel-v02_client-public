@@ -57,6 +57,7 @@ library.add(fas, far);
     ],
     imports: [
         CommonModule,
+        RouterModule,
         FontAwesomeModule,
         NgbModule,
         HttpClientModule,

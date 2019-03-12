@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProjetosService } from '@app/projetos/projetos.service';
-import { Produto, EtapaProduto, Projeto, EditEtapaRequest, CriarEtapaRequest } from '@app/models';
+import { Produto, EtapaProduto, Projeto, EditEtapaRequest, CriarEtapaRequest, Etapa } from '@app/models';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { zip, timer } from 'rxjs';
 import { AppService } from '@app/app.service';
@@ -11,13 +11,12 @@ import { ProjetoFacade } from '@app/facades';
 
 
 @Component({
-    selector: 'app-etapa-form',
-    templateUrl: './etapa-form.component.html',
+    selector: 'app-etapa-atividades-form',
+    templateUrl: './etapa-atividades-form.component.html',
     styles: []
 })
-export class EtapaFormComponent implements OnInit {
-
-    etapa: any;
+export class EtapaAtividadesFormComponent implements OnInit {
+    etapa: Etapa;
     projeto: ProjetoFacade;
     form: FormGroup;
     produtos: Produto[] = [];
@@ -28,10 +27,20 @@ export class EtapaFormComponent implements OnInit {
     constructor(public activeModal: NgbActiveModal, protected app: AppService) { }
 
     get btnTxt() {
-        return this.etapa.id ? "Salvar Etapa" : "Adicionar Etapa";
+        return "Salvar Etapa";
     }
     get tituloTxt() {
-        return this.etapa.id ? "Editar Etapa" : "Nova Etapa";
+        return "Editar Etapa";
+    }
+
+    get etapaProdutos() {
+        if (this.etapa) {
+            return this.etapa.etapaProdutos.map(
+                ep => this.produtos.find(p => ep.produtoId === p.id)
+            ).filter(p => p !== undefined);
+
+        }
+        return [];
     }
 
     ngOnInit() {
@@ -54,21 +63,17 @@ export class EtapaFormComponent implements OnInit {
         return this.produtos.filter(p => (list.indexOf(p.id) === -1 || p.id === pid));
     }
 
+    setEtapa(etapa: Etapa) {
+        this.etapa = etapa;
+    }
+
     setup() {
         this.form = new FormGroup({
-            projetoId: new FormControl(this.projeto.id),
+            id: new FormControl(this.etapa.id),
             desc: new FormControl(this.etapa.desc || '', [Validators.required]),
-            EtapaProdutos: this.produtosGroup
+            etapaProdutos: new FormControl(this.etapa.etapaProdutos || [], [Validators.required]),
+            atividadesRealizadas: new FormControl(this.etapa.atividadesRealizadas || '', Validators.required)
         });
-
-        if (this.etapa.id) {
-            this.form.addControl('id', new FormControl(this.etapa.id));
-        }
-        if (this.etapa.etapaProdutos) {
-            (this.etapa.etapaProdutos as Array<EtapaProduto>).map(ep => {
-                this.produtosGroup.push(new FormGroup({ ProdutoId: new FormControl(ep.produtoId, Validators.required) }));
-            });
-        }
     }
 
     adicionarProduto(id: number) {
@@ -82,39 +87,24 @@ export class EtapaFormComponent implements OnInit {
     submit() {
         if (this.form.valid) {
             const v = this.form.value;
-            const request = this.etapa.id ? this.projeto.REST.Etapas.editar(v) : this.projeto.REST.Etapas.criar(v);
 
             this.loading.show();
 
-            request.subscribe(r => {
+            this.projeto.REST.Etapas.editar(v).subscribe(r => {
                 if (r.sucesso) {
                     this.activeModal.close(r);
+                    this.app.alert("Salvo com sucesso");
                 } else {
                     this.app.alert(r.inconsistencias.join(', '));
                 }
                 this.loading.hide();
+            }, error => {
+                this.loading.hide();
+                this.app.alert(error.message, error.statusText);
+
             });
         }
     }
 
-    excluirEtapa() {
-        this.app.confirm("Tem certeza que deseja excluir esta etapa?", "Confirmar Exclusão")
-            .then(result => {
-                if (result) {
-                    this.loading.show();
-                    this.app.projetos.delEtapa(this.etapa.id).subscribe(resultDelete => {
-                        this.loading.hide();
-                        if (resultDelete.sucesso) {
-                            this.activeModal.close('deleted');
-                        } else {
-                            this.app.alert(resultDelete.inconsistencias.join(', '));
-                        }
-                    }, (error: HttpErrorResponse) => {
-                        this.app.alert(error.message);
-                    });
-                }
-
-            });
-    }
 
 }

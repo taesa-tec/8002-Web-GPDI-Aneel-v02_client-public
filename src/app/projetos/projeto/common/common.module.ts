@@ -10,6 +10,7 @@ import { RecursoHumanoFormComponent } from '@app/projetos/projeto/common/recurso
 import { RecursoMaterialFormComponent } from '@app/projetos/projeto/common/recurso-material-form/recurso-material-form.component';
 import { RecursosHumanosComponent } from '@app/projetos/projeto/common/recursos-humanos/recursos-humanos.component';
 import { RecursosMateriaisComponent } from '@app/projetos/projeto/common/recursos-materiais/recursos-materiais.component';
+import { EtapaAtividadesFormComponent } from './etapa-atividades-form/etapa-atividades-form.component';
 
 @NgModule({
     declarations: [
@@ -22,10 +23,12 @@ import { RecursosMateriaisComponent } from '@app/projetos/projeto/common/recurso
         AlocarRecursoMaterialFormComponent,
         RecursosHumanosComponent,
         RecursosMateriaisComponent,
+        EtapaAtividadesFormComponent
     ],
     entryComponents: [
         ProdutoFormComponent,
         EtapaFormComponent,
+        EtapaAtividadesFormComponent,
         EmpresaFormComponent,
         RecursoHumanoFormComponent,
         AlocarRecursoHumanoFormComponent,
