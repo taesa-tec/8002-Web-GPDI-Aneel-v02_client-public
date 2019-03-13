@@ -3,6 +3,7 @@ import { ResultadoBase } from '../resultado-base';
 import { AppService } from '@app/app.service';
 
 import { ResultadoCientificoComponent as Editor } from '../../common/editors/resultado-cientifico/resultado-cientifico.component';
+import { TiposProducaoTC } from '@app/models';
 
 @Component({
     selector: 'app-resultado-cientifico',
@@ -12,6 +13,11 @@ import { ResultadoCientificoComponent as Editor } from '../../common/editors/res
 export class ResultadoCientificoComponent extends ResultadoBase<any> {
 
     constructor(app: AppService) { super(app, "ResultadoProducao", Editor); }
+
+    producao(v: string) {
+        const tc = TiposProducaoTC.find(c => c.value === v);
+        return tc ? tc.text : '';
+    }
 
 }
 

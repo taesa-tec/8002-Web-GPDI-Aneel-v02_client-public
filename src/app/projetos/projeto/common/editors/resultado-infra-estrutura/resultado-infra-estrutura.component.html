@@ -1,6 +1,6 @@
 <div class="modal-header">
     <h5 class="modal-title">REGISTRAR APOIO A INFRA-ESTRUTURA</h5>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"  (click)="close()">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
@@ -52,20 +52,18 @@
             </div>
         </div>
     </div>
-
     <div class="row">
-        <div class="col-12">
+        <div class="col">
+            <button *ngIf="editable" class="btn btn-link" (click)="remove()">
+                <i class="ta-trash"></i> Excluir
+            </button>
+        </div>
+        <div class="col">
             <div class="text-right">
-                <button class="btn btn-link" (click)="close()">
-                    <i class="ta-cancel-circle"></i> Cancelar
-                </button>
-                <button class="btn btn-primary" (click)="submit()" [disabled]="form.invalid">
-                    <i class="ta-plus-circle"></i> Salvar Apoio a infra-estrutura
-                </button>
+                <button class="btn btn-link" (click)="close()"><i class="ta-cancel-circle"></i> Cancelar</button>
+                <button class="btn btn-primary" (click)="submit()" [disabled]="form.invalid"><i class="ta-plus-circle"></i> Salvar Apoio a infra-estrutura</button>
             </div>
         </div>
     </div>
-
-
 </div>
 <app-loading type="fullscreen"></app-loading>

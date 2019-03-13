@@ -23,8 +23,6 @@ export class ResultadoCapacitacaoComponent extends EditorResultado<ResultadoCapa
 
     constructor(app: AppService, activeModal: NgbActiveModal) { super(app, activeModal, "ResultadoCapacitacao"); }
 
-
-
     load() {
         return new Observable<void>(observer => {
             this.projeto.REST.RecursoHumanos.listar<Array<RecursoHumano>>().subscribe(recursosHumanos => {

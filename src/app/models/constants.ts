@@ -80,7 +80,7 @@ export const PropriedadeIntelectual: Array<TextValue> = [
     { text: "Registro de Desenho Industrial", value: "RD" },
 ];
 
-export const TipoProducaoTC: Array<TextValue> = [
+export const TiposProducaoTC: Array<TextValue> = [
     { text: "Periódico Nacional", value: "PN" },
     { text: "Periódico Internacional", value: "PI" },
     { text: "Anais de Evento Nacional", value: "AN" },

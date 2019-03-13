@@ -466,3 +466,18 @@ export interface ResultadoInfra {
     areaPesquisa: string;
     listaMateriais: string;
 }
+
+export interface ResultadoProducao {
+    id: number;
+    projetoId: number;
+    tipo: string;
+    tipoValor?: string;
+    dataPublicacao: string;
+    confirmacao: boolean;
+    nome: string;
+    url: string;
+    catalogPaisId: number;
+    cidade: string;
+    titulo: string;
+    uploads: Array<FileUploaded>;
+}

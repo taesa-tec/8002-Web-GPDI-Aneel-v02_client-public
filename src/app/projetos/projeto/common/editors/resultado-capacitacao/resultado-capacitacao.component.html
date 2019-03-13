@@ -76,7 +76,9 @@
         <div class="col-12">
             <div class="form-group mb-0">
                 <label for="">ARQUIVO DO TRABALHO QUE DEU ORIGEM A CAPTAÇÃO PROFISSIONAL (EM PDF)</label>
-                <span class="btn btn-link" *ngFor="let file of editable.uploads" [downloadFile]="file">{{file.nomeArquivo}}</span>
+                <div *ngIf="editable">
+                    <span class="btn btn-link" *ngFor="let file of editable.uploads" [downloadFile]="file">{{file.nomeArquivo}}</span>
+                </div>
             </div>
             <label class="btn btn-link">
                 <i class="ta-upload mx-2 fs-22"></i>
@@ -89,11 +91,15 @@
     </div>
 
     <div class="row">
-        <div class="col-12">
+        <div class="col">
+            <button *ngIf="editable" class="btn btn-link" (click)="remove()">
+                <i class="ta-trash"></i> Excluir
+            </button>
+        </div>
+        <div class="col">
             <div class="text-right">
                 <button class="btn btn-link" (click)="close()"><i class="ta-cancel-circle"></i> Cancelar</button>
                 <button class="btn btn-primary" (click)="submit()" [disabled]="form.invalid"><i class="ta-plus-circle"></i> Salvar Captação Profissional</button>
-
             </div>
         </div>
     </div>

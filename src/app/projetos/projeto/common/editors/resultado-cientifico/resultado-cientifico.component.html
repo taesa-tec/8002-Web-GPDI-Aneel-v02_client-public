@@ -1,3 +1,114 @@
-<p>
-  resultado-cientifico works!
-</p>
+<div class="modal-header">
+    <h5 class="modal-title">REGISTRAR PRODUÇÃO TÉCNICO CIENTÍFICA</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" *ngIf="form" [formGroup]="form">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">TIPO DE PRODUÇÃO</label>
+                <select class="form-control" formControlName="tipo">
+                    <option value="">Selecione</option>
+                    <option *ngFor="let tipo of tiposProducao" [value]="tipo.value">{{tipo.text}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">DATA DA PUBLICAÇÃO</label>
+                <input type="date" class="form-control" formControlName="dataPublicacao">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">RECEBIDA A CONFIRMAÇÃO DA PUBLICAÇÃO?</label>
+                <select formControlName="confirmacao" class="form-control">
+                    <option value="">Selecione</option>
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">NOME DO PERIÓDICO OU DO EVENTO DE PUBLICAÇÃO DA PRODUÇÃO TÉCNICO-CIENTÍFICA</label>
+                <app-textarea class="form-control" formControlName="nome" maxlength="50" rows="1"></app-textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">ENDEREÇO NA INTERNET DO PERIÓDICO OU DO EVENTO DE PUBLICAÇÃO </label>
+                <app-textarea class="form-control" formControlName="url" rows="1"></app-textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">PAÍS DA PUBLICAÇÃO</label>
+                <select class="form-control" formControlName="catalogPaisId">
+                    <option value="">Selecione</option>
+                    <option [value]="pais.id" *ngFor="let pais of paises">{{pais.nome}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">CIDADE DA PUBLICAÇÃO</label>
+                <input type="text" class="form-control" formControlName="cidade">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">TÍTULO DO TRABALHO QUE GEROU A PRODUÇÃO TÉCNICO-CIENTÍFICA</label>
+                <app-textarea class="form-control" formControlName="titulo" maxlength="200" rows="1"></app-textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">ANEXAR ARQUIVO DO TRABALHO QUE DEU ORIGEM A CAPTAÇÃO PROFISSIONAL (EM PDF)</label>
+                <div *ngIf="editable">
+                    <span class="btn btn-link" *ngFor="let file of editable.uploads" [downloadFile]="file">{{file.nomeArquivo}}</span>
+                </div>
+            </div>
+            <label class="btn btn-link">
+                <i class="ta-upload mx-2 fs-22"></i>
+                <span>Selecionar arquivo </span>
+                <strong *ngFor="let file of file.files"> ({{file.name}})</strong>
+                <input type="file" accept=".pdf" class="form-control d-none" #file (change)="changeFile($event)">
+            </label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button *ngIf="editable" class="btn btn-link" (click)="remove()">
+                <i class="ta-trash"></i> Excluir
+            </button>
+        </div>
+        <div class="col">
+            <div class="text-right">
+                <button class="btn btn-link" (click)="close()"><i class="ta-cancel-circle"></i> Cancelar</button>
+                <button class="btn btn-primary" (click)="submit()" [disabled]="form.invalid"><i class="ta-plus-circle"></i> Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>

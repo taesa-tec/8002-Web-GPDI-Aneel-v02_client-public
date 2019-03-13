@@ -130,7 +130,7 @@ export abstract class EditorResultado<T extends { id: number }> implements OnIni
                     this.projetoREST.remover(this.editable.id).subscribe(resultDelete => {
                         this.loadingHide();
                         if (resultDelete.sucesso) {
-                            this.activeModal.close('deleted');
+                            this.activeModal.close(true);
                         } else {
                             this.app.alert(resultDelete.inconsistencias.join(', '));
                         }

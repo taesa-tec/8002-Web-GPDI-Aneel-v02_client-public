@@ -24,9 +24,9 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let resultado of resultados">
-                        <td>Periódico Nacional</td>
-                        <td>Ciência Hoje</td>
-                        <td>Sim</td>
+                        <td>{{producao(resultado.tipoValor)}}</td>
+                        <td>{{resultado.nome}}</td>
+                        <td>{{resultado.uploads.length > 0?'Sim':'Não'}}</td>
                         <td>
                             <button class="btn btn-primary btn-sm" type="button" (click)="editar(resultado)"><i class="ta-edit"></i> Editar</button>
                         </td>
