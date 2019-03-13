@@ -455,3 +455,14 @@ export interface ResultadoCapacitacao {
     tituloTrabalho: string;
     uploads: Array<FileUploaded>;
 }
+
+export interface ResultadoInfra {
+    id: number;
+    projetoId: number;
+    tipo: string;
+    tipoValor?: string;
+    cnpjReceptora: string;
+    nomeLaboratorio: string;
+    areaPesquisa: string;
+    listaMateriais: string;
+}

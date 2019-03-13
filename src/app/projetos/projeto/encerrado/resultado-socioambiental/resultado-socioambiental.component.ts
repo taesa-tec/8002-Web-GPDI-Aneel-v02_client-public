@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ResultadoBase } from '../resultado-base';
 import { AppService } from '@app/app.service';
+import { ResultadoSocioambientalComponent as Editor } from '../../common/editors/resultado-socioambiental/resultado-socioambiental.component';
 
 @Component({
     selector: 'app-resultado-socioambiental',
@@ -9,7 +10,7 @@ import { AppService } from '@app/app.service';
 })
 export class ResultadoSocioambientalComponent extends ResultadoBase<any> {
 
-    constructor(app: AppService) { super(app, "ResultadoSocioAmbiental"); }
+    constructor(app: AppService) { super(app, "ResultadoSocioAmbiental", Editor); }
 
 
 }

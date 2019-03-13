@@ -18,25 +18,25 @@
                     <tr>
                         <th>Tipo</th>
                         <th>CNPJ Entidade</th>
-                        <th>Ações</th>
+                        <th width="1%">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let resultado of resultados">
-                        <td>Laboratório Novo em Instituição de Ensino Superior</td>
-                        <td>13.844.202-0001/16</td>
+                        <td>{{resultado.nomeLaboratorio}}</td>
+                        <td>{{resultado.cnpjReceptora | mask:'00.000.000/0000-00'}}</td>
                         <td>
                             <button class="btn btn-primary btn-sm" type="button" (click)="editar(resultado)"><i class="ta-edit"></i> Editar</button>
                         </td>
                     </tr>
                     <tr [hidden]="!loading.isLoading">
-                            <td colspan="3" class="text-center">
-                                <app-loading type="inline"></app-loading>
-                            </td>
-                        </tr>
-                        <tr *ngIf="resultados.length === 0 && !loading.isLoading">
-                            <td colspan="3" class="text-center">Nenhum Resultado Encontrado</td>
-                        </tr>
+                        <td colspan="3" class="text-center">
+                            <app-loading type="inline"></app-loading>
+                        </td>
+                    </tr>
+                    <tr *ngIf="resultados.length === 0 && !loading.isLoading">
+                        <td colspan="3" class="text-center">Nenhum Resultado Encontrado</td>
+                    </tr>
                 </tbody>
             </table>
         </div>

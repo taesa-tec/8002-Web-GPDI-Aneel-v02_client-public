@@ -104,7 +104,9 @@ export abstract class EditorResultado<T extends { id: number }> implements OnIni
             request.subscribe(result => {
                 this.afterSubmit(result).subscribe(() => {
                     if (result.sucesso) {
-                        this.editable.id = result.id || this.editable.id;
+                        if (this.editable) {
+                            this.editable.id = result.id || this.editable.id;
+                        }
                         this.app.alert("Salvo com sucesso");
                     } else {
                         this.app.alert(result.inconsistencias);

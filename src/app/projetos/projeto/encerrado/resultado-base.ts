@@ -15,8 +15,6 @@ export abstract class ResultadoBase<T> implements OnInit {
 
     constructor(protected app: AppService, protected restService: string, protected editor?: any) { }
 
-
-
     ngOnInit(): void {
         this.app.projetos.projetoLoaded.subscribe(projeto => {
             try {
@@ -70,7 +68,9 @@ export abstract class ResultadoBase<T> implements OnInit {
                 if (updated) {
                     this.load();
                 }
-            })
+            }, error => {
+                // Só fechou o modal -.-
+            });
         } else {
             throw new Error('Editor não configurado ou encontrado');
         }

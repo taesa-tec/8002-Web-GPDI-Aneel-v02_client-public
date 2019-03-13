@@ -16,7 +16,14 @@ import { ResultadoEconomicoComponent } from './resultado-economico/resultado-eco
         ResultadoSocioambientalComponent,
         ResultadoEconomicoComponent
     ],
-    entryComponents: [ResultadoCapacitacaoComponent],
+    entryComponents: [
+        ResultadoCapacitacaoComponent,
+        ResultadoCientificoComponent,
+        ResultadoInfraEstruturaComponent,
+        ResultadoPropriedadeIntelectualComponent,
+        ResultadoSocioambientalComponent,
+        ResultadoEconomicoComponent
+    ],
     imports: [
         SharedModule,
     ]
