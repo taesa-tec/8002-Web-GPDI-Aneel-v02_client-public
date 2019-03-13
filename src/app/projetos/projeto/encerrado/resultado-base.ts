@@ -66,6 +66,11 @@ export abstract class ResultadoBase<T> implements OnInit {
                 console.log(e);
 
             }
+            ref.result.then(updated => {
+                if (updated) {
+                    this.load();
+                }
+            })
         } else {
             throw new Error('Editor não configurado ou encontrado');
         }

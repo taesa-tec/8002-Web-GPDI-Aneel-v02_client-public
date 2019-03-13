@@ -123,7 +123,7 @@ export class ProrrogarComponent implements OnInit {
                 this.app.alert(result.inconsistencias.join(', '));
             }
         }, (error: HttpErrorResponse) => {
-            this.app.alert(error.message);
+            this.app.alert(error.message,"Erro na requisição");
             this.loading.hide();
         });
     }

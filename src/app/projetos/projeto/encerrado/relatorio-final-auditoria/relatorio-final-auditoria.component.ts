@@ -4,6 +4,7 @@ import { ProjetoFacade } from '@app/facades';
 import { RelatorioFinal } from '@app/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
+import { timer } from 'rxjs';
 
 @Component({
     selector: 'app-relatorio-final-auditoria',
@@ -21,6 +22,22 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
     constructor(protected app: AppService) { }
+
+    get errors() {
+        const errs = [];
+        if (this.form) {
+            for (let k in this.form.controls) {
+                if (this.form.controls[k]) {
+                    const control = this.form.controls[k];
+                    if (control.errors) {
+                        errs.push({ field: k, errors: control.errors });
+                    }
+                }
+            }
+        }
+
+        return errs;
+    }
 
     ngOnInit() {
 
@@ -70,19 +87,40 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
             const controls = c.split('|');
             const [controlBase, controlBaseValue] = controls.shift().split(':');
 
-            controls.forEach(controlTarget => {
-                Object.defineProperty(this.dynamicForm, controlTarget, {
+            controls.forEach(controlTargetKey => {
+
+                Object.defineProperty(this.dynamicForm, controlTargetKey, {
                     get: () => String(this.form.get(controlBase).value) === controlBaseValue
                 });
 
-                this.form.get(controlBase).valueChanges.subscribe(value => {
-                    if (value === controlBaseValue) {
-                        const controlValue = this.relatorio ? this.relatorio[controlTarget] : '';
-                        this.form.addControl(controlTarget, new FormControl(controlValue, Validators.required));
-                    } else {
-                        this.form.removeControl(controlTarget);
-                    }
-                });
+                const control = this.form.get(controlBase);
+                const controlTarget = this.form.get(controlTargetKey);
+
+
+                if (control) {
+
+
+
+                    control.valueChanges.subscribe(value => {
+                        if (String(value) === controlBaseValue) {
+                            const controlValue = this.relatorio ? this.relatorio[controlTargetKey] : '';
+                            this.form.addControl(controlTargetKey, new FormControl(controlValue, Validators.required));
+                        } else {
+                            this.form.removeControl(controlTargetKey);
+                        }
+                    });
+
+                    timer(1).subscribe(t => {
+                        if (String(controlTarget.value) === controlBaseValue) {
+                            const controlValue = this.relatorio ? this.relatorio[controlTargetKey] : '';
+                            this.form.addControl(controlTargetKey, new FormControl(controlValue, Validators.required));
+                        } else {
+                            this.form.removeControl(controlTargetKey);
+                        }
+                    });
+                    
+                    this.form.updateValueAndValidity();
+                }
             });
         });
         this.form.updateValueAndValidity();
