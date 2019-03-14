@@ -5,7 +5,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ProjetoFacade } from '@app/facades';
 import { FormControl, Validators, FormGroup, FormArray } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { Produto, EtapaProduto } from '@app/models';
+import { Produto, EtapaProduto, TextValue, Etapa } from '@app/models';
+import { zip } from 'rxjs';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-prorrogar',
@@ -21,50 +23,52 @@ export class ProrrogarComponent implements OnInit {
     produtosGroup: FormArray = new FormArray([]);
     etapaGroup: FormGroup;
     formXml = new FormGroup({ xmlProjetoProrrogacao: this.xmlProjetoProrrogacao });
+    mesesRef: Array<TextValue> = [];
 
     @ViewChild('loading') loading: LoadingComponent;
     @ViewChild('xmlLoading') xmlLoading: LoadingComponent;
 
     constructor(protected app: AppService) { }
 
-    get dataFimControl() {
-        return this.form.get('dataFim');
-    }
-
-    get ano() {
-        return this.dataFim.getFullYear();
-    }
-    set ano(value) {
-        this.dataFim.setFullYear(value);
-        this.setControlData();
-    }
-
-    get mes() {
-        return this.dataFim.getMonth();
-    }
-    set mes(value) {
-        this.dataFim.setMonth(value);
-        this.setControlData();
-    }
-
-    protected setControlData() {
-        const d = new Date(this.ano, this.mes, 1);
-        const v = (new DatePipe('en-US')).transform(d, 'yyyy-MM-dd');
-        if (this.dataFimControl) {
-            this.dataFimControl.setValue(v);
-        }
-    }
-
     ngOnInit() {
 
         this.loading.show()
         this.app.projetos.projetoLoaded.subscribe(projeto => {
             this.projeto = projeto;
-            this.projeto.relations.produtos.get().subscribe(p => {
-                this.produtos = p;
-                this.setup();
+            const etapas$ = this.projeto.REST.Etapas.listar<Array<Etapa>>();
+            const produtos$ = this.projeto.REST.Produtos.listar<Array<Produto>>();
+            zip(etapas$, produtos$).subscribe(([etapas, produtos]) => {
+
+
+                const etapaFirst = etapas.shift();
+                const etapaLast = etapas.pop();
+
+                console.log({ etapaFirst, etapas, etapaLast });
+                const start = moment(etapaLast.dataFim).add(1, 'months');
+                const end = moment(etapaFirst.dataInicio).add(60, 'months');
+
+
+                while (start.isBefore(end)) {
+
+                    const ano = start.format('YYYY');
+                    const mes = start.format('MMMM'); // .padEnd(9, '*').replace(/\*/g, '&nbsp;');
+
+                    this.mesesRef.push({
+                        text: `${mes} - ${ano}`,
+                        value: start.format('YYYY-MM-DD')
+                    });
+                    start.add(1, 'months');
+                    // if (this.mesesRef.length > 10) {
+                    //     break;
+                    // }
+
+                }
+                this.produtos = produtos;
                 this.loading.hide();
+                this.setup();
             });
+
+
         });
     }
 
@@ -84,7 +88,6 @@ export class ProrrogarComponent implements OnInit {
             dataFim: new FormControl('', [Validators.required]),
             etapa: this.etapaGroup
         });
-        this.setControlData();
     }
 
     adicionarProduto(id: number) {
@@ -123,7 +126,7 @@ export class ProrrogarComponent implements OnInit {
                 this.app.alert(result.inconsistencias.join(', '));
             }
         }, (error: HttpErrorResponse) => {
-            this.app.alert(error.message,"Erro na requisição");
+            this.app.alert(error.message, "Erro na requisição");
             this.loading.hide();
         });
     }
