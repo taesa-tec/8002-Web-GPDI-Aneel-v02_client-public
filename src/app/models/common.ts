@@ -501,3 +501,13 @@ export interface ResultadoPropriedade {
         entidade: number;
     }>;
 }
+
+export interface ResultadoSocialAmbiental {
+    id: number;
+    projetoId: number;
+    tipo: number;
+    tipoValor: string;
+    positivo: boolean;
+    tecnicaPrevista?: any;
+    desc: string;
+}

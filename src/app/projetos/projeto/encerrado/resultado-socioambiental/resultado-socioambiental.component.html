@@ -23,8 +23,8 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let resultado of resultados">
-                        <td>Possibilidade de impactos ambientais (água, ar ou solo)</td>
-                        <td>Sim</td>
+                        <td>{{indicador(resultado.tipoValor)}} </td>
+                        <td>{{resultado.positivo ? 'Sim':'Não'}}</td>
                         <td>
                             <button class="btn btn-primary btn-sm" type="button" (click)="editar(resultado)"><i class="ta-edit"></i> Editar</button>
                         </td>
