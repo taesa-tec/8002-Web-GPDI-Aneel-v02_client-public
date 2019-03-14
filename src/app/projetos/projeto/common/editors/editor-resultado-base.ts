@@ -68,7 +68,6 @@ export abstract class EditorResultado<T extends { id: number }> implements OnIni
     }
 
     buildForm(editable?: T) {
-        console.log({ editable });
         this.form = new FormGroup({});
         if (editable) {
             this.form.addControl('id', new FormControl(editable.id));
@@ -120,7 +119,7 @@ export abstract class EditorResultado<T extends { id: number }> implements OnIni
 
         });
     }
-    afterSubmit(result?: ResultadoResponse) { return Observable.create(o => o.next()); }
+    afterSubmit(result?: ResultadoResponse): Observable<any> { return Observable.create(o => o.next()); }
 
     remove() {
         this.app.confirm("Tem certeza que deseja excluir?", "Confirmar Exclusão")

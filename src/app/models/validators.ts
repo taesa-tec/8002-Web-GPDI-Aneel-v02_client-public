@@ -1,4 +1,4 @@
-import { ValidatorFn, AbstractControl, ValidationErrors, Validators } from '@angular/forms';
+import { ValidatorFn, AbstractControl, ValidationErrors, Validators, FormArray } from '@angular/forms';
 
 
 export class AppValidators {
@@ -52,6 +52,23 @@ export class AppValidators {
         return isValid ? null : { cnpj: true };
     }
 
+    static minFormArray(minItens: number) {
+        return (formArray: FormArray): ValidationErrors | null => {
+            if (formArray.length < minItens) {
+                return { min: { min: minItens, actual: formArray.length } };
+            }
+            return null;
+        };
+    }
+
+    static maxFormArray(maxItens: number) {
+        return (formArray: FormArray): ValidationErrors | null => {
+            if (formArray.length > maxItens) {
+                return { max: { max: maxItens, actual: formArray.length } };
+            }
+            return null;
+        };
+    }
 }
 
 

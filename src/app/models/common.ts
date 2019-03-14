@@ -481,3 +481,23 @@ export interface ResultadoProducao {
     titulo: string;
     uploads: Array<FileUploaded>;
 }
+
+export interface ResultadoPropriedade {
+    id: number;
+    projetoId: number;
+    tipo: string;
+    tipoValor?: string;
+    dataPedido: string;
+    numeroPedido?: any;
+    titulo: string;
+    inventores: Array<{
+        id?: number;
+        recursoHumanoId: number;
+        recursoHumano?: RecursoHumano;
+        resultadoIntelectualId?: number;
+    }>;
+    depositantes: Array<{
+        empresaId: number;
+        entidade: number;
+    }>;
+}

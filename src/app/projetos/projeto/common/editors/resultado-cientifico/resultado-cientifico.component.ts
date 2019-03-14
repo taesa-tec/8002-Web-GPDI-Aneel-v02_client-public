@@ -73,10 +73,16 @@ export class ResultadoCientificoComponent extends EditorResultado<any> {
         return of(NoRequest);
     }
     afterSubmit(result: ResultadoResponse) {
-        if (result && result.sucesso && (result.id || this.editable.id)) {
-            return this.uploadFile(result.id || this.editable.id).pipe(tap(() => this.activeModal.close(true)));
-        }
-        return super.afterSubmit();
+        return super.afterSubmit().pipe(tap(r => {
+            if (result && result.sucesso) {
+                this.activeModal.close(true);
+            }
+            if (result && result.sucesso && (result.id || this.editable.id)) {
+                return this.uploadFile(result.id || this.editable.id).pipe(tap(() => this.activeModal.close(true)));
+            }
+        }));
+        
+        
     }
 }
 

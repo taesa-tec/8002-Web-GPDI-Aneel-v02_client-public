@@ -24,9 +24,9 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let resultado of resultados">
-                        <td>Laboratório Novo em Instituição de Ensino Superior</td>
-                        <td>138442020001</td>
-                        <td>05/01/2019</td>
+                        <td>{{tipoPropriedade(resultado.tipoValor)}}</td>
+                        <td>{{resultado.numeroPedido}}</td>
+                        <td>{{resultado.dataPedido | date:'shortDate'}}</td>
                         <td>
                             <button class="btn btn-primary btn-sm" type="button" (click)="editar(resultado)"><i class="ta-edit"></i> Editar</button>
                         </td>
