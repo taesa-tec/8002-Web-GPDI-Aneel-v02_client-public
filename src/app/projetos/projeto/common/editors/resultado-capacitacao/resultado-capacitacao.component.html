@@ -77,7 +77,7 @@
             <div class="form-group mb-0">
                 <label for="">ARQUIVO DO TRABALHO QUE DEU ORIGEM A CAPTAÇÃO PROFISSIONAL (EM PDF)</label>
                 <div *ngIf="editable">
-                    <span class="btn btn-link" *ngFor="let file of editable.uploads" [downloadFile]="file">{{file.nomeArquivo}}</span>
+                    <span class="btn btn-link" *ngFor="let file of editable.uploads" [downloadFile]="file">{{file.nomeArquivo}} <i class="ta-cancel-circle" title="Excluir o arquivo" (click)="deletarArquivo(file)"></i></span>
                 </div>
             </div>
             <label class="btn btn-link">
@@ -91,15 +91,15 @@
     </div>
 
     <div class="row">
-        <div class="col">
+        <div class="col-2">
             <button *ngIf="editable" class="btn btn-link" (click)="remove()">
                 <i class="ta-trash"></i> Excluir
             </button>
         </div>
-        <div class="col">
+        <div class="col-10">
             <div class="text-right">
                 <button class="btn btn-link" (click)="close()"><i class="ta-cancel-circle"></i> Cancelar</button>
-                <button class="btn btn-primary" (click)="submit()" [disabled]="form.invalid"><i class="ta-plus-circle"></i> Salvar Captação Profissional</button>
+                <button class="btn btn-primary" (click)="submit()" [disabled]="form.invalid"><i class="ta-plus-circle"></i> {{textSave}} Capacitação Profissional</button>
             </div>
         </div>
     </div>

@@ -33,8 +33,8 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let resultado of resultados | orderBy:listOrder.field:listOrder.direction">
-                        <td>Redução de Homem/Hora - Produtividade</td>
-                        <td>25%</td>
+                        <td>{{indicador(resultado.tipoValor)}}</td>
+                        <td> {{resultado.percentagem}} %</td>
                         <td>
                             <button class="btn btn-primary btn-sm" type="button" (click)="editar(resultado)"><i class="ta-edit"></i> Editar</button>
                         </td>

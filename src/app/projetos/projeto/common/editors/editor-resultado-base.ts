@@ -6,9 +6,9 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EMPTY, of, Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ResultadoResponse } from '@app/models';
+import { ResultadoResponse, FileUploaded } from '@app/models';
 
-export abstract class EditorResultado<T extends { id: number }> implements OnInit {
+export abstract class EditorResultado<T extends { id: number; uploads?: Array<FileUploaded> }> implements OnInit {
 
     editable: T;
     projeto: ProjetoFacade;
@@ -18,6 +18,9 @@ export abstract class EditorResultado<T extends { id: number }> implements OnIni
 
     get isEdit() {
         return this.editable && this.editable.id;
+    }
+    get textSave() {
+        return this.isEdit ? "Salvar" : "Adicionar";
     }
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
@@ -140,6 +143,22 @@ export abstract class EditorResultado<T extends { id: number }> implements OnIni
                 }
 
             });
+    }
+
+    deletarArquivo(file) {
+        this.loading.show();
+
+        this.editable.uploads.splice(this.editable.uploads.indexOf(file), 1);
+        this.app.file.remover(file).subscribe((result: ResultadoResponse) => {
+            this.loading.hide();
+            if (result.sucesso) {
+                this.app.alert("Excluido com sucesso");
+            } else {
+                this.app.alert(result.inconsistencias, 'Erro');
+            }
+        }, error => {
+            this.loading.hide();
+        });
     }
 
 

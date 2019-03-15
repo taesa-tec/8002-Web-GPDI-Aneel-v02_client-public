@@ -12,7 +12,7 @@ export abstract class ResultadoBase<T> implements OnInit {
     projeto: ProjetoFacade;
     projetoREST: ProjetoREST;
     resultados: Array<T> = [];
-    
+
     listOrder: { field: string; direction: 'asc' | 'desc'; } = {
         field: 'id',
         direction: 'asc'
@@ -62,7 +62,7 @@ export abstract class ResultadoBase<T> implements OnInit {
 
     editar(relatorio?: T) {
         if (this.editor) {
-            const ref = this.app.modal.open(this.editor, { size: 'lg' });
+            const ref = this.app.modal.open(this.editor, { size: 'lg', backdrop: 'static' });
             try {
                 (<EditorResultado<any>>ref.componentInstance).setEditable(relatorio);
             } catch (e) {

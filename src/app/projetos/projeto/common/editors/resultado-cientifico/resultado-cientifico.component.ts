@@ -52,6 +52,12 @@ export class ResultadoCientificoComponent extends EditorResultado<any> {
 
     configForm(): void {
         this.formFields.forEach(f => this.form.get(f).setValidators(Validators.required));
+        if (this.editable === undefined) {
+            const brasil = this.paises.find(p => p.nome === 'Brasil');
+            if (brasil) {
+                this.form.get('catalogPaisId').setValue(brasil.id);
+            }
+        }
         this.form.updateValueAndValidity();
     }
 
@@ -81,8 +87,8 @@ export class ResultadoCientificoComponent extends EditorResultado<any> {
                 return this.uploadFile(result.id || this.editable.id).pipe(tap(() => this.activeModal.close(true)));
             }
         }));
-        
-        
+
+
     }
 }
 

@@ -86,7 +86,7 @@
             <div class="form-group">
                 <label for="">ANEXAR ARQUIVO DO TRABALHO QUE DEU ORIGEM A CAPTAÇÃO PROFISSIONAL (EM PDF)</label>
                 <div *ngIf="editable">
-                    <span class="btn btn-link" *ngFor="let file of editable.uploads" [downloadFile]="file">{{file.nomeArquivo}}</span>
+                    <span class="btn btn-link" *ngFor="let file of editable.uploads" [downloadFile]="file">{{file.nomeArquivo}} <i class="ta-cancel-circle" title="Excluir o arquivo" (click)="deletarArquivo(file)"></i></span>
                 </div>
             </div>
             <label class="btn btn-link">

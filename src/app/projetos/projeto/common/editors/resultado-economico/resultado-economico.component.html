@@ -1,3 +1,75 @@
-<p>
-  resultado-economico works!
-</p>
+<div class="modal-header">
+    <h5 class="modal-title">REGISTRAR RESULTADO INDICADORES ECONÔMICOS</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" *ngIf="form" [formGroup]="form">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">TIPO DE INDICADOR ECONÔMICO OBTIDO COMO RESULTADO DO PROJETO</label>
+                <select class="form-control" formControlName="tipo">
+                    <option value="">Selecione</option>
+                    <option *ngFor="let tipo of indicadoresEconomicos" [value]="tipo.value">{{tipo.text}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">DESCRIÇÃO DO BENEFÍCIO ECONÔMICO PARA O INDICADOR ECONÔMICO SELECIONADO</label>
+                <app-textarea formControlName="desc" rows="5" maxlenght="400" class="form-control"></app-textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">UNIDADE DA BASE DO INDICADOR</label>
+                <input type="text" class="form-control" maxlength="10" formControlName="unidadeBase">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">VALOR NUMÉRICO DO INDICADOR </label>
+                <input type="text" class="form-control" mask="0*" formControlName="valorIndicador">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">PERCENTAGEM DO IMPACTO</label>
+                <input type="text" class="form-control" mask="percent" formControlName="percentagem">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">VALOR DO BENEFÍCIO ECONÔMICO</label>
+                <input type="text" class="form-control" mask="0*" formControlName="valorBeneficio">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2">
+            <button *ngIf="editable" class="btn btn-link" (click)="remove()">
+                <i class="ta-trash"></i> Excluir
+            </button>
+        </div>
+        <div class="col-10">
+            <div class="text-right">
+                <button class="btn btn-link" (click)="close()"><i class="ta-cancel-circle"></i> Cancelar</button>
+                <button class="btn btn-primary" (click)="submit()" [disabled]="form.invalid"><i class="ta-plus-circle"></i> {{textSave}} Resultado Indicadores Econômicos</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<app-loading type="fullscreen"></app-loading>

@@ -511,3 +511,14 @@ export interface ResultadoSocialAmbiental {
     tecnicaPrevista?: any;
     desc: string;
 }
+export interface ResultadoEconomico {
+    id: number;
+    projetoId: number;
+    tipo: number;
+    tipoValor: string;
+    desc: string;
+    unidadeBase: string;
+    valorIndicador: number;
+    percentagem: number;
+    valorBeneficio: number;
+}
