@@ -39,12 +39,23 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
         return this.extrato ? this.extrato.valor : 0;
     }
 
+
+
     constructor(protected app: AppService, private route: ActivatedRoute) {
         CategoriasContabeis.forEach(c => {
             this.categoriasContabeis[c.value] = c;
         });
     }
 
+    itemDesc(item: ExtratoItem) {
+        if (item.recursoHumano) {
+            return item.recursoHumano.nomeCompleto;
+        }
+        if (item.registroFinanceiro && item.registroFinanceiro.nomeItem) {
+            return item.registroFinanceiro.nomeItem;
+        }
+        return item.desc;
+    }
     calcDesvio(n: number) {
         return ((100 - n) / 100).toFixed(2).concat('%');
     }

@@ -129,6 +129,7 @@ export class ProjetosService {
     }
 
     editar(projeto: Projeto) {
+        projeto.catalogEmpresaId = parseInt(String(projeto.catalogEmpresaId), 10);
         return this.http.put<ResultadoResponse>(`Projetos`, projeto).pipe(tap(result => {
             if (result.sucesso) {
                 this.projetoUpdatedSource.next(projeto);

@@ -47,7 +47,7 @@
                 <table class="table table-borderless m-0">
                     <tr *ngFor="let i of relatorio.items">
                         <td width="25%">
-                            <span class="btn btn-link p-0" (click)="openModal(i)">{{i.desc}}</span>
+                            <span class="btn btn-link p-0" (click)="openModal(i)">{{itemDesc(i)}}</span>
                         </td>
                         <td width="15%">
                             <span *ngIf="etapas[i.etapa.id]" [title]="etapas[i.etapa.id].desc"> Etapa {{etapas[i.etapa.id].numeroEtapa}}</span>

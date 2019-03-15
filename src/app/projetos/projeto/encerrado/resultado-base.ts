@@ -12,6 +12,11 @@ export abstract class ResultadoBase<T> implements OnInit {
     projeto: ProjetoFacade;
     projetoREST: ProjetoREST;
     resultados: Array<T> = [];
+    
+    listOrder: { field: string; direction: 'asc' | 'desc'; } = {
+        field: 'id',
+        direction: 'asc'
+    };
 
     constructor(protected app: AppService, protected restService: string, protected editor?: any) { }
 

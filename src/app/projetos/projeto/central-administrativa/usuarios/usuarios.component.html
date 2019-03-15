@@ -3,6 +3,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>&nbsp;</th>
                     <th>
                         <div class="d-flex align-items-center">
                             <span class="mx-2">NOME</span>
@@ -31,11 +32,14 @@
             </thead>
             <tbody>
                 <tr>
-                    <td [hidden]="!loading.isLoading" colspan="3" class="text-center">
+                    <td [hidden]="!loading.isLoading" colspan="4" class="text-center">
                         <app-loading type="inline"></app-loading>
                     </td>
                 </tr>
                 <tr *ngFor="let userPermissao of usersPermissao">
+                    <td width="32">
+                        <img [src]="avatars[userPermissao.user.id] | async" width="32" height="32" alt="" class="rounded-circle mr-3">
+                    </td>
                     <td> {{userPermissao.user.nomeCompleto}} </td>
                     <td>
                         <span *ngIf="userPermissao.user.catalogEmpresa">

@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, of } from 'rxjs';
 import { Projeto, FileUploaded, User, UserProjeto } from '@app/models';
 import { AppService } from '@app/app.service';
 import { zip } from 'rxjs';
 import { FormArray, FormGroup, FormControl } from '@angular/forms';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
+import { SafeUrl } from '@angular/platform-browser';
+import { map, catchError } from 'rxjs/operators';
 
 @Component({
     selector: 'app-usuarios',
@@ -29,6 +31,8 @@ export class UsuariosComponent implements OnInit {
         direction: 'asc'
     };
 
+    avatars: { [propName: string]: Observable<SafeUrl> } = {};
+
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
     @ViewChild('saving') loadingSaving: LoadingComponent;
@@ -42,6 +46,15 @@ export class UsuariosComponent implements OnInit {
             this.loadUsers();
         });
     }
+
+    getAvatar(user) {
+        if (this.avatars[user.id] === undefined) {
+            this.avatars[user.id] = this.app.file.toBlob(`Users/${user.id}/avatar`, user.id).pipe(catchError(err => {
+                return of('/assets/avatartaesa.png');
+            }));
+        }
+    }
+
     loadUsers() {
         const permissoes$ = this.app.catalogo.permissoes();
         const empresas$ = this.app.catalogo.empresas();
@@ -52,6 +65,7 @@ export class UsuariosComponent implements OnInit {
         zip(empresas$, permissoes$, users$).subscribe(([empresas, permissoes, users]) => {
             this.permissoes = permissoes;
             this.users = users;
+            this.users.forEach(user => this.getAvatar(user));
             this.app.projetos.usersProjeto(this.projeto.id).subscribe(result => {
                 const ups = result.map(userProjeto => {
                     if (userProjeto.applicationUser.catalogEmpresaId) {

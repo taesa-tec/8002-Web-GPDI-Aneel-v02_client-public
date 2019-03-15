@@ -1,4 +1,14 @@
 <app-loading #loading type="fullscreen"></app-loading>
+<div *ngIf="form && mesesRef.length === 0">
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-danger">
+                <i class="ta-warning fs-24"></i> 
+                Esse projeto atingiu o limite máximo de 60 meses.
+            </div>
+        </div>
+    </div>
+</div>
 <div *ngIf="form && mesesRef.length > 0">
     <div class="row">
         <div class="col-12">

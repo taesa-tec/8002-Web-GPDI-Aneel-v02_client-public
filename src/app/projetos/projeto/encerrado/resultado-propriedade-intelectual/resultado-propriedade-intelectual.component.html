@@ -16,14 +16,29 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Tipo</th>
-                        <th>Número INPI</th>
-                        <th>Data Pedido</th>
+                        <th>
+                            <div class="d-flex align-items-center">
+                                <span class="mx-2">Tipo</span>
+                                <app-handler-order [current]="listOrder" field="tipoValor" (order)="listOrder=$event"></app-handler-order>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="d-flex align-items-center">
+                                <span class="mx-2">Número INPI</span>
+                                <app-handler-order [current]="listOrder" field="numeroPedido" (order)="listOrder=$event"></app-handler-order>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="d-flex align-items-center">
+                                <span class="mx-2">Data Pedido</span>
+                                <app-handler-order [current]="listOrder" field="dataPedido" (order)="listOrder=$event"></app-handler-order>
+                            </div>
+                        </th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let resultado of resultados">
+                    <tr *ngFor="let resultado of resultados | orderBy:listOrder.field:listOrder.direction">
                         <td>{{tipoPropriedade(resultado.tipoValor)}}</td>
                         <td>{{resultado.numeroPedido}}</td>
                         <td>{{resultado.dataPedido | date:'shortDate'}}</td>

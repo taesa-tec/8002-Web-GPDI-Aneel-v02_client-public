@@ -16,13 +16,23 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Tipo</th>
-                        <th>Percentual Impacto</th>
+                        <th>
+                            <div class="d-flex align-items-center">
+                                <span class="mx-2">Tipo</span>
+                                <app-handler-order [current]="listOrder" field="nome" (order)="listOrder=$event"></app-handler-order>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="d-flex align-items-center">
+                                <span class="mx-2">Percentual Impacto</span>
+                                <app-handler-order [current]="listOrder" field="nome" (order)="listOrder=$event"></app-handler-order>
+                            </div>
+                        </th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let resultado of resultados">
+                    <tr *ngFor="let resultado of resultados | orderBy:listOrder.field:listOrder.direction">
                         <td>Redução de Homem/Hora - Produtividade</td>
                         <td>25%</td>
                         <td>
@@ -30,13 +40,13 @@
                         </td>
                     </tr>
                     <tr [hidden]="!loading.isLoading">
-                            <td colspan="3" class="text-center">
-                                <app-loading type="inline"></app-loading>
-                            </td>
-                        </tr>
-                        <tr *ngIf="resultados.length === 0 && !loading.isLoading">
-                            <td colspan="3" class="text-center">Nenhum Resultado Encontrado</td>
-                        </tr>
+                        <td colspan="3" class="text-center">
+                            <app-loading type="inline"></app-loading>
+                        </td>
+                    </tr>
+                    <tr *ngIf="resultados.length === 0 && !loading.isLoading">
+                        <td colspan="3" class="text-center">Nenhum Resultado Encontrado</td>
+                    </tr>
                 </tbody>
             </table>
         </div>

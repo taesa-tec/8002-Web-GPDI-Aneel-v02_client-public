@@ -15,6 +15,11 @@ export class RelatorioEtapaProjetoComponent implements OnInit {
     projeto: ProjetoFacade;
     etapas: Array<Etapa>;
 
+    listOrder: { field: string; direction: 'asc' | 'desc'; } = {
+        field: 'id',
+        direction: 'asc'
+    };
+
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
     constructor(protected app: AppService) { }

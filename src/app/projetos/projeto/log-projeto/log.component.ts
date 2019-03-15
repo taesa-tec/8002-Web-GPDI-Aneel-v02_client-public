@@ -17,10 +17,8 @@ export class LogComponent implements OnInit {
     constructor(protected app: AppService) { }
 
     ngOnInit() {
-        console.log(this.log);
         this.app.file.toBlob(`/Users/${this.log.userId}/avatar`, this.log.userId).subscribe(avatar => {
             this.avatar = avatar;
-
         });
 
 
