@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AppService } from '@app/app.service';
 import { ProjetoFacade } from '@app/facades';
-import { RelatorioFinal } from '@app/models';
+import { RelatorioFinal, ResultadoResponse, NoRequest } from '@app/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { timer } from 'rxjs';
+import { timer, of, from, zip } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 
 @Component({
     selector: 'app-relatorio-final-auditoria',
@@ -16,8 +17,11 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
     projeto: ProjetoFacade;
     relatorio: RelatorioFinal;
     form: FormGroup;
-
     dynamicForm: { [propName: string]: boolean } | Object;
+
+
+    @ViewChild('file') file: ElementRef;
+    @ViewChild('fileAuditoria') fileAuditoria: ElementRef;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
@@ -38,9 +42,20 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
 
         return errs;
     }
+    get arquivosRelatorioFinal() {
+        if (this.relatorio) {
+            return this.relatorio.uploads.filter(file => file.categoriaValor === null);
+        }
+        return [];
+    }
+    get arquivosRelatorioAuditoria() {
+        if (this.relatorio) {
+            return this.relatorio.uploads.filter(file => file.categoriaValor === 'RelatorioFinalAuditoria');
+        }
+        return [];
+    }
 
     ngOnInit() {
-
         this.app.projetos.projetoLoaded.subscribe(projeto => {
             this.projeto = projeto;
             this.obterRelatorioFinal();
@@ -73,7 +88,7 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
         });
         this.configForm();
     }
-
+    changeFile() { };
     protected configForm() {
         this.dynamicForm = {};
         [
@@ -118,14 +133,27 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
                             this.form.removeControl(controlTargetKey);
                         }
                     });
-                    
+
                     this.form.updateValueAndValidity();
                 }
             });
         });
         this.form.updateValueAndValidity();
     }
-
+    deletarArquivo(file) {
+        this.loading.show();
+        this.relatorio.uploads.splice(this.relatorio.uploads.indexOf(file), 1);
+        this.app.file.remover(file).subscribe((result: ResultadoResponse) => {
+            this.loading.hide();
+            if (result.sucesso) {
+                this.app.alert("Excluido com sucesso");
+            } else {
+                this.app.alert(result.inconsistencias, 'Erro');
+            }
+        }, error => {
+            this.loading.hide();
+        });
+    }
     submit() {
 
         if (this.form.invalid) {
@@ -140,15 +168,48 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
 
         request.subscribe(result => {
             if (result.sucesso) {
-                this.app.alert("Salvo com sucesso");
+                this.uploadFile(result.id || this.relatorio.id).subscribe(() => {
+                    this.loading.hide();
+                    this.app.alert("Salvo com sucesso");
+                    this.obterRelatorioFinal();
+                });
             } else {
                 this.app.alert(result.inconsistencias);
+                this.loading.hide();
             }
-            this.loading.hide();
         }, error => {
             this.loading.hide();
             this.app.alert(error);
         })
+    }
+
+    uploadFile(id) {
+        const els = [
+            { el: this.file.nativeElement as HTMLInputElement, categoria: false },
+            { el: this.fileAuditoria.nativeElement as HTMLInputElement, categoria: 'RelatorioFinalAuditoria' }
+        ];
+        const uploads = els.map(item => {
+            const el = item.el;
+
+            if (el.files.length > 0) {
+                const form = new FormGroup({
+                    RelatorioFinalId: new FormControl(id)
+                });
+                if (item.categoria) {
+                    form.addControl('Categoria', new FormControl(item.categoria));
+                }
+                return this.app.file.upload(el.files.item(0), form).pipe(tap(result => {
+                    if (result.sucesso) {
+                        this.file.nativeElement.value = "";
+                    }
+                }), catchError(error => of(false)));
+
+            }
+            return of(true);
+        });
+
+
+        return zip(uploads[0], uploads[1]);
     }
 
 }

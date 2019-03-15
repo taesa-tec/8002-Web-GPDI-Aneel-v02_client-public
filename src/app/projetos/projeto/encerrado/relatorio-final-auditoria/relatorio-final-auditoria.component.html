@@ -1,5 +1,5 @@
 <app-loading type="fullscreen"></app-loading>
-<form *ngIf="form" [formGroup]="form">
+<div *ngIf="form" [formGroup]="form">
     <div class="row">
         <div class="col">
             <h5 class="text-uppercase text-blue font-weight-normal my-3">RELATÓRIO FINAL E AUDITORIA</h5>
@@ -122,6 +122,46 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group mb-0">
+                <label for="">ARQUIVO PDF RELATÓRIO FINAL</label>
+                <div *ngIf="relatorio">
+                    <span class="btn btn-link" *ngFor="let file of arquivosRelatorioFinal" [downloadFile]="file">{{file.nomeArquivo}} <i class="ta-cancel-circle" title="Excluir o arquivo" 
+                        (click)="deletarArquivo(file)"></i></span>
+                </div>
+            </div>
+            <label class="btn btn-link">
+                <i class="ta-upload mx-2 fs-22"></i>
+                <span>Selecionar arquivo </span>
+                <strong *ngFor="let file of file.files"> ({{file.name}})</strong>
+                <input type="file" accept=".pdf" class="form-control d-none" #file (change)="changeFile($event)">
+            </label>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group mb-0">
+                <label for="">ARQUIVO EM FORMATO PDF DO RELATÓRIO DE AUDITORIA CONTÁBIL E FINANCEIRA DO PROJETO DE P&D</label>
+                <div *ngIf="relatorio">
+                    <span class="btn btn-link" *ngFor="let file of arquivosRelatorioAuditoria" [downloadFile]="file">
+                        {{file.nomeArquivo}} 
+                        <i class="ta-cancel-circle" title="Excluir o arquivo" (click)="deletarArquivo(file)"></i>
+                    </span>
+                </div>
+            </div>
+            <label class="btn btn-link">
+                <i class="ta-upload mx-2 fs-22"></i>
+                <span>Selecionar arquivo </span>
+                <strong *ngFor="let file of fileAuditoria.files"> ({{file.name}})</strong>
+                <input type="file" accept=".pdf" class="form-control d-none" #fileAuditoria (change)="changeFile($event)">
+            </label>
+
+        </div>
+    </div>
+
     <hr>
 
     <div class="row mt-5">
@@ -133,4 +173,4 @@
             </div>
         </div>
     </div>
-</form>
+</div>

@@ -439,6 +439,7 @@ export interface RelatorioFinal {
     descAbrangencia: string;
     descAmbito: string;
     descAtividades: string;
+    uploads: Array<FileUploaded>;
 }
 
 export interface ResultadoCapacitacao {
