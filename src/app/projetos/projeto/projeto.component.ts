@@ -22,9 +22,9 @@ export class ProjetoComponent implements OnInit {
     projetoIniciadoRoutes: Routes;
     projeto: ProjetoFacade;
 
-    menus: { [propName: string]: Array<{ text: string, icon: string, path: string }> } = {
+    menus: { [propName: string]: Array<{ text: string | { pd: string; pg: string }, icon: string, path: string | { pd: string; pg: string } }> } = {
         proposta: [
-            { text: "Projeto", icon: "ta-projeto", path: 'info' },
+            { text: { pg: "Projeto Gestão", pd: "Projeto" }, icon: "ta-projeto", path: { pd: 'info', pg: 'projeto-gestao' } },
             { text: "Temas", icon: "ta-chat", path: 'temas' },
             { text: "Produtos", icon: "ta-box", path: 'produtos' },
             { text: "Etapas", icon: "ta-etapas", path: 'etapas' },
@@ -63,10 +63,23 @@ export class ProjetoComponent implements OnInit {
     get pstatus() {
         return this.projeto.catalogStatus.status.toLocaleLowerCase();
     }
-    constructor(private route: ActivatedRoute, protected app: AppService) { }
+    constructor(protected app: AppService) { }
 
-    route2link(r: { text: string, icon: string, path: string }) {
-        return ['/dashboard', 'projeto', this.projeto.id, this.pstatus].concat(r.path.split('/'));
+    route2link(r: { path: string | { pd?: string; pg?: string } }) {
+        if (typeof r.path === "string") {
+            return ['/dashboard', 'projeto', this.projeto.id, this.pstatus].concat(r.path.split('/'));
+        } else {
+            const tipo = this.projeto.tipoValor.toLowerCase();
+            return ['/dashboard', 'projeto', this.projeto.id, this.pstatus].concat(r.path[tipo].split('/'));
+        }
+    }
+    route2text(r: { text: string | { pd?: string; pg?: string } }) {
+        try {
+            return typeof r.text === "string" ? r.text : r.text[this.projeto.tipoValor.toLowerCase()];
+        } catch (error) {
+            console.log(error);
+
+        }
     }
 
     ngOnInit() {
