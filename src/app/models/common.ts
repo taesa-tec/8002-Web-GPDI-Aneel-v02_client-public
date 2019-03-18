@@ -51,6 +51,7 @@ export interface Projeto {
     id: number;
     titulo: string;
     tipo: number;
+    tipoValor?: string;
     dataInicio?: any;
     codigo?: any;
     tituloDesc: string;

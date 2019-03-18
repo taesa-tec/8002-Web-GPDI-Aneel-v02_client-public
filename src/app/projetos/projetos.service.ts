@@ -22,9 +22,10 @@ import {
     EmpresaProjeto,
     TotalLog,
     ExtratosEmpresas,
-    ProrrogarProjetoRequest
+    ProrrogarProjetoRequest,
+    XmlType
 } from '@app/models';
-import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import { Subject, Observable, BehaviorSubject, observable } from 'rxjs';
 import { tap, share, map } from 'rxjs/operators';
 import { ProjetoFacade } from '@app/facades';
 import { FileService } from '@app/shared/file.service';
@@ -354,17 +355,44 @@ export class ProjetosService {
     }
 
 
-    validarDados(id: number) {
-        return this.http.get<ResultadoResponse>(`projeto/${id}/Xml/ProjetoPed/ValidaDados`);
+    validarDados(id: number, tipo: XmlType = XmlType.ProjetoPed) {
+        return this.http.get<ResultadoResponse>(`projeto/${id}/Xml/${tipo}/ValidaDados`);
     }
-    /**
-     * @description Gerar XML's
-     */
+
     obterXmls(id: number) {
         return this.http.get<Array<FileUploaded>>(`projeto/${id}/ObterXmls`);
     }
     obterLogDuto(id: number) {
         return this.http.get<Array<FileUploaded>>(`upload/${id}/obterlogduto`);
+    }
+    gerarXml(projeto_id: number, versao: string, tipo: XmlType = XmlType.ProjetoPed) {
+        return new Observable(observer => {
+            this.validarDados(projeto_id, tipo).subscribe(result => {
+                if (result.sucesso) {
+                    this.http.get<ResultadoResponse>(`projeto/${projeto_id}/Xml/${tipo}/${versao}`).subscribe(xml_result => {
+                        this.obterXmls(projeto_id).subscribe(xmls => {
+                            const file = xmls.find(f => f.id === parseInt(xml_result.id, 10));
+                            if (file) {
+                                this.fileService.download(file);
+                                observer.next(file);
+                            } else {
+                                observer.error("Arquivo não encontrado");
+                            }
+
+                        }, error => {
+                            observer.error(error);
+                        });
+
+                    });
+
+                } else {
+                    observer.error("Arquivo não encontrado");
+                }
+
+            }, error => {
+                observer.error(error);
+            });
+        });
     }
     gerarXmlProjetoPed(id: number, versao: number) {
         return this.http.get<ResultadoResponse>(`projeto/${id}/Xml/ProjetoPed/${versao}`);

@@ -1,5 +1,5 @@
 import { ProjetosService } from '../projetos/projetos.service';
-import { Projeto, Empresa, ProjetoStatus, RegistroREFP, ProrrogarProjetoRequest, ResultadoResponse } from '@app/models';
+import { Projeto, Empresa, ProjetoStatus, RegistroREFP, ProrrogarProjetoRequest, ResultadoResponse, XmlType } from '@app/models';
 import { throwError, Subject, Observable } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { GenericFacade } from './generic.facade';
@@ -222,6 +222,7 @@ export class ProjetoFacade extends GenericFacade<Projeto> implements Projeto {
     id: number;
     titulo: string;
     tipo: number;
+    tipoValor?: string;
     dataInicio?: any;
     codigo?: any;
     tituloDesc: string;
@@ -270,8 +271,8 @@ export class ProjetoFacade extends GenericFacade<Projeto> implements Projeto {
 
     onSave = new Subject<Projeto>();
 
-    constructor(protected _projeto: Projeto, protected _service: ProjetosService) {
-        super(_projeto);
+    constructor(_data: Projeto, protected _service: ProjetosService) {
+        super(_data);
         this.relations = {
             tema: new ProjetoTema(this.id, this._service),
             etapas: new ProjetoEtapas(this.id, this._service),
@@ -294,11 +295,17 @@ export class ProjetoFacade extends GenericFacade<Projeto> implements Projeto {
                 get: () => this.catalogStatus && this.catalogStatus.status === status
             });
         });
-
-
     }
+
+    get isPD() {
+        return this.tipoValor === "PD";
+    }
+    get isPG() {
+        return this.tipoValor === "PG";
+    }
+
     save() {
-        const projeto = Object.assign({}, this._projeto);
+        const projeto = Object.assign({}, this._data);
         if (this.id) {
             return this._service.editar(projeto).pipe(tap(r => this.onSave.next(projeto)));
         } else {
@@ -311,7 +318,7 @@ export class ProjetoFacade extends GenericFacade<Projeto> implements Projeto {
         }
     }
     toRequest() {
-        return Object.assign({}, this._projeto);
+        return Object.assign({}, this._data);
     }
 
     prorrogar(prorrogacao: ProrrogarProjetoRequest) {
@@ -328,6 +335,9 @@ export class ProjetoFacade extends GenericFacade<Projeto> implements Projeto {
     }
     obterLogDuto() {
         return this._service.obterLogDuto(this.id);
+    }
+    gerarXml(tipo: XmlType, versao: any) {
+        return this._service.gerarXml(this.id, versao, tipo);
     }
     gerarXmlProjetoPed(versao: number) {
         return this._service.gerarXmlProjetoPed(this.id, versao);

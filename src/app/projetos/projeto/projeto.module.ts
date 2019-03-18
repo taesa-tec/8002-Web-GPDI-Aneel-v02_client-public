@@ -18,6 +18,7 @@ import { CentralAdministrativaModule } from './central-administrativa/central-ad
         EncerradoModule
     ],
     exports: [
+        CentralAdministrativaModule,
         CommonModule,
         PropostaModule,
         IniciadoModule,

@@ -12,7 +12,7 @@ import { AppService } from '@app/app.service';
 @Component({
     selector: 'app-info',
     templateUrl: './info.component.html',
-    styleUrls: ['./info.component.scss']
+    styleUrls: []
 })
 export class InfoComponent implements OnInit {
 
@@ -63,13 +63,10 @@ export class InfoComponent implements OnInit {
                 razoabilidade: new FormControl(p.razoabilidade),
                 pesquisas: new FormControl(p.pesquisas),
             });
-            this.formMountend();
-
             this.loading.hide();
         });
     }
 
-    formMountend() { }
 
     onSubmit() {
         if (this.form.valid) {
@@ -78,7 +75,7 @@ export class InfoComponent implements OnInit {
                     this.app.alert("Salvo com sucesso");
                     this.projeto = Object.assign(this.projeto, this.form.value);
                 } else {
-                    this.app.alert(resultado.inconsistencias.join("<br>"));
+                    this.app.alert(resultado.inconsistencias);
                 }
             });
         }

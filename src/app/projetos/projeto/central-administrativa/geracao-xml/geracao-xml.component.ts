@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { AppService } from '@app/app.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Projeto, ResultadoResponse } from '@app/models';
+import { Projeto, ResultadoResponse, XmlType } from '@app/models';
 import { Subscription } from 'rxjs';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { tap } from 'rxjs/operators';
@@ -39,6 +39,8 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
     constructor(protected app: AppService) { }
 
     ngOnInit() {
+        console.log(XmlType.InicioExecucaoProjeto);
+
         this.form = new FormGroup({
             XmlProjetoPed: this.XmlProjetoPed,
             XmlInteresseExecucao: this.XmlInteresseExecucao,
@@ -73,100 +75,29 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
         }
     }
 
+    gerarXml(tipo: XmlType, versao: any) {
+        this.loading.show();
+
+        this.projeto.gerarXml(tipo, versao).subscribe(result => {
+            this.loading.hide();
+        }, (error) => {
+            this.app.alert(error.message);
+            this.loading.hide();
+        });
+    }
     gerarXmlProjetoPed() {
-        this.loading.show();
-
-        this.app.projetos.gerarXmlProjetoPed(this.projeto.id, this.XmlProjetoPed.value).subscribe(result => {
-            this.loading.hide();
-            if (result.sucesso) {
-                this.downloadFile(result.id);
-                // this.app.file.download(result.id, `projeto-ped-${this.projeto.id}.xml`);
-            } else {
-                this.app.alert(result.inconsistencias.join(', '));
-            }
-
-        }, (error: HttpErrorResponse) => {
-            this.app.alert(error.message);
-            this.loading.hide();
-        });
+        this.gerarXml(XmlType.ProjetoPed, this.XmlProjetoPed.value);
     }
-
     gerarXmlInteresseExecucao() {
-        this.loading.show();
-        this.app.projetos.gerarXmlInteresseExecucao(this.projeto.id, this.XmlInteresseExecucao.value).subscribe(result => {
-            this.loading.hide();
-            if (result.sucesso) {
-                this.downloadFile(result.id);
-                // this.app.file.download(result.id, `projeto-${this.projeto.id}-interesse-execucao.xml`);
-            } else {
-                this.app.alert(result.inconsistencias.join(', '));
-            }
-            console.log(result);
-        }, (error: HttpErrorResponse) => {
-            this.app.alert(error.message);
-            this.loading.hide();
-        });
+        this.gerarXml(XmlType.InteresseProjetoPed, this.XmlInteresseExecucao.value);
     }
-
     gerarXmlInicioExecucao() {
-        this.loading.show();
-        this.app.projetos.gerarXmlInicioExecucao(this.projeto.id, this.XmlInicioExecucao.value).subscribe(result => {
-            this.loading.hide();
-            if (result.sucesso) {
-                this.downloadFile(result.id);
-                // this.app.file.download(result.id, `projeto-${this.projeto.id}-inicio-execucao.xml`);
-            } else {
-                this.app.alert(result.inconsistencias.join(', '));
-            }
-        }, (error: HttpErrorResponse) => {
-            this.app.alert(error.message);
-            this.loading.hide();
-        });
+        this.gerarXml(XmlType.InicioExecucaoProjeto, this.XmlInicioExecucao.value);
     }
     gerarXmlRelatorioFinal() {
-        this.loading.show();
-        this.app.projetos.gerarXmlRelatorioFinalPed(this.projeto.id, this.XmlRelatorioFinal.value).subscribe(result => {
-            this.loading.hide();
-            if (result.sucesso) {
-                this.downloadFile(result.id);
-                // this.app.file.download(result.id, `projeto-${this.projeto.id}-inicio-execucao.xml`);
-            } else {
-                this.app.alert(result.inconsistencias.join(', '));
-            }
-        }, (error: HttpErrorResponse) => {
-            this.app.alert(error.message);
-            this.loading.hide();
-        });
+        this.gerarXml(XmlType.RelatorioFinalPed, this.XmlInicioExecucao.value);
     }
     gerarXmlAuditoriaContabil() {
-        this.loading.show();
-        this.app.projetos.gerarXmlRelatorioAuditoriaPed(this.projeto.id, this.XmlAuditoriaContabil.value).subscribe(result => {
-            this.loading.hide();
-            if (result.sucesso) {
-                this.downloadFile(result.id);
-                // this.app.file.download(result.id, `projeto-${this.projeto.id}-inicio-execucao.xml`);
-            } else {
-                this.app.alert(result.inconsistencias.join(', '));
-            }
-        }, (error: HttpErrorResponse) => {
-            this.app.alert(error.message);
-            this.loading.hide();
-        });
+        this.gerarXml(XmlType.RelatorioAuditoriaPed, this.XmlAuditoriaContabil.value);
     }
-
-    downloadFile(file_id) {
-        this.app.requestCache.clear();
-        this.app.projetos.obterXmls(this.projeto.id).subscribe(result => {
-            const file = result.find(f => f.id === parseInt(file_id, 10));
-            if (file) {
-                this.app.file.download(file);
-            } else {
-                this.app.alert("Arquivo não encontrdo", 'Erro');
-            }
-            this.loading.hide();
-        }, error => {
-            this.loading.hide();
-        });
-    }
-
 }
