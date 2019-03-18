@@ -146,18 +146,17 @@ export abstract class EditorResultado<T extends { id: number; uploads?: Array<Fi
     }
 
     deletarArquivo(file) {
-        this.loading.show();
-
+        this.loadingShow();
         this.editable.uploads.splice(this.editable.uploads.indexOf(file), 1);
         this.app.file.remover(file).subscribe((result: ResultadoResponse) => {
-            this.loading.hide();
+            this.loadingHide();
             if (result.sucesso) {
                 this.app.alert("Excluido com sucesso");
             } else {
                 this.app.alert(result.inconsistencias, 'Erro');
             }
         }, error => {
-            this.loading.hide();
+            this.loadingHide();
         });
     }
 

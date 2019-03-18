@@ -11,7 +11,8 @@
         <div>
             <div *ngIf="temaProjeto">
                 <span class="btn btn-link" [downloadFile]="file" *ngFor="let file of temaProjeto.uploads">
-                        {{file.nomeArquivo}} <i class="ta-cancel-circle" (click)="deletarArquivo(file)"></i>
+                        {{file.nomeArquivo}} 
+                        <i class="ta-cancel-circle" (click)="deletarArquivo(file)"></i>
                     </span>
             </div>
             <label class="btn btn-link">
