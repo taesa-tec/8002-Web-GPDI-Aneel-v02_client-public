@@ -31,6 +31,7 @@ export class CentralAdministrativaComponent implements OnInit {
             { text: "Usuários", path: 'usuarios' },
         ],
         finalizado: [
+            { text: "Geração XMLS", path: 'geracao-xml' },
             { text: "Logs DUTO", path: 'logs-duto' },
             { text: "Repositório XMLs Gerados", path: 'repositorio-xml' },
             { text: "Alteração Status Projeto", path: 'alteracao-status-projeto' },

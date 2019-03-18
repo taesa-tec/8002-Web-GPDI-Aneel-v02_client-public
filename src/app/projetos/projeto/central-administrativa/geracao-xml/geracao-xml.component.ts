@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { tap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ProjetoFacade } from '@app/facades';
 
 @Component({
     selector: 'app-geracao-xml',
@@ -16,12 +17,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class GeracaoXmlComponent implements OnInit, OnDestroy {
 
 
-    projeto: Projeto;
+    projeto: ProjetoFacade;
     form: FormGroup;
 
     XmlProjetoPed: FormControl = new FormControl('', [Validators.required]);
     XmlInteresseExecucao: FormControl = new FormControl('', [Validators.required]);
     XmlInicioExecucao: FormControl = new FormControl('', [Validators.required]);
+    XmlRelatorioFinal: FormControl = new FormControl('', [Validators.required]);
+    XmlAuditoriaContabil: FormControl = new FormControl('', [Validators.required]);
 
     avaliacaoResult: ResultadoResponse;
 
@@ -39,12 +42,15 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
         this.form = new FormGroup({
             XmlProjetoPed: this.XmlProjetoPed,
             XmlInteresseExecucao: this.XmlInteresseExecucao,
-            XmlInicioExecucao: this.XmlInicioExecucao
+            XmlInicioExecucao: this.XmlInicioExecucao,
+            XmlRelatorioFinal: this.XmlRelatorioFinal,
+            XmlAuditoriaContabil: this.XmlAuditoriaContabil
+
         });
 
         this.projetoLoaded = this.app.projetos.projetoLoaded.subscribe(projeto => {
             this.projeto = projeto;
-            if (this.projeto.catalogStatus.status !== 'Proposta') {
+            if (this.projeto.catalogStatus.status === 'Iniciado') {
                 this.app.router.navigate(['dashboard', 'projeto', projeto.id, 'central-administrativa', 'logs-duto']);
             }
         });
@@ -105,6 +111,36 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
     gerarXmlInicioExecucao() {
         this.loading.show();
         this.app.projetos.gerarXmlInicioExecucao(this.projeto.id, this.XmlInicioExecucao.value).subscribe(result => {
+            this.loading.hide();
+            if (result.sucesso) {
+                this.downloadFile(result.id);
+                // this.app.file.download(result.id, `projeto-${this.projeto.id}-inicio-execucao.xml`);
+            } else {
+                this.app.alert(result.inconsistencias.join(', '));
+            }
+        }, (error: HttpErrorResponse) => {
+            this.app.alert(error.message);
+            this.loading.hide();
+        });
+    }
+    gerarXmlRelatorioFinal() {
+        this.loading.show();
+        this.app.projetos.gerarXmlRelatorioFinalPed(this.projeto.id, this.XmlRelatorioFinal.value).subscribe(result => {
+            this.loading.hide();
+            if (result.sucesso) {
+                this.downloadFile(result.id);
+                // this.app.file.download(result.id, `projeto-${this.projeto.id}-inicio-execucao.xml`);
+            } else {
+                this.app.alert(result.inconsistencias.join(', '));
+            }
+        }, (error: HttpErrorResponse) => {
+            this.app.alert(error.message);
+            this.loading.hide();
+        });
+    }
+    gerarXmlAuditoriaContabil() {
+        this.loading.show();
+        this.app.projetos.gerarXmlRelatorioAuditoriaPed(this.projeto.id, this.XmlAuditoriaContabil.value).subscribe(result => {
             this.loading.hide();
             if (result.sucesso) {
                 this.downloadFile(result.id);

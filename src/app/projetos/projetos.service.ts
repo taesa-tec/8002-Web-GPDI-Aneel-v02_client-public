@@ -378,6 +378,12 @@ export class ProjetosService {
     gerarXmlProrrogacao(id: number, versao: number) {
         return this.http.get<ResultadoResponse>(`projeto/${id}/Xml/ProrrogaExecucaoProjeto/${versao}`);
     }
+    gerarXmlRelatorioFinalPed(id: number, versao: number) {
+        return this.http.get<ResultadoResponse>(`projeto/${id}/Xml/RelatorioFinalPed/${versao}`);
+    }
+    gerarXmlRelatorioAuditoriaPed(id: number, versao: number) {
+        return this.http.get<ResultadoResponse>(`projeto/${id}/Xml/RelatorioAuditoriaPed/${versao}`);
+    }
     downloadXML(projeto_id, file_id) {
         const o = new Subject<boolean>();
         this.requestCache.clear();

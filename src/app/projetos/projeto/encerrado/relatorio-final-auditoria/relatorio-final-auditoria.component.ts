@@ -44,7 +44,7 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
     }
     get arquivosRelatorioFinal() {
         if (this.relatorio) {
-            return this.relatorio.uploads.filter(file => file.categoriaValor === null);
+            return this.relatorio.uploads.filter(file => file.categoriaValor === 'RelatorioFinalAnual');
         }
         return [];
     }
@@ -185,7 +185,7 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
 
     uploadFile(id) {
         const els = [
-            { el: this.file.nativeElement as HTMLInputElement, categoria: false },
+            { el: this.file.nativeElement as HTMLInputElement, categoria: 'RelatorioFinalAnual' },
             { el: this.fileAuditoria.nativeElement as HTMLInputElement, categoria: 'RelatorioFinalAuditoria' }
         ];
         const uploads = els.map(item => {

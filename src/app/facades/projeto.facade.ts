@@ -251,6 +251,10 @@ export class ProjetoFacade extends GenericFacade<Projeto> implements Projeto {
     usersProjeto?: any;
     empresas?: any;
 
+    isProposta: boolean;
+    isIniciado: boolean;
+    isEncerrado: boolean;
+
     relations: {
         tema: ProjetoTema;
         etapas: ProjetoEtapas;
@@ -263,6 +267,7 @@ export class ProjetoFacade extends GenericFacade<Projeto> implements Projeto {
     REST: REST;
 
     onUpdate = new Subject<{ prop: string; value: any; prev: any }>();
+
     onSave = new Subject<Projeto>();
 
     constructor(protected _projeto: Projeto, protected _service: ProjetosService) {
@@ -277,12 +282,21 @@ export class ProjetoFacade extends GenericFacade<Projeto> implements Projeto {
             REFP: new ProjetoREFP(this.id, this._service),
         };
         const rest = {};
+
         projetoComponents.forEach(path => {
             rest[path] = new ProjetoREST(path, this, this._service);
         });
-        this.REST = <REST>rest;
-    }
 
+        this.REST = <REST>rest;
+
+        "Encerrado|Proposta|Iniciado".split('|').forEach(status => {
+            Object.defineProperty(this, `is${status}`, {
+                get: () => this.catalogStatus && this.catalogStatus.status === status
+            });
+        });
+
+
+    }
     save() {
         const projeto = Object.assign({}, this._projeto);
         if (this.id) {
