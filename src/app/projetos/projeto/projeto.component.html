@@ -5,8 +5,8 @@
         <div class="projeto-side-info text-white fs-14 font-weight-light position-relative">
             <app-loading type="fullparent"></app-loading>
             <div *ngIf="projeto">
-                <div class=" p-3 border-bottom border-cinza-claro text-uppercase">{{projeto.numero}} -
-                    {{projeto.titulo}}
+                <div class=" p-3 border-bottom border-cinza-claro text-uppercase">
+                    {{projeto.numero}} - {{projeto.titulo}}
                 </div>
                 <div class="p-3 ">
                     <div class="etapa">
@@ -26,13 +26,11 @@
         </div>
         <nav class="side-nav">
             <app-loading type="fullparent" background="transparent"></app-loading>
-            <a *ngFor="let route of menu" [routerLink]="route2link(route)" class="side-nav-item" routerLinkActive="active"
+            <a *ngFor="let route of menu" [routerLink]="route.path" class="side-nav-item" routerLinkActive="active"
            [hidden]="!projeto">
-            <span class="fs-24 mr-3">
-                <i [class]="route.icon"></i>
-            </span>
-            {{route2text(route)}}
-        </a>
+            <span class="fs-24 mr-3"><i [class]="route.icon"></i></span>
+                {{route.text}}
+            </a>
             <a [routerLink]="['/dashboard','projeto',projeto.id,'central-administrativa']" class="side-nav-item" routerLinkActive="active">
             <span class="fs-24 mr-3"><i class="ta-central-admin"></i></span>Central Administrativa
         </a>
@@ -44,7 +42,6 @@
     <div class="py-4 px-5 mb-5">
         <!-- @todo Aletas -->
         <hr>
-
         <router-outlet></router-outlet>
     </div>
 

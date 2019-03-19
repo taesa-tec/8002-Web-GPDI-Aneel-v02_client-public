@@ -38,13 +38,13 @@
                 </div>
             </ng-template>
         </ngb-tab>
-        <ngb-tab title="Empresa Executora" id="executora">
+        <ngb-tab title="Empresa Executora" id="executora" [disabled]="projeto.isPG">
             <ng-template ngbTabContent>
                 <div class="row my-5" *ngIf="formExecutora" [formGroup]="formExecutora">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="">CNPJ</label>
-                            <input type="text" class="form-control"  mask="00.000.000/0000-00" formControlName="cnpj">
+                            <input type="text" class="form-control" mask="00.000.000/0000-00" formControlName="cnpj">
                         </div>
                     </div>
                     <div class="col-6">
@@ -82,7 +82,7 @@
                 </div>
             </ng-template>
         </ngb-tab>
-        <ngb-tab title="Empresa Parceira" id="parceira">
+        <ngb-tab title="Empresa Parceira" id="parceira" [disabled]="projeto.isPG">
             <ng-template ngbTabContent>
                 <div class="row my-5" *ngIf="formParceira" [formGroup]="formParceira">
                     <div class="col-6">

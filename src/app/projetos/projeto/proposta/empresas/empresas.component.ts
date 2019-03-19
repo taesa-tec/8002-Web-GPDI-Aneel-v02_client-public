@@ -10,7 +10,7 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 @Component({
     selector: 'app-empresas',
     templateUrl: './empresas.component.html',
-    styleUrls: ['./empresas.component.scss']
+    styleUrls: []
 })
 export class EmpresasComponent implements OnInit {
 

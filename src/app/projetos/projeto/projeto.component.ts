@@ -22,11 +22,11 @@ export class ProjetoComponent implements OnInit {
     projetoIniciadoRoutes: Routes;
     projeto: ProjetoFacade;
 
-    menus: { [propName: string]: Array<{ text: string | { pd: string; pg: string }, icon: string, path: string | { pd: string; pg: string } }> } = {
+    menus: { [propName: string]: Array<{ text: string | { pd: string; pg: string }, icon: string | { pd: string; pg: string }, path: string | { pd: string; pg: string }, only?: 'pd' | 'pg' }> } = {
         proposta: [
-            { text: { pg: "Projeto Gestão", pd: "Projeto" }, icon: "ta-projeto", path: { pd: 'info', pg: 'projeto-gestao' } },
-            { text: "Temas", icon: "ta-chat", path: 'temas' },
-            { text: "Produtos", icon: "ta-box", path: 'produtos' },
+            { text: { pg: "Projeto Gestão", pd: "Projeto" }, icon: "ta-projeto", path: 'info' },
+            { text: { pg: "Atividades", pd: "Temas" }, icon: "ta-chat", path: { pg: "atividades", pd: "temas" } },
+            { text: "Produtos", icon: "ta-box", path: 'produtos', only: 'pd' },
             { text: "Etapas", icon: "ta-etapas", path: 'etapas' },
             { text: "Empresas", icon: "ta-empresas", path: 'empresas' },
             { text: "Recursos Humanos", icon: "ta-group", path: 'recursos-humanos' },
@@ -57,7 +57,7 @@ export class ProjetoComponent implements OnInit {
         ]
     };
 
-    menu: Array<{ text: string, icon: string, path: string }>;
+    menu: Array<{ text: string, icon: string, path: Array<string> }>;
 
 
     get pstatus() {
@@ -65,21 +65,39 @@ export class ProjetoComponent implements OnInit {
     }
     constructor(protected app: AppService) { }
 
-    route2link(r: { path: string | { pd?: string; pg?: string } }) {
-        if (typeof r.path === "string") {
-            return ['/dashboard', 'projeto', this.projeto.id, this.pstatus].concat(r.path.split('/'));
+    protected route2link(path: string | { pd?: string; pg?: string }): Array<string> {
+        if (typeof path === "string") {
+            return ['/dashboard', 'projeto', this.projeto.id, this.pstatus]
+                .concat(path.split('/'))
+                .map(i => String(i));
         } else {
             const tipo = this.projeto.tipoValor.toLowerCase();
-            return ['/dashboard', 'projeto', this.projeto.id, this.pstatus].concat(r.path[tipo].split('/'));
+            return ['/dashboard', 'projeto', this.projeto.id, this.pstatus]
+                .concat(path[tipo].split('/'))
+                .map(i => String(i));
         }
     }
-    route2text(r: { text: string | { pd?: string; pg?: string } }) {
+    protected route2text(text: string | { pd?: string; pg?: string }): string {
         try {
-            return typeof r.text === "string" ? r.text : r.text[this.projeto.tipoValor.toLowerCase()];
+            return typeof text === "string" ? text : text[this.projeto.tipoValor.toLowerCase()];
         } catch (error) {
-            console.log(error);
-
+            return '';
         }
+    }
+    protected buildMenu(menu: Array<{ text: string | { pd: string; pg: string }, icon: string | { pd: string; pg: string }, path: string | { pd: string; pg: string }, only?: 'pd' | 'pg' }>)
+        : Array<{ text: string; icon: string; path: Array<string> }> {
+
+        return menu
+            .filter(item => {
+                return (item.only === undefined || (item.only && item.only === this.projeto.catalogStatus.status));
+            })
+            .map(item => {
+                return {
+                    text: this.route2text(item.text),
+                    icon: this.route2text(item.icon),
+                    path: this.route2link(item.path)
+                };
+            });
     }
 
     ngOnInit() {
@@ -99,13 +117,13 @@ export class ProjetoComponent implements OnInit {
         switch (status.toLocaleLowerCase()) {
 
             case 'iniciado':
-                this.menu = this.menus.iniciado;
+                this.menu = this.buildMenu(this.menus.iniciado);
                 break;
             case 'encerrado':
-                this.menu = this.menus.finalizado;
+                this.menu = this.buildMenu(this.menus.finalizado);
                 break;
             default:
-                this.menu = this.menus.proposta;
+                this.menu = this.buildMenu(this.menus.proposta);
                 break;
         }
     }

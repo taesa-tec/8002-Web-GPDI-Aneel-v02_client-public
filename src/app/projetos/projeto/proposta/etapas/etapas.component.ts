@@ -11,112 +11,107 @@ import { Projeto, Etapa } from '@app/models';
 import { FormGroup, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
+import { ProjetoFacade } from '@app/facades';
 
 @Component({
-  selector: 'app-etapas',
-  templateUrl: './etapas.component.html',
-  styles: []
+    selector: 'app-etapas',
+    templateUrl: './etapas.component.html',
+    styles: []
 })
 export class EtapasComponent implements OnInit {
 
-  projeto: Projeto;
-  etapas: Array<Etapa>;
-  form: FormGroup;
-  dataInicio = new Date();
+    projeto: ProjetoFacade;
+    etapas: Array<Etapa> = [];
+    form: FormGroup;
+    dataInicio = new Date();
 
-  listOrder: { field: string; direction: 'asc' | 'desc'; } = {
-    field: 'id',
-    direction: 'asc'
-  };
+    listOrder: { field: string; direction: 'asc' | 'desc'; } = {
+        field: 'id',
+        direction: 'asc'
+    };
 
-  @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent) loading: LoadingComponent;
 
-  get ano() {
-    return this.dataInicio.getFullYear();
-  }
-  set ano(value) {
-    this.dataInicio.setFullYear(value);
-    this.setControlData();
-  }
+    get ano() {
+        return this.dataInicio.getFullYear();
+    }
+    set ano(value) {
+        this.dataInicio.setFullYear(value);
+        this.setControlData();
+    }
 
-  get mes() {
-    return this.dataInicio.getMonth();
-  }
-  set mes(value) {
-    this.dataInicio.setMonth(value);
-    this.setControlData();
-  }
+    get mes() {
+        return this.dataInicio.getMonth();
+    }
+    set mes(value) {
+        this.dataInicio.setMonth(value);
+        this.setControlData();
+    }
 
-  constructor(
-    private app: AppService,
-    private route: ActivatedRoute,
-    private projetoService: ProjetosService,
-    protected modalService: NgbModal,
-    protected catalogo: CatalogsService) {
-  }
+    constructor(private app: AppService) { }
 
-  protected setControlData() {
-    const d = new Date(this.ano, this.mes, 1);
-    const v = (new DatePipe('en-US')).transform(d, 'yyyy-MM-dd');
-    this.form.get('dataInicio').setValue(v);
-  }
+    protected setControlData() {
+        const d = new Date(this.ano, this.mes, 1);
+        const v = (new DatePipe('en-US')).transform(d, 'yyyy-MM-dd');
+        this.form.get('dataInicio').setValue(v);
+    }
 
 
-  ngOnInit() {
-    const projeto$ = this.app.projetos.projetoLoaded;
-    
-    zip(projeto$).subscribe(([projeto]) => {
-      this.projeto = projeto;
+    ngOnInit() {
+        const projeto$ = this.app.projetos.projetoLoaded;
 
-      this.form = new FormGroup({
-        id: new FormControl(this.projeto.id),
-        dataInicio: new FormControl('')
-      });
+        zip(projeto$).subscribe(([projeto]) => {
+            this.projeto = projeto;
 
-      const dataInicio = this.projeto.dataInicio ? new Date(this.projeto.dataInicio) : new Date();
-      this.mes = dataInicio.getMonth();
-      this.ano = dataInicio.getFullYear();
+            const dataInicio = this.projeto.dataInicio ? new Date(this.projeto.dataInicio) : new Date();
 
-      // this.setControlData();
-      this.loadEtapas();
-    });
-  }
+            this.form = new FormGroup({
+                id: new FormControl(this.projeto.id),
+                dataInicio: new FormControl('')
+            });
 
-  loadEtapas() {
-    this.projetoService.getEtapas(this.projeto.id)
-      .subscribe(etapas => this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; }));
-  }
+            this.mes = dataInicio.getMonth();
+            this.ano = dataInicio.getFullYear();
 
-  openModal(etapa: any = {}) {
-    const modalRef = this.modalService.open(EtapaFormComponent, { size: 'lg' });
-    modalRef.componentInstance.etapa = etapa;
-    modalRef.componentInstance.projeto = this.projeto;
-    modalRef.result.then(r => {
-      this.loadEtapas();
-    }, e => {
+            this.loadEtapas();
+        });
+    }
 
-    });
-  }
+    loadEtapas() {
+        this.projeto.REST.Etapas.listar<Array<Etapa>>().subscribe(etapas => {
+            if (etapas) {
+                this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; })
+            }
+        });
+    }
 
-  excluir(id: number) {
-    this.app.confirm(`Tem certeza quer deseja excluir esta etapa?
+    openModal(etapa: any = {}) {
+        const modalRef = this.app.modal.open(EtapaFormComponent, { size: 'lg' });
+        modalRef.componentInstance.etapa = etapa;
+        modalRef.componentInstance.projeto = this.projeto;
+        modalRef.result.then(r => {
+            this.loadEtapas();
+        }, e => {
+
+        });
+    }
+
+    excluir(id: number) {
+        this.app.confirm(`Tem certeza quer deseja excluir esta etapa?
          Todos os produtos intermediários associados a ela perdrão sua associação.`
-      , "Excluir Etapa").then(response => {
-        if (response) {
-          this.app.alert("Etapa Excluída");
-        }
-      });
-  }
+            , "Excluir Etapa").then(response => {
+                if (response) {
+                    this.app.alert("Etapa Excluída");
+                }
+            });
+    }
 
-  setDataInicio() {
-
-    this.loading.show();
-    this.projetoService.editarDataInicio(this.form.value).subscribe(result => {
-      this.loading.hide();
-      this.loadEtapas();
-    });
-    // console.log(this.form.value);
-
-  }
+    setDataInicio() {
+        this.loading.show();
+        this.app.projetos.editarDataInicio(this.form.value).subscribe(result => {
+            this.loading.hide();
+            this.loadEtapas();
+        });
+    }
 
 }

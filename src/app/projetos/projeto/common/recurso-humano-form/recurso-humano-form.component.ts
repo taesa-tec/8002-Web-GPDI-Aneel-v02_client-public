@@ -23,7 +23,7 @@ export class RecursoHumanoFormComponent implements OnInit {
     empresasCatalog: Array<Empresa>;
     recursoHumano: RecursoHumano;
     nacionalidades = [{ value: 'Brasileiro', text: "Sim" }, { value: 'Estrangeiro', text: "Não" }];
-    nacionalidade = new FormControl('', Validators.required);
+    nacionalidade: FormControl;
     form: FormGroup;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
@@ -64,6 +64,10 @@ export class RecursoHumanoFormComponent implements OnInit {
         const cpf = new FormControl(this.recursoHumano.cpf || '', [Validators.required, AppValidators.cpf]);
         const passaporte = new FormControl(this.recursoHumano.passaporte || '', Validators.required);
         const empresaCtrl = new FormControl(this.recursoHumano.empresaId || '', Validators.required);
+        this.nacionalidade = new FormControl('', Validators.required);
+        if (this.projeto.isPG) {
+            this.funcoes = Funcoes.slice(0, 2);
+        }
 
         this.form = new FormGroup({
             projetoId: new FormControl(this.projeto.id, Validators.required),

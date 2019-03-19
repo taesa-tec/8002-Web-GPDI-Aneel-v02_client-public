@@ -8,6 +8,7 @@ import { zip } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { AppService } from '@app/app.service';
+import { ProjetoFacade } from '@app/facades';
 
 @Component({
     selector: 'app-info',
@@ -16,7 +17,7 @@ import { AppService } from '@app/app.service';
 })
 export class InfoComponent implements OnInit {
 
-    projeto: Projeto;
+    projeto: ProjetoFacade;
     form: FormGroup;
     empresas: Array<Empresa>;
     compartilhamentos: Array<TextValue>;
@@ -47,22 +48,25 @@ export class InfoComponent implements OnInit {
 
             this.form = new FormGroup({
                 id: new FormControl(p.id, [Validators.required]),
+                catalogStatusId: new FormControl(p.catalogStatusId, [Validators.required]),
                 numero: new FormControl(p.numero, [Validators.required]),
                 catalogEmpresaId: new FormControl(p.catalogEmpresaId, [Validators.required]),
-                catalogStatusId: new FormControl(p.catalogStatusId, [Validators.required]),
+                compartResultados: new FormControl(p.compartResultadosValor || '', [Validators.required]),
                 titulo: new FormControl(p.titulo, [Validators.required]),
                 tituloDesc: new FormControl(p.tituloDesc, [Validators.required]),
-                catalogSegmentoId: new FormControl(p.catalogSegmentoId || '', [Validators.required]),
-                avaliacaoInicial: new FormControl(p.avaliacaoInicial || ''),
-                compartResultados: new FormControl(p.compartResultadosValor || '', [Validators.required]),
                 codigo: new FormControl({ value: p.codigo, disabled: true }),
-                motivacao: new FormControl(p.motivacao),
-                originalidade: new FormControl(p.originalidade),
-                aplicabilidade: new FormControl(p.aplicabilidade),
-                relevancia: new FormControl(p.relevancia),
-                razoabilidade: new FormControl(p.razoabilidade),
-                pesquisas: new FormControl(p.pesquisas),
             });
+
+            if (this.projeto.isPD) {
+                this.form.addControl('catalogSegmentoId', new FormControl(p.catalogSegmentoId || '', [Validators.required]));
+                this.form.addControl('avaliacaoInicial', new FormControl(p.avaliacaoInicial || ''));
+                this.form.addControl('motivacao', new FormControl(p.motivacao));
+                this.form.addControl('originalidade', new FormControl(p.originalidade));
+                this.form.addControl('aplicabilidade', new FormControl(p.aplicabilidade));
+                this.form.addControl('relevancia', new FormControl(p.relevancia));
+                this.form.addControl('razoabilidade', new FormControl(p.razoabilidade));
+                this.form.addControl('pesquisas', new FormControl(p.pesquisas));
+            }
             this.loading.hide();
         });
     }

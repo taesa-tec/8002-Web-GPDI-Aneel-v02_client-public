@@ -13,6 +13,7 @@ import { OrcamentoEtapasComponent } from './orcamento-etapas/orcamento-etapas.co
 import { AlocacaoComponent as AlocacaoHComponent } from './recursos-humanos/alocacao.component';
 import { AlocacaoComponent as AlocacaoMComponent } from './recursos-materiais/alocacao.component';
 import { ProjetoResolverService } from '@app/projetos/projeto-resolver.service';
+import { AtividadesComponent } from './atividades/atividades.component';
 
 const routes: Routes = [
     {
@@ -20,6 +21,9 @@ const routes: Routes = [
             { path: '', redirectTo: 'info', pathMatch: 'full' },
             {
                 path: 'info', component: InfoComponent,
+            },
+            {
+                path: 'atividades', component: AtividadesComponent,
             },
             {
                 path: 'temas', component: TemasComponent,
