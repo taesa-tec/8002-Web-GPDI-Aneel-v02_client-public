@@ -1,14 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProjetosService } from '@app/projetos/projetos.service';
-import { CategoriasContabeis, Projeto, RecursoMaterial } from '@app/models';
+import { CategoriasContabeis, RecursoMaterial } from '@app/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { AppService } from '@app/app.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
-import { zip } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { ProjetoFacade } from '@app/facades';
 
 @Component({
     selector: 'app-recurso-material-form',
@@ -19,7 +16,7 @@ export class RecursoMaterialFormComponent implements OnInit {
 
     categoriaContabel = CategoriasContabeis;
     form: FormGroup;
-    projeto: Projeto;
+    projeto: ProjetoFacade;
     recursoMaterial: RecursoMaterial;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;

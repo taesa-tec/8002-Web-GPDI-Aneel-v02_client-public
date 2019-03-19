@@ -1,13 +1,14 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProjetosService } from '@app/projetos/projetos.service';
-import { Produto, EtapaProduto, Projeto, EditEtapaRequest, CriarEtapaRequest } from '@app/models';
+import { Produto, EtapaProduto, Projeto, EditEtapaRequest, CriarEtapaRequest, TextValue } from '@app/models';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
-import { zip, timer } from 'rxjs';
+import { zip } from 'rxjs';
 import { AppService } from '@app/app.service';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProjetoFacade } from '@app/facades';
+import * as moment from 'moment';
+
 
 
 @Component({
@@ -22,6 +23,8 @@ export class EtapaFormComponent implements OnInit {
     form: FormGroup;
     produtos: Produto[] = [];
     produtosGroup: FormArray = new FormArray([]);
+    mesesGroup: FormArray = new FormArray([]);
+    meses: Array<TextValue> = [];
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
@@ -38,37 +41,68 @@ export class EtapaFormComponent implements OnInit {
 
         this.app.projetos.projetoLoaded.subscribe(projeto => {
             this.projeto = projeto;
-            const produtos$ = this.projeto.REST.Produtos.listar<Array<Produto>>();
-            zip(produtos$).subscribe(([produtos]) => {
-                this.produtos = produtos;
+            if (this.projeto.isPD) {
+                const produtos$ = this.projeto.REST.Produtos.listar<Array<Produto>>();
+                zip(produtos$).subscribe(([produtos]) => {
+                    this.produtos = produtos;
+                    this.setup();
+                });
+            } else {
                 this.setup();
-            });
+            }
         })
 
 
     }
-
-    filtrarProdutos(atual = null) {
-        const pid = atual ? parseInt(atual.value.ProdutoId, 10) : 0;
-        const list = (this.produtosGroup.value as Array<{ ProdutoId: any }>).map(p => parseInt(p.ProdutoId, 10));
-        return this.produtos.filter(p => (list.indexOf(p.id) === -1 || p.id === pid));
-    }
-
     setup() {
         this.form = new FormGroup({
             projetoId: new FormControl(this.projeto.id),
             desc: new FormControl(this.etapa.desc || '', [Validators.required]),
-            EtapaProdutos: this.produtosGroup
+
         });
 
         if (this.etapa.id) {
             this.form.addControl('id', new FormControl(this.etapa.id));
         }
-        if (this.etapa.etapaProdutos) {
-            (this.etapa.etapaProdutos as Array<EtapaProduto>).map(ep => {
-                this.produtosGroup.push(new FormGroup({ ProdutoId: new FormControl(ep.produtoId, Validators.required) }));
-            });
+
+        if (this.projeto.isPD) {
+            this.form.addControl('EtapaProdutos', this.produtosGroup);
+            if (this.etapa.etapaProdutos) {
+                (this.etapa.etapaProdutos as Array<EtapaProduto>).map(ep => {
+                    this.produtosGroup.push(new FormGroup({ ProdutoId: new FormControl(ep.produtoId, Validators.required) }));
+                });
+            }
         }
+        
+        if (this.projeto.isPG) {
+            this.fillMonths();
+            this.form.addControl('meses', this.mesesGroup);
+        }
+
+    }
+    fillMonths() {
+        if (this.projeto.isPD) {
+            return;
+        }
+
+        const start = moment(this.projeto.dataInicio);
+        const end = moment(this.projeto.dataInicio).add(24, 'months');
+        while (start.isBefore(end)) {
+
+            const ano = start.format('YYYY');
+            const mes = start.format('MMMM'); // .padEnd(9, '*').replace(/\*/g, '&nbsp;');
+
+            this.meses.push({
+                text: `${mes} - ${ano}`,
+                value: start.format('YYYY-MM-DD')
+            });
+            start.add(1, 'month');
+        }
+    }
+    filtrarProdutos(atual = null) {
+        const pid = atual ? parseInt(atual.value.ProdutoId, 10) : 0;
+        const list = (this.produtosGroup.value as Array<{ ProdutoId: any }>).map(p => parseInt(p.ProdutoId, 10));
+        return this.produtos.filter(p => (list.indexOf(p.id) === -1 || p.id === pid));
     }
 
     adicionarProduto(id: number) {
@@ -77,6 +111,19 @@ export class EtapaFormComponent implements OnInit {
 
     removerProduto(index) {
         this.produtosGroup.removeAt(index);
+    }
+
+    filtrarMeses(atual = null) {
+        const mes = atual ? atual.value.mes : '';
+        const list = (this.mesesGroup.value as Array<{ mes: any }>).map(p => p.mes);
+        return this.meses.filter(m => (list.indexOf(m.value) === -1 || m.value === mes));
+    }
+    adicionarMes(id: number) {
+        this.mesesGroup.push(new FormGroup({ mes: new FormControl('', Validators.required) }));
+    }
+
+    removerMes(index) {
+        this.mesesGroup.removeAt(index);
     }
 
     submit() {
