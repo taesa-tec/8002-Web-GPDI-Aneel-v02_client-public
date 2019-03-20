@@ -95,11 +95,17 @@ export class ProjetosService {
     ResultadoIntelectual: ProjetoREST;
     ResultadoSocioAmbiental: ProjetoREST;
     ResultadoEconomico: ProjetoREST;
+    AtividadesGestao: ProjetoREST;
     status: ProjetoStatus[];
 
     constructor(protected http: HttpClient, protected fileService: FileService, protected requestCache: RequestCacheService) {
-        const rest = "Temas|Produtos|Etapas|Empresas|RecursoHumanos|AlocacaoRhs|RecursoMateriais|AlocacaoRms|RelatorioFinal|ResultadoCapacitacao|ResultadoProducao|ResultadoInfra|ResultadoIntelectual|ResultadoSocioAmbiental|ResultadoEconomico";
-        rest.split('|').forEach(path => {
+        const rest = [
+            "Temas", "Produtos", "Etapas", "Empresas", "RecursoHumanos", "AlocacaoRhs",
+            "RecursoMateriais", "AlocacaoRms", "RelatorioFinal", "ResultadoCapacitacao", "ResultadoProducao",
+            "ResultadoInfra", "ResultadoIntelectual", "ResultadoSocioAmbiental", "ResultadoEconomico", "AtividadesGestao"
+        ];
+
+        rest.forEach(path => {
             const projetoRest = new ProjetoREST(path, this.http);
             Object.defineProperty(this, path, { get: () => projetoRest });
         });
@@ -376,7 +382,7 @@ export class ProjetosService {
                                 this.fileService.download(file);
                                 observer.next(file);
                             } else {
-                                observer.error("Arquivo não encontrado");
+                                observer.error({ success: false, id: null, inconsistencias: ["Arquivo não encontrado"] });
                             }
 
                         }, error => {
@@ -386,7 +392,7 @@ export class ProjetosService {
                     });
 
                 } else {
-                    observer.error("Arquivo não encontrado");
+                    observer.error(result);
                 }
 
             }, error => {

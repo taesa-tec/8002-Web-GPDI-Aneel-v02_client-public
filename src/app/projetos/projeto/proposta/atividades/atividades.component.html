@@ -1,15 +1,24 @@
 <h5 class="text-uppercase text-blue font-weight-normal my-3">Projeto Base Pesquisa e Desenvolvimento</h5>
 <app-loading type="fullscreen"></app-loading>
 <form *ngIf="form" [formGroup]="form">
-    <app-accordion *ngFor="let atividade of atividades">
-        <header role="heading" class="d-flex justify-content-between">
-            <span>{{atividade.titulo}}</span>
-        </header>
-        <div role="main">
-            <div class="form-group">
-                <span class="text-cinza">DESCRIÇÃO, SUCINTA, DAS AÇÕES A SEREM REALIZADAS PELA(S) EMPRESA(S) NA ATIVIDADE SELECIONADA</span>
-                <app-textarea maxlength="1000" class="form-control" rows="5"></app-textarea>
-            </div>
+    <div class="row">
+        <div class="col-12">
+            <app-accordion *ngFor="let atividade of atividades">
+                <header role="heading" class="d-flex justify-content-between">
+                    <span>{{atividade.titulo}}</span>
+                </header>
+                <div role="main">
+                    <div class="form-group">
+                        <span class="text-cinza">DESCRIÇÃO, SUCINTA, DAS AÇÕES A SEREM REALIZADAS PELA(S) EMPRESA(S) NA ATIVIDADE SELECIONADA</span>
+                        <app-textarea maxlength="1000" class="form-control" rows="5" [formControlName]="atividade.formName"></app-textarea>
+                    </div>
+                </div>
+            </app-accordion>
         </div>
-    </app-accordion>
+    </div>
+    <div class="row">
+        <div class="col-12 text-right">
+            <button class="btn btn-primary" (click)="submit()" [disabled]="form.invalid">Salvar</button>
+        </div>
+    </div>
 </form>

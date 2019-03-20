@@ -22,6 +22,7 @@ const projetoComponents = [
     "ResultadoIntelectual",
     "ResultadoSocioAmbiental",
     "ResultadoEconomico",
+    "AtividadesGestao"
 ];
 interface REST {
     Temas: ProjetoREST;
@@ -39,6 +40,7 @@ interface REST {
     ResultadoIntelectual: ProjetoREST;
     ResultadoSocioAmbiental: ProjetoREST;
     ResultadoEconomico: ProjetoREST;
+    AtividadesGestao: ProjetoREST;
 
 }
 

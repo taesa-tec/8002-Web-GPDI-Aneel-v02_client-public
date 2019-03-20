@@ -7,6 +7,7 @@ import { zip } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { EmpresaProjetoFacade, ProjetoFacade } from '@app/facades';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-alocar-recurso-humano-form',
@@ -17,7 +18,6 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
 
     projeto: ProjetoFacade;
     recursosHumanos: Array<RecursoHumano>;
-    recursoHumano: RecursoHumano;
     etapas: Array<Etapa>;
     // empresasFinanciadoras: Array<EmpresaProjetoFacade>;
     empresas: Array<EmpresaProjetoFacade>;
@@ -26,6 +26,8 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
     etapaMarcada = false;
     alocacao: AlocacaoRH;
     maxHora = 160;
+    totalMeses: number;
+    mesInicial: moment.Moment = moment();
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
@@ -53,99 +55,49 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
         }
         return [];
     }
+    get recursoHumano() {
+        const recursoHumano = this.form.get('recursoHumanoId');
+        return recursoHumano ? this.recursosHumanos.find(r => r.id === parseInt(recursoHumano.value, 10)) : null;
+    }
 
     ngOnInit() {
-
         this.loadData();
     }
 
-    _horaAlocadas(duracao: number = 6, etapa?: Etapa) {
-
-        const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-
-        this.horasAlocadas = [];
-
-        for (let i = 1; i <= duracao; i++) {
-
-            let horas = { text: "Mês " + i, name: "hrsMes" + i, form: new FormControl({ value: '', disabled: true }, [Validators.required]) };
-
-            if (etapa && etapa.dataInicio || this.alocacao.id !== undefined) {
-
-                let dataInicio = new Date();
-                let val = '';
-
-                if (this.alocacao.id !== undefined) {
-
-                    dataInicio = new Date(this.alocacao.etapa.dataInicio);
-                    val = this.alocacao["hrsMes" + i];
-
-                    const empresa = this.alocacao.empresa;
-
-                    if (empresa.classificacaoValor !== undefined && (empresa.classificacaoValor === 'Proponente' || empresa.classificacaoValor === 'Energia')) {
-                        this.maxHora = 172;
-                    }
-
-                }
-
-                if (etapa && etapa.dataInicio) {
-                    dataInicio = new Date(etapa.dataInicio);
-                    val = '';
-                }
-
-                dataInicio.setMonth(dataInicio.getMonth() + (i - 1));
-
-                horas = {
-                    text: monthNames[dataInicio.getMonth()],
-                    name: "hrsMes" + i,
-                    form: new FormControl(val, [Validators.required, Validators.max(this.maxHora), Validators.min(1)])
-                };
-
-            }
-
-            this.horasAlocadas.push(horas);
-        }
-    }
-
-    _form_horaAlocadas() {
-
-        this.horasAlocadas.forEach((value) => {
-            this.form.removeControl(value.name);
-            this.form.addControl(value.name, value.form);
-
-        });
-    }
-
     setup() {
-
-        const etapa = new FormControl(this.alocacao.etapaId || '', Validators.required);
-        const recursoHumano = new FormControl(this.alocacao.recursoHumanoId || '', Validators.required);
-
+        this.totalMeses = this.projeto.isPG ? 24 : 6;
         this.form = new FormGroup({
             projetoId: new FormControl(this.projeto.id, Validators.required),
-            recursoHumanoId: recursoHumano,
-            etapaId: etapa,
+            recursoHumanoId: new FormControl(this.alocacao.recursoHumanoId || '', Validators.required),
             empresaId: new FormControl(this.alocacao.empresaId || '', Validators.required),
             justificativa: new FormControl(this.alocacao.justificativa || '', Validators.required),
-            // valorHora: new FormControl('',Validators.required),
-            // hrsMes1: new FormControl('',Validators.required), esta na funções horasAlocadas()
         });
 
-        this._horaAlocadas();
-        this._form_horaAlocadas();
+        if (this.alocacao.id !== undefined) {
+            this.form.addControl('id', new FormControl(this.alocacao.id));
+        }
 
-        etapa.valueChanges.subscribe(value => {
+        this.configForm();
+        this.addHorasMesForm();
 
-            this.etapaMarcada = true;
+        if (this.projeto.isPD) {
+            const etapaId = new FormControl(this.alocacao.etapaId || '', Validators.required);
 
-            const etapaVal = this.etapas.find(e => e.id === parseInt(value, 10));
+            etapaId.valueChanges.subscribe(value => {
+                const etapa$ = this.etapas.find(e => e.id === parseInt(value, 10));
+                this.mesInicial = moment(etapa$.dataInicio);
+            });
 
-            this._horaAlocadas(6, etapaVal);
+            this.form.addControl('etapaId', etapaId);
+        } else {
+            this.mesInicial = moment(this.projeto.dataInicio);
+        }
 
-            this._form_horaAlocadas();
+        this.form.updateValueAndValidity();
+    }
 
-        });
-
-        recursoHumano.valueChanges.subscribe(value => {
+    configForm() {
+        this.form.get('recursoHumanoId').valueChanges.subscribe(value => {
 
             this.form.get('empresaId').setValue('');
 
@@ -159,17 +111,7 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
                     this.maxHora = 172;
                 }
             }
-            this.setRecurso();
-
-
         });
-
-        if (this.alocacao.id !== undefined) {
-            this.form.addControl('id', new FormControl(this.alocacao.id));
-        }
-
-        this.setRecurso();
-        this.form.updateValueAndValidity();
     }
 
     loadData() {
@@ -179,24 +121,32 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
         const empresas$ = this.projeto.relations.empresas.get();
 
         zip(recursosHumanos$, etapas$, empresas$).subscribe(([recursosHumanos, etapas, empresas]) => {
+
+            if (etapas) {
+                this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; });
+            }
             this.recursosHumanos = recursosHumanos;
-            this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; });
             this.empresas = empresas;
             this.loading.hide();
             this.setup();
         });
     }
 
-    setRecurso() {
-        const recursoHumano = this.form.get('recursoHumanoId');
-        if (recursoHumano.value !== '' && this.recursosHumanos) {
-            this.recursoHumano = this.recursosHumanos.find(r => r.id === parseInt(recursoHumano.value, 10));
-        } else {
-            this.recursoHumano = null;
+    addHorasMesForm() {
+        for (let i = 1; i <= this.totalMeses; i++) {
+            const value = this.alocacao[`hrsMes${i}`] || '';
+            this.form.addControl(`hrsMes${i}`, new FormControl(value, [Validators.required, (control) => {
+                return parseFloat(control.value) > this.maxHora ? { max: true } : null;
+            }]));
         }
-
     }
 
+    getMesAnoAt(i) {
+        if (this.mesInicial) {
+            return this.mesInicial.clone().add(i - 1, 'months').format('MMM YYYY');
+        }
+        return `Mês ${i}`;
+    }
 
     submit() {
         if (this.form.valid) {
@@ -204,7 +154,7 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
             this.loading.show();
             request.subscribe(result => {
                 if (result.sucesso) {
-                    this.logProjeto("Alocação de Recurso Humano");
+                    // this.logProjeto("Alocação de Recurso Humano");
                     this.activeModal.close(result);
                 } else {
                     this.app.alert(result.inconsistencias.join(', '));

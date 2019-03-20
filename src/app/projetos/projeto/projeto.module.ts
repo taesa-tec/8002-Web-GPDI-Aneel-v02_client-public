@@ -6,16 +6,19 @@ import { CommonModule } from './common/common.module';
 import { PropostaModule } from './proposta/proposta.module';
 import { EncerradoModule } from './encerrado/encerrado.module';
 import { CentralAdministrativaModule } from './central-administrativa/central-administrativa.module';
+import { StatusFlowComponent } from './status-flow.component';
+import { ProjetoRoutingModule } from './projeto-routing.module';
 
 @NgModule({
-    declarations: [],
+    declarations: [StatusFlowComponent],
     imports: [
         SharedModule,
         CommonModule,
         CentralAdministrativaModule,
         PropostaModule,
         IniciadoModule,
-        EncerradoModule
+        EncerradoModule,
+        ProjetoRoutingModule
     ],
     exports: [
         CentralAdministrativaModule,

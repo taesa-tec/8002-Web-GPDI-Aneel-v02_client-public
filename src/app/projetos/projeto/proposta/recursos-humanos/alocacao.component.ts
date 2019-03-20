@@ -9,17 +9,18 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { map, mergeMap } from 'rxjs/operators';
 import { zip, of } from 'rxjs';
 import { Projeto, AlocacaoRH, Etapa, Empresa } from '@app/models';
+import { ProjetoFacade } from '@app/facades';
 
 @Component({
     selector: 'app-alocacao',
     templateUrl: './alocacao.component.html',
-    styleUrls: ['./alocacao.component.scss']
+    styleUrls: []
 })
 export class AlocacaoComponent implements OnInit {
 
     alocacoes: Array<any>;
-    etapas: Array<Etapa>;
-    projeto: Projeto;
+    etapas: Array<Etapa> = [];
+    projeto: ProjetoFacade;
     catalogEmpresa: Array<Empresa>;
 
     listOrder: { field: string; direction: 'asc' | 'desc'; } = {
@@ -57,7 +58,7 @@ export class AlocacaoComponent implements OnInit {
             mergeMap(p => zip(
                 of(p),
                 this.app.projetos.getAlocacaoRH(p.id),
-                this.app.projetos.getEtapas(p.id),
+                p.isPD ? this.app.projetos.getEtapas(p.id) : of([]),
                 this.app.catalogo.empresas(),
             ))
         );
@@ -67,11 +68,13 @@ export class AlocacaoComponent implements OnInit {
 
             this.catalogEmpresa = catalog_empresa;
 
-            this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; });
+            if (etapas) {
+                this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; });
+            }
 
             this.alocacoes = alocacoes.map(aloc => {
 
-                aloc.currentEtapa = this.etapas.find(eta => eta.id === aloc.etapaId);
+                aloc.currentEtapa = this.projeto.isPD ? this.etapas.find(eta => eta.id === aloc.etapaId) : false;
 
                 aloc.Empresa = aloc.empresa.razaoSocial ? aloc.empresa.razaoSocial : '';
 

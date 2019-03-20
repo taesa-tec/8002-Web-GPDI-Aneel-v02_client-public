@@ -16,6 +16,7 @@ import { CatalogsModule } from './catalogs/catalogs.module';
 import { AppService } from './app.service';
 import { registerLocaleData } from '@angular/common';
 import * as moment from 'moment';
+import { TestesComponent } from './testes/testes.component';
 
 registerLocaleData(localeBr, 'pt');
 moment.locale('pt-br');
@@ -25,6 +26,7 @@ moment.locale('pt-br');
     declarations: [
         AppComponent,
         NotFoundComponent,
+        TestesComponent,
     ],
     imports: [
         BrowserModule,

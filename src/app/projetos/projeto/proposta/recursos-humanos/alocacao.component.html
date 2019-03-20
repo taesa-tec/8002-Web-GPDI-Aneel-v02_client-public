@@ -22,7 +22,7 @@
                             <app-handler-order [current]="listOrder" field="recursoHumano.nomeCompleto" (order)=order($event)></app-handler-order>
                         </div>
                     </th>
-                    <th>
+                    <th *ngIf="projeto && projeto.isPD">
                         <div class="d-flex align-items-center">
                             <span class="mx-2">Etapa</span>
                             <app-handler-order [current]="listOrder" field="currentEtapa.numeroEtapa" (order)=order($event)></app-handler-order>
@@ -56,7 +56,7 @@
             </tr>
             <tr *ngFor="let alocacao of alocacoes | orderBy:listOrder.field:listOrder.direction">
                 <td>{{alocacao.recursoHumano.nomeCompleto}}</td>
-                <td>Etapa {{alocacao.currentEtapa.numeroEtapa}}</td>
+                <td *ngIf="projeto.isPD">Etapa {{alocacao.currentEtapa.numeroEtapa}}</td>
                 <td>{{alocacao.Empresa}}</td>
                 <td>{{alocacao.valorTotal | currency:'R$'}}</td>
                 <td>
@@ -73,7 +73,8 @@
 <hr>
 <div class="row">
     <div class="col-auto">
-        <!-- <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes --> </div>
+        <!-- <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes -->
+    </div>
     <div class="col text-right">
 
     </div>

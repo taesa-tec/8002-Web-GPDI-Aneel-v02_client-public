@@ -4,10 +4,11 @@ import { ProjetosService } from '@app/projetos/projetos.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
-import { Projeto, AlocacaoRM, CategoriasContabeis } from '@app/models';
+import { Projeto, AlocacaoRM, CategoriasContabeis, EmpresaProjeto } from '@app/models';
 import { zip, of } from 'rxjs';
 import { AppService } from '@app/app.service';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
+import { EmpresaProjetoFacade } from '@app/facades';
 
 @Component({
     selector: 'app-alocacao',
@@ -44,18 +45,24 @@ export class AlocacaoComponent implements OnInit {
             mergeMap(p => zip(
                 of(p),
                 this.app.projetos.getAlocacaoRM(p.id),
-                this.app.catalogo.empresas()
+                p.REST.Empresas.listar<Array<EmpresaProjeto>>()
+                    .pipe(map(empresas => empresas.map(e => new EmpresaProjetoFacade(e))))
             ))
         );
 
         data$.subscribe(([projeto, alocacoes, empresas]) => {
+
 
             this.projeto = projeto;
 
             this.alocacoes = alocacoes.map(aloc => {
 
                 if (aloc.empresaFinanciadoraId) {
-                    aloc.empresaFinanciadoraNome = empresas.find(e => aloc.empresaFinanciadoraId === e.id).nome;
+                    const empresa = empresas.find(e => aloc.empresaFinanciadoraId === e.id);
+                    console.log({ empresa });
+
+                    aloc.empresaFinanciadoraNome = empresa ? empresa.nome : "Não encontrada";
+
                 }
 
                 if (aloc.recursoMaterial) {

@@ -240,6 +240,7 @@ export interface AlocacaoRM {
     empresaRecebedora?: any;
     qtd: number;
     justificativa: string;
+    [propName: string]: any;
 }
 export interface RecursoHumano {
     id: number;
@@ -523,4 +524,17 @@ export interface ResultadoEconomico {
     valorIndicador: number;
     percentagem: number;
     valorBeneficio: number;
+}
+export interface ProjetoGestaoAtividades {
+    id: number;
+    projetoId: number;
+    dedicacaoHorario: string;
+    participacaoMembros: string;
+    desenvFerramenta: string;
+    prospTecnologica: string;
+    divulgacaoResultados: string;
+    participacaoTecnicos: string;
+    buscaAnterioridade: string;
+    contratacaoAuditoria: string;
+    apoioCitenel: string;
 }

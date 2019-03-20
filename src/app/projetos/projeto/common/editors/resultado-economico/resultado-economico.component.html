@@ -31,13 +31,13 @@
         <div class="col-6">
             <div class="form-group">
                 <label for="">UNIDADE DA BASE DO INDICADOR</label>
-                <input type="text" class="form-control" maxlength="10" formControlName="unidadeBase">
+                <input type="text" class="form-control" maxlength="10" formControlName="unidadeBase" placeholder="Até 10 caracteres">
             </div>
         </div>
         <div class="col-6">
             <div class="form-group">
                 <label for="">VALOR NUMÉRICO DO INDICADOR </label>
-                <input type="text" class="form-control" currencyMask formControlName="valorIndicador">
+                <input type="text" class="form-control" mask="0*" formControlName="valorIndicador">
             </div>
         </div>
     </div>
@@ -51,7 +51,7 @@
         <div class="col-6">
             <div class="form-group">
                 <label for="">VALOR DO BENEFÍCIO ECONÔMICO</label>
-                <input type="text" class="form-control" currencyMask formControlName="valorBeneficio">
+                <input type="text" class="form-control" mask="0*" formControlName="valorBeneficio">
             </div>
         </div>
     </div>

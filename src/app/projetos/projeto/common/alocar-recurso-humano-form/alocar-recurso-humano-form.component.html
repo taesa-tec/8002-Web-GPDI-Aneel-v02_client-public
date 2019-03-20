@@ -15,7 +15,7 @@
         </div>
 
     </div>
-    <div class="row">
+    <div class="row" *ngIf="projeto.isPD">
         <div class="col-6">
             <div class="form-group">
 
@@ -37,6 +37,18 @@
             </div>
         </div>
     </div>
+    <div class="row" *ngIf="projeto.isPG">
+        <div class="col-12">
+            <div class="form-group">
+
+                <label for="">Empresa Financiadora</label>
+                <select name="" id="" class="form-control" formControlName="empresaId">
+                    <option value="">Selecione</option>
+                    <option [value]="empresa.id" *ngFor="let empresa of empresasFinanciadoras">{{empresa.nome}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="form-group m-0"><label for="">Horas Alocadas por mês</label></div>
@@ -45,10 +57,10 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <div class="d-flex p-3 bg-cinza-claro rounded mb-4">
-                <div class="col-2" *ngFor="let ha of horasAlocadas">
-                    <label for="">{{ha.text}}</label>
-                    <input placeholder="Max {{maxHora}}h" mask="999" [formControlName]="ha.name" type="text" class="form-control">
+            <div class="row mx-0 p-3 bg-cinza-claro rounded mb-4">
+                <div class="col-2 mb-2" *ngFor="let i of totalMeses | n2array:1">
+                    <label for="">{{getMesAnoAt(i)}}</label>
+                    <input placeholder="Max {{maxHora}}h" mask="999" sufix="h" [formControlName]="'hrsMes' + i" type="text" class="form-control">
                 </div>
             </div>
         </div>
