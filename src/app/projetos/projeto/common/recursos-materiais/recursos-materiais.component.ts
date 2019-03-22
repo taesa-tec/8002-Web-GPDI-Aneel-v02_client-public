@@ -47,7 +47,16 @@ export class RecursosMateriaisComponent implements OnInit {
         data$.subscribe(([projeto, recursosMaterias]) => {
             this.projeto = projeto;
             this.recursosMaterias = recursosMaterias.map(rec => {
-                rec.categoriaContabelNome = this.categoriaContabel.find(e => rec.categoriaContabilValor === e.value).text;
+                console.log(rec);
+                try {
+                    if (rec.categoriaContabilGestao) {
+                        rec.categoriaContabelNome = rec.categoriaContabilGestao.nome;
+                    } else {
+                        rec.categoriaContabelNome = this.categoriaContabel.find(e => rec.categoriaContabilValor === e.value).text;
+                    }
+                } catch (err) {
+                    rec.categoriaContabelNome = "Não encontrada";
+                }
                 return rec;
             });
             this.loading.hide();

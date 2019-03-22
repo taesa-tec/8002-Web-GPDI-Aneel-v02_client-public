@@ -5,6 +5,7 @@
     </button>
 </div>
 <form class="modal-body" *ngIf="form" [formGroup]="form">
+    <pre class="debug">{{form.value|json}}</pre>
     <div class="row">
         <div class="col-12">
             <div class="form-group">
@@ -18,7 +19,7 @@
         <div class="col-6">
             <div class="form-group">
                 <label for="">Categorial Contábil</label>
-                <select name="" id="" class="form-control" formControlName="categoriaContabil">
+                <select name="" id="" class="form-control" [formControlName]="projeto.isPD?'categoriaContabil':'catalogCategoriaContabilGestaoId'">
                     <option value="">Selecione</option>
                     <option [value]="cat.value" *ngFor="let cat of categoriaContabel">{{cat.text}}</option>
                 </select>
@@ -35,16 +36,9 @@
         <div class="col-12">
             <div class="form-group">
                 <label>Tipo de Atividade</label>
-                <select class="form-control">
-                    <option>Dedicação horária dos membros da equipe de gestão do Programa de P&D da Empresa, quadro efetivo.</option>
-                    <option>Participação dos membros da equipe de gestão em eventos sobre pesquisa, desenvolvimento e inovação relacionados ao setor elétrico e/ou em cursos de gestão tecnológica e da informação.</option>
-                    <option>Desenvolvimento de ferramenta para gestão do Programa de P&D da Empresa, excluindose aquisição de equipamentos.</option>
-                    <option>Prospecção tecnológica e demais atividades necessárias ao planejamento e à elaboração do plano estratégico de investimento em P&D.</option>
-                    <option>Divulgação de resultados de projetos de P&D, concluídos e/ou em execução.</option>
-                    <option>Participação dos responsáveis técnicos pelos projetos de P&D nas avaliações presenciais convocadas pela ANEEL.</option>
-                    <option>Buscas de anterioridade no Instituto Nacional da Propriedade Industrial (INPI).</option>
-                    <option>Contratação de auditoria contábil e financeira para os projetos concluídos.</option>
-                    <option>Apoio à realização do CITENEL.</option>
+                <select class="form-control" [disabled]="atividades.length === 0" formControlName="catalogAtividadeId">
+                    <option value="">Selecione</option>
+                    <option [value]="atividade.id" *ngFor="let atividade of atividades">{{atividade.nome}}</option>
                 </select>
             </div>
         </div>

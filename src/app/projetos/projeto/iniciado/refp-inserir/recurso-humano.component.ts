@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AppService } from '@app/app.service';
 import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, NoRequest } from '@app/models';
-import { ProjetoFacade } from '@app/facades';
+import { ProjetoFacade, EmpresaProjetoFacade } from '@app/facades';
 import { zip, of } from 'rxjs';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import * as moment from 'moment';
@@ -21,7 +21,7 @@ export class RecursoHumanoComponent implements OnInit {
     recursos: Array<RecursoHumano>;
     recurso: FormControl;
     qtdHrs: FormControl;
-    empresas: Array<{ id: number; nome: string; }>;
+
     tipoDocs = TiposDoc;
     form: FormGroup;
     obsInternas: FormGroup;
@@ -29,6 +29,33 @@ export class RecursoHumanoComponent implements OnInit {
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
     @ViewChild('file') file: ElementRef;
+
+    empresas: Array<EmpresaProjetoFacade>;
+    // empresasRecebedoras: Array<{ id: number; nome: string; classificacao: string; }>;
+
+    get empresasFinanciadoras(): Array<EmpresaProjetoFacade> {
+        if (this.empresas === undefined) {
+            return [];
+        }
+
+
+        if (this.recurso) {
+            const recursoHumanoId = parseInt(this.recurso.value, 10);
+            const recurso = this.recursos.find(r => {
+                return r.id === recursoHumanoId;
+            });
+
+            const recursoEmpresa = recurso ? this.empresas.find(e => e.id === recurso.empresaId) : undefined;
+            return this.empresas.filter(empresa => {
+                if (recursoEmpresa && recursoEmpresa.classificacaoValor.match(/(Energia|Proponente)/) !== null) {
+                    return recursoEmpresa.id === empresa.id;
+                }
+                return empresa.classificacaoValor.match(/(Executora)/) === null;
+            });
+        }
+
+        return [];
+    }
 
     constructor(protected app: AppService) { }
 
@@ -60,21 +87,14 @@ export class RecursoHumanoComponent implements OnInit {
             this.projeto = projeto;
 
             const recursos$ = this.projeto.relations.recursosHumanos.get();
-            const empresas$ = this.projeto.relations.empresas.get();
+            const empresas$ = this.projeto.REST.Empresas.listar<Array<EmpresaProjeto>>();
             const etapas$ = this.projeto.relations.etapas.get();
 
             this.loading.show(1000);
             zip(recursos$, empresas$, etapas$).subscribe(([recursos, empresas, etapas]) => {
                 this.etapas = etapas;
                 this.recursos = recursos;
-                this.empresas = empresas.map(e => {
-                    const empresa = {
-                        id: e.id,
-                        nome: e.catalogEmpresaId ? `${e.catalogEmpresa.nome} - ${e.catalogEmpresa.valor}` : e.razaoSocial
-                    };
-                    return empresa;
-                });
-
+                this.empresas = empresas.map(e => new EmpresaProjetoFacade(e));
                 this.buildForm();
             });
             // const empresas = this.app.projetos
@@ -129,6 +149,10 @@ export class RecursoHumanoComponent implements OnInit {
             atividadeRealizada: new FormControl('', [Validators.required]),
             obsInternas: new FormArray([this.obsInternas])
         });
+
+        this.recurso.valueChanges.subscribe(v => {
+            this.form.get('empresaFinanciadoraId').setValue('');
+        })
     }
 
 

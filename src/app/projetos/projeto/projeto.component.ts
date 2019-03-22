@@ -22,11 +22,11 @@ export class ProjetoComponent implements OnInit {
     projetoIniciadoRoutes: Routes;
     projeto: ProjetoFacade;
 
-    menus: { [propName: string]: Array<{ text: string | { pd: string; pg: string }, icon: string | { pd: string; pg: string }, path: string | { pd: string; pg: string }, only?: 'pd' | 'pg' }> } = {
+    menus: { [propName: string]: Array<{ text: string | { pd: string; pg: string }, icon: string | { pd: string; pg: string }, path: string | { pd: string; pg: string }, only?: 'PD' | 'PG' }> } = {
         proposta: [
             { text: { pg: "Projeto Gestão", pd: "Projeto" }, icon: "ta-projeto", path: 'info' },
             { text: { pg: "Atividades", pd: "Temas" }, icon: "ta-chat", path: { pg: "atividades", pd: "temas" } },
-            { text: "Produtos", icon: "ta-box", path: 'produtos', only: 'pd' },
+            { text: "Produtos", icon: "ta-box", path: 'produtos', only: 'PD' },
             { text: "Etapas", icon: "ta-etapas", path: 'etapas' },
             { text: "Empresas", icon: "ta-empresas", path: 'empresas' },
             { text: "Recursos Humanos", icon: "ta-group", path: 'recursos-humanos' },
@@ -84,12 +84,12 @@ export class ProjetoComponent implements OnInit {
             return '';
         }
     }
-    protected buildMenu(menu: Array<{ text: string | { pd: string; pg: string }, icon: string | { pd: string; pg: string }, path: string | { pd: string; pg: string }, only?: 'pd' | 'pg' }>)
+    protected buildMenu(menu: Array<{ text: string | { pd: string; pg: string }, icon: string | { pd: string; pg: string }, path: string | { pd: string; pg: string }, only?: 'PD' | 'PG' }>)
         : Array<{ text: string; icon: string; path: Array<string> }> {
 
         return menu
             .filter(item => {
-                return (item.only === undefined || (item.only && item.only === this.projeto.catalogStatus.status));
+                return (item.only === undefined || (item.only && item.only === this.projeto.tipoValor));
             })
             .map(item => {
                 return {

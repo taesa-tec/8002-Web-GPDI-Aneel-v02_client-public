@@ -10,21 +10,25 @@ import { map, share, first } from 'rxjs/operators';
 export class CatalogsService {
 
 
-    protected data: { [propName: string]: any } = {};
+    protected cache = new Map();
     protected observables: { [propName: string]: Observable<any> } = {};
 
     constructor(private http: HttpClient) { }
 
     protected getData<T>(key: string, url: string): Observable<T> {
-        if (this.data[key]) {
-            return of(this.data[key]);
+
+        const cached = this.cache.get(key);
+
+        if (cached) {
+            return of(cached);
         } else if (this.observables[key]) {
             return this.observables[key];
         } else {
             this.observables[key] = this.http.get<T>(url)
                 .pipe(
                     map(r => {
-                        this.data[key] = r; return r;
+                        this.cache.set(key, r);
+                        return r;
                     }),
                     share()
                 );
@@ -38,7 +42,6 @@ export class CatalogsService {
 
     empresas() {
         return this.getData<Array<Empresa>>('empresas', `catalogs/empresas`);
-        // return this.http.get<Array<Empresa>>(`catalogs/empresas`);
     }
     empresa(id: number) {
         return this.empresas().pipe(map(empresas => empresas.find(e => e.id === id)));
@@ -46,7 +49,6 @@ export class CatalogsService {
 
     status() {
         return this.getData<Array<ProjetoStatus>>('status', `catalogs/status`);
-        // return this.http.get<Array<ProjetoStatus>>(`catalogs/status`);
     }
 
     segmentos() {
@@ -55,16 +57,16 @@ export class CatalogsService {
 
     temas() {
         return this.getData<any>('temas', `catalogs/temas`);
-        // return this.http.get(`catalogs/temas`);
     }
 
     estados() {
         return this.getData<any>('estados', `catalogs/Estados`);
-        // return this.http.get(`catalogs/Estados`);
+    }
+    categoriasContabeisGestao() {
+        return this.getData<any>('estados', `catalogs/categoriascontabeisgestao`);
     }
     paises() {
         return this.getData<Array<{ id: number; nome: string; }>>('estados', `catalogs/Paises`);
-        // return this.http.get(`catalogs/Estados`);
     }
 
     tipoCompartilhamento() {

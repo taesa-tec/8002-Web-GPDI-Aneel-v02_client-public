@@ -4,12 +4,12 @@ import { map } from 'rxjs/operators';
 import { zip } from 'rxjs';
 
 import { AppService } from '@app/app.service';
-import { Projeto, OrcamentosEmpresas, Etapa, TextValue, CategoriasContabeis, ExtratoItem, ResultadoResponse } from '@app/models';
+import { Projeto, OrcamentosEmpresas, Etapa, TextValue, CategoriasContabeis, ExtratoItem, ResultadoResponse, Empresa, EmpresaProjeto } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AlocarRecursoHumanoFormComponent } from '@app/projetos/projeto/common/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
 import { AlocarRecursoMaterialFormComponent } from '@app/projetos/projeto/common/alocar-recurso-material-form/alocar-recurso-material-form.component';
-import { ProjetoFacade } from '@app/facades';
+import { ProjetoFacade, EmpresaProjetoFacade } from '@app/facades';
 
 @Component({
     selector: 'app-orcamento-empresas',
@@ -21,6 +21,7 @@ export class OrcamentoEmpresasComponent implements OnInit {
     projeto: ProjetoFacade;
     extrato: OrcamentosEmpresas;
     etapas: { [propName: number]: Etapa } = {};
+    empresas: Array<EmpresaProjetoFacade> = [];
 
     alocacoesRH: Array<any> = [];
     alocacoesRM: Array<any> = [];
@@ -50,6 +51,19 @@ export class OrcamentoEmpresasComponent implements OnInit {
         }
         return '';
     }
+    empresaRecebedoraFromItem(item) {
+        const id = item.alocacaoRm ? item.alocacaoRm.empresaRecebedoraId : item.alocacaoRh.empresaId;
+        const empresa = this.empresas.find(e => e.id === id);
+        if (id === undefined) {
+            console.log({ item, empresa, id, empresas: this.empresas });
+        }
+
+        if (empresa) {
+
+            return empresa.nome;
+        }
+        return "Não encontrado";
+    }
 
 
 
@@ -61,14 +75,16 @@ export class OrcamentoEmpresasComponent implements OnInit {
         });
     }
 
-    load() {
+    async load() {
         this.loading.show();
-        const extratos$ = this.app.projetos.getOrcamentoEmpresas(this.projeto.id);
-        const etapas$ = this.app.projetos.getEtapas(this.projeto.id);
-        zip(extratos$, etapas$, this.app.projetos.getAlocacaoRH(this.projeto.id), this.app.projetos.getAlocacaoRM(this.projeto.id))
-            .subscribe(([extrato, etapas, alocacoesRH, alocacoesRM]) => {
+        const extratos$ = this.projeto.REST.ExtratoEmpresas.listar<OrcamentosEmpresas>(); // this.app.projetos.getOrcamentoEmpresas(this.projeto.id);
+        const etapas$ = this.projeto.REST.Etapas.listar<Array<Etapa>>(); // this.app.projetos.getEtapas(this.projeto.id);
+        const emepresas$ = this.projeto.REST.Empresas.listar<Array<EmpresaProjeto>>();
+
+        zip(extratos$, etapas$, emepresas$, this.app.projetos.getAlocacaoRH(this.projeto.id), this.app.projetos.getAlocacaoRM(this.projeto.id))
+            .subscribe(([extrato, etapas, empresas, alocacoesRH, alocacoesRM]) => {
                 this.extrato = extrato;
-                
+                this.empresas = empresas.map(e => new EmpresaProjetoFacade(e));
                 this.alocacoesRH = alocacoesRH;
                 this.alocacoesRM = alocacoesRM;
 

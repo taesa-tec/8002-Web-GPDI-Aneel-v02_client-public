@@ -223,6 +223,8 @@ export interface RecursoMaterial {
     nome: string;
     categoriaContabil: number;
     categoriaContabilValor: string;
+    catalogCategoriaContabilGestaoId: number;
+    catalogAtividadeId: number;
     valorUnitario: string;
     especificacao: string;
 }

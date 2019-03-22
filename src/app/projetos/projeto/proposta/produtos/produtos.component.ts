@@ -5,16 +5,17 @@ import { AppService } from '@app/app.service';
 import { map } from 'rxjs/operators';
 import { Projeto, Produto, Etapa } from '@app/models';
 import { zip } from 'rxjs';
+import { ProjetoFacade } from '@app/facades';
 
 @Component({
     selector: 'app-produtos',
     templateUrl: './produtos.component.html',
-    styleUrls: ['./produtos.component.scss']
+    styleUrls: []
 })
 export class ProdutosComponent implements OnInit {
 
     produtos: Array<Produto>;
-    projeto: Projeto;
+    projeto: ProjetoFacade;
     etapas: { [propName: number]: Etapa } = {};
 
     listOrder: { field: string; direction: 'asc' | 'desc'; } = {
@@ -33,7 +34,6 @@ export class ProdutosComponent implements OnInit {
         const modalRef = this.app.modal.open(ProdutoFormComponent, { size: 'lg' });
         modalRef.componentInstance.produto = produto;
         modalRef.componentInstance.projeto = this.projeto;
-
         modalRef.result.then(result => {
             this.loadProdutos();
         }, e => {
@@ -56,14 +56,18 @@ export class ProdutosComponent implements OnInit {
         this.listOrder = data;
     }
 
-    loadProdutos() {
-        const produtos$ = this.app.projetos.getProdutos(this.projeto.id);
-        const etapas$ = this.app.projetos.getEtapas(this.projeto.id);
+    async loadProdutos() {
+
+        const produtos$ = this.projeto.REST.Produtos.listar<Array<Produto>>();
+        const etapas$ = this.projeto.REST.Etapas.listar<Array<Etapa>>();
+
         zip(produtos$, etapas$).subscribe(([produtos, etapas]) => {
             this.produtos = produtos || [];
-            etapas.forEach((etapa, index) => {
-                this.etapas[etapa.id] = Object.assign(etapa, { numeroEtapa: index + 1 });
-            });
+            if (etapas) {
+                etapas.forEach((etapa, index) => {
+                    this.etapas[etapa.id] = Object.assign(etapa, { numeroEtapa: index + 1 });
+                });
+            }
         });
     }
 }

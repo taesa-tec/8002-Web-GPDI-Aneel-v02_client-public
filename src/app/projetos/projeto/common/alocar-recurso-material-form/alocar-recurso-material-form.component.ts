@@ -17,7 +17,6 @@ import { EmpresaProjetoFacade, ProjetoFacade } from '@app/facades';
 export class AlocarRecursoMaterialFormComponent implements OnInit {
 
     recursosMaterias: Array<any>;
-
     empresasFinanciadoras: Array<EmpresaProjetoFacade>;
     empresasCatalog: Array<Empresa>;
     empresas: Array<EmpresaProjetoFacade>;
@@ -46,7 +45,7 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
             return [];
         }
         return this.empresas.filter(empresa => {
-            if (empresa.classificacaoValor === 'Energia') {
+            if (empresa.classificacaoValor.match(/(Energia|Proponente)/)) {
                 const financiadora = this.form.get('empresaFinanciadoraId');
                 return empresa.id === parseInt(financiadora.value, 10);
             } else {
@@ -56,8 +55,8 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.setup();
         this.loadData();
+
     }
 
     setup() {
@@ -84,6 +83,34 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
             this.form.updateValueAndValidity();
         });
 
+
+
+    }
+
+    loadData() {
+
+        this.loading.show();
+
+        const recm$ = this.app.projetos.getRecursoMaterial(this.projeto.id);
+        const empresa$ = this.projeto.REST.Empresas.listar<Array<EmpresaProjeto>>();
+        const etapa$ = this.projeto.relations.etapas.get();
+        const empresasCatalog$ = this.app.catalogo.empresas();
+
+        zip(recm$, empresa$, etapa$, empresasCatalog$).subscribe(([recursosMaterias, empresas, etapas, empresasCatalog]) => {
+            this.empresas = empresas.map(e => new EmpresaProjetoFacade(e));
+
+            this.recursosMaterias = recursosMaterias || [];
+
+            this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; });
+
+            this.empresasCatalog = empresasCatalog;
+
+            this.empresasFinanciadoras = this.empresas.filter(item => item.classificacaoValor !== "Executora");
+
+            this.setup();
+
+            this.loading.hide();
+        });
     }
 
 
@@ -106,29 +133,7 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
         }
     }
 
-    loadData() {
 
-        this.loading.show();
-
-        const recm$ = this.app.projetos.getRecursoMaterial(this.projeto.id);
-        const empresa$ = this.projeto.relations.empresas.get();
-        const etapa$ = this.projeto.relations.etapas.get();
-        const empresasCatalog$ = this.app.catalogo.empresas();
-
-        zip(recm$, empresa$, etapa$, empresasCatalog$).subscribe(([recursosMaterias, empresas, etapas, empresasCatalog]) => {
-            this.empresas = empresas;
-
-            this.recursosMaterias = recursosMaterias || [];
-
-            this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; });
-
-            this.empresasCatalog = empresasCatalog;
-
-            this.empresasFinanciadoras = empresas.filter(item => item.classificacaoValor !== "Executora");
-
-            this.loading.hide();
-        });
-    }
 
     excluir() {
         this.app.confirm("Tem certeza que deseja excluir esta alocação do recurso material?", "Confirmar Exclusão")

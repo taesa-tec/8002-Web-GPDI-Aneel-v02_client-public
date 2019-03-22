@@ -84,6 +84,7 @@ export class ProjetosService {
     Produtos: ProjetoREST;
     Etapas: ProjetoREST;
     Empresas: ProjetoREST;
+    ExtratoEmpresas: ProjetoREST;
     RecursoHumanos: ProjetoREST;
     AlocacaoRhs: ProjetoREST;
     RecursoMateriais: ProjetoREST;
@@ -100,7 +101,7 @@ export class ProjetosService {
 
     constructor(protected http: HttpClient, protected fileService: FileService, protected requestCache: RequestCacheService) {
         const rest = [
-            "Temas", "Produtos", "Etapas", "Empresas", "RecursoHumanos", "AlocacaoRhs",
+            "Temas", "Produtos", "Etapas", "Empresas", "ExtratoEmpresas", "RecursoHumanos", "AlocacaoRhs",
             "RecursoMateriais", "AlocacaoRms", "RelatorioFinal", "ResultadoCapacitacao", "ResultadoProducao",
             "ResultadoInfra", "ResultadoIntelectual", "ResultadoSocioAmbiental", "ResultadoEconomico", "AtividadesGestao"
         ];

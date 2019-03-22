@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { CategoriasContabeis, RecursoMaterial } from '@app/models';
+import { CategoriasContabeis, RecursoMaterial, TextValue } from '@app/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { AppService } from '@app/app.service';
@@ -14,7 +14,7 @@ import { ProjetoFacade } from '@app/facades';
 })
 export class RecursoMaterialFormComponent implements OnInit {
 
-    categoriaContabel = CategoriasContabeis;
+    categoriaContabel: Array<any> = CategoriasContabeis;
     form: FormGroup;
     projeto: ProjetoFacade;
     recursoMaterial: RecursoMaterial;
@@ -34,24 +34,95 @@ export class RecursoMaterialFormComponent implements OnInit {
             { text: "Adicionar Recurso Material", icon: 'ta-plus-circle' };
     }
 
+    get atividades() {
+        try {
+            const currentCategoryValue = this.form ? this.form.get('catalogCategoriaContabilGestaoId').value : false;
+            if (currentCategoryValue) {
+                const currentCategory = this.categoriaContabel.find(c => c.value === currentCategoryValue);
+                if (currentCategory) {
+                    return currentCategory.atividades.map(a => { a.id = String(a.id); return a; });
+                }
+            }
+        } catch (error) {
+
+        }
+        return [];
+    }
+
     ngOnInit() {
         this.setup();
 
     }
 
-    setup() {
-        this.form = new FormGroup({
+    async setup() {
+        const form = new FormGroup({
             projetoId: new FormControl(this.projeto.id, Validators.required),
             nome: new FormControl(this.recursoMaterial.nome || '', [Validators.required]),
-            categoriaContabil: new FormControl(this.recursoMaterial.categoriaContabilValor || '', [Validators.required]),
             valorUnitario: new FormControl(this.recursoMaterial.valorUnitario || '', [Validators.required]),
             especificacao: new FormControl(this.recursoMaterial.especificacao || '', [Validators.required]),
         });
 
         if (this.recursoMaterial.id !== undefined) {
-            this.form.addControl('id', new FormControl(this.recursoMaterial.id));
+            form.addControl('id', new FormControl(this.recursoMaterial.id));
         }
 
+        if (this.projeto.isPG) {
+
+            const cats = <Array<any>>await this.app.catalogo.categoriasContabeisGestao().toPromise();
+
+            this.categoriaContabel = cats.map(cat => {
+                return { text: cat.nome, value: String(cat.id), atividades: cat.atividades };
+            });
+            const catalogCategoriaContabilGestaoId = new FormControl(this.recursoMaterial.catalogCategoriaContabilGestaoId || '', [Validators.required]);
+            form.addControl('catalogCategoriaContabilGestaoId', catalogCategoriaContabilGestaoId);
+            form.addControl('catalogAtividadeId', new FormControl(this.recursoMaterial.catalogAtividadeId || '', [Validators.required]));
+            catalogCategoriaContabilGestaoId.valueChanges.subscribe(v => {
+                this.form.get('catalogAtividadeId').setValue('');
+            });
+        } else {
+            form.addControl('categoriaContabil', new FormControl(this.recursoMaterial.categoriaContabil || '', [Validators.required]));
+        }
+        this.form = form;
+    }
+
+
+
+    submit() {
+        if (this.form.valid) {
+            const request = this.recursoMaterial.id ? this.app.projetos.editarRecursoMaterial(this.form.value) : this.app.projetos.criarRecursoMaterial(this.form.value);
+            this.loading.show();
+            request.subscribe(result => {
+                if (result.sucesso) {
+                    // this.logProjeto("Recursos Materiais");
+                    this.activeModal.close(result);
+                } else {
+                    this.app.alert(result.inconsistencias.join(', '));
+                }
+                this.loading.hide();
+            });
+        }
+    }
+
+    excluir() {
+        this.app.confirm("Tem certeza que deseja excluir este recurso material?", "Confirmar Exclusão")
+            .then(result => {
+                if (result) {
+                    this.loading.show();
+                    this.app.projetos.delRecursoMaterial(this.recursoMaterial.id).subscribe(resultDelete => {
+                        this.loading.hide();
+                        if (resultDelete.sucesso) {
+                            this.logProjeto("Recursos Materiais", "Delete");
+                            this.activeModal.close('deleted');
+                        } else {
+                            this.app.alert(resultDelete.inconsistencias.join(', '));
+                        }
+                    }, (error: HttpErrorResponse) => {
+                        this.loading.hide();
+                        this.app.alert(error.message);
+                    });
+                }
+
+            });
     }
 
     logProjeto(tela: string, acao?: string) {
@@ -103,43 +174,5 @@ export class RecursoMaterialFormComponent implements OnInit {
                 this.app.alert(result.inconsistencias.join(', '));
             }
         });
-    }
-
-    submit() {
-        if (this.form.valid) {
-            const request = this.recursoMaterial.id ? this.app.projetos.editarRecursoMaterial(this.form.value) : this.app.projetos.criarRecursoMaterial(this.form.value);
-            this.loading.show();
-            request.subscribe(result => {
-                if (result.sucesso) {
-                    this.logProjeto("Recursos Materiais");
-                    this.activeModal.close(result);
-                } else {
-                    this.app.alert(result.inconsistencias.join(', '));
-                }
-                this.loading.hide();
-            });
-        }
-    }
-
-    excluir() {
-        this.app.confirm("Tem certeza que deseja excluir este recurso material?", "Confirmar Exclusão")
-            .then(result => {
-                if (result) {
-                    this.loading.show();
-                    this.app.projetos.delRecursoMaterial(this.recursoMaterial.id).subscribe(resultDelete => {
-                        this.loading.hide();
-                        if (resultDelete.sucesso) {
-                            this.logProjeto("Recursos Materiais", "Delete");
-                            this.activeModal.close('deleted');
-                        } else {
-                            this.app.alert(resultDelete.inconsistencias.join(', '));
-                        }
-                    }, (error: HttpErrorResponse) => {
-                        this.loading.hide();
-                        this.app.alert(error.message);
-                    });
-                }
-
-            });
     }
 }

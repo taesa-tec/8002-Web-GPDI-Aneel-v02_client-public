@@ -11,6 +11,7 @@ const projetoComponents = [
     "Produtos",
     "Etapas",
     "Empresas",
+    "ExtratoEmpresas",
     "RecursoHumanos",
     "AlocacaoRhs",
     "RecursoMateriais",
@@ -29,6 +30,7 @@ interface REST {
     Produtos: ProjetoREST;
     Etapas: ProjetoREST;
     Empresas: ProjetoREST;
+    ExtratoEmpresas: ProjetoREST;
     RecursoHumanos: ProjetoREST;
     AlocacaoRhs: ProjetoREST;
     RecursoMateriais: ProjetoREST;
@@ -56,7 +58,7 @@ export class ProjetoREST {
             if (this.service[this.path]) {
                 return this.service[this.path].listar<T>(this.projeto.id);
             }
-            return throwError('Relação não existente');
+            return throwError('Relação não existente no serviço de projetos');
         } catch (error) {
             return throwError(error);
         }
@@ -67,7 +69,7 @@ export class ProjetoREST {
             if (this.service[this.path]) {
                 return this.service[this.path].criar<T>(data);
             }
-            return throwError('Relação não existente');
+            return throwError('Relação não existente no serviço de projetos');
         } catch (error) {
             return throwError(error);
         }
@@ -78,7 +80,7 @@ export class ProjetoREST {
             if (this.service[this.path]) {
                 return this.service[this.path].obter<T>(id_item);
             }
-            return throwError('Relação não existente');
+            return throwError('Relação não existente no serviço de projetos');
         } catch (error) {
             return throwError(error);
         }
@@ -90,7 +92,7 @@ export class ProjetoREST {
             if (this.service[this.path]) {
                 return this.service[this.path].editar(data);
             }
-            return throwError('Relação não existente');
+            return throwError('Relação não existente no serviço de projetos');
         } catch (error) {
             return throwError(error);
         }

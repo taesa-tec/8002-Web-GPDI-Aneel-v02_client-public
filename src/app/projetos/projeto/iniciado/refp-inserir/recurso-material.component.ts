@@ -6,7 +6,7 @@ import { zip, of } from 'rxjs';
 
 import { AppService } from '@app/app.service';
 import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RecursoMaterial, AppValidators, CategoriasContabeis, NoRequest } from '@app/models';
-import { ProjetoFacade } from '@app/facades';
+import { ProjetoFacade, EmpresaProjetoFacade } from '@app/facades';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { tap } from 'rxjs/operators';
 
@@ -22,9 +22,24 @@ export class RecursoMaterialComponent implements OnInit {
     recursos: Array<RecursoMaterial>;
     recurso: FormControl;
 
-    empresas: Array<{ id: number; nome: string; classificacao: string; }>;
-    empresasFinanciadoras: Array<{ id: number; nome: string; classificacao: string; }>;
-    empresasRecebedoras: Array<{ id: number; nome: string; classificacao: string; }>;
+    empresas: Array<EmpresaProjetoFacade>;
+    empresasFinanciadoras: Array<EmpresaProjetoFacade>;
+    // empresasRecebedoras: Array<{ id: number; nome: string; classificacao: string; }>;
+
+    get empresasRecebedoras(): Array<EmpresaProjetoFacade> {
+        if (this.empresas === undefined) {
+            return [];
+        }
+        return this.empresas.filter(empresa => {
+            if (empresa.classificacaoValor.match(/(Energia|Proponente)/)) {
+                const financiadora = this.form.get('empresaFinanciadoraId');
+                return empresa.id === parseInt(financiadora.value, 10);
+            } else {
+                return empresa.classificacaoValor === "Executora";
+            }
+        });
+    }
+
     tipoDocs = TiposDoc;
     form: FormGroup;
     obsInternas: FormGroup;
@@ -66,26 +81,15 @@ export class RecursoMaterialComponent implements OnInit {
             this.projeto = projeto;
 
             const recursos$ = this.projeto.relations.recursosMateriais.get();
-            const empresas$ = this.projeto.relations.empresas.get();
+            const empresas$ = this.projeto.REST.Empresas.listar<Array<EmpresaProjetoFacade>>();
             const etapas$ = this.projeto.relations.etapas.get();
 
             this.loading.show(1000);
             zip(recursos$, empresas$, etapas$).subscribe(([recursos, empresas, etapas]) => {
                 this.etapas = etapas;
                 this.recursos = recursos;
-                this.empresas = empresas.map(e => {
-
-                    return {
-                        id: e.id,
-                        nome: e.catalogEmpresaId ? `${e.catalogEmpresa.nome} - ${e.catalogEmpresa.valor}` : e.razaoSocial,
-                        classificacao: e.classificacaoValor
-                    };
-
-
-                });
-                this.empresasFinanciadoras = this.empresas.filter(e => e.classificacao !== "Executora");
-                this.empresasRecebedoras = this.empresas;
-
+                this.empresas = empresas.map(e => new EmpresaProjetoFacade(e));
+                this.empresasFinanciadoras = this.empresas.filter(e => e.classificacaoValor !== "Executora");
                 this.buildForm();
             });
             // const empresas = this.app.projetos

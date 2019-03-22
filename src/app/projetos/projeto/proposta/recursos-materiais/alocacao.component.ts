@@ -59,10 +59,7 @@ export class AlocacaoComponent implements OnInit {
 
                 if (aloc.empresaFinanciadoraId) {
                     const empresa = empresas.find(e => aloc.empresaFinanciadoraId === e.id);
-                    console.log({ empresa });
-
                     aloc.empresaFinanciadoraNome = empresa ? empresa.nome : "Não encontrada";
-
                 }
 
                 if (aloc.recursoMaterial) {

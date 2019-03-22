@@ -23,7 +23,7 @@
                             <span *ngIf="etapas[i.etapa.id]" [title]="etapas[i.etapa.id].desc"> Etapa {{etapas[i.etapa.id].numeroEtapa}}</span>
                         </td>
                         <td>
-                            {{ i.etapa.desc }}
+                            {{empresaRecebedoraFromItem(i)}}
                         </td>
                         <td class="text-right" width="15%">{{i.valor | currency:'R$'}}</td>
                     </tr>
