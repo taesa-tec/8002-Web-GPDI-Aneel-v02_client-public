@@ -15,16 +15,16 @@
 
     </div>
     <div class="row">
-        <div class="col-6">
+        <div class="col-6" [ngClass]="{'col-6':projeto.isPD,'col-12':projeto.isPG}">
             <div class="form-group">
-                <label for="">Empresa Financiadora</label>
+                <label for="">Empresa Financiadora <span [hidden]="projeto.isPD">e Recebedora</span></label>
                 <select name="" id="" class="form-control" formControlName="empresaFinanciadoraId">
                     <option value="">Selecione</option>
                     <option [value]="empresa.id" *ngFor="let empresa of empresasFinanciadoras">{{empresa.nome}}</option>
                 </select>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-6" *ngIf="projeto.isPD">
             <div class="form-group">
                 <label for="">Empresa Recebedora</label>
                 <select name="" id="" class="form-control" formControlName="empresaRecebedoraId">
@@ -35,7 +35,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-6">
+        <div class="col-6" *ngIf="projeto.isPD">
             <div class="form-group">
                 <label for="">Etapa</label>
                 <select name="" id="" class="form-control" formControlName="etapaId">
@@ -44,7 +44,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-6">
+        <div [ngClass]="{'col-6':projeto.isPD,'col-12':projeto.isPG}">
             <div class="form-group">
                 <label for="">Quantidade</label>
                 <input type="number" class="form-control" formControlName="qtd">

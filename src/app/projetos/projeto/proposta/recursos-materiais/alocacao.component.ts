@@ -8,18 +8,18 @@ import { Projeto, AlocacaoRM, CategoriasContabeis, EmpresaProjeto } from '@app/m
 import { zip, of } from 'rxjs';
 import { AppService } from '@app/app.service';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { EmpresaProjetoFacade } from '@app/facades';
+import { EmpresaProjetoFacade, ProjetoFacade } from '@app/facades';
 
 @Component({
     selector: 'app-alocacao',
     templateUrl: './alocacao.component.html',
-    styleUrls: ['./alocacao.component.scss']
+    styleUrls: []
 })
 export class AlocacaoComponent implements OnInit {
 
     categoriaContabel = CategoriasContabeis;
     alocacoes: Array<any>;
-    projeto: Projeto;
+    projeto: ProjetoFacade;
 
     listOrder: { field: string; direction: 'asc' | 'desc'; } = {
         field: 'recursoMaterial.nome',
@@ -28,33 +28,34 @@ export class AlocacaoComponent implements OnInit {
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
-    constructor(
-        private route: ActivatedRoute,
-        protected app: AppService,
-        protected modalService: NgbModal) { }
+    constructor(protected app: AppService) { }
 
     ngOnInit() {
         this.loadData();
     }
 
-    loadData() {
+    async loadData() {
 
         this.loading.show();
 
         const data$ = this.app.projetos.projetoLoaded.pipe(
-            mergeMap(p => zip(
+            mergeMap((p: ProjetoFacade) => zip(
                 of(p),
-                this.app.projetos.getAlocacaoRM(p.id),
-                p.REST.Empresas.listar<Array<EmpresaProjeto>>()
-                    .pipe(map(empresas => empresas.map(e => new EmpresaProjetoFacade(e))))
+                p.REST.AlocacaoRms.listar<Array<any>>(),
+                p.REST.Empresas.listar<Array<EmpresaProjeto>>().pipe(map(empresas => empresas.map(e => new EmpresaProjetoFacade(e))))
             ))
         );
 
+        const categoriasContabeisGestao = <Array<any>>await this.app.catalogo.categoriasContabeisGestao().toPromise();
+
         data$.subscribe(([projeto, alocacoes, empresas]) => {
-
-
             this.projeto = projeto;
 
+            if (this.projeto.isPG) {
+                this.categoriaContabel = categoriasContabeisGestao.map(cat => {
+                    return { text: cat.nome, value: String(cat.id), atividades: cat.atividades };
+                });
+            }
             this.alocacoes = alocacoes.map(aloc => {
 
                 if (aloc.empresaFinanciadoraId) {
@@ -63,7 +64,17 @@ export class AlocacaoComponent implements OnInit {
                 }
 
                 if (aloc.recursoMaterial) {
-                    aloc.categoriaContabelNome = this.categoriaContabel.find(e => aloc.recursoMaterial.categoriaContabilValor === e.value).text;
+                    try {
+                        if (this.projeto.isPD) {
+                            aloc.categoriaContabelNome = this.categoriaContabel.find(e => aloc.recursoMaterial.categoriaContabilValor === e.value).text;
+                        } else {
+                            aloc.categoriaContabelNome = this.categoriaContabel.find(e => String(aloc.recursoMaterial.catalogCategoriaContabilGestaoId) === e.value).text;
+                        }
+                    } catch (err) {
+                        console.log(err, this.categoriaContabel);
+
+                        aloc.categoriaContabelNome = "Não definido";
+                    }
                 }
 
                 aloc.valorTotal = aloc.qtd * aloc.recursoMaterial.valorUnitario;
@@ -75,7 +86,7 @@ export class AlocacaoComponent implements OnInit {
     }
 
     openModal(alocacao: AlocacaoRM | {} = {}) {
-        const modalRef = this.modalService.open(AlocarRecursoMaterialFormComponent, { size: 'lg' });
+        const modalRef = this.app.modal.open(AlocarRecursoMaterialFormComponent, { size: 'lg' });
         modalRef.componentInstance.alocacao = alocacao;
         modalRef.componentInstance.projeto = this.projeto;
 

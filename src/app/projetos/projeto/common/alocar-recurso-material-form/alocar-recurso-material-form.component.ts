@@ -5,7 +5,7 @@ import { RecursoMaterial, Projeto, AlocacaoRM, Empresa, EmpresaProjeto } from '@
 import { AppService } from '@app/app.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { zip } from 'rxjs';
+import { zip, of } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { EmpresaProjetoFacade, ProjetoFacade } from '@app/facades';
 
@@ -56,7 +56,36 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
 
     ngOnInit() {
         this.loadData();
+    }
 
+
+
+    loadData() {
+
+        this.loading.show();
+
+        const recm$ = this.app.projetos.getRecursoMaterial(this.projeto.id);
+        const empresa$ = this.projeto.REST.Empresas.listar<Array<EmpresaProjeto>>();
+        const etapa$ = this.projeto.isPD ? this.projeto.relations.etapas.get() : of([]);
+        const empresasCatalog$ = this.app.catalogo.empresas();
+
+        zip(recm$, empresa$, etapa$, empresasCatalog$).subscribe(([recursosMaterias, empresas, etapas, empresasCatalog]) => {
+
+            this.empresas = empresas.map(e => new EmpresaProjetoFacade(e));
+
+            this.recursosMaterias = recursosMaterias || [];
+            if (etapas) {
+                this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; });
+            }
+
+            this.empresasCatalog = empresasCatalog;
+
+            this.empresasFinanciadoras = this.empresas.filter(item => item.classificacaoValor !== "Executora");
+
+            this.setup();
+
+            this.loading.hide();
+        });
     }
 
     setup() {
@@ -67,15 +96,20 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
         this.form = new FormGroup({
             projetoId: new FormControl(this.projeto.id, Validators.required),
             recursoMaterialId: new FormControl(this.alocacao.recursoMaterialId || '', [Validators.required]),
-            etapaId: new FormControl(this.alocacao.etapaId || '', [Validators.required]),
             empresaFinanciadoraId: empresaFinanciadoraControl,
-            empresaRecebedoraId: empresaRecebedoraControl,
             qtd: new FormControl(this.alocacao.qtd || '', [Validators.required]),
             justificativa: new FormControl(this.alocacao.justificativa || '', [Validators.required]),
         });
 
+
+
         if (this.alocacao.id !== undefined) {
             this.form.addControl('id', new FormControl(this.alocacao.id));
+        }
+        if (this.projeto.isPD) {
+
+            this.form.addControl('etapaId', new FormControl(this.alocacao.etapaId || '', [Validators.required]));
+            this.form.addControl('empresaRecebedoraId', empresaRecebedoraControl);
         }
 
         empresaFinanciadoraControl.valueChanges.subscribe(v => {
@@ -85,32 +119,6 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
 
 
 
-    }
-
-    loadData() {
-
-        this.loading.show();
-
-        const recm$ = this.app.projetos.getRecursoMaterial(this.projeto.id);
-        const empresa$ = this.projeto.REST.Empresas.listar<Array<EmpresaProjeto>>();
-        const etapa$ = this.projeto.relations.etapas.get();
-        const empresasCatalog$ = this.app.catalogo.empresas();
-
-        zip(recm$, empresa$, etapa$, empresasCatalog$).subscribe(([recursosMaterias, empresas, etapas, empresasCatalog]) => {
-            this.empresas = empresas.map(e => new EmpresaProjetoFacade(e));
-
-            this.recursosMaterias = recursosMaterias || [];
-
-            this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; });
-
-            this.empresasCatalog = empresasCatalog;
-
-            this.empresasFinanciadoras = this.empresas.filter(item => item.classificacaoValor !== "Executora");
-
-            this.setup();
-
-            this.loading.hide();
-        });
     }
 
 
@@ -123,7 +131,7 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
             request.subscribe(result => {
 
                 if (result.sucesso) {
-                    this.logProjeto("Alocação de recursos Materias");
+                    // this.logProjeto("Alocação de recursos Materias");
                     this.activeModal.close(result);
                 } else {
                     this.app.alert(result.inconsistencias.join(', '));
