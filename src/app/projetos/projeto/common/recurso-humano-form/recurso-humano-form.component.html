@@ -42,11 +42,19 @@
             </div>
         </div>
         <div class="col-6">
-            <div class="form-group">
+            <div class="form-group" *ngIf="projeto.isPD">
                 <label for="">Função</label>
                 <select name="" id="" class="form-control" formControlName="funcao">
                     <option value="">Selecione</option>
                     <option [value]="funcao.value" *ngFor="let funcao of funcoes">{{funcao.text}}</option>
+                </select>
+            </div>
+            <div class="form-group" *ngIf="projeto.isPG">
+                <label for="">Será o Gerente do Projeto?</label>
+                <select name="" id="" class="form-control" formControlName="gerenteProjeto">
+                    <option value="">Selecione</option>
+                    <option *ngIf="!hasManager" value="true">Sim</option>
+                    <option value="false">Não</option>
                 </select>
             </div>
         </div>

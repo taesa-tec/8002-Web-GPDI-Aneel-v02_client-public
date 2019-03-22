@@ -25,6 +25,7 @@ export class RecursoHumanoFormComponent implements OnInit {
     nacionalidades = [{ value: 'Brasileiro', text: "Sim" }, { value: 'Estrangeiro', text: "Não" }];
     nacionalidade: FormControl;
     form: FormGroup;
+    hasManager = false;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
@@ -50,9 +51,11 @@ export class RecursoHumanoFormComponent implements OnInit {
         this.loading.show();
         const empresas$ = this.projeto.relations.empresas.get();
         const empresasCatalog$ = this.app.catalogo.empresas();
+        const recursos$ = this.projeto.REST.RecursoHumanos.listar<Array<RecursoHumano>>();
 
-        zip(empresas$, empresasCatalog$).subscribe(([empresas, empresasCatalog]) => {
+        zip(empresas$, empresasCatalog$, recursos$).subscribe(([empresas, empresasCatalog, recursos]) => {
 
+            this.hasManager = recursos.find(rec => rec.gerenteProjeto) !== null;
             this.empresasCatalog = empresasCatalog;
             this.empresas = empresas;
             this.setup();
@@ -65,9 +68,7 @@ export class RecursoHumanoFormComponent implements OnInit {
         const passaporte = new FormControl(this.recursoHumano.passaporte || '', Validators.required);
         const empresaCtrl = new FormControl(this.recursoHumano.empresaId || '', Validators.required);
         this.nacionalidade = new FormControl('', Validators.required);
-        if (this.projeto.isPG) {
-            this.funcoes = Funcoes.slice(0, 2);
-        }
+
 
         this.form = new FormGroup({
             projetoId: new FormControl(this.projeto.id, Validators.required),
@@ -79,6 +80,14 @@ export class RecursoHumanoFormComponent implements OnInit {
             nacionalidade: this.nacionalidade,
             urlCurriculo: new FormControl(this.recursoHumano.urlCurriculo || '', [Validators.required, Validators.pattern(/^https?:\/\/(.+)\.(.+)/)]),
         });
+
+        if (this.projeto.isPG) {
+            this.form.addControl('gerenteProjeto', new FormControl(this.recursoHumano.gerenteProjeto || (this.hasManager ? 'false' : ''), Validators.required));
+        } else {
+            this.form.addControl('funcao', new FormControl(this.recursoHumano.funcaoValor || '', Validators.required));
+
+        }
+
         empresaCtrl.valueChanges.subscribe(value => {
             const _empresa = this.empresas.find(e => e.id === parseInt(value, 10));
 

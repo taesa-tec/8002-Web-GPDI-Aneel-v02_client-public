@@ -1,4 +1,9 @@
-<h5 class="text-uppercase text-blue font-weight-normal my-3">Projeto Base Pesquisa e Desenvolvimento</h5>
+<h5 class="text-uppercase text-blue font-weight-normal my-3" *ngIf="projeto.isPD">
+    Projeto Base Pesquisa e Desenvolvimento
+</h5>
+<h5 class="text-uppercase text-blue font-weight-normal my-3" *ngIf="projeto.isPG">
+    PROJETO BASE DE GESTÃO
+</h5>
 <app-loading type="fullscreen"></app-loading>
 <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="row">

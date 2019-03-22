@@ -14,7 +14,7 @@ export const APP_CONFIG_PROD: AppConfig = {
 };
 export const APP_CONFIG_DEV: AppConfig = {
     api_url: "https://taesagestor.azurewebsites.net/api",
-    version: '0.7.0'
+    version: '0.8.2'
 };
 
 export const customCurrencyMaskConfig = {

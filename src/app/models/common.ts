@@ -261,6 +261,7 @@ export interface RecursoHumano {
     cpf: string;
     passaporte?: any;
     urlCurriculo: string;
+    gerenteProjeto: boolean;
 }
 
 export interface ExtratoItem {

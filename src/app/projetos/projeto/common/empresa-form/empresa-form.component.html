@@ -38,7 +38,7 @@
                 </div>
             </ng-template>
         </ngb-tab>
-        <ngb-tab title="Empresa Executora" id="executora" [disabled]="projeto.isPG">
+        <ngb-tab title="Empresa Executora" id="executora" *ngIf="projeto.isPD">
             <ng-template ngbTabContent>
                 <div class="row my-5" *ngIf="formExecutora" [formGroup]="formExecutora">
                     <div class="col-6">
@@ -82,7 +82,7 @@
                 </div>
             </ng-template>
         </ngb-tab>
-        <ngb-tab title="Empresa Parceira" id="parceira" [disabled]="projeto.isPG">
+        <ngb-tab title="Empresa Parceira" id="parceira" *ngIf="projeto.isPD">
             <ng-template ngbTabContent>
                 <div class="row my-5" *ngIf="formParceira" [formGroup]="formParceira">
                     <div class="col-6">
