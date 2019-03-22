@@ -25,7 +25,8 @@ export class ProjetoComponent implements OnInit {
     menus: { [propName: string]: Array<{ text: string | { pd: string; pg: string }, icon: string | { pd: string; pg: string }, path: string | { pd: string; pg: string }, only?: 'PD' | 'PG' }> } = {
         proposta: [
             { text: { pg: "Projeto Gestão", pd: "Projeto" }, icon: "ta-projeto", path: 'info' },
-            { text: { pg: "Atividades", pd: "Temas" }, icon: "ta-chat", path: { pg: "atividades", pd: "temas" } },
+            { text: "Temas", icon: "ta-chat", path: "temas", only: "PD" },
+            { text: "Atividades", icon: "ta-chat", path: "atividades", only: "PG" },
             { text: "Produtos", icon: "ta-box", path: 'produtos', only: 'PD' },
             { text: "Etapas", icon: "ta-etapas", path: 'etapas' },
             { text: "Empresas", icon: "ta-empresas", path: 'empresas' },
@@ -34,7 +35,8 @@ export class ProjetoComponent implements OnInit {
             { text: "Recursos Materiais", icon: "ta-recurso-material", path: 'recursos-materiais' },
             { text: "Alocação de Recursos Materias", icon: "ta-alocacao-material", path: 'alocacao-recursos-materiais' },
             { text: "Extrato Financeiro Empresas", icon: "ta-extrato", path: 'extrato-financeiro-empresas' },
-            { text: "Extrato Financeiro Etapas", icon: "ta-table", path: 'extrato-financeiro-etapas' }
+            { text: "Extrato Financeiro Etapas", icon: "ta-table", path: 'extrato-financeiro-etapas', only: "PD" },
+            { text: "Extrato Financeiro Atividades", icon: "ta-table", path: 'extrato-financeiro-atividades', only: "PG" }
         ],
         iniciado: [
             { text: "Inserir Registro REFP", icon: "ta-edit", path: 'refp-inserir' },
