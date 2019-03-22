@@ -38,13 +38,18 @@ export class RecursoMaterialFormComponent implements OnInit {
         try {
             const currentCategoryValue = this.form ? this.form.get('catalogCategoriaContabilGestaoId').value : false;
             if (currentCategoryValue) {
-                const currentCategory = this.categoriaContabel.find(c => c.value === currentCategoryValue);
+                // const currentCategory = this.categoriaContabel.find(c => c.value === currentCategoryValue);
+                const currentCategory = this.categoriaContabel.find(c => {
+                    return c.value === currentCategoryValue;
+                });
                 if (currentCategory) {
                     return currentCategory.atividades.map(a => { a.id = String(a.id); return a; });
                 }
             }
-        } catch (error) {
 
+
+        } catch (error) {
+            console.log(error);
         }
         return [];
     }
@@ -73,7 +78,7 @@ export class RecursoMaterialFormComponent implements OnInit {
             this.categoriaContabel = cats.map(cat => {
                 return { text: cat.nome, value: String(cat.id), atividades: cat.atividades };
             });
-            const catalogCategoriaContabilGestaoId = new FormControl(this.recursoMaterial.catalogCategoriaContabilGestaoId || '', [Validators.required]);
+            const catalogCategoriaContabilGestaoId = new FormControl(String(this.recursoMaterial.catalogCategoriaContabilGestaoId || ''), [Validators.required]);
             form.addControl('catalogCategoriaContabilGestaoId', catalogCategoriaContabilGestaoId);
             form.addControl('catalogAtividadeId', new FormControl(this.recursoMaterial.catalogAtividadeId || '', [Validators.required]));
             catalogCategoriaContabilGestaoId.valueChanges.subscribe(v => {

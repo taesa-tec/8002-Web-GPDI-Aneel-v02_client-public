@@ -36,7 +36,7 @@
         <div class="col-12">
             <div class="form-group">
                 <label>Tipo de Atividade</label>
-                <select class="form-control" [disabled]="atividades.length === 0" formControlName="catalogAtividadeId">
+                <select class="form-control" formControlName="catalogAtividadeId">
                     <option value="">Selecione</option>
                     <option [value]="atividade.id" *ngFor="let atividade of atividades">{{atividade.nome}}</option>
                 </select>
