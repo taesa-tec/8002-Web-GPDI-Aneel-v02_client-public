@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { zip } from 'rxjs';
+import { zip, of } from 'rxjs';
 
 import { AppService } from '@app/app.service';
 import { Projeto, Etapa, TextValue, CategoriasContabeis, ExtratosEtapas, ExtratoItem } from '@app/models';
@@ -65,7 +65,7 @@ export class OrcamentoEtapasComponent implements OnInit {
     load() {
         this.loading.show();
         const extratos$ = this.app.projetos.getOrcamentoEtapas(this.projeto.id);
-        const etapas$ = this.app.projetos.getEtapas(this.projeto.id);
+        const etapas$ = this.projeto.isPD ? this.projeto.REST.Etapas.listar<Array<Etapa>>() : of([]);
 
         zip(extratos$,
             etapas$,

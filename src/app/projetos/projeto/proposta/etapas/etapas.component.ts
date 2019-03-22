@@ -1,17 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EtapaFormComponent } from '@app/projetos/projeto/common/etapa-form/etapa-form.component';
 import { AppService } from '@app/app.service';
-import { ProjetosService } from '@app/projetos/projetos.service';
-import { CatalogsService } from '@app/catalogs/catalogs.service';
-import { ActivatedRoute } from '@angular/router';
 import { zip } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Projeto, Etapa } from '@app/models';
 import { FormGroup, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { ProjetoFacade } from '@app/facades';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-etapas',
@@ -56,7 +52,11 @@ export class EtapasComponent implements OnInit {
         this.form.get('dataInicio').setValue(v);
     }
 
-
+    etapaMeses(etapa: Etapa) {
+        return etapa.etapaMeses.map(mes => {
+            return moment(mes.mes).format('MMM/YYYY');
+        }).join(' - ');
+    }
     ngOnInit() {
         const projeto$ = this.app.projetos.projetoLoaded;
 

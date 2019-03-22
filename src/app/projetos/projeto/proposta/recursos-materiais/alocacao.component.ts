@@ -71,9 +71,7 @@ export class AlocacaoComponent implements OnInit {
                             aloc.categoriaContabelNome = this.categoriaContabel.find(e => String(aloc.recursoMaterial.catalogCategoriaContabilGestaoId) === e.value).text;
                         }
                     } catch (err) {
-                        console.log(err, this.categoriaContabel);
-
-                        aloc.categoriaContabelNome = "Não definido";
+                        aloc.categoriaContabelNome = "Não encontrado";
                     }
                 }
 

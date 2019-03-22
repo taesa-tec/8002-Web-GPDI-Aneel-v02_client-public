@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { zip } from 'rxjs';
+import { zip, of } from 'rxjs';
 
 import { AppService } from '@app/app.service';
 import { Projeto, OrcamentosEmpresas, Etapa, TextValue, CategoriasContabeis, ExtratoItem, ResultadoResponse, Empresa, EmpresaProjeto } from '@app/models';
@@ -78,7 +78,7 @@ export class OrcamentoEmpresasComponent implements OnInit {
     async load() {
         this.loading.show();
         const extratos$ = this.projeto.REST.ExtratoEmpresas.listar<OrcamentosEmpresas>(); // this.app.projetos.getOrcamentoEmpresas(this.projeto.id);
-        const etapas$ = this.projeto.REST.Etapas.listar<Array<Etapa>>(); // this.app.projetos.getEtapas(this.projeto.id);
+        const etapas$ = this.projeto.isPD ? this.projeto.REST.Etapas.listar<Array<Etapa>>() : of([]); // this.app.projetos.getEtapas(this.projeto.id);
         const emepresas$ = this.projeto.REST.Empresas.listar<Array<EmpresaProjeto>>();
 
         zip(extratos$, etapas$, emepresas$, this.app.projetos.getAlocacaoRH(this.projeto.id), this.app.projetos.getAlocacaoRM(this.projeto.id))

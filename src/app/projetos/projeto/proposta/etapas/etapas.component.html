@@ -1,95 +1,113 @@
 <div class="row justify-content-between">
-  <div class="col">
-    <h5 class="text-uppercase text-blue font-weight-normal my-3">Etapas</h5>
-  </div>
-  <div class="col-auto">
-    <button class="btn btn-outline-primary" type="button" (click)="openModal()">
-      <i class="ta-plus-circle fs-24 align-middle align-middle"></i>
-      Nova Etapa
-    </button>
-  </div>
+    <div class="col">
+        <h5 class="text-uppercase text-blue font-weight-normal my-3">Etapas</h5>
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-outline-primary" type="button" (click)="openModal()">
+            <i class="ta-plus-circle fs-24 align-middle align-middle"></i>
+            Nova Etapa
+        </button>
+    </div>
 </div>
 
 <div class="row my-5">
-  <div class="col">
-    <div class="form-group m-0">
-      <label for="">Data Inicial Projeto</label>
-    </div>
-    <div class="form-group form-inline">
-      <select name="" [(ngModel)]="mes" class="form-control mr-3">
-        <option value="0">JAN</option>
-        <option value="1">FEV</option>
-        <option value="2">MAR</option>
-        <option value="3">ABR</option>
-        <option value="4">MAI</option>
-        <option value="5">JUN</option>
-        <option value="6">JUL</option>
-        <option value="7">AGO</option>
-        <option value="8">SET</option>
-        <option value="9">OUT</option>
-        <option value="10">NOV</option>
-        <option value="11">DEZ</option>
-      </select>
+    <div class="col">
+        <div class="form-group m-0">
+            <label for="">Data Inicial Projeto</label>
+        </div>
+        <div class="form-group form-inline">
+            <select name="" [(ngModel)]="mes" class="form-control mr-3">
+                <option value="0">JAN</option>
+                <option value="1">FEV</option>
+                <option value="2">MAR</option>
+                <option value="3">ABR</option>
+                <option value="4">MAI</option>
+                <option value="5">JUN</option>
+                <option value="6">JUL</option>
+                <option value="7">AGO</option>
+                <option value="8">SET</option>
+                <option value="9">OUT</option>
+                <option value="10">NOV</option>
+                <option value="11">DEZ</option>
+            </select>
 
-      <input type="number" [(ngModel)]="ano" class="form-control">
-      <app-loading type="inline" background="transparent" color="#03286a" #loading></app-loading>
-      <button class="mx-3 btn btn-primary py-2" type="button" [disabled]="loading.isLoading" (click)="setDataInicio()">
-        <i class="ta-save fs-24 align-middle align-middle"></i>
-        Salvar
-      </button>
+            <input type="number" [(ngModel)]="ano" class="form-control">
+            <app-loading type="inline" background="transparent" color="#03286a" #loading></app-loading>
+            <button class="mx-3 btn btn-primary py-2" type="button" [disabled]="loading.isLoading" (click)="setDataInicio()">
+                <i class="ta-save fs-24 align-middle align-middle"></i>
+                Salvar
+            </button>
+        </div>
     </div>
-  </div>
 </div>
 <div class="row mt-4">
-  <div class="col-12">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>
-            <div class="d-flex align-items-center">
-              <span class="mx-2">Etapas</span>
-              <app-handler-order [current]="listOrder" field="id" (order)="listOrder=$event"></app-handler-order>
-            </div>
-          </th>
-          <th>
-            <div class="d-flex align-items-center">
-              <span class="mx-2">Data Inicial</span>
-              <app-handler-order [current]="listOrder" field="dataInicio" (order)="listOrder=$event"></app-handler-order>
-            </div>
+    <div class="col-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">Etapas</span>
+                            <app-handler-order [current]="listOrder" field="id" (order)="listOrder=$event"></app-handler-order>
+                        </div>
+                    </th>
+                    <ng-container *ngIf="projeto.isPD">
+                        <th>
+                            <div class="d-flex align-items-center">
+                                <span class="mx-2">Data Inicial</span>
+                                <app-handler-order [current]="listOrder" field="dataInicio" (order)="listOrder=$event"></app-handler-order>
+                            </div>
 
-          </th>
-          <th>
-            <div class="d-flex align-items-center">
-              <span class="mx-2">Data Final</span>
-              <app-handler-order [current]="listOrder" field="dataFim" (order)="listOrder=$event"></app-handler-order>
-            </div>
-          </th>
-          <th>
-            <div class="d-flex align-items-center">
-              <span class="mx-2">Ações</span>
-            </div>
-          </th>
-        </tr>
-      </thead>
-      <tr *ngFor="let etapa of etapas | orderBy:listOrder.field:listOrder.direction; let i = index">
-        <td> <span [ngbTooltip]="etapa.desc"> Etapa {{ etapa.numeroEtapa }}  </span></td>
-        <td>{{ etapa.dataInicio | date:'dd/MM/yyyy' }}</td>
-        <td>{{ etapa.dataFim | date:'dd/MM/yyyy' }}</td>
-        <td>
-          <button type="button" class="btn btn-primary" (click)="openModal(etapa)">
-            <i class="ta-edit"></i>
-            Editar
-          </button>
-        </td>
-      </tr>
-    </table>
-  </div>
+                        </th>
+                        <th>
+                            <div class="d-flex align-items-center">
+                                <span class="mx-2">Data Final</span>
+                                <app-handler-order [current]="listOrder" field="dataFim" (order)="listOrder=$event"></app-handler-order>
+                            </div>
+                        </th>
+                    </ng-container>
+                    <ng-container *ngIf="projeto.isPG">
+                        <th>
+                            <div class="d-flex align-items-center">
+                                <span class="mx-2">Meses</span>
+                            </div>
+                        </th>
+                    </ng-container>
+                    <th>
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">Ações</span>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tr *ngFor="let etapa of etapas | orderBy:listOrder.field:listOrder.direction; let i = index">
+                <td> <span [ngbTooltip]="etapa.desc"> Etapa {{ etapa.numeroEtapa }}  </span></td>
+                <ng-container *ngIf="projeto.isPD">
+                    <td>{{ etapa.dataInicio | date:'dd/MM/yyyy' }}</td>
+                    <td>{{ etapa.dataFim | date:'dd/MM/yyyy' }}</td>
+                </ng-container>
+                <ng-container *ngIf="projeto.isPG">
+                    <td>
+                        {{etapaMeses(etapa)}}
+                    </td>
+                </ng-container>
+
+                <td>
+                    <button type="button" class="btn btn-primary" (click)="openModal(etapa)">
+                        <i class="ta-edit"></i>
+                        Editar
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 <hr>
 <div class="row">
-  <div class="col-auto">
-    <!-- <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes --> </div>
-  <div class="col text-right">
+    <div class="col-auto">
+        <!-- <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes -->
+    </div>
+    <div class="col text-right">
 
-  </div>
+    </div>
 </div>

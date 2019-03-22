@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Produto, EtapaProduto, Projeto, EditEtapaRequest, CriarEtapaRequest, TextValue } from '@app/models';
+import { Produto, EtapaProduto, Projeto, EditEtapaRequest, CriarEtapaRequest, TextValue, Etapa } from '@app/models';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { zip } from 'rxjs';
 import { AppService } from '@app/app.service';
@@ -18,7 +18,7 @@ import * as moment from 'moment';
 })
 export class EtapaFormComponent implements OnInit {
 
-    etapa: any;
+    etapa: Etapa;
     projeto: ProjetoFacade;
     form: FormGroup;
     produtos: Produto[] = [];
@@ -73,10 +73,15 @@ export class EtapaFormComponent implements OnInit {
                 });
             }
         }
-        
+
         if (this.projeto.isPG) {
             this.fillMonths();
-            this.form.addControl('meses', this.mesesGroup);
+            this.form.addControl('EtapaMeses', this.mesesGroup);
+            if (this.etapa.etapaMeses) {
+                this.etapa.etapaMeses.forEach(mes => {
+                    this.adicionarMes(moment(mes.mes).format('YYYY-MM-DD'));
+                });
+            }
         }
 
     }
@@ -118,8 +123,8 @@ export class EtapaFormComponent implements OnInit {
         const list = (this.mesesGroup.value as Array<{ mes: any }>).map(p => p.mes);
         return this.meses.filter(m => (list.indexOf(m.value) === -1 || m.value === mes));
     }
-    adicionarMes(id: number) {
-        this.mesesGroup.push(new FormGroup({ mes: new FormControl('', Validators.required) }));
+    adicionarMes(mes = '') {
+        this.mesesGroup.push(new FormGroup({ mes: new FormControl(mes, Validators.required) }));
     }
 
     removerMes(index) {

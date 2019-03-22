@@ -196,6 +196,7 @@ export interface Etapa {
     dataFim: string;
     atividadesRealizadas?: any;
     etapaProdutos: EtapaProduto[];
+    etapaMeses: Array<{ id?: number; etapaId?: number; mes: string; }>;
 }
 export interface EtapaProduto {
     id: number;

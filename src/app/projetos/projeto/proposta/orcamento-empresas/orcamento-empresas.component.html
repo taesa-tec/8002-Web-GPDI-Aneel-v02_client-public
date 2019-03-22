@@ -19,7 +19,7 @@
                         <td width="25%">
                             <span class="btn btn-link p-0" (click)="openModal(i)">{{i.desc}}</span>
                         </td>
-                        <td width="15%">
+                        <td width="15%" *ngIf="projeto.isPD">
                             <span *ngIf="etapas[i.etapa.id]" [title]="etapas[i.etapa.id].desc"> Etapa {{etapas[i.etapa.id].numeroEtapa}}</span>
                         </td>
                         <td>
