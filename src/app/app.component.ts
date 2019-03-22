@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd, ActivationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { LoadingComponent } from './shared/loading/loading.component';
+import { AppService } from './app.service';
 
 @Component({
     selector: 'app-root',
@@ -10,9 +11,12 @@ import { LoadingComponent } from './shared/loading/loading.component';
 })
 export class AppComponent {
 
+    version = '';
+
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
-    constructor(protected router: Router) {
+    constructor(protected router: Router, app: AppService) {
+        this.version = app.config.version;
         this.router.events.pipe(filter(e => e instanceof NavigationStart)).subscribe(e => {
             this.loading.show();
         });

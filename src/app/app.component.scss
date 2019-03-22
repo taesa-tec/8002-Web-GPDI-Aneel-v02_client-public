@@ -1,3 +1,16 @@
 :host {
     height: 100%;
 }
+
+.app-version {
+    position: fixed;
+    padding: 4px;
+    right: 0;
+    bottom: 0;
+    opacity: 0.5;
+    color: #222;
+    z-index: 1000;
+    &:hover {
+        opacity: 1;
+    }
+}
