@@ -54,8 +54,7 @@ export class RecursoHumanoFormComponent implements OnInit {
         const recursos$ = this.projeto.REST.RecursoHumanos.listar<Array<RecursoHumano>>();
 
         zip(empresas$, empresasCatalog$, recursos$).subscribe(([empresas, empresasCatalog, recursos]) => {
-
-            this.hasManager = recursos.find(rec => rec.gerenteProjeto) !== null;
+            this.hasManager = recursos.find(rec => rec.gerenteProjeto === true) !== undefined;
             this.empresasCatalog = empresasCatalog;
             this.empresas = empresas;
             this.setup();

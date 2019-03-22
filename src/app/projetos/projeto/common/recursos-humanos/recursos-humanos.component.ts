@@ -8,6 +8,7 @@ import { AppService } from '@app/app.service';
 import { zip, of } from 'rxjs';
 import { Projeto, RecursoHumano, Funcoes, Graduacoes } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
+import { ProjetoFacade } from '@app/facades';
 
 @Component({
     selector: 'app-recursos-humanos',
@@ -17,7 +18,7 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 export class RecursosHumanosComponent implements OnInit {
 
     recursosHumano: Array<RecursoHumano>;
-    projeto: Projeto;
+    projeto: ProjetoFacade;
 
     listOrder: { field: string; direction: 'asc' | 'desc'; } = {
         field: 'nomeCompleto',
