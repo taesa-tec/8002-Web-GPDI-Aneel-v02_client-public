@@ -82,10 +82,7 @@ export class RefpListComponent implements OnInit {
     fillTable() {
         this.tableRegistro = this.registros.map(registro => {
             let empresa: any = this.empresas.find(e => e.id === registro.empresaFinanciadoraId);
-            console.log(registro);
-
             empresa = empresa.catalogEmpresa ? empresa.catalogEmpresa.nome : empresa.razaoSocial;
-
             const registroItem = {
                 registro,
                 nome: '',

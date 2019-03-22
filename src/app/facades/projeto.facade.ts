@@ -324,6 +324,14 @@ export class ProjetoFacade extends GenericFacade<Projeto> implements Projeto {
     toRequest() {
         return Object.assign({}, this._data);
     }
+    editarDataInicio(dataInicio) {
+        return this._service.editarDataInicio({
+            id: this.id,
+            dataInicio
+        }).pipe(tap(r => {
+            this.dataInicio = dataInicio;
+        }));
+    }
 
     prorrogar(prorrogacao: ProrrogarProjetoRequest) {
         return this._service.prorrogarProjeto(prorrogacao);

@@ -26,7 +26,7 @@ export class EtapasComponent implements OnInit {
         direction: 'asc'
     };
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild('loading') loading: LoadingComponent;
 
     get ano() {
         return this.dataInicio.getFullYear();
@@ -108,10 +108,15 @@ export class EtapasComponent implements OnInit {
 
     setDataInicio() {
         this.loading.show();
-        this.app.projetos.editarDataInicio(this.form.value).subscribe(result => {
-            this.loading.hide();
-            this.loadEtapas();
-        });
+        // this.app.projetos.editarDataInicio(this.form.value)
+        this.projeto.editarDataInicio(this.form.get('dataInicio').value)
+            .subscribe(result => {
+                if (result.sucesso) {
+                    this.app.alert("Salvo com sucesso");
+                }
+                this.loading.hide();
+                this.loadEtapas();
+            });
     }
 
 }

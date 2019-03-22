@@ -52,7 +52,7 @@ export abstract class RegistroRecursoBase implements OnInit {
         this.app.projetos.projetoLoaded.subscribe(projeto => {
             this.projeto = projeto;
             const empresas$ = this.projeto.relations.empresas.get();
-            const etapas$ = this.projeto.relations.etapas.get();
+            const etapas$ = this.projeto.isPD ? this.projeto.REST.Etapas.listar<Array<Etapa>>() : of([]);
             const recursos$ = this.getRecursos(projeto);
 
             this.loading.show(1000);
@@ -78,21 +78,35 @@ export abstract class RegistroRecursoBase implements OnInit {
 
     buildForm() {
         this.mesesRef = [];
-        this.etapas.map(etapa => {
-            const start = moment(etapa.dataInicio);
-            const end = moment(etapa.dataFim);
 
+
+        if (this.projeto.isPD) {
+            this.etapas.map(etapa => {
+                const start = moment(etapa.dataInicio);
+                const end = moment(etapa.dataFim);
+                while (start.isBefore(end)) {
+                    const ano = start.format('YYYY');
+                    const mes = start.format('MMMM'); // .padEnd(9, '*').replace(/\*/g, '&nbsp;');
+                    this.mesesRef.push({
+                        text: `${mes} - ${ano}`,
+                        value: start.format('YYYY-MM-DD')
+                    });
+                    start.add(1, 'months');
+                }
+            });
+        } else {
+            const start = moment(this.projeto.dataInicio);
+            const end = moment(this.projeto.dataInicio).add(24, 'months');
             while (start.isBefore(end)) {
+                const ano = start.format('YYYY');
+                const mes = start.format('MMMM'); // .padEnd(9, '*').replace(/\*/g, '&nbsp;');
                 this.mesesRef.push({
-                    text: start.format('MMMM YYYY'),
+                    text: `${mes} - ${ano}`,
                     value: start.format('YYYY-MM-DD')
                 });
-                start.add(1, 'M');
-                if (this.mesesRef.length > 10) {
-                    break;
-                }
+                start.add(1, 'month');
             }
-        });
+        }
     }
 
     buildFormObs() {

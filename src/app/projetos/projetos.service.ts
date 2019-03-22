@@ -31,11 +31,6 @@ import { ProjetoFacade } from '@app/facades';
 import { FileService } from '@app/shared/file.service';
 import { RequestCacheService } from '@app/request-cache.service';
 
-abstract class ProjetoServiceModule {
-    constructor(protected http: HttpClient) { }
-}
-// 
-
 class ProjetoREST {
     constructor(protected projetoComponentPath: string, protected http: HttpClient) { }
 

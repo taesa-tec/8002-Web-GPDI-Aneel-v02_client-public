@@ -88,7 +88,7 @@ export class RecursoHumanoComponent implements OnInit {
 
             const recursos$ = this.projeto.relations.recursosHumanos.get();
             const empresas$ = this.projeto.REST.Empresas.listar<Array<EmpresaProjeto>>();
-            const etapas$ = this.projeto.relations.etapas.get();
+            const etapas$ = this.projeto.isPD ? this.projeto.REST.Etapas.listar<Array<Etapa>>() : of([]);
 
             this.loading.show(1000);
             zip(recursos$, empresas$, etapas$).subscribe(([recursos, empresas, etapas]) => {
@@ -113,28 +113,33 @@ export class RecursoHumanoComponent implements OnInit {
 
         this.mesesRef = [];
 
-
-        this.etapas.map(etapa => {
-            const start = moment(etapa.dataInicio);
-            const end = moment(etapa.dataFim);
-
-
+        if (this.projeto.isPD) {
+            this.etapas.map(etapa => {
+                const start = moment(etapa.dataInicio);
+                const end = moment(etapa.dataFim);
+                while (start.isBefore(end)) {
+                    const ano = start.format('YYYY');
+                    const mes = start.format('MMMM'); // .padEnd(9, '*').replace(/\*/g, '&nbsp;');
+                    this.mesesRef.push({
+                        text: `${mes} - ${ano}`,
+                        value: start.format('YYYY-MM-DD')
+                    });
+                    start.add(1, 'months');
+                }
+            });
+        } else {
+            const start = moment(this.projeto.dataInicio);
+            const end = moment(this.projeto.dataInicio).add(24, 'months');
             while (start.isBefore(end)) {
-
                 const ano = start.format('YYYY');
                 const mes = start.format('MMMM'); // .padEnd(9, '*').replace(/\*/g, '&nbsp;');
-
                 this.mesesRef.push({
                     text: `${mes} - ${ano}`,
                     value: start.format('YYYY-MM-DD')
                 });
-                start.add(1, 'months');
-                // if (this.mesesRef.length > 10) {
-                //     break;
-                // }
-
+                start.add(1, 'month');
             }
-        });
+        }
 
         this.form = new FormGroup({
             projetoId: new FormControl(this.projeto.id),

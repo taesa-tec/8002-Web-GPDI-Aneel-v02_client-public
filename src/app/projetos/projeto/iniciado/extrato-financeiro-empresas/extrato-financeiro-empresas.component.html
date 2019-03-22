@@ -49,12 +49,14 @@
                         <td width="25%">
                             <span class="btn btn-link p-0" (click)="openModal(i)">{{itemDesc(i)}}</span>
                         </td>
-                        <td width="15%">
-                            <span *ngIf="etapas[i.etapa.id]" [title]="etapas[i.etapa.id].desc"> Etapa {{etapas[i.etapa.id].numeroEtapa}}</span>
-                        </td>
-                        <td>
-                            {{ i.etapa.desc }}
-                        </td>
+                        <ng-container *ngIf="projeto.isPD">
+                            <td width="15%">
+                                <span *ngIf="etapas[i.etapa.id]" [title]="etapas[i.etapa.id].desc"> Etapa {{etapas[i.etapa.id].numeroEtapa}}</span>
+                            </td>
+                            <td>
+                                {{ i.etapa.desc }}
+                            </td>
+                        </ng-container>
                         <td class="text-right" width="15%">{{i.valor | currency:'R$'}}</td>
                     </tr>
                 </table>

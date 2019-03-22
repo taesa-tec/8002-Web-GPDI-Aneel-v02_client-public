@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { zip } from 'rxjs';
+import { zip, of } from 'rxjs';
 
 import { AppService } from '@app/app.service';
 import { Projeto, OrcamentosEmpresas, Etapa, TextValue, CategoriasContabeis, ExtratoItem, ResultadoResponse, ExtratosEmpresas, ExtratoEmpresa } from '@app/models';
@@ -80,7 +80,7 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
     load() {
         this.loading.show();
         const extratos$ = this.app.projetos.extratoREFP(this.projeto.id);
-        const etapas$ = this.app.projetos.getEtapas(this.projeto.id);
+        const etapas$ = this.projeto.isPD ? this.app.projetos.getEtapas(this.projeto.id) : of([]);
         zip(extratos$, etapas$, this.app.projetos.getAlocacaoRH(this.projeto.id), this.app.projetos.getAlocacaoRM(this.projeto.id))
             .subscribe(([extrato, etapas, alocacoesRH, alocacoesRM]) => {
                 console.log(extrato);
