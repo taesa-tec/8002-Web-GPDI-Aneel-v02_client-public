@@ -2,10 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppService } from '@app/app.service';
 import { ProjetoFacade } from '@app/facades';
-import { Observable, zip, EMPTY } from 'rxjs';
+import { Observable, zip, EMPTY, of } from 'rxjs';
 import { RegistroREFP, RecursoHumano, RecursoMaterial, Empresa, EmpresaProjeto, CategoriasContabeis } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { RegistroRefpDetailsComponent } from '@app/projetos/projeto/iniciado/registro-refp-details/registro-refp-details.component';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-refp-list',
@@ -21,6 +22,7 @@ export class RefpListComponent implements OnInit {
     recursosHumanos: Array<RecursoHumano>;
     recursosMateriais: Array<RecursoMaterial>;
     empresas: Array<EmpresaProjeto>;
+    categorias: Array<any>;
 
     tableRegistro: Array<{
         registro: RegistroREFP,
@@ -70,13 +72,22 @@ export class RefpListComponent implements OnInit {
     }
 
     load() {
+        const categorias$ = this.projeto.isPD ? of(CategoriasContabeis) : this.app.catalogo.categoriasContabeisGestao().pipe(map(cats => cats.map(c => {
+            return {
+                text: c.nome,
+                value: c.id,
+                atividades: c.atividades
+            };
+        })));
         this.loading.show();
         this.tableRegistro = [];
-        this.loadRegistros().subscribe(registros => {
-            this.registros = registros;
-            this.fillTable();
-            this.loading.hide();
-        });
+        zip(this.loadRegistros(), categorias$)
+            .subscribe(([registros, categorias]) => {
+                this.registros = registros;
+                this.categorias = categorias;
+                this.fillTable();
+                this.loading.hide();
+            });
     }
 
     fillTable() {
@@ -104,9 +115,9 @@ export class RefpListComponent implements OnInit {
 
             } else {
                 const recurso = this.recursosMateriais.find(r => r.id === registro.recursoMaterialId);
-                const categoriaContabil = CategoriasContabeis.find(c => c.value === recurso.categoriaContabilValor);
+                const categoriaContabil = this.categorias.find(c => String(c.value) === String(this.projeto.isPD ? recurso.categoriaContabilValor : recurso.categoriaContabilGestao.id));
                 registroItem.nome = registro.nomeItem;
-                registroItem.categoria = categoriaContabil.text;
+                registroItem.categoria = categoriaContabil ? categoriaContabil.text : '';
                 registroItem.valor = registro.qtdItens * registro.valorUnitario;
             }
 

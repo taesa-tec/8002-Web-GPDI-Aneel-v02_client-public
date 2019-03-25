@@ -225,6 +225,7 @@ export interface RecursoMaterial {
     categoriaContabil: number;
     categoriaContabilValor: string;
     catalogCategoriaContabilGestaoId: number;
+    categoriaContabilGestao: { id: number; nome: string; valor: string; atividades: Array<any> };
     catalogAtividadeId: number;
     valorUnitario: string;
     especificacao: string;
@@ -395,6 +396,8 @@ export interface RegistroREFP {
     cnpjBeneficiado?: any;
     categoriaContabil: number;
     categoriaContabilValor: string;
+    catalogCategoriaContabilGestaoId: number;
+    catalogAtividadeId: number;
     equiparLabExistente?: any;
     equiparLabNovo?: any;
     itemNacional?: any;

@@ -4,7 +4,7 @@
         <div class="col-6">
             <div class="form-group">
                 <label for="">Número projeto <app-tip [tipId]="7"></app-tip></label>
-                <input type="text" class="form-control" formControlName="numero" maxlength="6" mask="00000S" [patterns]="numeroPatterns" placeholder="00000X">
+                <input type="text" class="form-control" formControlName="numero" maxlength="6" mask="0000S" [patterns]="numeroPatterns" placeholder="00000X">
             </div>
         </div>
         <div class="col-6">
@@ -13,6 +13,23 @@
                 <select name="" id="" class="form-control" formControlName="catalogEmpresaId">
                     <option *ngFor="let empresa of empresas" [value]="empresa.id">{{empresa.nome}}</option>
                 </select>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="projeto.isPG">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">Compartilhamento dos resultados</label>
+                <select name="" id="" class="form-control" formControlName="compartResultados">
+                    <option value="">Selecione o tipo de Compartilhamento dos resultados</option>
+                    <option *ngFor="let c of compartilhamentos" [value]="c.value">{{c.text }}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">Código do projeto</label>
+                <input type="text" class="form-control" formControlName="codigo">
             </div>
         </div>
     </div>
@@ -32,7 +49,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="projeto.isPD">
         <div class="col-6">
             <div class="form-group">
                 <label for="">Segmento</label>
@@ -53,7 +70,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="projeto.isPD">
         <div class="col-6">
             <div class="form-group">
                 <label for="">Compartilhamento dos resultados</label>
@@ -70,7 +87,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="projeto.isPD">
         <div class="col-12">
             <div class="form-group">
                 <label for="">Motivação</label>
@@ -79,7 +96,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="projeto.isPD">
         <div class="col-12">
             <div class="form-group">
                 <label for="">Originalidade</label>
@@ -88,7 +105,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="projeto.isPD">
         <div class="col-12">
             <div class="form-group">
                 <label for="">Aplicabilidade</label>
@@ -96,7 +113,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="projeto.isPD">
         <div class="col-12">
             <div class="form-group">
                 <label for="">Relevância</label>
@@ -104,7 +121,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="projeto.isPD">
         <div class="col-12">
             <div class="form-group">
                 <label for="">Razoabilidade dos custos</label>
@@ -112,7 +129,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="projeto.isPD">
         <div class="col-12">
             <div class="form-group">
                 <label for="">Pesquisas Correlatas</label>
@@ -123,7 +140,10 @@
     <hr>
     <div class="row">
         <div class="col-auto">
-            <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes
+            <!-- <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes -->
+        </div>
+        <div class="col text-right">
+            <button class="btn btn-primary" [disabled]="form.invalid">Salvar Dados</button>
         </div>
     </div>
 </form>

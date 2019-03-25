@@ -33,7 +33,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-6" *ngIf="projeto.isPD">
             <div class="form-group">
                 <label for="">EMPRESA RECEBEDORA</label>
                 <select name="" id="" class="form-control" formControlName="empresaRecebedoraId">
@@ -68,7 +68,7 @@
         <div class="col-6">
             <div class="form-group">
                 <label for="">CATEGORIA CONTÁBIL</label>
-                <select name="" id="" class="form-control" formControlName="categoriaContabil">
+                <select name="" id="" class="form-control" [formControlName]="projeto.isPD?'categoriaContabil':'catalogCategoriaContabilGestaoId'">
                     <option value="">Selecionar</option>
                     <option [value]="c.value" *ngFor="let c of categoriasContabeis">{{c.text}}</option>
                 </select>

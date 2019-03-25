@@ -63,7 +63,7 @@ export class CatalogsService {
         return this.getData<any>('estados', `catalogs/Estados`);
     }
     categoriasContabeisGestao() {
-        return this.getData<any>('estados', `catalogs/categoriascontabeisgestao`);
+        return this.getData<Array<any>>('estados', `catalogs/categoriascontabeisgestao`);
     }
     paises() {
         return this.getData<Array<{ id: number; nome: string; }>>('estados', `catalogs/Paises`);

@@ -2,13 +2,14 @@ import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angu
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 
 import * as moment from 'moment';
-import { zip, Observable } from 'rxjs';
+import { zip, Observable, of } from 'rxjs';
 
 import { AppService } from '@app/app.service';
 import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RecursoMaterial, AppValidators, CategoriasContabeis, RegistroREFP, ResultadoResponse } from '@app/models';
 import { ProjetoFacade } from '@app/facades';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { RegistroRecursoBase } from '../registro-recurso-base';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-registro-recurso-material',
@@ -27,7 +28,6 @@ export class RegistroRecursoMaterialComponent extends RegistroRecursoBase {
     form: FormGroup;
     obsInternas: FormGroup;
     mesesRef: Array<TextValue>;
-    categoriasContabeis = CategoriasContabeis;
 
     @Input() registro: RegistroREFP;
 
@@ -82,7 +82,7 @@ export class RegistroRecursoMaterialComponent extends RegistroRecursoBase {
             nomeItem: new FormControl(this.registro.nomeItem, [Validators.required]),
             recursoMaterialId: this.recurso,
             empresaFinanciadoraId: new FormControl(this.registro.empresaFinanciadoraId, [Validators.required]),
-            empresaRecebedoraId: new FormControl(this.registro.empresaRecebedoraId, [Validators.required]),
+            // empresaRecebedoraId: new FormControl(this.registro.empresaRecebedoraId, [Validators.required]),
             beneficiado: new FormControl(this.registro.beneficiado, [Validators.required]),
             cnpjBeneficiado: new FormControl(this.registro.cnpjBeneficiado, [Validators.required, AppValidators.cnpj]),
             categoriaContabil: new FormControl(this.registro.categoriaContabilValor),
@@ -98,8 +98,20 @@ export class RegistroRecursoMaterialComponent extends RegistroRecursoBase {
             //
         });
 
+        if (this.projeto.isPG) {
+            const catalogCategoriaContabilGestaoId = new FormControl(this.registro.catalogCategoriaContabilGestaoId || '', [Validators.required]);
+            this.form.addControl('catalogCategoriaContabilGestaoId', catalogCategoriaContabilGestaoId);
+            this.form.addControl('catalogAtividadeId', new FormControl(this.registro.catalogAtividadeId, [Validators.required]));
+            catalogCategoriaContabilGestaoId.valueChanges.subscribe(v => {
+                this.form.get('catalogAtividadeId').setValue('');
+            });
+        } else {
+            this.form.addControl('categoriaContabil', new FormControl(this.registro.categoriaContabilValor || '', Validators.required));
+            this.form.addControl('empresaRecebedoraId', new FormControl(this.registro.empresaRecebedoraId || '', Validators.required));
+        }
+
         this.toggleMaterialPermanente(this.categoriaContabil.value === 'MP');
-        
+
         if (!this.isEditable) {
             this.form.disable();
         } else {

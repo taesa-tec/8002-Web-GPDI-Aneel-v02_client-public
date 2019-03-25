@@ -83,12 +83,9 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
         const etapas$ = this.projeto.isPD ? this.app.projetos.getEtapas(this.projeto.id) : of([]);
         zip(extratos$, etapas$, this.app.projetos.getAlocacaoRH(this.projeto.id), this.app.projetos.getAlocacaoRM(this.projeto.id))
             .subscribe(([extrato, etapas, alocacoesRH, alocacoesRM]) => {
-                console.log(extrato);
-
                 this.extrato = extrato;
                 this.alocacoesRH = alocacoesRH;
                 this.alocacoesRM = alocacoesRM;
-
                 etapas.forEach((etapa, index) => {
                     this.etapas[etapa.id] = Object.assign(etapa, { numeroEtapa: index + 1 });
                 });
@@ -98,7 +95,6 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
     }
 
     openModal(item: ExtratoItem) {
-        console.log(item);
         const registro = item.registroFinanceiro;
         const empresa = item.registroFinanceiro.empresaFinanciadora;
         const recurso = item.registroFinanceiro.recursoHumano || item.registroFinanceiro.recursoMaterial;

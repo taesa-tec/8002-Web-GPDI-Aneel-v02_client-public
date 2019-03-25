@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter, ElementRef } from '@angular/core';
 import { AppService } from '@app/app.service';
-import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RegistroREFP, ResultadoResponse, NoRequest } from '@app/models';
+import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RegistroREFP, ResultadoResponse, NoRequest, CategoriasContabeis } from '@app/models';
 import { ProjetoFacade } from '@app/facades';
 import { zip, Observable, of } from 'rxjs';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import * as moment from 'moment';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 
 export abstract class RegistroRecursoBase implements OnInit {
 
@@ -17,6 +17,7 @@ export abstract class RegistroRecursoBase implements OnInit {
     empresas: Array<{ id: number; nome: string; classificacao: string; }>;
     empresasFinanciadoras: Array<{ id: number; nome: string; classificacao: string; }>;
     empresasRecebedoras: Array<{ id: number; nome: string; classificacao: string; }>;
+    categoriasContabeis: Array<any>;
     tipoDocs = TiposDoc;
     form: FormGroup;
     obsInternas: FormGroup;
@@ -54,11 +55,19 @@ export abstract class RegistroRecursoBase implements OnInit {
             const empresas$ = this.projeto.relations.empresas.get();
             const etapas$ = this.projeto.isPD ? this.projeto.REST.Etapas.listar<Array<Etapa>>() : of([]);
             const recursos$ = this.getRecursos(projeto);
+            const categoriasContabeis$ = this.projeto.isPD ? of(CategoriasContabeis) : this.app.catalogo.categoriasContabeisGestao().pipe(map(cats => cats.map(c => {
+                return {
+                    text: c.nome,
+                    value: c.id,
+                    atividades: c.atividades
+                };
+            })));
 
             this.loading.show(1000);
-            zip(recursos$, empresas$, etapas$).subscribe(([recursos, empresas, etapas]) => {
+            zip(recursos$, empresas$, etapas$, categoriasContabeis$).subscribe(([recursos, empresas, etapas, categoriasContabeis]) => {
                 this.etapas = etapas;
                 this.recursos = recursos;
+                this.categoriasContabeis = categoriasContabeis;
                 this.empresas = empresas.map(e => {
                     return {
                         id: e.id,

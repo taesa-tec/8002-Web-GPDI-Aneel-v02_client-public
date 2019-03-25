@@ -1,5 +1,6 @@
 <app-loading type="fullscreen"></app-loading>
 <form [formGroup]="form" *ngIf="form">
+    <pre class="debug">{{form.value | json}}</pre>
     <div class="row">
         <div class="col-12">
             <div class="form-group">
@@ -27,7 +28,7 @@
         <div class="col-4">
 
             <div class="form-group">
-                <label for="">EMPRESA FINACIADORA</label>
+                <label for="">EMPRESA FINACIADORA <span [hidden]="projeto.isPD">e Recebedora</span></label>
                 <select name="" id="" class="form-control" formControlName="empresaFinanciadoraId">
                     <option value="">Selecionar</option>
                     <option [value]="item.id" *ngFor="let item of empresasFinanciadoras">{{item.nome}}</option>
@@ -36,7 +37,7 @@
 
         </div>
 
-        <div class="col-4">
+        <div class="col-4" *ngIf="projeto.isPD">
             <div class="form-group">
                 <label for="">EMPRESA RECEBEDORA</label>
                 <select name="" id="" class="form-control" formControlName="empresaRecebedoraId">
@@ -52,10 +53,7 @@
                 <input type="text" class="form-control" formControlName="beneficiado">
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-4">
+        <div class="col-4" *ngIf="projeto.isPG">
 
             <div class="form-group">
                 <label for="">CNPJ BENEFICIADO</label>
@@ -63,13 +61,32 @@
             </div>
 
         </div>
+    </div>
 
-        <div class="col-8">
+    <div class="row">
+        <div class="col-4" *ngIf="projeto.isPD">
+            <div class="form-group">
+                <label for="">CNPJ BENEFICIADO</label>
+                <input type="text" class="form-control" mask="00.000.000/0000-00" placeholder="00.000.000/0000-00" value="cnpjBeneficiado" formControlName="cnpjBeneficiado">
+            </div>
+
+        </div>
+
+        <div class="col-4">
             <div class="form-group">
                 <label for="">CATEGORIA CONTÁBIL</label>
-                <select name="" id="" class="form-control" formControlName="categoriaContabil">
+                <select name="" id="" class="form-control" [formControlName]="projeto.isPD?'categoriaContabil':'catalogCategoriaContabilGestaoId'">
                     <option value="">Selecionar</option>
                     <option [value]="c.value" *ngFor="let c of categoriasContabeis">{{c.text}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-8" *ngIf="projeto.isPG">
+            <div class="form-group">
+                <label for="">TIPO DE ATIVIDADE</label>
+                <select name="" id="" class="form-control" formControlName="catalogAtividadeId">
+                    <option value="">Selecionar</option>
+                    <option [value]="c.value" *ngFor="let c of atividades">{{c.text}}</option>
                 </select>
             </div>
         </div>

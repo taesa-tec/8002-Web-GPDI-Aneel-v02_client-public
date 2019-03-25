@@ -8,7 +8,7 @@ import { AppService } from '@app/app.service';
 import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RecursoMaterial, AppValidators, CategoriasContabeis, NoRequest } from '@app/models';
 import { ProjetoFacade, EmpresaProjetoFacade } from '@app/facades';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-recurso-material',
@@ -39,12 +39,28 @@ export class RecursoMaterialComponent implements OnInit {
             }
         });
     }
+    get atividades() {
+        if (this.projeto.isPD || this.form === undefined) {
+            return [];
+        }
+
+        try {
+            const c = this.categoriasContabeis.find(c => String(c.value) === this.categoriaContabil.value);
+            return c ? c.atividades.map(a => {
+                return { text: a.nome, value: a.id };
+            }) : [];
+        } catch (e) {
+
+            return [];
+        }
+
+    }
 
     tipoDocs = TiposDoc;
     form: FormGroup;
     obsInternas: FormGroup;
     mesesRef: Array<TextValue>;
-    categoriasContabeis = CategoriasContabeis;
+    categoriasContabeis: Array<{ text: string; value: string; atividades: Array<any> }>;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
     @ViewChild('file') file: ElementRef;
@@ -52,7 +68,7 @@ export class RecursoMaterialComponent implements OnInit {
 
 
     get categoriaContabil() {
-        return this.form.get('categoriaContabil');
+        return this.form.get(this.projeto.isPG ? 'catalogCategoriaContabilGestaoId' : 'categoriaContabil');
     }
     get qtdItens() {
         return this.form.get('qtdItens');
@@ -60,8 +76,6 @@ export class RecursoMaterialComponent implements OnInit {
     get valorUnitario() {
         return this.form.get('valorUnitario');
     }
-
-
     get valorFinal() {
         if (this.qtdItens && this.valorUnitario) {
             return parseFloat(this.qtdItens.value) * parseFloat(this.valorUnitario.value);
@@ -77,19 +91,29 @@ export class RecursoMaterialComponent implements OnInit {
 
     loadData() {
         this.app.projetos.projetoLoaded.subscribe(projeto => {
-
             this.projeto = projeto;
 
             const recursos$ = this.projeto.relations.recursosMateriais.get();
             const empresas$ = this.projeto.REST.Empresas.listar<Array<EmpresaProjetoFacade>>();
-            const etapas$ = this.projeto.relations.etapas.get();
+            const etapas$ = this.projeto.isPD ? this.projeto.relations.etapas.get() : of([]);
+            const categorias$ = this.projeto.isPD ? of(CategoriasContabeis) :
+                this.app.catalogo.categoriasContabeisGestao().pipe(map(cats => {
+                    return cats.map(c => {
+                        return {
+                            text: c.nome,
+                            value: c.id,
+                            atividades: c.atividades
+                        };
+                    });
+                }));
 
             this.loading.show(1000);
-            zip(recursos$, empresas$, etapas$).subscribe(([recursos, empresas, etapas]) => {
+            zip(recursos$, empresas$, etapas$, categorias$).subscribe(([recursos, empresas, etapas, categorias]) => {
                 this.etapas = etapas;
                 this.recursos = recursos;
                 this.empresas = empresas.map(e => new EmpresaProjetoFacade(e));
                 this.empresasFinanciadoras = this.empresas.filter(e => e.classificacaoValor !== "Executora");
+                this.categoriasContabeis = categorias;
                 this.buildForm();
             });
             // const empresas = this.app.projetos
@@ -106,25 +130,33 @@ export class RecursoMaterialComponent implements OnInit {
 
         this.mesesRef = [];
 
-        this.etapas.map(etapa => {
-            let start = moment(etapa.dataInicio);
-            const end = moment(etapa.dataFim);
-
+        if (this.projeto.isPD) {
+            this.etapas.map(etapa => {
+                const start = moment(etapa.dataInicio);
+                const end = moment(etapa.dataFim);
+                while (start.isBefore(end)) {
+                    const ano = start.format('YYYY');
+                    const mes = start.format('MMMM'); // .padEnd(9, '*').replace(/\*/g, '&nbsp;');
+                    this.mesesRef.push({
+                        text: `${mes} - ${ano}`,
+                        value: start.format('YYYY-MM-DD')
+                    });
+                    start.add(1, 'months');
+                }
+            });
+        } else {
+            const start = moment(this.projeto.dataInicio);
+            const end = moment(this.projeto.dataInicio).add(24, 'months');
             while (start.isBefore(end)) {
                 const ano = start.format('YYYY');
                 const mes = start.format('MMMM'); // .padEnd(9, '*').replace(/\*/g, '&nbsp;');
-
                 this.mesesRef.push({
                     text: `${mes} - ${ano}`,
                     value: start.format('YYYY-MM-DD')
                 });
-                start.add(1, 'months');
-                // if (this.mesesRef.length > 10) {
-                //     break;
-                // }
-
+                start.add(1, 'month');
             }
-        });
+        }
 
         this.form = new FormGroup({
             projetoId: new FormControl(this.projeto.id),
@@ -135,10 +167,9 @@ export class RecursoMaterialComponent implements OnInit {
             nomeItem: new FormControl('', [Validators.required]),
             recursoMaterialId: this.recurso,
             empresaFinanciadoraId: new FormControl('', [Validators.required]),
-            empresaRecebedoraId: new FormControl('', [Validators.required]),
             beneficiado: new FormControl('', [Validators.required]),
             cnpjBeneficiado: new FormControl('', [Validators.required, AppValidators.cnpj]),
-            categoriaContabil: new FormControl(''),
+            // categoriaContabil: new FormControl(''),
             // 
             equiparLabExistente: new FormControl(''),
             equiparLabNovo: new FormControl(''),
@@ -151,6 +182,18 @@ export class RecursoMaterialComponent implements OnInit {
             funcaoRecurso: new FormControl('', [Validators.required]),
             obsInternas: new FormArray([this.obsInternas])
         });
+        
+        if (this.projeto.isPG) {
+            const catalogCategoriaContabilGestaoId = new FormControl('', [Validators.required]);
+            this.form.addControl('catalogCategoriaContabilGestaoId', catalogCategoriaContabilGestaoId);
+            this.form.addControl('catalogAtividadeId', new FormControl('', [Validators.required]));
+            catalogCategoriaContabilGestaoId.valueChanges.subscribe(v => {
+                this.form.get('catalogAtividadeId').setValue('');
+            });
+        } else {
+            this.form.addControl('categoriaContabil', new FormControl('', Validators.required));
+            this.form.addControl('empresaRecebedoraId', new FormControl('', Validators.required));
+        }
 
         this.categoriaContabil.valueChanges.subscribe(value => {
             if (value === 'MP') {
