@@ -6,8 +6,9 @@ import { ProjetoFacade } from '@app/facades';
 import { FormControl, Validators, FormGroup, FormArray } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Produto, EtapaProduto, TextValue, Etapa } from '@app/models';
-import { zip } from 'rxjs';
+import { zip, timer } from 'rxjs';
 import * as moment from 'moment';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-prorrogar',
@@ -28,45 +29,52 @@ export class ProrrogarComponent implements OnInit {
     @ViewChild('loading') loading: LoadingComponent;
     @ViewChild('xmlLoading') xmlLoading: LoadingComponent;
 
-    constructor(protected app: AppService) { }
+    constructor(protected app: AppService, private route: ActivatedRoute) { }
 
     ngOnInit() {
 
-        this.loading.show()
+        this.loading.show();
         this.app.projetos.projetoLoaded.subscribe(projeto => {
             this.projeto = projeto;
-            const etapas$ = this.projeto.REST.Etapas.listar<Array<Etapa>>();
-            const produtos$ = this.projeto.REST.Produtos.listar<Array<Produto>>();
-            zip(etapas$, produtos$).subscribe(([etapas, produtos]) => {
+            if (projeto.isPD) {
+                const etapas$ = this.projeto.REST.Etapas.listar<Array<Etapa>>();
+                const produtos$ = this.projeto.REST.Produtos.listar<Array<Produto>>();
+                zip(etapas$, produtos$).subscribe(([etapas, produtos]) => {
 
 
-                const etapaFirst = etapas.shift();
-                const etapaLast = etapas.pop();
+                    const etapaFirst = etapas.shift();
+                    const etapaLast = etapas.pop();
 
-                console.log({ etapaFirst, etapas, etapaLast });
-                const start = moment(etapaLast.dataFim).add(1, 'months');
-                const end = moment(etapaFirst.dataInicio).add(60, 'months');
+                    console.log({ etapaFirst, etapas, etapaLast });
+                    const start = moment(etapaLast.dataFim).add(1, 'months');
+                    const end = moment(etapaFirst.dataInicio).add(60, 'months');
 
 
-                while (start.isBefore(end)) {
+                    while (start.isBefore(end)) {
 
-                    const ano = start.format('YYYY');
-                    const mes = start.format('MMMM'); // .padEnd(9, '*').replace(/\*/g, '&nbsp;');
+                        const ano = start.format('YYYY');
+                        const mes = start.format('MMMM'); // .padEnd(9, '*').replace(/\*/g, '&nbsp;');
 
-                    this.mesesRef.push({
-                        text: `${mes} - ${ano}`,
-                        value: start.format('YYYY-MM-DD')
-                    });
-                    start.add(1, 'months');
-                    // if (this.mesesRef.length > 10) {
-                    //     break;
-                    // }
+                        this.mesesRef.push({
+                            text: `${mes} - ${ano}`,
+                            value: start.format('YYYY-MM-DD')
+                        });
+                        start.add(1, 'months');
+                        // if (this.mesesRef.length > 10) {
+                        //     break;
+                        // }
 
-                }
-                this.produtos = produtos;
+                    }
+                    this.produtos = produtos;
+                    this.loading.hide();
+                    this.setup();
+                });
+            } else {
                 this.loading.hide();
-                this.setup();
-            });
+                timer(10).subscribe(t => {
+                    this.app.router.navigate(['../recursos-humanos'], { relativeTo: this.route });
+                });
+            }
 
 
         });

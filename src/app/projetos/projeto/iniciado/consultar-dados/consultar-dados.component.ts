@@ -13,7 +13,7 @@ export class ConsultarDadosComponent implements OnInit {
     constructor(protected app: AppService) { }
 
     ngOnInit() {
-
+        this.load();
     }
 
     async load() {
