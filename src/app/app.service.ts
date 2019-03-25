@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { RequestCacheService } from './request-cache.service';
 import { AppConfig, APP_CONFIG } from './app.config';
+import { environment } from '../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -19,6 +20,7 @@ import { AppConfig, APP_CONFIG } from './app.config';
 export class AppService {
 
     moment: any;
+    config: any;
 
     constructor(
         public modal: NgbModal,
@@ -28,9 +30,10 @@ export class AppService {
         public file: FileService,
         public auth: AuthService,
         public router: Router,
-        public requestCache: RequestCacheService,
-        @Inject(APP_CONFIG) public config: AppConfig
-    ) { }
+        public requestCache: RequestCacheService
+    ) {
+        this.config = environment;
+    }
 
     alert(message: string | Array<string>, title: string = "Alerta") {
         const ref = this.modal.open(AlertComponent);
