@@ -48,14 +48,15 @@ export class ProjetoComponent implements OnInit {
             { text: "Consultar Dados Planejamento Projeto", icon: "ta-eye", path: 'consultar' },
         ],
         finalizado: [
-            { text: "Relatório Final e Auditoria", icon: "ta-edit", path: "relatorio-final-auditoria" },
-            { text: "Relatório Etapas Projeto", icon: "ta-etapas", path: "relatorio-etapas-projeto" },
-            { text: "Resultados Capacitação", icon: "ta-user-id", path: "resultados-capacitacao" },
-            { text: "Resultados Apoio a Infra-estrutura", icon: "ta-tubo-ensaio", path: "resultados-infra-estrutura" },
+            { text: { pg: "Relatório Final e Auditoria", pd: "Relatório Final Base Projeto" }, icon: "ta-edit", path: "relatorio-final-auditoria" },
+            { text: { pd: "Relatório Etapas Projeto", pg: "Relatório Etapas" }, icon: "ta-etapas", path: "relatorio-etapas-projeto" },
+            { text: "Relatório Atividades", icon: "ta-edit", path: "relatorio-atividades", only: "PG" },
+            { text: { pd: "Resultados Capacitação", pg: "Resultados Capacitação Profissional" }, icon: "ta-user-id", path: "resultados-capacitacao" },
+            { text: "Resultados Apoio a Infra-estrutura", icon: "ta-tubo-ensaio", path: "resultados-infra-estrutura", only: "PD" },
             { text: "Resultados Produção Técnico Cientifica", icon: "ta-torre", path: "resultados-cientificos" },
-            { text: "Resultados Propriedade Intelectual", icon: "ta-lamp", path: "resultados-propriedade-intelectual" },
-            { text: "Resultados Socioambientais", icon: "ta-ambiente", path: "resultados-socioambientais" },
-            { text: "Resultados Indicadores Econômicos", icon: "ta-chart", path: "resultados-economicos" },
+            { text: "Resultados Propriedade Intelectual", icon: "ta-lamp", path: "resultados-propriedade-intelectual", only: "PD" },
+            { text: "Resultados Socioambientais", icon: "ta-ambiente", path: "resultados-socioambientais", only: "PD" },
+            { text: "Resultados Indicadores Econômicos", icon: "ta-chart", path: "resultados-economicos", only: "PD" },
         ]
     };
 

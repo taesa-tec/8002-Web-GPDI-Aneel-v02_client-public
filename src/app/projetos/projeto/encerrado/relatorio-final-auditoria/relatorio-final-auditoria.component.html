@@ -5,7 +5,7 @@
             <h5 class="text-uppercase text-blue font-weight-normal my-3">RELATÓRIO FINAL E AUDITORIA</h5>
         </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="projeto.isPD">
         <div class="col-12">
             <div class="form-group">
                 <label>PRODUTO PRINCIPAL PREVISTO FOI ALCANÇADO OU SUPERADO?</label>
@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    <div class="row" *ngIf="dynamicForm['justificativaProduto']">
+    <div class="row" *ngIf="dynamicForm['justificativaProduto'] && projeto.isPD">
         <div class="col-12">
             <div class="form-group">
                 <label for="">JUSTIFICATIVA PELO NÃO ALCANCE DO PRODUTO PRINCIPAL PREVISTO</label>
@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    <div class="row" *ngIf="dynamicForm['especificacaoProduto']">
+    <div class="row" *ngIf="dynamicForm['especificacaoProduto'] && projeto.isPD">
         <div class="col-12">
             <div class="form-group">
                 <label for="">ESPECIFICAÇÃO TÉCNICA DO PRODUTO PRINCIPAL OBTIDO</label>
@@ -33,7 +33,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="projeto.isPD">
         <div class="col-12">
             <div class="form-group">
                 <div>
@@ -49,7 +49,7 @@
 
         </div>
     </div>
-    <div class="row" *ngIf="dynamicForm['justificativaTecnica']">
+    <div class="row" *ngIf="dynamicForm['justificativaTecnica'] && projeto.isPD">
         <div class="col-12">
             <div class="form-group">
                 <label for="">JUSTIFICATIVA PELA NÃO IMPLEMENTAÇÃO DA TÉCNICA PREVISTA</label>
@@ -57,7 +57,7 @@
             </div>
         </div>
     </div>
-    <div class="row" *ngIf="dynamicForm['descTecnica']">
+    <div class="row" *ngIf="dynamicForm['descTecnica'] && projeto.isPD">
         <div class="col-12">
             <div class="form-group">
                 <label for="">DESCRIÇÃO, SUCINTA, DA TÉCNICA EMPREGADA</label>
@@ -65,7 +65,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="projeto.isPD">
         <div class="col-12">
             <div class="form-group">
                 <div>
@@ -79,7 +79,7 @@
             </div>
         </div>
     </div>
-    <div class="row" *ngIf="dynamicForm['justificativaAplicabilidade']">
+    <div class="row" *ngIf="dynamicForm['justificativaAplicabilidade'] && projeto.isPD">
         <div class="col-12">
             <div class="form-group">
                 <label for="">JUSTIFICATIVA PELO NÃO ALCANCE DA APLICABILIDADE PREVISTA</label>
@@ -113,7 +113,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="projeto.isPD">
         <div class="col-12">
             <div class="form-group">
                 <label for="">DESCRIÇÃO, SUCINTA, DAS ATIVIDADES RELACIONADAS À TRANSFERÊNCIA/DIFUSÃO TECNOLÓGICA</label>
@@ -127,7 +127,7 @@
             <div class="form-group mb-0">
                 <label for="">ARQUIVO PDF RELATÓRIO FINAL</label>
                 <div *ngIf="relatorio">
-                    <span class="btn btn-link" *ngFor="let file of arquivosRelatorioFinal" [downloadFile]="file">{{file.nomeArquivo}} <i class="ta-cancel-circle" title="Excluir o arquivo" 
+                    <span class="btn btn-link" *ngFor="let file of arquivosRelatorioFinal" [downloadFile]="file">{{file.nomeArquivo}} <i class="ta-cancel-circle" title="Excluir o arquivo"
                         (click)="deletarArquivo(file)"></i></span>
                 </div>
             </div>
@@ -147,8 +147,8 @@
                 <label for="">ARQUIVO EM FORMATO PDF DO RELATÓRIO DE AUDITORIA CONTÁBIL E FINANCEIRA DO PROJETO DE P&D</label>
                 <div *ngIf="relatorio">
                     <span class="btn btn-link" *ngFor="let file of arquivosRelatorioAuditoria" [downloadFile]="file">
-                        {{file.nomeArquivo}} 
-                        <i class="ta-cancel-circle" title="Excluir o arquivo" (click)="deletarArquivo(file)"></i>
+                    {{file.nomeArquivo}}
+                    <i class="ta-cancel-circle" title="Excluir o arquivo" (click)="deletarArquivo(file)"></i>
                     </span>
                 </div>
             </div>

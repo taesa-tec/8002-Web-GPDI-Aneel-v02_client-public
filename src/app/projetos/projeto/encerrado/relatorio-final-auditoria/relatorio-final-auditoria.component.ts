@@ -91,6 +91,7 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
     changeFile() { };
     protected configForm() {
         this.dynamicForm = {};
+        
         [
             'produtoAlcancado:false|justificativaProduto',
             'produtoAlcancado:true|especificacaoProduto',
