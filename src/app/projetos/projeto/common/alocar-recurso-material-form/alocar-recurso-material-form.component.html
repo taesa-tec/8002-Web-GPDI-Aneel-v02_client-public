@@ -1,5 +1,8 @@
 <div class="modal-header">
     <div class="text-uppercase modal-title text-blue-light fs-24">{{modalTitle}}</div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <i class="ta-cancel-circle"></i>
+    </button>
 </div>
 <form class="modal-body" [formGroup]="form" *ngIf="form">
     <div class="row">

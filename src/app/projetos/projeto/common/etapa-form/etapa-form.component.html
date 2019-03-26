@@ -8,7 +8,7 @@
     <app-loading type="fullscreen"></app-loading>
     <div class="form-group" [formGroup]="form" *ngIf="form">
         <label>Descrição das atividades</label>
-        <app-textarea cols="30" rows="2" formControlName="desc" class="form-control"></app-textarea>
+        <app-textarea cols="30" rows="2" maxlength="300" formControlName="desc" class="form-control"></app-textarea>
     </div>
     <div class="form-group" *ngIf="projeto.isPD">
         <label>PRODUTOS ASSOCIADOS A ESTA ETAPA</label>
