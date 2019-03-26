@@ -63,10 +63,10 @@ export class CatalogsService {
         return this.getData<any>('estados', `catalogs/Estados`);
     }
     categoriasContabeisGestao() {
-        return this.getData<Array<any>>('estados', `catalogs/categoriascontabeisgestao`);
+        return this.getData<Array<any>>('categoriasContabeisGestao', `catalogs/categoriascontabeisgestao`);
     }
     paises() {
-        return this.getData<Array<{ id: number; nome: string; }>>('estados', `catalogs/Paises`);
+        return this.getData<Array<{ id: number; nome: string; }>>('paises', `catalogs/Paises`);
     }
 
     tipoCompartilhamento() {
