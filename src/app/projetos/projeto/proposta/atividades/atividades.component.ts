@@ -13,6 +13,7 @@ import { ProjetoGestaoAtividades } from '@app/models';
 export class AtividadesComponent implements OnInit {
 
     form: FormGroup;
+    disabled = false;
 
     readonly atividades: Array<{ titulo: string; formName: string; }> = [
         {
@@ -75,7 +76,7 @@ export class AtividadesComponent implements OnInit {
             this.form = new FormGroup({});
 
             this.atividades.forEach(atividade => {
-                this.form.addControl(atividade.formName, new FormControl('', Validators.required));
+                this.form.addControl(atividade.formName, new FormControl({ value: '', disabled: this.disabled }, Validators.required));
             });
             if (atividades) {
                 this.form.addControl('id', new FormControl(atividades.id));

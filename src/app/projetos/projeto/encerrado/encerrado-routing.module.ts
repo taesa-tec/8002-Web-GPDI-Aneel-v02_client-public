@@ -12,6 +12,7 @@ import { ResultadoInfraEstruturaComponent } from './resultado-infra-estrutura/re
 import { ResultadoPropriedadeIntelectualComponent } from './resultado-propriedade-intelectual/resultado-propriedade-intelectual.component';
 import { ResultadoSocioambientalComponent } from './resultado-socioambiental/resultado-socioambiental.component';
 import { ResultadoEconomicoComponent } from './resultado-economico/resultado-economico.component';
+import { RelatorioAtividadesComponent } from './relatorio-atividades/relatorio-atividades.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: "relatorio-final-auditoria", pathMatch: 'full' },
             { path: 'relatorio-final-auditoria', component: RelatorioFinalAuditoriaComponent },
+            { path: 'relatorio-atividades', component: RelatorioAtividadesComponent },
             { path: 'relatorio-etapas-projeto', component: RelatorioEtapaProjetoComponent },
             { path: 'resultados-capacitacao', component: ResultadoCapacitacaoComponent },
             { path: 'resultados-cientificos', component: ResultadoCientificoComponent },

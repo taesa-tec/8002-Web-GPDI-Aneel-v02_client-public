@@ -79,66 +79,73 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
             this.form.addControl('projetoId', new FormControl(this.projeto.id));
         }
 
-        ["produtoAlcancado", "justificativaProduto", "especificacaoProduto", "tecnicaPrevista", "justificativaTecnica",
-            "descTecnica", "aplicabilidadePrevista", "justificativaAplicabilidade", "descTestes", "descAbrangencia",
-            "descAmbito", "descAtividades"
-        ].forEach(field => {
-            const value = relatorio ? relatorio[field] : '';
-            this.form.addControl(field, new FormControl(value, Validators.required))
-        });
+        if (this.projeto.isPD) {
+
+            ["produtoAlcancado", "justificativaProduto", "especificacaoProduto", "tecnicaPrevista", "justificativaTecnica",
+                "descTecnica", "aplicabilidadePrevista", "justificativaAplicabilidade", "descTestes", "descAbrangencia",
+                "descAmbito", "descAtividades"
+            ].forEach(field => {
+                const value = relatorio ? relatorio[field] : '';
+                this.form.addControl(field, new FormControl(value, Validators.required))
+            });
+
+        }
         this.configForm();
     }
     changeFile() { };
     protected configForm() {
         this.dynamicForm = {};
-        
-        [
-            'produtoAlcancado:false|justificativaProduto',
-            'produtoAlcancado:true|especificacaoProduto',
-            'tecnicaPrevista:false|justificativaTecnica',
-            'tecnicaPrevista:true|descTecnica',
-            'aplicabilidadePrevista:false|justificativaAplicabilidade',
-            'aplicabilidadePrevista:true|descTestes|descAbrangencia|descAmbito'
-        ].forEach(c => {
-            const controls = c.split('|');
-            const [controlBase, controlBaseValue] = controls.shift().split(':');
+        if (this.projeto.isPD) {
 
-            controls.forEach(controlTargetKey => {
 
-                Object.defineProperty(this.dynamicForm, controlTargetKey, {
-                    get: () => String(this.form.get(controlBase).value) === controlBaseValue
+            [
+                'produtoAlcancado:false|justificativaProduto',
+                'produtoAlcancado:true|especificacaoProduto',
+                'tecnicaPrevista:false|justificativaTecnica',
+                'tecnicaPrevista:true|descTecnica',
+                'aplicabilidadePrevista:false|justificativaAplicabilidade',
+                'aplicabilidadePrevista:true|descTestes|descAbrangencia|descAmbito'
+            ].forEach(c => {
+                const controls = c.split('|');
+                const [controlBase, controlBaseValue] = controls.shift().split(':');
+
+                controls.forEach(controlTargetKey => {
+
+                    Object.defineProperty(this.dynamicForm, controlTargetKey, {
+                        get: () => String(this.form.get(controlBase).value) === controlBaseValue
+                    });
+
+                    const control = this.form.get(controlBase);
+                    const controlTarget = this.form.get(controlTargetKey);
+
+
+                    if (control) {
+
+
+
+                        control.valueChanges.subscribe(value => {
+                            if (String(value) === controlBaseValue) {
+                                const controlValue = this.relatorio ? this.relatorio[controlTargetKey] : '';
+                                this.form.addControl(controlTargetKey, new FormControl(controlValue, Validators.required));
+                            } else {
+                                this.form.removeControl(controlTargetKey);
+                            }
+                        });
+
+                        timer(1).subscribe(t => {
+                            if (String(controlTarget.value) === controlBaseValue) {
+                                const controlValue = this.relatorio ? this.relatorio[controlTargetKey] : '';
+                                this.form.addControl(controlTargetKey, new FormControl(controlValue, Validators.required));
+                            } else {
+                                this.form.removeControl(controlTargetKey);
+                            }
+                        });
+
+                        this.form.updateValueAndValidity();
+                    }
                 });
-
-                const control = this.form.get(controlBase);
-                const controlTarget = this.form.get(controlTargetKey);
-
-
-                if (control) {
-
-
-
-                    control.valueChanges.subscribe(value => {
-                        if (String(value) === controlBaseValue) {
-                            const controlValue = this.relatorio ? this.relatorio[controlTargetKey] : '';
-                            this.form.addControl(controlTargetKey, new FormControl(controlValue, Validators.required));
-                        } else {
-                            this.form.removeControl(controlTargetKey);
-                        }
-                    });
-
-                    timer(1).subscribe(t => {
-                        if (String(controlTarget.value) === controlBaseValue) {
-                            const controlValue = this.relatorio ? this.relatorio[controlTargetKey] : '';
-                            this.form.addControl(controlTargetKey, new FormControl(controlValue, Validators.required));
-                        } else {
-                            this.form.removeControl(controlTargetKey);
-                        }
-                    });
-
-                    this.form.updateValueAndValidity();
-                }
             });
-        });
+        }
         this.form.updateValueAndValidity();
     }
     deletarArquivo(file) {

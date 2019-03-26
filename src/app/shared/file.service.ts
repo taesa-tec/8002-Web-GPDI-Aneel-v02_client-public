@@ -17,8 +17,6 @@ export class FileService {
         const formData = new FormData();
 
         if (form) {
-            console.log(form.value);
-
             for (let key in form.value) {
                 if (form.get(key)) {
                     formData.append(key, form.get(key).value);
@@ -26,7 +24,6 @@ export class FileService {
             }
         }
         formData.append('file', file);
-
         return this.http.post<ResultadoResponse>('upload', formData);
     }
 

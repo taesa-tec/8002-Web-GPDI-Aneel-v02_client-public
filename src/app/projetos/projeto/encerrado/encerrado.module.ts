@@ -10,6 +10,7 @@ import { ResultadoInfraEstruturaComponent } from './resultado-infra-estrutura/re
 import { ResultadoPropriedadeIntelectualComponent } from './resultado-propriedade-intelectual/resultado-propriedade-intelectual.component';
 import { ResultadoSocioambientalComponent } from './resultado-socioambiental/resultado-socioambiental.component';
 import { ResultadoEconomicoComponent } from './resultado-economico/resultado-economico.component';
+import { RelatorioAtividadesComponent } from './relatorio-atividades/relatorio-atividades.component';
 
 @NgModule({
     declarations: [
@@ -20,7 +21,8 @@ import { ResultadoEconomicoComponent } from './resultado-economico/resultado-eco
         ResultadoInfraEstruturaComponent,
         ResultadoPropriedadeIntelectualComponent,
         ResultadoSocioambientalComponent,
-        ResultadoEconomicoComponent
+        ResultadoEconomicoComponent,
+        RelatorioAtividadesComponent
     ],
     imports: [
         SharedModule,
