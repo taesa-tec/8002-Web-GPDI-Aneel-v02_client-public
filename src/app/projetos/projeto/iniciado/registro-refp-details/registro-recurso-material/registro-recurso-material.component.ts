@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angu
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 
 import * as moment from 'moment';
-import { zip, Observable, of } from 'rxjs';
+import { zip, Observable, of, timer } from 'rxjs';
 
 import { AppService } from '@app/app.service';
 import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RecursoMaterial, AppValidators, CategoriasContabeis, RegistroREFP, ResultadoResponse } from '@app/models';
@@ -35,10 +35,8 @@ export class RegistroRecursoMaterialComponent extends RegistroRecursoBase {
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
-
-
     get categoriaContabil() {
-        return this.form.get('categoriaContabil');
+        return this.form.get(this.projeto.isPG ? 'catalogCategoriaContabilGestaoId' : 'categoriaContabil');
     }
     get qtdItens() {
         return this.form.get('qtdItens');
@@ -54,7 +52,27 @@ export class RegistroRecursoMaterialComponent extends RegistroRecursoBase {
         return 0;
     }
 
+    get atividades() {
+        if (this.projeto.isPD || this.form === undefined) {
+            return [];
+        }
 
+        try {
+            const c = this.categoriasContabeis.find(cc => String(cc.value) === String(this.categoriaContabil.value));
+
+            return c ? c.atividades.map(a => {
+                return { text: a.nome, value: a.id };
+            }) : [];
+        } catch (e) {
+
+            return [];
+        }
+
+    }
+
+    get observacoes() {
+        return this.registro.obsInternas.filter(obs => obs.texto.trim().length > 0);
+    }
 
     constructor(protected app: AppService) {
         super(app);
@@ -101,9 +119,12 @@ export class RegistroRecursoMaterialComponent extends RegistroRecursoBase {
         if (this.projeto.isPG) {
             const catalogCategoriaContabilGestaoId = new FormControl(this.registro.catalogCategoriaContabilGestaoId || '', [Validators.required]);
             this.form.addControl('catalogCategoriaContabilGestaoId', catalogCategoriaContabilGestaoId);
-            this.form.addControl('catalogAtividadeId', new FormControl(this.registro.catalogAtividadeId, [Validators.required]));
-            catalogCategoriaContabilGestaoId.valueChanges.subscribe(v => {
-                this.form.get('catalogAtividadeId').setValue('');
+            this.form.addControl('catalogAtividadeId', new FormControl(this.registro.atividade ? String(this.registro.atividade.id) : '', [Validators.required]));
+
+            timer(100).subscribe(() => {
+                catalogCategoriaContabilGestaoId.valueChanges.subscribe(v => {
+                    this.form.get('catalogAtividadeId').setValue('');
+                });
             });
         } else {
             this.form.addControl('categoriaContabil', new FormControl(this.registro.categoriaContabilValor || '', Validators.required));

@@ -25,6 +25,14 @@ export class RecursoMaterialComponent implements OnInit {
     empresas: Array<EmpresaProjetoFacade>;
     empresasFinanciadoras: Array<EmpresaProjetoFacade>;
     // empresasRecebedoras: Array<{ id: number; nome: string; classificacao: string; }>;
+    tipoDocs = TiposDoc;
+    form: FormGroup;
+    obsInternas: FormGroup;
+    mesesRef: Array<TextValue>;
+    categoriasContabeis: Array<{ text: string; value: string; atividades: Array<any> }>;
+
+    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild('file') file: ElementRef;
 
     get empresasRecebedoras(): Array<EmpresaProjetoFacade> {
         if (this.empresas === undefined) {
@@ -39,31 +47,9 @@ export class RecursoMaterialComponent implements OnInit {
             }
         });
     }
-    get atividades() {
-        if (this.projeto.isPD || this.form === undefined) {
-            return [];
-        }
 
-        try {
-            const c = this.categoriasContabeis.find(c => String(c.value) === this.categoriaContabil.value);
-            return c ? c.atividades.map(a => {
-                return { text: a.nome, value: a.id };
-            }) : [];
-        } catch (e) {
 
-            return [];
-        }
 
-    }
-
-    tipoDocs = TiposDoc;
-    form: FormGroup;
-    obsInternas: FormGroup;
-    mesesRef: Array<TextValue>;
-    categoriasContabeis: Array<{ text: string; value: string; atividades: Array<any> }>;
-
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
-    @ViewChild('file') file: ElementRef;
 
 
 
@@ -81,6 +67,22 @@ export class RecursoMaterialComponent implements OnInit {
             return parseFloat(this.qtdItens.value) * parseFloat(this.valorUnitario.value);
         }
         return 0;
+    }
+    get atividades() {
+        if (this.projeto.isPD || this.form === undefined) {
+            return [];
+        }
+
+        try {
+            const c = this.categoriasContabeis.find(c => String(c.value) === this.categoriaContabil.value);
+            return c ? c.atividades.map(a => {
+                return { text: a.nome, value: a.id };
+            }) : [];
+        } catch (e) {
+
+            return [];
+        }
+
     }
 
     constructor(protected app: AppService) { }
@@ -182,7 +184,7 @@ export class RecursoMaterialComponent implements OnInit {
             funcaoRecurso: new FormControl('', [Validators.required]),
             obsInternas: new FormArray([this.obsInternas])
         });
-        
+
         if (this.projeto.isPG) {
             const catalogCategoriaContabilGestaoId = new FormControl('', [Validators.required]);
             this.form.addControl('catalogCategoriaContabilGestaoId', catalogCategoriaContabilGestaoId);

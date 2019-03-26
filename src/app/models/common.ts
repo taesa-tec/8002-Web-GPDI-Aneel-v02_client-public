@@ -370,6 +370,7 @@ export interface REFPObsInterna {
 }
 export interface RegistroREFP {
     id: number;
+    atividade?: { id: number; nome: string; valor: string; };
     projetoId: number;
     tipo: 'RH' | 'RM';
     tipoValor: 'RH' | 'RM';
