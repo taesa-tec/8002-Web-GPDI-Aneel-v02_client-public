@@ -1,29 +1,26 @@
-<h5 class="text-uppercase text-blue font-weight-normal mb-5">Extrato Financeiro por empresas</h5>
+<h5 class="text-uppercase text-blue font-weight-normal mb-5">Extrato Financeiro por atividade</h5>
 <div class="row">
     <div class="col-12 text-center">
         <app-loading type="inline"></app-loading>
     </div>
 </div>
-<div class="row" *ngFor="let empresa of extratoEmpresas">
+<div class="row" *ngFor="let atividade of extratoAtividades">
     <div class="col-12">
-        <h6>{{empresa.nome}}</h6>
+        <h6>{{atividade.nome}}</h6>
     </div>
     <div class="col-12">
-        <app-accordion *ngFor="let relatorio of empresa.relatorios">
+        <app-accordion *ngFor="let r of atividade.empresas">
             <header role="heading" class="d-flex justify-content-between">
-                <span>{{ categoriaPorCod(relatorio.desc) }}</span><span>{{relatorio.valor | currency:'R$'}}</span>
+                <span>{{ r.empresa.nome }}</span><span>{{r.valor | currency:'R$'}}</span>
             </header>
             <div role="main">
                 <table class="table table-borderless m-0">
-                    <tr *ngFor="let i of relatorio.items">
+                    <tr *ngFor="let i of r.items">
                         <td width="25%">
                             <span class="btn btn-link p-0" (click)="openModal(i)">{{i.desc}}</span>
                         </td>
-                        <td width="15%" *ngIf="projeto.isPD">
-                            <span *ngIf="etapas[i.etapa.id]" [title]="etapas[i.etapa.id].desc"> Etapa {{etapas[i.etapa.id].numeroEtapa}}</span>
-                        </td>
-                        <td>
-                            {{empresaRecebedoraFromItem(i)}}
+                        <td width="15%">
+                            {{categoriaPorCod(i.categoriaContabil)}}
                         </td>
                         <td class="text-right" width="15%">{{i.valor | currency:'R$'}}</td>
                     </tr>
@@ -33,7 +30,7 @@
     </div>
 </div>
 <hr>
-<div class="row" *ngIf="extrato">
+<div class="row" *ngIf="relatorio">
     <div class="col text-right">
         <h5 class="text-blue">
             Total Geral: {{ totalGeral | currency:'R$' }}

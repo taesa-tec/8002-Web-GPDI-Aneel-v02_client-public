@@ -1,7 +1,7 @@
-<h5 class="text-uppercase text-blue font-weight-normal my-3" *ngIf="projeto.isPD">
+<h5 class="text-uppercase text-blue font-weight-normal my-3" *ngIf="projeto && projeto.isPD">
     Projeto Base Pesquisa e Desenvolvimento
 </h5>
-<h5 class="text-uppercase text-blue font-weight-normal my-3" *ngIf="projeto.isPG">
+<h5 class="text-uppercase text-blue font-weight-normal my-3" *ngIf="projeto && projeto.isPG">
     PROJETO BASE DE GESTÃO
 </h5>
 <app-loading type="fullscreen"></app-loading>

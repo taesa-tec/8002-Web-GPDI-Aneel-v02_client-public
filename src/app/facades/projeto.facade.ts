@@ -11,7 +11,6 @@ const projetoComponents = [
     "Produtos",
     "Etapas",
     "Empresas",
-    "ExtratoEmpresas",
     "RecursoHumanos",
     "AlocacaoRhs",
     "RecursoMateriais",
@@ -30,7 +29,6 @@ interface REST {
     Produtos: ProjetoREST;
     Etapas: ProjetoREST;
     Empresas: ProjetoREST;
-    ExtratoEmpresas: ProjetoREST;
     RecursoHumanos: ProjetoREST;
     AlocacaoRhs: ProjetoREST;
     RecursoMateriais: ProjetoREST;
@@ -337,10 +335,13 @@ export class ProjetoFacade extends GenericFacade<Projeto> implements Projeto {
         return this._service.prorrogarProjeto(prorrogacao);
     }
     getOrcamentoEmpresas() {
-        return this._service.getOrcamentoEmpresas(this.aplicabilidade.id);
+        return this._service.getOrcamentoEmpresas(this.id);
     }
     getOrcamentoEtapas() {
         return this._service.getOrcamentoEtapas(this.id);
+    }
+    getOrcamentoAtividades() {
+        return this._service.getOrcamentoAtividades(this.id);
     }
     obterXmls() {
         return this._service.obterXmls(this.id);

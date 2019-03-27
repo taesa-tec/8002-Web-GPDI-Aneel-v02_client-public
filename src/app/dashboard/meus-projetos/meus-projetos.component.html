@@ -1,23 +1,26 @@
 <div class="bg-light py-4">
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <div class="d-flex justify-content-between">
-          <h3 class="text-uppercase text-dark">Meus Projetos</h3>
-          <button type="button" (click)="openNovoProjeto()" class="btn btn-outline-primary">
-            <fa-icon icon="plus-circle"></fa-icon>
-            Novo Projeto
-          </button>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between">
+                    <h3 class="text-uppercase text-dark">Meus Projetos</h3>
+                    <button type="button" (click)="openNovoProjeto()" class="btn btn-outline-primary">
+                        <fa-icon icon="plus-circle"></fa-icon>
+                        Novo Projeto
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 <app-projetos-list [projetos]="projetos"></app-projetos-list>
+<div class="py-4 text-center btn-sm" *ngIf="projetos.length === 0 && !loading.isLoading">
+    <button class="btn btn-primary" (click)="loadData()">Atualizar</button>
+</div>
 <div class="container">
-  <div class="row">
-    <div class="col-12 text-center">
-      <app-loading type="inline" background="transparent" color="#AAA" size="3x"></app-loading>
+    <div class="row">
+        <div class="col-12 text-center">
+            <app-loading type="inline" background="transparent" color="#AAA" size="3x"></app-loading>
+        </div>
     </div>
-  </div>
 </div>

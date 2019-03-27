@@ -46,12 +46,6 @@ export class MeusProjetosComponent implements OnInit {
         this.loading.show();
         zip(this.app.projetos.meusProjetos()).subscribe(([projetos]) => {
             this.projetos = projetos.map(p$ => p$.projeto);
-            this.projetos.forEach(projeto => {
-                this.app.users.currentUserCanAccess(projeto).subscribe(can => {
-                    console.log({ projeto, can });
-
-                });
-            });
             this.loading.hide();
         });
     }

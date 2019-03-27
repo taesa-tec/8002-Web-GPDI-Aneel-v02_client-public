@@ -14,6 +14,7 @@ import { AlocacaoComponent as AlocacaoHComponent } from './recursos-humanos/aloc
 import { AlocacaoComponent as AlocacaoMComponent } from './recursos-materiais/alocacao.component';
 import { ProjetoResolverService } from '@app/projetos/projeto-resolver.service';
 import { AtividadesComponent } from './atividades/atividades.component';
+import { OrcamentoAtividadesComponent } from './orcamento-atividades/orcamento-atividades.component';
 
 const routes: Routes = [
     {
@@ -54,6 +55,9 @@ const routes: Routes = [
             },
             {
                 path: 'extrato-financeiro-etapas', component: OrcamentoEtapasComponent,
+            },
+            {
+                path: 'extrato-financeiro-atividades', component: OrcamentoAtividadesComponent,
             },
             { path: '**', redirectTo: 'info', pathMatch: 'full' }
         ],

@@ -75,15 +75,14 @@ export class ProjetosService {
     projetoUpdated = this.projetoUpdatedSource.asObservable();
     projetoLoaded = this.projetoLoadedSource.asObservable();
 
-    Temas: ProjetoREST;
-    Produtos: ProjetoREST;
+    AtividadesGestao: ProjetoREST;
+    AlocacaoRhs: ProjetoREST;
+    AlocacaoRms: ProjetoREST;
     Etapas: ProjetoREST;
     Empresas: ProjetoREST;
-    ExtratoEmpresas: ProjetoREST;
+    Produtos: ProjetoREST;
     RecursoHumanos: ProjetoREST;
-    AlocacaoRhs: ProjetoREST;
     RecursoMateriais: ProjetoREST;
-    AlocacaoRms: ProjetoREST;
     RelatorioFinal: ProjetoREST;
     ResultadoCapacitacao: ProjetoREST;
     ResultadoProducao: ProjetoREST;
@@ -91,12 +90,12 @@ export class ProjetosService {
     ResultadoIntelectual: ProjetoREST;
     ResultadoSocioAmbiental: ProjetoREST;
     ResultadoEconomico: ProjetoREST;
-    AtividadesGestao: ProjetoREST;
     status: ProjetoStatus[];
+    Temas: ProjetoREST;
 
     constructor(protected http: HttpClient, protected fileService: FileService, protected requestCache: RequestCacheService) {
         const rest = [
-            "Temas", "Produtos", "Etapas", "Empresas", "ExtratoEmpresas", "RecursoHumanos", "AlocacaoRhs",
+            "Temas", "Produtos", "Etapas", "Empresas", "RecursoHumanos", "AlocacaoRhs",
             "RecursoMateriais", "AlocacaoRms", "RelatorioFinal", "ResultadoCapacitacao", "ResultadoProducao",
             "ResultadoInfra", "ResultadoIntelectual", "ResultadoSocioAmbiental", "ResultadoEconomico", "AtividadesGestao"
         ];
@@ -313,13 +312,11 @@ export class ProjetosService {
     }
 
     exportarExtratoEmpresas(id: number) {
-        this.http.get(`Projeto/${id}/ExtratoEmpresas/exportar`, {
+        return this.http.get(`Projeto/${id}/ExtratoEmpresas/exportar`, {
             responseType: "blob"
-        }).subscribe(filedata => {
+        }).pipe(tap(filedata => {
             this.fileService.download(new File([filedata], `projeto-${id}-extrato-financeiro.csv`));
-        }, error => {
-            console.error(error);
-        });
+        }));
     }
 
     /**
@@ -328,6 +325,13 @@ export class ProjetosService {
 
     getOrcamentoEtapas(id: number) {
         return this.http.get<ExtratosEtapas>(`Projeto/${id}/ExtratoEtapas`);
+    }
+
+    /**
+    * Extrato Financeiro Atividades
+    */
+    getOrcamentoAtividades(id: number) {
+        return this.http.get<any>(`Projeto/${id}/ExtratoAtividades`);
     }
 
     /**

@@ -64,7 +64,7 @@ export class OrcamentoEtapasComponent implements OnInit {
 
     load() {
         this.loading.show();
-        const extratos$ = this.app.projetos.getOrcamentoEtapas(this.projeto.id);
+        const extratos$ = this.projeto.getOrcamentoEtapas();
         const etapas$ = this.projeto.isPD ? this.projeto.REST.Etapas.listar<Array<Etapa>>() : of([]);
 
         zip(extratos$,
@@ -106,5 +106,14 @@ export class OrcamentoEtapasComponent implements OnInit {
 
             });
         }
+    }
+    orcamentoGerarCSV() {
+        this.projeto.orcamentoGerarCSV().subscribe(result => {
+
+        }, error => {
+            this.app.alert("Não foi possível gerar o relatório", "Erro!");
+            console.log({ error });
+
+        });
     }
 }

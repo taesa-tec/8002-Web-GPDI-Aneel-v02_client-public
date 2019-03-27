@@ -14,6 +14,7 @@ import { OrcamentoEmpresasComponent } from '@app/projetos/projeto/proposta/orcam
 import { OrcamentoEtapasComponent } from '@app/projetos/projeto/proposta/orcamento-etapas/orcamento-etapas.component';
 import { PropostaRoutingModule } from './proposta-routing.module';
 import { AtividadesComponent } from './atividades/atividades.component';
+import { OrcamentoAtividadesComponent } from './orcamento-atividades/orcamento-atividades.component';
 
 @NgModule({
     declarations: [
@@ -28,6 +29,7 @@ import { AtividadesComponent } from './atividades/atividades.component';
         OrcamentoEmpresasComponent,
         OrcamentoEtapasComponent,
         AtividadesComponent,
+        OrcamentoAtividadesComponent,
     ],
     imports: [
         SharedModule,
