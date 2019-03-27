@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { CreateUserRequest, ResultadoResponse, User, UserProjeto, ProjetoAccesses, Permissao, Projeto } from '@app/models';
-import { Observable, Subject, of, zip } from 'rxjs';
+import { Observable, Subject, of, zip, BehaviorSubject } from 'rxjs';
 import { share, delay } from 'rxjs/operators';
 import { AuthService } from '@app/auth/auth.service';
 import { CatalogsService } from '@app/catalogs/catalogs.service';
@@ -12,9 +12,9 @@ import { CatalogsService } from '@app/catalogs/catalogs.service';
 export class UsersService {
 
     protected _currentUser: User;
-    protected currentUserUpdatedSource = new Subject<User>();
+    protected currentUserUpdatedSource = new BehaviorSubject<User>(null);
     protected usersAccesses = new Map<string, Observable<any>>();
-    currentUserUpdated = this.currentUserUpdatedSource.asObservable().pipe(share());
+    currentUserUpdated = this.currentUserUpdatedSource.asObservable();
     projetoAccesses = ProjetoAccesses;
 
     constructor(protected http: HttpClient, protected auth: AuthService, protected catalogo: CatalogsService) { }
@@ -92,11 +92,10 @@ export class UsersService {
 
     userCanAccess(id: string, projeto: Projeto, permissao: Permissao = null) {
         return new Observable<boolean>(observer => {
-
             const projetos$ = this.usersAccesses.has(id) ? this.usersAccesses.get(id) : this.userProjetos(id);
             const permissoes$ = this.catalogo.permissoes();
             this.usersAccesses.set(id, projetos$);
-            
+
             zip(projetos$, permissoes$).subscribe(([projetos, permissoes]) => {
                 if (projetos.length === 0 || permissoes.length === 0) {
                     observer.next(false);
