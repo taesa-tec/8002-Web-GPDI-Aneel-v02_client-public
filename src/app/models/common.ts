@@ -1,4 +1,4 @@
-import { UserRole, ProjetoAccess } from './enums';
+import { UserRole } from './enums';
 
 export interface TextValue {
     text: string; value: any;

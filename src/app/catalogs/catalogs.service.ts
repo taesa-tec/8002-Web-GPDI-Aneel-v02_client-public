@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Empresa, ProjetoStatus, Segmento, TiposCompartilhamento, TextValue } from '@app/models';
+import { Empresa, ProjetoStatus, Segmento, TiposCompartilhamento, TextValue, Permissao } from '@app/models';
 import { of, Observable } from 'rxjs';
 import { map, share, first } from 'rxjs/operators';
 
@@ -37,7 +37,7 @@ export class CatalogsService {
     }
 
     permissoes() {
-        return this.getData<any>('permissoes', `catalogs/permissoes`);
+        return this.getData<Array<Permissao>>('permissoes', `catalogs/permissoes`);
     }
 
     empresas() {

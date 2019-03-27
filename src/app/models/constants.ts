@@ -1,4 +1,4 @@
-import { UserRole } from './enums';
+import { UserRole, ProjetoAccess } from './enums';
 import { TextValue } from './common';
 import { ResultadoResponse } from './responses';
 
@@ -6,6 +6,13 @@ export const Roles: Array<TextValue> = [
     { text: "Administrador", value: UserRole.Administrador },
     { text: "Usuário Padrão", value: UserRole.User }
 ];
+
+export const ProjetoAccesses = {
+    leitura: ProjetoAccess.Escrita,
+    leituraEscrita: ProjetoAccess.Escrita | ProjetoAccess.Leitura,
+    aprovador: ProjetoAccess.Aprovador | ProjetoAccess.Leitura,
+    administrador: ProjetoAccess.Administrador
+};
 
 export const TiposProdutos: Array<TextValue> = [
     { text: "Conceito ou Metodologia", value: "CM" },
