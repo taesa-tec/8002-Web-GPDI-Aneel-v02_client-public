@@ -1,9 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { CreateUserRequest, ResultadoResponse, User, UserProjeto } from '@app/models';
-import { Observable, Subject, of } from 'rxjs';
+import { CreateUserRequest, ResultadoResponse, User, UserProjeto, ProjetoAccesses, Permissao, Projeto } from '@app/models';
+import { Observable, Subject, of, zip } from 'rxjs';
 import { share, delay } from 'rxjs/operators';
 import { AuthService } from '@app/auth/auth.service';
+import { CatalogsService } from '@app/catalogs/catalogs.service';
 
 @Injectable({
     providedIn: 'root'
@@ -12,9 +13,11 @@ export class UsersService {
 
     protected _currentUser: User;
     protected currentUserUpdatedSource = new Subject<User>();
+    protected usersAccesses = new Map<string, Observable<any>>();
     currentUserUpdated = this.currentUserUpdatedSource.asObservable().pipe(share());
+    projetoAccesses = ProjetoAccesses;
 
-    constructor(private http: HttpClient, protected auth: AuthService) { }
+    constructor(protected http: HttpClient, protected auth: AuthService, protected catalogo: CatalogsService) { }
 
     get currentUser() {
         return this._currentUser;
@@ -25,6 +28,7 @@ export class UsersService {
     }
 
     me(forceUpdate: boolean = false) {
+
         return new Observable<User>(subscriber => {
 
             if (this.currentUser && !forceUpdate) {
@@ -84,5 +88,48 @@ export class UsersService {
     }
     userAvatar(id: string) {
         return this.http.get<any>(`Users/${id}/avatar`);
+    }
+
+    userCanAccess(id: string, projeto: Projeto, permissao: Permissao = null) {
+        return new Observable<boolean>(observer => {
+
+            const projetos$ = this.usersAccesses.has(id) ? this.usersAccesses.get(id) : this.userProjetos(id);
+            const permissoes$ = this.catalogo.permissoes();
+            this.usersAccesses.set(id, projetos$);
+            
+            zip(projetos$, permissoes$).subscribe(([projetos, permissoes]) => {
+                if (projetos.length === 0 || permissoes.length === 0) {
+                    observer.next(false);
+                }
+
+                const projetoAccess = projetos.find(p => p.projetoId === projeto.id);
+                if (projetoAccess) {
+                    if (permissao) {
+                        try {
+                            const userp = this.projetoAccesses[projetoAccess.catalogUserPermissao.valor];
+                            const checkp = this.projetoAccesses[permissao.valor];
+
+
+                            observer.next((userp & checkp) > 0);
+                        } catch (error) {
+
+                            observer.next(false);
+                        }
+                        return;
+                    }
+                    observer.next(true);
+                } else {
+                    observer.next(false);
+                }
+            });
+        });
+    }
+
+    currentUserCanAccess(projeto: Projeto, permissao: Permissao = null) {
+        if (this.currentUser) {
+            return this.userCanAccess(this.currentUser.id, projeto, permissao);
+        }
+        return of(false);
+
     }
 }
