@@ -9,16 +9,20 @@ import { ProjetoGestaoAtividades } from '@app/models';
     styles: []
 })
 export class RelatorioAtividadesComponent extends AtividadesComponent {
-    disabled = true;
-
     setup() {
         this.loading.show();
         this.projeto.REST.AtividadesGestao.listar<ProjetoGestaoAtividades>().subscribe(atividades => {
+            console.log({ atividades });
+
             this.form = new FormGroup({});
 
             this.atividades.forEach(atividade => {
-                this.form.addControl(atividade.formName, new FormControl({ value: '', disabled: this.disabled }, Validators.required));
+
+                const resFormName = atividade.formName.substr(0, 1).toUpperCase().concat(atividade.formName.substr(1));
+                this.form.addControl(atividade.formName, new FormControl({ value: '', disabled: true }, Validators.required));
+                this.form.addControl(atividade.resFormName, new FormControl('', Validators.required));
             });
+
             if (atividades) {
                 this.form.addControl('id', new FormControl(atividades.id));
                 this.projetoAtividades = atividades;
@@ -34,4 +38,5 @@ export class RelatorioAtividadesComponent extends AtividadesComponent {
             this.loading.hide();
         });
     }
+
 }

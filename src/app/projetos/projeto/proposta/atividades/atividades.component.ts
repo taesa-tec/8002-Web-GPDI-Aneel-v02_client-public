@@ -13,45 +13,53 @@ import { ProjetoGestaoAtividades } from '@app/models';
 export class AtividadesComponent implements OnInit {
 
     form: FormGroup;
-    disabled = false;
 
-    readonly atividades: Array<{ titulo: string; formName: string; }> = [
+    readonly atividades: Array<{ titulo: string; formName: string; resFormName: string; }> = [
         {
             titulo: "Dedicação horária dos membros da equipe de gestão do Programa de P&D da Empresa, quadro efetivo.",
-            formName: "dedicacaoHorario"
+            formName: "dedicacaoHorario",
+            resFormName: "resDedicacaoHorario"
         },
         {
             titulo: `Participação dos membros da equipe de gestão em eventos sobre pesquisa, 
             desenvolvimento e inovação relacionados ao setor elétrico e/ou em cursos de gestão tecnológica e da informação.`,
-            formName: "participacaoMembros"
+            formName: "participacaoMembros",
+            resFormName: "resParticipacaoMembros",
         },
         {
             titulo: "Desenvolvimento de ferramenta para gestão do Programa de P&D da Empresa, excluindose aquisição de equipamentos.",
-            formName: "desenvFerramenta"
+            formName: "desenvFerramenta",
+            resFormName: "resDesenvFerramenta"
         },
         {
             titulo: "Prospecção tecnológica e demais atividades necessárias ao planejamento e à elaboração do plano estratégico de investimento em P&D.",
-            formName: "prospTecnologica"
+            formName: "prospTecnologica",
+            resFormName: "resProspTecnologica"
         },
         {
             titulo: "Divulgação de resultados de projetos de P&D, concluídos e/ou em execução.",
-            formName: "divulgacaoResultados"
+            formName: "divulgacaoResultados",
+            resFormName: "resDivulgacaoResultados"
         },
         {
             titulo: "Participação dos responsáveis técnicos pelos projetos de P&D nas avaliações presenciais convocadas pela ANEEL.",
-            formName: "participacaoTecnicos"
+            formName: "participacaoTecnicos",
+            resFormName: "resParticipacaoTecnicos"
         },
         {
             titulo: "Buscas de anterioridade no Instituto Nacional da Propriedade Industrial (INPI).",
-            formName: "buscaAnterioridade"
+            formName: "buscaAnterioridade",
+            resFormName: "resBuscaAnterioridade"
         },
         {
             titulo: "Contratação de auditoria contábil e financeira para os projetos concluídos.",
-            formName: "contratacaoAuditoria"
+            formName: "contratacaoAuditoria",
+            resFormName: "resContratacaoAuditoria"
         },
         {
             titulo: "Apoio à realização do CITENEL.",
-            formName: "apoioCitenel"
+            formName: "apoioCitenel",
+            resFormName: "resApoioCitenel"
         },
     ];
 
@@ -76,7 +84,7 @@ export class AtividadesComponent implements OnInit {
             this.form = new FormGroup({});
 
             this.atividades.forEach(atividade => {
-                this.form.addControl(atividade.formName, new FormControl({ value: '', disabled: this.disabled }, Validators.required));
+                this.form.addControl(atividade.formName, new FormControl('', Validators.required));
             });
             if (atividades) {
                 this.form.addControl('id', new FormControl(atividades.id));
@@ -113,7 +121,7 @@ export class AtividadesComponent implements OnInit {
             }, error => {
                 this.app.alert(error.message);
                 this.loading.hide();
-            })
+            });
 
         }
     }

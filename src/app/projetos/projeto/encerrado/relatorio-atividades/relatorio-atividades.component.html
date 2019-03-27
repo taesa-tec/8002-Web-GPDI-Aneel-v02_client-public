@@ -10,7 +10,7 @@
                 <div role="main">
                     <div class="form-group">
                         <label>DESCRIÇÃO, SUCINTA, DAS AÇÕES REALIZADAS PELA(S) EMPRESA(S) NA ATIVIDADE SELECIONADA</label>
-                        <app-textarea maxlength="1000" class="form-control" rows="5"></app-textarea>
+                        <app-textarea maxlength="1000" class="form-control" [formControlName]="atividade.resFormName" rows="5"></app-textarea>
                     </div>
                     <hr class="my-2">
                     <div class="text-cinza mb-3">DADOS CADASTRADOS NO PLANEJAMENTO DO PLANEJAMENTO (PARA REFERÊNCIA)</div>
