@@ -7,6 +7,7 @@ import { LogsDutoComponent } from '@app/projetos/projeto/central-administrativa/
 import { RepositorioXmlComponent } from '@app/projetos/projeto/central-administrativa/repositorio-xml/repositorio-xml.component';
 import { AlterarStatusComponent } from '@app/projetos/projeto/central-administrativa/alterar-status/alterar-status.component';
 import { UsuariosComponent } from '@app/projetos/projeto/central-administrativa/usuarios/usuarios.component';
+import { CommonModule } from '../common/common.module';
 
 @NgModule({
     declarations: [
@@ -19,6 +20,7 @@ import { UsuariosComponent } from '@app/projetos/projeto/central-administrativa/
     ],
     imports: [
         SharedModule,
+        CommonModule,
         CentralAdministrativaRoutingModule
     ]
 })

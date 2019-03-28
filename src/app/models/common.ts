@@ -546,3 +546,13 @@ export interface ProjetoGestaoAtividades {
     contratacaoAuditoria: string;
     apoioCitenel: string;
 }
+
+
+export interface MenuItem {
+    text: string | { pd: string; pg: string };
+    path: string | { pd?: string; pg?: string } | Array<string | { pd?: string; pg?: string }>;
+    icon?: string | { pd: string; pg: string };
+    only?: 'PD' | 'PG';
+    nivel?: any;
+}
+export type AppMenu = Array<MenuItem>;
