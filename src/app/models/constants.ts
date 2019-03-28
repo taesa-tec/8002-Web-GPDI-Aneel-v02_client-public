@@ -7,11 +7,13 @@ export const Roles: Array<TextValue> = [
     { text: "Usuário Padrão", value: UserRole.User }
 ];
 
-export const ProjetoAccesses = {
-    leitura: ProjetoAccess.Escrita,
-    leituraEscrita: ProjetoAccess.Escrita | ProjetoAccess.Leitura,
-    aprovador: ProjetoAccess.Aprovador | ProjetoAccess.Leitura,
-    administrador: ProjetoAccess.Administrador
+export const NiveisUsuarios = {
+    todos: ProjetoAccess.Todos,
+    leitura: ProjetoAccess.Todos | ProjetoAccess.Leitura,
+    leituraEscrita: ProjetoAccess.Todos | ProjetoAccess.Escrita | ProjetoAccess.Leitura,
+    aprovador: ProjetoAccess.Todos | ProjetoAccess.Aprovador | ProjetoAccess.Leitura,
+    // administrador: ProjetoAccess.Administrador,
+    admin: ProjetoAccess.Administrador
 };
 
 export const TiposProdutos: Array<TextValue> = [

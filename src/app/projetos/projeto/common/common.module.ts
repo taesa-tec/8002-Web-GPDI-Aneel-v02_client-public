@@ -12,6 +12,7 @@ import { RecursosHumanosComponent } from '@app/projetos/projeto/common/recursos-
 import { RecursosMateriaisComponent } from '@app/projetos/projeto/common/recursos-materiais/recursos-materiais.component';
 import { EtapaAtividadesFormComponent } from './etapa-atividades-form/etapa-atividades-form.component';
 import { EditorsModule } from './editors/editors.module';
+import { UserAccessDirective } from '@app/user-access.directive';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { EditorsModule } from './editors/editors.module';
         RecursosHumanosComponent,
         RecursosMateriaisComponent,
         EtapaAtividadesFormComponent,
+        UserAccessDirective
     ],
     entryComponents: [
         ProdutoFormComponent,
@@ -45,6 +47,7 @@ import { EditorsModule } from './editors/editors.module';
         EditorsModule,
         RecursosHumanosComponent,
         RecursosMateriaisComponent,
+        UserAccessDirective,
     ]
 
 })

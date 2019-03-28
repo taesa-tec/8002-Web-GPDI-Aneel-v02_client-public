@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { CreateUserRequest, ResultadoResponse, User, UserProjeto, ProjetoAccesses, Permissao, Projeto } from '@app/models';
+import { CreateUserRequest, ResultadoResponse, User, UserProjeto, NiveisUsuarios, Permissao, Projeto, Roles, UserRole } from '@app/models';
 import { Observable, Subject, of, zip, BehaviorSubject } from 'rxjs';
 import { share, delay } from 'rxjs/operators';
 import { AuthService } from '@app/auth/auth.service';
@@ -13,9 +13,9 @@ export class UsersService {
 
     protected _currentUser: User;
     protected currentUserUpdatedSource = new BehaviorSubject<User>(null);
-    protected usersAccesses = new Map<string, Observable<any>>();
+    protected usersAccesses = new Map<string, Array<UserProjeto>>();
     currentUserUpdated = this.currentUserUpdatedSource.asObservable();
-    projetoAccesses = ProjetoAccesses;
+    niveisUsuarios = NiveisUsuarios;
 
     constructor(protected http: HttpClient, protected auth: AuthService, protected catalogo: CatalogsService) { }
 
@@ -28,14 +28,11 @@ export class UsersService {
     }
 
     me(forceUpdate: boolean = false) {
-
         return new Observable<User>(subscriber => {
-
             if (this.currentUser && !forceUpdate) {
                 subscriber.next(this.currentUser);
                 return;
             }
-
             this.http.get<User>(`Users/me`).pipe(share()).subscribe(user => {
                 this.currentUser = user;
                 this.currentUserUpdatedSource.next(this.currentUser);
@@ -90,32 +87,42 @@ export class UsersService {
         return this.http.get<any>(`Users/${id}/avatar`);
     }
 
-    userCanAccess(id: string, projeto: Projeto, permissao: Permissao = null) {
+    userCanAccess(id: string, projeto: Projeto, permissao: any = null) {
         return new Observable<boolean>(observer => {
-            const projetos$ = this.usersAccesses.has(id) ? this.usersAccesses.get(id) : this.userProjetos(id);
+
+            const projetos$ = this.usersAccesses.has(id) ? of(this.usersAccesses.get(id)) : this.userProjetos(id);
+
             const permissoes$ = this.catalogo.permissoes();
-            this.usersAccesses.set(id, projetos$);
 
             zip(projetos$, permissoes$).subscribe(([projetos, permissoes]) => {
+
                 if (projetos.length === 0 || permissoes.length === 0) {
                     observer.next(false);
+                    return;
                 }
 
+                this.usersAccesses.set(id, projetos);
+
+                // Pega o acesso do usuário no projeto
                 const projetoAccess = projetos.find(p => p.projetoId === projeto.id);
+
                 if (projetoAccess) {
+                    /* 
+                        Se a verificação for por uma determina permissão 
+                        caso o contrário retorna que o usuário tem algum tipo de acesso ao projeto
+                    */
                     if (permissao) {
                         try {
-                            const userp = this.projetoAccesses[projetoAccess.catalogUserPermissao.valor];
-                            const checkp = this.projetoAccesses[permissao.valor];
-
-
-                            observer.next((userp & checkp) > 0);
+                            const userp = this.niveisUsuarios[projetoAccess.catalogUserPermissao.valor];
+                            const can = (userp & permissao) === permissao;
+                            observer.next(can);
                         } catch (error) {
 
                             observer.next(false);
                         }
                         return;
                     }
+
                     observer.next(true);
                 } else {
                     observer.next(false);
@@ -124,11 +131,22 @@ export class UsersService {
         });
     }
 
-    currentUserCanAccess(projeto: Projeto, permissao: Permissao = null) {
-        if (this.currentUser) {
-            return this.userCanAccess(this.currentUser.id, projeto, permissao);
-        }
-        return of(false);
+    currentUserCanAccess(projeto: Projeto, permissao: any = null) {
+
+        return new Observable(obsr => {
+            this.me().subscribe(user => {
+                if (user) {
+                    if (user.role === UserRole.Administrador) {
+                        return obsr.next(true);
+                    }
+                    this.userCanAccess(user.id, projeto, permissao).subscribe(can => obsr.next(can));
+                } else {
+                    return obsr.next(false);
+                }
+            }, error => {
+                return obsr.next(false);
+            });
+        });
 
     }
 }

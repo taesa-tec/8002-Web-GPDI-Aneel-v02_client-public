@@ -26,11 +26,12 @@
         </div>
         <nav class="side-nav">
             <app-loading type="fullparent" background="transparent"></app-loading>
-            <a *ngFor="let route of menu" [routerLink]="route.path" class="side-nav-item" routerLinkActive="active"
-           [hidden]="!projeto">
-            <span class="fs-24 mr-3"><i [class]="route.icon"></i></span>
-                {{route.text}}
-            </a>
+            <ng-container *ngFor="let route of menu">
+                <a *appUserAccess="route.nivel" [routerLink]="route.path" class="side-nav-item" routerLinkActive="active" [hidden]="!projeto">
+                    <span class="fs-24 mr-3"><i [class]="route.icon"></i></span>
+                    {{route.text}}
+                </a>
+            </ng-container>
             <a [routerLink]="['/dashboard','projeto',projeto.id,'central-administrativa']" class="side-nav-item" routerLinkActive="active">
             <span class="fs-24 mr-3"><i class="ta-central-admin"></i></span>Central Administrativa
         </a>
@@ -40,7 +41,6 @@
         </nav>
     </div>
     <div class="py-4 px-5 mb-5">
-        <!-- @todo Aletas -->
         <hr>
         <router-outlet></router-outlet>
     </div>

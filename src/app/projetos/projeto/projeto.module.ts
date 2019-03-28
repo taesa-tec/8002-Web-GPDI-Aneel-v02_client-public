@@ -9,6 +9,7 @@ import { CentralAdministrativaModule } from './central-administrativa/central-ad
 import { StatusFlowComponent } from './status-flow.component';
 import { ProjetoRoutingModule } from './projeto-routing.module';
 
+
 @NgModule({
     declarations: [StatusFlowComponent],
     imports: [
@@ -18,7 +19,7 @@ import { ProjetoRoutingModule } from './projeto-routing.module';
         PropostaModule,
         IniciadoModule,
         EncerradoModule,
-        ProjetoRoutingModule
+        ProjetoRoutingModule,
     ],
     exports: [
         CentralAdministrativaModule,
@@ -26,6 +27,7 @@ import { ProjetoRoutingModule } from './projeto-routing.module';
         PropostaModule,
         IniciadoModule,
         EncerradoModule
-    ]
+    ],
+
 })
 export class ProjetoModule { }

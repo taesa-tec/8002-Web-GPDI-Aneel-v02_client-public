@@ -5,10 +5,11 @@ export enum UserRole {
 }
 
 export enum ProjetoAccess {
-    Leitura = 1,
-    Escrita = 2,
-    Aprovador = 4,
-    Administrador = 7,
+    Todos = 1,
+    Leitura = 2,
+    Escrita = 4,
+    Aprovador = 8,
+    Administrador = 15,
 }
 
 export enum XmlType {

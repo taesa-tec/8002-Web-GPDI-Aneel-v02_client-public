@@ -18,6 +18,7 @@ import { registerLocaleData } from '@angular/common';
 import * as moment from 'moment';
 import { TestesComponent } from './testes/testes.component';
 
+
 registerLocaleData(localeBr, 'pt');
 moment.locale('pt-br');
 
@@ -37,7 +38,7 @@ moment.locale('pt-br');
         DashboardModule,
         UsersModule,
         AppRoutingModule,
-        
+
     ],
     exports: [SharedModule],
     providers: [

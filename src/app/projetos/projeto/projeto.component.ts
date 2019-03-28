@@ -6,6 +6,7 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { AppService } from '@app/app.service';
 import { ProjetoFacade } from '@app/facades';
 import { filter } from 'rxjs/operators';
+import { NiveisUsuarios } from '@app/models';
 
 
 @Component({
@@ -22,45 +23,54 @@ export class ProjetoComponent implements OnInit {
     projetoIniciadoRoutes: Routes;
     projeto: ProjetoFacade;
 
-    menus: { [propName: string]: Array<{ text: string | { pd: string; pg: string }, icon: string | { pd: string; pg: string }, path: string | { pd: string; pg: string }, only?: 'PD' | 'PG' }> } = {
-        proposta: [
-            { text: { pg: "Projeto Gestão", pd: "Projeto" }, icon: "ta-projeto", path: 'info' },
-            { text: "Temas", icon: "ta-chat", path: "temas", only: "PD" },
-            { text: "Atividades", icon: "ta-chat", path: "atividades", only: "PG" },
-            { text: "Produtos", icon: "ta-box", path: 'produtos', only: 'PD' },
-            { text: "Etapas", icon: "ta-etapas", path: 'etapas' },
-            { text: "Empresas", icon: "ta-empresas", path: 'empresas' },
-            { text: "Recursos Humanos", icon: "ta-group", path: 'recursos-humanos' },
-            { text: "Alocação de Recursos Humanos", icon: "ta-alocacao-rh", path: 'alocacao-recursos-humanos' },
-            { text: "Recursos Materiais", icon: "ta-recurso-material", path: 'recursos-materiais' },
-            { text: "Alocação de Recursos Materias", icon: "ta-alocacao-material", path: 'alocacao-recursos-materiais' },
-            { text: "Extrato Financeiro Empresas", icon: "ta-extrato", path: 'extrato-financeiro-empresas' },
-            { text: "Extrato Financeiro Etapas", icon: "ta-table", path: 'extrato-financeiro-etapas', only: "PD" },
-            { text: "Extrato Financeiro Atividades", icon: "ta-table", path: 'extrato-financeiro-atividades', only: "PG" }
-        ],
-        iniciado: [
-            { text: "Inserir Registro REFP", icon: "ta-edit", path: 'refp-inserir' },
-            { text: "Registros Pendentes REFP", icon: "ta-ampulheta", path: 'refp/pendentes' },
-            { text: "Registros Reprovados REFP", icon: "ta-cancel-circle", path: 'refp/reprovados' },
-            { text: "Registros Aprovados REFP", icon: "ta-ok", path: 'refp/aprovados' },
-            { text: "Extrato Financeiro Empresas", icon: "ta-extrato", path: 'extrato-financeiro' },
-            { text: "Alterar Projeto", icon: "ta-warning", path: 'alterar' },
-            { text: "Consultar Dados Planejamento Projeto", icon: "ta-eye", path: 'consultar' },
-        ],
-        finalizado: [
-            { text: { pg: "Relatório Final e Auditoria", pd: "Relatório Final Base Projeto" }, icon: "ta-edit", path: "relatorio-final-auditoria" },
-            { text: { pd: "Relatório Etapas Projeto", pg: "Relatório Etapas" }, icon: "ta-etapas", path: "relatorio-etapas-projeto" },
-            { text: "Relatório Atividades", icon: "ta-edit", path: "relatorio-atividades", only: "PG" },
-            { text: { pd: "Resultados Capacitação", pg: "Resultados Capacitação Profissional" }, icon: "ta-user-id", path: "resultados-capacitacao" },
-            { text: "Resultados Apoio a Infra-estrutura", icon: "ta-tubo-ensaio", path: "resultados-infra-estrutura", only: "PD" },
-            { text: "Resultados Produção Técnico Cientifica", icon: "ta-torre", path: "resultados-cientificos" },
-            { text: "Resultados Propriedade Intelectual", icon: "ta-lamp", path: "resultados-propriedade-intelectual", only: "PD" },
-            { text: "Resultados Socioambientais", icon: "ta-ambiente", path: "resultados-socioambientais", only: "PD" },
-            { text: "Resultados Indicadores Econômicos", icon: "ta-chart", path: "resultados-economicos", only: "PD" },
-        ]
-    };
+    menus: {
+        [propName: string]: Array<{
+            text: string | { pd: string; pg: string },
+            icon: string | { pd: string; pg: string },
+            path: string | { pd: string; pg: string },
+            only?: 'PD' | 'PG',
+            nivel?: any
 
-    menu: Array<{ text: string, icon: string, path: Array<string> }>;
+        }>
+    } = {
+            proposta: [
+                { text: { pg: "Projeto Gestão", pd: "Projeto" }, icon: "ta-projeto", path: 'info' },
+                { text: "Temas", icon: "ta-chat", path: "temas", only: "PD" },
+                { text: "Atividades", icon: "ta-chat", path: "atividades", only: "PG" },
+                { text: "Produtos", icon: "ta-box", path: 'produtos', only: 'PD' },
+                { text: "Etapas", icon: "ta-etapas", path: 'etapas' },
+                { text: "Empresas", icon: "ta-empresas", path: 'empresas' },
+                { text: "Recursos Humanos", icon: "ta-group", path: 'recursos-humanos' },
+                { text: "Alocação de Recursos Humanos", icon: "ta-alocacao-rh", path: 'alocacao-recursos-humanos' },
+                { text: "Recursos Materiais", icon: "ta-recurso-material", path: 'recursos-materiais' },
+                { text: "Alocação de Recursos Materias", icon: "ta-alocacao-material", path: 'alocacao-recursos-materiais' },
+                { text: "Extrato Financeiro Empresas", icon: "ta-extrato", path: 'extrato-financeiro-empresas' },
+                { text: "Extrato Financeiro Etapas", icon: "ta-table", path: 'extrato-financeiro-etapas', only: "PD" },
+                { text: "Extrato Financeiro Atividades", icon: "ta-table", path: 'extrato-financeiro-atividades', only: "PG" }
+            ],
+            iniciado: [
+                { text: "Inserir Registro REFP", icon: "ta-edit", path: 'refp-inserir' },
+                { text: "Registros Pendentes REFP", icon: "ta-ampulheta", path: 'refp/pendentes' },
+                { text: "Registros Reprovados REFP", icon: "ta-cancel-circle", path: 'refp/reprovados' },
+                { text: "Registros Aprovados REFP", icon: "ta-ok", path: 'refp/aprovados' },
+                { text: "Extrato Financeiro Empresas", icon: "ta-extrato", path: 'extrato-financeiro' },
+                { text: "Alterar Projeto", icon: "ta-warning", path: 'alterar' },
+                { text: "Consultar Dados Planejamento Projeto", icon: "ta-eye", path: 'consultar' },
+            ],
+            finalizado: [
+                { text: { pg: "Relatório Final e Auditoria", pd: "Relatório Final Base Projeto" }, icon: "ta-edit", path: "relatorio-final-auditoria" },
+                { text: { pd: "Relatório Etapas Projeto", pg: "Relatório Etapas" }, icon: "ta-etapas", path: "relatorio-etapas-projeto" },
+                { text: "Relatório Atividades", icon: "ta-edit", path: "relatorio-atividades", only: "PG" },
+                { text: { pd: "Resultados Capacitação", pg: "Resultados Capacitação Profissional" }, icon: "ta-user-id", path: "resultados-capacitacao" },
+                { text: "Resultados Apoio a Infra-estrutura", icon: "ta-tubo-ensaio", path: "resultados-infra-estrutura", only: "PD" },
+                { text: "Resultados Produção Técnico Cientifica", icon: "ta-torre", path: "resultados-cientificos" },
+                { text: "Resultados Propriedade Intelectual", icon: "ta-lamp", path: "resultados-propriedade-intelectual", only: "PD" },
+                { text: "Resultados Socioambientais", icon: "ta-ambiente", path: "resultados-socioambientais", only: "PD" },
+                { text: "Resultados Indicadores Econômicos", icon: "ta-chart", path: "resultados-economicos", only: "PD" },
+            ]
+        };
+
+    menu: Array<{ text: string, icon: string, path: Array<string>, nivel?: any }>;
 
 
     get pstatus() {
@@ -87,8 +97,11 @@ export class ProjetoComponent implements OnInit {
             return '';
         }
     }
-    protected buildMenu(menu: Array<{ text: string | { pd: string; pg: string }, icon: string | { pd: string; pg: string }, path: string | { pd: string; pg: string }, only?: 'PD' | 'PG' }>)
-        : Array<{ text: string; icon: string; path: Array<string> }> {
+    protected buildMenu(menu: Array<{
+        text: string | { pd: string; pg: string }, icon: string |
+        { pd: string; pg: string }, path: string | { pd: string; pg: string }, only?: 'PD' | 'PG', nivel?: any;
+    }>)
+        : Array<{ text: string; icon: string; path: Array<string>; nivel?: any; }> {
 
         return menu
             .filter(item => {
@@ -98,7 +111,8 @@ export class ProjetoComponent implements OnInit {
                 return {
                     text: this.route2text(item.text),
                     icon: this.route2text(item.icon),
-                    path: this.route2link(item.path)
+                    path: this.route2link(item.path),
+                    nivel: item.nivel || true
                 };
             });
     }
