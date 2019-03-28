@@ -8,6 +8,7 @@ import { zip, from, Observable } from 'rxjs';
 import { keyBy, mapValues } from 'lodash-es';
 import { FormGroup, FormControl } from '@angular/forms';
 import { concatAll } from 'rxjs/operators';
+import { AppService } from '@app/app.service';
 
 @Component({
     selector: 'app-user-projetos',
@@ -27,14 +28,11 @@ export class UserProjetosComponent implements OnInit {
 
 
     @Input() set userId(value) {
-        console.log("UserID", value);
-
         this.userIdControl.setValue(value);
     }
 
-    constructor(protected catalog: CatalogsService,
-        protected usersService: UsersService,
-        protected projetoService: ProjetosService,
+    constructor(
+        protected app: AppService,
         protected router: Router) { }
 
     get userId() {
@@ -43,9 +41,9 @@ export class UserProjetosComponent implements OnInit {
 
     ngOnInit() {
 
-        const projetos$ = this.projetoService.getProjetos();
-        const userProjetos$ = this.usersService.userProjetos(this.userId);
-        const permissoes$ = this.catalog.permissoes();
+        const projetos$ = this.app.projetos.getProjetos();
+        const userProjetos$ = this.app.users.userProjetos(this.userId);
+        const permissoes$ = this.app.catalogo.permissoes();
 
         zip(projetos$, userProjetos$, permissoes$).subscribe(([projetos, userProjetos, permissoes]) => {
 
@@ -76,9 +74,7 @@ export class UserProjetosComponent implements OnInit {
             p.form.get('userId').setValue(this.userId);
             return p.form.value;
         });
-        console.log({ permissoes });
-
-        return this.usersService.criarUserProjeto(permissoes);
+        return this.app.users.criarUserProjeto(permissoes);
     }
 
 }

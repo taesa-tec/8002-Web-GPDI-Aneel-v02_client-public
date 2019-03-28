@@ -29,7 +29,7 @@ export class ProjetoComponent implements OnInit {
             icon: string | { pd: string; pg: string },
             path: string | { pd: string; pg: string },
             only?: 'PD' | 'PG',
-            nivel?: any
+            nivel?: any | Array<any>
 
         }>
     } = {

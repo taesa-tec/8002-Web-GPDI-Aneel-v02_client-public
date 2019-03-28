@@ -31,8 +31,7 @@ export class MeComponent implements OnInit {
     projetos: Projetos = projetos;
 
     constructor(
-        protected catalog: CatalogsService,
-        protected usersService: UsersService,
+        protected app: AppService,
         protected router: Router,
         protected ui: AppService
     ) { }
@@ -45,12 +44,12 @@ export class MeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.catalog.empresas().subscribe(e => { this.empresas = e; this.getCurrentUser(); });
+        this.app.catalogo.empresas().subscribe(e => { this.empresas = e; this.getCurrentUser(); });
 
     }
 
     getCurrentUser() {
-        this.usersService.me().subscribe(u => {
+        this.app.users.currentUserUpdated.subscribe(u => {
             this.user = u;
             this.fotoPerfil = new FormGroup({
                 file: new FormControl(u.fotoPerfil ? u.fotoPerfil.file : '')
@@ -95,13 +94,15 @@ export class MeComponent implements OnInit {
                     this.form.value.catalogEmpresaId = null;
                 }
 
-                this.usersService.editMe(this.form.value).subscribe(resultado => {
+                this.app.users.editMe(this.form.value).subscribe(resultado => {
                     this.loading.hide();
                     if (resultado.sucesso) {
                         this.ui.alert("Suas informações foram atualizadas com sucesso");
-                        this.usersService.me(true);
+                        this.app.users.me().subscribe(user => {
+
+                        });
                     } else {
-                        this.ui.alert(resultado.inconsistencias.join('<br>'));
+                        this.ui.alert(resultado.inconsistencias);
                     }
                 });
 
