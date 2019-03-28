@@ -8,9 +8,11 @@
 <div class="row">
     <div class="col-12">
         <ul class="nav nav-bar-row nav-justified pt-3">
-            <li class="nav-item" *ngFor="let route of menu">
-                <a routerLinkActive="active" class="nav-link" [routerLink]="route.path">{{route.text}}</a>
-            </li>
+            <ng-container *ngFor="let route of menu">
+                <li class="nav-item" *appUserAccess="route.nivel">
+                    <a routerLinkActive="active" class="nav-link" [routerLink]="route.path">{{route.text}}</a>
+                </li>
+            </ng-container>
         </ul>
     </div>
 </div>

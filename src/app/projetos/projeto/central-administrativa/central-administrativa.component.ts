@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Routes, ActivatedRoute } from '@angular/router';
 import { map, filter } from 'rxjs/operators';
 import { zip } from 'rxjs';
-import { Projeto } from '@app/models';
+import { Projeto, AppMenu, NiveisUsuarios } from '@app/models';
 import { AppService } from '@app/app.service';
 import { ProjetoFacade } from '@app/facades';
 
@@ -16,30 +16,29 @@ export class CentralAdministrativaComponent implements OnInit {
     routes: Routes;
     projeto: ProjetoFacade;
 
-    menus: { [propName: string]: Array<{ text: string, path: string }> } = {
+    commonMenu: AppMenu = [
+        { text: "Alteração Status Projeto", path: 'alteracao-status-projeto', nivel: NiveisUsuarios.admin },
+        { text: "Usuários", path: 'usuarios', nivel: NiveisUsuarios.admin }
+    ];
+    menus: { [propName: string]: AppMenu } = {
         proposta: [
             { text: "Geração XMLS", path: 'geracao-xml' },
             { text: "Logs DUTO", path: 'logs-duto' },
             { text: "Repositório XMLs Gerados", path: 'repositorio-xml' },
-            { text: "Alteração Status Projeto", path: 'alteracao-status-projeto' },
-            { text: "Usuários", path: 'usuarios' },
         ],
         iniciado: [
             { text: "Logs DUTO", path: 'logs-duto' },
             { text: "Repositório XMLs Gerados", path: 'repositorio-xml' },
-            { text: "Alteração Status Projeto", path: 'alteracao-status-projeto' },
-            { text: "Usuários", path: 'usuarios' },
         ],
         finalizado: [
             { text: "Geração XMLS", path: 'geracao-xml' },
             { text: "Logs DUTO", path: 'logs-duto' },
             { text: "Repositório XMLs Gerados", path: 'repositorio-xml' },
-            { text: "Alteração Status Projeto", path: 'alteracao-status-projeto' },
-            { text: "Usuários", path: 'usuarios' },
+
         ]
     };
 
-    menu: Array<{ text: string, path: string }>;
+    menu: AppMenu;
 
     constructor(private route: ActivatedRoute, protected app: AppService) { }
 
@@ -56,15 +55,21 @@ export class CentralAdministrativaComponent implements OnInit {
         });
     }
     setMenu(status) {
+        this.menu = this.getMenu(status).concat(this.commonMenu).map(item => {
+            item.nivel = item.nivel || true;
+            return item;
+        });
+        // commonMenu
+    }
+    getMenu(status) {
         switch (status.toLocaleLowerCase()) {
             case 'proposta':
-                this.menu = this.menus.proposta;
-                break;
+                return this.menus.proposta;
             case 'iniciado':
-                this.menu = this.menus.iniciado;
-                break;
+                return this.menus.iniciado;
             case 'encerrado':
-                this.menu = this.menus.finalizado;
+                return this.menus.finalizado;
+            default: return [];
         }
     }
 
