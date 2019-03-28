@@ -12,8 +12,6 @@ export class UserAccessDirective {
     currentUser: User;
     currentProject: ProjetoFacade;
     @Input('appUserAccess') set access(permissao: any) {
-        console.log(permissao);
-
         if (typeof permissao === 'boolean' && permissao) {
             this.show();
             return;

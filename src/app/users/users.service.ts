@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { CreateUserRequest, ResultadoResponse, User, UserProjeto, NiveisUsuarios, Permissao, Projeto, Roles, UserRole } from '@app/models';
 import { Observable, Subject, of, zip, BehaviorSubject } from 'rxjs';
-import { share, delay } from 'rxjs/operators';
+import { share, delay, filter, tap } from 'rxjs/operators';
 import { AuthService } from '@app/auth/auth.service';
 import { CatalogsService } from '@app/catalogs/catalogs.service';
 
@@ -14,37 +14,44 @@ export class UsersService {
     protected _currentUser: User;
     protected currentUserUpdatedSource = new BehaviorSubject<User>(null);
     protected usersAccesses = new Map<string, Array<UserProjeto>>();
+
     currentUserUpdated = this.currentUserUpdatedSource.asObservable();
+
     niveisUsuarios = NiveisUsuarios;
 
-    constructor(protected http: HttpClient, protected auth: AuthService, protected catalogo: CatalogsService) { }
+    constructor(protected http: HttpClient, protected auth: AuthService, protected catalogo: CatalogsService) {
+        this.auth.authEvent.pipe(filter(e => e !== null)).subscribe(e => {
+            if (e.type === 'logout') {
+                this.currentUser = null;
+            } else {
+                this.me().subscribe(user => { });
+            }
+        });
+        
+        if (this.auth.isLoggedIn) {
+            this.me().subscribe(user => { });
+        }
+    }
 
     get currentUser() {
         return this._currentUser;
     }
     set currentUser(value) {
+        if (value && value !== this._currentUser) {
+            this.currentUserUpdatedSource.next(value);
+        }
         this._currentUser = value;
-        this.currentUserUpdatedSource.next(this.currentUser);
     }
 
-    me(forceUpdate: boolean = false) {
-        return new Observable<User>(subscriber => {
-            if (this.currentUser && !forceUpdate) {
-                subscriber.next(this.currentUser);
-                return;
+
+    me() {
+        return this.http.get<User>(`Users/me`).pipe(tap(user => {
+            this.currentUser = user;
+        }, (error: HttpErrorResponse) => {
+            if (error.status === 401) {
+                this.auth.logout();
             }
-            this.http.get<User>(`Users/me`).pipe(share()).subscribe(user => {
-                this.currentUser = user;
-                this.currentUserUpdatedSource.next(this.currentUser);
-                subscriber.next(this.currentUser);
-            }, (error: HttpErrorResponse) => {
-                if (error.status === 401) {
-                    this.auth.logout();
-                }
-
-            });
-
-        });
+        }));
     }
 
     editMe(user: User) {
@@ -134,18 +141,19 @@ export class UsersService {
     currentUserCanAccess(projeto: Projeto, permissao: any = null) {
 
         return new Observable(obsr => {
-            this.me().subscribe(user => {
-                if (user) {
-                    if (user.role === UserRole.Administrador) {
-                        return obsr.next(true);
+            this.currentUserUpdated
+                .subscribe(user => {
+                    if (user) {
+                        if (user.role === UserRole.Administrador) {
+                            return obsr.next(true);
+                        }
+                        this.userCanAccess(user.id, projeto, permissao).subscribe(can => obsr.next(can));
+                    } else {
+                        return obsr.next(false);
                     }
-                    this.userCanAccess(user.id, projeto, permissao).subscribe(can => obsr.next(can));
-                } else {
+                }, error => {
                     return obsr.next(false);
-                }
-            }, error => {
-                return obsr.next(false);
-            });
+                });
         });
 
     }
