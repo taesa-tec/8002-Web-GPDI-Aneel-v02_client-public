@@ -4,7 +4,6 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProjetoFacade } from '@app/facades';
 import { FormControl, Validators, FormGroup, FormArray } from '@angular/forms';
-import { DatePipe } from '@angular/common';
 import { Produto, EtapaProduto, TextValue, Etapa } from '@app/models';
 import { zip, timer } from 'rxjs';
 import * as moment from 'moment';
@@ -25,6 +24,7 @@ export class ProrrogarComponent implements OnInit {
     etapaGroup: FormGroup;
     formXml = new FormGroup({ xmlProjetoProrrogacao: this.xmlProjetoProrrogacao });
     mesesRef: Array<TextValue> = [];
+    etapas: Array<Etapa>;
 
     @ViewChild('loading') loading: LoadingComponent;
     @ViewChild('xmlLoading') xmlLoading: LoadingComponent;
@@ -41,29 +41,24 @@ export class ProrrogarComponent implements OnInit {
                 const produtos$ = this.projeto.REST.Produtos.listar<Array<Produto>>();
                 zip(etapas$, produtos$).subscribe(([etapas, produtos]) => {
 
+                    if (etapas) {
+                        this.etapas = etapas;
+                        const etapaFirst = etapas.shift();
+                        const etapaLast = etapas.pop();
+                        const start = moment(etapaLast.dataFim).add(1, 'months');
+                        const end = moment(etapaFirst.dataInicio).add(60, 'months');
+                        while (start.isBefore(end)) {
 
-                    const etapaFirst = etapas.shift();
-                    const etapaLast = etapas.pop();
+                            const ano = start.format('YYYY');
+                            const mes = start.format('MMMM'); // .padEnd(9, '*').replace(/\*/g, '&nbsp;');
 
-                    console.log({ etapaFirst, etapas, etapaLast });
-                    const start = moment(etapaLast.dataFim).add(1, 'months');
-                    const end = moment(etapaFirst.dataInicio).add(60, 'months');
+                            this.mesesRef.push({
+                                text: `${mes} - ${ano}`,
+                                value: start.format('YYYY-MM-DD')
+                            });
 
-
-                    while (start.isBefore(end)) {
-
-                        const ano = start.format('YYYY');
-                        const mes = start.format('MMMM'); // .padEnd(9, '*').replace(/\*/g, '&nbsp;');
-
-                        this.mesesRef.push({
-                            text: `${mes} - ${ano}`,
-                            value: start.format('YYYY-MM-DD')
-                        });
-                        start.add(1, 'months');
-                        // if (this.mesesRef.length > 10) {
-                        //     break;
-                        // }
-
+                            start.add(1, 'months');
+                        }
                     }
                     this.produtos = produtos;
                     this.loading.hide();

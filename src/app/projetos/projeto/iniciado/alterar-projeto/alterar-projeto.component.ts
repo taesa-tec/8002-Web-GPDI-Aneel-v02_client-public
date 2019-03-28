@@ -9,15 +9,19 @@ import { AppService } from '@app/app.service';
 })
 export class AlterarProjetoComponent implements OnInit {
 
-    projeto: ProjetoFacade
+    projeto: ProjetoFacade;
+
     constructor(protected app: AppService) { }
 
     ngOnInit() {
         this.load();
     }
 
-    async load() {
-        this.projeto = await this.app.projetos.projetoLoaded.toPromise();
+    load() {
+        this.app.projetos.projetoLoaded.subscribe(projeto => {
+            this.projeto = projeto;
+        });
+
     }
 
 }
