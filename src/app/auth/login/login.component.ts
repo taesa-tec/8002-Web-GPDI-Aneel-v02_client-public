@@ -5,51 +5,51 @@ import { LoginRequest } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
-  @ViewChild(LoadingComponent)
-  private loading: LoadingComponent;
+    @ViewChild(LoadingComponent)
+    private loading: LoadingComponent;
 
-  errorMessage: string;
+    errorMessage: string;
 
-  loginRequest: LoginRequest = {
-    email: "admin@taesa.com.br",
-    password: "AdminAPIGestor01!"
-  };
+    loginRequest: LoginRequest = {
+        email: "",
+        password: ""
+    };
 
-  remember = false;
+    remember = false;
 
-  constructor(protected authService: AuthService, private router: Router) { }
+    constructor(protected authService: AuthService, private router: Router) { }
 
-  doLogin() {
+    doLogin() {
 
-    const self = this;
+        const self = this;
 
-    this.loading.show();
+        this.loading.show();
 
-    this.errorMessage = null;
+        this.errorMessage = null;
 
-    this.authService.login(this.loginRequest, this.remember).subscribe({
-      next(result) {
-        self.loading.hide();
-        if (!result.authenticated) {
-          self.errorMessage = result.message;
-        } else {
-          self.router.navigate(['/dashboard']);
-        }
-      },
-      error(e) {
-        self.loading.hide();
-      }
-    });
+        this.authService.login(this.loginRequest, this.remember).subscribe({
+            next(result) {
+                self.loading.hide();
+                if (!result.authenticated) {
+                    self.errorMessage = result.message;
+                } else {
+                    self.router.navigate(['/dashboard']);
+                }
+            },
+            error(e) {
+                self.loading.hide();
+            }
+        });
 
-  }
+    }
 
-  ngOnInit(): void {
+    ngOnInit(): void {
 
-  }
+    }
 }
