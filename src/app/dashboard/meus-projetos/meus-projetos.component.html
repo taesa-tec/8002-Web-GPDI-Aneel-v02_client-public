@@ -4,7 +4,7 @@
             <div class="col-12">
                 <div class="d-flex justify-content-between">
                     <h3 class="text-uppercase text-dark">Meus Projetos</h3>
-                    <button type="button" (click)="openNovoProjeto()" class="btn btn-outline-primary">
+                    <button type="button" (click)="openNovoProjeto()" class="btn btn-outline-primary" *ngIf="currentUser && currentUser.role === 'Admin-APIGestor'">
                         <fa-icon icon="plus-circle"></fa-icon>
                         Novo Projeto
                     </button>

@@ -16,6 +16,7 @@ import { ProrrogarComponent } from '@app/projetos/projeto/iniciado/prorrogar/pro
 import { PropostaBaseComponent } from '@app/projetos/projeto/iniciado/proposta-base/proposta-base.component';
 import { ExtratoFinanceiroEmpresasComponent } from '@app/projetos/projeto/iniciado/extrato-financeiro-empresas/extrato-financeiro-empresas.component';
 import { IniciadoRoutingModule } from './iniciado-routing.module';
+import { CommonModule } from '../common/common.module';
 
 @NgModule({
     declarations: [
@@ -36,6 +37,7 @@ import { IniciadoRoutingModule } from './iniciado-routing.module';
     entryComponents: [RegistroRefpDetailsComponent],
     imports: [
         SharedModule,
+        CommonModule,
         IniciadoRoutingModule
     ]
 })

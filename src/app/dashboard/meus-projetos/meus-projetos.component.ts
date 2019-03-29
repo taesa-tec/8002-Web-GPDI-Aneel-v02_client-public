@@ -1,14 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { zip } from 'rxjs';
 
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NovoProjetoComponent } from '@app/projetos/novo-projeto/novo-projeto.component';
-import { Projeto } from '@app/models';
-import { Empresa } from '@app/models';
-import { ProjetosService } from '@app/projetos/projetos.service';
-import { CatalogsService } from '@app/catalogs/catalogs.service';
+import { Projeto, User } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { of, merge, Observable, interval, zip } from 'rxjs';
-import { mapTo, delay } from 'rxjs/operators';
 import { AppService } from '@app/app.service';
 
 @Component({
@@ -19,6 +14,7 @@ import { AppService } from '@app/app.service';
 export class MeusProjetosComponent implements OnInit {
 
     projetos: Projeto[];
+    currentUser: User;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
@@ -39,6 +35,7 @@ export class MeusProjetosComponent implements OnInit {
 
     ngOnInit() {
         this.app.users.currentUserUpdated.subscribe(user => {
+            this.currentUser = user;
             this.loadData();
         });
     }

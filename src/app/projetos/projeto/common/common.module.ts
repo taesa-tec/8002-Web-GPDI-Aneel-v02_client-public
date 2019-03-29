@@ -12,7 +12,7 @@ import { RecursosHumanosComponent } from '@app/projetos/projeto/common/recursos-
 import { RecursosMateriaisComponent } from '@app/projetos/projeto/common/recursos-materiais/recursos-materiais.component';
 import { EtapaAtividadesFormComponent } from './etapa-atividades-form/etapa-atividades-form.component';
 import { EditorsModule } from './editors/editors.module';
-import { UserAccessDirective } from '@app/user-access.directive';
+import { UserAccessDirective } from './directives';
 
 
 @NgModule({
@@ -27,7 +27,7 @@ import { UserAccessDirective } from '@app/user-access.directive';
         RecursosHumanosComponent,
         RecursosMateriaisComponent,
         EtapaAtividadesFormComponent,
-        UserAccessDirective
+        UserAccessDirective,
     ],
     entryComponents: [
         ProdutoFormComponent,

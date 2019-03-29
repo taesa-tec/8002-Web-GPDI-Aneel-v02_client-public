@@ -15,6 +15,7 @@ import { OrcamentoEtapasComponent } from '@app/projetos/projeto/proposta/orcamen
 import { PropostaRoutingModule } from './proposta-routing.module';
 import { AtividadesComponent } from './atividades/atividades.component';
 import { OrcamentoAtividadesComponent } from './orcamento-atividades/orcamento-atividades.component';
+import { CommonModule } from '../common/common.module';
 
 @NgModule({
     declarations: [
@@ -33,6 +34,7 @@ import { OrcamentoAtividadesComponent } from './orcamento-atividades/orcamento-a
     ],
     imports: [
         SharedModule,
+        CommonModule,
         PropostaRoutingModule
     ],
     exports: [

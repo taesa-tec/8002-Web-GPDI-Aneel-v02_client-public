@@ -40,8 +40,8 @@ export class ProjetoComponent implements OnInit {
             { text: "Extrato Financeiro Atividades", icon: "ta-table", path: 'extrato-financeiro-atividades', only: "PG" }
         ],
         iniciado: [
-            { text: "Inserir Registro REFP", icon: "ta-edit", path: 'refp-inserir' },
-            { text: "Registros Pendentes REFP", icon: "ta-ampulheta", path: 'refp/pendentes' },
+            { text: "Inserir Registro REFP", icon: "ta-edit", path: 'refp-inserir', nivel: NiveisUsuarios.leituraEscrita },
+            { text: "Registros Pendentes REFP", icon: "ta-ampulheta", path: 'refp/pendentes', nivel: NiveisUsuarios.aprovador },
             { text: "Registros Reprovados REFP", icon: "ta-cancel-circle", path: 'refp/reprovados' },
             { text: "Registros Aprovados REFP", icon: "ta-ok", path: 'refp/aprovados' },
             { text: "Extrato Financeiro Empresas", icon: "ta-extrato", path: 'extrato-financeiro' },

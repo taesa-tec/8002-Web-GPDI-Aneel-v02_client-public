@@ -11,6 +11,7 @@ import { ResultadoPropriedadeIntelectualComponent } from './resultado-propriedad
 import { ResultadoSocioambientalComponent } from './resultado-socioambiental/resultado-socioambiental.component';
 import { ResultadoEconomicoComponent } from './resultado-economico/resultado-economico.component';
 import { RelatorioAtividadesComponent } from './relatorio-atividades/relatorio-atividades.component';
+import { CommonModule } from '../common/common.module';
 
 @NgModule({
     declarations: [
@@ -26,6 +27,7 @@ import { RelatorioAtividadesComponent } from './relatorio-atividades/relatorio-a
     ],
     imports: [
         SharedModule,
+        CommonModule,
         EncerradoRoutingModule
     ]
 })

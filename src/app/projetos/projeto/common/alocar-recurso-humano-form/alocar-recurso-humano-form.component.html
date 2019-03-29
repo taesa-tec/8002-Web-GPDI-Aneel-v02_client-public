@@ -21,7 +21,6 @@
     <div class="row" *ngIf="projeto.isPD">
         <div class="col-6">
             <div class="form-group">
-
                 <label for="">Etapa Relacionada</label>
                 <select name="" id="" class="form-control" formControlName="etapaId">
                     <option value="">Selecione</option>
@@ -81,7 +80,7 @@
 
             <div class="d-flex justify-content-between">
 
-                <div>
+                <div *appUserAdmin>
                     <button class="btn btn-link" (click)="excluir()" *ngIf="alocacao.id"><i class="ta-cancel-circle"></i> Excluir</button>
                 </div>
 
