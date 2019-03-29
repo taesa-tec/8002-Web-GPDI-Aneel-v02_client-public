@@ -13,10 +13,18 @@ export enum ProjetoAccess {
 }
 
 export enum XmlType {
+    // Pesquisa e desenvolvimento
     ProjetoPed = "ProjetoPed",
     InteresseProjetoPed = "InteresseProjetoPed",
-    InicioExecucaoProjeto = "InicioExecucaoProjeto",
     ProrrogaExecucaoProjeto = "ProrrogaExecucaoProjeto",
     RelatorioFinalPed = "RelatorioFinalPed",
-    RelatorioAuditoriaPed = "RelatorioAuditoriaPed"
+    RelatorioAuditoriaPed = "RelatorioAuditoriaPed",
+
+    // Gestão
+    ProjetoGestao = "ProjetoGestao",
+    RelatorioFinalGestao = "RelatorioFinalGestao",
+    RelatorioAuditoriaGestao = "RelatorioAuditoriaGestao",
+
+    // Todos
+    InicioExecucaoProjeto = "InicioExecucaoProjeto",
 }

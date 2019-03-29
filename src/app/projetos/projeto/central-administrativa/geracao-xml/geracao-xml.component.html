@@ -2,42 +2,61 @@
 <ngb-alert [dismissible]="false" type="danger" *ngFor="let item of inconsistencias">
     {{item}}
 </ngb-alert>
-<div [formGroup]="form" *ngIf="avaliacaoResult && avaliacaoResult.sucesso">
+<div [formGroup]="form" *ngIf="avaliacaoResult && avaliacaoResult.sucesso || true">
     <div *ngIf="projeto.isProposta">
-        <h5>GERAR XML DO PROJETO DE PeD</h5>
-        <div class="rounded bg-cinza-claro p-3 mb-3">
-            <div class="form-group">
-                <label class="d-block">Versão</label>
-                <div class="d-inline-flex">
-                    <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlProjetoPed">
-                    <button class="btn btn-primary mx-3" [disabled]="XmlProjetoPed.invalid" style="white-space: nowrap;" (click)="gerarXmlProjetoPed()">
-                        <i class="ta-download fs-18"></i> Gerar XML
-                    </button>
+        <ng-container *ngIf="projeto.isPD">
+            <h5>GERAR XML DO PROJETO DE PeD</h5>
+            <div class="rounded bg-cinza-claro p-3 mb-3">
+                <div class="form-group">
+                    <label class="d-block">Versão</label>
+                    <div class="d-inline-flex">
+                        <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlProjetoPed">
+                        <button class="btn btn-primary mx-3" [disabled]="XmlProjetoPed.invalid" style="white-space: nowrap;" (click)="gerarXmlProjetoPed()">
+                            <i class="ta-download fs-18"></i> Gerar XML
+                        </button>
+                    </div>
+                </div>
+                <div class="text-success  d-none">
+                    <i class="ta-ok fs-24 align-middle"></i>
+                    Todos os campos necessários para a geraçao deste XML estão preenchidos
                 </div>
             </div>
-            <div class="text-success  d-none">
-                <i class="ta-ok fs-24 align-middle"></i>
-                Todos os campos necessários para a geraçao deste XML estão preenchidos
-            </div>
-        </div>
 
-        <h5>GERAR XML DE INTERESSE NA EXECUÇÃO DE PROJETOS DE PeD</h5>
-        <div class="rounded bg-cinza-claro p-3 mb-3">
-            <div class="form-group">
-                <label class="d-block">Versão</label>
-                <div class="d-inline-flex">
-                    <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlInteresseExecucao">
-                    <button class="btn btn-primary mx-3" [disabled]="XmlInteresseExecucao.invalid" style="white-space: nowrap;" (click)="gerarXmlInteresseExecucao()">
-                        <i class="ta-download fs-18"></i> Gerar XML
-                    </button>
+            <h5>GERAR XML DE INTERESSE NA EXECUÇÃO DE PROJETOS DE PeD</h5>
+            <div class="rounded bg-cinza-claro p-3 mb-3">
+                <div class="form-group">
+                    <label class="d-block">Versão</label>
+                    <div class="d-inline-flex">
+                        <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlInteresseExecucao">
+                        <button class="btn btn-primary mx-3" [disabled]="XmlInteresseExecucao.invalid" style="white-space: nowrap;" (click)="gerarXmlInteresseExecucao()">
+                            <i class="ta-download fs-18"></i> Gerar XML
+                        </button>
+                    </div>
+                </div>
+                <div class="text-danger d-none">
+                    <i class="ta-cancel-circle fs-24 align-middle"></i>
+                    O campo "CÓDIGO DO PROJETO" não foi definido
                 </div>
             </div>
-            <div class="text-danger d-none">
-                <i class="ta-cancel-circle fs-24 align-middle"></i>
-                O campo "CÓDIGO DO PROJETO" não foi definido
+        </ng-container>
+        <ng-container *ngIf="projeto.isPG">
+            <h5>GERAR XML DO PROJETO DE GESTÃO</h5>
+            <div class="rounded bg-cinza-claro p-3 mb-3">
+                <div class="form-group">
+                    <label class="d-block">Versão</label>
+                    <div class="d-inline-flex">
+                        <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlProjetoGestao">
+                        <button class="btn btn-primary mx-3" [disabled]="XmlProjetoGestao.invalid" style="white-space: nowrap;" (click)="gerarXmlProjetoGestao()">
+                            <i class="ta-download fs-18"></i> Gerar XML
+                        </button>
+                    </div>
+                </div>
+                <div class="text-danger d-none">
+                    <i class="ta-cancel-circle fs-24 align-middle"></i>
+                    O campo "CÓDIGO DO PROJETO" não foi definido
+                </div>
             </div>
-        </div>
-
+        </ng-container>
         <h5>GERAR  XML DE INICIO EXECUÇÃO PROJETO</h5>
         <div class="rounded bg-cinza-claro p-3 mb-3">
             <div class="form-group">
@@ -56,38 +75,80 @@
         </div>
     </div>
     <div *ngIf="projeto.isEncerrado">
-        <h5>GERAR XML DO RELATÓRIO FINAL DO PROJETO</h5>
-        <div class="rounded bg-cinza-claro p-3 mb-3">
-            <div class="form-group">
-                <label class="d-block">Versão</label>
-                <div class="d-inline-flex">
-                    <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlRelatorioFinal">
-                    <button class="btn btn-primary mx-3" [disabled]="XmlRelatorioFinal.invalid" style="white-space: nowrap;" (click)="gerarXmlRelatorioFinal()">
-                        <i class="ta-download fs-18"></i> Gerar XML
-                    </button>
-                </div>
-            </div>
-            <div class="text-success  d-none">
-                <i class="ta-ok fs-24 align-middle"></i>
-                Todos os campos necessários para a geraçao deste XML estão preenchidos
-            </div>
-        </div>
 
-        <h5>GERAR XML DA AUDITORIA CONTÁBIL E FINANCEIRA DO PROJETO</h5>
-        <div class="rounded bg-cinza-claro p-3 mb-3">
-            <div class="form-group">
-                <label class="d-block">Versão</label>
-                <div class="d-inline-flex">
-                    <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlAuditoriaContabil">
-                    <button class="btn btn-primary mx-3" [disabled]="XmlAuditoriaContabil.invalid" style="white-space: nowrap;" (click)="gerarXmlAuditoriaContabil()">
-                        <i class="ta-download fs-18"></i> Gerar XML
-                    </button>
+        <ng-container *ngIf="projeto.isPD">
+            <h5>GERAR XML DO RELATÓRIO FINAL DO PROJETO</h5>
+            <div class="rounded bg-cinza-claro p-3 mb-3">
+                <div class="form-group">
+                    <label class="d-block">Versão</label>
+                    <div class="d-inline-flex">
+                        <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlRelatorioFinal">
+                        <button class="btn btn-primary mx-3" [disabled]="XmlRelatorioFinal.invalid" style="white-space: nowrap;" (click)="gerarXmlRelatorioFinal()">
+                            <i class="ta-download fs-18"></i> Gerar XML
+                        </button>
+                    </div>
+                </div>
+                <div class="text-success  d-none">
+                    <i class="ta-ok fs-24 align-middle"></i>
+                    Todos os campos necessários para a geraçao deste XML estão preenchidos
                 </div>
             </div>
-            <div class="text-danger d-none">
-                <i class="ta-cancel-circle fs-24 align-middle"></i>
-                O campo "CÓDIGO DO PROJETO" não foi definido
+
+            <h5>GERAR XML DA AUDITORIA CONTÁBIL E FINANCEIRA DO PROJETO</h5>
+            <div class="rounded bg-cinza-claro p-3 mb-3">
+                <div class="form-group">
+                    <label class="d-block">Versão</label>
+                    <div class="d-inline-flex">
+                        <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlAuditoriaContabil">
+                        <button class="btn btn-primary mx-3" [disabled]="XmlAuditoriaContabil.invalid" style="white-space: nowrap;" (click)="gerarXmlAuditoriaContabil()">
+                            <i class="ta-download fs-18"></i> Gerar XML
+                        </button>
+                    </div>
+                </div>
+                <div class="text-danger d-none">
+                    <i class="ta-cancel-circle fs-24 align-middle"></i>
+                    O campo "CÓDIGO DO PROJETO" não foi definido
+                </div>
             </div>
-        </div>
+        </ng-container>
+
+        <ng-container *ngIf="projeto.isPG">
+            <h5>GERAR XML DO RELATÓRIO FINAL DO PROJETO</h5>
+            <div class="rounded bg-cinza-claro p-3 mb-3">
+                <div class="form-group">
+                    <label class="d-block">Versão</label>
+                    <div class="d-inline-flex">
+                        <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlRelatorioFinalGestao">
+                        <button class="btn btn-primary mx-3" [disabled]="XmlRelatorioFinalGestao.invalid" style="white-space: nowrap;" (click)="gerarXmlRelatorioFinalGestao()">
+                            <i class="ta-download fs-18"></i> Gerar XML
+                        </button>
+                    </div>
+                </div>
+                <div class="text-success  d-none">
+                    <i class="ta-ok fs-24 align-middle"></i>
+                    Todos os campos necessários para a geraçao deste XML estão preenchidos
+                </div>
+            </div>
+
+            <h5>GERAR XML DA AUDITORIA CONTÁBIL E FINANCEIRA DO PROJETO</h5>
+            <div class="rounded bg-cinza-claro p-3 mb-3">
+                <div class="form-group">
+                    <label class="d-block">Versão</label>
+                    <div class="d-inline-flex">
+                        <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlRelatorioAuditoriaGestao">
+                        <button class="btn btn-primary mx-3" [disabled]="XmlRelatorioAuditoriaGestao.invalid" style="white-space: nowrap;" (click)="gerarXmlRelatorioAuditoriaGestao()">
+                            <i class="ta-download fs-18"></i> Gerar XML
+                        </button>
+                    </div>
+                </div>
+                <div class="text-danger d-none">
+                    <i class="ta-cancel-circle fs-24 align-middle"></i>
+                    O campo "CÓDIGO DO PROJETO" não foi definido
+                </div>
+            </div>
+        </ng-container>
+
+
+
     </div>
 </div>

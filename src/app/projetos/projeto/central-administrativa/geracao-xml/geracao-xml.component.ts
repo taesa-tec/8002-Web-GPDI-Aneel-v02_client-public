@@ -20,11 +20,23 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
     projeto: ProjetoFacade;
     form: FormGroup;
 
+
+
+    // Projeto Pesquisa E Desenvolvimento
     XmlProjetoPed: FormControl = new FormControl('', [Validators.required]);
     XmlInteresseExecucao: FormControl = new FormControl('', [Validators.required]);
-    XmlInicioExecucao: FormControl = new FormControl('', [Validators.required]);
     XmlRelatorioFinal: FormControl = new FormControl('', [Validators.required]);
     XmlAuditoriaContabil: FormControl = new FormControl('', [Validators.required]);
+
+    // Projeto Gestão
+    XmlProjetoGestao: FormControl = new FormControl('', [Validators.required]);
+    XmlRelatorioFinalGestao: FormControl = new FormControl('', [Validators.required]);
+    XmlRelatorioAuditoriaGestao: FormControl = new FormControl('', [Validators.required]);
+
+    // Ambos Tipos de projeto
+    XmlInicioExecucao: FormControl = new FormControl('', [Validators.required]);
+
+
 
     avaliacaoResult: ResultadoResponse;
 
@@ -33,20 +45,27 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
     protected projetoLoaded: Subscription;
 
     get inconsistencias() {
-        return this.avaliacaoResult ? this.avaliacaoResult.inconsistencias : [];
+        return []; // this.avaliacaoResult ? this.avaliacaoResult.inconsistencias : [];
     }
 
     constructor(protected app: AppService) { }
 
     ngOnInit() {
-        console.log(XmlType.InicioExecucaoProjeto);
 
         this.form = new FormGroup({
+            // Projeto Pesquisa E Desenvolvimento
             XmlProjetoPed: this.XmlProjetoPed,
             XmlInteresseExecucao: this.XmlInteresseExecucao,
-            XmlInicioExecucao: this.XmlInicioExecucao,
             XmlRelatorioFinal: this.XmlRelatorioFinal,
-            XmlAuditoriaContabil: this.XmlAuditoriaContabil
+            XmlAuditoriaContabil: this.XmlAuditoriaContabil,
+
+            // Projeto Gestão
+            XmlProjetoGestao: this.XmlProjetoGestao,
+            XmlRelatorioFinalGestao: this.XmlRelatorioFinalGestao,
+            XmlRelatorioAuditoriaGestao: this.XmlRelatorioAuditoriaGestao,
+
+            // Ambos Tipos de projeto
+            XmlInicioExecucao: this.XmlInicioExecucao,
 
         });
 
@@ -77,7 +96,6 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
 
     gerarXml(tipo: XmlType, versao: any) {
         this.loading.show();
-
         this.projeto.gerarXml(tipo, versao).subscribe(result => {
             this.loading.hide();
         }, (error) => {
@@ -85,19 +103,32 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
             this.loading.hide();
         });
     }
+    gerarXmlInicioExecucao() {
+        this.gerarXml(XmlType.InicioExecucaoProjeto, this.XmlInicioExecucao.value);
+    }
+
+    // Pesquisa E Desenvolvimento
     gerarXmlProjetoPed() {
         this.gerarXml(XmlType.ProjetoPed, this.XmlProjetoPed.value);
     }
     gerarXmlInteresseExecucao() {
         this.gerarXml(XmlType.InteresseProjetoPed, this.XmlInteresseExecucao.value);
     }
-    gerarXmlInicioExecucao() {
-        this.gerarXml(XmlType.InicioExecucaoProjeto, this.XmlInicioExecucao.value);
-    }
     gerarXmlRelatorioFinal() {
         this.gerarXml(XmlType.RelatorioFinalPed, this.XmlInicioExecucao.value);
     }
     gerarXmlAuditoriaContabil() {
         this.gerarXml(XmlType.RelatorioAuditoriaPed, this.XmlAuditoriaContabil.value);
+    }
+
+    // Gestão
+    gerarXmlProjetoGestao() {
+        this.gerarXml(XmlType.ProjetoGestao, this.XmlProjetoGestao.value);
+    }
+    gerarXmlRelatorioFinalGestao() {
+        this.gerarXml(XmlType.RelatorioFinalGestao, this.XmlRelatorioFinalGestao.value);
+    }
+    gerarXmlRelatorioAuditoriaGestao() {
+        this.gerarXml(XmlType.RelatorioAuditoriaGestao, this.XmlRelatorioAuditoriaGestao.value);
     }
 }
