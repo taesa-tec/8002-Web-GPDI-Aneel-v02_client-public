@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { zip } from 'rxjs';
 
 import { NovoProjetoComponent } from '@app/projetos/novo-projeto/novo-projeto.component';
-import { Projeto, User } from '@app/models';
+import { Projeto, User, Roles, UserRole } from '@app/models';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { AppService } from '@app/app.service';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-meus-projetos',
@@ -35,14 +36,19 @@ export class MeusProjetosComponent implements OnInit {
 
     ngOnInit() {
         this.app.users.currentUserUpdated.subscribe(user => {
-            this.currentUser = user;
-            this.loadData();
+            if (user !== null) {
+                this.currentUser = user;
+                this.loadData();
+            }
         });
     }
     loadData() {
         this.loading.show();
-        zip(this.app.projetos.meusProjetos()).subscribe(([projetos]) => {
-            this.projetos = projetos.map(p$ => p$.projeto);
+        const projetos$ = this.currentUser.role === UserRole.Administrador ? this.app.projetos.getProjetos() :
+            this.app.projetos.meusProjetos().pipe(map(projetos => projetos.map(p$ => p$.projeto)));
+            
+        zip(projetos$).subscribe(([projetos]) => {
+            this.projetos = projetos;
             this.loading.hide();
         });
     }

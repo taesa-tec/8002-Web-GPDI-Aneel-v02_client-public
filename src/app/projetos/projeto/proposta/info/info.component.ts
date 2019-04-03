@@ -59,7 +59,7 @@ export class InfoComponent implements OnInit {
 
             if (this.projeto.isPD) {
                 this.form.addControl('catalogSegmentoId', new FormControl(p.catalogSegmentoId || '', [Validators.required]));
-                this.form.addControl('avaliacaoInicial', new FormControl(p.avaliacaoInicial || ''));
+                this.form.addControl('avaliacaoInicial', new FormControl(p.avaliacaoInicial || 'false'));
                 this.form.addControl('motivacao', new FormControl(p.motivacao));
                 this.form.addControl('originalidade', new FormControl(p.originalidade));
                 this.form.addControl('aplicabilidade', new FormControl(p.aplicabilidade));

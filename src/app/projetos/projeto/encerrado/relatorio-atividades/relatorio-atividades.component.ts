@@ -19,8 +19,8 @@ export class RelatorioAtividadesComponent extends AtividadesComponent {
             this.atividades.forEach(atividade => {
 
                 const resFormName = atividade.formName.substr(0, 1).toUpperCase().concat(atividade.formName.substr(1));
-                this.form.addControl(atividade.formName, new FormControl({ value: '', disabled: true }, Validators.required));
-                this.form.addControl(atividade.resFormName, new FormControl('', Validators.required));
+                this.form.addControl(atividade.formName, new FormControl({ value: '', disabled: true }));
+                this.form.addControl(atividade.resFormName, new FormControl(''));
             });
 
             if (atividades) {

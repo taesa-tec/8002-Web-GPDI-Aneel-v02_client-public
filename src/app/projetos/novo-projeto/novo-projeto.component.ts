@@ -7,6 +7,7 @@ import { CatalogsService } from '@app/catalogs/catalogs.service';
 import { Observable } from 'rxjs';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { Router } from '@angular/router';
+import { AppService } from '@app/app.service';
 
 @Component({
     selector: 'app-novo-projeto',
@@ -20,27 +21,11 @@ export class NovoProjetoComponent implements OnInit {
 
     resultado: ResultadoResponse;
 
-    empresas: Observable<Array<Empresa>> = this.catalog.empresas();
+    empresas: Observable<Array<Empresa>> = this.app.catalogo.empresas();
 
-    status = this.catalog.status();
 
-    form = new FormGroup({
-        Numero: new FormControl('', [
-            Validators.required,
-            Validators.minLength(4),
-            Validators.maxLength(5),
-        ]),
-        Titulo: new FormControl('', [
-            Validators.maxLength(60),
-            Validators.required
-        ]),
-        TituloDesc: new FormControl('', [
-            Validators.maxLength(this.maxTituloContent),
-            Validators.required
-        ]),
-        CatalogEmpresaId: new FormControl('', [Validators.required]),
-        CatalogStatusId: new FormControl('', [Validators.required]),
-    });
+
+    form: FormGroup;
 
     readonly numeroPatterns = {
         'S': { pattern: /[A-Za-z]/, optional: true },
@@ -49,8 +34,7 @@ export class NovoProjetoComponent implements OnInit {
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
-    constructor(public activeModal: NgbActiveModal, private projetoService: ProjetosService,
-        protected catalog: CatalogsService, protected router: Router) { }
+    constructor(public activeModal: NgbActiveModal, protected app: AppService) { }
 
     get tituloDescRestante() {
         return this.maxTituloContent - this.tituloDesc.value.length;
@@ -71,23 +55,47 @@ export class NovoProjetoComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.app.catalogo.status().subscribe(status => {
 
+            const catalogoStatus = status.find(s => s.status === "Proposta");
+            this.form = new FormGroup({
+                Numero: new FormControl('', [
+                    Validators.required,
+                    Validators.minLength(4),
+                    Validators.maxLength(5),
+                ]),
+                Titulo: new FormControl('', [
+                    Validators.maxLength(60),
+                    Validators.required
+                ]),
+                TituloDesc: new FormControl('', [
+                    Validators.maxLength(this.maxTituloContent),
+                    Validators.required
+                ]),
+                CatalogEmpresaId: new FormControl('', [Validators.required]),
+                CatalogStatusId: new FormControl(catalogoStatus.id, [Validators.required])
+            });
+        });
     }
 
     onSubmit() {
-
         this.loading.show();
-        this.projetoService.criarProjeto(this.form.value).subscribe(resultado => {
+        this.app.projetos.criarProjeto(this.form.value).subscribe(resultado => {
             this.loading.hide();
             this.resultado = resultado;
             if (resultado.sucesso) {
                 this.activeModal.close(resultado);
                 if (resultado.id) {
-                    this.router.navigate(['dashboard', 'projeto', resultado.id]);
+                    this.app.router.navigate(['dashboard', 'projeto', resultado.id]);
                 } else {
-                    this.router.navigate(['dashboard']);
+                    this.app.router.navigate(['dashboard']);
                 }
             }
+        }, error => {
+            if (error && error.message) {
+                this.app.alert(error.message);
+            }
+            this.loading.hide();
         });
     }
 

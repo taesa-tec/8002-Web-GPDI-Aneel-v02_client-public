@@ -1,5 +1,13 @@
 <app-loading type="fullscreen"></app-loading>
-<form [formGroup]="form" *ngIf="form">
+<div class="row" *ngFor="let error of errors">
+    <div class="col-12">
+        <div class="alert alert-danger">
+            <i class="align-middle fs-32 mx-3 ta-warning"></i>
+            {{error.message}}
+        </div>
+    </div>
+</div>
+<form [formGroup]="form" *ngIf="form && isValid">
     <div class="row">
         <div class="col-12">
             <div class="form-group">

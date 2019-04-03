@@ -9,6 +9,7 @@ import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextV
 import { ProjetoFacade, EmpresaProjetoFacade } from '@app/facades';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { tap, map } from 'rxjs/operators';
+import { isNil } from 'lodash-es';
 
 @Component({
     selector: 'app-recurso-material',
@@ -31,6 +32,9 @@ export class RecursoMaterialComponent implements OnInit {
     mesesRef: Array<TextValue>;
     categoriasContabeis: Array<{ text: string; value: string; atividades: Array<any> }>;
 
+    errors: Array<Error>;
+    isValid = true;
+
     @ViewChild(LoadingComponent) loading: LoadingComponent;
     @ViewChild('file') file: ElementRef;
 
@@ -47,11 +51,6 @@ export class RecursoMaterialComponent implements OnInit {
             }
         });
     }
-
-
-
-
-
 
     get categoriaContabil() {
         return this.form.get(this.projeto.isPG ? 'catalogCategoriaContabilGestaoId' : 'categoriaContabil');
@@ -111,16 +110,47 @@ export class RecursoMaterialComponent implements OnInit {
 
             this.loading.show(1000);
             zip(recursos$, empresas$, etapas$, categorias$).subscribe(([recursos, empresas, etapas, categorias]) => {
+
                 this.etapas = etapas;
                 this.recursos = recursos;
                 this.empresas = empresas.map(e => new EmpresaProjetoFacade(e));
                 this.empresasFinanciadoras = this.empresas.filter(e => e.classificacaoValor !== "Executora");
                 this.categoriasContabeis = categorias;
-                this.buildForm();
+                try {
+                    this.validate();
+                    this.buildForm();
+                } catch (error) {
+                    this.isValid = false;
+                }
             });
             // const empresas = this.app.projetos
 
         });
+    }
+
+    validate() {
+        this.errors = [];
+        if (isNil(this.etapas) || this.etapas.length === 0) {
+            this.errors.push(new Error(`Este projeto ainda não tem nenhuma etapa cadastrada. 
+            Para inserir um registro REFP é necessário ter etapas cadastradas já que cada registro é vinculado a uma etapa. 
+            Por favor, volte para o Planejamento do projeto e cadastre alguma etapa para continuar.`));
+
+        }
+        if (isNil(this.recursos) || this.recursos.length === 0) {
+            this.errors.push(new Error(`Este projeto ainda não tem nenhum Recurso Material cadastrado. 
+            Para inserir um registro REFP é necessário ter Recursos Materiais cadastrados já que cada registro é vinculado a um Recurso Material específico. 
+            Por favor, volte para o Planejamento do projeto e cadastre algum Recurso Material para continuar.`));
+        }
+        if (isNil(this.empresas) || this.empresas.length === 0) {
+            this.errors.push(new Error(`Este projeto ainda não tem nenhuma Empresa cadastrada. 
+            Para inserir um registro REFP é necessário ter Empresas cadastradas já que cada registro é vinculado a uma Empresa específica. 
+            Por favor, volte para o Planejamento do projeto e cadastre alguma Empresa para continuar.`));
+        }
+
+        if (this.errors.length > 0) {
+            throw new Error("Errors");
+        }
+
     }
 
     buildForm() {
@@ -133,6 +163,7 @@ export class RecursoMaterialComponent implements OnInit {
         this.mesesRef = [];
 
         if (this.projeto.isPD) {
+
             this.etapas.map(etapa => {
                 const start = moment(etapa.dataInicio);
                 const end = moment(etapa.dataFim);
@@ -146,6 +177,8 @@ export class RecursoMaterialComponent implements OnInit {
                     start.add(1, 'months');
                 }
             });
+
+
         } else {
             const start = moment(this.projeto.dataInicio);
             const end = moment(this.projeto.dataInicio).add(24, 'months');

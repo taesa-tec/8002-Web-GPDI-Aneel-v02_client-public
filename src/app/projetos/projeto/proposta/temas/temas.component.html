@@ -34,7 +34,7 @@
                 </label>
                 <select name="" id="" class="form-control w-50" formControlName="catalogTemaId">
                     <option value="">Selecione</option>
-                    <option [value]="tema.id" *ngFor="let tema of temas | orderBy:'order'">{{tema.nome}}</option>
+                    <option [value]="tema.id" *ngFor="let tema of temas | orderBy:'order'">{{tema.nome}} - {{tema.valor}}</option>
                 </select>
             </div>
             <div class="form-group" *ngIf="tema && tema.valor === 'OU'">

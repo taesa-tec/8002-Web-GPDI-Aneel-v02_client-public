@@ -57,8 +57,6 @@ export class FormComponent implements OnInit {
         return this.form.get('razaoSocial') as FormControl;
     }
 
-
-
     ngOnInit() {
 
         const empresas$ = this.catalog.empresas();

@@ -7,6 +7,7 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import * as moment from 'moment';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { tap } from 'rxjs/operators';
+import { isNil } from 'lodash-es';
 
 @Component({
     selector: 'app-recurso-humano',
@@ -26,6 +27,9 @@ export class RecursoHumanoComponent implements OnInit {
     form: FormGroup;
     obsInternas: FormGroup;
     mesesRef: Array<TextValue>;
+
+    errors: Array<Error>;
+    isValid = true;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
     @ViewChild('file') file: ElementRef;
@@ -95,11 +99,42 @@ export class RecursoHumanoComponent implements OnInit {
                 this.etapas = etapas;
                 this.recursos = recursos;
                 this.empresas = empresas.map(e => new EmpresaProjetoFacade(e));
-                this.buildForm();
+                try {
+                    this.validate();
+                    this.buildForm();
+                } catch (error) {
+                    this.isValid = false;
+                }
             });
             // const empresas = this.app.projetos
 
         });
+    }
+
+    validate() {
+        this.errors = [];
+        if (isNil(this.etapas) || this.etapas.length === 0) {
+            this.errors.push(new Error(`Este projeto ainda não tem nenhuma etapa cadastrada. 
+            Para inserir um registro REFP é necessário ter etapas cadastradas já que cada registro é vinculado a uma etapa. 
+            Por favor, volte para o Planejamento do projeto e cadastre alguma etapa para continuar.`));
+
+        }
+        if (isNil(this.recursos) || this.recursos.length === 0) {
+            this.errors.push(new Error(`
+            Este projeto ainda não tem nenhum Recurso Humano cadastrado. 
+            Para inserir um registro REFP é necessário ter Recursos Humanos cadastrados já que cada registro é vinculado a um Recurso Humano específico. 
+            Por favor, volte para o Planejamento do projeto e cadastre algum Recurso Humano para continuar.`));
+        }
+        if (isNil(this.empresas) || this.empresas.length === 0) {
+            this.errors.push(new Error(`Este projeto ainda não tem nenhuma Empresa cadastrada. 
+            Para inserir um registro REFP é necessário ter Empresas cadastradas já que cada registro é vinculado a uma Empresa específica. 
+            Por favor, volte para o Planejamento do projeto e cadastre alguma Empresa para continuar.`));
+        }
+
+        if (this.errors.length > 0) {
+            throw new Error("Errors");
+        }
+
     }
 
     buildForm() {

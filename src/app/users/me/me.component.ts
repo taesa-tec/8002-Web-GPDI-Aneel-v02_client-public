@@ -50,6 +50,9 @@ export class MeComponent implements OnInit {
 
     getCurrentUser() {
         this.app.users.currentUserUpdated.subscribe(u => {
+            if (u === null) {
+                return;
+            }
             this.user = u;
             this.fotoPerfil = new FormGroup({
                 file: new FormControl(u.fotoPerfil ? u.fotoPerfil.file : '')

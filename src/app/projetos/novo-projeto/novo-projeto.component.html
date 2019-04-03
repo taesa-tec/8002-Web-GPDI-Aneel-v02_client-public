@@ -6,7 +6,7 @@
 </div>
 <div class="modal-body">
     <app-loading type="fullscreen"></app-loading>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="row mb-4">
             <div class="col">
                 <div class="form-group">
@@ -39,15 +39,17 @@
                     </select>
                 </div>
             </div>
-            <div class="col">
-                <div class="form-group">
-                    <label class="text-blue-light" for="">Status</label>
-                    <select name="" id="" class="form-control" formControlName="CatalogStatusId">
-                        <option value="">Selecione</option>
-                        <option *ngFor="let s of status | async" [value]="s.id">{{s.status}}</option>
-                    </select>
+            <!-- 
+                <div class="col">
+                    <div class="form-group">
+                        <label class="text-blue-light" for="">Status</label>
+                        <select name="" id="" class="form-control" formControlName="CatalogStatusId">
+                            <option value="">Selecione</option>
+                            <option *ngFor="let s of status | async" [value]="s.id">{{s.status}}</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
+            -->
         </div>
         <div class="row" *ngIf="form.dirty && form.invalid && false">
             <div class="col-12">

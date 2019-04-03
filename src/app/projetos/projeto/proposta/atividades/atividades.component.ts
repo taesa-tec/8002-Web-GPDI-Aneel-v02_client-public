@@ -84,7 +84,7 @@ export class AtividadesComponent implements OnInit {
             this.form = new FormGroup({});
 
             this.atividades.forEach(atividade => {
-                this.form.addControl(atividade.formName, new FormControl('', Validators.required));
+                this.form.addControl(atividade.formName, new FormControl(''));
             });
             if (atividades) {
                 this.form.addControl('id', new FormControl(atividades.id));

@@ -75,13 +75,13 @@ export class RecursoHumanoFormComponent implements OnInit {
             valorHora: new FormControl(this.recursoHumano.valorHora || '', Validators.required),
             nomeCompleto: new FormControl(this.recursoHumano.nomeCompleto || '', Validators.required),
             titulacao: new FormControl(this.recursoHumano.titulacaoValor || '', Validators.required),
-            funcao: new FormControl(this.recursoHumano.funcaoValor || '', Validators.required),
             nacionalidade: this.nacionalidade,
             urlCurriculo: new FormControl(this.recursoHumano.urlCurriculo || '', [Validators.required, Validators.pattern(/^https?:\/\/(.+)\.(.+)/)]),
         });
 
         if (this.projeto.isPG) {
             this.form.addControl('gerenteProjeto', new FormControl(this.recursoHumano.gerenteProjeto || (this.hasManager ? 'false' : ''), Validators.required));
+            this.nacionalidade.setValue('Brasileiro');
         } else {
             this.form.addControl('funcao', new FormControl(this.recursoHumano.funcaoValor || '', Validators.required));
 
@@ -149,7 +149,7 @@ export class RecursoHumanoFormComponent implements OnInit {
                     this.app.projetos.delRH(this.recursoHumano.id).subscribe(resultDelete => {
                         this.loading.hide();
                         if (resultDelete.sucesso) {
-                            this.logProjeto("Recurso Humano", "Delete");
+                            // this.logProjeto("Recurso Humano", "Delete");
                             this.activeModal.close('deleted');
                         } else {
                             this.app.alert(resultDelete.inconsistencias.join(', '));
