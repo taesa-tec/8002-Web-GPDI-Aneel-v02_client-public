@@ -14,6 +14,7 @@ export abstract class EditorResultado<T extends { id: number; uploads?: Array<Fi
     projeto: ProjetoFacade;
     projetoREST: ProjetoREST;
     form: FormGroup;
+    sender: any;
 
 
     get isEdit() {
@@ -62,8 +63,11 @@ export abstract class EditorResultado<T extends { id: number; uploads?: Array<Fi
         }
     }
 
-    setEditable(editable: T) {
+    setEditable(editable: T, sender?: any) {
         this.editable = editable;
+        if (sender) {
+            this.sender = sender;
+        }
     }
 
     sanitizedValue(field: string, editable?: T) {

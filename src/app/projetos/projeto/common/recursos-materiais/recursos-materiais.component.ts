@@ -47,7 +47,6 @@ export class RecursosMateriaisComponent implements OnInit {
         data$.subscribe(([projeto, recursosMaterias]) => {
             this.projeto = projeto;
             this.recursosMaterias = recursosMaterias.map(rec => {
-                console.log(rec);
                 try {
                     if (rec.categoriaContabilGestao) {
                         rec.categoriaContabelNome = rec.categoriaContabilGestao.nome;

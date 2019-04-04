@@ -4,6 +4,7 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { ProjetoFacade, ProjetoREST } from '@app/facades';
 import { Observable } from 'rxjs';
 import { EditorResultado } from '../common/editors/editor-resultado-base';
+import { Projeto } from '@app/models';
 
 export abstract class ResultadoBase<T> implements OnInit {
 
@@ -64,7 +65,7 @@ export abstract class ResultadoBase<T> implements OnInit {
         if (this.editor) {
             const ref = this.app.modal.open(this.editor, { size: 'lg', backdrop: 'static' });
             try {
-                (<EditorResultado<any>>ref.componentInstance).setEditable(relatorio);
+                (<EditorResultado<any>>ref.componentInstance).setEditable(relatorio, this);
             } catch (e) {
                 console.log(e);
 
@@ -76,6 +77,7 @@ export abstract class ResultadoBase<T> implements OnInit {
             }, error => {
                 // Só fechou o modal -.-
             });
+            return ref;
         } else {
             throw new Error('Editor não configurado ou encontrado');
         }

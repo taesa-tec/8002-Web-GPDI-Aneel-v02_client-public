@@ -41,28 +41,21 @@ export class AlocacaoComponent implements OnInit {
         const data$ = this.app.projetos.projetoLoaded.pipe(
             mergeMap((p: ProjetoFacade) => zip(
                 of(p),
-                p.REST.AlocacaoRms.listar<Array<any>>(),
-                p.REST.Empresas.listar<Array<EmpresaProjeto>>().pipe(map(empresas => empresas.map(e => new EmpresaProjetoFacade(e))))
+                p.REST.AlocacaoRms.listar<Array<AlocacaoRM>>(),
+                this.app.catalogo.categoriasContabeisGestao()
             ))
         );
-
-        const categoriasContabeisGestao = <Array<any>>await this.app.catalogo.categoriasContabeisGestao().toPromise();
-
-        data$.subscribe(([projeto, alocacoes, empresas]) => {
+        data$.subscribe(([projeto, alocacoes, categoriasContabeisGestao]) => {
             this.projeto = projeto;
-
             if (this.projeto.isPG) {
                 this.categoriaContabel = categoriasContabeisGestao.map(cat => {
                     return { text: cat.nome, value: String(cat.id), atividades: cat.atividades };
                 });
             }
+
             this.alocacoes = alocacoes.map(aloc => {
-
-                if (aloc.empresaFinanciadoraId) {
-                    const empresa = empresas.find(e => aloc.empresaFinanciadoraId === e.id);
-                    aloc.empresaFinanciadoraNome = empresa ? empresa.nome : "Não encontrada";
-                }
-
+                aloc.empresaFinanciadora = new EmpresaProjetoFacade(aloc.empresaFinanciadora);
+                aloc.empresaRecebedora = new EmpresaProjetoFacade(aloc.empresaRecebedora);
                 if (aloc.recursoMaterial) {
                     try {
                         if (this.projeto.isPD) {

@@ -9,7 +9,7 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { map, mergeMap } from 'rxjs/operators';
 import { zip, of } from 'rxjs';
 import { Projeto, AlocacaoRH, Etapa, Empresa } from '@app/models';
-import { ProjetoFacade } from '@app/facades';
+import { ProjetoFacade, EmpresaFacade, EmpresaProjetoFacade } from '@app/facades';
 
 @Component({
     selector: 'app-alocacao',
@@ -92,6 +92,10 @@ export class AlocacaoComponent implements OnInit {
                 aloc.valorTotal = aloc.horasTotal * aloc.recursoHumano.valorHora;
 
                 aloc.valorTotal = Math.round(aloc.valorTotal * 100) / 100;
+
+                if (aloc.recursoHumano.empresa) {
+                    aloc.recursoHumano.empresa = new EmpresaProjetoFacade(aloc.recursoHumano.empresa);
+                }
 
                 return aloc;
             });

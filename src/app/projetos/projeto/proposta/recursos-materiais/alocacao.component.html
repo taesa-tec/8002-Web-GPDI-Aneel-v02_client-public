@@ -25,7 +25,14 @@
                     <th>
                         <div class="d-flex align-items-center">
                             <span class="mx-2">Empresa Financiadora</span>
-                            <app-handler-order [current]="listOrder" field="empresaFinanciadoraNome" (order)=order($event)></app-handler-order>
+                            <app-handler-order [current]="listOrder" field="empresaFinanciadora.nome" (order)=order($event)></app-handler-order>
+                        </div>
+
+                    </th>
+                    <th>
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">Empresa Recebedora</span>
+                            <app-handler-order [current]="listOrder" field="empresaRecebedora.nome" (order)=order($event)></app-handler-order>
                         </div>
 
                     </th>
@@ -61,7 +68,8 @@
             </tr>
             <tr *ngFor="let alocacao of alocacoes | orderBy:listOrder.field:listOrder.direction">
                 <td>{{alocacao.recursoMaterial.nome}}</td>
-                <td>{{alocacao.empresaFinanciadoraNome}}</td>
+                <td>{{alocacao.empresaFinanciadora.nome}}</td>
+                <td>{{alocacao.empresaRecebedora.nome}}</td>
                 <td>{{alocacao.categoriaContabelNome}}</td>
                 <td class="text-center">{{alocacao.qtd}}</td>
                 <td><span ngbTooltip="Valor unitário {{alocacao.recursoMaterial.valorUnitario | currency:'R$'}}">{{alocacao.valorTotal | currency:'R$'}}</span></td>
@@ -79,7 +87,8 @@
 <hr>
 <div class="row">
     <div class="col-auto">
-        <!-- <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes --> </div>
+        <!-- <i class="ta-user-o text-blue-light"></i> Última atualização em 16.02.2019, às 19:30 por André Moraes -->
+    </div>
     <div class="col text-right">
 
     </div>

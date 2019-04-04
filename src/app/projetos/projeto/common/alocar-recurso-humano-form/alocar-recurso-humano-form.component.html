@@ -70,7 +70,8 @@
     <div class="row">
         <div class="col-12">
             <div class="form-group">
-                <label for="">Justificativa do recurso</label>
+                <label for="" *ngIf="projeto.isPD">Justificativa detalhada do recurso na etapa</label>
+                <label for="" *ngIf="projeto.isPG">Justificativa do recurso</label>
                 <app-textarea name="" formControlName="justificativa" id="" cols="30" rows="4" class="form-control" maxlength="1000" placeholder="Por que o recurso é necessário?"></app-textarea>
             </div>
         </div>

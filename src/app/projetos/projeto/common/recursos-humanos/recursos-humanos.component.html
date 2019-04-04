@@ -49,6 +49,12 @@
                         </th>
                         <th>
                             <div class="d-flex align-items-center">
+                                <span class="mx-2">Custo Hora</span>
+                                <app-handler-order [current]="listOrder" field="valorHora" (order)=order($event)></app-handler-order>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="d-flex align-items-center">
                                 <span class="mx-2">Ações</span>
                             </div>
                         </th>
@@ -67,6 +73,7 @@
                     <td *ngIf="projeto.isPD">{{recursoHumano.funcaoNome}}</td>
                     <td *ngIf="projeto.isPG">{{recursoHumano.gerenteProjeto?'Sim':'Não'}}</td>
                     <td>{{recursoHumano.titulacaoNome}}</td>
+                    <td>{{recursoHumano.valorHora|currency:'R$'}}</td>
                     <td>
                         <button type="button" class="btn btn-primary btn-sm btn-block" (click)="openModal(recursoHumano)">
                             <i class="ta-edit"></i>
