@@ -7,6 +7,7 @@ import { FormArray, FormGroup, FormControl } from '@angular/forms';
 import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { SafeUrl } from '@angular/platform-browser';
 import { map, catchError } from 'rxjs/operators';
+import { isNil, keyBy } from 'lodash-es';
 
 @Component({
     selector: 'app-usuarios',
@@ -24,7 +25,11 @@ export class UsuariosComponent implements OnInit {
     usersPermissao: Array<{ user: User, formGroup: FormGroup }>;
 
 
+
     formArray: FormArray;
+    formUsersSelecteds = new FormGroup({});
+    selectAll: FormControl = new FormControl('');
+    globalcatalogUserPermissaoId: FormControl = new FormControl('');
 
     listOrder: { field: string; direction: 'asc' | 'desc'; } = {
         field: 'created',
@@ -38,6 +43,16 @@ export class UsuariosComponent implements OnInit {
     @ViewChild('saving') loadingSaving: LoadingComponent;
 
     constructor(protected app: AppService) { }
+
+    get selectedUsers() {
+        if (this.users) {
+            return this.users.filter(user => {
+                const c = this.formUsersSelecteds.get(user.id);
+                return !isNil(c) && c.value;
+            }).map(user => user.id);
+        }
+        return [];
+    }
 
     ngOnInit() {
 
@@ -60,6 +75,7 @@ export class UsuariosComponent implements OnInit {
         const empresas$ = this.app.catalogo.empresas();
         const users$ = this.app.users.all();
 
+
         this.loading.show();
 
         zip(empresas$, permissoes$, users$).subscribe(([empresas, permissoes, users]) => {
@@ -73,19 +89,37 @@ export class UsuariosComponent implements OnInit {
                     }
                     return userProjeto;
                 });
+
                 this.formArray = new FormArray([]);
+
                 this.usersPermissao = this.users.map(user => {
                     const item = ups.find(up => up.userId === user.id) ||
                         { id: 0, userId: user.id, projetoId: this.projeto.id, catalogUserPermissaoId: '', applicationUser: user };
+
                     const formGroup = new FormGroup({
                         userId: new FormControl(user.id),
                         projetoId: new FormControl(this.projeto.id),
                         catalogUserPermissaoId: new FormControl(item.catalogUserPermissaoId)
-                    })
+                    });
+                    this.formUsersSelecteds.addControl(user.id, new FormControl(false));
+                    // if (user.id === this.app.users.currentUser.id) {
+                    //     this.formUsersSelecteds.addControl(user.id, new FormControl({ value: false, disabled: true }));
+                    // } else {
+                    //     this.formUsersSelecteds.addControl(user.id, new FormControl(false));
+                    // }
                     this.formArray.push(formGroup);
 
-                    return { user, formGroup }
+                    return { user, formGroup };
                 });
+
+                this.selectAll.valueChanges.subscribe(value => {
+                    this.users.forEach(user => {
+                        if (user.id !== this.app.users.currentUser.id) {
+                            this.formUsersSelecteds.controls[user.id].setValue(value);
+                        }
+                    });
+                });
+
                 this.loading.hide();
             });
         });
@@ -107,6 +141,19 @@ export class UsuariosComponent implements OnInit {
                 }
             });
         }
+    }
+
+    aplicarPermissoes() {
+        const forms = keyBy(this.usersPermissao, 'user.id');
+
+
+        this.selectedUsers.forEach(userid => {
+            if (forms[userid] && userid !== this.app.users.currentUser.id) {
+                forms[userid].formGroup.get('catalogUserPermissaoId').setValue(this.globalcatalogUserPermissaoId.value);
+            }
+
+        });
+        this.formArray.updateValueAndValidity();
     }
 
 }

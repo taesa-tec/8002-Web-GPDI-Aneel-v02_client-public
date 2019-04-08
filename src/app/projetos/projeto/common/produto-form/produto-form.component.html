@@ -44,12 +44,14 @@
         {{item}}
     </ngb-alert>
     <div class="d-flex justify-content-between">
-        <div *appUserAdmin>
-            <button class="btn btn-link" (click)="excluir()" *ngIf="produto.id"><i class="ta-cancel-circle"></i> Excluir</button>
+        <div>
+            <ng-container *appUserAdmin>
+                <button class="btn btn-link" (click)="excluir()" *ngIf="produto.id"><i class="ta-cancel-circle"></i> Excluir</button>
+            </ng-container>
         </div>
         <div class="text-right">
             <button class="btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</button>
-            <button class="btn btn-primary" type="button" (click)="submit()" [disabled]="form.invalid">
+            <button class="btn btn-primary" type="button" (click)="submit()" *appUserEscrita [disabled]="form.invalid">
                 <i [class]="buttonAction.icon"></i>
                 {{buttonAction.text}}
             </button>
