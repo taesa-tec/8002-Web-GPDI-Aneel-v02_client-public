@@ -65,7 +65,9 @@
                 <td>{{alocacao.recursoHumano.nomeCompleto}}</td>
                 <td *ngIf="projeto.isPD">Etapa {{alocacao.currentEtapa.numeroEtapa}}</td>
                 <td>{{alocacao.Empresa}}</td>
-                <td>{{alocacao.recursoHumano.empresa.nome}}</td>
+                <td>
+                    <span *ngIf="alocacao.recursoHumano.empresa">{{alocacao.recursoHumano.empresa.nome}}</span>
+                </td>
                 <td>{{alocacao.valorTotal | currency:'R$'}}</td>
                 <td>
                     <button type="button" class="btn btn-primary btn-sm btn-block" (click)="openModal(alocacao)">
