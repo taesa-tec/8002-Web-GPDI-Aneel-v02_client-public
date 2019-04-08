@@ -15,46 +15,51 @@
     <div class="col-12">
         <table class="table">
             <thead>
-                <tr>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Nome</span>
-                            <app-handler-order [current]="listOrder" field="recursoHumano.nomeCompleto" (order)=order($event)></app-handler-order>
-                        </div>
-                    </th>
-                    <th *ngIf="projeto && projeto.isPD">
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Etapa</span>
-                            <app-handler-order [current]="listOrder" field="currentEtapa.numeroEtapa" (order)=order($event)></app-handler-order>
-                        </div>
+            <tr>
+                <th>
+                    <div class="d-flex align-items-center">
+                        <span class="mx-2">Nome</span>
+                        <app-handler-order [current]="listOrder" field="recursoHumano.nomeCompleto"
+                                           (order)=order($event)></app-handler-order>
+                    </div>
+                </th>
+                <th *ngIf="projeto && projeto.isPD">
+                    <div class="d-flex align-items-center">
+                        <span class="mx-2">Etapa</span>
+                        <app-handler-order [current]="listOrder" field="currentEtapa.numeroEtapa"
+                                           (order)=order($event)></app-handler-order>
+                    </div>
 
-                    </th>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Empresa Financiadora</span>
-                            <app-handler-order [current]="listOrder" field="Empresa" (order)=order($event)></app-handler-order>
-                        </div>
+                </th>
+                <th>
+                    <div class="d-flex align-items-center">
+                        <span class="mx-2">Empresa Financiadora</span>
+                        <app-handler-order [current]="listOrder" field="empresa.nome"
+                                           (order)=order($event)></app-handler-order>
+                    </div>
 
-                    </th>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Empresa Recebedora</span>
-                            <app-handler-order [current]="listOrder" field="recursoHumano.empresa.nome" (order)=order($event)></app-handler-order>
-                        </div>
+                </th>
+                <th>
+                    <div class="d-flex align-items-center">
+                        <span class="mx-2">Empresa Recebedora</span>
+                        <app-handler-order [current]="listOrder" field="recursoHumano.empresa.nome"
+                                           (order)=order($event)></app-handler-order>
+                    </div>
 
-                    </th>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Valor</span>
-                            <app-handler-order [current]="listOrder" field="valorTotal" (order)=order($event)></app-handler-order>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2">Ações</span>
-                        </div>
-                    </th>
-                </tr>
+                </th>
+                <th>
+                    <div class="d-flex align-items-center">
+                        <span class="mx-2">Valor</span>
+                        <app-handler-order [current]="listOrder" field="valorTotal"
+                                           (order)=order($event)></app-handler-order>
+                    </div>
+                </th>
+                <th>
+                    <div class="d-flex align-items-center">
+                        <span class="mx-2">Ações</span>
+                    </div>
+                </th>
+            </tr>
             </thead>
             <tr>
                 <td colspan="5" class="text-center p-0">
@@ -64,7 +69,7 @@
             <tr *ngFor="let alocacao of alocacoes | orderBy:listOrder.field:listOrder.direction">
                 <td>{{alocacao.recursoHumano.nomeCompleto}}</td>
                 <td *ngIf="projeto.isPD">Etapa {{alocacao.currentEtapa.numeroEtapa}}</td>
-                <td>{{alocacao.Empresa}}</td>
+                <td>{{alocacao.empresa.nome}}</td>
                 <td>
                     <span *ngIf="alocacao.recursoHumano.empresa">{{alocacao.recursoHumano.empresa.nome}}</span>
                 </td>

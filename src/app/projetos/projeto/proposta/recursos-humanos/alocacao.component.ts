@@ -1,15 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 
-import { AlocarRecursoHumanoFormComponent } from '@app/projetos/projeto/common/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
-import { ProjetosService } from '@app/projetos/projetos.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ActivatedRoute } from '@angular/router';
-import { AppService } from '@app/app.service';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { map, mergeMap } from 'rxjs/operators';
-import { zip, of } from 'rxjs';
-import { Projeto, AlocacaoRH, Etapa, Empresa } from '@app/models';
-import { ProjetoFacade, EmpresaFacade, EmpresaProjetoFacade } from '@app/facades';
+import {AlocarRecursoHumanoFormComponent} from '@app/projetos/projeto/common/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
+import {ProjetosService} from '@app/projetos/projetos.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ActivatedRoute} from '@angular/router';
+import {AppService} from '@app/app.service';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {map, mergeMap} from 'rxjs/operators';
+import {zip, of} from 'rxjs';
+import {Projeto, AlocacaoRH, Etapa, Empresa, EmpresaProjeto} from '@app/models';
+import {ProjetoFacade, EmpresaFacade, EmpresaProjetoFacade} from '@app/facades';
 
 @Component({
     selector: 'app-alocacao',
@@ -18,7 +18,7 @@ import { ProjetoFacade, EmpresaFacade, EmpresaProjetoFacade } from '@app/facades
 })
 export class AlocacaoComponent implements OnInit {
 
-    alocacoes: Array<any>;
+    alocacoes: Array<AlocacaoRH>;
     etapas: Array<Etapa> = [];
     projeto: ProjetoFacade;
     catalogEmpresa: Array<Empresa>;
@@ -31,12 +31,13 @@ export class AlocacaoComponent implements OnInit {
     constructor(
         protected projetoService: ProjetosService,
         protected route: ActivatedRoute, protected app: AppService,
-        protected modalService: NgbModal) { }
+        protected modalService: NgbModal) {
+    }
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
     openModal(alocacao: AlocacaoRH | any = {}) {
-        const modalRef = this.modalService.open(AlocarRecursoHumanoFormComponent, { size: 'lg' });
+        const modalRef = this.modalService.open(AlocarRecursoHumanoFormComponent, {size: 'lg'});
         modalRef.componentInstance.alocacao = alocacao;
         modalRef.componentInstance.projeto = this.projeto;
 
@@ -60,43 +61,37 @@ export class AlocacaoComponent implements OnInit {
                 this.app.projetos.getAlocacaoRH(p.id),
                 p.isPD ? this.app.projetos.getEtapas(p.id) : of([]),
                 this.app.catalogo.empresas(),
+                p.REST.Empresas.listar<Array<EmpresaProjeto>>().pipe(map(es => {
+                    return es.map(_e => new EmpresaProjetoFacade(_e));
+                }))
             ))
         );
 
-        data$.subscribe(([projeto, alocacoes, etapas, catalog_empresa]) => {
+        data$.subscribe(([projeto, alocacoes, etapas, catalog_empresa, empresas]) => {
             this.projeto = projeto;
-
             this.catalogEmpresa = catalog_empresa;
 
             if (etapas) {
-                this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; });
+                this.etapas = etapas.map((etapa, i) => {
+                    etapa.numeroEtapa = i + 1;
+                    return etapa;
+                });
             }
 
             this.alocacoes = alocacoes.map(aloc => {
 
                 aloc.currentEtapa = this.projeto.isPD ? this.etapas.find(eta => eta.id === aloc.etapaId) : false;
-
-                aloc.Empresa = aloc.empresa.razaoSocial ? aloc.empresa.razaoSocial : '';
-
-                if (aloc.empresa.catalogEmpresaId) {
-                    aloc.catalogEmpresa = catalog_empresa.find(e => aloc.empresa.catalogEmpresaId === e.id);
-                    aloc.Empresa = aloc.catalogEmpresa.nome;
-                }
-
+                aloc.empresa = empresas.find(e => e.id === aloc.empresaId);
+                aloc.recursoHumano.empresa = empresas.find(e => e.id === aloc.recursoHumano.empresaId);
                 aloc.horasTotal = 0;
 
                 for (let i = 1; i <= 6; i++) {
-                    aloc.horasTotal += aloc["hrsMes" + i];
+                    aloc.horasTotal += aloc['hrsMes' + i];
                 }
 
                 aloc.valorTotal = aloc.horasTotal * aloc.recursoHumano.valorHora;
 
                 aloc.valorTotal = Math.round(aloc.valorTotal * 100) / 100;
-
-                if (aloc.recursoHumano.empresa) {
-                    aloc.recursoHumano.empresa = new EmpresaProjetoFacade(aloc.recursoHumano.empresa);
-                }
-
                 return aloc;
             });
 
