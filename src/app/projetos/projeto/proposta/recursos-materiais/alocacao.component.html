@@ -50,7 +50,7 @@
                     </th>
                     <th>
                         <div class="d-flex align-items-center">
-                            <span class="mx-2">Valor Total</span>
+                            <span class="mx-2">Custo Total</span>
                             <app-handler-order [current]="listOrder" field="valorTotal" (order)=order($event)></app-handler-order>
                         </div>
                     </th>
@@ -72,7 +72,7 @@
                 <td>{{alocacao.empresaRecebedora.nome}}</td>
                 <td>{{alocacao.categoriaContabelNome}}</td>
                 <td class="text-center">{{alocacao.qtd}}</td>
-                <td><span ngbTooltip="Valor unitário {{alocacao.recursoMaterial.valorUnitario | currency:'R$'}}">{{alocacao.valorTotal | currency:'R$'}}</span></td>
+                <td><span ngbTooltip="Custo unitário {{alocacao.recursoMaterial.valorUnitario | currency:'R$'}}">{{alocacao.valorTotal | currency:'R$'}}</span></td>
                 <td>
                     <button type="button" class="btn btn-primary btn-sm w-100" (click)="openModal(alocacao)">
                         <i class="ta-edit"></i>
