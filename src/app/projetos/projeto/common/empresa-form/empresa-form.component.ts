@@ -34,8 +34,6 @@ export class EmpresaFormComponent implements OnInit, AfterViewInit {
     constructor(public activeModal: NgbActiveModal, protected app: AppService) { }
 
     ngOnInit() {
-        console.log(this.tabs);
-
         if (this.empresa.classificacaoValor) {
 
             this.tabFixed = true;
