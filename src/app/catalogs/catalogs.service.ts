@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Empresa, ProjetoStatus, Segmento, TiposCompartilhamento, TextValue, Permissao } from '@app/models';
-import { of, Observable } from 'rxjs';
-import { map, share, first } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Empresa, ProjetoStatus, Segmento, TiposCompartilhamento, TextValue, Permissao} from '@app/models';
+import {of, Observable} from 'rxjs';
+import {map, share, first} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +13,8 @@ export class CatalogsService {
     protected cache = new Map();
     protected observables: { [propName: string]: Observable<any> } = {};
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+    }
 
     protected getData<T>(key: string, url: string): Observable<T> {
 
@@ -43,6 +44,7 @@ export class CatalogsService {
     empresas() {
         return this.getData<Array<Empresa>>('empresas', `catalogs/empresas`);
     }
+
     empresa(id: number) {
         return this.empresas().pipe(map(empresas => empresas.find(e => e.id === id)));
     }
@@ -62,14 +64,20 @@ export class CatalogsService {
     estados() {
         return this.getData<any>('estados', `catalogs/Estados`);
     }
+
     categoriasContabeisGestao() {
         return this.getData<Array<any>>('categoriasContabeisGestao', `catalogs/categoriascontabeisgestao`);
     }
+
     paises() {
         return this.getData<Array<{ id: number; nome: string; }>>('paises', `catalogs/Paises`);
     }
 
     tipoCompartilhamento() {
         return of<Array<TextValue>>(TiposCompartilhamento);
+    }
+
+    produtoFasesCadeia() {
+        return this.getData<Array<{ id: number; nome: string; }>>('produtoFasesCadeia', `catalogs/ProdutoFasesCadeia`);
     }
 }
