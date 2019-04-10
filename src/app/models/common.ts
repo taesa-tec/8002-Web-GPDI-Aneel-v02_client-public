@@ -1,13 +1,16 @@
-import { UserRole } from './enums';
+import {UserRole} from './enums';
 
 export interface TextValue {
-    text: string; value: any;
+    text: string;
+    value: any;
 }
+
 export interface MessageAlert {
     message: string;
     type: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark';
     icon?: string;
 }
+
 export interface FileUploaded {
     id: number;
     nomeArquivo: string;
@@ -21,21 +24,25 @@ export interface FileUploaded {
     user?: any;
     created: string;
 }
+
 export interface UF {
     id: number;
     nome: string;
     valor: string;
 }
+
 export interface Segmento {
     id: number;
     nome: string;
     valor: string;
 }
+
 export interface Empresa {
     id: number;
     nome: string;
     valor: string;
 }
+
 export interface Permissao {
     id: number;
     nome: string;
@@ -46,6 +53,7 @@ export interface ProjetoStatus {
     id: number;
     status: string;
 }
+
 export interface Projeto {
     created: string;
     id: number;
@@ -167,6 +175,7 @@ export interface TemaProjeto {
     subTemas: SubTema[];
     uploads: FileUploaded[];
 }
+
 // Produtos
 export interface Produto {
     created: string;
@@ -180,6 +189,8 @@ export interface Produto {
     tipoValor: string;
     faseCadeia: number;
     faseCadeiaValor: string;
+    catalogProdutoFaseCadeiaId: number;
+    catalogProdutoTipoDetalhadoId: number;
     etapaProduto: any[];
 }
 
@@ -198,6 +209,7 @@ export interface Etapa {
     etapaProdutos: EtapaProduto[];
     etapaMeses: Array<{ id?: number; etapaId?: number; mes: string; }>;
 }
+
 export interface EtapaProduto {
     id: number;
     etapaId: number;
@@ -244,8 +256,10 @@ export interface AlocacaoRM {
     empresaRecebedora?: any;
     qtd: number;
     justificativa: string;
+
     [propName: string]: any;
 }
+
 export interface RecursoHumano {
     id: number;
     projetoId: number;
@@ -289,6 +303,7 @@ export interface OrcamentoEmpresa {
     total: number;
     valor: number;
 }
+
 export interface ExtratoEmpresa extends OrcamentoEmpresa {
     desvio: number;
     totalAprovado: number;
@@ -349,14 +364,16 @@ export interface ExtratoEtapa {
     total: number;
     valor: number;
 }
+
 export interface ExtratosEtapas {
     etapas: ExtratoEtapa[];
     total: number;
     valor: number;
 }
+
 // -------------- ---------------
 /**
- * Registro REFP 
+ * Registro REFP
  */
 
 
@@ -368,6 +385,7 @@ export interface REFPObsInterna {
     user?: User;
     texto: string;
 }
+
 export interface RegistroREFP {
     id: number;
     atividade?: { id: number; nome: string; valor: string; };
@@ -522,6 +540,7 @@ export interface ResultadoSocialAmbiental {
     tecnicaPrevista?: any;
     desc: string;
 }
+
 export interface ResultadoEconomico {
     id: number;
     projetoId: number;
@@ -533,6 +552,7 @@ export interface ResultadoEconomico {
     percentagem: number;
     valorBeneficio: number;
 }
+
 export interface ProjetoGestaoAtividades {
     id: number;
     projetoId: number;
@@ -555,4 +575,5 @@ export interface MenuItem {
     only?: 'PD' | 'PG';
     nivel?: any;
 }
+
 export type AppMenu = Array<MenuItem>;

@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
     api_url: "https://taesapro.azurewebsites.net/api",
-    version: '0.16.25'
+    version: '0.16.26'
 };

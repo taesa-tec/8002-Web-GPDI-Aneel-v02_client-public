@@ -85,7 +85,7 @@ export class RecursoMaterialFormComponent implements OnInit {
                 this.form.get('catalogAtividadeId').setValue('');
             });
         } else {
-            form.addControl('categoriaContabil', new FormControl(this.recursoMaterial.categoriaContabil || '', [Validators.required]));
+            form.addControl('categoriaContabil', new FormControl(this.recursoMaterial.categoriaContabilValor || '', [Validators.required]));
         }
         this.form = form;
     }
