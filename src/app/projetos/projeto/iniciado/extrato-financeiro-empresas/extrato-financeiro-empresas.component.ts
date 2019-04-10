@@ -1,16 +1,16 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
-import { zip, of } from 'rxjs';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {map} from 'rxjs/operators';
+import {zip, of} from 'rxjs';
 
-import { AppService } from '@app/app.service';
-import { Projeto, OrcamentosEmpresas, Etapa, TextValue, CategoriasContabeis, ExtratoItem, ResultadoResponse, ExtratosEmpresas, ExtratoEmpresa } from '@app/models';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { AlocarRecursoHumanoFormComponent } from '@app/projetos/projeto/common/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
-import { AlocarRecursoMaterialFormComponent } from '@app/projetos/projeto/common/alocar-recurso-material-form/alocar-recurso-material-form.component';
-import { ProjetoFacade } from '@app/facades';
-import { RegistroRefpDetailsComponent } from '../registro-refp-details/registro-refp-details.component';
+import {AppService} from '@app/app.service';
+import {Projeto, OrcamentosEmpresas, Etapa, TextValue, CategoriasContabeis, ExtratoItem, ResultadoResponse, ExtratosEmpresas, ExtratoEmpresa} from '@app/models';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {AlocarRecursoHumanoFormComponent} from '@app/projetos/projeto/common/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
+import {AlocarRecursoMaterialFormComponent} from '@app/projetos/projeto/common/alocar-recurso-material-form/alocar-recurso-material-form.component';
+import {ProjetoFacade} from '@app/facades';
+import {RegistroRefpDetailsComponent} from '../registro-refp-details/registro-refp-details.component';
 
 @Component({
     selector: 'app-extrato-financeiro-empresas',
@@ -27,7 +27,7 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
     alocacoesRM: Array<any> = [];
 
     categoriasContabeis: { [propName: string]: TextValue } = {
-        "RH": { text: "Recursos Humanos", value: "RH" }
+        'RH': {text: 'Recursos Humanos', value: 'RH'}
     };
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
@@ -35,10 +35,10 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
     get extratoEmpresas(): ExtratoEmpresa[] {
         return this.extrato ? this.extrato.empresas.filter(e => e.total > 0) : [];
     }
+
     get totalGeral() {
         return this.extrato ? this.extrato.valor : 0;
     }
-
 
 
     constructor(protected app: AppService, private route: ActivatedRoute) {
@@ -56,6 +56,7 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
         }
         return item.desc;
     }
+
     calcDesvio(n: number) {
         return ((100 - n) / 100).toFixed(2).concat('%');
     }
@@ -66,7 +67,6 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
         }
         return '';
     }
-
 
 
     ngOnInit() {
@@ -86,9 +86,11 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
                 this.extrato = extrato;
                 this.alocacoesRH = alocacoesRH;
                 this.alocacoesRM = alocacoesRM;
-                etapas.forEach((etapa, index) => {
-                    this.etapas[etapa.id] = Object.assign(etapa, { numeroEtapa: index + 1 });
-                });
+                if (etapas) {
+                    etapas.forEach((etapa, index) => {
+                        this.etapas[etapa.id] = Object.assign(etapa, {numeroEtapa: index + 1});
+                    });
+                }
 
                 this.loading.hide();
             });
@@ -108,13 +110,13 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
             tipo: registro.tipoValor
         };
 
-        if (registro.tipoValor === "RH") {
+        if (registro.tipoValor === 'RH') {
             if (recurso) {
                 registroItem.nome = recurso.nomeCompleto;
-                registroItem.categoria = "Recursos Humanos";
+                registroItem.categoria = 'Recursos Humanos';
                 registroItem.valor = recurso.valorHora * registro.qtdHrs;
             } else {
-                registroItem.nome = "Não encontrado";
+                registroItem.nome = 'Não encontrado';
             }
 
         } else {
@@ -124,7 +126,7 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
             registroItem.valor = registro.qtdItens * registro.valorUnitario;
         }
 
-        const ref = this.app.modal.open(RegistroRefpDetailsComponent, { size: 'lg', backdrop: 'static' });
+        const ref = this.app.modal.open(RegistroRefpDetailsComponent, {size: 'lg', backdrop: 'static'});
 
         ref.componentInstance.setRegistro(registroItem);
 

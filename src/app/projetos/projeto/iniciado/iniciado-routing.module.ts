@@ -24,7 +24,10 @@ const routes: Routes = [
                 path: '', redirectTo: "refp-inserir", pathMatch: 'full'
             },
             {
-                path: 'refp', redirectTo: "refp-inserir", pathMatch: 'full'
+                path: 'refp', redirectTo: "refp/pendentes", pathMatch: 'full'
+            },
+            {
+                path: 'refp/:status', component: RefpListComponent
             },
             {
                 path: 'refp-inserir', component: RefpInserirComponent,
@@ -36,9 +39,6 @@ const routes: Routes = [
             },
             {
                 path: 'extrato-financeiro', component: ExtratoFinanceiroEmpresasComponent,
-            },
-            {
-                path: 'refp/:status', component: RefpListComponent
             },
             {
                 path: 'alterar', component: AlterarProjetoComponent,

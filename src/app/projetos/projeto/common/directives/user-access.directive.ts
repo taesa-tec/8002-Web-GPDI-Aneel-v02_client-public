@@ -17,20 +17,15 @@ export class UserAccessDirective {
     }
 
     @Input('appUserAdmin') set userAdmin(value) {
-        console.log('appUserAdmin');
         this.update(NiveisUsuarios.admin);
     }
     @Input('appUserAprovador') set userAprovador(value) {
-        console.log('appUserAprovador');
-
         this.update(NiveisUsuarios.aprovador);
     }
     @Input('appUserEscrita') set userLeituraEscrita(value) {
-        console.log('appUserLeituraEscrita');
         this.update(NiveisUsuarios.leituraEscrita);
     }
     @Input('appUserLeitura') set userLeitura(value) {
-        console.log('appUserLeitura');
         this.update(NiveisUsuarios.leitura);
     }
 

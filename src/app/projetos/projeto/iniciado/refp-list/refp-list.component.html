@@ -1,3 +1,18 @@
+<div class="row mb-5">
+    <div class="col-12">
+        <ul class="nav nav-bar-row pt-3">
+            <li class="nav-item" *appUserEscrita>
+                <a routerLinkActive="active" class="nav-link px-3" routerLink="../pendentes">Registro Pendentes</a>
+            </li>
+            <li class="nav-item" *appUserEscrita>
+                <a routerLinkActive="active" class="nav-link px-3" routerLink="../reprovados">Registro Reprovados</a>
+            </li>
+            <li class="nav-item" *appUserEscrita>
+                <a routerLinkActive="active" class="nav-link px-3" routerLink="../aprovados">Registro Aprovados</a>
+            </li>
+        </ul>
+    </div>
+</div>
 <div class="row">
     <div class="col">
         <h5 class="text-uppercase text-blue font-weight-normal my-3">REGISTROS {{status}} - REFP</h5>
@@ -8,36 +23,36 @@
         <div class="table-responsive">
             <table class="table">
                 <thead>
-                    <tr>
-                        <th>Nome / Benefíciário</th>
-                        <th>Categoria Contábil</th>
-                        <th>Empresa Pagadora</th>
-                        <th>Valor</th>
-                        <th>Ações</th>
-                    </tr>
+                <tr>
+                    <th>Nome / Benefíciário</th>
+                    <th>Categoria Contábil</th>
+                    <th>Empresa Pagadora</th>
+                    <th>Valor</th>
+                    <th>Ações</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let registro of tableRegistro">
-                        <td>{{ registro.nome }}</td>
-                        <td>{{ registro.categoria }}</td>
-                        <td>{{ registro.empresa }}</td>
-                        <td>{{ registro.valor | currency:'R$' }}</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm" type="button" (click)="openDetails(registro)">
-                                <i class="ta-edit"></i> Ver Detalhes
-                            </button>
-                        </td>
-                    </tr>
-                    <tr [hidden]="!loading.isLoading">
-                        <td colspan="5" class="text-center">
-                            <app-loading type="inline"></app-loading>
-                        </td>
-                    </tr>
-                    <tr *ngIf="tableRegistro && tableRegistro.length === 0 && !loading.isLoading">
-                        <td colspan="5" class="text-center">
-                            Nenhum Registro encontrado
-                        </td>
-                    </tr>
+                <tr *ngFor="let registro of tableRegistro">
+                    <td>{{ registro.nome }}</td>
+                    <td>{{ registro.categoria }}</td>
+                    <td>{{ registro.empresa }}</td>
+                    <td>{{ registro.valor | currency:'R$' }}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" type="button" (click)="openDetails(registro)">
+                            <i class="ta-edit"></i> Ver Detalhes
+                        </button>
+                    </td>
+                </tr>
+                <tr [hidden]="!loading.isLoading">
+                    <td colspan="5" class="text-center">
+                        <app-loading type="inline"></app-loading>
+                    </td>
+                </tr>
+                <tr *ngIf="tableRegistro && tableRegistro.length === 0 && !loading.isLoading">
+                    <td colspan="5" class="text-center">
+                        Nenhum Registro encontrado
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>
