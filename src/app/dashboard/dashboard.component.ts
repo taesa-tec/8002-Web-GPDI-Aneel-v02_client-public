@@ -1,13 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { AppService } from '@app/app.service';
-import { AuthService } from '@app/auth/auth.service';
-import { UsersService } from '@app/users/users.service';
-import { ProjetosService } from '@app/projetos/projetos.service';
-import { CatalogsService } from '@app/catalogs/catalogs.service';
-import { User } from '@app/models';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {AppService} from '@app/app.service';
+import {User} from '@app/models';
+
+
 
 @Component({
     selector: 'app-dashboard',
@@ -21,9 +19,7 @@ export class DashboardComponent implements OnInit {
 
     currentUser: User;
 
-    constructor(
-        protected app: AppService,
-    ) { }
+    constructor(protected app: AppService) {}
 
     get avatar() {
         return (this.currentUser && this.currentUser.fotoPerfil) ?
@@ -33,7 +29,7 @@ export class DashboardComponent implements OnInit {
         if (this.currentUser) {
             return this.currentUser.catalogEmpresa ?
                 this.currentUser.catalogEmpresa.nome :
-                (this.currentUser.razaoSocial ? this.currentUser.razaoSocial : '')
+                (this.currentUser.razaoSocial ? this.currentUser.razaoSocial : '');
         }
         return '';
     }

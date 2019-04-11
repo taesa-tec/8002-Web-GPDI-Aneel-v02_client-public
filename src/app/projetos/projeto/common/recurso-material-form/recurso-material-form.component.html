@@ -17,8 +17,12 @@
     <div class="row">
         <div class="col-6">
             <div class="form-group">
-                <label for="">Categorial Contábil</label>
-                <select name="" id="" class="form-control" [formControlName]="projeto.isPD?'categoriaContabil':'catalogCategoriaContabilGestaoId'">
+                <label for="">Categorial Contábil
+                    <app-tip message="Clique para mais detalhes"
+                             (click)="app.openPage('detalheCategoriaContabeis')"></app-tip>
+                </label>
+                <select name="" id="" class="form-control"
+                        [formControlName]="projeto.isPD?'categoriaContabil':'catalogCategoriaContabilGestaoId'">
                     <option value="">Selecione</option>
                     <option [value]="cat.value" *ngFor="let cat of categoriaContabel">{{cat.text}}</option>
                 </select>
@@ -46,7 +50,8 @@
         <div class="col-12">
             <div class="form-group">
                 <label for="">Especificação técninca detalhada do recurso</label>
-                <app-textarea name="" id="" maxlength="1000" cols="30" rows="3" class="form-control" formControlName="especificacao"></app-textarea>
+                <app-textarea name="" id="" maxlength="1000" cols="30" rows="3" class="form-control"
+                              formControlName="especificacao"></app-textarea>
 
             </div>
         </div>
@@ -57,14 +62,17 @@
             <div class="d-flex justify-content-between">
                 <div>
                     <div *appUserAdmin>
-                        <button class="btn btn-link" (click)="excluir()" *ngIf="recursoMaterial.id"><i class="ta-cancel-circle"></i> Excluir</button>
+                        <button class="btn btn-link" (click)="excluir()" *ngIf="recursoMaterial.id"><i
+                                class="ta-cancel-circle"></i> Excluir
+                        </button>
                     </div>
                 </div>
 
                 <div class="text-right">
                     <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
 
-                    <button class="btn btn-primary" type="button" (click)="submit()" [disabled]="form.invalid || !form.touched || !form.dirty">
+                    <button class="btn btn-primary" type="button" (click)="submit()"
+                            [disabled]="form.invalid || !form.touched || !form.dirty">
                         <i [class]="buttonAction.icon"></i>
                         {{buttonAction.text}}
                     </button>
