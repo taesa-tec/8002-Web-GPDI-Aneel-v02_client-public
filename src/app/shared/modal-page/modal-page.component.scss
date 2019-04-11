@@ -1,0 +1,9 @@
+@import "components-base";
+
+.modal-page {
+  .inner-content {
+    strong, h1, h2, h3, h4, h5, h6 {
+      color: $blueLight;
+    }
+  }
+}
