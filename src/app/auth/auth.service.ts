@@ -1,19 +1,19 @@
-import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { APP_CONFIG, AppConfig } from '../app.config';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { LoginRequest, RecoverRequest, ResultadoResponse, NewpassRequest } from '@app/models';
-import { LoginResponse } from '@app/models';
-import { Router } from '@angular/router';
+import {Injectable, Inject} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable, BehaviorSubject} from 'rxjs';
+import {LoginRequest, RecoverRequest, ResultadoResponse, NewpassRequest} from '@app/models';
+import {LoginResponse} from '@app/models';
+import {Router} from '@angular/router';
 
 const storageKey = 'loggedUser';
+
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
 
 
-    public redirectTo = "/dashboard";
+    public redirectTo = '/dashboard';
     private loginResponse: LoginResponse;
 
     protected authEventsSource = new BehaviorSubject<{ type: string, data?: any }>(null);
@@ -30,6 +30,7 @@ export class AuthService {
                 console.log(e.message);
             }
         }
+        console.log('AuthService Ok');
     }
 
     get expiration() {
@@ -68,7 +69,7 @@ export class AuthService {
                         localStorage.setItem(storageKey, JSON.stringify(loginResponse));
                     }
                     this.router.navigateByUrl(this.redirectTo);
-                    this.authEventsSource.next({ type: 'login', data: loginResponse });
+                    this.authEventsSource.next({type: 'login', data: loginResponse});
                 }
                 rootObserver.next(loginResponse);
             }, error => {
@@ -85,7 +86,7 @@ export class AuthService {
         localStorage.removeItem(storageKey);
         this.redirectTo = this.router.url;
         this.router.navigate(['/login']);
-        this.authEventsSource.next({ type: 'logout' });
+        this.authEventsSource.next({type: 'logout'});
     }
 
     recuperarSenha(recoverRequest: RecoverRequest): Observable<ResultadoResponse> {
@@ -95,7 +96,6 @@ export class AuthService {
     novaSenha(recoverRequest: NewpassRequest): Observable<ResultadoResponse> {
         return this.http.post<ResultadoResponse>('Login/nova-senha', recoverRequest);
     }
-
 
 
 }

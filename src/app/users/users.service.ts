@@ -1,10 +1,10 @@
-import { Injectable, Inject } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { CreateUserRequest, ResultadoResponse, User, UserProjeto, NiveisUsuarios, Permissao, Projeto, Roles, UserRole } from '@app/models';
-import { Observable, Subject, of, zip, BehaviorSubject } from 'rxjs';
-import { share, delay, filter, tap } from 'rxjs/operators';
-import { AuthService } from '@app/auth/auth.service';
-import { CatalogsService } from '@app/catalogs/catalogs.service';
+import {Injectable, Inject} from '@angular/core';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {CreateUserRequest, ResultadoResponse, User, UserProjeto, NiveisUsuarios, Permissao, Projeto, Roles, UserRole} from '@app/models';
+import {Observable, Subject, of, zip, BehaviorSubject, timer} from 'rxjs';
+import {share, delay, filter, tap} from 'rxjs/operators';
+import {AuthService} from '@app/auth/auth.service';
+import {CatalogsService} from '@app/catalogs/catalogs.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,27 +15,34 @@ export class UsersService {
     protected currentUserUpdatedSource = new BehaviorSubject<User>(null);
     protected usersAccesses = new Map<string, Array<UserProjeto>>();
 
-    currentUserUpdated = this.currentUserUpdatedSource.asObservable();
+    currentUserUpdated: Observable<any> = this.currentUserUpdatedSource.asObservable();
 
     niveisUsuarios = NiveisUsuarios;
 
     constructor(protected http: HttpClient, protected auth: AuthService, protected catalogo: CatalogsService) {
+
+
+        // if (this.auth.isLoggedIn) {
+        //     // timer(1000).subscribe((t) => {
+        //     this.me().subscribe(user => {
+        //     });
+        //     // });
+        // }
         this.auth.authEvent.pipe(filter(e => e !== null)).subscribe(e => {
             if (e.type === 'logout') {
                 this.currentUser = null;
             } else {
-                this.me().subscribe(user => { });
+                this.me().subscribe(user => {
+                });
             }
         });
-        
-        if (this.auth.isLoggedIn) {
-            this.me().subscribe(user => { });
-        }
+        console.log('UsersService Ok');
     }
 
     get currentUser() {
         return this._currentUser;
     }
+
     set currentUser(value) {
         if (value && value !== this._currentUser) {
             this.currentUserUpdatedSource.next(value);
@@ -44,14 +51,20 @@ export class UsersService {
     }
 
 
-    me() {
-        return this.http.get<User>(`Users/me`).pipe(tap(user => {
-            this.currentUser = user;
-        }, (error: HttpErrorResponse) => {
-            if (error.status === 401) {
-                this.auth.logout();
-            }
-        }));
+    me(reloadUser = false) {
+        if (!reloadUser) {
+            return this.http.get<User>(`Users/me`);
+        } else {
+            this.me().subscribe(user => {
+                this.currentUser = user;
+            }, (error: HttpErrorResponse) => {
+                console.log({error});
+                if (error.status === 401) {
+                    this.auth.logout();
+                }
+            });
+        }
+
     }
 
     editMe(user: User) {
@@ -90,6 +103,7 @@ export class UsersService {
     criarUserProjeto(userProjetos: Array<UserProjeto>) {
         return this.http.post<ResultadoResponse>(`UserProjetos`, userProjetos);
     }
+
     userAvatar(id: string) {
         return this.http.get<any>(`Users/${id}/avatar`);
     }

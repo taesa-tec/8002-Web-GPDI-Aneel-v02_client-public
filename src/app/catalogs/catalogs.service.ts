@@ -14,6 +14,7 @@ export class CatalogsService {
     protected observables: { [propName: string]: Observable<any> } = {};
 
     constructor(private http: HttpClient) {
+        console.log('CatalogsService OK');
     }
 
     protected getData<T>(key: string, url: string): Observable<T> {

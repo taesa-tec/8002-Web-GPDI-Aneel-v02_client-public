@@ -1,8 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule} from '@angular/router';
 
 import {NgxMaskModule} from 'ngx-mask';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
@@ -62,7 +61,7 @@ library.add(fas, far);
         RouterModule,
         FontAwesomeModule,
         NgbModule,
-        HttpClientModule,
+
         FormsModule,
         AppFormsModule,
         ReactiveFormsModule,
@@ -73,7 +72,6 @@ library.add(fas, far);
     providers: [FileService],
     exports: [
         CommonModule,
-        HttpClientModule,
         FormsModule,
         RouterModule,
         ReactiveFormsModule,

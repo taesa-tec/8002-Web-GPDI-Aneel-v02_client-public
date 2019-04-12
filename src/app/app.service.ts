@@ -9,9 +9,9 @@ import {FileService} from './shared/file.service';
 import {UsersService} from './users/users.service';
 import {PromptComponent} from './shared/prompt/prompt.component';
 import {Router} from '@angular/router';
-import {RequestCacheService} from './request-cache.service';
 import {environment} from '../environments/environment';
 import {ModalPageComponent} from '@app/shared/modal-page/modal-page.component';
+import {LoggerService} from '@app/logger.service';
 
 @Injectable({
     providedIn: 'root'
@@ -29,9 +29,10 @@ export class AppService {
         public file: FileService,
         public auth: AuthService,
         public router: Router,
-        public requestCache: RequestCacheService
+        public logger: LoggerService
     ) {
         this.config = environment;
+        console.log('%cAppService Ok', 'color:#0CF');
     }
 
     alert(message: string | Array<string>, title: string = 'Alerta') {

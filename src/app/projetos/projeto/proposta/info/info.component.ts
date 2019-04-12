@@ -1,20 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ProjetosService } from '@app/projetos/projetos.service';
-import { Projeto, Empresa, Segmento, TextValue } from '@app/models';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { CatalogsService } from '@app/catalogs/catalogs.service';
-import { zip } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { AppService } from '@app/app.service';
-import { ProjetoFacade } from '@app/facades';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Empresa, Segmento, TextValue} from '@app/models';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {zip} from 'rxjs';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {AppService} from '@app/app.service';
+import {ProjetoFacade} from '@app/facades';
+import {ScreenName} from '@app/decorators';
 
+@ScreenName({name: 'Projeto'})
 @Component({
     selector: 'app-info',
     templateUrl: './info.component.html',
     styleUrls: []
 })
+
 export class InfoComponent implements OnInit {
 
     projeto: ProjetoFacade;
@@ -26,14 +25,14 @@ export class InfoComponent implements OnInit {
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
     public numeroPatterns = {
-        'S': { pattern: /[A-Za-z]/, optional: true },
-        '0': { pattern: /\d/, optional: false }
+        'S': {pattern: /[A-Za-z]/, optional: true},
+        '0': {pattern: /\d/, optional: false}
     };
 
-    constructor(protected app: AppService) { }
+    constructor(protected app: AppService) {
+    }
 
     ngOnInit() {
-
         const empresas$ = this.app.catalogo.empresas();
         const segmentos$ = this.app.catalogo.segmentos();
         const compartilhamentos$ = this.app.catalogo.tipoCompartilhamento();
@@ -54,7 +53,7 @@ export class InfoComponent implements OnInit {
                 compartResultados: new FormControl(p.compartResultadosValor || '', [Validators.required]),
                 titulo: new FormControl(p.titulo, [Validators.required]),
                 tituloDesc: new FormControl(p.tituloDesc, [Validators.required]),
-                codigo: new FormControl({ value: p.codigo, disabled: true }),
+                codigo: new FormControl({value: p.codigo, disabled: true}),
             });
 
             if (this.projeto.isPD) {
@@ -76,7 +75,7 @@ export class InfoComponent implements OnInit {
         if (this.form.valid) {
             this.app.projetos.editar(this.form.value).subscribe(resultado => {
                 if (resultado.sucesso) {
-                    this.app.alert("Salvo com sucesso");
+                    this.app.alert('Salvo com sucesso');
                     this.projeto = Object.assign(this.projeto, this.form.value);
                 } else {
                     this.app.alert(resultado.inconsistencias);

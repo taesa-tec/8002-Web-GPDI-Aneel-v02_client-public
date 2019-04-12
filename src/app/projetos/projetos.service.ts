@@ -1,5 +1,5 @@
-import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable, Inject} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {
     CreateProjectRequest,
     Projeto, ResultadoResponse,
@@ -25,14 +25,15 @@ import {
     ProrrogarProjetoRequest,
     XmlType
 } from '@app/models';
-import { Subject, Observable, BehaviorSubject, observable } from 'rxjs';
-import { tap, share, map } from 'rxjs/operators';
-import { ProjetoFacade } from '@app/facades';
-import { FileService } from '@app/shared/file.service';
-import { RequestCacheService } from '@app/request-cache.service';
+import {Subject, Observable, BehaviorSubject, observable} from 'rxjs';
+import {tap, share, map} from 'rxjs/operators';
+import {ProjetoFacade} from '@app/facades';
+import {FileService} from '@app/shared/file.service';
+import {RequestCacheService} from '@app/request-cache.service';
 
 class ProjetoREST {
-    constructor(protected projetoComponentPath: string, protected http: HttpClient) { }
+    constructor(protected projetoComponentPath: string, protected http: HttpClient) {
+    }
 
     listar(id_projeto: any): Observable<any>;
     listar<T>(id_projeto: any) {
@@ -95,16 +96,16 @@ export class ProjetosService {
 
     constructor(protected http: HttpClient, protected fileService: FileService, protected requestCache: RequestCacheService) {
         const rest = [
-            "Temas", "Produtos", "Etapas", "Empresas", "RecursoHumanos", "AlocacaoRhs",
-            "RecursoMateriais", "AlocacaoRms", "RelatorioFinal", "ResultadoCapacitacao", "ResultadoProducao",
-            "ResultadoInfra", "ResultadoIntelectual", "ResultadoSocioAmbiental", "ResultadoEconomico", "AtividadesGestao"
+            'Temas', 'Produtos', 'Etapas', 'Empresas', 'RecursoHumanos', 'AlocacaoRhs',
+            'RecursoMateriais', 'AlocacaoRms', 'RelatorioFinal', 'ResultadoCapacitacao', 'ResultadoProducao',
+            'ResultadoInfra', 'ResultadoIntelectual', 'ResultadoSocioAmbiental', 'ResultadoEconomico', 'AtividadesGestao'
         ];
 
         rest.forEach(path => {
             const projetoRest = new ProjetoREST(path, this.http);
-            Object.defineProperty(this, path, { get: () => projetoRest });
+            Object.defineProperty(this, path, {get: () => projetoRest});
         });
-
+        console.log('ProjetosService Ok');
     }
 
     meusProjetos() {
@@ -118,6 +119,7 @@ export class ProjetosService {
     getProjetos() {
         return this.http.get<Array<Projeto>>('Projetos');
     }
+
     usersProjeto(id: number) {
         return this.http.get<Array<UserProjeto>>(`Projetos/${id}/Usuarios`);
     }
@@ -313,7 +315,7 @@ export class ProjetosService {
 
     exportarExtratoEmpresas(id: number) {
         return this.http.get(`Projeto/${id}/ExtratoEmpresas/exportar`, {
-            responseType: "blob"
+            responseType: 'blob'
         }).pipe(tap(filedata => {
             this.fileService.download(new File([filedata], `projeto-${id}-extrato-financeiro.csv`));
         }));
@@ -328,8 +330,8 @@ export class ProjetosService {
     }
 
     /**
-    * Extrato Financeiro Atividades
-    */
+     * Extrato Financeiro Atividades
+     */
     getOrcamentoAtividades(id: number) {
         return this.http.get<any>(`Projeto/${id}/ExtratoAtividades`);
     }
@@ -368,9 +370,11 @@ export class ProjetosService {
     obterXmls(id: number) {
         return this.http.get<Array<FileUploaded>>(`projeto/${id}/ObterXmls`);
     }
+
     obterLogDuto(id: number) {
         return this.http.get<Array<FileUploaded>>(`upload/${id}/obterlogduto`);
     }
+
     gerarXml(projeto_id: number, versao: string, tipo: XmlType = XmlType.ProjetoPed) {
         return new Observable(observer => {
             this.validarDados(projeto_id, tipo).subscribe(result => {
@@ -382,7 +386,7 @@ export class ProjetosService {
                                 this.fileService.download(file);
                                 observer.next(file);
                             } else {
-                                observer.error({ success: false, id: null, inconsistencias: ["Arquivo não encontrado"] });
+                                observer.error({success: false, id: null, inconsistencias: ['Arquivo não encontrado']});
                             }
 
                         }, error => {
@@ -400,24 +404,31 @@ export class ProjetosService {
             });
         });
     }
+
     gerarXmlProjetoPed(id: number, versao: number) {
         return this.http.get<ResultadoResponse>(`projeto/${id}/Xml/ProjetoPed/${versao}`);
     }
+
     gerarXmlInteresseExecucao(id: number, versao: number) {
         return this.http.get<ResultadoResponse>(`projeto/${id}/Xml/InteresseProjetoPed/${versao}`);
     }
+
     gerarXmlInicioExecucao(id: number, versao: number) {
         return this.http.get<ResultadoResponse>(`projeto/${id}/Xml/InicioExecucaoProjeto/${versao}`);
     }
+
     gerarXmlProrrogacao(id: number, versao: number) {
         return this.http.get<ResultadoResponse>(`projeto/${id}/Xml/ProrrogaExecucaoProjeto/${versao}`);
     }
+
     gerarXmlRelatorioFinalPed(id: number, versao: number) {
         return this.http.get<ResultadoResponse>(`projeto/${id}/Xml/RelatorioFinalPed/${versao}`);
     }
+
     gerarXmlRelatorioAuditoriaPed(id: number, versao: number) {
         return this.http.get<ResultadoResponse>(`projeto/${id}/Xml/RelatorioAuditoriaPed/${versao}`);
     }
+
     downloadXML(projeto_id, file_id) {
         const o = new Subject<boolean>();
         this.requestCache.clear();
@@ -447,9 +458,11 @@ export class ProjetosService {
     criarRegistroREFP(registro: RegistroREFP) {
         return this.http.post<ResultadoResponse>(`projeto/RegistroFinanceiro`, registro);
     }
+
     editarRegistroREFP(registro: RegistroREFP | RegistroREFPEdit) {
         return this.http.put<ResultadoResponse>(`projeto/RegistroFinanceiro`, registro);
     }
+
     removerRegistroREFP(id: number) {
         return this.http.delete<ResultadoResponse>(`projeto/RegistroFinanceiro/${id}`);
     }
@@ -457,18 +470,22 @@ export class ProjetosService {
     listarRegistrosAprovados(id: number) {
         return this.http.get<Array<RegistroREFP>>(`projeto/${id}/RegistroFinanceiro/Aprovado`);
     }
+
     listarRegistrosReprovados(id: number) {
         return this.http.get<Array<RegistroREFP>>(`projeto/${id}/RegistroFinanceiro/Reprovado`);
     }
+
     listarRegistrosPendentes(id: number) {
         return this.http.get<Array<RegistroREFP>>(`projeto/${id}/RegistroFinanceiro/Pendente`);
     }
+
     extratoREFP(id: number) {
         return this.http.get<ExtratosEmpresas>(`projeto/${id}/ExtratoREFP`);
     }
+
     exportarExtratoREFP(id: number) {
         this.http.get(`projeto/${id}/ExtratoREFP/exportar`, {
-            responseType: "blob"
+            responseType: 'blob'
         }).subscribe(filedata => {
             this.fileService.download(new File([filedata], `projeto-${id}-extrato-financeiro.csv`));
         }, error => {

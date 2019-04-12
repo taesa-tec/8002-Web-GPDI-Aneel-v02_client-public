@@ -6,7 +6,6 @@ import {AppService} from '@app/app.service';
 import {User} from '@app/models';
 
 
-
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -19,12 +18,14 @@ export class DashboardComponent implements OnInit {
 
     currentUser: User;
 
-    constructor(protected app: AppService) {}
+    constructor(protected app: AppService) {
+    }
 
     get avatar() {
         return (this.currentUser && this.currentUser.fotoPerfil) ?
             `data:image/jpeg;base64,${this.currentUser.fotoPerfil.file}` : '/assets/default_avatar.png';
     }
+
     get empresa() {
         if (this.currentUser) {
             return this.currentUser.catalogEmpresa ?
@@ -39,9 +40,11 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log('%cDashboardComponent@ngOnInit()', 'color:#FA0');
         this.app.users.currentUserUpdated.subscribe(user => {
             this.currentUser = user;
         });
+
     }
 
 }

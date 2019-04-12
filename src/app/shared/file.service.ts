@@ -11,7 +11,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class FileService {
 
 
-    constructor(private http: HttpClient, protected sanatizer: DomSanitizer) { }
+    constructor(private http: HttpClient, protected sanatizer: DomSanitizer) {
+        console.log('FileService Ok');
+    }
 
     upload(file: File, form?: FormGroup) {
         const formData = new FormData();

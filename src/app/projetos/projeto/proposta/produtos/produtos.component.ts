@@ -24,8 +24,8 @@ export class ProdutosComponent implements OnInit {
     };
 
     constructor(
-        private app: AppService,
-        private route: ActivatedRoute
+        protected app: AppService,
+        protected route: ActivatedRoute
     ) {
     }
 
