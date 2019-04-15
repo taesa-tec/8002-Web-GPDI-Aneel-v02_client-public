@@ -16,9 +16,8 @@ export class AuthService {
     public redirectTo = '/dashboard';
     private loginResponse: LoginResponse;
 
-    protected authEventsSource = new BehaviorSubject<{ type: string, data?: any }>(null);
-
-    authEvent = this.authEventsSource.asObservable();
+    protected authEventsSource: BehaviorSubject<{ type: string, data?: any }>;
+    authEvent: Observable<{ type: string, data?: any }>;
 
     constructor(private http: HttpClient, protected router: Router) {
 
@@ -26,11 +25,17 @@ export class AuthService {
         if (loggedUser) {
             try {
                 this.loginResponse = JSON.parse(loggedUser);
+                this.authEventsSource = new BehaviorSubject<{ type: string, data?: any }>({type: 'login', data: this.loginResponse});
+                // this.authEventsSource.next({type: 'login', data: this.loginResponse});
             } catch (e) {
                 console.log(e.message);
+                this.authEventsSource = new BehaviorSubject<{ type: string, data?: any }>(null);
             }
+        } else {
+            this.authEventsSource = new BehaviorSubject<{ type: string, data?: any }>(null);
         }
-        console.log('AuthService Ok');
+        this.authEvent = this.authEventsSource.asObservable();
+        console.log('%cAuthService Ok', 'color:red');
     }
 
     get expiration() {
@@ -48,11 +53,8 @@ export class AuthService {
     }
 
     get isLoggedIn() {
-        if (this.token && this.expiration !== null && this.expiration.getTime() > Date.now()) {
-            return true;
-        }
+        return (this.token && this.expiration !== null && this.expiration.getTime() > Date.now());
 
-        return false;
     }
 
     login(loginRequest: LoginRequest, remember: boolean = false, redirectTo: string | null = null): Observable<LoginResponse> {

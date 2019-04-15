@@ -24,7 +24,9 @@ export class AppComponent {
         this.app.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(e => {
             this.loading.hide();
         });
-        this.app.users.me(true);
+        if (this.app.auth.isLoggedIn) {
+            this.app.users.me(true);
+        }
 
         console.log('%cAppComponent@ngOnInit()', 'color:#FA0; font-weight:bold; font-size:24px;');
     }

@@ -40,7 +40,6 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log('%cDashboardComponent@ngOnInit()', 'color:#FA0');
         this.app.users.currentUserUpdated.subscribe(user => {
             this.currentUser = user;
         });

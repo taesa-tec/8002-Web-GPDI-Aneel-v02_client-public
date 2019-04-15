@@ -11,7 +11,7 @@ import {PromptComponent} from './shared/prompt/prompt.component';
 import {Router} from '@angular/router';
 import {environment} from '../environments/environment';
 import {ModalPageComponent} from '@app/shared/modal-page/modal-page.component';
-import {LoggerService} from '@app/logger.service';
+import {LoggerService} from '@app/logger/logger.service';
 
 @Injectable({
     providedIn: 'root'
@@ -29,7 +29,7 @@ export class AppService {
         public file: FileService,
         public auth: AuthService,
         public router: Router,
-        public logger: LoggerService
+        public logger: LoggerService,
     ) {
         this.config = environment;
         console.log('%cAppService Ok', 'color:#0CF');

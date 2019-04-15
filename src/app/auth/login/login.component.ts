@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
                 if (!result.authenticated) {
                     self.errorMessage = result.message;
                 } else {
-                    self.router.navigate(['/dashboard']);
+                    // self.router.navigate(['/dashboard']);
                 }
             },
             error(e) {

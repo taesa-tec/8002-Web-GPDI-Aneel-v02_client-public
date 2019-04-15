@@ -17,7 +17,7 @@ import {registerLocaleData} from '@angular/common';
 import * as moment from 'moment';
 import {TestesComponent} from './testes/testes.component';
 import {HttpClientModule} from '@angular/common/http';
-
+import {LoggerModule} from '@app/logger/logger.module';
 
 registerLocaleData(localeBr, 'pt');
 moment.locale('pt-br');
@@ -34,18 +34,19 @@ moment.locale('pt-br');
         HttpClientModule,
         SharedModule,
         AuthModule,
+        UsersModule,
         CatalogsModule,
         ProjetosModule,
         DashboardModule,
-        UsersModule,
+        LoggerModule,
         AppRoutingModule,
 
     ],
     exports: [SharedModule],
     providers: [
         {provide: LOCALE_ID, useValue: 'pt'},
-        AppService,
-        httpInterceptorProviders
+        httpInterceptorProviders,
+        AppService
     ],
     bootstrap: [AppComponent]
 })

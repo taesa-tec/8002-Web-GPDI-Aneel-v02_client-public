@@ -20,22 +20,15 @@ export class UsersService {
     niveisUsuarios = NiveisUsuarios;
 
     constructor(protected http: HttpClient, protected auth: AuthService, protected catalogo: CatalogsService) {
-
-
-        // if (this.auth.isLoggedIn) {
-        //     // timer(1000).subscribe((t) => {
-        //     this.me().subscribe(user => {
-        //     });
-        //     // });
-        // }
-        this.auth.authEvent.pipe(filter(e => e !== null)).subscribe(e => {
-            if (e.type === 'logout') {
-                this.currentUser = null;
-            } else {
-                this.me().subscribe(user => {
-                });
-            }
-        });
+        setTimeout(() => {
+            this.auth.authEvent.pipe(filter(e => e !== null)).subscribe(e => {
+                if (e.type === 'logout') {
+                    this.currentUser = null;
+                } else {
+                    this.me(true);
+                }
+            });
+        }, 0);
         console.log('UsersService Ok');
     }
 

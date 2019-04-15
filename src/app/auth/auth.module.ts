@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 
-import { AuthRoutingModule } from './auth-routing.module';
-import { AuthComponent } from './auth/auth.component';
-import { ForgetPassComponent } from './forget-pass/forget-pass.component';
-import { LoginComponent } from './login/login.component';
-import { NewpassComponent } from './newpass/newpass.component';
-import { SharedModule } from '../shared/shared.module';
-import { AuthService } from './auth.service';
+import {AuthRoutingModule} from './auth-routing.module';
+import {AuthComponent} from './auth/auth.component';
+import {ForgetPassComponent} from './forget-pass/forget-pass.component';
+import {LoginComponent} from './login/login.component';
+import {NewpassComponent} from './newpass/newpass.component';
+import {SharedModule} from '../shared/shared.module';
+import {AuthService} from './auth.service';
 
 
 @NgModule({
@@ -17,4 +17,5 @@ import { AuthService } from './auth.service';
     ],
     providers: [AuthService]
 })
-export class AuthModule { }
+export class AuthModule {
+}

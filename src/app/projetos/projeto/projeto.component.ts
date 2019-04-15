@@ -8,7 +8,7 @@ import {ProjetoFacade} from '@app/facades';
 import {filter} from 'rxjs/operators';
 import {NiveisUsuarios, AppMenu} from '@app/models';
 import {timer} from 'rxjs';
-import {LoggerService} from '@app/logger.service';
+import {LoggerService} from '@app/logger/logger.service';
 
 
 @Component({
@@ -71,7 +71,7 @@ export class ProjetoComponent implements OnInit {
         return this.projeto.catalogStatus.status.toLocaleLowerCase();
     }
 
-    constructor(protected app: AppService, protected logger: LoggerService) {
+    constructor(protected app: AppService) {
     }
 
     protected route2link(path: string | { pd?: string; pg?: string }, prefix = ''): Array<string> {
@@ -131,9 +131,9 @@ export class ProjetoComponent implements OnInit {
                 });
         });
 
-        this.logger.updateCurrentComponent(this.outlet.component);
+        // this.logger.updateCurrentComponent(this.outlet.component);
         this.app.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(e => {
-            this.logger.updateCurrentComponent(this.outlet.component);
+            // this.logger.updateCurrentComponent(this.outlet.component);
         });
     }
 
