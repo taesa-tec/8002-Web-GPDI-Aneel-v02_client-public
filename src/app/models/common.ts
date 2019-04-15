@@ -321,7 +321,6 @@ export interface ExtratosEmpresas extends OrcamentosEmpresas {
 }
 
 
-
 export interface AlocacaoRH {
     id: number;
     etapaId: number;
@@ -436,6 +435,8 @@ export interface LogProjeto {
     statusNovo: string;
     created: string;
 }
+
+export type LogItem = Array<TextValue>;
 
 export interface RelatorioFinal {
     id?: number;

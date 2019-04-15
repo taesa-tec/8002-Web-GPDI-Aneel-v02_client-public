@@ -1,15 +1,14 @@
 import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Projeto, Funcoes, Graduacoes, EmpresaProjeto, Empresa, AppValidators, RecursoHumano} from '@app/models';
+import {Projeto, Funcoes, Graduacoes, EmpresaProjeto, Empresa, AppValidators, RecursoHumano, LogItem} from '@app/models';
 import {AppService} from '@app/app.service';
 import {zip} from 'rxjs';
 import {LoadingComponent} from '@app/shared/loading/loading.component';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {HttpErrorResponse} from '@angular/common/http';
-import {CurrencyPipe} from '@angular/common';
 import {ProjetoFacade} from '@app/facades';
-import {LogRecursoHumano} from '@app/classes/logs';
 import {RecursoHumanoFacade} from '@app/facades/recurso-humano.facade';
+import {LoggerDirective} from '@app/logger/logger.directive';
 
 @Component({
     selector: 'app-recurso-humano-form',
@@ -28,9 +27,10 @@ export class RecursoHumanoFormComponent implements OnInit {
     nacionalidade: FormControl;
     form: FormGroup;
     hasManager = false;
-    log: LogRecursoHumano;
+    log: LogItem;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoggerDirective) logger: LoggerDirective;
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -118,25 +118,18 @@ export class RecursoHumanoFormComponent implements OnInit {
             this.form.addControl('id', new FormControl(this.recursoHumano.id));
         }
 
-        this.log = new LogRecursoHumano({empresas: this.empresas, recurso: this.recursoHumano, funcoes: this.funcoes, titulos: this.titulacao});
-        console.log(this.log);
+
     }
 
 
     submit() {
         if (this.form.valid) {
-
-            this.log.update({empresas: this.empresas, recurso: this.form.value, funcoes: this.funcoes, titulos: this.titulacao});
-            this.app.logger.submitLog(this.log);
-            this.loading.hide();
-            return;
-
             const request = this.recursoHumano.id ? this.app.projetos.editarRH(this.form.value) : this.app.projetos.criarRH(this.form.value);
             this.loading.show();
             request.subscribe(result => {
                 if (result.sucesso) {
                     this.activeModal.close(result);
-
+                    this.app.logger.submitLog(this.logger.getLog(), this.log);
                 } else {
                     this.app.alert(result.inconsistencias.join(', '));
                 }
@@ -166,79 +159,5 @@ export class RecursoHumanoFormComponent implements OnInit {
                 }
 
             });
-    }
-
-    logProjeto(tela: string, acao?: string) {
-
-        const logProjeto = {
-            userId: this.app.users.currentUser.id,
-            projetoId: this.projeto.id,
-            tela,
-            acao: acao || 'Create',
-            statusAnterior: '',
-            statusNovo: ''
-        };
-
-        const empresa = this.empresas.find(e => e.id === parseInt(this.form.get('empresaId').value, 10));
-        const titulo = this.titulacao.find(t => t.value === this.form.get('titulacao').value).text;
-        const funcao = this.funcoes.find(f => f.value === this.form.get('funcao').value).text;
-        const real = (new CurrencyPipe('pt')).transform(this.form.get('valorHora').value, 'R$');
-
-        logProjeto.statusNovo = '<b>Empresa:</b> ' + empresa['Empresa'] + '<br>';
-        logProjeto.statusNovo += '<b>Valor Hora:</b> ' + real + '<br>';
-        logProjeto.statusNovo += '<b>Nome Completo:</b> ' + this.form.get('nomeCompleto').value + '<br>';
-        logProjeto.statusNovo += '<b>Titulo:</b> ' + titulo + '<br>';
-        logProjeto.statusNovo += '<b>Função:</b> ' + funcao + '<br>';
-        logProjeto.statusNovo += '<b>Nacionalidade:</b> ' + this.form.get('nacionalidade').value + '<br>';
-
-        if (this.form.get('cpf')) {
-            logProjeto.statusNovo += '<b>CPF:</b> ' + this.form.get('cpf').value + '<br>';
-        }
-        if (this.form.get('passaporte')) {
-            logProjeto.statusNovo += '<b>Passaporte:</b> ' + this.form.get('passaporte').value + '<br>';
-        }
-
-        logProjeto.statusNovo += '<b>Endereço Currículo Lattes:</b> ' + this.form.get('urlCurriculo').value + '<br>';
-
-        if (acao === 'Delete') {
-            logProjeto.statusNovo = '';
-        }
-
-        if (this.recursoHumano.id !== undefined) {
-
-            const _empresa = this.empresas.find(e => e.id === this.recursoHumano.empresaId);
-            const _titulo = this.titulacao.find(t => t.value === this.recursoHumano.titulacaoValor).text;
-            const _funcao = this.funcoes.find(f => f.value === this.recursoHumano.funcaoValor).text;
-            const real = (new CurrencyPipe('pt')).transform(this.recursoHumano.valorHora, 'R$');
-
-            logProjeto.statusAnterior = '<b>Empresa:</b> ' + _empresa['Empresa'] + '<br>';
-            logProjeto.statusAnterior += '<b>Valor Hora:</b> ' + this.recursoHumano.valorHora + '<br>';
-            logProjeto.statusAnterior += '<b>Nome Completo:</b> ' + this.recursoHumano.nomeCompleto + '<br>';
-            logProjeto.statusAnterior += '<b>Titulo:</b> ' + _titulo + '<br>';
-            logProjeto.statusAnterior += '<b>Função:</b> ' + _funcao + '<br>';
-            logProjeto.statusAnterior += '<b>Nacionalidade:</b> ' + this.recursoHumano.nacionalidadeValor + '<br>';
-
-            if (this.recursoHumano.cpf) {
-                logProjeto.statusAnterior += '<b>CPF:</b> ' + this.recursoHumano.cpf + '<br>';
-            }
-            if (this.recursoHumano.passaporte) {
-                logProjeto.statusAnterior += '<b>Passaporte:</b> ' + this.recursoHumano.passaporte + '<br>';
-            }
-
-            logProjeto.statusAnterior += '<b>Endereço Currículo Lattes:</b> ' + this.recursoHumano.urlCurriculo + '<br>';
-
-            logProjeto.acao = acao || 'Update';
-        }
-
-        const request = this.app.projetos.criarLogProjeto(logProjeto);
-
-        request.subscribe(result => {
-            if (result.sucesso) {
-                this.activeModal.close(result);
-            } else {
-                this.app.alert(result.inconsistencias.join(', '));
-            }
-        });
-
     }
 }

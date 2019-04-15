@@ -2,11 +2,9 @@ import {Injectable} from '@angular/core';
 import {ProjetosService} from '@app/projetos/projetos.service';
 import {UsersService} from '@app/users/users.service';
 import {ProjetoFacade} from '@app/facades';
-import {User} from '@app/models';
+import {LogItem, User} from '@app/models';
 import {HttpRequest} from '@angular/common/http';
 import {NavigationEnd, Router} from '@angular/router';
-import {filter} from 'rxjs/operators';
-import {LogFactory} from '@app/classes/log-factory.class';
 import {CreateLogProjetoRequest} from '@app/models';
 
 const method2action = {
@@ -46,6 +44,20 @@ export class LoggerService {
         this._tela = value;
     }
 
+    static dataToHtml(label: string, value: any, headerTag = 'strong', bodyTag = 'p'): string {
+        return `<${headerTag}>${label}</${headerTag}>
+                <${bodyTag}>${String(value)}</${bodyTag}>`;
+    }
+
+    static logItemToHtml(data: LogItem = []): string {
+        if (data && data.length > 0) {
+            return data.map(log => {
+                return LoggerService.dataToHtml(log.text, log.value);
+            }).join('\n');
+        }
+        return null;
+    }
+
     constructor(protected ps: ProjetosService, protected  us: UsersService, protected router: Router) {
         try {
             this.ps.projetoLoaded.subscribe(projeto => this.projeto = projeto);
@@ -60,15 +72,16 @@ export class LoggerService {
         this.tela = component.screenName || 'Não informado';
     }
 
-    public submitLog<T extends LogFactory<any>>(log: T) {
+
+    public submitLog(statusNovo: LogItem, statusAnterior?: LogItem) {
 
         const requestData: CreateLogProjetoRequest = {
             projetoId: this.projeto.id,
             userId: this.user.id,
             acao: this.acao,
             tela: this.tela,
-            statusAnterior: log.statusAnterior,
-            statusNovo: log.statusNovo
+            statusAnterior: LoggerService.logItemToHtml(statusAnterior),
+            statusNovo: LoggerService.logItemToHtml(statusNovo)
         };
 
         console.log(requestData);
