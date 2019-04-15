@@ -60,7 +60,8 @@ export class LoggerService {
         this.tela = component.screenName || 'Não informado';
     }
 
-    public log(log: LogFactory<any>) {
+    public submitLog<T extends LogFactory<any>>(log: T) {
+
         const requestData: CreateLogProjetoRequest = {
             projetoId: this.projeto.id,
             userId: this.user.id,

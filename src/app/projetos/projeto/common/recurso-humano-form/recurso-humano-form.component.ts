@@ -8,6 +8,8 @@ import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {HttpErrorResponse} from '@angular/common/http';
 import {CurrencyPipe} from '@angular/common';
 import {ProjetoFacade} from '@app/facades';
+import {LogRecursoHumano} from '@app/classes/logs';
+import {RecursoHumanoFacade} from '@app/facades/recurso-humano.facade';
 
 @Component({
     selector: 'app-recurso-humano-form',
@@ -21,11 +23,12 @@ export class RecursoHumanoFormComponent implements OnInit {
     titulacao = Graduacoes;
     empresas: Array<any>;
     empresasCatalog: Array<Empresa>;
-    recursoHumano: RecursoHumano;
+    recursoHumano: RecursoHumanoFacade;
     nacionalidades = [{value: 'Brasileiro', text: 'Sim'}, {value: 'Estrangeiro', text: 'Não'}];
     nacionalidade: FormControl;
     form: FormGroup;
     hasManager = false;
+    log: LogRecursoHumano;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
@@ -111,26 +114,29 @@ export class RecursoHumanoFormComponent implements OnInit {
 
         this.nacionalidade.setValue(this.recursoHumano.nacionalidadeValor || 'Brasileiro');
 
-        if (this.recursoHumano.nacionalidadeValor && this.recursoHumano.empresaId) {
-            console.log(this.recursoHumano);
-
-        }
-
         if (this.recursoHumano.id !== undefined) {
             this.form.addControl('id', new FormControl(this.recursoHumano.id));
         }
+
+        this.log = new LogRecursoHumano({empresas: this.empresas, recurso: this.recursoHumano, funcoes: this.funcoes, titulos: this.titulacao});
+        console.log(this.log);
     }
 
 
     submit() {
         if (this.form.valid) {
 
+            this.log.update({empresas: this.empresas, recurso: this.form.value, funcoes: this.funcoes, titulos: this.titulacao});
+            this.app.logger.submitLog(this.log);
+            this.loading.hide();
+            return;
+
             const request = this.recursoHumano.id ? this.app.projetos.editarRH(this.form.value) : this.app.projetos.criarRH(this.form.value);
             this.loading.show();
             request.subscribe(result => {
                 if (result.sucesso) {
                     this.activeModal.close(result);
-                    this.logProjeto('Recurso Humano');
+
                 } else {
                     this.app.alert(result.inconsistencias.join(', '));
                 }

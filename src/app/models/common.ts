@@ -320,23 +320,7 @@ export interface ExtratosEmpresas extends OrcamentosEmpresas {
     empresas: ExtratoEmpresa[];
 }
 
-export interface RecursoHumano {
-    id: number;
-    projetoId: number;
-    empresaId: number;
-    empresa?: any;
-    valorHora: number;
-    nomeCompleto: string;
-    titulacao: number;
-    titulacaoValor: string;
-    funcao: number;
-    funcaoValor: string;
-    nacionalidade: number;
-    nacionalidadeValor: string;
-    cpf: string;
-    passaporte?: any;
-    urlCurriculo: string;
-}
+
 
 export interface AlocacaoRH {
     id: number;

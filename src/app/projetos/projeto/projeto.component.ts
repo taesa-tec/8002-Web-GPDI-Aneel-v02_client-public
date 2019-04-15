@@ -131,9 +131,9 @@ export class ProjetoComponent implements OnInit {
                 });
         });
 
-        // this.logger.updateCurrentComponent(this.outlet.component);
+        this.app.logger.updateCurrentComponent(this.outlet.component);
         this.app.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(e => {
-            // this.logger.updateCurrentComponent(this.outlet.component);
+            this.app.logger.updateCurrentComponent(this.outlet.component);
         });
     }
 

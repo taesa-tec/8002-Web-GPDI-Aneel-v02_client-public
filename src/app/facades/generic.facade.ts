@@ -1,6 +1,6 @@
-import { Subject } from 'rxjs';
+import {Subject} from 'rxjs';
 
-export class GenericFacade<T>{
+export class GenericFacade<T> {
 
     onUpdate = new Subject<{ prop: string; value: any; prev: any }>();
 
@@ -11,7 +11,7 @@ export class GenericFacade<T>{
                 set: (value) => {
                     const prev = this._data[key];
                     this._data[key] = value;
-                    this.onUpdate.next({ prop: key, value, prev });
+                    this.onUpdate.next({prop: key, value, prev});
                 }
             });
         });
