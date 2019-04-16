@@ -12,7 +12,6 @@ import {RecursosHumanosComponent} from '@app/projetos/projeto/common/recursos-hu
 import {RecursosMateriaisComponent} from '@app/projetos/projeto/common/recursos-materiais/recursos-materiais.component';
 import {EtapaAtividadesFormComponent} from './etapa-atividades-form/etapa-atividades-form.component';
 import {EditorsModule} from './editors/editors.module';
-import {UserAccessDirective} from './directives';
 import {LoggerModule} from '@app/logger/logger.module';
 
 
@@ -28,7 +27,6 @@ import {LoggerModule} from '@app/logger/logger.module';
         RecursosHumanosComponent,
         RecursosMateriaisComponent,
         EtapaAtividadesFormComponent,
-        UserAccessDirective,
     ],
     entryComponents: [
         ProdutoFormComponent,
@@ -50,7 +48,6 @@ import {LoggerModule} from '@app/logger/logger.module';
         LoggerModule,
         RecursosHumanosComponent,
         RecursosMateriaisComponent,
-        UserAccessDirective,
     ]
 
 })

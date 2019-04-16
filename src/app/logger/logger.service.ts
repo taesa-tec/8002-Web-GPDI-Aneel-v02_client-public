@@ -73,15 +73,15 @@ export class LoggerService {
     }
 
 
-    public submitLog(statusNovo: LogItem, statusAnterior?: LogItem) {
+    public submitLog(statusNovo: LogItem | string, statusAnterior?: LogItem | string, acao?: string, tela?: string) {
 
         const requestData: CreateLogProjetoRequest = {
             projetoId: this.projeto.id,
             userId: this.user.id,
-            acao: this.acao,
-            tela: this.tela,
-            statusAnterior: LoggerService.logItemToHtml(statusAnterior),
-            statusNovo: LoggerService.logItemToHtml(statusNovo)
+            acao: acao || this.acao,
+            tela: tela || this.tela,
+            statusAnterior: typeof statusAnterior === 'string' ? statusAnterior : LoggerService.logItemToHtml(statusAnterior),
+            statusNovo: typeof statusNovo === 'string' ? statusNovo : LoggerService.logItemToHtml(statusNovo)
         };
 
         console.log(requestData);

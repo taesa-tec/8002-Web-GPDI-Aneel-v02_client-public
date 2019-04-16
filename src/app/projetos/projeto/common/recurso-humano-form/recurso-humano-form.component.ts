@@ -129,7 +129,7 @@ export class RecursoHumanoFormComponent implements OnInit {
             request.subscribe(result => {
                 if (result.sucesso) {
                     this.activeModal.close(result);
-                    this.app.logger.submitLog(this.logger.getLog(), this.log);
+                    this.app.logger.submitLog(this.logger.getLog(), result.id ? '' : this.log);
                 } else {
                     this.app.alert(result.inconsistencias.join(', '));
                 }
@@ -148,6 +148,7 @@ export class RecursoHumanoFormComponent implements OnInit {
                         this.loading.hide();
                         if (resultDelete.sucesso) {
                             // this.logProjeto("Recurso Humano", "Delete");
+                            this.app.logger.submitLog('Excluído', this.log);
                             this.activeModal.close('deleted');
                         } else {
                             this.app.alert(resultDelete.inconsistencias.join(', '));

@@ -129,6 +129,7 @@ export class UsersService {
                         try {
                             const userp = this.niveisUsuarios[projetoAccess.catalogUserPermissao.valor];
                             const can = (userp & permissao) === permissao;
+                            console.log({can, userp});
                             observer.next(can);
                         } catch (error) {
 
@@ -151,6 +152,7 @@ export class UsersService {
             this.currentUserUpdated
                 .subscribe(user => {
                     if (user) {
+                        console.log({user});
                         if (user.role === UserRole.Administrador) {
                             return obsr.next(true);
                         }

@@ -23,9 +23,8 @@ import {TipoProjetoPipe} from './pipes/tipo-projeto.pipe';
 import {customCurrencyMaskConfig} from '@app/app.config';
 import {NgxCurrencyModule} from 'ngx-currency';
 import {FileService} from './file.service';
-import {DownloadFileDirective} from './download-file.directive';
+import {DownloadFileDirective, DynamicHostDirective, UserAccessDirective} from './directives';
 import {PromptComponent} from './prompt/prompt.component';
-import {DynamicHostDirective} from './dynamic-host.directive';
 import {N2arrayPipe} from './pipes/n2array.pipe';
 import {ErrorComponent} from './screens/error.component';
 import {DebugComponent} from './screens/debug.component';
@@ -45,12 +44,13 @@ library.add(fas, far);
         TipComponent,
         OrdersComponent,
         // Pipes
+        DownloadFileDirective,
+        DynamicHostDirective,
+        UserAccessDirective,
         NotDefinedPipe,
         OrderByPipe,
         TipoProjetoPipe,
-        DownloadFileDirective,
         PromptComponent,
-        DynamicHostDirective,
         N2arrayPipe,
         ErrorComponent,
         DebugComponent,
@@ -101,7 +101,8 @@ library.add(fas, far);
 
         // Directives
         DynamicHostDirective,
-        DownloadFileDirective
+        DownloadFileDirective,
+        UserAccessDirective
 
 
     ]

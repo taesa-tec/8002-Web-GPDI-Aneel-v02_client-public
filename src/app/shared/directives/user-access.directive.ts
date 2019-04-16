@@ -1,7 +1,7 @@
 import {Directive, ElementRef, Input, TemplateRef, ViewContainerRef} from '@angular/core';
 import {AppService} from '@app/app.service';
-import {User, NiveisUsuarios} from '@app/models';
-import {ProjetoFacade} from '@app/facades';
+import {NiveisUsuarios} from '@app/models';
+import {ProjetoFacade} from '@app/facades/index';
 
 @Directive({
     selector: '[appUserAccess], [appUserAdmin], [appUserAprovador], [appUserEscrita], [appUserLeitura]'
@@ -25,6 +25,7 @@ export class UserAccessDirective {
     }
 
     @Input('appUserEscrita') set userLeituraEscrita(value) {
+        console.log(this.element, value);
         this.update(NiveisUsuarios.leituraEscrita);
     }
 
