@@ -1,17 +1,17 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { CatalogsService } from '@app/catalogs/catalogs.service';
+import {Component, OnInit, ViewChild, Input, Output, EventEmitter} from '@angular/core';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {CatalogsService} from '@app/catalogs/catalogs.service';
 import {
     Empresa, ResultadoResponse, UserRole, Roles, AppValidators, User, CreateUserRequest,
     Projeto, Projetos
 } from '@app/models';
-import { UsersService } from '../users.service';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { Observable, Observer, zip, of, concat, throwError, timer, empty } from 'rxjs';
-import { Router } from '@angular/router';
-import { ProjetosService } from '@app/projetos/projetos.service';
-import { UserProjetosComponent } from '../user-projetos/user-projetos.component';
-import { mergeMap, last } from 'rxjs/operators';
+import {UsersService} from '../users.service';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {Observable, Observer, zip, of, concat, throwError, timer, empty} from 'rxjs';
+import {Router} from '@angular/router';
+import {ProjetosService} from '@app/projetos/projetos.service';
+import {UserProjetosComponent} from '../user-projetos/user-projetos.component';
+import {mergeMap, last} from 'rxjs/operators';
 
 @Component({
     selector: 'app-form',
@@ -19,12 +19,6 @@ import { mergeMap, last } from 'rxjs/operators';
     styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit {
-
-
-
-
-
-
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
     @ViewChild(UserProjetosComponent) userProjetos: UserProjetosComponent;
@@ -42,17 +36,18 @@ export class FormComponent implements OnInit {
     userId: string;
 
 
-
     constructor(
         protected catalog: CatalogsService,
         protected usersService: UsersService,
         protected projetoService: ProjetosService,
         protected router: Router
-    ) { }
+    ) {
+    }
 
     get empresaControl(): FormControl {
         return this.form.get('catalogEmpresaId') as FormControl;
     }
+
     get razaoSocial(): FormControl {
         return this.form.get('razaoSocial') as FormControl;
     }
@@ -68,7 +63,6 @@ export class FormComponent implements OnInit {
 
 
             this.userId = u.id;
-
             this.fotoPerfil = new FormGroup({
                 file: new FormControl(u.fotoPerfil ? u.fotoPerfil.file : '')
             });
@@ -91,7 +85,7 @@ export class FormComponent implements OnInit {
             }
 
             this.empresaControl.valueChanges.subscribe(r => {
-                if (r === "0") {
+                if (r === '0') {
                     this.form.addControl('razaoSocial', new FormControl(u.razaoSocial, [Validators.required]));
                 } else {
                     this.form.removeControl('razaoSocial');
@@ -103,7 +97,6 @@ export class FormComponent implements OnInit {
         });
 
 
-
     }
 
     onSubmit() {
@@ -111,7 +104,7 @@ export class FormComponent implements OnInit {
             this.loading.show();
 
             try {
-                if (this.form.value.catalogEmpresaId === "0") {
+                if (this.form.value.catalogEmpresaId === '0') {
                     this.form.value.catalogEmpresaId = null;
                 }
 
@@ -132,21 +125,20 @@ export class FormComponent implements OnInit {
                     .pipe(last());
 
 
-
                 //this.handler(this.form.value)
 
                 requests.subscribe(result => {
-                    console.log(result);
-                    this.loading.hide();
-                    this.submited.emit(result);
-                    this.resultado = result;
-                },
+                        console.log(result);
+                        this.loading.hide();
+                        this.submited.emit(result);
+                        this.resultado = result;
+                    },
                     error => {
 
                         console.log(error);
 
                         const r = {
-                            acao: "",
+                            acao: '',
                             sucesso: false,
                             inconsistencias: [error.message]
                         };

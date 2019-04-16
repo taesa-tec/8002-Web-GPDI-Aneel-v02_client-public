@@ -15,7 +15,7 @@ import {RegistroRefpDetailsComponent} from '../registro-refp-details/registro-re
 @Component({
     selector: 'app-extrato-financeiro-empresas',
     templateUrl: './extrato-financeiro-empresas.component.html',
-    styles: []
+    styleUrls: ['./extrato-financeiro-empresas.component.scss']
 })
 export class ExtratoFinanceiroEmpresasComponent implements OnInit {
 

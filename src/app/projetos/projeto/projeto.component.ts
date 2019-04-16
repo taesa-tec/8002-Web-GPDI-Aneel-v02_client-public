@@ -41,7 +41,7 @@ export class ProjetoComponent implements OnInit {
         ],
         iniciado: [
             {text: 'Inserir Registro REFP', icon: 'ta-edit', path: 'refp-inserir', nivel: NiveisUsuarios.leituraEscrita},
-            {text: 'Registros REFS', icon: 'ta-projeto', path: 'refp', nivel: NiveisUsuarios.leituraEscrita},
+            {text: 'Registros REFP', icon: 'ta-projeto', path: 'refp', nivel: NiveisUsuarios.leituraEscrita},
             {text: 'Extrato Financeiro Empresas', icon: 'ta-extrato', path: 'extrato-financeiro'},
             {text: 'Alterar Projeto', icon: 'ta-warning', path: 'alterar', nivel: NiveisUsuarios.admin},
             {text: 'Consultar Dados Planejamento Projeto', icon: 'ta-eye', path: 'consultar'},
@@ -133,7 +133,9 @@ export class ProjetoComponent implements OnInit {
 
         this.app.logger.updateCurrentComponent(this.outlet.component);
         this.app.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(e => {
-            this.app.logger.updateCurrentComponent(this.outlet.component);
+            if (this.outlet.isActivated) {
+                this.app.logger.updateCurrentComponent(this.outlet.component);
+            }
         });
     }
 

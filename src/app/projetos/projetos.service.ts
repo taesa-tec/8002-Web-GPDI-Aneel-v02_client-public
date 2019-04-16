@@ -129,7 +129,11 @@ export class ProjetosService {
     }
 
     getById(id: number) {
-        return this.http.get<Projeto>(`Projetos/${id}`).pipe(tap(p => this.projetoLoadedSource.next(new ProjetoFacade(p, this))), share());
+        return this.http.get<Projeto>(`Projetos/${id}`)
+            .pipe(
+                tap(p => this.projetoLoadedSource.next(new ProjetoFacade(p, this))),
+                share()
+            );
     }
 
     editar(projeto: Projeto) {

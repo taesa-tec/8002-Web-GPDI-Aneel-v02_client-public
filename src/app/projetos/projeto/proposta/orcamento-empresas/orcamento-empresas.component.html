@@ -16,13 +16,13 @@
             <div role="main">
                 <table class="table table-borderless m-0">
                     <tr *ngFor="let i of relatorio.items">
-                        <td width="25%">
-                            <span class="btn btn-link p-0" (click)="openModal(i)">{{i.desc}}</span>
+                        <td >
+                            <div class="btn btn-link p-0 text-left" (click)="openModal(i)">{{i.desc}}</div>
                         </td>
                         <td width="15%" *ngIf="projeto.isPD">
                             <span *ngIf="etapas[i.etapa.id]" [title]="etapas[i.etapa.id].desc"> Etapa {{etapas[i.etapa.id].numeroEtapa}}</span>
                         </td>
-                        <td>
+                        <td width="20%">
                             {{empresaRecebedoraFromItem(i)}}
                         </td>
                         <td class="text-right" width="15%">{{i.valor | currency:'R$'}}</td>

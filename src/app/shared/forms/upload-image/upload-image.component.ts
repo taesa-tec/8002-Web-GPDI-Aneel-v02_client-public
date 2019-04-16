@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, Input, ElementRef, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {Component, OnInit, ViewChild, Input, ElementRef, forwardRef} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
     selector: 'app-upload-image',
@@ -16,7 +16,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class UploadImageComponent implements OnInit, ControlValueAccessor {
 
 
-    constructor() { }
+    constructor() {
+    }
 
     previewImage: string;
 
@@ -37,8 +38,8 @@ export class UploadImageComponent implements OnInit, ControlValueAccessor {
 
         return !(
             this.value === null ||
-            typeof this.value === "undefined" ||
-            (typeof this.value === "string" && this.value.length === 0)
+            typeof this.value === 'undefined' ||
+            (typeof this.value === 'string' && this.value.length === 0)
         );
     }
 
@@ -51,8 +52,8 @@ export class UploadImageComponent implements OnInit, ControlValueAccessor {
 
     set value(val) {
         if (this.asBase64) {
-            const p = (val as string).split(',')[1];
-            this.file = p;
+            const p = (val as string).split(',');
+            this.file = p.length > 1 ? p[1] : p[0];
             this.previewImage = `data:image/jpeg;base64,${this.file}`;
         } else {
             this.file = val;
@@ -64,18 +65,20 @@ export class UploadImageComponent implements OnInit, ControlValueAccessor {
     get style() {
         if (this.previewImage) {
             return {
-                "background-image": `url(${this.previewImage})`
+                'background-image': `url(${this.previewImage})`
             };
         }
         return {};
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+    }
 
     elOnChange(event: Event) {
         const input = event.target as HTMLInputElement;
         this.changeFile(input.files);
     }
+
     onDrop(event: DragEvent) {
         event.preventDefault();
         this.changeFile(event.dataTransfer.files);
@@ -106,15 +109,19 @@ export class UploadImageComponent implements OnInit, ControlValueAccessor {
             (this.input.nativeElement as HTMLInputElement).value = '';
         }
     }
-    onChange: any = () => { };
 
-    onTouched: any = () => { };
+    onChange: any = () => {
+    };
+
+    onTouched: any = () => {
+    };
 
     writeValue(value: any) {
         if (value) {
             this.value = value;
         }
     }
+
     registerOnChange(fn: any) {
         this.onChange = fn;
     }
