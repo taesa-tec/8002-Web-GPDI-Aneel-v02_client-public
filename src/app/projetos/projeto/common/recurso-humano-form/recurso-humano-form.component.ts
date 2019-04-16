@@ -129,7 +129,7 @@ export class RecursoHumanoFormComponent implements OnInit {
             request.subscribe(result => {
                 if (result.sucesso) {
                     this.activeModal.close(result);
-                    this.app.logger.submitLog(this.logger.getLog(), result.id ? '' : this.log);
+                    this.logger.save(result.id ? '' : this.log);
                 } else {
                     this.app.alert(result.inconsistencias.join(', '));
                 }

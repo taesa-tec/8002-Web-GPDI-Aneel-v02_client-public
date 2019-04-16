@@ -152,7 +152,6 @@ export class UsersService {
             this.currentUserUpdated
                 .subscribe(user => {
                     if (user) {
-                        console.log({user});
                         if (user.role === UserRole.Administrador) {
                             return obsr.next(true);
                         }

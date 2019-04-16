@@ -8,10 +8,10 @@ import {NavigationEnd, Router} from '@angular/router';
 import {CreateLogProjetoRequest} from '@app/models';
 
 const method2action = {
-    'POST': 'Criar',
-    'PUT': 'Editar',
-    'DELETE': 'Deletar',
-    'GET': 'Ler'
+    'POST': 'Create',
+    'PUT': 'Update',
+    'DELETE': 'Delete',
+    'GET': 'Read'
 };
 
 @Injectable({
@@ -73,17 +73,24 @@ export class LoggerService {
     }
 
 
-    public submitLog(statusNovo: LogItem | string, statusAnterior?: LogItem | string, acao?: string, tela?: string) {
+    public submitLog(statusNovo: LogItem | string, statusAnterior?: LogItem | string, acao?: 'Create' | 'Update' | 'Delete', tela?: string, projetoId?: any, userId?: string) {
 
         const requestData: CreateLogProjetoRequest = {
-            projetoId: this.projeto.id,
-            userId: this.user.id,
+            projetoId: projetoId || (this.projeto ? this.projeto.id : 0),
+            userId: userId || this.user.id,
             acao: acao || this.acao,
             tela: tela || this.tela,
             statusAnterior: typeof statusAnterior === 'string' ? statusAnterior : LoggerService.logItemToHtml(statusAnterior),
             statusNovo: typeof statusNovo === 'string' ? statusNovo : LoggerService.logItemToHtml(statusNovo)
         };
 
-        console.log(requestData);
+        return this.ps.criarLogProjeto(requestData).subscribe(result => {
+            console.log(result);
+        });
     }
+
+    public simpleLog(log: string, acao?: 'Create' | 'Update' | 'Delete', tela?: string, projetoId?: any, userId?: string) {
+        return this.submitLog(log, '', acao, tela, projetoId, userId);
+    }
+
 }

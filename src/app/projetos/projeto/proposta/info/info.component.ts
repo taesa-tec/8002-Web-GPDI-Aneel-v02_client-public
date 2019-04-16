@@ -6,6 +6,7 @@ import {LoadingComponent} from '@app/shared/loading/loading.component';
 import {AppService} from '@app/app.service';
 import {ProjetoFacade} from '@app/facades';
 import {ScreenName} from '@app/decorators';
+import {LoggerDirective} from '@app/logger/logger.directive';
 
 @ScreenName({name: 'Projeto'})
 @Component({
@@ -23,6 +24,7 @@ export class InfoComponent implements OnInit {
     segmentos: Array<Segmento>;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoggerDirective) logger: LoggerDirective;
 
     public numeroPatterns = {
         'S': {pattern: /[A-Za-z]/, optional: true},
@@ -77,6 +79,7 @@ export class InfoComponent implements OnInit {
                 if (resultado.sucesso) {
                     this.app.alert('Salvo com sucesso');
                     this.projeto = Object.assign(this.projeto, this.form.value);
+                    this.logger.saveChanges('Update');
                 } else {
                     this.app.alert(resultado.inconsistencias);
                 }

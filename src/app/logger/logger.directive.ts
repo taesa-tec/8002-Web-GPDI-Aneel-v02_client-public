@@ -1,23 +1,17 @@
 import {
     AfterViewInit,
-    Attribute,
     ContentChildren,
     Directive,
     ElementRef,
     EventEmitter,
-    Host,
     Input,
-    OnChanges,
-    OnInit,
-    Optional,
     Output,
     QueryList,
-    Self,
-    SimpleChanges,
-    ViewChildren
 } from '@angular/core';
 import {FormControl, FormControlDirective, FormGroup, NgControl} from '@angular/forms';
 import {LogItem, TextValue} from '@app/models';
+import {ProjetosService} from '@app/projetos/projetos.service';
+import {LoggerService} from '@app/logger/logger.service';
 
 
 @Directive({
@@ -29,6 +23,10 @@ export class LoggerItemDirective implements AfterViewInit {
     @Input('formControlName') controlName;
 
     ngAfterViewInit(): void {
+    }
+
+    get changed() {
+        return this.control.touched;
     }
 
     get value() {
@@ -61,17 +59,37 @@ export class LoggerDirective implements AfterViewInit {
     @Input('formGroup') form: FormGroup;
     @Output() initialLog: EventEmitter<LogItem> = new EventEmitter();
 
-    ngAfterViewInit(): void {
-        this.initialLog.emit(this.getLog());
+    protected _firstLog: LogItem;
+
+    get firstLog() {
+        return this._firstLog;
     }
 
-    getLog(): LogItem {
-        return this.items.map(item => {
-            return {
-                text: item.title,
-                value: item.value
-            };
-        });
+    constructor(protected logger: LoggerService) {
+    }
+
+    ngAfterViewInit(): void {
+        this._firstLog = this.getLog();
+        this.initialLog.emit(this.firstLog);
+    }
+
+    getLog(onlyChanges: boolean = false): LogItem {
+        return this.items
+            .filter(item => !onlyChanges || item.changed)
+            .map(item => {
+                return {
+                    text: item.title,
+                    value: item.value
+                };
+            });
+    }
+
+    save(statusAnterior?: LogItem | string, acao?: 'Create' | 'Update' | 'Delete', tela?: string, projetoId?: any, userId?: string) {
+        return this.logger.submitLog(this.getLog(), statusAnterior, acao, tela, projetoId, userId);
+    }
+
+    saveChanges(acao?: 'Create' | 'Update' | 'Delete', tela?: string, projetoId?: any, userId?: string) {
+        return this.logger.submitLog(this.getLog(true), this.firstLog, acao, tela, projetoId, userId);
     }
 
 }
