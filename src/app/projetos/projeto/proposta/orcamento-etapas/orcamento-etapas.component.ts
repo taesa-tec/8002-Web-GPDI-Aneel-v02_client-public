@@ -1,15 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
-import { zip, of } from 'rxjs';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {map} from 'rxjs/operators';
+import {zip, of} from 'rxjs';
 
-import { AppService } from '@app/app.service';
-import { Projeto, Etapa, TextValue, CategoriasContabeis, ExtratosEtapas, ExtratoItem } from '@app/models';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { AlocarRecursoHumanoFormComponent } from '@app/projetos/projeto/common/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
-import { AlocarRecursoMaterialFormComponent } from '@app/projetos/projeto/common/alocar-recurso-material-form/alocar-recurso-material-form.component';
-import { ProjetoFacade } from '@app/facades';
+import {AppService} from '@app/app.service';
+import {Projeto, Etapa, TextValue, CategoriasContabeis, ExtratosEtapas, ExtratoItem} from '@app/models';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {AlocarRecursoHumanoFormComponent} from '@app/projetos/projeto/common/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
+import {AlocarRecursoMaterialFormComponent} from '@app/projetos/projeto/common/alocar-recurso-material-form/alocar-recurso-material-form.component';
+import {ProjetoFacade} from '@app/facades';
 
 @Component({
     selector: 'app-orcamento-etapas',
@@ -22,7 +22,7 @@ export class OrcamentoEtapasComponent implements OnInit {
     extrato: ExtratosEtapas;
     etapas: { [propName: number]: Etapa } = {};
     categoriasContabeis: { [propName: string]: TextValue } = {
-        "RH": { text: "Recursos Humanos", value: "RH" }
+        'RH': {text: 'Recursos Humanos', value: 'RH'}
     };
 
     alocacoesRH: Array<any> = [];
@@ -33,6 +33,7 @@ export class OrcamentoEtapasComponent implements OnInit {
     get extratoEtapas() {
         return this.extrato ? this.extrato.etapas.filter(e => e.total > 0) : [];
     }
+
     get totalGeral() {
         return this.extrato ? this.extrato.valor : 0;
     }
@@ -45,13 +46,13 @@ export class OrcamentoEtapasComponent implements OnInit {
             this.categoriasContabeis[c.value] = c;
         });
     }
+
     categoriaPorCod(cod) {
         if (this.categoriasContabeis[cod]) {
             return this.categoriasContabeis[cod].text;
         }
         return '';
     }
-
 
 
     ngOnInit() {
@@ -75,26 +76,27 @@ export class OrcamentoEtapasComponent implements OnInit {
             this.extrato = extrato;
             this.alocacoesRH = alocacoesRH;
             this.alocacoesRM = alocacoesRM;
-
-            etapas.forEach((etapa, index) => {
-                this.etapas[etapa.id] = Object.assign(etapa, { numeroEtapa: index + 1 });
-            });
+            if (etapas) {
+                etapas.forEach((etapa, index) => {
+                    this.etapas[etapa.id] = Object.assign(etapa, {numeroEtapa: index + 1});
+                });
+            }
 
             this.loading.hide();
         });
     }
 
-    openModal(item: ExtratoItem) {
+    openModal(item: ExtratoItem, itens: Array<any>) {
         let modal: NgbModalRef;
 
         if (item.recursoHumano) {
             const alocacao = this.alocacoesRH.find(a => a.id === item.alocacaoId);
-            modal = this.app.modal.open(AlocarRecursoHumanoFormComponent, { size: 'lg' });
+            modal = this.app.modal.open(AlocarRecursoHumanoFormComponent, {size: 'lg'});
             modal.componentInstance.alocacao = alocacao;
 
         } else if (item.recursoMaterial) {
             const alocacao = this.alocacoesRM.find(a => a.id === item.alocacaoId);
-            modal = this.app.modal.open(AlocarRecursoMaterialFormComponent, { size: 'lg' });
+            modal = this.app.modal.open(AlocarRecursoMaterialFormComponent, {size: 'lg'});
             modal.componentInstance.alocacao = alocacao;
         }
 
@@ -102,17 +104,21 @@ export class OrcamentoEtapasComponent implements OnInit {
             modal.componentInstance.projeto = this.projeto;
             modal.result.then(result => {
                 console.log(result);
+                if (result === 'deleted') {
+                    itens.splice(itens.indexOf(item), 1);
+                }
             }, error => {
 
             });
         }
     }
+
     orcamentoGerarCSV() {
         this.projeto.orcamentoGerarCSV().subscribe(result => {
 
         }, error => {
-            this.app.alert("Não foi possível gerar o relatório", "Erro!");
-            console.log({ error });
+            this.app.alert('Não foi possível gerar o relatório', 'Erro!');
+            console.log({error});
 
         });
     }

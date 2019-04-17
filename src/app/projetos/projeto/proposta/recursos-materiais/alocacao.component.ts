@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AlocarRecursoMaterialFormComponent } from '@app/projetos/projeto/common/alocar-recurso-material-form/alocar-recurso-material-form.component';
-import { ProjetosService } from '@app/projetos/projetos.service';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ActivatedRoute } from '@angular/router';
-import { map, mergeMap } from 'rxjs/operators';
-import { Projeto, AlocacaoRM, CategoriasContabeis, EmpresaProjeto } from '@app/models';
-import { zip, of } from 'rxjs';
-import { AppService } from '@app/app.service';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { EmpresaProjetoFacade, ProjetoFacade } from '@app/facades';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {AlocarRecursoMaterialFormComponent} from '@app/projetos/projeto/common/alocar-recurso-material-form/alocar-recurso-material-form.component';
+import {ProjetosService} from '@app/projetos/projetos.service';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {ActivatedRoute} from '@angular/router';
+import {map, mergeMap} from 'rxjs/operators';
+import {Projeto, AlocacaoRM, CategoriasContabeis, EmpresaProjeto} from '@app/models';
+import {zip, of} from 'rxjs';
+import {AppService} from '@app/app.service';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {EmpresaProjetoFacade, ProjetoFacade} from '@app/facades';
 
 @Component({
     selector: 'app-alocacao',
@@ -28,7 +28,8 @@ export class AlocacaoComponent implements OnInit {
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
-    constructor(protected app: AppService) { }
+    constructor(protected app: AppService) {
+    }
 
     ngOnInit() {
         this.loadData();
@@ -49,13 +50,13 @@ export class AlocacaoComponent implements OnInit {
             this.projeto = projeto;
             if (this.projeto.isPG) {
                 this.categoriaContabel = categoriasContabeisGestao.map(cat => {
-                    return { text: cat.nome, value: String(cat.id), atividades: cat.atividades };
+                    return {text: cat.nome, value: String(cat.id), atividades: cat.atividades};
                 });
             }
 
             this.alocacoes = alocacoes.map(aloc => {
                 aloc.empresaFinanciadora = new EmpresaProjetoFacade(aloc.empresaFinanciadora);
-                aloc.empresaRecebedora = new EmpresaProjetoFacade(aloc.empresaRecebedora);
+                aloc.empresaRecebedora = this.projeto.isPD ? new EmpresaProjetoFacade(aloc.empresaRecebedora) : aloc.empresaFinanciadora;
                 if (aloc.recursoMaterial) {
                     try {
                         if (this.projeto.isPD) {
@@ -64,7 +65,7 @@ export class AlocacaoComponent implements OnInit {
                             aloc.categoriaContabelNome = this.categoriaContabel.find(e => String(aloc.recursoMaterial.catalogCategoriaContabilGestaoId) === e.value).text;
                         }
                     } catch (err) {
-                        aloc.categoriaContabelNome = "Não encontrado";
+                        aloc.categoriaContabelNome = 'Não encontrado';
                     }
                 }
 
@@ -77,7 +78,7 @@ export class AlocacaoComponent implements OnInit {
     }
 
     openModal(alocacao: AlocacaoRM | {} = {}) {
-        const modalRef = this.app.modal.open(AlocarRecursoMaterialFormComponent, { size: 'lg' });
+        const modalRef = this.app.modal.open(AlocarRecursoMaterialFormComponent, {size: 'lg'});
         modalRef.componentInstance.alocacao = alocacao;
         modalRef.componentInstance.projeto = this.projeto;
 

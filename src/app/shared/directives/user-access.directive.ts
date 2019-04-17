@@ -25,7 +25,6 @@ export class UserAccessDirective {
     }
 
     @Input('appUserEscrita') set userLeituraEscrita(value) {
-        console.log(this.element, value);
         this.update(NiveisUsuarios.leituraEscrita);
     }
 

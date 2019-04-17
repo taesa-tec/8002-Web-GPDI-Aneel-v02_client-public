@@ -1,13 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AppService } from '@app/app.service';
-import { Projeto, Etapa, EmpresaProjeto, RecursoHumano, AlocacaoRH } from '@app/models';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { zip } from 'rxjs';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
-import { EmpresaProjetoFacade, ProjetoFacade } from '@app/facades';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {AppService} from '@app/app.service';
+import {Projeto, Etapa, EmpresaProjeto, RecursoHumano, AlocacaoRH} from '@app/models';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {zip} from 'rxjs';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {HttpErrorResponse} from '@angular/common/http';
+import {EmpresaProjetoFacade, ProjetoFacade} from '@app/facades';
 import * as moment from 'moment';
+import {LoggerDirective} from '@app/logger/logger.directive';
 
 @Component({
     selector: 'app-alocar-recurso-humano-form',
@@ -30,31 +31,34 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
     mesInicial: moment.Moment = moment();
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoggerDirective) logger: LoggerDirective;
 
     constructor(
         public activeModal: NgbActiveModal,
-        protected app: AppService) { }
+        protected app: AppService) {
+    }
 
     get modalTitle() {
-        return typeof this.alocacao.id !== 'undefined' ? "Editar Alocação Recurso Humano" : "Alocar Recurso Humano";
+        return typeof this.alocacao.id !== 'undefined' ? 'Editar Alocação Recurso Humano' : 'Alocar Recurso Humano';
     }
 
     get buttonAction() {
-        return typeof this.alocacao.id !== 'undefined' ? { text: "Salvar Alterações", icon: 'ta-save' } :
-            { text: "Alocar Recurso Humano", icon: 'ta-plus-circle' };
+        return typeof this.alocacao.id !== 'undefined' ? {text: 'Salvar Alterações', icon: 'ta-save'} :
+            {text: 'Alocar Recurso Humano', icon: 'ta-plus-circle'};
     }
 
     get empresasFinanciadoras() {
         if (this.recursoHumano) {
             return this.empresas.filter(item => {
-                if (this.recursoHumano.empresa !== undefined && this.recursoHumano.empresa.classificacaoValor !== "Executora") {
+                if (this.recursoHumano.empresa !== undefined && this.recursoHumano.empresa.classificacaoValor !== 'Executora') {
                     return this.recursoHumano.empresa.id === item.id;
                 }
-                return item.classificacaoValor !== "Executora";
+                return item.classificacaoValor !== 'Executora';
             });
         }
         return [];
     }
+
     get recursoHumano() {
         const recursoHumano = this.form.get('recursoHumanoId');
         return recursoHumano ? this.recursosHumanos.find(r => r.id === parseInt(recursoHumano.value, 10)) : null;
@@ -123,7 +127,10 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
         zip(recursosHumanos$, etapas$, empresas$).subscribe(([recursosHumanos, etapas, empresas]) => {
 
             if (etapas) {
-                this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; });
+                this.etapas = etapas.map((etapa, i) => {
+                    etapa.numeroEtapa = i + 1;
+                    return etapa;
+                });
             }
             this.recursosHumanos = recursosHumanos;
             this.empresas = empresas;
@@ -136,7 +143,7 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
         for (let i = 1; i <= this.totalMeses; i++) {
             const value = this.alocacao[`hrsMes${i}`] || '';
             this.form.addControl(`hrsMes${i}`, new FormControl(value, [Validators.required, (control) => {
-                return parseFloat(control.value) > this.maxHora ? { max: true } : null;
+                return parseFloat(control.value) > this.maxHora ? {max: true} : null;
             }]));
         }
     }
@@ -154,8 +161,12 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
             this.loading.show();
             request.subscribe(result => {
                 if (result.sucesso) {
-                    // this.logProjeto("Alocação de Recurso Humano");
                     this.activeModal.close(result);
+                    if (this.form.get('id')) {
+                        this.logger.saveUpdate();
+                    } else {
+                        this.logger.saveCreate();
+                    }
                 } else {
                     this.app.alert(result.inconsistencias.join(', '));
                 }
@@ -165,14 +176,13 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
     }
 
     excluir() {
-        this.app.confirm("Tem certeza que deseja excluir esta alocação do recurso humano?", "Confirmar Exclusão")
+        this.app.confirm('Tem certeza que deseja excluir esta alocação do recurso humano?', 'Confirmar Exclusão')
             .then(result => {
                 if (result) {
                     this.loading.show();
                     this.app.projetos.delAlocacaoRH(this.alocacao.id).subscribe(resultDelete => {
                         this.loading.hide();
                         if (resultDelete.sucesso) {
-                            this.logProjeto("Alocação de Recurso Humano", "Delete");
                             this.activeModal.close('deleted');
                         } else {
                             this.app.alert(resultDelete.inconsistencias.join(', '));
@@ -192,20 +202,20 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
             userId: this.app.users.currentUser.id,
             projetoId: this.projeto.id,
             tela,
-            acao: acao || "Create",
-            statusAnterior: "",
-            statusNovo: ""
+            acao: acao || 'Create',
+            statusAnterior: '',
+            statusNovo: ''
         };
 
-        let horas_string = "";
+        let horas_string = '';
 
-        const rh = this.recursosHumanos.find(e => e.id === parseInt(this.form.get("recursoHumanoId").value, 10));
-        const empresa = this.empresas.find(e => e.id === parseInt(this.form.get("empresaId").value, 10));
-        const etapa = this.etapas.find(e => e.id === parseInt(this.form.get("etapaId").value, 10));
-        const justificativa = this.form.get("justificativa").value;
+        const rh = this.recursosHumanos.find(e => e.id === parseInt(this.form.get('recursoHumanoId').value, 10));
+        const empresa = this.empresas.find(e => e.id === parseInt(this.form.get('empresaId').value, 10));
+        const etapa = this.etapas.find(e => e.id === parseInt(this.form.get('etapaId').value, 10));
+        const justificativa = this.form.get('justificativa').value;
 
         this.horasAlocadas.forEach(horas => {
-            horas_string += horas.form.value + "h ";
+            horas_string += horas.form.value + 'h ';
         });
 
         logProjeto.statusNovo = `<b>Recurso Humano:</b> ${rh.nomeCompleto}<br>
@@ -214,8 +224,8 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
         <b>Horas:</b> ${horas_string}<br>
         <b>Justificativa do Recurso:</b> ${justificativa}<br>`;
 
-        if (acao === "Delete") {
-            logProjeto.statusNovo = "";
+        if (acao === 'Delete') {
+            logProjeto.statusNovo = '';
         }
 
         if (this.alocacao.id !== undefined) {
@@ -225,9 +235,9 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
             const _etapa = this.etapas.find(e => e.id === this.alocacao.etapaId);
             const _justificativa = this.alocacao.justificativa;
 
-            horas_string = "";
+            horas_string = '';
             for (let i = 1; i <= 6; i++) {
-                horas_string += this.alocacao["hrsMes" + i] + "h ";
+                horas_string += this.alocacao['hrsMes' + i] + 'h ';
             }
 
 
@@ -237,7 +247,7 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
         <b>Horas:</b> ${horas_string}<br>
         <b>Justificativa do Recurso:</b> ${_justificativa}<br>`;
 
-            logProjeto.acao = acao || "Update";
+            logProjeto.acao = acao || 'Update';
         }
 
         const request = this.app.projetos.criarLogProjeto(logProjeto);

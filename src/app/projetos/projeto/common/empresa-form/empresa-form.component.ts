@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
-import { NgbActiveModal, NgbTabChangeEvent, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
-import { EmpresaProjeto, Projeto, Empresa, UF, AppValidators } from '@app/models';
-import { AppService } from '@app/app.service';
-import { FormGroup, FormControl } from '@angular/forms';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ProjetoFacade } from '@app/facades';
+import {Component, OnInit, Input, ViewChild, AfterViewInit} from '@angular/core';
+import {NgbActiveModal, NgbTabChangeEvent, NgbTabset} from '@ng-bootstrap/ng-bootstrap';
+import {EmpresaProjeto, Projeto, Empresa, UF, AppValidators} from '@app/models';
+import {AppService} from '@app/app.service';
+import {FormGroup, FormControl} from '@angular/forms';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ProjetoFacade} from '@app/facades';
 
 @Component({
     selector: 'app-empresa-form',
@@ -31,20 +31,21 @@ export class EmpresaFormComponent implements OnInit, AfterViewInit {
     @ViewChild(LoadingComponent) loading: LoadingComponent;
     @ViewChild(NgbTabset) tabs: NgbTabset;
 
-    constructor(public activeModal: NgbActiveModal, protected app: AppService) { }
+    constructor(public activeModal: NgbActiveModal, protected app: AppService) {
+    }
 
     ngOnInit() {
         if (this.empresa.classificacaoValor) {
 
             this.tabFixed = true;
             switch (this.empresa.classificacaoValor) {
-                case "Energia":
+                case 'Energia':
                     this.tabs.activeId = 'cooperada';
                     break;
-                case "Executora":
+                case 'Executora':
                     this.tabs.activeId = 'executora';
                     break;
-                case "Parceira":
+                case 'Parceira':
                     this.tabs.activeId = 'parceira';
                     break;
                 default:
@@ -59,6 +60,7 @@ export class EmpresaFormComponent implements OnInit, AfterViewInit {
             return pe.catalogEmpresaId === empresa.id;
         }) === undefined || (this.empresa && this.empresa.catalogEmpresaId === empresa.id));
     }
+
     ngAfterViewInit() {
 
     }
@@ -82,11 +84,16 @@ export class EmpresaFormComponent implements OnInit, AfterViewInit {
         this.formParceira = new FormGroup({
             projetoId, classificacao: new FormControl('Parceira'), cnpj, razaoSocial
         });
+        if (this.empresa.id) {
+            [this.formCooperada, this.formExecutora, this.formParceira]
+                .forEach(f => f.setControl('id', new FormControl(this.empresa.id)));
+        }
     }
 
     setTab(tab) {
 
     }
+
     beforeChangeTab(event: NgbTabChangeEvent) {
         if (this.tabFixed) {
             event.preventDefault();
@@ -113,6 +120,7 @@ export class EmpresaFormComponent implements OnInit, AfterViewInit {
             this.loading.show();
             const request = this.empresa.id ? this.app.projetos.editarEmpresa(form.value) :
                 this.app.projetos.criarEmpresa(form.value);
+
             request.subscribe(result => {
                 this.loading.hide();
                 if (result.sucesso) {
@@ -123,8 +131,9 @@ export class EmpresaFormComponent implements OnInit, AfterViewInit {
             });
         }
     }
+
     excluirEmpresa() {
-        this.app.confirm("Tem certeza que deseja excluir esta empresa?", "Confirmar Exclusão")
+        this.app.confirm('Tem certeza que deseja excluir esta empresa?', 'Confirmar Exclusão')
             .then(result => {
                 if (result) {
                     this.loading.show();

@@ -1,15 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
-import { zip, of } from 'rxjs';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {map} from 'rxjs/operators';
+import {zip, of} from 'rxjs';
 
-import { AppService } from '@app/app.service';
-import { Projeto, OrcamentosEmpresas, Etapa, TextValue, CategoriasContabeis, ExtratoItem, ResultadoResponse, Empresa, EmpresaProjeto } from '@app/models';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { AlocarRecursoHumanoFormComponent } from '@app/projetos/projeto/common/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
-import { AlocarRecursoMaterialFormComponent } from '@app/projetos/projeto/common/alocar-recurso-material-form/alocar-recurso-material-form.component';
-import { ProjetoFacade, EmpresaProjetoFacade } from '@app/facades';
+import {AppService} from '@app/app.service';
+import {Projeto, OrcamentosEmpresas, Etapa, TextValue, CategoriasContabeis, ExtratoItem, ResultadoResponse, Empresa, EmpresaProjeto} from '@app/models';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {AlocarRecursoHumanoFormComponent} from '@app/projetos/projeto/common/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
+import {AlocarRecursoMaterialFormComponent} from '@app/projetos/projeto/common/alocar-recurso-material-form/alocar-recurso-material-form.component';
+import {ProjetoFacade, EmpresaProjetoFacade} from '@app/facades';
 
 @Component({
     selector: 'app-orcamento-empresas',
@@ -27,7 +27,7 @@ export class OrcamentoEmpresasComponent implements OnInit {
     alocacoesRM: Array<any> = [];
 
     categoriasContabeis: { [propName: string]: TextValue } = {
-        "RH": { text: "Recursos Humanos", value: "RH" }
+        'RH': {text: 'Recursos Humanos', value: 'RH'}
     };
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
@@ -35,6 +35,7 @@ export class OrcamentoEmpresasComponent implements OnInit {
     get extratoEmpresas() {
         return this.extrato ? this.extrato.empresas.filter(e => e.total > 0) : [];
     }
+
     get totalGeral() {
         return this.extrato ? this.extrato.valor : 0;
     }
@@ -51,20 +52,20 @@ export class OrcamentoEmpresasComponent implements OnInit {
         }
         return '';
     }
+
     empresaRecebedoraFromItem(item) {
         const id = item.alocacaoRm ? item.alocacaoRm.empresaRecebedoraId : item.alocacaoRh.empresaId;
         const empresa = this.empresas.find(e => e.id === id);
         if (id === undefined) {
-            console.log({ item, empresa, id, empresas: this.empresas });
+            console.log({item, empresa, id, empresas: this.empresas});
         }
 
         if (empresa) {
 
             return empresa.nome;
         }
-        return "Não encontrado";
+        return 'Não encontrado';
     }
-
 
 
     ngOnInit() {
@@ -89,24 +90,24 @@ export class OrcamentoEmpresasComponent implements OnInit {
                 this.alocacoesRM = alocacoesRM;
 
                 etapas.forEach((etapa, index) => {
-                    this.etapas[etapa.id] = Object.assign(etapa, { numeroEtapa: index + 1 });
+                    this.etapas[etapa.id] = Object.assign(etapa, {numeroEtapa: index + 1});
                 });
 
                 this.loading.hide();
             });
     }
 
-    openModal(item: ExtratoItem) {
+    openModal(item: ExtratoItem, itens: Array<any>) {
         let modal: NgbModalRef;
 
         if (item.recursoHumano) {
             const alocacao = this.alocacoesRH.find(a => a.id === item.alocacaoId);
-            modal = this.app.modal.open(AlocarRecursoHumanoFormComponent, { size: 'lg' });
+            modal = this.app.modal.open(AlocarRecursoHumanoFormComponent, {size: 'lg'});
             modal.componentInstance.alocacao = alocacao;
 
         } else if (item.recursoMaterial) {
             const alocacao = this.alocacoesRM.find(a => a.id === item.alocacaoId);
-            modal = this.app.modal.open(AlocarRecursoMaterialFormComponent, { size: 'lg' });
+            modal = this.app.modal.open(AlocarRecursoMaterialFormComponent, {size: 'lg'});
             modal.componentInstance.alocacao = alocacao;
         }
 
@@ -114,17 +115,21 @@ export class OrcamentoEmpresasComponent implements OnInit {
             modal.componentInstance.projeto = this.projeto;
             modal.result.then(result => {
                 console.log(result);
+                if (result === 'deleted') {
+                    itens.splice(itens.indexOf(item), 1);
+                }
             }, error => {
 
             });
         }
     }
+
     orcamentoGerarCSV() {
         this.projeto.orcamentoGerarCSV().subscribe(result => {
 
         }, error => {
-            this.app.alert("Não foi possível gerar o relatório", "Erro!");
-            console.log({ error });
+            this.app.alert('Não foi possível gerar o relatório', 'Erro!');
+            console.log({error});
 
         });
     }

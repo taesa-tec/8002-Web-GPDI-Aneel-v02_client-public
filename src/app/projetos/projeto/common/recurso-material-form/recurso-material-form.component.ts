@@ -116,7 +116,7 @@ export class RecursoMaterialFormComponent implements OnInit {
                     this.app.projetos.delRecursoMaterial(this.recursoMaterial.id).subscribe(resultDelete => {
                         this.loading.hide();
                         if (resultDelete.sucesso) {
-                            this.logProjeto("Recursos Materiais", "Delete");
+                            // this.logProjeto("Recursos Materiais", "Delete");
                             this.activeModal.close('deleted');
                         } else {
                             this.app.alert(resultDelete.inconsistencias.join(', '));

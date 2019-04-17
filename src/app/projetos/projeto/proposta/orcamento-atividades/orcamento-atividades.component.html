@@ -17,7 +17,7 @@
                 <table class="table table-borderless m-0">
                     <tr *ngFor="let i of r.items">
                         <td width="25%">
-                            <span class="btn btn-link p-0" (click)="openModal(i)">{{i.desc}}</span>
+                            <span class="btn btn-link p-0" (click)="openModal(i, r.items)">{{i.desc}}</span>
                         </td>
                         <td width="15%">
                             {{categoriaPorCod(i.categoriaContabil)}}

@@ -1,13 +1,13 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { AppService } from '@app/app.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Projeto, ResultadoResponse, XmlType } from '@app/models';
-import { Subscription } from 'rxjs';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { tap } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ProjetoFacade } from '@app/facades';
+import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
+import {AppService} from '@app/app.service';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {Projeto, ResultadoResponse, XmlType} from '@app/models';
+import {Subscription} from 'rxjs';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {tap} from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ProjetoFacade} from '@app/facades';
 
 @Component({
     selector: 'app-geracao-xml',
@@ -19,7 +19,6 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
 
     projeto: ProjetoFacade;
     form: FormGroup;
-
 
 
     // Projeto Pesquisa E Desenvolvimento
@@ -37,7 +36,6 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
     XmlInicioExecucao: FormControl = new FormControl('', [Validators.required]);
 
 
-
     avaliacaoResult: ResultadoResponse;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
@@ -48,7 +46,8 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
         return []; // this.avaliacaoResult ? this.avaliacaoResult.inconsistencias : [];
     }
 
-    constructor(protected app: AppService) { }
+    constructor(protected app: AppService) {
+    }
 
     ngOnInit() {
 
@@ -88,6 +87,7 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
             this.avaliacaoResult = result;
         }));
     }
+
     ngOnDestroy() {
         if (this.projetoLoaded) {
             this.projetoLoaded.unsubscribe();
@@ -103,6 +103,7 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
             this.loading.hide();
         });
     }
+
     gerarXmlInicioExecucao() {
         this.gerarXml(XmlType.InicioExecucaoProjeto, this.XmlInicioExecucao.value);
     }
@@ -111,12 +112,15 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
     gerarXmlProjetoPed() {
         this.gerarXml(XmlType.ProjetoPed, this.XmlProjetoPed.value);
     }
+
     gerarXmlInteresseExecucao() {
         this.gerarXml(XmlType.InteresseProjetoPed, this.XmlInteresseExecucao.value);
     }
+
     gerarXmlRelatorioFinal() {
-        this.gerarXml(XmlType.RelatorioFinalPed, this.XmlInicioExecucao.value);
+        this.gerarXml(XmlType.RelatorioFinalPed, this.XmlRelatorioFinal.value);
     }
+
     gerarXmlAuditoriaContabil() {
         this.gerarXml(XmlType.RelatorioAuditoriaPed, this.XmlAuditoriaContabil.value);
     }
@@ -125,9 +129,11 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
     gerarXmlProjetoGestao() {
         this.gerarXml(XmlType.ProjetoGestao, this.XmlProjetoGestao.value);
     }
+
     gerarXmlRelatorioFinalGestao() {
         this.gerarXml(XmlType.RelatorioFinalGestao, this.XmlRelatorioFinalGestao.value);
     }
+
     gerarXmlRelatorioAuditoriaGestao() {
         this.gerarXml(XmlType.RelatorioAuditoriaGestao, this.XmlRelatorioAuditoriaGestao.value);
     }

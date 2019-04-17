@@ -151,7 +151,7 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
                     this.app.projetos.delAlocacaoRM(this.alocacao.id).subscribe(resultDelete => {
                         this.loading.hide();
                         if (resultDelete.sucesso) {
-                            this.logProjeto("Alocação de recursos Materias", "Delete");
+                            // this.logProjeto("Alocação de recursos Materias", "Delete");
                             this.activeModal.close('deleted');
                         } else {
                             this.app.alert(resultDelete.inconsistencias.join(', '));

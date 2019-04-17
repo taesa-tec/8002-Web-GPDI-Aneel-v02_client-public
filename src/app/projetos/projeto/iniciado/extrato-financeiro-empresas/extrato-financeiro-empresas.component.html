@@ -45,18 +45,20 @@
                 </table>
             </header>
             <div role="main">
-                <table class="table table-borderless m-0">
+                <table class="table table-borderless m-0" *ngIf="relatorio.items.length > 0">
                     <tr *ngFor="let i of relatorio.items">
                         <td width="25%">
                             <span class="btn btn-link p-0" (click)="openModal(i)">{{itemDesc(i)}}</span>
                         </td>
                         <ng-container *ngIf="projeto.isPD">
                             <td width="15%">
-                                <span *ngIf="etapas[i.etapa.id]"
+                                <span *ngIf="i.etapa && etapas[i.etapa.id]"
                                       [title]="etapas[i.etapa.id].desc"> Etapa {{etapas[i.etapa.id].numeroEtapa}}</span>
                             </td>
                             <td>
+                                <span *ngIf="i.etapa">
                                 {{ i.etapa.desc }}
+                                </span>
                             </td>
                         </ng-container>
                         <td class="text-right" width="15%">{{i.valor | currency:'R$'}}</td>

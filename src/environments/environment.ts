@@ -5,7 +5,7 @@
 export const environment = {
     production: false,
     api_url: "https://taesagestor.azurewebsites.net/api",
-    version: '0.21.37'
+    version: '0.21.45'
 };
 
 /*

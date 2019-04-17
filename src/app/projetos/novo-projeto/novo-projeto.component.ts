@@ -79,6 +79,7 @@ export class NovoProjetoComponent implements OnInit {
                 CatalogEmpresaId: new FormControl('', [Validators.required]),
                 CatalogStatusId: new FormControl(catalogoStatus.id, [Validators.required])
             });
+            console.log(this);
         });
     }
 
@@ -90,7 +91,7 @@ export class NovoProjetoComponent implements OnInit {
             if (resultado.sucesso) {
                 this.activeModal.close(resultado);
                 if (resultado.id) {
-                    this.logger.save('', 'Create', 'Novo Projeto', resultado.id);
+                    this.logger.saveCreate(resultado.id);
                     this.app.router.navigate(['dashboard', 'projeto', resultado.id]);
                 } else {
                     this.app.router.navigate(['dashboard']);

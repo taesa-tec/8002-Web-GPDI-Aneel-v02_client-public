@@ -131,6 +131,7 @@ export class ProjetosService {
     getById(id: number) {
         return this.http.get<Projeto>(`Projetos/${id}`)
             .pipe(
+                // map(p => {                    p.catalogStatusId = 1;                    p.catalogStatus = {id: 1, status: 'Proposta'};                    return p;                }),
                 tap(p => this.projetoLoadedSource.next(new ProjetoFacade(p, this))),
                 share()
             );

@@ -12,7 +12,8 @@
                 <table class="table table-borderless">
                     <tr *ngFor="let item of empresa.items">
                         <td>
-                            <span class="btn btn-sm btn-link" (click)="openModal(item)"> {{item.desc}} </span>
+                            <span class="btn btn-sm btn-link"
+                                  (click)="openModal(item, empresa.items)"> {{item.desc}} </span>
                         </td>
                         <td width="30%">{{categoriaPorCod(item.categoriaContabil) }}</td>
                         <td width="15%"> {{ item.valor | currency:'R$' }} </td>

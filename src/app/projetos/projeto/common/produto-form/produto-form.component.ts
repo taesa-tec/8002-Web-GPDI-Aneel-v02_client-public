@@ -40,7 +40,6 @@ export class ProdutoFormComponent implements OnInit {
     get tiposDetalhados() {
         if (this.form) {
             const faseControl = this.form.get('catalogProdutoFaseCadeiaId');
-            console.log({faseControl});
             if (faseControl && faseControl.value) {
                 const fase = this.fases.find(f => f.id === parseFloat(faseControl.value));
                 return fase ? fase.tiposDetalhados : [];
