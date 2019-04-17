@@ -26,9 +26,6 @@ export class LoggerService {
 
 
     set request(value: HttpRequest<any>) {
-        if (value.method !== 'GET') {
-            console.log({request: value});
-        }
         this._request = value;
     }
 
