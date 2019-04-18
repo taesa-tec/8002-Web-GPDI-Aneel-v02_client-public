@@ -436,7 +436,11 @@ export interface LogProjeto {
     created: string;
 }
 
-export type LogItem = Array<TextValue>;
+export type LogItem = Array<{
+    text: string;
+    value: any;
+    children?: Array<LogItem>;
+}>;
 
 export interface RelatorioFinal {
     id?: number;

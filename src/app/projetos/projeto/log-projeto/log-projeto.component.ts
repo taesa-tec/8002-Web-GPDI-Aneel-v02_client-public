@@ -65,8 +65,6 @@ export class LogProjetoComponent implements OnInit {
         this.loading.show();
         this.args = { pag: this.currentPagina, size: this.size };
 
-        console.log(this.args);
-
         const data$ = this.app.projetos.projetoLoaded.pipe(
             mergeMap(p =>
                 zip(
@@ -84,8 +82,6 @@ export class LogProjetoComponent implements OnInit {
             this.paginas = Array(paginas).fill(0).map((x, i) => i + 1);
 
             this.usuarios = usuarios;
-
-            console.log(this.paginas);
 
             this.logsProjeto = logsProjeto.itens.map(log => {
                 log.acaoValor = this.status.find(stat => stat.value === log.acaoValor).text;

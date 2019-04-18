@@ -6,6 +6,7 @@ import {FormGroup, FormControl} from '@angular/forms';
 import {LoadingComponent} from '@app/shared/loading/loading.component';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ProjetoFacade} from '@app/facades';
+import {LoggerDirective} from '@app/logger/logger.directive';
 
 @Component({
     selector: 'app-empresa-form',
@@ -30,6 +31,9 @@ export class EmpresaFormComponent implements OnInit, AfterViewInit {
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
     @ViewChild(NgbTabset) tabs: NgbTabset;
+    @ViewChild('loggerCooperada') loggerCooperada: LoggerDirective;
+    @ViewChild('loggerExecutora') loggerExecutora: LoggerDirective;
+    @ViewChild('loggerParceira') loggerParceira: LoggerDirective;
 
     constructor(public activeModal: NgbActiveModal, protected app: AppService) {
     }
@@ -98,19 +102,24 @@ export class EmpresaFormComponent implements OnInit, AfterViewInit {
         if (this.tabFixed) {
             event.preventDefault();
         }
+        console.log(this);
     }
 
     submit(formName) {
         let form: FormGroup;
+        let logger: LoggerDirective;
         switch (formName) {
             case 'Energia':
                 form = this.formCooperada;
+                logger = this.loggerCooperada;
                 break;
             case 'Executora':
                 form = this.formExecutora;
+                logger = this.loggerExecutora;
                 break;
             case 'Parceira':
                 form = this.formParceira;
+                logger = this.loggerParceira;
                 break;
         }
 
@@ -125,6 +134,11 @@ export class EmpresaFormComponent implements OnInit, AfterViewInit {
                 this.loading.hide();
                 if (result.sucesso) {
                     this.activeModal.close(result);
+                    if (this.empresa.id) {
+                        logger.saveUpdate();
+                    } else {
+                        logger.saveCreate();
+                    }
                 } else {
                     this.app.alert(result.inconsistencias.join(', '));
                 }

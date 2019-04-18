@@ -5,6 +5,7 @@ import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {LoadingComponent} from '@app/shared/loading/loading.component';
 import {AppService} from '@app/app.service';
 import {zip} from 'rxjs';
+import {LoggerDirective} from '@app/logger/logger.directive';
 
 @Component({
     selector: 'app-produto-form',
@@ -24,6 +25,7 @@ export class ProdutoFormComponent implements OnInit {
     form: FormGroup;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoggerDirective) logger: LoggerDirective;
 
     constructor(public activeModal: NgbActiveModal, protected app: AppService) {
     }
@@ -81,6 +83,11 @@ export class ProdutoFormComponent implements OnInit {
             request.subscribe(result => {
                 if (result.sucesso) {
                     this.activeModal.close(result);
+                    if (this.produto.id) {
+                        this.logger.saveUpdate();
+                    } else {
+                        this.logger.saveCreate();
+                    }
                 } else {
                     this.inconsistencias = result.inconsistencias;
                 }

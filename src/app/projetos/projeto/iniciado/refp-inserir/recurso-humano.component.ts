@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { AppService } from '@app/app.service';
-import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, NoRequest } from '@app/models';
-import { ProjetoFacade, EmpresaProjetoFacade } from '@app/facades';
-import { zip, of } from 'rxjs';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {AppService} from '@app/app.service';
+import {RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, NoRequest} from '@app/models';
+import {ProjetoFacade, EmpresaProjetoFacade} from '@app/facades';
+import {zip, of} from 'rxjs';
+import {FormGroup, FormControl, Validators, FormArray} from '@angular/forms';
 import * as moment from 'moment';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { tap } from 'rxjs/operators';
-import { isNil } from 'lodash-es';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {tap} from 'rxjs/operators';
+import {isNil} from 'lodash-es';
 
 @Component({
     selector: 'app-recurso-humano',
@@ -35,6 +35,7 @@ export class RecursoHumanoComponent implements OnInit {
     @ViewChild('file') file: ElementRef;
 
     empresas: Array<EmpresaProjetoFacade>;
+
     // empresasRecebedoras: Array<{ id: number; nome: string; classificacao: string; }>;
 
     get empresasFinanciadoras(): Array<EmpresaProjetoFacade> {
@@ -61,7 +62,8 @@ export class RecursoHumanoComponent implements OnInit {
         return [];
     }
 
-    constructor(protected app: AppService) { }
+    constructor(protected app: AppService) {
+    }
 
     get valorFinal() {
 
@@ -92,11 +94,11 @@ export class RecursoHumanoComponent implements OnInit {
 
             const recursos$ = this.projeto.relations.recursosHumanos.get();
             const empresas$ = this.projeto.REST.Empresas.listar<Array<EmpresaProjeto>>();
-            const etapas$ = this.projeto.isPD ? this.projeto.REST.Etapas.listar<Array<Etapa>>() : of([]);
+            const etapas$ = this.projeto.REST.Etapas.listar<Array<Etapa>>(); // this.projeto.isPD ? this.projeto.REST.Etapas.listar<Array<Etapa>>() : of([]);
 
             this.loading.show(1000);
             zip(recursos$, empresas$, etapas$).subscribe(([recursos, empresas, etapas]) => {
-                this.etapas = etapas;
+                this.etapas = etapas ? etapas : [];
                 this.recursos = recursos;
                 this.empresas = empresas.map(e => new EmpresaProjetoFacade(e));
                 try {
@@ -132,7 +134,7 @@ export class RecursoHumanoComponent implements OnInit {
         }
 
         if (this.errors.length > 0) {
-            throw new Error("Errors");
+            throw new Error('Errors');
         }
 
     }
@@ -178,7 +180,7 @@ export class RecursoHumanoComponent implements OnInit {
 
         this.form = new FormGroup({
             projetoId: new FormControl(this.projeto.id),
-            tipo: new FormControl("RH"),
+            tipo: new FormControl('RH'),
             recursoHumanoId: this.recurso,
             empresaFinanciadoraId: new FormControl('', [Validators.required]),
             mes: new FormControl('', [Validators.required]),
@@ -192,7 +194,7 @@ export class RecursoHumanoComponent implements OnInit {
 
         this.recurso.valueChanges.subscribe(v => {
             this.form.get('empresaFinanciadoraId').setValue('');
-        })
+        });
     }
 
 
@@ -204,7 +206,7 @@ export class RecursoHumanoComponent implements OnInit {
                     this.sendFile(result.id).subscribe(_result => {
                         this.loading.hide();
                         this.form.reset();
-                        this.app.alert("Salvo com sucesso!");
+                        this.app.alert('Salvo com sucesso!');
                     });
                 } else {
                     this.loading.hide();
@@ -213,7 +215,10 @@ export class RecursoHumanoComponent implements OnInit {
             });
         }
     }
-    changeFile(event) { }
+
+    changeFile(event) {
+    }
+
     sendFile(id?) {
         const el = this.file.nativeElement as HTMLInputElement;
 
@@ -222,7 +227,7 @@ export class RecursoHumanoComponent implements OnInit {
                 RegistroFinanceiroId: new FormControl(id),
             })).pipe(tap(result => {
                 if (result.sucesso) {
-                    this.file.nativeElement.value = "";
+                    this.file.nativeElement.value = '';
                 }
             }));
         }

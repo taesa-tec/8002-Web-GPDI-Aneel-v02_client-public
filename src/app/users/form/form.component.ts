@@ -12,6 +12,7 @@ import {Router} from '@angular/router';
 import {ProjetosService} from '@app/projetos/projetos.service';
 import {UserProjetosComponent} from '../user-projetos/user-projetos.component';
 import {mergeMap, last} from 'rxjs/operators';
+import {AppService} from '@app/app.service';
 
 @Component({
     selector: 'app-form',
@@ -34,14 +35,10 @@ export class FormComponent implements OnInit {
     projetos: Projetos;
     resultado: ResultadoResponse;
     userId: string;
+    projetoAcessosEnabled = true;
 
 
-    constructor(
-        protected catalog: CatalogsService,
-        protected usersService: UsersService,
-        protected projetoService: ProjetosService,
-        protected router: Router
-    ) {
+    constructor(protected app: AppService) {
     }
 
     get empresaControl(): FormControl {
@@ -54,7 +51,7 @@ export class FormComponent implements OnInit {
 
     ngOnInit() {
 
-        const empresas$ = this.catalog.empresas();
+        const empresas$ = this.app.catalogo.empresas();
 
         zip(empresas$).subscribe(([empresas]) => {
             this.empresas = empresas;
@@ -94,12 +91,14 @@ export class FormComponent implements OnInit {
                 this.form.updateValueAndValidity();
 
             });
+            this.projetoAcessosEnabled = u.role === UserRole.User;
+            this.form.get('role').valueChanges.subscribe(value => this.projetoAcessosEnabled = value === UserRole.User);
         });
 
 
     }
 
-    onSubmit() {
+    submit() {
         if (this.form.valid && this.handler) {
             this.loading.show();
 
@@ -109,26 +108,21 @@ export class FormComponent implements OnInit {
                 }
 
                 const requests = concat(this.handler(this.form.value).pipe(mergeMap(result => {
+                        if (result.sucesso) {
 
-                    console.log(result);
-
-                    if (result.sucesso) {
-
-                        if (result.id) {
-                            return this.userProjetos.updatePermissoes(result.id);
+                            if (result.id) {
+                                return this.userProjetos.updatePermissoes(result.id);
+                            }
+                            return of(result);
                         }
-                        return of(result);
-                    }
-                    return throwError(result);
+                        return throwError(result);
 
-                })), this.userId ? this.userProjetos.updatePermissoes(this.userId) : empty())
+                    })),
+                    this.userId ? this.userProjetos.updatePermissoes(this.userId) : empty())
                     .pipe(last());
 
 
-                //this.handler(this.form.value)
-
                 requests.subscribe(result => {
-                        console.log(result);
                         this.loading.hide();
                         this.submited.emit(result);
                         this.resultado = result;
@@ -143,15 +137,35 @@ export class FormComponent implements OnInit {
                             inconsistencias: [error.message]
                         };
                         this.submited.emit(r);
-                        this.resultado = r;
+                        this.resultado = error.inconsistencias ? error : r;
                         this.loading.hide();
                     }
                 );
 
             } catch (error) {
+                console.log(error);
                 this.loading.hide();
             }
         }
+    }
+
+    removeUser() {
+        this.app.confirm('Tem certeza que deseja remover este usuário?').then(result => {
+            this.app.users.remove(this.userId).subscribe(r => {
+                if (r.sucesso) {
+                    this.app.alert('Usuário removido com sucesso');
+                    this.app.router.navigate(['/dashboard', 'gerenciar-usuarios'], {
+                        queryParams: {
+                            message: 'user-removed'
+                        }
+                    });
+                } else {
+                    this.app.alert(r.inconsistencias);
+                }
+            }, error => {
+                this.app.alert(error.message);
+            });
+        });
     }
 
 }

@@ -13,6 +13,10 @@ const alertMessages: { [propName: string]: MessageAlert } = {
     'user-updated': {
         message: 'Usuário editado com sucesso. Obrigado.',
         type: 'success'
+    },
+    'user-removed': {
+        message: 'Usuário removido',
+        type: 'success'
     }
 };
 

@@ -4,8 +4,8 @@
 
 export const environment = {
     production: false,
-    api_url: "https://taesagestor.azurewebsites.net/api",
-    version: '0.21.45'
+    api_url: 'https://taesagestor.azurewebsites.net/api',
+    version: '0.22.51'
 };
 
 /*

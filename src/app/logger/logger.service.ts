@@ -82,7 +82,7 @@ export class LoggerService {
         };
 
         return this.ps.criarLogProjeto(requestData).subscribe(result => {
-            console.log(result);
+            // console.log(result);
         });
     }
 

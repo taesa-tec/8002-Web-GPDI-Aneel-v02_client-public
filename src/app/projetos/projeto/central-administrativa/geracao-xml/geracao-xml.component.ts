@@ -96,10 +96,11 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
 
     gerarXml(tipo: XmlType, versao: any) {
         this.loading.show();
+        console.log('gerar...');
         this.projeto.gerarXml(tipo, versao).subscribe(result => {
             this.loading.hide();
         }, (error) => {
-            this.app.alert(error.inconsistencias);
+            this.app.alert(error.inconsistencias || error.message, 'Erro!');
             this.loading.hide();
         });
     }

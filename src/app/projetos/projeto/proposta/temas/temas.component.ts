@@ -1,14 +1,15 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { CatalogsService } from '@app/catalogs/catalogs.service';
-import { AppService } from '@app/app.service';
-import { ActivatedRoute } from '@angular/router';
-import { ProjetosService } from '@app/projetos/projetos.service';
-import { map, mergeMap, tap } from 'rxjs/operators';
-import { zip, of } from 'rxjs';
-import { Projeto, Tema, SubTema, SubTemaRequest, TemaProjeto, NoRequest, ResultadoResponse } from '@app/models';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { SubTemasComponent } from './sub-tema.component';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
+import {Component, OnInit, ViewChild, AfterViewInit, ElementRef} from '@angular/core';
+import {CatalogsService} from '@app/catalogs/catalogs.service';
+import {AppService} from '@app/app.service';
+import {ActivatedRoute} from '@angular/router';
+import {ProjetosService} from '@app/projetos/projetos.service';
+import {map, mergeMap, tap} from 'rxjs/operators';
+import {zip, of} from 'rxjs';
+import {Projeto, Tema, SubTema, SubTemaRequest, TemaProjeto, NoRequest, ResultadoResponse} from '@app/models';
+import {FormGroup, FormControl, Validators, FormArray} from '@angular/forms';
+import {SubTemasComponent} from './sub-tema.component';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {LoggerDirective} from '@app/logger/logger.directive';
 
 @Component({
     selector: 'app-temas',
@@ -31,6 +32,7 @@ export class TemasComponent implements OnInit {
     @ViewChild(SubTemasComponent) subTemasComponent;
     @ViewChild(LoadingComponent) loading;
     @ViewChild('file') file: ElementRef;
+    @ViewChild(LoggerDirective) logger: LoggerDirective;
 
     get tema() {
         return this.temas ? this.temas.find(t => t.id === parseInt(this.temaControl.value, 10)) : null;
@@ -65,6 +67,7 @@ export class TemasComponent implements OnInit {
     }
 
     load() {
+
         this.projetoService.getTema(this.projeto.id).subscribe(temaProjeto => {
             this.temaProjeto = temaProjeto;
             this.setupForm(this.projeto, temaProjeto);
@@ -106,6 +109,9 @@ export class TemasComponent implements OnInit {
                 this.addSubTema(s);
             });
         }
+        setTimeout(() => {
+            console.log(this.logger.getLog());
+        }, 1000);
     }
 
     protected reset(keepOne = true) {
@@ -142,7 +148,7 @@ export class TemasComponent implements OnInit {
         const request =
             (this.temaProjeto ? this.projetoService.editTema(this.form.value) : this.projetoService.criarTema(this.form.value))
                 .pipe(mergeMap(result => {
-                    console.log({ result });
+                    console.log({result});
 
                     if (result.sucesso) {
                         if (result.id) {
@@ -158,9 +164,9 @@ export class TemasComponent implements OnInit {
             this.loading.hide();
             if (resultado.sucesso) {
                 this.load();
-                this.app.alert("Tema atualizado com sucesso");
+                this.app.alert('Tema atualizado com sucesso');
             } else {
-                this.app.alert(resultado.inconsistencias.join(", "));
+                this.app.alert(resultado.inconsistencias.join(', '));
             }
         });
     }
@@ -174,7 +180,7 @@ export class TemasComponent implements OnInit {
                 temaId: new FormControl(temaId),
             })).pipe(tap(result => {
                 if (result.sucesso) {
-                    this.file.nativeElement.value = "";
+                    this.file.nativeElement.value = '';
                 }
             }));
         }
@@ -188,7 +194,7 @@ export class TemasComponent implements OnInit {
         this.app.file.remover(file).subscribe((result: ResultadoResponse) => {
             this.loading.hide();
             if (result.sucesso) {
-                this.app.alert("Excluido com sucesso");
+                this.app.alert('Excluido com sucesso');
             } else {
                 this.app.alert(result.inconsistencias, 'Erro');
             }

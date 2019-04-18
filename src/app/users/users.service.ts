@@ -89,6 +89,11 @@ export class UsersService {
         return this.http.put<ResultadoResponse>(`Users`, user);
     }
 
+    remove(user: User | string) {
+        const id = (typeof user === 'string') ? user : user.id;
+        return this.http.delete<ResultadoResponse>(`Users/${id}`);
+    }
+
     userProjetos(id: string) {
         return this.http.get<Array<UserProjeto>>(`UserProjetos/${id}`);
     }

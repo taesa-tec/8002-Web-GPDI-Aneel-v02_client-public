@@ -1,14 +1,14 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Produto, EtapaProduto, Projeto, EditEtapaRequest, CriarEtapaRequest, TextValue, Etapa } from '@app/models';
-import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
-import { zip } from 'rxjs';
-import { AppService } from '@app/app.service';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ProjetoFacade } from '@app/facades';
+import {Component, OnInit, Input, ViewChild} from '@angular/core';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {Produto, EtapaProduto, Projeto, EditEtapaRequest, CriarEtapaRequest, TextValue, Etapa} from '@app/models';
+import {FormGroup, FormArray, FormControl, Validators} from '@angular/forms';
+import {zip} from 'rxjs';
+import {AppService} from '@app/app.service';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ProjetoFacade} from '@app/facades';
 import * as moment from 'moment';
-
+import {LoggerDirective} from '@app/logger/logger.directive';
 
 
 @Component({
@@ -27,14 +27,17 @@ export class EtapaFormComponent implements OnInit {
     meses: Array<TextValue> = [];
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoggerDirective) logger: LoggerDirective;
 
-    constructor(public activeModal: NgbActiveModal, protected app: AppService) { }
+    constructor(public activeModal: NgbActiveModal, protected app: AppService) {
+    }
 
     get btnTxt() {
-        return this.etapa.id ? "Salvar Etapa" : "Adicionar Etapa";
+        return this.etapa.id ? 'Salvar Etapa' : 'Adicionar Etapa';
     }
+
     get tituloTxt() {
-        return this.etapa.id ? "Editar Etapa" : "Nova Etapa";
+        return this.etapa.id ? 'Editar Etapa' : 'Nova Etapa';
     }
 
     ngOnInit() {
@@ -50,10 +53,11 @@ export class EtapaFormComponent implements OnInit {
             } else {
                 this.setup();
             }
-        })
+        });
 
 
     }
+
     setup() {
         this.form = new FormGroup({
             projetoId: new FormControl(this.projeto.id),
@@ -69,7 +73,7 @@ export class EtapaFormComponent implements OnInit {
             this.form.addControl('EtapaProdutos', this.produtosGroup);
             if (this.etapa.etapaProdutos) {
                 (this.etapa.etapaProdutos as Array<EtapaProduto>).map(ep => {
-                    this.produtosGroup.push(new FormGroup({ ProdutoId: new FormControl(ep.produtoId, Validators.required) }));
+                    this.produtosGroup.push(new FormGroup({ProdutoId: new FormControl(ep.produtoId, Validators.required)}));
                 });
             }
         }
@@ -85,6 +89,7 @@ export class EtapaFormComponent implements OnInit {
         }
 
     }
+
     fillMonths() {
         if (this.projeto.isPD) {
             return;
@@ -104,6 +109,7 @@ export class EtapaFormComponent implements OnInit {
             start.add(1, 'month');
         }
     }
+
     filtrarProdutos(atual = null) {
         const pid = atual ? parseInt(atual.value.ProdutoId, 10) : 0;
         const list = (this.produtosGroup.value as Array<{ ProdutoId: any }>).map(p => parseInt(p.ProdutoId, 10));
@@ -111,7 +117,7 @@ export class EtapaFormComponent implements OnInit {
     }
 
     adicionarProduto(id: number) {
-        this.produtosGroup.push(new FormGroup({ ProdutoId: new FormControl('', Validators.required) }));
+        this.produtosGroup.push(new FormGroup({ProdutoId: new FormControl('', Validators.required)}));
     }
 
     removerProduto(index) {
@@ -123,8 +129,9 @@ export class EtapaFormComponent implements OnInit {
         const list = (this.mesesGroup.value as Array<{ mes: any }>).map(p => p.mes);
         return this.meses.filter(m => (list.indexOf(m.value) === -1 || m.value === mes));
     }
+
     adicionarMes(mes = '') {
-        this.mesesGroup.push(new FormGroup({ mes: new FormControl(mes, Validators.required) }));
+        this.mesesGroup.push(new FormGroup({mes: new FormControl(mes, Validators.required)}));
     }
 
     removerMes(index) {
@@ -141,6 +148,12 @@ export class EtapaFormComponent implements OnInit {
             request.subscribe(r => {
                 if (r.sucesso) {
                     this.activeModal.close(r);
+                    if (this.etapa.id) {
+                        this.logger.saveUpdate();
+                    } else {
+                        this.logger.saveCreate();
+                    }
+
                 } else {
                     this.app.alert(r.inconsistencias.join(', '));
                 }
@@ -150,7 +163,7 @@ export class EtapaFormComponent implements OnInit {
     }
 
     excluirEtapa() {
-        this.app.confirm("Tem certeza que deseja excluir esta etapa?", "Confirmar Exclusão")
+        this.app.confirm('Tem certeza que deseja excluir esta etapa?', 'Confirmar Exclusão')
             .then(result => {
                 if (result) {
                     this.loading.show();

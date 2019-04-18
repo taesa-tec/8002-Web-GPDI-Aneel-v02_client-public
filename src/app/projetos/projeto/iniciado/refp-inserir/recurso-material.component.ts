@@ -1,15 +1,15 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {FormGroup, FormControl, Validators, FormArray} from '@angular/forms';
 
 import * as moment from 'moment';
-import { zip, of } from 'rxjs';
+import {zip, of} from 'rxjs';
 
-import { AppService } from '@app/app.service';
-import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RecursoMaterial, AppValidators, CategoriasContabeis, NoRequest } from '@app/models';
-import { ProjetoFacade, EmpresaProjetoFacade } from '@app/facades';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { tap, map } from 'rxjs/operators';
-import { isNil } from 'lodash-es';
+import {AppService} from '@app/app.service';
+import {RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RecursoMaterial, AppValidators, CategoriasContabeis, NoRequest} from '@app/models';
+import {ProjetoFacade, EmpresaProjetoFacade} from '@app/facades';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {tap, map} from 'rxjs/operators';
+import {isNil} from 'lodash-es';
 
 @Component({
     selector: 'app-recurso-material',
@@ -47,7 +47,7 @@ export class RecursoMaterialComponent implements OnInit {
                 const financiadora = this.form.get('empresaFinanciadoraId');
                 return empresa.id === parseInt(financiadora.value, 10);
             } else {
-                return empresa.classificacaoValor === "Executora";
+                return empresa.classificacaoValor === 'Executora';
             }
         });
     }
@@ -55,18 +55,22 @@ export class RecursoMaterialComponent implements OnInit {
     get categoriaContabil() {
         return this.form.get(this.projeto.isPG ? 'catalogCategoriaContabilGestaoId' : 'categoriaContabil');
     }
+
     get qtdItens() {
         return this.form.get('qtdItens');
     }
+
     get valorUnitario() {
         return this.form.get('valorUnitario');
     }
+
     get valorFinal() {
         if (this.qtdItens && this.valorUnitario) {
             return parseFloat(this.qtdItens.value) * parseFloat(this.valorUnitario.value);
         }
         return 0;
     }
+
     get atividades() {
         if (this.projeto.isPD || this.form === undefined) {
             return [];
@@ -75,7 +79,7 @@ export class RecursoMaterialComponent implements OnInit {
         try {
             const c = this.categoriasContabeis.find(c => String(c.value) === this.categoriaContabil.value);
             return c ? c.atividades.map(a => {
-                return { text: a.nome, value: a.id };
+                return {text: a.nome, value: a.id};
             }) : [];
         } catch (e) {
 
@@ -84,7 +88,8 @@ export class RecursoMaterialComponent implements OnInit {
 
     }
 
-    constructor(protected app: AppService) { }
+    constructor(protected app: AppService) {
+    }
 
     ngOnInit() {
         this.loadData();
@@ -96,7 +101,7 @@ export class RecursoMaterialComponent implements OnInit {
 
             const recursos$ = this.projeto.relations.recursosMateriais.get();
             const empresas$ = this.projeto.REST.Empresas.listar<Array<EmpresaProjetoFacade>>();
-            const etapas$ = this.projeto.isPD ? this.projeto.relations.etapas.get() : of([]);
+            const etapas$ = this.projeto.relations.etapas.get(); // this.projeto.isPD ? this.projeto.relations.etapas.get() : of([]);
             const categorias$ = this.projeto.isPD ? of(CategoriasContabeis) :
                 this.app.catalogo.categoriasContabeisGestao().pipe(map(cats => {
                     return cats.map(c => {
@@ -111,10 +116,10 @@ export class RecursoMaterialComponent implements OnInit {
             this.loading.show(1000);
             zip(recursos$, empresas$, etapas$, categorias$).subscribe(([recursos, empresas, etapas, categorias]) => {
 
-                this.etapas = etapas;
+                this.etapas = etapas ? etapas : [];
                 this.recursos = recursos;
                 this.empresas = empresas.map(e => new EmpresaProjetoFacade(e));
-                this.empresasFinanciadoras = this.empresas.filter(e => e.classificacaoValor !== "Executora");
+                this.empresasFinanciadoras = this.empresas.filter(e => e.classificacaoValor !== 'Executora');
                 this.categoriasContabeis = categorias;
                 try {
                     this.validate();
@@ -148,7 +153,7 @@ export class RecursoMaterialComponent implements OnInit {
         }
 
         if (this.errors.length > 0) {
-            throw new Error("Errors");
+            throw new Error('Errors');
         }
 
     }
@@ -195,7 +200,7 @@ export class RecursoMaterialComponent implements OnInit {
 
         this.form = new FormGroup({
             projetoId: new FormControl(this.projeto.id),
-            tipo: new FormControl("RM"),
+            tipo: new FormControl('RM'),
             tipoDocumento: new FormControl('', [Validators.required]),
             numeroDocumento: new FormControl('', [Validators.required]),
             dataDocumento: new FormControl('', [Validators.required]),
@@ -255,7 +260,7 @@ export class RecursoMaterialComponent implements OnInit {
                     this.sendFile(result.id).subscribe(_result => {
                         this.loading.hide();
                         this.form.reset();
-                        this.app.alert("Salvo com sucesso!");
+                        this.app.alert('Salvo com sucesso!');
                     });
                 } else {
                     this.loading.hide();
@@ -264,7 +269,9 @@ export class RecursoMaterialComponent implements OnInit {
             });
         }
     }
-    changeFile(event) { }
+
+    changeFile(event) {
+    }
 
     sendFile(id?) {
         const el = this.file.nativeElement as HTMLInputElement;
@@ -274,7 +281,7 @@ export class RecursoMaterialComponent implements OnInit {
                 RegistroFinanceiroId: new FormControl(id),
             })).pipe(tap(result => {
                 if (result.sucesso) {
-                    this.file.nativeElement.value = "";
+                    this.file.nativeElement.value = '';
                 }
             }));
         }

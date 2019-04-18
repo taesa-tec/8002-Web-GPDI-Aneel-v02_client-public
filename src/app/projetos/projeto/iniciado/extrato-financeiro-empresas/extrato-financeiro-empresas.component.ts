@@ -54,7 +54,7 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
     }
 
     calcDesvio(n: number) {
-        return ((100 - n) / 100).toFixed(2).concat('%');
+        return (n - 100).toFixed(2).concat('%');
     }
 
     categoriaPorCod(cod) {

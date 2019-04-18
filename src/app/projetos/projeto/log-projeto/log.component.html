@@ -1,7 +1,7 @@
 <div class="card my-3">
     <div class="card-header bg-blue-light text-white d-flex justify-content-between">
         <div>
-            <img [src]="avatar" width="32" height="32" alt="" class="rounded-circle mr-3">
+            <img *ngIf="avatar" [src]="avatar" width="32" height="32" alt="" class="rounded-circle mr-3">
             <span>{{log.user.nomeCompleto}} - {{log.created | date:'short'}}</span>
         </div>
         <div>
@@ -18,30 +18,18 @@
             </td>
         </tr>
         <tr>
-            <td *ngIf="log.statusAnterior !== ''" [class]="log.statusAnterior !== '' ? 'w-50': ''" [attr.colspan]="log.statusNovo === '' ? 2 : ''">
+            <td *ngIf="log.statusAnterior !== ''" [class]="log.statusAnterior !== '' ? 'w-50': ''"
+                [attr.colspan]="log.statusNovo === '' ? 2 : ''">
                 <strong class="text-blue-light mb-3 d-inline-block">
-                        Status Anterior
-                    </strong>
-                <div [innerHTML]="log.statusAnterior"></div>
-
-                <!-- <div class="text-blue">Titulo do Projeto:</div>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem, minima.</p>
-                    <div class="text-blue">Motivação:</div>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta nihil necessitatibus
-                        inventore recusandae natus, minus provident quidem non sapiente, ipsa, atque perferendis
-                        sit dolorum?</p> -->
+                    Status Anterior
+                </strong>
+                <div class="app-log app-log-status-anterior" [innerHTML]="log.statusAnterior"></div>
             </td>
             <td *ngIf="log.statusNovo !== ''" [attr.colspan]="log.statusAnterior === '' ? 2 : ''">
                 <strong class="text-blue-light  mb-3 d-inline-block">
-                        Novo Status
-                    </strong>
-                <div [innerHTML]="log.statusNovo"></div>
-                <!-- <div class="text-blue">Titulo do Projeto:</div>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem, minima.</p>
-                    <div class="text-blue">Motivação:</div>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta nihil necessitatibus
-                        inventore recusandae natus, minus provident quidem non sapiente, ipsa, atque perferendis
-                        sit dolorum?</p> -->
+                    Novo Status
+                </strong>
+                <div class="app-log app-log-status-novo" [innerHTML]="log.statusNovo"></div>
             </td>
         </tr>
     </table>

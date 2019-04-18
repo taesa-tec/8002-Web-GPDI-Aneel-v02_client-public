@@ -1,13 +1,13 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProjetosService } from '@app/projetos/projetos.service';
-import { Produto, EtapaProduto, Projeto, EditEtapaRequest, CriarEtapaRequest, Etapa } from '@app/models';
-import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
-import { zip, timer } from 'rxjs';
-import { AppService } from '@app/app.service';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ProjetoFacade } from '@app/facades';
+import {Component, OnInit, Input, ViewChild} from '@angular/core';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {ProjetosService} from '@app/projetos/projetos.service';
+import {Produto, EtapaProduto, Projeto, EditEtapaRequest, CriarEtapaRequest, Etapa} from '@app/models';
+import {FormGroup, FormArray, FormControl, Validators} from '@angular/forms';
+import {zip, timer} from 'rxjs';
+import {AppService} from '@app/app.service';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ProjetoFacade} from '@app/facades';
 
 
 @Component({
@@ -24,13 +24,15 @@ export class EtapaAtividadesFormComponent implements OnInit {
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
-    constructor(public activeModal: NgbActiveModal, protected app: AppService) { }
+    constructor(public activeModal: NgbActiveModal, protected app: AppService) {
+    }
 
     get btnTxt() {
-        return "Salvar Etapa";
+        return 'Salvar Etapa';
     }
+
     get tituloTxt() {
-        return "Editar Etapa";
+        return 'Editar Etapa';
     }
 
     get etapaProdutos() {
@@ -52,7 +54,7 @@ export class EtapaAtividadesFormComponent implements OnInit {
                 this.produtos = produtos;
                 this.setup();
             });
-        })
+        });
 
 
     }
@@ -71,13 +73,13 @@ export class EtapaAtividadesFormComponent implements OnInit {
         this.form = new FormGroup({
             id: new FormControl(this.etapa.id),
             desc: new FormControl(this.etapa.desc || '', [Validators.required]),
-            etapaProdutos: new FormControl(this.etapa.etapaProdutos || [], [Validators.required]),
-            atividadesRealizadas: new FormControl(this.etapa.atividadesRealizadas || '', Validators.required)
+            etapaProdutos: new FormControl(this.etapa.etapaProdutos || []),
+            atividadesRealizadas: new FormControl(this.etapa.atividadesRealizadas || '')
         });
     }
 
     adicionarProduto(id: number) {
-        this.produtosGroup.push(new FormGroup({ ProdutoId: new FormControl('', Validators.required) }));
+        this.produtosGroup.push(new FormGroup({ProdutoId: new FormControl('', Validators.required)}));
     }
 
     removerProduto(index) {
@@ -93,7 +95,7 @@ export class EtapaAtividadesFormComponent implements OnInit {
             this.projeto.REST.Etapas.editar(v).subscribe(r => {
                 if (r.sucesso) {
                     this.activeModal.close(r);
-                    this.app.alert("Salvo com sucesso");
+                    this.app.alert('Salvo com sucesso');
                 } else {
                     this.app.alert(r.inconsistencias.join(', '));
                 }

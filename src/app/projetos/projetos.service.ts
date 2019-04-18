@@ -398,7 +398,7 @@ export class ProjetosService {
                             observer.error(error);
                         });
 
-                    });
+                    }, error1 => observer.error(error1));
 
                 } else {
                     observer.error(result);
