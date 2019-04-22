@@ -30,7 +30,7 @@ export class RecursoMaterialComponent implements OnInit {
     form: FormGroup;
     obsInternas: FormGroup;
     mesesRef: Array<TextValue>;
-    categoriasContabeis: Array<{ text: string; value: string; atividades: Array<any> }>;
+    categoriasContabeis: Array<TextValue> | Array<{ text: string; value: string; atividades: Array<any> }>;
 
     errors: Array<Error>;
     isValid = true;
@@ -77,8 +77,8 @@ export class RecursoMaterialComponent implements OnInit {
         }
 
         try {
-            const c = this.categoriasContabeis.find(c => String(c.value) === this.categoriaContabil.value);
-            return c ? c.atividades.map(a => {
+            const cc: { text: string; value: string; atividades?: Array<any> } = this.categoriasContabeis.find(c => String(c.value) === this.categoriaContabil.value);
+            return cc ? cc.atividades.map(a => {
                 return {text: a.nome, value: a.id};
             }) : [];
         } catch (e) {
@@ -106,9 +106,9 @@ export class RecursoMaterialComponent implements OnInit {
                 this.app.catalogo.categoriasContabeisGestao().pipe(map(cats => {
                     return cats.map(c => {
                         return {
-                            text: c.nome,
-                            value: c.id,
-                            atividades: c.atividades
+                            text: <string>c.nome,
+                            value: <string>c.id,
+                            atividades: <Array<any>>c.atividades
                         };
                     });
                 }));
