@@ -89,9 +89,11 @@ export class OrcamentoEmpresasComponent implements OnInit {
                 this.alocacoesRH = alocacoesRH;
                 this.alocacoesRM = alocacoesRM;
 
-                etapas.forEach((etapa, index) => {
-                    this.etapas[etapa.id] = Object.assign(etapa, {numeroEtapa: index + 1});
-                });
+                if (etapas) {
+                    etapas.forEach((etapa, index) => {
+                        this.etapas[etapa.id] = Object.assign(etapa, {numeroEtapa: index + 1});
+                    });
+                }
 
                 this.loading.hide();
             });
