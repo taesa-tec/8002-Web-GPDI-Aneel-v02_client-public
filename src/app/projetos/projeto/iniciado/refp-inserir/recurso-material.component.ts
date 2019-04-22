@@ -65,8 +65,12 @@ export class RecursoMaterialComponent implements OnInit {
     }
 
     get valorFinal() {
-        if (this.qtdItens && this.valorUnitario) {
-            return parseFloat(this.qtdItens.value) * parseFloat(this.valorUnitario.value);
+        try {
+            if (this.qtdItens && this.valorUnitario) {
+                return parseFloat(this.qtdItens.value) * parseFloat(this.valorUnitario.value);
+            }
+        } catch (e) {
+
         }
         return 0;
     }
@@ -260,6 +264,8 @@ export class RecursoMaterialComponent implements OnInit {
                     this.sendFile(result.id).subscribe(_result => {
                         this.loading.hide();
                         this.form.reset();
+                        this.form.get('tipo').setValue('RM');
+                        this.form.get('projetoId').setValue(this.projeto.id);
                         this.app.alert('Salvo com sucesso!');
                     });
                 } else {

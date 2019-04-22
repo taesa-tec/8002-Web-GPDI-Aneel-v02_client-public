@@ -65,7 +65,7 @@
         <div class="col-10">
             <div class="text-right">
                 <button class="btn btn-link" (click)="close()"><i class="ta-cancel-circle"></i> Cancelar</button>
-                <button class="btn btn-primary" (click)="submit()" [disabled]="form.invalid"><i class="ta-plus-circle"></i> {{textSave}} Resultado Indicadores Econômicos</button>
+                <button *appUserEscrita class="btn btn-primary" (click)="submit()" [disabled]="form.invalid"><i class="ta-plus-circle"></i> {{textSave}} Resultado Indicadores Econômicos</button>
             </div>
         </div>
     </div>

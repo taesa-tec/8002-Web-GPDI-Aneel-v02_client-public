@@ -74,7 +74,7 @@ export class RecursoHumanoComponent implements OnInit {
             });
 
 
-            if (recurso && this.qtdHrs.value.length > 0) {
+            if (recurso && this.qtdHrs.value) {
                 return parseInt(this.qtdHrs.value, 10) * recurso.valorHora;
             }
         }
@@ -206,6 +206,8 @@ export class RecursoHumanoComponent implements OnInit {
                     this.sendFile(result.id).subscribe(_result => {
                         this.loading.hide();
                         this.form.reset();
+                        this.form.get('tipo').setValue('RH');
+                        this.form.get('projetoId').setValue(this.projeto.id);
                         this.app.alert('Salvo com sucesso!');
                     });
                 } else {

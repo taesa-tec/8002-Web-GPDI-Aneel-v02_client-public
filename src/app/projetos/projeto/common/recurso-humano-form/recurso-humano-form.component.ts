@@ -27,7 +27,6 @@ export class RecursoHumanoFormComponent implements OnInit {
     nacionalidade: FormControl;
     form: FormGroup;
     hasManager = false;
-    log: LogItem;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
     @ViewChild(LoggerDirective) logger: LoggerDirective;

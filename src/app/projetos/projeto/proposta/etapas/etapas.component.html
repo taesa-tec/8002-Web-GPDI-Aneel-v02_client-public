@@ -3,7 +3,7 @@
         <h5 class="text-uppercase text-blue font-weight-normal my-3">Etapas</h5>
     </div>
     <div class="col-auto">
-        <button class="btn btn-outline-primary" type="button" (click)="openModal()">
+        <button *appUserEscrita class="btn btn-outline-primary" type="button" (click)="openModal()">
             <i class="ta-plus-circle fs-24 align-middle align-middle"></i>
             Nova Etapa
         </button>
@@ -33,7 +33,7 @@
 
             <input type="number" [(ngModel)]="ano" class="form-control">
             <app-loading type="inline" background="transparent" color="#03286a" #loading></app-loading>
-            <button class="mx-3 btn btn-primary py-2" type="button" [disabled]="loading.isLoading" (click)="setDataInicio()">
+            <button *appUserEscrita class="mx-3 btn btn-primary py-2" type="button" [disabled]="loading.isLoading" (click)="setDataInicio()">
                 <i class="ta-save fs-24 align-middle align-middle"></i>
                 Salvar
             </button>

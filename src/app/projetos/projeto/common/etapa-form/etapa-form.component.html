@@ -48,7 +48,10 @@
                         </div>
                         <div class="text-right">
                             <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
-                            <button class="btn btn-primary" type="button" [disabled]="form && form.invalid"
+                            <button class="btn btn-primary"
+                                    *appUserEscrita
+                                    type="button"
+                                    [disabled]="form && form.invalid"
                                     (click)="submit()">
                                 <i class="ta-save"></i>
                                 {{btnTxt}}
@@ -94,6 +97,7 @@
                         <div class="text-right">
                             <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
                             <button class="btn btn-primary" type="button" [disabled]="form && form.invalid"
+                                    *appUserEscrita
                                     (click)="submit()">
                                 <i class="ta-save"></i>
                                 {{btnTxt}}

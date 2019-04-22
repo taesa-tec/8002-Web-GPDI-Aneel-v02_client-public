@@ -4,7 +4,7 @@
         <i class="ta-cancel-circle"></i>
     </button>
 </div>
-<form class="modal-body" [formGroup]="form" *ngIf="form" appLogger="Recurso Humano" (initialLog)="log = $event">
+<form class="modal-body" [formGroup]="form" *ngIf="form" appLogger="Recurso Humano">
     <div class="row">
         <div class="col-6">
             <div class="form-group">
@@ -109,7 +109,7 @@
                 <div class="text-right">
                     <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
 
-                    <button class="btn btn-primary" type="button" (click)="submit()"
+                    <button class="btn btn-primary" *appUserEscrita type="button" (click)="submit()"
                             [disabled]="form.invalid || !form.touched || !form.dirty">
                         <i [class]="buttonAction.icon"></i>
                         {{buttonAction.text}}

@@ -58,7 +58,8 @@
         <div class="col-12">
             <div class="form-group">
                 <label for="">Justificativa do recurso nesta etapa</label>
-                <app-textarea name="" formControlName="justificativa" id="" cols="30" rows="4" class="form-control" placeholder="Por que o recurso é necessário nesta etapa?" maxlenght="1000"></app-textarea>
+                <app-textarea name="" formControlName="justificativa" id="" cols="30" rows="4" class="form-control"
+                              placeholder="Por que o recurso é necessário nesta etapa?" maxlenght="1000"></app-textarea>
             </div>
         </div>
     </div>
@@ -67,14 +68,19 @@
             <div class="d-flex justify-content-between">
                 <div>
                     <div *appUserAdmin>
-                        <button class="btn btn-link" (click)="excluir()" *ngIf="alocacao.id"><i class="ta-cancel-circle"></i> Excluir</button>
+                        <button class="btn btn-link" (click)="excluir()" *ngIf="alocacao.id"><i
+                                class="ta-cancel-circle"></i> Excluir
+                        </button>
                     </div>
                 </div>
 
                 <div class="text-right">
                     <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
 
-                    <button class="btn btn-primary" type="button" (click)="submit()" [disabled]="form.invalid || !form.touched || !form.dirty">
+                    <button class="btn btn-primary" type="button" (click)="submit()"
+                            [disabled]="form.invalid || !form.touched || !form.dirty"
+                            *appUserEscrita
+                    >
                         <i [class]="buttonAction.icon"></i>
                         {{buttonAction.text}}
                     </button>
