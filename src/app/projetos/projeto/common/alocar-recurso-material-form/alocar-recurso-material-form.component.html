@@ -4,12 +4,13 @@
         <i class="ta-cancel-circle"></i>
     </button>
 </div>
-<form class="modal-body" [formGroup]="form" *ngIf="form">
+<form class="modal-body" [formGroup]="form" *ngIf="form" appLogger="Alocar Recurso Material">
     <div class="row">
         <div class="col-12">
             <div class="form-group">
                 <label for="">Selecione um recurso material</label>
-                <select name="" id="" class="form-control" formControlName="recursoMaterialId">
+                <select name="" id="" class="form-control" formControlName="recursoMaterialId"
+                        appLogItem="Recurso Material">
                     <option value="">Selecione</option>
                     <option [value]="rec.id" *ngFor="let rec of recursosMaterias">{{rec.nome}}</option>
                 </select>
@@ -21,7 +22,8 @@
         <div class="col-6" [ngClass]="{'col-6':projeto.isPD,'col-12':projeto.isPG}">
             <div class="form-group">
                 <label for="">Empresa Financiadora <span [hidden]="projeto.isPD">e Recebedora</span></label>
-                <select name="" id="" class="form-control" formControlName="empresaFinanciadoraId">
+                <select name="" id="" class="form-control" formControlName="empresaFinanciadoraId"
+                        [appLogItem]="'Empresa Financiadora'.concat(projeto.isPG?' e Recebedora':'')">
                     <option value="">Selecione</option>
                     <option [value]="empresa.id" *ngFor="let empresa of empresasFinanciadoras">{{empresa.nome}}</option>
                 </select>
@@ -30,7 +32,7 @@
         <div class="col-6" *ngIf="projeto.isPD">
             <div class="form-group">
                 <label for="">Empresa Recebedora</label>
-                <select name="" id="" class="form-control" formControlName="empresaRecebedoraId">
+                <select class="form-control" formControlName="empresaRecebedoraId" appLogItem="Empresa REcebedora">
                     <option value="">Selecione</option>
                     <option [value]="emR.id" *ngFor="let emR of empresasRecebedoras">{{emR.nome}}</option>
                 </select>
@@ -41,7 +43,7 @@
         <div class="col-6" *ngIf="projeto.isPD">
             <div class="form-group">
                 <label for="">Etapa</label>
-                <select name="" id="" class="form-control" formControlName="etapaId">
+                <select class="form-control" formControlName="etapaId" appLogItem="Etapa">
                     <option value="">Selecione</option>
                     <option [value]="etapa.id" *ngFor="let etapa of etapas">Etapa {{ etapa.numeroEtapa }}</option>
                 </select>
@@ -50,7 +52,7 @@
         <div [ngClass]="{'col-6':projeto.isPD,'col-12':projeto.isPG}">
             <div class="form-group">
                 <label for="">Quantidade</label>
-                <input type="number" class="form-control" formControlName="qtd">
+                <input type="number" class="form-control" formControlName="qtd" appLogItem="Quantidade">
             </div>
         </div>
     </div>
@@ -58,7 +60,8 @@
         <div class="col-12">
             <div class="form-group">
                 <label for="">Justificativa do recurso nesta etapa</label>
-                <app-textarea name="" formControlName="justificativa" id="" cols="30" rows="4" class="form-control"
+                <app-textarea formControlName="justificativa" cols="30" rows="4" class="form-control"
+                              appLogItem="Justificativa do recurso nesta etapa"
                               placeholder="Por que o recurso é necessário nesta etapa?" maxlenght="1000"></app-textarea>
             </div>
         </div>

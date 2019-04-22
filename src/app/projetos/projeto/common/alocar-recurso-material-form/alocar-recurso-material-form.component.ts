@@ -1,13 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ProjetosService } from '@app/projetos/projetos.service';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { RecursoMaterial, Projeto, AlocacaoRM, Empresa, EmpresaProjeto } from '@app/models';
-import { AppService } from '@app/app.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { zip, of } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
-import { EmpresaProjetoFacade, ProjetoFacade } from '@app/facades';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ProjetosService} from '@app/projetos/projetos.service';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {RecursoMaterial, Projeto, AlocacaoRM, Empresa, EmpresaProjeto} from '@app/models';
+import {AppService} from '@app/app.service';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {zip, of} from 'rxjs';
+import {HttpErrorResponse} from '@angular/common/http';
+import {EmpresaProjetoFacade, ProjetoFacade} from '@app/facades';
+import {LoggerDirective} from '@app/logger/logger.directive';
 
 @Component({
     selector: 'app-alocar-recurso-material-form',
@@ -26,18 +27,20 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
     form: FormGroup;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoggerDirective) logger: LoggerDirective;
 
     constructor(
         public activeModal: NgbActiveModal,
-        protected app: AppService) { }
+        protected app: AppService) {
+    }
 
     get modalTitle() {
-        return typeof this.alocacao.id !== 'undefined' ? "Editar Alocação Recurso Material" : "Alocar Recurso Material";
+        return typeof this.alocacao.id !== 'undefined' ? 'Editar Alocação Recurso Material' : 'Alocar Recurso Material';
     }
 
     get buttonAction() {
-        return typeof this.alocacao.id !== 'undefined' ? { text: "Salvar Alterações", icon: 'ta-save' } :
-            { text: "Alocar Recurso Material", icon: 'ta-plus-circle' };
+        return typeof this.alocacao.id !== 'undefined' ? {text: 'Salvar Alterações', icon: 'ta-save'} :
+            {text: 'Alocar Recurso Material', icon: 'ta-plus-circle'};
     }
 
     get empresasRecebedoras(): Array<EmpresaProjetoFacade> {
@@ -49,7 +52,7 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
                 const financiadora = this.form.get('empresaFinanciadoraId');
                 return empresa.id === parseInt(financiadora.value, 10);
             } else {
-                return empresa.classificacaoValor === "Executora";
+                return empresa.classificacaoValor === 'Executora';
             }
         });
     }
@@ -57,7 +60,6 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
     ngOnInit() {
         this.loadData();
     }
-
 
 
     loadData() {
@@ -75,12 +77,15 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
 
             this.recursosMaterias = recursosMaterias || [];
             if (etapas) {
-                this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; });
+                this.etapas = etapas.map((etapa, i) => {
+                    etapa.numeroEtapa = i + 1;
+                    return etapa;
+                });
             }
 
             this.empresasCatalog = empresasCatalog;
 
-            this.empresasFinanciadoras = this.empresas.filter(item => item.classificacaoValor !== "Executora");
+            this.empresasFinanciadoras = this.empresas.filter(item => item.classificacaoValor !== 'Executora');
 
             this.setup();
 
@@ -102,7 +107,6 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
         });
 
 
-
         if (this.alocacao.id !== undefined) {
             this.form.addControl('id', new FormControl(this.alocacao.id));
         }
@@ -118,9 +122,7 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
         });
 
 
-
     }
-
 
 
     submit() {
@@ -133,6 +135,11 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
                 if (result.sucesso) {
                     // this.logProjeto("Alocação de recursos Materias");
                     this.activeModal.close(result);
+                    if (this.alocacao.id) {
+                        this.logger.saveUpdate();
+                    } else {
+                        this.logger.saveCreate();
+                    }
                 } else {
                     this.app.alert(result.inconsistencias.join(', '));
                 }
@@ -142,9 +149,8 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
     }
 
 
-
     excluir() {
-        this.app.confirm("Tem certeza que deseja excluir esta alocação do recurso material?", "Confirmar Exclusão")
+        this.app.confirm('Tem certeza que deseja excluir esta alocação do recurso material?', 'Confirmar Exclusão')
             .then(result => {
                 if (result) {
                     this.loading.show();
@@ -153,6 +159,7 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
                         if (resultDelete.sucesso) {
                             // this.logProjeto("Alocação de recursos Materias", "Delete");
                             this.activeModal.close('deleted');
+                            this.logger.saveDelete();
                         } else {
                             this.app.alert(resultDelete.inconsistencias.join(', '));
                         }
@@ -172,17 +179,17 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
             userId: this.app.users.currentUser.id,
             projetoId: this.projeto.id,
             tela,
-            acao: acao || "Create",
-            statusAnterior: "",
-            statusNovo: ""
+            acao: acao || 'Create',
+            statusAnterior: '',
+            statusNovo: ''
         };
 
-        const rm = this.recursosMaterias.find(r => r.id === parseInt(this.form.get("recursoMaterialId").value, 10));
-        const emf = this.empresasFinanciadoras.find(f => f.id === parseInt(this.form.get("empresaFinanciadoraId").value, 10));
-        const emr = this.empresasRecebedoras.find(er => er.id === parseInt(this.form.get("empresaRecebedoraId").value, 10));
-        const etapa = this.etapas.find(et => et.id === parseInt(this.form.get("etapaId").value, 10));
-        const qtd = this.form.get("qtd").value;
-        const justificativa = this.form.get("justificativa").value;
+        const rm = this.recursosMaterias.find(r => r.id === parseInt(this.form.get('recursoMaterialId').value, 10));
+        const emf = this.empresasFinanciadoras.find(f => f.id === parseInt(this.form.get('empresaFinanciadoraId').value, 10));
+        const emr = this.empresasRecebedoras.find(er => er.id === parseInt(this.form.get('empresaRecebedoraId').value, 10));
+        const etapa = this.etapas.find(et => et.id === parseInt(this.form.get('etapaId').value, 10));
+        const qtd = this.form.get('qtd').value;
+        const justificativa = this.form.get('justificativa').value;
 
         logProjeto.statusNovo = `<b>Recurso Material:</b> ${rm.nome}<br>
         <b>Empresa Financiadora:</b> ${emf.catalogEmpresa ? emf.catalogEmpresa.nome : emf.razaoSocial}<br>
@@ -191,8 +198,8 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
         <b>Quantidade:</b> ${qtd}<br>
         <b>Justificativa:</b> ${justificativa}<br>`;
 
-        if (acao === "Delete") {
-            logProjeto.statusNovo = "";
+        if (acao === 'Delete') {
+            logProjeto.statusNovo = '';
         }
 
         if (this.alocacao.id !== undefined) {
@@ -211,7 +218,7 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
             <b>Quantidade:</b> ${_qtd}<br>
             <b>Justificativa:</b> ${_justificativa}<br>`;
 
-            logProjeto.acao = acao || "Update";
+            logProjeto.acao = acao || 'Update';
         }
 
         const request = this.app.projetos.criarLogProjeto(logProjeto);

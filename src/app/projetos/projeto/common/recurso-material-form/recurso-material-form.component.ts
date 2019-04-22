@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { CategoriasContabeis, RecursoMaterial, TextValue } from '@app/models';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { AppService } from '@app/app.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ProjetoFacade } from '@app/facades';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {CategoriasContabeis, RecursoMaterial, TextValue} from '@app/models';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {AppService} from '@app/app.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ProjetoFacade} from '@app/facades';
 import {LoggerDirective} from '@app/logger/logger.directive';
 
 @Component({
@@ -25,15 +25,16 @@ export class RecursoMaterialFormComponent implements OnInit {
 
     constructor(
         public activeModal: NgbActiveModal,
-        protected app: AppService) { }
+        protected app: AppService) {
+    }
 
     get modalTitle() {
-        return typeof this.recursoMaterial.id !== 'undefined' ? "Editar Recurso Material" : "Adicionar Recurso Material";
+        return typeof this.recursoMaterial.id !== 'undefined' ? 'Editar Recurso Material' : 'Adicionar Recurso Material';
     }
 
     get buttonAction() {
-        return typeof this.recursoMaterial.id !== 'undefined' ? { text: "Salvar Alterações", icon: 'ta-save' } :
-            { text: "Adicionar Recurso Material", icon: 'ta-plus-circle' };
+        return typeof this.recursoMaterial.id !== 'undefined' ? {text: 'Salvar Alterações', icon: 'ta-save'} :
+            {text: 'Adicionar Recurso Material', icon: 'ta-plus-circle'};
     }
 
     get atividades() {
@@ -45,7 +46,10 @@ export class RecursoMaterialFormComponent implements OnInit {
                     return c.value === currentCategoryValue;
                 });
                 if (currentCategory) {
-                    return currentCategory.atividades.map(a => { a.id = String(a.id); return a; });
+                    return currentCategory.atividades.map(a => {
+                        a.id = String(a.id);
+                        return a;
+                    });
                 }
             }
 
@@ -78,7 +82,7 @@ export class RecursoMaterialFormComponent implements OnInit {
             const cats = <Array<any>>await this.app.catalogo.categoriasContabeisGestao().toPromise();
 
             this.categoriaContabel = cats.map(cat => {
-                return { text: cat.nome, value: String(cat.id), atividades: cat.atividades };
+                return {text: cat.nome, value: String(cat.id), atividades: cat.atividades};
             });
             const catalogCategoriaContabilGestaoId = new FormControl(String(this.recursoMaterial.catalogCategoriaContabilGestaoId || ''), [Validators.required]);
             form.addControl('catalogCategoriaContabilGestaoId', catalogCategoriaContabilGestaoId);
@@ -93,15 +97,18 @@ export class RecursoMaterialFormComponent implements OnInit {
     }
 
 
-
     submit() {
         if (this.form.valid) {
             const request = this.recursoMaterial.id ? this.app.projetos.editarRecursoMaterial(this.form.value) : this.app.projetos.criarRecursoMaterial(this.form.value);
             this.loading.show();
             request.subscribe(result => {
                 if (result.sucesso) {
-                    // this.logProjeto("Recursos Materiais");
                     this.activeModal.close(result);
+                    if (this.recursoMaterial.id) {
+                        this.logger.saveUpdate();
+                    } else {
+                        this.logger.saveCreate();
+                    }
                 } else {
                     this.app.alert(result.inconsistencias.join(', '));
                 }
@@ -111,7 +118,7 @@ export class RecursoMaterialFormComponent implements OnInit {
     }
 
     excluir() {
-        this.app.confirm("Tem certeza que deseja excluir este recurso material?", "Confirmar Exclusão")
+        this.app.confirm('Tem certeza que deseja excluir este recurso material?', 'Confirmar Exclusão')
             .then(result => {
                 if (result) {
                     this.loading.show();
@@ -120,6 +127,7 @@ export class RecursoMaterialFormComponent implements OnInit {
                         if (resultDelete.sucesso) {
                             // this.logProjeto("Recursos Materiais", "Delete");
                             this.activeModal.close('deleted');
+                            this.logger.saveDelete();
                         } else {
                             this.app.alert(resultDelete.inconsistencias.join(', '));
                         }
@@ -138,23 +146,23 @@ export class RecursoMaterialFormComponent implements OnInit {
             userId: this.app.users.currentUser.id,
             projetoId: this.projeto.id,
             tela,
-            acao: acao || "Create",
-            statusAnterior: "",
-            statusNovo: ""
+            acao: acao || 'Create',
+            statusAnterior: '',
+            statusNovo: ''
         };
 
-        const nome = this.form.get("nome").value;
-        const cat = this.categoriaContabel.find(t => t.value === this.form.get("categoriaContabil").value).text;
-        const valor = this.form.get("valorUnitario").value;
-        const especificacao = this.form.get("especificacao").value;
+        const nome = this.form.get('nome').value;
+        const cat = this.categoriaContabel.find(t => t.value === this.form.get('categoriaContabil').value).text;
+        const valor = this.form.get('valorUnitario').value;
+        const especificacao = this.form.get('especificacao').value;
 
         logProjeto.statusNovo = `<b>Nome:</b> ${nome}<br>
         <b>Categoria Contábil:</b> ${cat}<br>
         <b>Valor Unitário:</b> ${valor}<br>
         <b>Especificação:</b> ${especificacao}<br>`;
 
-        if (acao === "Delete") {
-            logProjeto.statusNovo = "";
+        if (acao === 'Delete') {
+            logProjeto.statusNovo = '';
         }
 
         if (this.recursoMaterial.id !== undefined) {
@@ -169,7 +177,7 @@ export class RecursoMaterialFormComponent implements OnInit {
             <b>Valor Unitário:</b> ${_valor}<br>
             <b>Especificação:</b> ${_especificacao}<br>`;
 
-            logProjeto.acao = acao || "Update";
+            logProjeto.acao = acao || 'Update';
         }
 
         const request = this.app.projetos.criarLogProjeto(logProjeto);

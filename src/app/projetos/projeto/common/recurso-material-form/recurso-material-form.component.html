@@ -4,13 +4,13 @@
         <i class="ta-cancel-circle"></i>
     </button>
 </div>
-<form class="modal-body" *ngIf="form" [formGroup]="form">
+<form class="modal-body" *ngIf="form" [formGroup]="form" appLogger="Recurso Material">
     <div class="row">
         <div class="col-12">
             <div class="form-group">
 
                 <label for="">Nome do recurso material</label>
-                <input type="text" class="form-control" formControlName="nome">
+                <input type="text" class="form-control" formControlName="nome" appLogItem="Nome do recurso Material">
             </div>
         </div>
     </div>
@@ -22,6 +22,7 @@
                              (click)="app.openPage('detalheCategoriaContabeis')"></app-tip>
                 </label>
                 <select name="" id="" class="form-control"
+                        appLogItem="Categoria Contábil"
                         [formControlName]="projeto.isPD?'categoriaContabil':'catalogCategoriaContabilGestaoId'">
                     <option value="">Selecione</option>
                     <option [value]="cat.value" *ngFor="let cat of categoriaContabel">{{cat.text}}</option>
@@ -31,7 +32,8 @@
         <div class="col-6">
             <div class="form-group">
                 <label for="">Custo unitário</label>
-                <input type="text" currencyMask class="form-control" formControlName="valorUnitario">
+                <input type="text" currencyMask class="form-control" formControlName="valorUnitario"
+                       appLogItem="Custo unitário">
             </div>
         </div>
     </div>
@@ -39,7 +41,7 @@
         <div class="col-12">
             <div class="form-group">
                 <label>Tipo de Atividade</label>
-                <select class="form-control" formControlName="catalogAtividadeId">
+                <select class="form-control" formControlName="catalogAtividadeId" appLogItem="Tipo de atividade">
                     <option value="">Selecione</option>
                     <option [value]="atividade.id" *ngFor="let atividade of atividades">{{atividade.nome}}</option>
                 </select>
@@ -51,6 +53,7 @@
             <div class="form-group">
                 <label for="">Especificação técnica detalhada do recurso</label>
                 <app-textarea maxlength="1000" cols="30" rows="3" class="form-control"
+                              appLogItem="Especificação técnica detalhada do recurso"
                               formControlName="especificacao"></app-textarea>
 
             </div>
