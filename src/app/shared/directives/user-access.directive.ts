@@ -64,6 +64,7 @@ export class UserAccessDirective {
     }
 
     update(permissao) {
+        console.log(permissao);
         this.permissao = permissao;
         if (typeof permissao === 'boolean' && permissao) {
             this.show();

@@ -13,7 +13,7 @@ export const NiveisUsuarios = {
     leituraEscrita: ProjetoAccess.Todos | ProjetoAccess.Escrita | ProjetoAccess.Leitura,
     aprovador: ProjetoAccess.Todos | ProjetoAccess.Aprovador | ProjetoAccess.Leitura | ProjetoAccess.Escrita,
     // administrador: ProjetoAccess.Administrador,
-    admin: ProjetoAccess.Administrador
+    admin: ProjetoAccess.Administrador | ProjetoAccess.Todos | ProjetoAccess.Aprovador | ProjetoAccess.Leitura | ProjetoAccess.Escrita
 };
 
 export const TiposProdutos: Array<TextValue> = [

@@ -6,6 +6,7 @@ import { LoadingComponent } from '@app/shared/loading/loading.component';
 import { AppService } from '@app/app.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProjetoFacade } from '@app/facades';
+import {LoggerDirective} from '@app/logger/logger.directive';
 
 @Component({
     selector: 'app-recurso-material-form',
@@ -20,6 +21,7 @@ export class RecursoMaterialFormComponent implements OnInit {
     recursoMaterial: RecursoMaterial;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoggerDirective) logger: LoggerDirective;
 
     constructor(
         public activeModal: NgbActiveModal,

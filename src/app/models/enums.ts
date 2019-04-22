@@ -9,7 +9,7 @@ export enum ProjetoAccess {
     Leitura = 2,
     Escrita = 4,
     Aprovador = 8,
-    Administrador = 15,
+    Administrador = 16,
 }
 
 export enum XmlType {
