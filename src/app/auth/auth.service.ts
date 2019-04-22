@@ -1,6 +1,6 @@
 import {Injectable, Inject} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, BehaviorSubject} from 'rxjs';
+import {Observable, BehaviorSubject, timer} from 'rxjs';
 import {LoginRequest, RecoverRequest, ResultadoResponse, NewpassRequest} from '@app/models';
 import {LoginResponse} from '@app/models';
 import {Router} from '@angular/router';
@@ -65,13 +65,15 @@ export class AuthService {
 
             this.http.post<LoginResponse>(`Login`, loginRequest).subscribe(loginResponse => {
                 if (loginResponse.authenticated) {
-
                     this.loginResponse = loginResponse;
                     if (remember) {
                         localStorage.setItem(storageKey, JSON.stringify(loginResponse));
                     }
-                    this.router.navigateByUrl(this.redirectTo);
-                    this.authEventsSource.next({type: 'login', data: loginResponse});
+                    this.router.navigateByUrl(this.redirectTo).then(() => {
+                        this.authEventsSource.next({type: 'login', data: loginResponse});
+                    }, error => {
+                        console.log(error);
+                    });
                 }
                 rootObserver.next(loginResponse);
             }, error => {
@@ -86,7 +88,7 @@ export class AuthService {
     logout(): void {
         this.loginResponse = null;
         localStorage.removeItem(storageKey);
-        this.redirectTo = this.router.url;
+        this.redirectTo = this.router.url !== '/login' ? this.router.url : '/dashboard';
         this.router.navigate(['/login']);
         this.authEventsSource.next({type: 'logout'});
     }

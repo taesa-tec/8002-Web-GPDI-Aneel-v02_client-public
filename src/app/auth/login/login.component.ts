@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
-import { LoginRequest } from '@app/models';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {AuthService} from '../auth.service';
+import {Router} from '@angular/router';
+import {LoginRequest} from '@app/models';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
 
 @Component({
     selector: 'app-login',
@@ -17,13 +17,14 @@ export class LoginComponent implements OnInit {
     errorMessage: string;
 
     loginRequest: LoginRequest = {
-        email: "",
-        password: ""
+        email: '',
+        password: ''
     };
 
     remember = false;
 
-    constructor(protected authService: AuthService, private router: Router) { }
+    constructor(protected authService: AuthService, private router: Router) {
+    }
 
     doLogin() {
 
@@ -33,19 +34,18 @@ export class LoginComponent implements OnInit {
 
         this.errorMessage = null;
 
-        this.authService.login(this.loginRequest, this.remember).subscribe({
-            next(result) {
+        this.authService.login(this.loginRequest, this.remember).subscribe(
+            result => {
                 self.loading.hide();
                 if (!result.authenticated) {
                     self.errorMessage = result.message;
                 } else {
                     // self.router.navigate(['/dashboard']);
                 }
-            },
-            error(e) {
+            }, e => {
+                console.log(e);
                 self.loading.hide();
-            }
-        });
+            });
 
     }
 
