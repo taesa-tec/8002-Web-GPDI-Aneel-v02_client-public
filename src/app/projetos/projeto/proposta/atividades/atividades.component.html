@@ -1,6 +1,6 @@
 <h5 class="text-uppercase text-blue font-weight-normal my-3">Projeto Base Pesquisa e Desenvolvimento</h5>
 <app-loading type="fullscreen"></app-loading>
-<form *ngIf="form" [formGroup]="form">
+<form *ngIf="form" [formGroup]="form" appLogger="Atividades">
     <div class="row">
         <div class="col-12">
             <app-accordion *ngFor="let atividade of atividades">
@@ -10,7 +10,9 @@
                 <div role="main">
                     <div class="form-group">
                         <span class="text-cinza">DESCRIÇÃO, SUCINTA, DAS AÇÕES A SEREM REALIZADAS PELA(S) EMPRESA(S) NA ATIVIDADE SELECIONADA</span>
-                        <app-textarea maxlength="1000" class="form-control" rows="5" [formControlName]="atividade.formName"></app-textarea>
+                        <app-textarea maxlength="1000" class="form-control" rows="5"
+                                      [formControlName]="atividade.formName"
+                                      [appLogItem]="atividade.titulo"></app-textarea>
                     </div>
                 </div>
             </app-accordion>

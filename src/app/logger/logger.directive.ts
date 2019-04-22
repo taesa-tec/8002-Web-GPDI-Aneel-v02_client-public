@@ -8,9 +8,8 @@ import {
     Output,
     QueryList, ViewChildren,
 } from '@angular/core';
-import {FormControl, FormControlDirective, FormGroup, NgControl} from '@angular/forms';
+import {NgControl} from '@angular/forms';
 import {LogItem, TextValue} from '@app/models';
-import {ProjetosService} from '@app/projetos/projetos.service';
 import {LoggerService} from '@app/logger/logger.service';
 
 
@@ -92,11 +91,7 @@ export class LoggerDirective implements AfterViewInit {
             this._firstLog = this.getLog();
             this.initialLog.emit(this.firstLog);
         }
-        this.items.changes.subscribe(changes => {
-            console.log(
-                changes
-            );
-        });
+        this.items.changes.subscribe(changes => { });
         this.items.notifyOnChanges();
 
     }
