@@ -1,5 +1,5 @@
 <app-loading type="fullscreen"></app-loading>
-<div *ngIf="form" [formGroup]="form">
+<div *ngIf="form" [formGroup]="form" appLogger="Relatorio Final Base Projeto">
     <div class="row">
         <div class="col">
             <h5 class="text-uppercase text-blue font-weight-normal my-3">RELATÓRIO FINAL E AUDITORIA</h5>
@@ -9,7 +9,8 @@
         <div class="col-12">
             <div class="form-group">
                 <label>PRODUTO PRINCIPAL PREVISTO FOI ALCANÇADO OU SUPERADO?</label>
-                <select class="form-control" formControlName="produtoAlcancado" #produtoAlcancado>
+                <select class="form-control" formControlName="produtoAlcancado" #produtoAlcancado
+                        appLogItem="Produto principal previsto foi alcançado">
                     <option value="">Selecione</option>
                     <option value="true">Sim</option>
                     <option value="false">Não</option>
@@ -21,7 +22,9 @@
         <div class="col-12">
             <div class="form-group">
                 <label for="">JUSTIFICATIVA PELO NÃO ALCANCE DO PRODUTO PRINCIPAL PREVISTO</label>
-                <app-textarea class="form-control" rows="4" formControlName="justificativaProduto" maxlength="1000"></app-textarea>
+                <app-textarea class="form-control" rows="4" formControlName="justificativaProduto"
+                              appLogItem="Justificativa pelo não alcance do produto principal previsto"
+                              maxlength="1000"></app-textarea>
             </div>
         </div>
     </div>
@@ -29,7 +32,9 @@
         <div class="col-12">
             <div class="form-group">
                 <label for="">ESPECIFICAÇÃO TÉCNICA DO PRODUTO PRINCIPAL OBTIDO</label>
-                <app-textarea class="form-control" rows="4" formControlName="especificacaoProduto" maxlength="1000"></app-textarea>
+                <app-textarea class="form-control" rows="4" formControlName="especificacaoProduto"
+                              appLogItem="Especificação técnica do produto principal obtido"
+                              maxlength="1000"></app-textarea>
             </div>
         </div>
     </div>
@@ -38,7 +43,8 @@
             <div class="form-group">
                 <div>
                     <label for="">TÉCNICA PREVISTA FOI IMPLEMENTADA?</label>
-                    <select class="form-control" formControlName="tecnicaPrevista">
+                    <select class="form-control" formControlName="tecnicaPrevista"
+                            appLogItem="Técnica prevista foi implementada?">
                         <option value="">Selecione</option>
                         <option value="true">Sim</option>
                         <option value="false">Não</option>
@@ -53,7 +59,9 @@
         <div class="col-12">
             <div class="form-group">
                 <label for="">JUSTIFICATIVA PELA NÃO IMPLEMENTAÇÃO DA TÉCNICA PREVISTA</label>
-                <app-textarea class="form-control" rows="4" formControlName="justificativaTecnica" maxlength="1000"></app-textarea>
+                <app-textarea class="form-control" rows="4" formControlName="justificativaTecnica"
+                              appLogItem="Justificativa pela não implementação da técnica prevista"
+                              maxlength="1000"></app-textarea>
             </div>
         </div>
     </div>
@@ -61,7 +69,9 @@
         <div class="col-12">
             <div class="form-group">
                 <label for="">DESCRIÇÃO, SUCINTA, DA TÉCNICA EMPREGADA</label>
-                <app-textarea class="form-control" rows="4" formControlName="descTecnica" maxlength="1000"></app-textarea>
+                <app-textarea class="form-control" rows="4" formControlName="descTecnica"
+                              appLogItem="Descrição da técnica empregada"
+                              maxlength="1000"></app-textarea>
             </div>
         </div>
     </div>
@@ -70,7 +80,8 @@
             <div class="form-group">
                 <div>
                     <label for="">APLICABILIDADE PREVISTA FOI ALCANÇADA OU SUPERADA?</label>
-                    <select class="form-control" formControlName="aplicabilidadePrevista">
+                    <select class="form-control" formControlName="aplicabilidadePrevista"
+                            appLogItem="Aplicabilidade prevista foi alcançada ou superada?">
                         <option value="">Selecione</option>
                         <option value="true">Sim</option>
                         <option value="false">Não</option>
@@ -83,15 +94,20 @@
         <div class="col-12">
             <div class="form-group">
                 <label for="">JUSTIFICATIVA PELO NÃO ALCANCE DA APLICABILIDADE PREVISTA</label>
-                <app-textarea class="form-control" rows="4" formControlName="justificativaAplicabilidade" maxlength="1000"></app-textarea>
+                <app-textarea class="form-control" rows="4" formControlName="justificativaAplicabilidade"
+                              appLogItem="Justificativa pelo não alcance da aplicabilidade prevista"
+                              maxlength="1000"></app-textarea>
             </div>
         </div>
     </div>
     <div class="row" *ngIf="dynamicForm['descTestes']">
         <div class="col-12">
             <div class="form-group">
-                <label for="">DESCRIÇÃO, SUCINTA, DOS RESULTADOS DOS TESTES DE FUNCIONALIDADE DO PRODUTO PRINCIPAL E SUAS RESTRIÇÕES</label>
-                <app-textarea class="form-control" rows="4" formControlName="descTestes" maxlength="1000"></app-textarea>
+                <label for="">DESCRIÇÃO, SUCINTA, DOS RESULTADOS DOS TESTES DE FUNCIONALIDADE DO PRODUTO PRINCIPAL E
+                    SUAS RESTRIÇÕES</label>
+                <app-textarea class="form-control" rows="4" formControlName="descTestes"
+                              appLogItem="Descrição dos resultados dos testes de funcionalidade do produto principal e suas restrições"
+                              maxlength="1000"></app-textarea>
             </div>
         </div>
     </div>
@@ -99,7 +115,9 @@
         <div class="col-12">
             <div class="form-group">
                 <label for="">DESCRIÇÃO DA ABRANGÊNCIA DE APLICAÇÃO DO PRODUTO PRINCIPAL E SUAS RESTRIÇÕES</label>
-                <app-textarea class="form-control" rows="4" formControlName="descAbrangencia" maxlength="1000"></app-textarea>
+                <app-textarea class="form-control" rows="4" formControlName="descAbrangencia"
+                              appLogItem="Descrição da abrangência de aplicação do produto principal e suas restrições"
+                              maxlength="1000"></app-textarea>
             </div>
         </div>
     </div>
@@ -108,7 +126,8 @@
         <div class="col-12">
             <div class="form-group">
                 <label for="">DESCRIÇÃO DO ÂMBITO DE APLICAÇÃO DO PRODUTO PRINCIPAL E SUAS RESTRIÇÕES</label>
-                <app-textarea class="form-control" rows="4" formControlName="descAmbito" maxlength="1000"></app-textarea>
+                <app-textarea class="form-control" rows="4" formControlName="descAmbito"
+                              maxlength="1000"></app-textarea>
             </div>
         </div>
     </div>
@@ -116,8 +135,11 @@
     <div class="row" *ngIf="projeto.isPD">
         <div class="col-12">
             <div class="form-group">
-                <label for="">DESCRIÇÃO, SUCINTA, DAS ATIVIDADES RELACIONADAS À TRANSFERÊNCIA/DIFUSÃO TECNOLÓGICA</label>
-                <app-textarea class="form-control" rows="4" formControlName="descAtividades" maxlength="500"></app-textarea>
+                <label for="">DESCRIÇÃO, SUCINTA, DAS ATIVIDADES RELACIONADAS À TRANSFERÊNCIA/DIFUSÃO
+                    TECNOLÓGICA</label>
+                <app-textarea class="form-control" rows="4" formControlName="descAtividades"
+                              appLogItem="Descrição das atividades relacionadas à transferência/difusão tecnológica"
+                              maxlength="500"></app-textarea>
             </div>
         </div>
     </div>
@@ -127,8 +149,10 @@
             <div class="form-group mb-0">
                 <label for="">ARQUIVO PDF RELATÓRIO FINAL</label>
                 <div *ngIf="relatorio">
-                    <span class="btn btn-link" *ngFor="let file of arquivosRelatorioFinal" [downloadFile]="file">{{file.nomeArquivo}} <i class="ta-cancel-circle" title="Excluir o arquivo"
-                        (click)="deletarArquivo(file)"></i></span>
+                    <span class="btn btn-link" *ngFor="let file of arquivosRelatorioFinal"
+                          [downloadFile]="file">{{file.nomeArquivo}} <i class="ta-cancel-circle"
+                                                                        title="Excluir o arquivo"
+                                                                        (click)="deletarArquivo(file)"></i></span>
                 </div>
             </div>
             <label class="btn btn-link">
@@ -144,11 +168,12 @@
     <div class="row">
         <div class="col-12">
             <div class="form-group mb-0">
-                <label for="">ARQUIVO EM FORMATO PDF DO RELATÓRIO DE AUDITORIA CONTÁBIL E FINANCEIRA DO PROJETO DE P&D</label>
+                <label for="">ARQUIVO EM FORMATO PDF DO RELATÓRIO DE AUDITORIA CONTÁBIL E FINANCEIRA DO PROJETO DE
+                    P&D</label>
                 <div *ngIf="relatorio">
                     <span class="btn btn-link" *ngFor="let file of arquivosRelatorioAuditoria" [downloadFile]="file">
                     {{file.nomeArquivo}}
-                    <i class="ta-cancel-circle" title="Excluir o arquivo" (click)="deletarArquivo(file)"></i>
+                        <i class="ta-cancel-circle" title="Excluir o arquivo" (click)="deletarArquivo(file)"></i>
                     </span>
                 </div>
             </div>
@@ -156,7 +181,8 @@
                 <i class="ta-upload mx-2 fs-22"></i>
                 <span>Selecionar arquivo </span>
                 <strong *ngFor="let file of fileAuditoria.files"> ({{file.name}})</strong>
-                <input type="file" accept=".pdf" class="form-control d-none" #fileAuditoria (change)="changeFile($event)">
+                <input type="file" accept=".pdf" class="form-control d-none" #fileAuditoria
+                       (change)="changeFile($event)">
             </label>
 
         </div>
@@ -169,7 +195,9 @@
         </div>
         <div class="col-6">
             <div class="text-right">
-                <button *appUserEscrita class="btn btn-primary" (click)="submit()" [disabled]="form.invalid"><i class="ta-save"></i> Salvar Dados</button>
+                <button *appUserEscrita class="btn btn-primary" (click)="submit()" [disabled]="form.invalid"><i
+                        class="ta-save"></i> Salvar Dados
+                </button>
             </div>
         </div>
     </div>

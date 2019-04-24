@@ -6,6 +6,7 @@ import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {LoadingComponent} from '@app/shared/loading/loading.component';
 import {timer, of, from, zip} from 'rxjs';
 import {tap, catchError} from 'rxjs/operators';
+import {LoggerDirective} from '@app/logger/logger.directive';
 
 @Component({
     selector: 'app-relatorio-final-auditoria',
@@ -24,6 +25,7 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
     @ViewChild('fileAuditoria') fileAuditoria: ElementRef;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoggerDirective) logger: LoggerDirective;
 
     constructor(protected app: AppService) {
     }
@@ -70,12 +72,13 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
             this.relatorio = relatorio;
             this.buildForm(relatorio);
         }, error => {
+            console.log({error});
             this.buildForm();
         });
     }
 
     buildForm(relatorio?: RelatorioFinal) {
-        this.form = new FormGroup({});
+        this.form = this.form || new FormGroup({});
         if (relatorio) {
             this.form.addControl('id', new FormControl(relatorio.id));
         } else {
@@ -97,13 +100,12 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
     }
 
     changeFile() {
-    };
+
+    }
 
     protected configForm() {
         this.dynamicForm = {};
         if (this.projeto.isPD) {
-
-
             [
                 'produtoAlcancado:false|justificativaProduto',
                 'produtoAlcancado:true|especificacaoProduto',
@@ -116,7 +118,6 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
                 const [controlBase, controlBaseValue] = controls.shift().split(':');
 
                 controls.forEach(controlTargetKey => {
-
                     Object.defineProperty(this.dynamicForm, controlTargetKey, {
                         get: () => String(this.form.get(controlBase).value) === controlBaseValue
                     });
@@ -124,22 +125,15 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
                     const control = this.form.get(controlBase);
                     const controlTarget = this.form.get(controlTargetKey);
 
-
                     if (control) {
-
-
+                        const controlValue = this.relatorio ? this.relatorio[controlTargetKey] : '';
+                        if (String(control.value) === controlBaseValue) {
+                            this.form.addControl(controlTargetKey, new FormControl(controlValue, Validators.required));
+                        } else {
+                            this.form.removeControl(controlTargetKey);
+                        }
                         control.valueChanges.subscribe(value => {
                             if (String(value) === controlBaseValue) {
-                                const controlValue = this.relatorio ? this.relatorio[controlTargetKey] : '';
-                                this.form.addControl(controlTargetKey, new FormControl(controlValue, Validators.required));
-                            } else {
-                                this.form.removeControl(controlTargetKey);
-                            }
-                        });
-
-                        timer(1).subscribe(t => {
-                            if (String(controlTarget.value) === controlBaseValue) {
-                                const controlValue = this.relatorio ? this.relatorio[controlTargetKey] : '';
                                 this.form.addControl(controlTargetKey, new FormControl(controlValue, Validators.required));
                             } else {
                                 this.form.removeControl(controlTargetKey);
@@ -147,6 +141,7 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
                         });
 
                         this.form.updateValueAndValidity();
+
                     }
                 });
             });
@@ -161,6 +156,7 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
             this.loading.hide();
             if (result.sucesso) {
                 this.app.alert('Excluido com sucesso');
+                this.logger.saveDelete();
             } else {
                 this.app.alert(result.inconsistencias, 'Erro');
             }
@@ -188,6 +184,11 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
                     this.app.alert('Salvo com sucesso');
                     this.obterRelatorioFinal();
                 });
+                if (this.relatorio) {
+                    this.logger.saveUpdate();
+                } else {
+                    this.logger.saveCreate();
+                }
             } else {
                 this.app.alert(result.inconsistencias);
                 this.loading.hide();
