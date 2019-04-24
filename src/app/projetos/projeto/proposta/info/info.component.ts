@@ -79,7 +79,9 @@ export class InfoComponent implements OnInit {
                 if (resultado.sucesso) {
                     this.app.alert('Salvo com sucesso');
                     this.projeto = Object.assign(this.projeto, this.form.value);
-                    this.logger.saveUpdate();
+                    if (this.logger) {
+                        this.logger.saveUpdate();
+                    }
                 } else {
                     this.app.alert(resultado.inconsistencias);
                 }

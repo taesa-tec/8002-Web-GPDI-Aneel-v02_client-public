@@ -76,7 +76,7 @@ export class LoggerDirective implements AfterViewInit, OnInit, AfterContentInit,
     @ContentChildren(LoggerItemDirective, {descendants: true}) items: QueryList<LoggerItemDirective>;
 
     @Input() initLog = true;
-    @Input('appLogger') tela;
+    @Input('appLogger') tela: string;
     @Output() initialLog: EventEmitter<LogItem> = new EventEmitter();
 
     protected _firstLog: LogItem;
@@ -140,5 +140,10 @@ export class LoggerDirective implements AfterViewInit, OnInit, AfterContentInit,
     saveDelete(projetoId?: any, userId?: string) {
         return this.logger.submitLog('Excluído', this.getLog(), 'Delete', this.tela, projetoId, userId);
     }
+
+    saveStatus(status: string, acao: 'Create' | 'Update' | 'Delete' = 'Update', projetoId?: any, userId?: string) {
+        return this.logger.submitLog(status, this.getLog(), acao, this.tela, projetoId, userId);
+    }
+
 }
 

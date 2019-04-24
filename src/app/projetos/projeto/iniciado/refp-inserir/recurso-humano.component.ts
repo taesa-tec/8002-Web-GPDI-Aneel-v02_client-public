@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import {LoadingComponent} from '@app/shared/loading/loading.component';
 import {tap} from 'rxjs/operators';
 import {isNil} from 'lodash-es';
+import {LoggerDirective} from '@app/logger/logger.directive';
 
 @Component({
     selector: 'app-recurso-humano',
@@ -32,6 +33,7 @@ export class RecursoHumanoComponent implements OnInit {
     isValid = true;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoggerDirective) logger: LoggerDirective;
     @ViewChild('file') file: ElementRef;
 
     empresas: Array<EmpresaProjetoFacade>;
@@ -205,6 +207,7 @@ export class RecursoHumanoComponent implements OnInit {
                 if (result.sucesso) {
                     this.sendFile(result.id).subscribe(_result => {
                         this.loading.hide();
+                        this.logger.saveCreate();
                         this.form.reset();
                         this.form.get('tipo').setValue('RH');
                         this.form.get('projetoId').setValue(this.projeto.id);

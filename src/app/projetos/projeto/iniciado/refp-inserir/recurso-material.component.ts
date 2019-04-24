@@ -10,6 +10,7 @@ import {ProjetoFacade, EmpresaProjetoFacade} from '@app/facades';
 import {LoadingComponent} from '@app/shared/loading/loading.component';
 import {tap, map} from 'rxjs/operators';
 import {isNil} from 'lodash-es';
+import {LoggerDirective} from '@app/logger/logger.directive';
 
 @Component({
     selector: 'app-recurso-material',
@@ -36,6 +37,7 @@ export class RecursoMaterialComponent implements OnInit {
     isValid = true;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoggerDirective) logger: LoggerDirective;
     @ViewChild('file') file: ElementRef;
 
     get empresasRecebedoras(): Array<EmpresaProjetoFacade> {
@@ -263,6 +265,7 @@ export class RecursoMaterialComponent implements OnInit {
                 if (result.sucesso) {
                     this.sendFile(result.id).subscribe(_result => {
                         this.loading.hide();
+                        this.logger.saveCreate();
                         this.form.reset();
                         this.form.get('tipo').setValue('RM');
                         this.form.get('projetoId').setValue(this.projeto.id);

@@ -1,10 +1,11 @@
 <app-loading type="fullscreen"></app-loading>
-<form [formGroup]="form" *ngIf="form">
+<form [formGroup]="form" *ngIf="form" appLogger="Registro REFP">
     <div class="row">
         <div class="col-12">
             <div class="form-group">
                 <label for="">NOME DO ITEM</label>
-                <input type="text" class="form-control" formControlName="nomeItem" placeholder="Nome">
+                <input type="text" class="form-control" formControlName="nomeItem" placeholder="Nome"
+                       appLogItem="Nome do item">
             </div>
         </div>
     </div>
@@ -14,7 +15,8 @@
 
             <div>
                 <label for="">RECURSO MATERIAL ASSOCIADO</label>
-                <select name="" id="" class="form-control" formControlName="recursoMaterialId">
+                <select name="" id="" class="form-control" formControlName="recursoMaterialId"
+                        appLogItem="Recurso material associado">
                     <option value="">Selecionar</option>
                     <option [value]="r.id" *ngFor="let r of recursos">{{ r.nome }}</option>
                 </select>
@@ -26,8 +28,9 @@
     <div class="row">
         <div class="col-6">
             <div class="form-group">
-                <label for="">EMPRESA FINACIADORA</label>
-                <select name="" id="" class="form-control" formControlName="empresaFinanciadoraId">
+                <label for="">EMPRESA FINANCIADORA</label>
+                <select name="" id="" class="form-control" formControlName="empresaFinanciadoraId"
+                        appLogItem="Empresa financiadora">
                     <option value="">Selecionar</option>
                     <option [value]="item.id" *ngFor="let item of empresasFinanciadoras">{{item.nome}}</option>
                 </select>
@@ -36,7 +39,8 @@
         <div class="col-6" *ngIf="projeto.isPD">
             <div class="form-group">
                 <label for="">EMPRESA RECEBEDORA</label>
-                <select name="" id="" class="form-control" formControlName="empresaRecebedoraId">
+                <select name="" id="" class="form-control" formControlName="empresaRecebedoraId"
+                        appLogItem="Empresa recebedora">
                     <option value="">Selecionar</option>
                     <option [value]="item.id" *ngFor="let item of empresasRecebedoras">{{item.nome}}</option>
                 </select>
@@ -50,13 +54,15 @@
         <div class="col-6">
             <div class="form-group">
                 <label for="">BENEFÍCIADO</label>
-                <input type="text" class="form-control" formControlName="beneficiado">
+                <input type="text" class="form-control" formControlName="beneficiado" appLogItem="Benefíciado">
             </div>
         </div>
         <div class="col-6">
             <div class="form-group">
-                <label for="">CNPJ BENEFICIADO</label>
-                <input type="text" class="form-control" mask="00.000.000/0000-00" placeholder="00.000.000/0000-00" value="cnpjBeneficiado" formControlName="cnpjBeneficiado">
+                <label for="">CNPJ BENEFÍCIADO</label>
+                <input type="text" class="form-control" mask="00.000.000/0000-00" placeholder="00.000.000/0000-00"
+                       appLogItem="CNPJ benefíciado"
+                       value="cnpjBeneficiado" formControlName="cnpjBeneficiado">
             </div>
 
         </div>
@@ -68,7 +74,9 @@
         <div class="col-6">
             <div class="form-group">
                 <label for="">CATEGORIA CONTÁBIL</label>
-                <select name="" id="" class="form-control" [formControlName]="projeto.isPD?'categoriaContabil':'catalogCategoriaContabilGestaoId'">
+                <select class="form-control"
+                        appLogItem="Categoria contábil"
+                        [formControlName]="projeto.isPD?'categoriaContabil':'catalogCategoriaContabilGestaoId'">
                     <option value="">Selecionar</option>
                     <option [value]="c.value" *ngFor="let c of categoriasContabeis">{{c.text}}</option>
                 </select>
@@ -78,19 +86,22 @@
             <div class="col-6">
                 <div>
                     <label>
-                        <app-checkbox formControlName="equiparLabExistente" class="d-inline-block"></app-checkbox>
+                        <app-checkbox formControlName="equiparLabExistente" class="d-inline-block"
+                                      appLogItem="Irá equipar laboratório existente"></app-checkbox>
                         IRÁ EQUIPAR LABORATÓRIO EXISTENTE?
                     </label>
                 </div>
                 <div>
                     <label>
-                        <app-checkbox formControlName="equiparLabNovo" class="d-inline-block"></app-checkbox>
+                        <app-checkbox formControlName="equiparLabNovo" class="d-inline-block"
+                                      appLogItem="Irá equipar laboratório novo"></app-checkbox>
                         IRÁ EQUIPAR LABORATÓRIO NOVO?
                     </label>
                 </div>
                 <div>
                     <label>
-                        <app-checkbox formControlName="itemNacional" class="d-inline-block"></app-checkbox>
+                        <app-checkbox formControlName="itemNacional" class="d-inline-block"
+                                      appLogItem="Item nacional"></app-checkbox>
                         ITEM NACIONAL?
                     </label>
                 </div>
@@ -100,7 +111,8 @@
         <div class="col-6" *ngIf="projeto.isPG">
             <div class="form-group">
                 <label for="">TIPO DE ATIVIDADE</label>
-                <select name="" id="" class="form-control" formControlName="catalogAtividadeId">
+                <select class="form-control" formControlName="catalogAtividadeId"
+                        appLogItem="Tipo de atividade">
                     <option value="">Selecionar</option>
                     <option [value]="c.value" *ngFor="let c of atividades">{{c.text}}</option>
                 </select>
@@ -113,7 +125,7 @@
 
             <div class="form-group">
                 <label for="">MÊS REFERÊNCIA</label>
-                <select name="" id="" class="form-control" formControlName="mes">
+                <select name="" id="" class="form-control" formControlName="mes" appLogItem="Mês referência">
                     <option value="">Selecione</option>
                     <option [value]="item.value" *ngFor="let item of mesesRef">{{item.text}}</option>
                 </select>
@@ -124,14 +136,16 @@
         <div class="col-4">
             <div class="form-group">
                 <label for="">QUANTIDADE ITENS</label>
-                <input type="text" class="form-control" maxlength="7" formControlName="qtdItens" mask="0*">
+                <input type="text" class="form-control" maxlength="7" formControlName="qtdItens" mask="0*"
+                       appLogItem="Quantidade itens">
             </div>
         </div>
 
         <div class="col-4">
             <div class="form-group">
                 <label for="">CUSTO UNITÁRIO</label>
-                <input type="text" class="form-control" currencyMask formControlName="valorUnitario">
+                <input type="text" class="form-control" currencyMask formControlName="valorUnitario"
+                       appLogItem="Custo unitário">
             </div>
         </div>
     </div>
@@ -141,7 +155,7 @@
 
             <div class="form-group">
                 <label for="">TIPO DE DOCUMENTO?</label>
-                <select name="" id="" class="form-control" formControlName="tipoDocumento">
+                <select class="form-control" formControlName="tipoDocumento" appLogItem="Tipo de documento">
                     <option value="">Selecionar</option>
                     <option [value]="t.value" *ngFor="let t of tipoDocs">{{ t.text }}</option>
                 </select>
@@ -152,14 +166,15 @@
         <div class="col-4">
             <div class="form-group">
                 <label for="">NÚMERO DE DOCUMENTO</label>
-                <input type="text" class="form-control" formControlName="numeroDocumento">
+                <input type="text" class="form-control" formControlName="numeroDocumento"
+                       appLogItem="Número de documento">
             </div>
         </div>
 
         <div class="col-4">
             <div class="form-group">
                 <label for="">DATA DO DOCUMENTO</label>
-                <input type="date" class="form-control" formControlName="dataDocumento">
+                <input type="date" class="form-control" formControlName="dataDocumento" appLogItem="Data do documento">
             </div>
         </div>
     </div>
@@ -168,7 +183,9 @@
         <div class="col-12">
             <div class="form-group">
                 <label for="">ESPECÍFICAÇÃO TÉCNICA</label>
-                <textarea name="" id="" cols="30" rows="4" class="form-control" formControlName="especificacaoTecnica"></textarea>
+                <textarea cols="30" rows="4" class="form-control"
+                          appLogItem="Específicação técnica"
+                          formControlName="especificacaoTecnica"></textarea>
             </div>
 
         </div>
@@ -178,7 +195,9 @@
         <div class="col-12">
             <div class="form-group">
                 <label for="">FUNÇÃO DESTE RECURSO NESTA ETAPA DO PROJETO</label>
-                <textarea name="" id="" cols="30" rows="4" class="form-control" formControlName="funcaoRecurso"></textarea>
+                <textarea cols="30" rows="4" class="form-control"
+                          appLogItem="Função deste recurso nesta etapa do projeto"
+                          formControlName="funcaoRecurso"></textarea>
             </div>
         </div>
     </div>
@@ -257,7 +276,8 @@
                 <div class="col-12">
                     <div class="form-group" [formGroup]="obsInternas">
                         <label for="">RESPOSTA QUESTIONAMENTOS (SERÁ ADICIONADO AS OBSERVAÇÕES INTERNAS)</label>
-                        <textarea name="" id="" cols="30" rows="4" class="form-control" formControlName="texto"></textarea>
+                        <textarea name="" id="" cols="30" rows="4" class="form-control"
+                                  formControlName="texto"></textarea>
                     </div>
                     <div class="text-right">
                         <button class="btn btn-primary" [disabled]="obsInternas.invalid" (click)="enviarAprovacao()">

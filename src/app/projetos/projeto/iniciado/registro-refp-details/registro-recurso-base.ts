@@ -1,12 +1,13 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter, ElementRef } from '@angular/core';
-import { AppService } from '@app/app.service';
-import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RegistroREFP, ResultadoResponse, NoRequest, CategoriasContabeis } from '@app/models';
-import { ProjetoFacade } from '@app/facades';
-import { zip, Observable, of } from 'rxjs';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import {Component, OnInit, ViewChild, Input, Output, EventEmitter, ElementRef} from '@angular/core';
+import {AppService} from '@app/app.service';
+import {RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RegistroREFP, ResultadoResponse, NoRequest, CategoriasContabeis} from '@app/models';
+import {ProjetoFacade} from '@app/facades';
+import {zip, Observable, of} from 'rxjs';
+import {FormGroup, FormControl, Validators, FormArray} from '@angular/forms';
 import * as moment from 'moment';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { tap, map } from 'rxjs/operators';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {tap, map} from 'rxjs/operators';
+import {LoggerDirective} from '@app/logger/logger.directive';
 
 export abstract class RegistroRecursoBase implements OnInit {
 
@@ -30,8 +31,10 @@ export abstract class RegistroRecursoBase implements OnInit {
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
     @ViewChild('file') file: ElementRef;
+    @ViewChild(LoggerDirective) logger: LoggerDirective;
 
-    constructor(protected app: AppService) { }
+    constructor(protected app: AppService) {
+    }
 
     get status() {
         if (this.registro) {
@@ -43,6 +46,7 @@ export abstract class RegistroRecursoBase implements OnInit {
     get isEditable() {
         return this.status === 'reprovado';
     }
+
     protected abstract getRecursos(projeto: ProjetoFacade): Observable<any>;
 
     ngOnInit() {
@@ -75,7 +79,7 @@ export abstract class RegistroRecursoBase implements OnInit {
                         classificacao: e.classificacaoValor
                     };
                 });
-                this.empresasFinanciadoras = this.empresas.filter(e => e.classificacao !== "Executora");
+                this.empresasFinanciadoras = this.empresas.filter(e => e.classificacao !== 'Executora');
                 this.empresasRecebedoras = this.empresas;
 
                 this.buildForm();
@@ -135,7 +139,9 @@ export abstract class RegistroRecursoBase implements OnInit {
                         this.app.prompt('Motivo da reprovação (será adicionado as observações internas)', 'Reprovar Registro')
                             .then(motivo => {
                                 this.projeto.relations.REFP.reprovarRegistro(this.registro.id, motivo)
-                                    .subscribe(r => subscribe.next(r), e => subscribe.error(e));
+                                    .subscribe(r => {
+                                        subscribe.next(r);
+                                    }, e => subscribe.error(e));
                             }, error => {
                                 subscribe.error(error);
                             });
@@ -146,10 +152,11 @@ export abstract class RegistroRecursoBase implements OnInit {
 
         request().subscribe(result => {
             if (result.sucesso) {
-
                 this.registroAlterado.emit();
-
-                this.app.alert("Alterado com sucesso!");
+                this.app.alert('Alterado com sucesso!');
+                if (this.logger) {
+                    this.logger.saveStatus(status);
+                }
             } else {
                 this.app.alert(result.inconsistencias);
             }
@@ -158,7 +165,7 @@ export abstract class RegistroRecursoBase implements OnInit {
     }
 
     removerRegistro() {
-        this.app.confirm("Tem certeza que deseja remover este registro", "Confirme").then(result => {
+        this.app.confirm('Tem certeza que deseja remover este registro', 'Confirme').then(result => {
 
             if (result) {
                 this.loading.show();
@@ -167,7 +174,10 @@ export abstract class RegistroRecursoBase implements OnInit {
 
                     if (result.sucesso) {
                         this.registroAlterado.emit();
-                        this.app.alert("Excluído com sucesso!");
+                        this.app.alert('Excluído com sucesso!');
+                        if (this.logger) {
+                            this.logger.saveDelete();
+                        }
                     } else {
                         this.app.alert(result.inconsistencias);
                     }
@@ -183,18 +193,18 @@ export abstract class RegistroRecursoBase implements OnInit {
             this.loading.hide();
             if (resultado.sucesso) {
                 this.sendFile(this.registro.id).subscribe(_result => {
-                    this.app.alert("Enviado para a aprovação");
+                    this.app.alert('Enviado para a aprovação');
                     this.registroAlterado.emit();
                 });
             } else {
-                this.app.alert(resultado.inconsistencias)
+                this.app.alert(resultado.inconsistencias);
             }
         });
 
     }
 
     editarRegistro() {
-        this.registro.statusValor = "Reprovado";
+        this.registro.statusValor = 'Reprovado';
         this.buildFormObs();
         this.form.enable();
         this.form.updateValueAndValidity();
@@ -206,7 +216,7 @@ export abstract class RegistroRecursoBase implements OnInit {
         this.app.file.remover(file).subscribe((result: ResultadoResponse) => {
             this.loading.hide();
             if (result.sucesso) {
-                this.app.alert("Excluido com sucesso");
+                this.app.alert('Excluido com sucesso');
             } else {
                 this.app.alert(result.inconsistencias, 'Erro');
             }
@@ -215,7 +225,9 @@ export abstract class RegistroRecursoBase implements OnInit {
         });
     }
 
-    changeFile(event) { }
+    changeFile(event) {
+    }
+
     sendFile(id?) {
         const el = this.file.nativeElement as HTMLInputElement;
 
@@ -224,7 +236,7 @@ export abstract class RegistroRecursoBase implements OnInit {
                 RegistroFinanceiroId: new FormControl(id),
             })).pipe(tap(result => {
                 if (result.sucesso) {
-                    this.file.nativeElement.value = "";
+                    this.file.nativeElement.value = '';
                 }
             }));
         }

@@ -1,12 +1,10 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { AppService } from '@app/app.service';
-import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RegistroREFP, ResultadoResponse } from '@app/models';
-import { ProjetoFacade } from '@app/facades';
-import { zip, Observable } from 'rxjs';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import {Component, OnInit, ViewChild, Input, Output, EventEmitter} from '@angular/core';
+import {AppService} from '@app/app.service';
+import {RecursoHumano} from '@app/models';
+import {ProjetoFacade} from '@app/facades';
+import {FormGroup, FormControl, Validators, FormArray} from '@angular/forms';
 import * as moment from 'moment';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { RegistroRecursoBase } from '../registro-recurso-base';
+import {RegistroRecursoBase} from '../registro-recurso-base';
 
 @Component({
     selector: 'app-registro-recurso-humano',
@@ -14,7 +12,6 @@ import { RegistroRecursoBase } from '../registro-recurso-base';
     styles: []
 })
 export class RegistroRecursoHumanoComponent extends RegistroRecursoBase {
-
 
 
     recursos: Array<RecursoHumano>;
@@ -37,6 +34,7 @@ export class RegistroRecursoHumanoComponent extends RegistroRecursoBase {
         }
         return 0;
     }
+
     get observacoes() {
         return this.registro.obsInternas.filter(obs => obs.texto.length > 0);
     }
@@ -59,7 +57,7 @@ export class RegistroRecursoHumanoComponent extends RegistroRecursoBase {
         this.form = new FormGroup({
             id: new FormControl(this.registro.id),
             projetoId: new FormControl(this.projeto.id),
-            tipo: new FormControl("RH"),
+            tipo: new FormControl('RH'),
             recursoHumanoId: this.recurso,
             empresaFinanciadoraId: new FormControl(this.registro.empresaFinanciadoraId, [Validators.required]),
             mes: new FormControl(mes, [Validators.required]),
