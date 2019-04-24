@@ -88,7 +88,7 @@ export class AuthService {
     logout(): void {
         this.loginResponse = null;
         localStorage.removeItem(storageKey);
-        this.redirectTo = this.router.url !== '/login' ? this.router.url : '/dashboard';
+        this.redirectTo = '/dashboard';
         this.router.navigate(['/login']);
         this.authEventsSource.next({type: 'logout'});
     }

@@ -1,10 +1,12 @@
 import {
+    AfterContentChecked,
+    AfterContentInit,
     AfterViewInit,
     ContentChildren,
     Directive,
     ElementRef,
     EventEmitter,
-    Input, Optional,
+    Input, OnInit, Optional,
     Output,
     QueryList, ViewChildren,
 } from '@angular/core';
@@ -69,7 +71,7 @@ export class LoggerItemDirective implements AfterViewInit {
     selector: '[appLogger]',
     exportAs: 'logger'
 })
-export class LoggerDirective implements AfterViewInit {
+export class LoggerDirective implements AfterViewInit, OnInit, AfterContentInit, AfterContentChecked {
 
     @ContentChildren(LoggerItemDirective, {descendants: true}) items: QueryList<LoggerItemDirective>;
 
@@ -86,12 +88,24 @@ export class LoggerDirective implements AfterViewInit {
     constructor(protected logger: LoggerService) {
     }
 
+    ngOnInit(): void {
+    }
+
+    ngAfterContentChecked(): void {
+        // console.log('ngAfterContentChecked', this.tela, this.items);
+    }
+
+    ngAfterContentInit(): void {
+        // console.log(this.tela, 'ngAfterContentInit');
+    }
+
     ngAfterViewInit(): void {
         if (this.initLog) {
             this._firstLog = this.getLog();
             this.initialLog.emit(this.firstLog);
         }
-        this.items.changes.subscribe(changes => { });
+        this.items.changes.subscribe(changes => {
+        });
         this.items.notifyOnChanges();
 
     }
@@ -124,7 +138,7 @@ export class LoggerDirective implements AfterViewInit {
     }
 
     saveDelete(projetoId?: any, userId?: string) {
-        return this.logger.submitLog('Excluído', this.getLog(), 'Delete', projetoId, userId);
+        return this.logger.submitLog('Excluído', this.getLog(), 'Delete', this.tela, projetoId, userId);
     }
 }
 

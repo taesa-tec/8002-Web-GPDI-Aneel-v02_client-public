@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { SubTema, CatalogSubTema } from '@app/models';
+import {Component, OnInit, Input, Output, EventEmitter, ViewChild} from '@angular/core';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
+import { CatalogSubTema} from '@app/models';
+import {LoggerDirective} from '@app/logger/logger.directive';
 
 @Component({
     selector: 'app-sub-tema',
@@ -15,6 +16,7 @@ export class SubTemasComponent implements OnInit {
     @Input() subform: FormGroup;
     @Input() index: number;
     @Output() remove: EventEmitter<void> = new EventEmitter();
+    @ViewChild(LoggerDirective) logger: LoggerDirective;
 
 
     get temas() {
@@ -22,9 +24,11 @@ export class SubTemasComponent implements OnInit {
             return this.selectedThemes.indexOf(tema.subTemaId) === -1 || (this.tema && this.tema.subTemaId === tema.subTemaId);
         });
     }
+
     get temaControl() {
         return this.subform.get('catalogSubTemaId');
     }
+
     get tema() {
         return this.subTemas ? this.subTemas.find(t => t.subTemaId === parseInt(this.temaControl.value, 10)) : null;
     }
@@ -32,7 +36,9 @@ export class SubTemasComponent implements OnInit {
     get isOther() {
         return this.tema && this.tema.nome.match(/^Outros?\.?$/g) !== null;
     }
-    constructor() { }
+
+    constructor() {
+    }
 
     ngOnInit(): void {
         // this.setup();

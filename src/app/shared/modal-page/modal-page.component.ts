@@ -12,7 +12,7 @@ import htmlpages from '@htmlpages/index';
 export class ModalPageComponent implements OnInit {
 
     parser = new DOMParser();
-    protected htmlContent: SafeHtml;
+    htmlContent: SafeHtml;
 
     protected _title = 'Detalhamento';
     get title() {

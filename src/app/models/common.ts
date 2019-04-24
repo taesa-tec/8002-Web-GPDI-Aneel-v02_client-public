@@ -148,7 +148,7 @@ export interface CatalogTema {
     id: number;
     nome: string;
     valor: string;
-    subTemas: SubTema[];
+    subTemas: CatalogSubTema[];
 }
 
 export interface CatalogSubTema {

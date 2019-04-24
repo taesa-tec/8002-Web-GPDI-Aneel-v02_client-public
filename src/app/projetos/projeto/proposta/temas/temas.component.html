@@ -50,16 +50,37 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="subTemasForms" formArrayName="subTemas">
         <div class="col-12">
-            <ng-container *ngFor="let formSubtema of subTemasForms.controls; let i = index;">
-                <app-sub-tema [subform]="formSubtema"
-                              appLogItem="SubTema Outter"
-                              [selectedThemes]="selectedsThemes" [subTemas]="subTemas" (remove)="delete(i)"
-                              [index]="i"></app-sub-tema>
-            </ng-container>
+            <div class="bg-cinza-claro my-3 p-3 rounded"
+                 *ngFor="let formSubtema of subTemasForms.controls; let i = index;" [formGroup]="formSubtema">
+                <div class="form-group">
+                    <label for="">Sub-Tema
+                        <app-tip [tipId]="34"></app-tip>
+                    </label>
+                    <select class="form-control" formControlName="catalogSubTemaId"
+                            appLogItem="Sub-tema">
+                        <option value="">Selecione</option>
+                        <option [value]="subTema.subTemaId"
+                                *ngFor="let subTema of subtemasdisponiveis(formSubtema.get('catalogSubTemaId').value) | orderBy:'order'">{{subTema.nome}}
+                            - {{subTema.valor}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group" *ngIf="isOther(formSubtema.get('catalogSubTemaId').value)">
+                    <label>Outro sub-tema</label>
+                    <app-textarea [maxlength]="200" rows="2" class="form-control"
+                                  formControlName="outroDesc"
+                                  appLogItem="Sub-tema outros"></app-textarea>
+                </div>
+                <div class="text-right" *ngIf="i > 0">
+                    <button type="button" class="btn btn-link text-cinza" (click)="delete(i)">
+                        <i class="ta-cancel-circle"></i> Excluir
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="col-12 text-right" *ngIf="subTemas.length > 0">
+        <div class="col-12 text-right" *ngIf="subTemas.length > subTemasForms.length">
             <button type="button" *appUserEscrita class="btn btn-outline-primary" (click)="addSubTema()">
                 <i class="ta-plus-circle"></i> Adicionar Sub-Tema
             </button>

@@ -5,7 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import {ProjetosService} from '@app/projetos/projetos.service';
 import {map, mergeMap, tap} from 'rxjs/operators';
 import {zip, of} from 'rxjs';
-import {Projeto, Tema, SubTema, SubTemaRequest, TemaProjeto, NoRequest, ResultadoResponse} from '@app/models';
+import {Projeto, Tema, SubTema, SubTemaRequest, TemaProjeto, NoRequest, ResultadoResponse, CatalogTema} from '@app/models';
 import {FormGroup, FormControl, Validators, FormArray} from '@angular/forms';
 import {SubTemasComponent} from './sub-tema.component';
 import {LoadingComponent} from '@app/shared/loading/loading.component';
@@ -22,7 +22,7 @@ export class TemasComponent implements OnInit {
 
     temaProjeto: TemaProjeto;
 
-    temas: Array<Tema>;
+    temas: Array<CatalogTema>;
     // Form
     form: FormGroup;
     formFile: FormGroup;
@@ -39,8 +39,10 @@ export class TemasComponent implements OnInit {
     }
 
     get subTemas() {
+
         return this.tema ? this.tema.subTemas : [];
     }
+
 
     get selectedsThemes() {
         return (this.subTemasForms.value as Array<any>).map(i => parseInt(i.catalogSubTemaId, 10));
@@ -51,6 +53,17 @@ export class TemasComponent implements OnInit {
         private route: ActivatedRoute,
         private projetoService: ProjetosService,
         protected catalogo: CatalogsService) {
+    }
+
+    subtemasdisponiveis(current?: any) {
+        return this.subTemas.filter(tema => {
+            return this.selectedsThemes.indexOf(tema.subTemaId) === -1 || (current && parseFloat(current) === tema.subTemaId);
+        });
+    }
+
+    isOther(subTemaId) {
+        const subtema = this.subTemas ? this.subTemas.find(st => st.subTemaId === parseInt(subTemaId, 10)) : null;
+        return subtema && subtema.nome.match(/^Outros?\.?$/g) !== null;
     }
 
     ngOnInit() {
@@ -109,9 +122,6 @@ export class TemasComponent implements OnInit {
                 this.addSubTema(s);
             });
         }
-        setTimeout(() => {
-            console.log(this.logger.getLog());
-        }, 1000);
     }
 
     protected reset(keepOne = true) {
@@ -134,6 +144,7 @@ export class TemasComponent implements OnInit {
             outroDesc: new FormControl(outroDesc)
         });
         this.subTemasForms.push(f);
+        this.form.updateValueAndValidity();
     }
 
     delete(i: number) {
@@ -143,13 +154,12 @@ export class TemasComponent implements OnInit {
     }
 
     updateTemas() {
-        this.loading.show();
 
+
+        this.loading.show();
         const request =
             (this.temaProjeto ? this.projetoService.editTema(this.form.value) : this.projetoService.criarTema(this.form.value))
                 .pipe(mergeMap(result => {
-                    console.log({result});
-
                     if (result.sucesso) {
                         if (result.id) {
                             return this.sendFile(result.id);
@@ -165,6 +175,11 @@ export class TemasComponent implements OnInit {
             if (resultado.sucesso) {
                 this.load();
                 this.app.alert('Tema atualizado com sucesso');
+                if (this.temaProjeto) {
+                    this.logger.saveUpdate();
+                } else {
+                    this.logger.saveCreate();
+                }
             } else {
                 this.app.alert(resultado.inconsistencias.join(', '));
             }
