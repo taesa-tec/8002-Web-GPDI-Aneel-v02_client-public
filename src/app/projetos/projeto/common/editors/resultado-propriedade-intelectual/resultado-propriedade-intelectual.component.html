@@ -5,12 +5,12 @@
     </button>
 </div>
 <div class="modal-body">
-    <div [formGroup]="form" *ngIf="form">
+    <div [formGroup]="form" *ngIf="form" appLogger="Resultados produção técnico cientifica">
         <div class="row">
             <div class="col-12">
                 <div class="form-group">
                     <label for="">TIPO DE PROPRIEDADE INTELECTUAL</label>
-                    <select class="form-control" formControlName="tipo">
+                    <select class="form-control" formControlName="tipo" appLogItem="Tipo de propriedade intelectual">
                         <option value="">Selecione</option>
                         <option *ngFor="let tipo of tiposPropriedades" [value]="tipo.value">{{tipo.text}}</option>
                     </select>
@@ -22,13 +22,15 @@
             <div class="col-6">
                 <div class="form-group">
                     <label for="">DATA DO PEDITO INPI</label>
-                    <input type="date" class="form-control" formControlName="dataPedido">
+                    <input type="date" class="form-control" formControlName="dataPedido"
+                           appLogItem="Data do pedito INPI">
                 </div>
             </div>
             <div class="col-6">
                 <div class="form-group">
                     <label for="">NÚMERO PEDIDO INPI</label>
-                    <input type="text" formControlName="numeroPedido" maxlength="15" mask="0*" class="form-control">
+                    <input type="text" formControlName="numeroPedido" maxlength="15" mask="0*" class="form-control"
+                           appLogItem="Número pedido INPI">
                 </div>
             </div>
         </div>
@@ -37,7 +39,8 @@
             <div class="col-12">
                 <div class="form-group">
                     <label for="">TÍTULO DA PROPRIEDADE INTELECTUAL NO INPI</label>
-                    <app-textarea formControlName="titulo" maxlength="200" rows="3" class="form-control"></app-textarea>
+                    <app-textarea formControlName="titulo" maxlength="200" rows="3" class="form-control"
+                                  appLogItem="Título da propriedade intelectual no INPI"></app-textarea>
                 </div>
             </div>
         </div>
@@ -48,7 +51,8 @@
                     <label for="">INVENTORES</label>
                     <div class="row mb-3" *ngFor="let item of inventoresGroup.controls; let i = index;">
                         <div class="col-11" [formGroup]="item">
-                            <select name="" id="" class="form-control" formControlName="recursoHumanoId">
+                            <select class="form-control" formControlName="recursoHumanoId"
+                                    appLogItem="Inventor">
                                 <option value="">Selecione</option>
                                 <option *ngFor="let p of filtrarInventor(item)" [value]="p.id">
                                     {{p.nomeCompleto}}
@@ -78,19 +82,23 @@
             <div class="col-12">
                 <div class="form-group">
                     <label for="">DEPOSITANTE PROPRIEDADE INTELECTUAL
-                        <span [ngClass]="{'text-danger': depositantePercentual>100, 'text-warning':depositantePercentual < 100}">({{depositantePercentual}}%)</span>
+                        <span [ngClass]="{'text-danger': depositantePercentual>100, 'text-warning':depositantePercentual < 100}">({{depositantePercentual}}
+                            %)</span>
                     </label>
-                    <div class="row mb-3" *ngFor="let item of depositantesGroup.controls; let i = index;" [formGroup]="item">
+                    <div class="row mb-3" *ngFor="let item of depositantesGroup.controls; let i = index;"
+                         [formGroup]="item">
                         <div class="col-5">
-                            <select name="" id="" class="form-control" formControlName="empresaId">
+                            <select name="" id="" class="form-control" formControlName="empresaId"
+                                    appLogItem="Depositante propriedade intelectual">
                                 <option value="">Selecione</option>
                                 <option *ngFor="let e of filtrarDepositante(item)" [value]="e.id">
-                                    {{e.catalogEmpresa ? e.catalogEmpresa.nome:e.razaoSocial}}
+                                    {{e.catalogEmpresa ? e.catalogEmpresa.nome : e.razaoSocial}}
                                 </option>
                             </select>
                         </div>
                         <div class="col-5">
-                            <input type="text" class="form-control" formControlName="entidade" sufix="%" mask="percent">
+                            <input type="text" class="form-control" formControlName="entidade" sufix="%" mask="percent"
+                                   appLogItem="Porcentagem">
                         </div>
                         <div class="col-1 d-flex align-items-center">
                             <button class="btn p-0 hover-text-blue" type="button" (click)="removerDepositante(i)">
@@ -120,7 +128,9 @@
             <div class="col">
                 <div class="text-right">
                     <button class="btn btn-link" (click)="close()"><i class="ta-cancel-circle"></i> Cancelar</button>
-                    <button *appUserEscrita class="btn btn-primary" (click)="submit()" [disabled]="form.invalid"><i class="ta-plus-circle"></i> Salvar</button>
+                    <button *appUserEscrita class="btn btn-primary" (click)="submit()" [disabled]="form.invalid"><i
+                            class="ta-plus-circle"></i> Salvar
+                    </button>
                 </div>
             </div>
         </div>

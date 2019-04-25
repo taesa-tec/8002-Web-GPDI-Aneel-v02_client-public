@@ -1,12 +1,13 @@
-import { FormGroup, FormControl, AbstractControlOptions, AsyncValidatorFn, ValidatorFn, Validators } from '@angular/forms';
-import { ProjetoFacade, ProjetoREST } from '@app/facades';
-import { AppService } from '@app/app.service';
-import { OnInit, ViewChild } from '@angular/core';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { EMPTY, of, Observable } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ResultadoResponse, FileUploaded } from '@app/models';
+import {FormGroup, FormControl, AbstractControlOptions, AsyncValidatorFn, ValidatorFn, Validators} from '@angular/forms';
+import {ProjetoFacade, ProjetoREST} from '@app/facades';
+import {AppService} from '@app/app.service';
+import {OnInit, ViewChild} from '@angular/core';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {EMPTY, of, Observable} from 'rxjs';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ResultadoResponse, FileUploaded} from '@app/models';
+import {LoggerDirective} from '@app/logger/logger.directive';
 
 export abstract class EditorResultado<T extends { id: number; uploads?: Array<FileUploaded> }> implements OnInit {
 
@@ -20,15 +21,19 @@ export abstract class EditorResultado<T extends { id: number; uploads?: Array<Fi
     get isEdit() {
         return this.editable && this.editable.id;
     }
+
     get textSave() {
-        return this.isEdit ? "Salvar" : "Adicionar";
+        return this.isEdit ? 'Salvar' : 'Adicionar';
     }
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoggerDirective) logger: LoggerDirective;
 
-    constructor(protected app: AppService, public activeModal: NgbActiveModal, protected restService: string) { }
+    constructor(protected app: AppService, public activeModal: NgbActiveModal, protected restService: string) {
+    }
 
     abstract get formFields(): Array<string>;
+
     abstract configForm(): void;
 
     ngOnInit(): void {
@@ -44,7 +49,7 @@ export abstract class EditorResultado<T extends { id: number; uploads?: Array<Fi
                     this.loadingHide();
                 }, e => this.loadingHide());
             } catch (e) {
-                console.log("REST não encontrada no projeto");
+                console.log('REST não encontrada no projeto');
             }
         });
     }
@@ -52,11 +57,13 @@ export abstract class EditorResultado<T extends { id: number; uploads?: Array<Fi
     load(): Observable<void> {
         return Observable.create(o => o.next());
     }
+
     loadingShow() {
         if (this.loading) {
             this.loading.show();
         }
     }
+
     loadingHide() {
         if (this.loading) {
             this.loading.hide();
@@ -94,7 +101,9 @@ export abstract class EditorResultado<T extends { id: number; uploads?: Array<Fi
         this.activeModal.close(false);
     }
 
-    beforeSubmit() { return Observable.create(o => o.next()); }
+    beforeSubmit() {
+        return Observable.create(o => o.next());
+    }
 
     submit() {
         if (this.form.invalid) {
@@ -113,7 +122,14 @@ export abstract class EditorResultado<T extends { id: number; uploads?: Array<Fi
                         if (this.editable) {
                             this.editable.id = result.id || this.editable.id;
                         }
-                        this.app.alert("Salvo com sucesso");
+                        this.app.alert('Salvo com sucesso');
+                        if (this.logger) {
+                            if (result.id) {
+                                this.logger.saveCreate();
+                            } else {
+                                this.logger.saveUpdate();
+                            }
+                        }
                     } else {
                         this.app.alert(result.inconsistencias);
                     }
@@ -126,10 +142,13 @@ export abstract class EditorResultado<T extends { id: number; uploads?: Array<Fi
 
         });
     }
-    afterSubmit(result?: ResultadoResponse): Observable<any> { return Observable.create(o => o.next()); }
+
+    afterSubmit(result?: ResultadoResponse): Observable<any> {
+        return Observable.create(o => o.next());
+    }
 
     remove() {
-        this.app.confirm("Tem certeza que deseja excluir?", "Confirmar Exclusão")
+        this.app.confirm('Tem certeza que deseja excluir?', 'Confirmar Exclusão')
             .then(result => {
                 if (result) {
                     this.loadingShow();
@@ -155,7 +174,7 @@ export abstract class EditorResultado<T extends { id: number; uploads?: Array<Fi
         this.app.file.remover(file).subscribe((result: ResultadoResponse) => {
             this.loadingHide();
             if (result.sucesso) {
-                this.app.alert("Excluido com sucesso");
+                this.app.alert('Excluido com sucesso');
             } else {
                 this.app.alert(result.inconsistencias, 'Erro');
             }

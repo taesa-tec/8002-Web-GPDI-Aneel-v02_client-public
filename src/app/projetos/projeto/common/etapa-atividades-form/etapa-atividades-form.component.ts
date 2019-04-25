@@ -8,6 +8,7 @@ import {AppService} from '@app/app.service';
 import {LoadingComponent} from '@app/shared/loading/loading.component';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ProjetoFacade} from '@app/facades';
+import {LoggerDirective} from '@app/logger/logger.directive';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class EtapaAtividadesFormComponent implements OnInit {
     produtosGroup: FormArray = new FormArray([]);
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoggerDirective) logger: LoggerDirective;
 
     constructor(public activeModal: NgbActiveModal, protected app: AppService) {
     }
@@ -96,6 +98,7 @@ export class EtapaAtividadesFormComponent implements OnInit {
                 if (r.sucesso) {
                     this.activeModal.close(r);
                     this.app.alert('Salvo com sucesso');
+                    this.logger.saveUpdate();
                 } else {
                     this.app.alert(r.inconsistencias.join(', '));
                 }

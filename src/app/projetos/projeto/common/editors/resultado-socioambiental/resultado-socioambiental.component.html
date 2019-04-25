@@ -4,13 +4,14 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<div class="modal-body" *ngIf="form" [formGroup]="form">
+<div class="modal-body" *ngIf="form" [formGroup]="form" appLogger="Resultado Socioambientais">
 
     <div class="row">
         <div class="col-6">
             <div class="form-group">
                 <label for="">TIPO DE INDICADOR SOCIOAMBIENTAL</label>
-                <select name="" id="" class="form-control" formControlName="tipo">
+                <select name="" id="" class="form-control" formControlName="tipo"
+                        appLogItem="Tipo de indicador socioambiental">
                     <option value="">Selecione</option>
                     <option *ngFor="let tipo of indicadoresSocioambientais" [value]="tipo.value">{{tipo.text}}</option>
                 </select>
@@ -19,7 +20,7 @@
         <div class="col-6">
             <div class="form-group">
                 <label for="">RESULTADO POSITIVO?</label>
-                <select class="form-control" formControlName="positivo">
+                <select class="form-control" formControlName="positivo" appLogItem="Resultado Positivo?">
                     <option value="">Selecione</option>
                     <option value="true">Sim</option>
                     <option value="false">Não</option>
@@ -32,7 +33,8 @@
         <div class="col-12">
             <div class="form-group">
                 <label for="">DESCRIÇÃO DE IMPACTO/MITIGAÇÃO DO RESULTADO DO PROJETO DE P&D</label>
-                <app-textarea class="form-control" formControlName="desc" rows="4" maxlength="500"></app-textarea>
+                <app-textarea class="form-control" formControlName="desc" rows="4" maxlength="500"
+                              appLogItem="Descrição de impacto/mitigação do resultado do projeto de P&D"></app-textarea>
             </div>
         </div>
     </div>
@@ -46,7 +48,9 @@
         <div class="col">
             <div class="text-right">
                 <button class="btn btn-link" (click)="close()"><i class="ta-cancel-circle"></i> Cancelar</button>
-                <button *appUserEscrita class="btn btn-primary" (click)="submit()" [disabled]="form.invalid"><i class="ta-plus-circle"></i> Salvar</button>
+                <button *appUserEscrita class="btn btn-primary" (click)="submit()" [disabled]="form.invalid"><i
+                        class="ta-plus-circle"></i> Salvar
+                </button>
             </div>
         </div>
     </div>

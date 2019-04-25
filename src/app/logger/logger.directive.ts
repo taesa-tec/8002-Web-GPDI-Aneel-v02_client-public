@@ -55,7 +55,7 @@ export class LoggerItemDirective implements AfterViewInit {
                         break;
                 }
             }
-            return this.control ? this.control.value : null;
+            return this.control ? this.control.value : (this.logItemValue ? this.logItemValue : null);
         } catch (e) {
             console.error(e);
             return null;
