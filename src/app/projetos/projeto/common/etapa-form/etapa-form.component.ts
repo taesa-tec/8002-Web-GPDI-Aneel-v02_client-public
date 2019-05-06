@@ -23,7 +23,7 @@ export class EtapaFormComponent implements OnInit {
     form: FormGroup;
     produtos: Produto[] = [];
     produtosGroup: FormArray = new FormArray([]);
-    mesesGroup: FormArray = new FormArray([]);
+    mesesGroup: FormGroup = new FormGroup({});
     meses: Array<TextValue> = [];
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
@@ -80,10 +80,29 @@ export class EtapaFormComponent implements OnInit {
 
         if (this.projeto.isPG) {
             this.fillMonths();
-            this.form.addControl('EtapaMeses', this.mesesGroup);
+            this.form.addControl('EtapaMeses', new FormArray([]));
+
+
+            this.mesesGroup.valueChanges.subscribe(value => {
+                const etapasmeses = <FormArray>this.form.get('EtapaMeses');
+                while (etapasmeses.length > 0) {
+                    etapasmeses.removeAt(0);
+                }
+                this.meses.filter(m => value[m.value]).forEach(m => {
+                    etapasmeses.push(new FormGroup({mes: new FormControl(m.value)}));
+                });
+
+            });
+
             if (this.etapa.etapaMeses) {
                 this.etapa.etapaMeses.forEach(mes => {
-                    this.adicionarMes(moment(mes.mes).format('YYYY-MM-DD'));
+                    const _mes = moment(mes.mes).format('YYYY-MM-DD');
+                    try {
+                        this.mesesGroup.get(_mes).setValue(true);
+                    } catch (e) {
+                        console.log(e);
+                    }
+
                 });
             }
         }
@@ -101,13 +120,22 @@ export class EtapaFormComponent implements OnInit {
 
             const ano = start.format('YYYY');
             const mes = start.format('MMMM'); // .padEnd(9, '*').replace(/\*/g, '&nbsp;');
+            const value = start.format('YYYY-MM-DD');
 
+            this.mesesGroup.addControl(value, new FormControl(false));
             this.meses.push({
                 text: `${mes} - ${ano}`,
-                value: start.format('YYYY-MM-DD')
+                value
             });
+
             start.add(1, 'month');
         }
+    }
+
+    selMeses() {
+        this.meses.forEach(m => {
+            this.mesesGroup.get(m.value).setValue(true);
+        });
     }
 
     filtrarProdutos(atual = null) {
@@ -122,20 +150,6 @@ export class EtapaFormComponent implements OnInit {
 
     removerProduto(index) {
         this.produtosGroup.removeAt(index);
-    }
-
-    filtrarMeses(atual = null) {
-        const mes = atual ? atual.value.mes : '';
-        const list = (this.mesesGroup.value as Array<{ mes: any }>).map(p => p.mes);
-        return this.meses.filter(m => (list.indexOf(m.value) === -1 || m.value === mes));
-    }
-
-    adicionarMes(mes = '') {
-        this.mesesGroup.push(new FormGroup({mes: new FormControl(mes, Validators.required)}));
-    }
-
-    removerMes(index) {
-        this.mesesGroup.removeAt(index);
     }
 
     submit() {

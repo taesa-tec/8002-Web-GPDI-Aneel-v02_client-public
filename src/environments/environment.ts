@@ -6,7 +6,7 @@ export const environment = {
     production: false,
     // api_url: 'https://taesagestor.azurewebsites.net/api',
     api_url: 'https://localhost:8080/api',
-    version: '0.26.62',
+    version: '0.29.62',
     autologin: {
         user: 'admin@admin.com',
         pass: 'AdminAPIGestor01!'

@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { EtapaFormComponent } from '@app/projetos/projeto/common/etapa-form/etapa-form.component';
-import { AppService } from '@app/app.service';
-import { zip } from 'rxjs';
-import { Projeto, Etapa } from '@app/models';
-import { FormGroup, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { ProjetoFacade } from '@app/facades';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {EtapaFormComponent} from '@app/projetos/projeto/common/etapa-form/etapa-form.component';
+import {AppService} from '@app/app.service';
+import {zip} from 'rxjs';
+import {Projeto, Etapa} from '@app/models';
+import {FormGroup, FormControl} from '@angular/forms';
+import {DatePipe} from '@angular/common';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {ProjetoFacade} from '@app/facades';
 import * as moment from 'moment';
 
 @Component({
@@ -31,6 +31,7 @@ export class EtapasComponent implements OnInit {
     get ano() {
         return this.dataInicio.getFullYear();
     }
+
     set ano(value) {
         this.dataInicio.setFullYear(value);
         this.setControlData();
@@ -39,12 +40,14 @@ export class EtapasComponent implements OnInit {
     get mes() {
         return this.dataInicio.getMonth();
     }
+
     set mes(value) {
         this.dataInicio.setMonth(value);
         this.setControlData();
     }
 
-    constructor(private app: AppService) { }
+    constructor(private app: AppService) {
+    }
 
     protected setControlData() {
         const d = new Date(this.ano, this.mes, 1);
@@ -53,10 +56,16 @@ export class EtapasComponent implements OnInit {
     }
 
     etapaMeses(etapa: Etapa) {
-        return etapa.etapaMeses.map(mes => {
+        return etapa.etapaMeses.sort((a, b) => {
+            if (a.mes === b.mes) {
+                return 0;
+            }
+            return (moment(a.mes).isBefore(moment(b.mes))) ? -1 : 1;
+        }).map(mes => {
             return moment(mes.mes).format('MMM/YYYY');
         }).join(' - ');
     }
+
     ngOnInit() {
         const projeto$ = this.app.projetos.projetoLoaded;
 
@@ -80,13 +89,16 @@ export class EtapasComponent implements OnInit {
     loadEtapas() {
         this.projeto.REST.Etapas.listar<Array<Etapa>>().subscribe(etapas => {
             if (etapas) {
-                this.etapas = etapas.map((etapa, i) => { etapa.numeroEtapa = i + 1; return etapa; })
+                this.etapas = etapas.map((etapa, i) => {
+                    etapa.numeroEtapa = i + 1;
+                    return etapa;
+                });
             }
         });
     }
 
     openModal(etapa: any = {}) {
-        const modalRef = this.app.modal.open(EtapaFormComponent, { size: 'lg' });
+        const modalRef = this.app.modal.open(EtapaFormComponent, {size: 'lg'});
         modalRef.componentInstance.etapa = etapa;
         modalRef.componentInstance.projeto = this.projeto;
         modalRef.result.then(r => {
@@ -99,11 +111,11 @@ export class EtapasComponent implements OnInit {
     excluir(id: number) {
         this.app.confirm(`Tem certeza quer deseja excluir esta etapa?
          Todos os produtos intermediários associados a ela perdrão sua associação.`
-            , "Excluir Etapa").then(response => {
-                if (response) {
-                    this.app.alert("Etapa Excluída");
-                }
-            });
+            , 'Excluir Etapa').then(response => {
+            if (response) {
+                this.app.alert('Etapa Excluída');
+            }
+        });
     }
 
     setDataInicio() {
@@ -112,7 +124,7 @@ export class EtapasComponent implements OnInit {
         this.projeto.editarDataInicio(this.form.get('dataInicio').value)
             .subscribe(result => {
                 if (result.sucesso) {
-                    this.app.alert("Salvo com sucesso");
+                    this.app.alert('Salvo com sucesso');
                 }
                 this.loading.hide();
                 this.loadEtapas();

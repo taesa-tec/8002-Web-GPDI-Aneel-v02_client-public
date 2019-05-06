@@ -62,26 +62,20 @@
             </div>
         </div>
         <div class="form-group" *ngIf="projeto.isPG">
-            <label>MESES DESTA ETAPA</label>
-            <div class="row mb-3" *ngFor="let item of mesesGroup.controls; let i = index;">
-                <div class="col-11" [formGroup]="item">
-                    <select name="" id="" class="form-control" formControlName="mes">
-                        <option value="">Selecione</option>
-                        <option *ngFor="let m of filtrarMeses(item)" [value]="m.value">{{m.text}}</option>
-                    </select>
-                </div>
-                <div class="col-1 d-flex align-items-center">
-                    <button class="btn p-0 hover-text-blue" type="button" (click)="removerMes(i)">
-                        <i class="ta-remove-circle fs-24"></i>
-                    </button>
+            <div>
+                <label>MESES DESTA ETAPA</label>
+            </div>
+            <div class="row" [formGroup]="mesesGroup">
+                <div class="col-4" *ngFor="let mes of meses">
+                    <label>
+                        <app-checkbox [formControlName]="mes.value"></app-checkbox>
+                        {{mes.text}}
+                    </label>
                 </div>
             </div>
-            <div class="row mb-4" *ngIf="mesesGroup.length < meses.length">
-                <div class="col">
-                    <button class="btn p-0 hover-text-blue" (click)="adicionarMes()">
-                        <i class="ta-plus-circle fs-24 align-middle"></i>
-                        Adicionar Mês
-                    </button>
+            <div class="row mt-2 mb-3">
+                <div class="col-12 text-center">
+                    <span class="btn btn-link" style="cursor: pointer" (click)="selMeses()">Marca todos</span>
                 </div>
             </div>
             <div class="row">
