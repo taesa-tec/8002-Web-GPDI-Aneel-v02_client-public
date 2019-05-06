@@ -76,13 +76,15 @@
     </div>
 
     <div class="row">
-        <div class="col-4" *ngIf="projeto.isPD">
-            <div class="form-group">
-                <label for="">CNPJ BENEFICIADO</label>
-                <input type="text" class="form-control" mask="00.000.000/0000-00" placeholder="00.000.000/0000-00"
-                       value="cnpjBeneficiado" formControlName="cnpjBeneficiado" appLogItem="CNPJ beneficiado">
-            </div>
 
+        <div class="col-4">
+            <div class="form-group">
+                <label for="">MÊS REFERÊNCIA</label>
+                <select class="form-control" formControlName="mes" appLogItem="Mês referência">
+                    <option value="">Selecione</option>
+                    <option [value]="item.value" *ngFor="let item of mesesRef" [innerHTML]="item.text"></option>
+                </select>
+            </div>
         </div>
 
         <div class="col-4">
@@ -94,6 +96,57 @@
                     <option value="">Selecionar</option>
                     <option [value]="c.value" *ngFor="let c of categoriasContabeis">{{c.text}}</option>
                 </select>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="form-group">
+                <label for="">TIPO DE DOCUMENTO?</label>
+                <select class="form-control" formControlName="tipoDocumento" appLogItem="Tipo de documento">
+                    <option value="">Selecionar</option>
+                    <option [value]="t.value" *ngFor="let t of tipoDocs">{{ t.text }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <label for="">NÚMERO DE DOCUMENTO</label>
+                <input type="text" class="form-control" formControlName="numeroDocumento"
+                       appLogItem="Número de documento">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label for="">QUANTIDADE ITENS</label>
+                <input type="text" class="form-control" maxlength="7" formControlName="qtdItens" mask="0*"
+                       appLogItem="Quantidade itens">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label for="">CUSTO UNITÁRIO</label>
+                <input type="text" class="form-control" currencyMask formControlName="valorUnitario"
+                       appLogItem="Custo unitário">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <label for="">DATA DO DOCUMENTO</label>
+                <input type="date" class="form-control" formControlName="dataDocumento" appLogItem="Data do documento">
+            </div>
+        </div>
+        <div class="col-8" *ngIf="projeto.isPD">
+            <div class="form-group">
+                <label for="">CNPJ BENEFICIADO</label>
+                <input type="text" class="form-control" mask="00.000.000/0000-00" placeholder="00.000.000/0000-00"
+                       value="cnpjBeneficiado" formControlName="cnpjBeneficiado" appLogItem="CNPJ beneficiado">
             </div>
         </div>
         <div class="col-8" *ngIf="projeto.isPG">
@@ -143,65 +196,6 @@
                     <option [value]="true">Sim</option>
                     <option [value]="false">Não</option>
                 </select>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-4">
-
-            <div class="form-group">
-                <label for="">MÊS REFERÊNCIA</label>
-                <select class="form-control" formControlName="mes" appLogItem="Mês referência">
-                    <option value="">Selecione</option>
-                    <option [value]="item.value" *ngFor="let item of mesesRef" [innerHTML]="item.text"></option>
-                </select>
-            </div>
-
-        </div>
-
-        <div class="col-4">
-            <div class="form-group">
-                <label for="">QUANTIDADE ITENS</label>
-                <input type="text" class="form-control" maxlength="7" formControlName="qtdItens" mask="0*"
-                       appLogItem="Quantidade itens">
-            </div>
-        </div>
-
-        <div class="col-4">
-            <div class="form-group">
-                <label for="">CUSTO UNITÁRIO</label>
-                <input type="text" class="form-control" currencyMask formControlName="valorUnitario"
-                       appLogItem="Custo unitário">
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-4">
-
-            <div class="form-group">
-                <label for="">TIPO DE DOCUMENTO?</label>
-                <select class="form-control" formControlName="tipoDocumento" appLogItem="Tipo de documento">
-                    <option value="">Selecionar</option>
-                    <option [value]="t.value" *ngFor="let t of tipoDocs">{{ t.text }}</option>
-                </select>
-            </div>
-
-        </div>
-
-        <div class="col-4">
-            <div class="form-group">
-                <label for="">NÚMERO DE DOCUMENTO</label>
-                <input type="text" class="form-control" formControlName="numeroDocumento"
-                       appLogItem="Número de documento">
-            </div>
-        </div>
-
-        <div class="col-4">
-            <div class="form-group">
-                <label for="">DATA DO DOCUMENTO</label>
-                <input type="date" class="form-control" formControlName="dataDocumento" appLogItem="Data do documento">
             </div>
         </div>
     </div>

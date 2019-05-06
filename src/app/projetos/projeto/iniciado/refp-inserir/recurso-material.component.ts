@@ -229,6 +229,14 @@ export class RecursoMaterialComponent implements OnInit {
             obsInternas: new FormArray([this.obsInternas])
         });
 
+        this.form.get('tipoDocumento').valueChanges.subscribe(value => {
+            if (value === 'ReciboSemCNPJ') {
+                this.form.get('cnpjBeneficiado').disable();
+            } else {
+                this.form.get('cnpjBeneficiado').enable();
+            }
+        });
+
         if (this.projeto.isPG) {
             const catalogCategoriaContabilGestaoId = new FormControl('', [Validators.required]);
             this.form.addControl('catalogCategoriaContabilGestaoId', catalogCategoriaContabilGestaoId);

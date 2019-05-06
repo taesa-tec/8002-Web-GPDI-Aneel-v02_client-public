@@ -195,6 +195,7 @@ export const TiposDoc: Array<TextValue> = [
     {text: 'Nota Fiscal', value: 'Nota'},
     {text: 'Recibo', value: 'Recibo'},
     {text: 'Reserva', value: 'Reserva'},
+    {text: 'Recibo não vinculado a CNPJ', value: 'ReciboSemCNPJ'}
 ];
 
 export const AcaoLog: Array<TextValue> = [
