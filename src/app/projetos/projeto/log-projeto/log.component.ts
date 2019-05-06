@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { LogProjeto } from '@app/models';
 import { AppService } from '@app/app.service';
 import { SafeUrl } from '@angular/platform-browser';
+import {environment} from '../../../../environments/environment';
 
 @Component({
     selector: 'app-log-item',
@@ -17,9 +18,10 @@ export class LogComponent implements OnInit {
     constructor(protected app: AppService) { }
 
     ngOnInit() {
-        this.app.file.toBlob(`/Users/${this.log.userId}/avatar`, this.log.userId).subscribe(avatar => {
-            this.avatar = avatar;
-        });
+        this.avatar = `${environment.api_url}/Users/${this.log.userId}/avatar`;
+        // this.app.file.toBlob(`Users/${this.log.userId}/avatar`, this.log.userId).subscribe(avatar => {
+        //     this.avatar = avatar;
+        // });
 
 
     }

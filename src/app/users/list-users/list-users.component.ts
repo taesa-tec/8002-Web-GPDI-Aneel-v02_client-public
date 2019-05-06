@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { UsersService } from '../users.service';
-import { User } from '@app/models';
-import { CatalogsService } from '@app/catalogs/catalogs.service';
-import { Observable } from 'rxjs';
+import {Component, OnInit, Input} from '@angular/core';
+import {UsersService} from '../users.service';
+import {User} from '@app/models';
+import {CatalogsService} from '@app/catalogs/catalogs.service';
+import {Observable} from 'rxjs';
+import {environment} from '../../../environments/environment';
 
 @Component({
     selector: 'app-list-users',
@@ -18,17 +19,15 @@ export class ListUsersComponent implements OnInit {
         direction: 'asc'
     };
 
-    constructor(protected usersService: UsersService, protected catalog: CatalogsService) { }
+    constructor(protected usersService: UsersService, protected catalog: CatalogsService) {
+    }
 
     order(data: { field: string; direction: 'asc' | 'desc'; }) {
         this.listOrder = data;
     }
 
     userAvatar(user: User) {
-        if (user.fotoPerfil) {
-            return `url(data:image/jpeg;base64,${user.fotoPerfil.file})`;
-        }
-        return '#CCC';
+        return `url(${environment.api_url}/Users/${user.id}/avatar)`;
     }
 
     ngOnInit() {

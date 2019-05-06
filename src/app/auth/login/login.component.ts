@@ -3,6 +3,8 @@ import {AuthService} from '../auth.service';
 import {Router} from '@angular/router';
 import {LoginRequest} from '@app/models';
 import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {environment} from '../../../environments/environment';
+
 
 @Component({
     selector: 'app-login',
@@ -17,11 +19,11 @@ export class LoginComponent implements OnInit {
     errorMessage: string;
 
     loginRequest: LoginRequest = {
-        email: '',
-        password: ''
+        email: !environment.production ? environment.autologin.user : '',
+        password: !environment.production ? environment.autologin.pass : ''
     };
 
-    remember = false;
+    remember = !environment.production;
 
     constructor(protected authService: AuthService, private router: Router) {
     }
