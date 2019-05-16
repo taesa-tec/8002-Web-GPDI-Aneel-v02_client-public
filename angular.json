@@ -17,7 +17,9 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/sistema-ped",
+                        "outputPath": "dist/stage",
+                        "sourceMap": false,
+                        "optimization": true,
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -38,6 +40,7 @@
                     },
                     "configurations": {
                         "production": {
+                            "outputPath": "dist/production",
                             "fileReplacements": [
                                 {
                                     "replace": "src/environments/environment.ts",
@@ -60,17 +63,31 @@
                                     "maximumError": "5mb"
                                 }
                             ]
+                        },
+                        "local": {
+                            "outputPath": "dist/local",
+                            "sourceMap": true,
+                            "optimization": false,
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.local.ts"
+                                }
+                            ]
                         }
                     }
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "sistema-ped:build"
+                        "browserTarget": "sistema-ped:build:local"
                     },
                     "configurations": {
                         "production": {
                             "browserTarget": "sistema-ped:build:production"
+                        },
+                        "stage": {
+                            "browserTarget": "sistema-ped:build"
                         }
                     }
                 },
@@ -90,6 +107,11 @@
                         "styles": [
                             "src/styles.scss"
                         ],
+                        "stylePreprocessorOptions": {
+                            "includePaths": [
+                                "src/styles"
+                            ]
+                        },
                         "scripts": [],
                         "assets": [
                             "src/favicon.ico",

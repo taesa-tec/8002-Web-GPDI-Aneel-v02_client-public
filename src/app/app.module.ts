@@ -44,6 +44,7 @@ moment.locale('pt-br');
     ],
     exports: [SharedModule],
     providers: [
+        {provide: Window, useValue: window},
         {provide: LOCALE_ID, useValue: 'pt'},
         httpInterceptorProviders,
         AppService

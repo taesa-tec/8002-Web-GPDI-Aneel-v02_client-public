@@ -33,7 +33,12 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
     }
 
     get totalGeral() {
-        return this.extrato ? this.extrato.valor : 0;
+        if (this.extrato) {
+            return this.extrato.empresas
+                .map(e => e.valorAprovado)
+                .reduce((p, c) => p + c);
+        }
+        return 0;
     }
 
 
@@ -94,8 +99,8 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
 
     openModal(item: ExtratoItem) {
         const registro = item.registroFinanceiro;
-        const empresa = item.registroFinanceiro.empresaFinanciadora;
-        const recurso = item.registroFinanceiro.recursoHumano || item.registroFinanceiro.recursoMaterial;
+        const empresa = item.registroFinanceiro ? item.registroFinanceiro.empresaFinanciadora : null;
+        const recurso = item.registroFinanceiro ? (item.registroFinanceiro.recursoHumano || item.registroFinanceiro.recursoMaterial) : null;
 
         const registroItem = {
             registro,

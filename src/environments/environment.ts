@@ -2,14 +2,16 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+
+import {version} from './version';
+
 export const environment = {
     production: false,
-    // api_url: 'https://taesagestor.azurewebsites.net/api',
-    api_url: 'https://localhost:8080/api',
-    version: '0.29.62',
+    api_url: 'https://taesagestor.azurewebsites.net/api',
+    version: version,
     autologin: {
-        user: 'admin@admin.com',
-        pass: 'AdminAPIGestor01!'
+        user: '',
+        pass: ''
     }
 };
 

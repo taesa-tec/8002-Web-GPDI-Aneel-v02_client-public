@@ -320,9 +320,10 @@ export class ProjetosService {
 
     exportarExtratoEmpresas(id: number) {
         return this.http.get(`Projeto/${id}/ExtratoEmpresas/exportar`, {
-            responseType: 'blob'
+            responseType: 'blob',
+            observe: 'response',
         }).pipe(tap(filedata => {
-            this.fileService.download(new File([filedata], `projeto-${id}-extrato-financeiro.csv`));
+            this.fileService.download(new File([filedata.body], `projeto-${id}-extrato-financeiro.xlsx`));
         }));
     }
 
@@ -492,7 +493,7 @@ export class ProjetosService {
         this.http.get(`projeto/${id}/ExtratoREFP/exportar`, {
             responseType: 'blob'
         }).subscribe(filedata => {
-            this.fileService.download(new File([filedata], `projeto-${id}-extrato-financeiro.csv`));
+            this.fileService.download(new File([filedata], `projeto-${id}-extrato-financeiro.xlsx`));
         }, error => {
             console.error(error);
         });

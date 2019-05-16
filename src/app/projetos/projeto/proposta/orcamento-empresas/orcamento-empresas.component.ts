@@ -54,7 +54,9 @@ export class OrcamentoEmpresasComponent implements OnInit {
     }
 
     empresaRecebedoraFromItem(item) {
-        const id = item.alocacaoRm ? item.alocacaoRm.empresaRecebedoraId : item.alocacaoRh.empresaId;
+        const id = item.alocacaoRm ?
+            (this.projeto.isPD ? item.alocacaoRm.empresaRecebedoraId : item.alocacaoRm.empresaFinanciadoraId) :
+            item.alocacaoRh.empresaId;
         const empresa = this.empresas.find(e => e.id === id);
         if (id === undefined) {
             console.log({item, empresa, id, empresas: this.empresas});
@@ -126,6 +128,7 @@ export class OrcamentoEmpresasComponent implements OnInit {
         }
     }
 
+    // Mudou para xlxs
     orcamentoGerarCSV() {
         this.projeto.orcamentoGerarCSV().subscribe(result => {
 

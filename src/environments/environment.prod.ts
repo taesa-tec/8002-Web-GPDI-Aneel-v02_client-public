@@ -1,5 +1,6 @@
+import {version} from './version';
 export const environment = {
     production: true,
     api_url: 'https://taesapro.azurewebsites.net/api',
-    version: '0.29.62'
+    version: version
 };

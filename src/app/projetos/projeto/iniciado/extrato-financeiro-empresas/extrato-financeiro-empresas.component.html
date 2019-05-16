@@ -29,7 +29,7 @@
                 <table class="table table-borderless m-0">
                     <tr>
                         <td>
-                            {{ categoriaPorCod(relatorio.desc) }}
+                            {{ relatorio.desc }}
                         </td>
                         <td width="15%">
                             {{relatorio.valor | currency:'R$'}}
@@ -96,7 +96,7 @@
         </h5>
         <button class="btn btn-outline-blue" (click)="projeto.extratoGerarCSV()">
             <i class="ta-download fs-18"></i>
-            Gerar CSV
+            Gerar XLSX
         </button>
     </div>
 </div>

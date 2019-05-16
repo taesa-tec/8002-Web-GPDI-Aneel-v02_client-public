@@ -11,7 +11,7 @@
     <div class="col-12">
         <app-accordion *ngFor="let relatorio of empresa.relatorios">
             <header role="heading" class="d-flex justify-content-between">
-                <span>{{ categoriaPorCod(relatorio.desc) }}</span><span>{{relatorio.valor | currency:'R$'}}</span>
+                <span>{{ relatorio.desc }}</span><span>{{relatorio.valor | currency:'R$'}}</span>
             </header>
             <div role="main">
                 <table class="table table-borderless m-0">
@@ -42,7 +42,7 @@
         </h5>
         <button class="btn btn-outline-blue" (click)="orcamentoGerarCSV()">
             <i class="ta-download fs-18"></i>
-            Gerar CSV
+            Gerar XLSX
         </button>
     </div>
 </div>

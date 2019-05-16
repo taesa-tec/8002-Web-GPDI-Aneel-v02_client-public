@@ -13,7 +13,6 @@
              appLogger="Central Administrativa - Alteração Status Projeto">
             <select name="" id="" class="form-control flex-grow-1" formControlName="catalogStatusId"
                     appLogItem="Status">
-                <option value="">Selecione</option>
                 <option [value]="item.id" *ngFor="let item of status">{{ item.status }}</option>
             </select>
             <button class="btn btn-primary btn-sm mx-3 text-nowrap" (click)="save()">

@@ -85,8 +85,8 @@ export class AlocacaoComponent implements OnInit {
                 aloc.recursoHumano.empresa = empresas.find(e => e.id === aloc.recursoHumano.empresaId);
                 aloc.horasTotal = 0;
 
-                for (let i = 1; i <= 6; i++) {
-                    aloc.horasTotal += aloc['hrsMes' + i];
+                for (let i = 1; i <= (this.projeto.isPD ? 6 : 24); i++) {
+                    aloc.horasTotal += (aloc['hrsMes' + i] || 0);
                 }
 
                 aloc.valorTotal = aloc.horasTotal * aloc.recursoHumano.valorHora;

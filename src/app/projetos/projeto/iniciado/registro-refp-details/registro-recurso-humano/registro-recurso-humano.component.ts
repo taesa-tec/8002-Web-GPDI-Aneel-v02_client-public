@@ -36,7 +36,7 @@ export class RegistroRecursoHumanoComponent extends RegistroRecursoBase {
     }
 
     get observacoes() {
-        return this.registro.obsInternas.filter(obs => obs.texto.length > 0);
+        return this.registro.obsInternas.filter(obs => obs.texto != null && obs.texto.length > 0);
     }
 
     protected getRecursos(projeto: ProjetoFacade) {
