@@ -35,7 +35,7 @@ import { CommonModule } from '../common/common.module';
     imports: [
         SharedModule,
         CommonModule,
-        PropostaRoutingModule
+        // PropostaRoutingModule
     ],
     exports: [
         ProdutosComponent,

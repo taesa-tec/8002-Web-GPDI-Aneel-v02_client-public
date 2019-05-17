@@ -38,7 +38,7 @@ import { CommonModule } from '../common/common.module';
     imports: [
         SharedModule,
         CommonModule,
-        IniciadoRoutingModule
+        // IniciadoRoutingModule
     ]
 })
 export class IniciadoModule { }

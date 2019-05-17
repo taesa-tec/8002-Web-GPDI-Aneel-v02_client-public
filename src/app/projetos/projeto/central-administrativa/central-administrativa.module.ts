@@ -21,7 +21,7 @@ import { CommonModule } from '../common/common.module';
     imports: [
         SharedModule,
         CommonModule,
-        CentralAdministrativaRoutingModule
+        // CentralAdministrativaRoutingModule
     ]
 })
 export class CentralAdministrativaModule { }

@@ -28,7 +28,7 @@ import { CommonModule } from '../common/common.module';
     imports: [
         SharedModule,
         CommonModule,
-        EncerradoRoutingModule
+        // EncerradoRoutingModule
     ]
 })
 export class EncerradoModule { }

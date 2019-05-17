@@ -31,13 +31,13 @@ export class LogsDutoComponent implements OnInit {
     }
 
     async ngOnInit() {
-        console.log("Relou");
-        this.projeto = await this.app.projetos.projetoLoaded.toPromise();
-        this.loadData();
+        this.app.projetos.projetoLoaded.subscribe(projeto => {
+            this.projeto = projeto;
+            this.loadData();
+        });
     }
 
     loadData() {
-        console.log("Relou");
         this.loading.show();
         this.projeto.obterLogDuto().subscribe(logs => {
             this.loading.hide();

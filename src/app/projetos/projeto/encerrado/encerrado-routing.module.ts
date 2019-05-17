@@ -15,9 +15,9 @@ import { ResultadoEconomicoComponent } from './resultado-economico/resultado-eco
 import { RelatorioAtividadesComponent } from './relatorio-atividades/relatorio-atividades.component';
 
 
-const routes: Routes = [
+export const routes: Routes = [
     {
-        path: 'dashboard/projeto/:id/encerrado', component: ProjetoComponent,
+        path: 'encerrado',
         children: [
             { path: '', redirectTo: "relatorio-final-auditoria", pathMatch: 'full' },
             { path: 'relatorio-final-auditoria', component: RelatorioFinalAuditoriaComponent },
@@ -29,10 +29,7 @@ const routes: Routes = [
             { path: 'resultados-propriedade-intelectual', component: ResultadoPropriedadeIntelectualComponent },
             { path: 'resultados-socioambientais', component: ResultadoSocioambientalComponent },
             { path: 'resultados-economicos', component: ResultadoEconomicoComponent },
-        ],
-        resolve: {
-            projeto: ProjetoResolverService
-        },
+        ]
     }
 ];
 
