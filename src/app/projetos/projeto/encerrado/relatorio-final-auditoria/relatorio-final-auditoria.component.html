@@ -149,10 +149,10 @@
             <div class="form-group mb-0">
                 <label for="">ARQUIVO PDF RELATÓRIO FINAL</label>
                 <div *ngIf="relatorio">
-                    <span class="btn btn-link" *ngFor="let file of arquivosRelatorioFinal"
-                          [downloadFile]="file">{{file.nomeArquivo}} <i class="ta-cancel-circle"
-                                                                        title="Excluir o arquivo"
-                                                                        (click)="deletarArquivo(file)"></i></span>
+                    <span class="btn btn-link" *ngFor="let file of arquivosRelatorioFinal">
+                        <span [downloadFile]="file"> {{file.nomeArquivo}} </span>
+                        <i class="ta-cancel-circle" title="Excluir o arquivo" (click)="deletarArquivo(file)"></i>
+                    </span>
                 </div>
             </div>
             <label class="btn btn-link">
@@ -171,8 +171,8 @@
                 <label for="">ARQUIVO EM FORMATO PDF DO RELATÓRIO DE AUDITORIA CONTÁBIL E FINANCEIRA DO PROJETO DE
                     P&D</label>
                 <div *ngIf="relatorio">
-                    <span class="btn btn-link" *ngFor="let file of arquivosRelatorioAuditoria" [downloadFile]="file">
-                    {{file.nomeArquivo}}
+                    <span class="btn btn-link" *ngFor="let file of arquivosRelatorioAuditoria">
+                        <span [downloadFile]="file">{{file.nomeArquivo}}</span>
                         <i class="ta-cancel-circle" title="Excluir o arquivo" (click)="deletarArquivo(file)"></i>
                     </span>
                 </div>

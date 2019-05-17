@@ -71,6 +71,7 @@ export class ResultadoCientificoComponent extends EditorResultado<any> {
                 ResultadoProducaoId: new FormControl(id),
             })).pipe(tap(result => {
                 if (result.sucesso) {
+                    this.logger.save(`Arquivo ${el.files.item(0).name} adicionado`);
                     this.file.nativeElement.value = "";
                 }
             }));

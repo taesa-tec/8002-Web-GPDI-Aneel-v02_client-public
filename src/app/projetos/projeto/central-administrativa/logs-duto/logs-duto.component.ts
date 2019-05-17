@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AppService } from '@app/app.service';
-import { ProjetoFacade } from '@app/facades';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { FileUploaded } from '@app/models';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {AppService} from '@app/app.service';
+import {ProjetoFacade} from '@app/facades';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {FileUploaded} from '@app/models';
 
 @Component({
     selector: 'app-logs-duto',
@@ -27,16 +27,17 @@ export class LogsDutoComponent implements OnInit {
     @ViewChild('sendFile') sendFileLoading: LoadingComponent;
     @ViewChild('loading') loading: LoadingComponent;
 
-    constructor(protected app: AppService) { }
+    constructor(protected app: AppService) {
+    }
 
-    ngOnInit() {
-        this.app.projetos.projetoLoaded.subscribe(projeto => {
-            this.projeto = projeto;
-            this.loadData();
-        });
+    async ngOnInit() {
+        console.log("Relou");
+        this.projeto = await this.app.projetos.projetoLoaded.toPromise();
+        this.loadData();
     }
 
     loadData() {
+        console.log("Relou");
         this.loading.show();
         this.projeto.obterLogDuto().subscribe(logs => {
             this.loading.hide();
@@ -49,10 +50,10 @@ export class LogsDutoComponent implements OnInit {
         const files = input.files;
 
         if (files && files.length > 0) {
-            
+
             const file = files.item(0);
             if (file.type.match(/^text\/plain$/) === null) {
-                this.app.alert("Somente arquivos .txt");
+                this.app.alert('Somente arquivos .txt');
                 event.preventDefault();
                 return;
             }
@@ -65,7 +66,7 @@ export class LogsDutoComponent implements OnInit {
                 this.sendFileLoading.hide();
                 if (result.sucesso) {
                     this.loadData();
-                    this.app.alert("Log enviado com sucesso!");
+                    this.app.alert('Log enviado com sucesso!');
                 } else {
                     this.app.alert(result.inconsistencias.join(', '));
                 }

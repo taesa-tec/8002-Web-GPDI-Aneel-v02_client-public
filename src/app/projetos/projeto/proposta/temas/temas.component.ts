@@ -195,6 +195,7 @@ export class TemasComponent implements OnInit {
                 temaId: new FormControl(temaId),
             })).pipe(tap(result => {
                 if (result.sucesso) {
+                    this.logger.save(`Arquivo ${el.files.item(0).name} adicionado`);
                     this.file.nativeElement.value = '';
                 }
             }));
@@ -204,18 +205,23 @@ export class TemasComponent implements OnInit {
     }
 
     deletarArquivo(file) {
-        this.loading.show();
-        this.temaProjeto.uploads.splice(this.temaProjeto.uploads.indexOf(file), 1);
-        this.app.file.remover(file).subscribe((result: ResultadoResponse) => {
-            this.loading.hide();
-            if (result.sucesso) {
-                this.app.alert('Excluido com sucesso');
-            } else {
-                this.app.alert(result.inconsistencias, 'Erro');
+        this.app.confirm('Tem certeza que deseja remover este arquivo?').then(response => {
+            if (response) {
+                this.loading.show();
+                this.temaProjeto.uploads.splice(this.temaProjeto.uploads.indexOf(file), 1);
+                this.app.file.remover(file).subscribe((result: ResultadoResponse) => {
+                    this.loading.hide();
+                    if (result.sucesso) {
+                        this.app.alert('Excluido com sucesso');
+                    } else {
+                        this.app.alert(result.inconsistencias, 'Erro');
+                    }
+                }, error => {
+                    this.loading.hide();
+                });
             }
-        }, error => {
-            this.loading.hide();
         });
+
     }
 
 }

@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {AppService} from '@app/app.service';
 import {ProjetoFacade} from '@app/facades';
-import {RelatorioFinal, ResultadoResponse, NoRequest} from '@app/models';
+import {RelatorioFinal, ResultadoResponse, NoRequest, FileUploaded} from '@app/models';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {LoadingComponent} from '@app/shared/loading/loading.component';
 import {timer, of, from, zip} from 'rxjs';
@@ -149,19 +149,23 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
         this.form.updateValueAndValidity();
     }
 
-    deletarArquivo(file) {
-        this.loading.show();
-        this.relatorio.uploads.splice(this.relatorio.uploads.indexOf(file), 1);
-        this.app.file.remover(file).subscribe((result: ResultadoResponse) => {
-            this.loading.hide();
-            if (result.sucesso) {
-                this.app.alert('Excluido com sucesso');
-                this.logger.saveDelete();
-            } else {
-                this.app.alert(result.inconsistencias, 'Erro');
+    deletarArquivo(file: FileUploaded) {
+        this.app.confirm('Tem certeza que deseja remover este arquivo?').then(response => {
+            if (response) {
+                this.loading.show();
+                this.relatorio.uploads.splice(this.relatorio.uploads.indexOf(file), 1);
+                this.app.file.remover(file).subscribe((result: ResultadoResponse) => {
+                    this.loading.hide();
+                    if (result.sucesso) {
+                        this.app.alert('Excluido com sucesso');
+                        this.logger.saveDelete(`Arquivo ${file.nomeArquivo} excluído`);
+                    } else {
+                        this.app.alert(result.inconsistencias, 'Erro');
+                    }
+                }, error => {
+                    this.loading.hide();
+                });
             }
-        }, error => {
-            this.loading.hide();
         });
     }
 
@@ -216,6 +220,7 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
                 }
                 return this.app.file.upload(el.files.item(0), form).pipe(tap(result => {
                     if (result.sucesso) {
+                        this.logger.save(`Arquivo ${el.files.item(0).name} adicionado`);
                         el.value = '';
                     }
                 }), catchError(error => of(false)));

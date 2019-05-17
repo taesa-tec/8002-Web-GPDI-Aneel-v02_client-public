@@ -29,7 +29,7 @@ export class LogProjetoComponent implements OnInit {
     constructor(protected app: AppService, protected route: ActivatedRoute) { }
 
     ngOnInit() {
-        this.loadData();
+        // this.loadData();
     }
 
     mudarStatus(value: string) {

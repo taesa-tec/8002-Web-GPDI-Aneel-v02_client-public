@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
 import {AppService} from '@app/app.service';
-import {ProjetoStatus, Projeto, ResultadoResponse} from '@app/models';
+import {ProjetoStatus, Projeto, ResultadoResponse, RegistroREFP} from '@app/models';
 import {zip} from 'rxjs';
 import {FormGroup, FormControl} from '@angular/forms';
 import {ProjetoFacade} from '@app/facades';
@@ -16,9 +16,10 @@ export class AlterarStatusComponent implements OnInit {
 
     status: Array<ProjetoStatus>;
     projeto: ProjetoFacade;
-
+    refpPendentes: Array<RegistroREFP> = [];
     form: FormGroup;
     catalogFC: FormControl;
+    projetoStatus: number;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
     @ViewChild(LoggerDirective) logger: LoggerDirective;
@@ -30,10 +31,12 @@ export class AlterarStatusComponent implements OnInit {
         const status$ = this.app.catalogo.status();
         const projeto$ = this.app.projetos.projetoLoaded;
 
-        zip(status$, projeto$).subscribe(([status, projeto]) => {
+        zip(status$, projeto$).subscribe(async ([status, projeto]) => {
             this.projeto = projeto;
-
             this.status = status;
+            this.projetoStatus = this.projeto.catalogStatusId;
+            this.refpPendentes = await this.projeto.relations.REFP.registrosPendentes().toPromise();
+
             this.catalogFC = new FormControl(this.projeto.catalogStatusId);
             this.form = new FormGroup({
                 id: new FormControl(this.projeto.id),
@@ -45,7 +48,16 @@ export class AlterarStatusComponent implements OnInit {
         });
     }
 
-    save() {
+    async save() {
+
+        if (this.projeto.catalogStatusId === 3 && this.refpPendentes.length > 0 && this.projetoStatus === 2) {
+            const response = await this.app.confirm('Ainda existem registros REFPs pendentes de aprovação. Tem certeza que deseja mudar o status do projeto para encerrado?');
+            if (!response) {
+                this.catalogFC.setValue(this.projetoStatus);
+                return;
+            }
+        }
+
         this.projeto.save().subscribe(result => {
             if (result.sucesso) {
                 this.projeto.catalogStatus = this.status.find(s => s.id === parseInt(this.catalogFC.value, 10));
@@ -59,6 +71,11 @@ export class AlterarStatusComponent implements OnInit {
                 this.app.alert(result.inconsistencias.join(', '), 'Erro!');
             }
         });
+    }
+
+    async changeStatus(event: Event) {
+
+
     }
 
     deletarProjeto() {

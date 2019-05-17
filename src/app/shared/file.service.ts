@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { ResultadoResponse, FileUploaded } from '@app/models';
-import { FormGroup } from '@angular/forms';
-import { mapTo, map } from 'rxjs/operators';
-import { DomSanitizer } from '@angular/platform-browser';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {ResultadoResponse, FileUploaded} from '@app/models';
+import {FormGroup} from '@angular/forms';
+import {mapTo, map} from 'rxjs/operators';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Injectable({
     providedIn: 'root'
@@ -49,7 +49,7 @@ export class FileService {
             const id = typeof file === 'object' ? file.id : file;
             const filename = name ? name : file.nomeArquivo;
             this.http.get(`upload/download/${id}`, {
-                responseType: "blob"
+                responseType: 'blob'
             }).subscribe((filedata: Blob) => {
                 const f = new File([filedata], filename);
                 this.doDownload(f);
@@ -58,21 +58,21 @@ export class FileService {
             });
         }
     }
+
     downloadLogDuto(id: number) {
         return this.http.get<any>(`upload/${id}/ObterLogDuto`);
     }
 
-    toBlob(url: string, name: string = "blob") {
+    toBlob(url: string, name: string = 'blob') {
         return this.http.get(url, {
-            responseType: "blob"
+            responseType: 'blob'
         }).pipe(map(value => {
             return this.sanatizer.bypassSecurityTrustUrl(URL.createObjectURL(new File([value], name)));
         }));
     }
 
 
-    remover(file: FileUploaded);
-    remover(file: number);
+    remover(file: FileUploaded | number);
     remover(file) {
         const id = typeof file === 'object' ? file.id : file;
         return this.http.delete(`upload/${id}`);

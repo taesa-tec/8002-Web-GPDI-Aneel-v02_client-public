@@ -23,10 +23,10 @@ export class ProjetoResolverService implements Resolve<Projeto> {
             this.router.navigate(['/dashboard']);
             return EMPTY;
         }
+
         return this.app.projetos.getById(id).pipe(
             take(1),
             mergeMap(projeto => {
-                console.log(projeto);
                 if (projeto) {
                     return of(projeto);
                 } else { // id not found

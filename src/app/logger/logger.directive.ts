@@ -137,8 +137,8 @@ export class LoggerDirective implements AfterViewInit, OnInit, AfterContentInit,
         return this.saveChanges('Update', projetoId, userId);
     }
 
-    saveDelete(projetoId?: any, userId?: string) {
-        return this.logger.submitLog('Excluído', this.getLog(), 'Delete', this.tela, projetoId, userId);
+    saveDelete(status = 'Excluído', projetoId?: any, userId?: string) {
+        return this.logger.submitLog(status, this.getLog(), 'Delete', this.tela, projetoId, userId);
     }
 
     saveStatus(status: string, acao: 'Create' | 'Update' | 'Delete' = 'Update', projetoId?: any, userId?: string) {

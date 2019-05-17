@@ -1,11 +1,11 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { EditorResultado } from '../editor-resultado-base';
-import { AppService } from '@app/app.service';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable, of } from 'rxjs';
-import { TiposCapacitacao, RecursoHumano, AppValidators, NoRequest, ResultadoResponse, ResultadoCapacitacao } from '@app/models';
-import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { tap } from 'rxjs/operators';
+import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
+import {EditorResultado} from '../editor-resultado-base';
+import {AppService} from '@app/app.service';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {Observable, of} from 'rxjs';
+import {TiposCapacitacao, RecursoHumano, AppValidators, NoRequest, ResultadoResponse, ResultadoCapacitacao} from '@app/models';
+import {Validators, FormGroup, FormControl} from '@angular/forms';
+import {tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-resultado-capacitacao',
@@ -21,7 +21,9 @@ export class ResultadoCapacitacaoComponent extends EditorResultado<ResultadoCapa
 
     @ViewChild('file') file: ElementRef;
 
-    constructor(app: AppService, activeModal: NgbActiveModal) { super(app, activeModal, "ResultadoCapacitacao"); }
+    constructor(app: AppService, activeModal: NgbActiveModal) {
+        super(app, activeModal, 'ResultadoCapacitacao');
+    }
 
     load() {
         return new Observable<void>(observer => {
@@ -59,7 +61,9 @@ export class ResultadoCapacitacaoComponent extends EditorResultado<ResultadoCapa
         }
         return super.afterSubmit();
     }
-    changeFile(event) { }
+
+    changeFile(event) {
+    }
 
     uploadFile(id) {
         const el = this.file.nativeElement as HTMLInputElement;
@@ -69,7 +73,8 @@ export class ResultadoCapacitacaoComponent extends EditorResultado<ResultadoCapa
                 ResultadoCapacitacaoId: new FormControl(id),
             })).pipe(tap(result => {
                 if (result.sucesso) {
-                    this.file.nativeElement.value = "";
+                    this.logger.save(`Arquivo ${el.files.item(0).name} adicionado`);
+                    this.file.nativeElement.value = '';
                 }
             }));
         }

@@ -11,7 +11,8 @@
     <div class="col-6">
         <div *ngIf="form" class="d-flex" [formGroup]="form"
              appLogger="Central Administrativa - Alteração Status Projeto">
-            <select name="" id="" class="form-control flex-grow-1" formControlName="catalogStatusId"
+            <select class="form-control flex-grow-1" formControlName="catalogStatusId"
+                    (change)="changeStatus($event)"
                     appLogItem="Status">
                 <option [value]="item.id" *ngFor="let item of status">{{ item.status }}</option>
             </select>

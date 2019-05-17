@@ -1,5 +1,5 @@
 import {Injectable, Inject} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
 import {AlertComponent} from './shared/alert/alert.component';
 import {ConfirmComponent} from './shared/confirm/confirm.component';
 import {CatalogsService} from './catalogs/catalogs.service';
@@ -30,13 +30,15 @@ export class AppService {
         public auth: AuthService,
         public router: Router,
         public logger: LoggerService,
+        public modalConfig: NgbModalConfig
     ) {
         this.config = environment;
+        this.modalConfig.backdrop = 'static';
         console.log('%cAppService Ok', 'color:#0CF');
     }
 
     alert(message: string | Array<string>, title: string = 'Alerta') {
-        const ref = this.modal.open(AlertComponent);
+        const ref = this.modal.open(AlertComponent, {backdrop: 'static'});
         ref.componentInstance.title = title;
         ref.componentInstance.setMessage(message);
         return ref.result;
