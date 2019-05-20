@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AppService } from '@app/app.service';
-import { ProjetoFacade } from '@app/facades';
-import { Etapa } from '@app/models';
-import { EtapaAtividadesFormComponent } from '../../common/etapa-atividades-form/etapa-atividades-form.component';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {AppService} from '@app/app.service';
+import {ProjetoFacade} from '@app/facades';
+import {Etapa} from '@app/models';
+import {EtapaAtividadesFormComponent} from '../../common/etapa-atividades-form/etapa-atividades-form.component';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-relatorio-etapa-projeto',
@@ -22,7 +23,8 @@ export class RelatorioEtapaProjetoComponent implements OnInit {
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
-    constructor(protected app: AppService) { }
+    constructor(protected app: AppService) {
+    }
 
     ngOnInit() {
         this.app.projetos.projetoLoaded.subscribe(projeto => {
@@ -43,7 +45,7 @@ export class RelatorioEtapaProjetoComponent implements OnInit {
     }
 
     editar(etapa: Etapa) {
-        const ref = this.app.modal.open(EtapaAtividadesFormComponent, { size: 'lg' });
+        const ref = this.app.modal.open(EtapaAtividadesFormComponent, {size: 'lg'});
         const etapaAtividadeForm = <EtapaAtividadesFormComponent>ref.componentInstance;
         etapaAtividadeForm.setEtapa(etapa);
         ref.result.then(result => {
@@ -53,6 +55,17 @@ export class RelatorioEtapaProjetoComponent implements OnInit {
         }, e => {
 
         });
+    }
+
+    etapaMeses(etapa: Etapa) {
+        return etapa.etapaMeses.sort((a, b) => {
+            if (a.mes === b.mes) {
+                return 0;
+            }
+            return (moment(a.mes).isBefore(moment(b.mes))) ? -1 : 1;
+        }).map(mes => {
+            return moment(mes.mes).format('MMM/YYYY');
+        }).join(' - ');
     }
 
 }

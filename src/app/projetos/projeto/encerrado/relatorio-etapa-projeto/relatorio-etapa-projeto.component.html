@@ -10,42 +10,62 @@
         <div class="table-responsive">
             <table class="table">
                 <thead>
-                    <tr>
-                        <th>Etapas </th>
+                <tr>
+                    <th>Etapas</th>
+                    <ng-container *ngIf="projeto.isPD">
                         <th>
                             <div class="d-flex align-items-center">
                                 <span class="mx-2">Data Inicial</span>
-                                <app-handler-order [current]="listOrder" field="dataInicio" (order)="listOrder=$event"></app-handler-order>
+                                <app-handler-order [current]="listOrder" field="dataInicio"
+                                                   (order)="listOrder=$event"></app-handler-order>
                             </div>
+
                         </th>
                         <th>
                             <div class="d-flex align-items-center">
                                 <span class="mx-2">Data Final</span>
-                                <app-handler-order [current]="listOrder" field="dataFim" (order)="listOrder=$event"></app-handler-order>
+                                <app-handler-order [current]="listOrder" field="dataFim"
+                                                   (order)="listOrder=$event"></app-handler-order>
                             </div>
                         </th>
+                    </ng-container>
+                    <ng-container *ngIf="projeto.isPG">
                         <th>
                             <div class="d-flex align-items-center">
-                                <span class="mx-2">Atividade Cadastradas?</span>
-                                <app-handler-order [current]="listOrder" field="atividadesRealizadas" (order)="listOrder=$event"></app-handler-order>
+                                <span class="mx-2">Meses</span>
                             </div>
                         </th>
-                        <th>Ações</th>
-                    </tr>
+                    </ng-container>
+                    <th>
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">Atividade Cadastradas?</span>
+                            <app-handler-order [current]="listOrder" field="atividadesRealizadas"
+                                               (order)="listOrder=$event"></app-handler-order>
+                        </div>
+                    </th>
+                    <th>Ações</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let etapa of etapas | orderBy:listOrder.field:listOrder.direction; let i = index">
-                        <td>Etapa {{i+1}}</td>
-                        <td>{{etapa.dataInicio | date:'MM/yyyy'}}</td>
-                        <td>{{etapa.dataFim | date:'MM/yyyy'}}</td>
-                        <td>{{etapa.atividadesRealizadas?'Sim':'Não'}}</td>
+                <tr *ngFor="let etapa of etapas | orderBy:listOrder.field:listOrder.direction; let i = index">
+                    <td>Etapa {{i + 1}}</td>
+                    <ng-container *ngIf="projeto.isPD">
+                        <td>{{ etapa.dataInicio | date:'dd/MM/yyyy' }}</td>
+                        <td>{{ etapa.dataFim | date:'dd/MM/yyyy' }}</td>
+                    </ng-container>
+                    <ng-container *ngIf="projeto.isPG">
                         <td>
-                            <button class="btn btn-primary btn-sm" type="button" (click)="editar(etapa)">
-                                <i class="ta-edit"></i>
-                                Editar
-                            </button>
+                            {{etapaMeses(etapa)}}
                         </td>
-                    </tr>
+                    </ng-container>
+                    <td>{{etapa.atividadesRealizadas ? 'Sim' : 'Não'}}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" type="button" (click)="editar(etapa)">
+                            <i class="ta-edit"></i>
+                            Editar
+                        </button>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>
