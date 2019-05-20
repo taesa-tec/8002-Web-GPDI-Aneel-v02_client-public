@@ -168,7 +168,7 @@ export abstract class EditorResultado<T extends { id: number; uploads?: Array<Fi
             });
     }
 
-    deletarArquivo(file) {
+    deletarArquivo(file: FileUploaded) {
 
         this.app.confirm('Tem certeza que deseja remover este arquivo?').then(response => {
             if (response) {
@@ -178,6 +178,7 @@ export abstract class EditorResultado<T extends { id: number; uploads?: Array<Fi
                     this.loadingHide();
                     if (result.sucesso) {
                         this.app.alert('Excluido com sucesso');
+                        this.logger.save(`Arquivo ${file.nomeArquivo} Excluído`, this.logger.getLog(), 'Delete');
                     } else {
                         this.app.alert(result.inconsistencias, 'Erro');
                     }
