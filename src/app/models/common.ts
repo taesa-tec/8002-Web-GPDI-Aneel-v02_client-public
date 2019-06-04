@@ -3,6 +3,8 @@ import {UserRole} from './enums';
 export interface TextValue {
     text: string;
     value: any;
+
+    [propName: string]: any;
 }
 
 export interface MessageAlert {
