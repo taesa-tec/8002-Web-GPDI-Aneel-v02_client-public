@@ -1,10 +1,20 @@
 <app-loading #loading type="fullscreen"></app-loading>
-<div *ngIf="form && mesesRef.length === 0">
+<div *ngIf="canExtend && form && mesesRef.length === 0">
     <div class="row">
         <div class="col-12">
             <div class="alert alert-danger">
-                <i class="ta-warning fs-24"></i> 
+                <i class="ta-warning fs-24"></i>
                 Esse projeto atingiu o limite máximo de 60 meses.
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="!canExtend && canExtendMessage.length > 0">
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-danger">
+                <i class="ta-warning fs-24"></i>
+                {{canExtendMessage}}
             </div>
         </div>
     </div>
@@ -12,7 +22,9 @@
 <div *ngIf="form && mesesRef.length > 0">
     <div class="row">
         <div class="col-12">
-            <div class="alert alert-danger"><i class="ta-warning"></i> Será criada uma nova Etapa no projeto chamada "Prorrogação" contendo a duração que será acrescentada ao projeto.</div>
+            <div class="alert alert-danger"><i class="ta-warning"></i> Será criada uma nova Etapa no projeto chamada
+                "Prorrogação" contendo a duração que será acrescentada ao projeto.
+            </div>
         </div>
     </div>
 
@@ -30,7 +42,6 @@
             </div>
         </div>
     </div>
-
 
 
     <div class="row">
@@ -108,7 +119,8 @@
                 </div>
             </div>
             <div hidden>
-                <p class="text-success"><i class="ta-ok"></i> Todos os campos necessários para a geração deste XML estão preenchidos.</p>
+                <p class="text-success"><i class="ta-ok"></i> Todos os campos necessários para a geração deste XML estão
+                    preenchidos.</p>
             </div>
         </div>
     </div>

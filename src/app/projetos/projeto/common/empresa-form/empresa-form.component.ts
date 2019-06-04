@@ -154,7 +154,21 @@ export class EmpresaFormComponent implements OnInit, AfterViewInit {
                     this.app.projetos.delEmpresa(this.empresa.id).subscribe(resultDelete => {
                         this.loading.hide();
                         if (resultDelete.sucesso) {
+
                             this.activeModal.close('deleted');
+                            switch (this.empresa.classificacaoValor) {
+                                case 'Energia':
+                                    this.loggerCooperada.saveDelete();
+                                    break;
+                                case 'Executora':
+                                    this.loggerExecutora.saveDelete();
+                                    break;
+                                case 'Parceira':
+                                    this.loggerParceira.saveDelete();
+                                    break;
+                                default:
+                                    this.tabFixed = false;
+                            }
                         } else {
                             this.app.alert(resultDelete.inconsistencias.join(', '));
                         }

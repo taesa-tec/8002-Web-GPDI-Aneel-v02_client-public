@@ -47,8 +47,13 @@ export class EtapaFormComponent implements OnInit {
             if (this.projeto.isPD) {
                 const produtos$ = this.projeto.REST.Produtos.listar<Array<Produto>>();
                 zip(produtos$).subscribe(([produtos]) => {
-                    this.produtos = produtos;
-                    this.setup();
+                    if (produtos === null) {
+                        this.app.alert('O projeto atual não tem produtos cadastrado, por favor adicione produtos antes de criar novas etapas', 'Não há produtos');
+                        this.activeModal.dismiss('Sem produtos');
+                    } else {
+                        this.produtos = produtos;
+                        this.setup();
+                    }
                 });
             } else {
                 this.setup();
@@ -184,6 +189,7 @@ export class EtapaFormComponent implements OnInit {
                     this.app.projetos.delEtapa(this.etapa.id).subscribe(resultDelete => {
                         this.loading.hide();
                         if (resultDelete.sucesso) {
+                            this.logger.saveDelete();
                             this.activeModal.close('deleted');
                         } else {
                             this.app.alert(resultDelete.inconsistencias.join(', '));
