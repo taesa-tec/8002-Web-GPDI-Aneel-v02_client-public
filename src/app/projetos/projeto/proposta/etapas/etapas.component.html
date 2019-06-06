@@ -33,7 +33,8 @@
 
             <input type="number" [(ngModel)]="ano" class="form-control">
             <app-loading type="inline" background="transparent" color="#03286a" #loading></app-loading>
-            <button *appUserEscrita class="mx-3 btn btn-primary py-2" type="button" [disabled]="loading.isLoading" (click)="setDataInicio()">
+            <button *appUserEscrita class="mx-3 btn btn-primary py-2" type="button" [disabled]="loading.isLoading"
+                    (click)="setDataInicio()">
                 <i class="ta-save fs-24 align-middle align-middle"></i>
                 Salvar
             </button>
@@ -42,46 +43,49 @@
 </div>
 <div class="row mt-4">
     <div class="col-12">
-        <table class="table">
+        <table class="table" *ngIf="projeto">
             <thead>
-                <tr>
+            <tr>
+                <th>
+                    <div class="d-flex align-items-center">
+                        <span class="mx-2">Etapas</span>
+                        <app-handler-order [current]="listOrder" field="id"
+                                           (order)="listOrder=$event"></app-handler-order>
+                    </div>
+                </th>
+                <ng-container *ngIf="projeto.isPD">
                     <th>
                         <div class="d-flex align-items-center">
-                            <span class="mx-2">Etapas</span>
-                            <app-handler-order [current]="listOrder" field="id" (order)="listOrder=$event"></app-handler-order>
+                            <span class="mx-2">Data Inicial</span>
+                            <app-handler-order [current]="listOrder" field="dataInicio"
+                                               (order)="listOrder=$event"></app-handler-order>
                         </div>
-                    </th>
-                    <ng-container *ngIf="projeto.isPD">
-                        <th>
-                            <div class="d-flex align-items-center">
-                                <span class="mx-2">Data Inicial</span>
-                                <app-handler-order [current]="listOrder" field="dataInicio" (order)="listOrder=$event"></app-handler-order>
-                            </div>
 
-                        </th>
-                        <th>
-                            <div class="d-flex align-items-center">
-                                <span class="mx-2">Data Final</span>
-                                <app-handler-order [current]="listOrder" field="dataFim" (order)="listOrder=$event"></app-handler-order>
-                            </div>
-                        </th>
-                    </ng-container>
-                    <ng-container *ngIf="projeto.isPG">
-                        <th>
-                            <div class="d-flex align-items-center">
-                                <span class="mx-2">Meses</span>
-                            </div>
-                        </th>
-                    </ng-container>
+                    </th>
                     <th>
                         <div class="d-flex align-items-center">
-                            <span class="mx-2">Ações</span>
+                            <span class="mx-2">Data Final</span>
+                            <app-handler-order [current]="listOrder" field="dataFim"
+                                               (order)="listOrder=$event"></app-handler-order>
                         </div>
                     </th>
-                </tr>
+                </ng-container>
+                <ng-container *ngIf="projeto.isPG">
+                    <th>
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">Meses</span>
+                        </div>
+                    </th>
+                </ng-container>
+                <th>
+                    <div class="d-flex align-items-center">
+                        <span class="mx-2">Ações</span>
+                    </div>
+                </th>
+            </tr>
             </thead>
             <tr *ngFor="let etapa of etapas | orderBy:listOrder.field:listOrder.direction; let i = index">
-                <td> <span [ngbTooltip]="etapa.desc"> Etapa {{ etapa.numeroEtapa }}  </span></td>
+                <td><span [ngbTooltip]="etapa.desc"> Etapa {{ etapa.numeroEtapa }}  </span></td>
                 <ng-container *ngIf="projeto.isPD">
                     <td>{{ etapa.dataInicio | date:'dd/MM/yyyy' }}</td>
                     <td>{{ etapa.dataFim | date:'dd/MM/yyyy' }}</td>

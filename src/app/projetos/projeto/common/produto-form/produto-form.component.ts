@@ -1,7 +1,7 @@
 import {Component, OnInit, Input, ViewChild} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Produto, TiposProdutos, FasesCadeiaInovacao, Projeto} from '@app/models';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {FormGroup, FormControl, Validators, AbstractControl} from '@angular/forms';
 import {LoadingComponent} from '@app/shared/loading/loading.component';
 import {AppService} from '@app/app.service';
 import {zip} from 'rxjs';
@@ -12,6 +12,7 @@ import {LoggerDirective} from '@app/logger/logger.directive';
     templateUrl: './produto-form.component.html',
     styles: []
 })
+
 export class ProdutoFormComponent implements OnInit {
 
     @Input() produto_id: number;
@@ -55,24 +56,43 @@ export class ProdutoFormComponent implements OnInit {
         this.setup();
     }
 
-    setup() {
-        const fases$ = this.app.catalogo.produtoFasesCadeia();
-        zip(fases$).subscribe(([fases]) => {
-            this.fases = fases;
-            this.form = new FormGroup({
-                projetoId: new FormControl(this.projeto.id, Validators.required),
-                titulo: new FormControl(this.produto.titulo || '', [Validators.required]),
-                desc: new FormControl(this.produto.desc || '', [Validators.required]),
-                classificacao: new FormControl(this.produto.classificacaoValor || '', [Validators.required]),
-                tipo: new FormControl(this.produto.tipoValor || '', [Validators.required]),
-                catalogProdutoFaseCadeiaId: new FormControl(this.produto.catalogProdutoFaseCadeiaId || '', [Validators.required]),
-                catalogProdutoTipoDetalhadoId: new FormControl(this.produto.catalogProdutoTipoDetalhadoId || '', [Validators.required])
-            });
+    async setup() {
+        this.fases = await this.app.catalogo.produtoFasesCadeia().toPromise();
 
-            if (this.produto.id !== undefined) {
-                this.form.addControl('id', new FormControl(this.produto.id));
-            }
+        const classificacao = new FormControl(this.produto.classificacaoValor || '', [Validators.required]);
+        const tipo = new FormControl(this.produto.tipoValor || '', [Validators.required]);
+        const catalogProdutoFaseCadeiaId = new FormControl(this.produto.catalogProdutoFaseCadeiaId || '', [Validators.required]);
+        const catalogProdutoTipoDetalhadoId = new FormControl(this.produto.catalogProdutoTipoDetalhadoId || '', [Validators.required]);
+
+        this.form = new FormGroup({
+            projetoId: new FormControl(this.projeto.id, Validators.required),
+            classificacao,
+            titulo: new FormControl(this.produto.titulo || '', [Validators.required]),
+            desc: new FormControl(this.produto.desc || '', [Validators.required]),
+            // <editor-fold desc="Somente para produto Final">
+            tipo,
+            catalogProdutoFaseCadeiaId,
+            catalogProdutoTipoDetalhadoId
+            // </editor-fold>
         });
+        classificacao.valueChanges.subscribe(value => {
+            if (value === 'Final') {
+                this.form.addControl('tipo', tipo);
+                this.form.addControl('catalogProdutoFaseCadeiaId', catalogProdutoFaseCadeiaId);
+                this.form.addControl('catalogProdutoTipoDetalhadoId', catalogProdutoTipoDetalhadoId);
+            } else {
+                this.form.removeControl('tipo');
+                this.form.removeControl('catalogProdutoFaseCadeiaId');
+                this.form.removeControl('catalogProdutoTipoDetalhadoId');
+            }
+            this.form.updateValueAndValidity();
+
+            console.log(tipo);
+        });
+
+        if (this.produto.id !== undefined) {
+            this.form.addControl('id', new FormControl(this.produto.id));
+        }
     }
 
     submit() {

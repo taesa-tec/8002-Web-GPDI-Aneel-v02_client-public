@@ -67,24 +67,25 @@ export class EtapasComponent implements OnInit {
     }
 
     ngOnInit() {
-        const projeto$ = this.app.projetos.projetoLoaded;
-
-        zip(projeto$).subscribe(([projeto]) => {
-            this.projeto = projeto;
-
-            const dataInicio = this.projeto.dataInicio ? new Date(this.projeto.dataInicio) : new Date();
-
-            this.form = new FormGroup({
-                id: new FormControl(this.projeto.id),
-                dataInicio: new FormControl('')
-            });
-
-            this.mes = dataInicio.getMonth();
-            this.ano = dataInicio.getFullYear();
-
-            this.loadEtapas();
-        });
+        this.setup();
     }
+
+    async setup() {
+        this.projeto = await new Promise((resolve => this.app.projetos.projetoLoaded.subscribe(projeto => resolve(projeto))));
+
+        const dataInicio = this.projeto.dataInicio ? moment(this.projeto.dataInicio) : moment();
+
+        this.form = new FormGroup({
+            id: new FormControl(this.projeto.id),
+            dataInicio: new FormControl('')
+        });
+
+        this.mes = parseFloat(dataInicio.format('MM')) - 1;
+        this.ano = parseFloat(dataInicio.format('YYYY'));
+        this.loadEtapas();
+
+    }
+
 
     loadEtapas() {
         this.projeto.REST.Etapas.listar<Array<Etapa>>().subscribe(etapas => {

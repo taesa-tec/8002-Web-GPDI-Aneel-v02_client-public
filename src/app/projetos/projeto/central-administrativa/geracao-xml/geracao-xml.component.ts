@@ -96,7 +96,10 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
 
     gerarXml(tipo: XmlType, versao: any) {
         this.loading.show();
-        console.log('gerar...');
+        versao = parseFloat(versao);
+        if (versao < 10) {
+            versao = `0${versao}`;
+        }
         this.projeto.gerarXml(tipo, versao).subscribe(result => {
             this.loading.hide();
         }, (error) => {

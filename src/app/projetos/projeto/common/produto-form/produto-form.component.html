@@ -17,21 +17,21 @@
             <label class="form-check-label" for="input-r-produto-intermediario">Produto Intermediário</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="input-r-produto-final" value="Final"
+            <input class="form-check-input" #produtoFinal type="radio" id="input-r-produto-final" value="Final"
                    appLogItem="Classificação"
                    appLogItemValue="Produto Final"
                    formControlName="classificacao">
             <label class="form-check-label" for="input-r-produto-final">Produto Final</label>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" [hidden]="!produtoFinal.checked">
         <label>Tipo de produto</label>
         <select class="form-control" formControlName="tipo" appLogItem="Tipo de produto">
             <option value="">Selecione</option>
             <option [value]="tipo.value" *ngFor="let tipo of tiposProdutos">{{tipo.text}}</option>
         </select>
     </div>
-    <div class="form-group">
+    <div class="form-group" [hidden]="!produtoFinal.checked">
         <label>Fase da cadeia de inovação</label>
         <select class="form-control" formControlName="catalogProdutoFaseCadeiaId"
                 appLogItem="Fase da cadeia de inovação">
@@ -39,7 +39,7 @@
             <option [value]="fase.id" *ngFor="let fase of fases">{{fase.nome}}</option>
         </select>
     </div>
-    <div class="form-group">
+    <div class="form-group" [hidden]="!produtoFinal.checked">
         <label>Tipo de produto detalhado</label>
         <select class="form-control" formControlName="catalogProdutoTipoDetalhadoId"
                 appLogItem="Tipo de produto detalhado">

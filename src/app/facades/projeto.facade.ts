@@ -1,29 +1,30 @@
-import { ProjetosService } from '../projetos/projetos.service';
-import { Projeto, Empresa, ProjetoStatus, RegistroREFP, ProrrogarProjetoRequest, ResultadoResponse, XmlType } from '@app/models';
-import { throwError, Subject, Observable } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
-import { GenericFacade } from './generic.facade';
-import { EmpresaProjetoFacade } from './empresa.facade';
-import { RecursoHumanoFacade } from './recurso-humano.facade';
+import {ProjetosService} from '../projetos/projetos.service';
+import {Projeto, Empresa, ProjetoStatus, RegistroREFP, ProrrogarProjetoRequest, ResultadoResponse, XmlType} from '@app/models';
+import {throwError, Subject, Observable} from 'rxjs';
+import {tap, map} from 'rxjs/operators';
+import {GenericFacade} from './generic.facade';
+import {EmpresaProjetoFacade} from './empresa.facade';
+import {RecursoHumanoFacade} from './recurso-humano.facade';
 
 const projetoComponents = [
-    "Temas",
-    "Produtos",
-    "Etapas",
-    "Empresas",
-    "RecursoHumanos",
-    "AlocacaoRhs",
-    "RecursoMateriais",
-    "AlocacaoRms",
-    "RelatorioFinal",
-    "ResultadoCapacitacao",
-    "ResultadoProducao",
-    "ResultadoInfra",
-    "ResultadoIntelectual",
-    "ResultadoSocioAmbiental",
-    "ResultadoEconomico",
-    "AtividadesGestao"
+    'Temas',
+    'Produtos',
+    'Etapas',
+    'Empresas',
+    'RecursoHumanos',
+    'AlocacaoRhs',
+    'RecursoMateriais',
+    'AlocacaoRms',
+    'RelatorioFinal',
+    'ResultadoCapacitacao',
+    'ResultadoProducao',
+    'ResultadoInfra',
+    'ResultadoIntelectual',
+    'ResultadoSocioAmbiental',
+    'ResultadoEconomico',
+    'AtividadesGestao'
 ];
+
 interface REST {
     Temas: ProjetoREST;
     Produtos: ProjetoREST;
@@ -45,11 +46,13 @@ interface REST {
 }
 
 abstract class ProjetoModule {
-    constructor(protected id: number, protected service: ProjetosService) { }
+    constructor(protected id: number, protected service: ProjetosService) {
+    }
 }
 
 export class ProjetoREST {
-    constructor(protected path: string, protected projeto: ProjetoFacade, protected service: ProjetosService) { }
+    constructor(protected path: string, protected projeto: ProjetoFacade, protected service: ProjetosService) {
+    }
 
     listar<T>(): Observable<T> {
         try {
@@ -61,6 +64,7 @@ export class ProjetoREST {
             return throwError(error);
         }
     }
+
     criar(data: any): Observable<ResultadoResponse>;
     criar<T>(data: T): Observable<T> {
         try {
@@ -116,6 +120,7 @@ class ProjetoTema extends ProjetoModule {
         return this.service.getTema(this.id);
     }
 }
+
 /**
  * @deprecated Use o ProjetoREST
  */
@@ -124,6 +129,7 @@ class ProjetoEtapas extends ProjetoModule {
         return this.service.getEtapas(this.id);
     }
 }
+
 /**
  * @deprecated Use o ProjetoREST
  */
@@ -132,6 +138,7 @@ class ProjetoProdutos extends ProjetoModule {
         return this.service.getProdutos(this.id);
     }
 }
+
 /**
  * @deprecated Use o ProjetoREST
  */
@@ -141,6 +148,7 @@ class ProjetoEmpresas extends ProjetoModule {
             .pipe(map(empresas => empresas.map(e => new EmpresaProjetoFacade(e))));
     }
 }
+
 /**
  * @deprecated Use o ProjetoREST
  */
@@ -150,10 +158,12 @@ class ProjetoRH extends ProjetoModule {
             .pipe(map(rh => rh.map(r => new RecursoHumanoFacade(r))));
 
     }
+
     getAlocacao() {
         return this.service.getAlocacaoRH(this.id);
     }
 }
+
 /**
  * @deprecated Use o ProjetoREST
  */
@@ -161,10 +171,12 @@ class ProjetoRM extends ProjetoModule {
     get() {
         return this.service.getRecursoMaterial(this.id);
     }
+
     getAlocacao() {
         return this.service.getAlocacaoRM(this.id);
     }
 }
+
 /**
  * @deprecated Use o ProjetoREST
  */
@@ -172,12 +184,15 @@ class ProjetoREFP extends ProjetoModule {
     registrosAprovados() {
         return this.service.listarRegistrosAprovados(this.id);
     }
+
     registrosReprovados() {
         return this.service.listarRegistrosReprovados(this.id);
     }
+
     registrosPendentes() {
         return this.service.listarRegistrosPendentes(this.id);
     }
+
     aprovarRegistro(id: number) {
         return this.service.editarRegistroREFP({
             id,
@@ -185,9 +200,10 @@ class ProjetoREFP extends ProjetoModule {
             obsInternas: []
         });
     }
+
     reprovarRegistro(id: number, motivo: string) {
         if (motivo.trim().length === 0) {
-            return throwError("O motivo não pode ser vazio");
+            return throwError('O motivo não pode ser vazio');
         }
 
         return this.service.editarRegistroREFP({
@@ -198,10 +214,11 @@ class ProjetoREFP extends ProjetoModule {
             }]
         });
     }
+
     reenviarAprovacaoRegistro(registro: RegistroREFP, respostas: string) {
 
         if (respostas.trim().length === 0) {
-            return throwError("A resposta não pode ser vazia");
+            return throwError('A resposta não pode ser vazia');
         }
 
         const requestData = Object.assign({}, registro, {
@@ -292,7 +309,7 @@ export class ProjetoFacade extends GenericFacade<Projeto> implements Projeto {
 
         this.REST = <REST>rest;
 
-        "Encerrado|Proposta|Iniciado".split('|').forEach(status => {
+        'Encerrado|Proposta|Iniciado'.split('|').forEach(status => {
             Object.defineProperty(this, `is${status}`, {
                 get: () => this.catalogStatus && this.catalogStatus.status === status
             });
@@ -300,10 +317,11 @@ export class ProjetoFacade extends GenericFacade<Projeto> implements Projeto {
     }
 
     get isPD() {
-        return this.tipoValor === "PD";
+        return this.tipoValor === 'PD';
     }
+
     get isPG() {
-        return this.tipoValor === "PG";
+        return this.tipoValor === 'PG';
     }
 
     save() {
@@ -314,14 +332,17 @@ export class ProjetoFacade extends GenericFacade<Projeto> implements Projeto {
             return this._service.criarProjeto(projeto).pipe(tap(r => this.onSave.next(projeto)));
         }
     }
+
     delete() {
         if (this.id) {
             return this._service.removerProjeto(this.id);
         }
     }
+
     toRequest() {
         return Object.assign({}, this._data);
     }
+
     editarDataInicio(dataInicio) {
         return this._service.editarDataInicio({
             id: this.id,
@@ -334,42 +355,55 @@ export class ProjetoFacade extends GenericFacade<Projeto> implements Projeto {
     prorrogar(prorrogacao: ProrrogarProjetoRequest) {
         return this._service.prorrogarProjeto(prorrogacao);
     }
+
     getOrcamentoEmpresas() {
         return this._service.getOrcamentoEmpresas(this.id);
     }
+
     getOrcamentoEtapas() {
         return this._service.getOrcamentoEtapas(this.id);
     }
+
     getOrcamentoAtividades() {
         return this._service.getOrcamentoAtividades(this.id);
     }
+
     obterXmls() {
         return this._service.obterXmls(this.id);
     }
+
     obterLogDuto() {
         return this._service.obterLogDuto(this.id);
     }
+
     gerarXml(tipo: XmlType, versao: any) {
-        return this._service.gerarXml(this.id, versao, tipo);
+        return this._service.gerarXml(this.id, `S${versao}`, tipo);
     }
+
     gerarXmlProjetoPed(versao: number) {
         return this._service.gerarXmlProjetoPed(this.id, versao);
     }
+
     gerarXmlInteresseExecucao(versao: number) {
         return this._service.gerarXmlInteresseExecucao(this.id, versao);
     }
+
     gerarXmlInicioExecucao(versao: number) {
         return this._service.gerarXmlInicioExecucao(this.id, versao);
     }
+
     gerarXmlProrrogacao(versao: number) {
         return this._service.gerarXmlProrrogacao(this.id, versao);
     }
+
     downloadXml(id) {
         return this._service.downloadXML(this.id, id);
     }
+
     orcamentoGerarCSV() {
         return this._service.exportarExtratoEmpresas(this.id);
     }
+
     extratoGerarCSV() {
         return this._service.exportarExtratoREFP(this.id);
     }
