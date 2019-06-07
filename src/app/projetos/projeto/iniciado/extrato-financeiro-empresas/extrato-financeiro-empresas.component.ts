@@ -34,9 +34,11 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
 
     get totalGeral() {
         if (this.extrato) {
-            return this.extrato.empresas
-                .map(e => e.valorAprovado)
-                .reduce((p, c) => p + c);
+            const aprovados = this.extrato.empresas.map(e => e.valorAprovado);
+
+            if (aprovados.length > 0) {
+                return aprovados.reduce((p, c) => p + c);
+            }
         }
         return 0;
     }
