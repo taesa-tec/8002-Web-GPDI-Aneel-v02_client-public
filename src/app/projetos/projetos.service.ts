@@ -108,6 +108,11 @@ export class ProjetosService {
         console.log('ProjetosService Ok');
     }
 
+    async getCurrent(): Promise<ProjetoFacade> {
+        return new Promise((resolve => this.projetoLoaded.subscribe(projeto => resolve(projeto))));
+    }
+
+
     meusProjetos() {
         return this.http.get<Array<UserProjeto>>('UserProjetos/me');
     }
@@ -136,6 +141,7 @@ export class ProjetosService {
                 share()
             );
     }
+
 
     editar(projeto: Projeto) {
         projeto.catalogEmpresaId = parseInt(String(projeto.catalogEmpresaId), 10);

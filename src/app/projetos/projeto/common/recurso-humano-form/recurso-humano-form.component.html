@@ -55,7 +55,7 @@
                 <select name="" id="" class="form-control" formControlName="gerenteProjeto"
                         appLogItem="Gerente do Projeto">
                     <option value="">Selecione</option>
-                    <option *ngIf="!hasManager" value="true">Sim</option>
+                    <option *ngIf="!hasManager || this.recursoHumano.gerenteProjeto" value="true">Sim</option>
                     <option value="false">Não</option>
                 </select>
             </div>

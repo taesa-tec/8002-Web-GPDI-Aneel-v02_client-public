@@ -1,19 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AppService } from '@app/app.service';
-import { ProjetoFacade } from '@app/facades';
-import { Observable, zip, EMPTY, of } from 'rxjs';
-import { RegistroREFP, RecursoHumano, RecursoMaterial, Empresa, EmpresaProjeto, CategoriasContabeis } from '@app/models';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { RegistroRefpDetailsComponent } from '@app/projetos/projeto/iniciado/registro-refp-details/registro-refp-details.component';
-import { map } from 'rxjs/operators';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {AppService} from '@app/app.service';
+import {ProjetoFacade} from '@app/facades';
+import {Observable, zip, EMPTY, of, Subscription} from 'rxjs';
+import {RegistroREFP, RecursoHumano, RecursoMaterial, Empresa, EmpresaProjeto, CategoriasContabeis} from '@app/models';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {RegistroRefpDetailsComponent} from '@app/projetos/projeto/iniciado/registro-refp-details/registro-refp-details.component';
+import {map} from 'rxjs/operators';
 
 @Component({
     selector: 'app-refp-list',
     templateUrl: './refp-list.component.html',
     styles: []
 })
-export class RefpListComponent implements OnInit {
+export class RefpListComponent implements OnInit, OnDestroy {
 
 
     status = '...';
@@ -23,6 +23,7 @@ export class RefpListComponent implements OnInit {
     recursosMateriais: Array<RecursoMaterial>;
     empresas: Array<EmpresaProjeto>;
     categorias: Array<any>;
+    routerChangeSubscription: Subscription;
 
     tableRegistro: Array<{
         registro: RegistroREFP,
@@ -34,44 +35,52 @@ export class RefpListComponent implements OnInit {
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
-    constructor(protected route: ActivatedRoute, protected app: AppService) { }
+    constructor(protected route: ActivatedRoute, protected app: AppService) {
+    }
 
     ngOnInit() {
-        this.app.projetos.projetoLoaded.subscribe(projeto => {
-            const recursosHumanos$ = projeto.relations.recursosHumanos.get();
-            const recursosMateriais$ = projeto.relations.recursosMateriais.get();
-            const empresas$ = projeto.relations.empresas.get();
-            this.projeto = projeto;
-            this.loading.show();
 
-            zip(recursosHumanos$, recursosMateriais$, empresas$)
-                .subscribe(([recursosHumanos, recursosMateriais, empresas]) => {
+        this.load();
 
-                    this.recursosHumanos = recursosHumanos;
-                    this.recursosMateriais = recursosMateriais;
-                    this.empresas = empresas;
 
-                    this.route.paramMap.subscribe(paramsMap => {
-                        this.status = paramsMap.get('status');
-                        this.load();
-                    });
-                });
-        });
     }
 
-    protected loadRegistros() {
+    ngOnDestroy(): void {
+        this.routerChangeSubscription.unsubscribe();
+    }
+
+
+    protected async loadRegistros() {
+        let req: Observable<RegistroREFP[]>;
         switch (this.status) {
-            case "pendentes":
-                return this.projeto.relations.REFP.registrosPendentes();
-            case "reprovados":
-                return this.projeto.relations.REFP.registrosReprovados();
-            case "aprovados":
-                return this.projeto.relations.REFP.registrosAprovados();
+            case 'pendentes':
+                req = this.projeto.relations.REFP.registrosPendentes();
+                break;
+            case 'reprovados':
+                req = this.projeto.relations.REFP.registrosReprovados();
+                break;
+            case 'aprovados':
+                req = this.projeto.relations.REFP.registrosAprovados();
+                break;
         }
-        return EMPTY;
+
+        this.registros = await req.toPromise();
+
+        this.fillTable();
+
     }
 
-    load() {
+    async load() {
+
+        this.loading.show();
+        this.projeto = await this.app.projetos.getCurrent();
+
+        [this.recursosHumanos, this.recursosMateriais, this.empresas] =
+            await Promise.all([this.projeto.relations.recursosHumanos.get().toPromise(),
+                this.projeto.relations.recursosMateriais.get().toPromise(),
+                this.projeto.relations.empresas.get().toPromise()]);
+
+
         const categorias$ = this.projeto.isPD ? of(CategoriasContabeis) : this.app.catalogo.categoriasContabeisGestao().pipe(map(cats => cats.map(c => {
             return {
                 text: c.nome,
@@ -79,16 +88,16 @@ export class RefpListComponent implements OnInit {
                 atividades: c.atividades
             };
         })));
-        this.loading.show();
-        this.tableRegistro = [];
-        zip(this.loadRegistros(), categorias$)
-            .subscribe(([registros, categorias]) => {
-                this.registros = registros;
-                this.categorias = categorias;
-                this.fillTable();
-                this.loading.hide();
-            });
+
+        this.categorias = await categorias$.toPromise();
+
+        this.routerChangeSubscription = this.route.paramMap.subscribe(paramsMap => {
+            this.status = paramsMap.get('status');
+            this.loadRegistros();
+        });
+        this.loading.hide();
     }
+
 
     fillTable() {
         this.tableRegistro = this.registros.map(registro => {
@@ -103,14 +112,14 @@ export class RefpListComponent implements OnInit {
                 tipo: registro.tipoValor
             };
 
-            if (registro.tipoValor === "RH") {
+            if (registro.tipoValor === 'RH') {
                 const recurso = this.recursosHumanos.find(r => r.id === registro.recursoHumanoId);
                 if (recurso) {
                     registroItem.nome = recurso.nomeCompleto;
-                    registroItem.categoria = "Recursos Humanos";
+                    registroItem.categoria = 'Recursos Humanos';
                     registroItem.valor = recurso.valorHora * registro.qtdHrs;
                 } else {
-                    registroItem.nome = "Não encontrado";
+                    registroItem.nome = 'Não encontrado';
                 }
 
             } else {
@@ -126,7 +135,7 @@ export class RefpListComponent implements OnInit {
     }
 
     openDetails(registro) {
-        const ref = this.app.modal.open(RegistroRefpDetailsComponent, { size: 'lg', backdrop: 'static' });
+        const ref = this.app.modal.open(RegistroRefpDetailsComponent, {size: 'lg', backdrop: 'static'});
         ref.componentInstance.setRegistro(registro);
         ref.result.then(r => {
             this.load();

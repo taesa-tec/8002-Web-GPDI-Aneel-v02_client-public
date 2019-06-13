@@ -54,7 +54,6 @@ export class MeusProjetosComponent implements OnInit {
             // this.subProjetcs.unsubscribe();
         }
         this.loading.show();
-        console.log('Chamado');
         const projetos$ = this.currentUser.role === UserRole.Administrador ? this.app.projetos.getProjetos() :
             this.app.projetos.meusProjetos().pipe(map(projetos => projetos.map(p$ => p$.projeto)));
 
