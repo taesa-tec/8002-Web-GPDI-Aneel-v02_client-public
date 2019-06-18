@@ -1,8 +1,9 @@
-import {ProjetosService} from '../projetos/projetos.service';
-import {Projeto, Empresa, ProjetoStatus, RegistroREFP, ProrrogarProjetoRequest, ResultadoResponse, XmlType} from '@app/models';
 import {throwError, Subject, Observable} from 'rxjs';
 import {tap, map} from 'rxjs/operators';
+
+import {Projeto, Empresa, ProjetoStatus, RegistroREFP, ProrrogarProjetoRequest, ResultadoResponse, XmlType} from '@app/models';
 import {GenericFacade} from './generic.facade';
+import {ProjetosService} from '../projetos/projetos.service';
 import {EmpresaProjetoFacade} from './empresa.facade';
 import {RecursoHumanoFacade} from './recurso-humano.facade';
 
@@ -47,6 +48,7 @@ interface REST {
 
 abstract class ProjetoModule {
     constructor(protected id: number, protected service: ProjetosService) {
+
     }
 }
 
@@ -117,6 +119,7 @@ export class ProjetoREST {
  */
 class ProjetoTema extends ProjetoModule {
     get() {
+
         return this.service.getTema(this.id);
     }
 }
@@ -126,6 +129,7 @@ class ProjetoTema extends ProjetoModule {
  */
 class ProjetoEtapas extends ProjetoModule {
     get() {
+
         return this.service.getEtapas(this.id);
     }
 }
@@ -135,6 +139,7 @@ class ProjetoEtapas extends ProjetoModule {
  */
 class ProjetoProdutos extends ProjetoModule {
     get() {
+
         return this.service.getProdutos(this.id);
     }
 }
@@ -144,6 +149,7 @@ class ProjetoProdutos extends ProjetoModule {
  */
 class ProjetoEmpresas extends ProjetoModule {
     get() {
+
         return this.service.getEmpresas(this.id)
             .pipe(map(empresas => empresas.map(e => new EmpresaProjetoFacade(e))));
     }
@@ -154,12 +160,14 @@ class ProjetoEmpresas extends ProjetoModule {
  */
 class ProjetoRH extends ProjetoModule {
     get() {
+
         return this.service.getRH(this.id).pipe()
             .pipe(map(rh => rh.map(r => new RecursoHumanoFacade(r))));
 
     }
 
     getAlocacao() {
+
         return this.service.getAlocacaoRH(this.id);
     }
 }
@@ -169,6 +177,7 @@ class ProjetoRH extends ProjetoModule {
  */
 class ProjetoRM extends ProjetoModule {
     get() {
+
         return this.service.getRecursoMaterial(this.id);
     }
 
@@ -181,6 +190,8 @@ class ProjetoRM extends ProjetoModule {
  * @deprecated Use o ProjetoREST
  */
 class ProjetoREFP extends ProjetoModule {
+
+
     registrosAprovados() {
         return this.service.listarRegistrosAprovados(this.id);
     }

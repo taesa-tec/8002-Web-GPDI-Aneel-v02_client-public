@@ -1,10 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AlocarRecursoMaterialFormComponent} from '@app/projetos/projeto/common/alocar-recurso-material-form/alocar-recurso-material-form.component';
-import {ProjetosService} from '@app/projetos/projetos.service';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {ActivatedRoute} from '@angular/router';
-import {map, mergeMap} from 'rxjs/operators';
-import {Projeto, AlocacaoRM, CategoriasContabeis, EmpresaProjeto} from '@app/models';
+import {mergeMap} from 'rxjs/operators';
+import {AlocacaoRM, CategoriasContabeis} from '@app/models';
 import {zip, of} from 'rxjs';
 import {AppService} from '@app/app.service';
 import {LoadingComponent} from '@app/shared/loading/loading.component';

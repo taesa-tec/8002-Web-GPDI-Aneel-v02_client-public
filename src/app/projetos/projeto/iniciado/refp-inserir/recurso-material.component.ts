@@ -40,6 +40,16 @@ export class RecursoMaterialComponent implements OnInit {
     @ViewChild(LoggerDirective) logger: LoggerDirective;
     @ViewChild('file') file: ElementRef;
 
+    //<editor-fold desc="Getter & Setters">
+
+    get cnpjCpfMask(): string {
+        const currentValue = this.form.get('cnpjBeneficiado').value;
+        if (currentValue) {
+            return currentValue.replace(/\D/, '').length < 12 ? '000.000.000-009' : '00.000.000/0000-00';
+        }
+        return '0';
+    }
+
     get empresasRecebedoras(): Array<EmpresaProjetoFacade> {
         if (this.empresas === undefined) {
             return [];
@@ -94,6 +104,8 @@ export class RecursoMaterialComponent implements OnInit {
 
     }
 
+    //</editor-fold>
+
     constructor(protected app: AppService) {
     }
 
@@ -101,42 +113,39 @@ export class RecursoMaterialComponent implements OnInit {
         this.loadData();
     }
 
-    loadData() {
-        this.app.projetos.projetoLoaded.subscribe(projeto => {
-            this.projeto = projeto;
+    async loadData() {
 
-            const recursos$ = this.projeto.relations.recursosMateriais.get();
-            const empresas$ = this.projeto.REST.Empresas.listar<Array<EmpresaProjetoFacade>>();
-            const etapas$ = this.projeto.relations.etapas.get(); // this.projeto.isPD ? this.projeto.relations.etapas.get() : of([]);
-            const categorias$ = this.projeto.isPD ? of(CategoriasContabeis) :
-                this.app.catalogo.categoriasContabeisGestao().pipe(map(cats => {
-                    return cats.map(c => {
-                        return {
-                            text: <string>c.nome,
-                            value: <string>c.id,
-                            atividades: <Array<any>>c.atividades
-                        };
-                    });
-                }));
+        this.loading.show();
 
-            this.loading.show(1000);
-            zip(recursos$, empresas$, etapas$, categorias$).subscribe(([recursos, empresas, etapas, categorias]) => {
+        this.projeto = await this.app.projetos.getCurrent();
 
-                this.etapas = etapas ? etapas : [];
-                this.recursos = recursos;
-                this.empresas = empresas.map(e => new EmpresaProjetoFacade(e));
-                this.empresasFinanciadoras = this.empresas.filter(e => e.classificacaoValor !== 'Executora');
-                this.categoriasContabeis = categorias;
-                try {
-                    this.validate();
-                    this.buildForm();
-                } catch (error) {
-                    this.isValid = false;
-                }
-            });
-            // const empresas = this.app.projetos
+        const categorias$ = this.projeto.isPD ? of(CategoriasContabeis) :
+            this.app.catalogo.categoriasContabeisGestao().pipe(map(cats => {
+                return cats.map(c => {
+                    return {
+                        text: <string>c.nome,
+                        value: <string>c.id,
+                        atividades: <Array<any>>c.atividades
+                    };
+                });
+            }));
 
-        });
+        [this.recursos, this.empresas, this.etapas, this.categoriasContabeis] = await Promise.all([
+            this.projeto.REST.RecursoMateriais.listar<RecursoMaterial[]>().toPromise(),
+            this.projeto.REST.Empresas.listar<Array<EmpresaProjetoFacade>>().toPromise(),
+            this.projeto.REST.Etapas.listar<Etapa[]>().toPromise(),
+            categorias$.toPromise()
+        ]);
+        this.empresas = this.empresas.map(e => new EmpresaProjetoFacade(e));
+        this.empresasFinanciadoras = this.empresas.filter(e => e.classificacaoValor !== 'Executora');
+
+        try {
+            this.validate();
+            this.buildForm();
+        } catch (error) {
+            this.isValid = false;
+        }
+        this.loading.hide();
     }
 
     validate() {
@@ -214,7 +223,7 @@ export class RecursoMaterialComponent implements OnInit {
             recursoMaterialId: this.recurso,
             empresaFinanciadoraId: new FormControl('', [Validators.required]),
             beneficiado: new FormControl('', [Validators.required]),
-            cnpjBeneficiado: new FormControl('', [Validators.required, AppValidators.cnpj]),
+            cnpjBeneficiado: new FormControl('', [Validators.required, AppValidators.cnpjOrCpf]),
             // categoriaContabil: new FormControl(''),
             // 
             equiparLabExistente: new FormControl(''),

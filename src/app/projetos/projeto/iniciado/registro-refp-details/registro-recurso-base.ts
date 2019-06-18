@@ -53,40 +53,40 @@ export abstract class RegistroRecursoBase implements OnInit {
         this.loadData();
     }
 
-    loadData() {
-        this.app.projetos.projetoLoaded.subscribe(projeto => {
-            this.projeto = projeto;
-            const empresas$ = this.projeto.relations.empresas.get();
-            const etapas$ = this.projeto.isPD ? this.projeto.REST.Etapas.listar<Array<Etapa>>() : of([]);
-            const recursos$ = this.getRecursos(projeto);
-            const categoriasContabeis$ = this.projeto.isPD ? of(CategoriasContabeis) : this.app.catalogo.categoriasContabeisGestao().pipe(map(cats => cats.map(c => {
+    async loadData() {
+
+        this.projeto = await this.app.projetos.getCurrent();
+
+        const empresas$ = this.projeto.relations.empresas.get();
+        const etapas$ = this.projeto.isPD ? this.projeto.REST.Etapas.listar<Array<Etapa>>() : of([]);
+        const recursos$ = this.getRecursos(this.projeto);
+        const categoriasContabeis$ = this.projeto.isPD ? of(CategoriasContabeis) : this.app.catalogo.categoriasContabeisGestao().pipe(map(cats => cats.map(c => {
+            return {
+                text: c.nome,
+                value: c.id,
+                atividades: c.atividades
+            };
+        })));
+
+        this.loading.show(1000);
+        zip(recursos$, empresas$, etapas$, categoriasContabeis$).subscribe(([recursos, empresas, etapas, categoriasContabeis]) => {
+            this.etapas = etapas;
+            this.recursos = recursos;
+            this.categoriasContabeis = categoriasContabeis;
+            this.empresas = empresas.map(e => {
                 return {
-                    text: c.nome,
-                    value: c.id,
-                    atividades: c.atividades
+                    id: e.id,
+                    nome: e.catalogEmpresaId ? `${e.catalogEmpresa.nome} - ${e.catalogEmpresa.valor}` : e.razaoSocial,
+                    classificacao: e.classificacaoValor
                 };
-            })));
-
-            this.loading.show(1000);
-            zip(recursos$, empresas$, etapas$, categoriasContabeis$).subscribe(([recursos, empresas, etapas, categoriasContabeis]) => {
-                this.etapas = etapas;
-                this.recursos = recursos;
-                this.categoriasContabeis = categoriasContabeis;
-                this.empresas = empresas.map(e => {
-                    return {
-                        id: e.id,
-                        nome: e.catalogEmpresaId ? `${e.catalogEmpresa.nome} - ${e.catalogEmpresa.valor}` : e.razaoSocial,
-                        classificacao: e.classificacaoValor
-                    };
-                });
-                this.empresasFinanciadoras = this.empresas.filter(e => e.classificacao !== 'Executora');
-                this.empresasRecebedoras = this.empresas;
-
-                this.buildForm();
             });
-            // const empresas = this.app.projetos
+            this.empresasFinanciadoras = this.empresas.filter(e => e.classificacao !== 'Executora');
+            this.empresasRecebedoras = this.empresas;
 
+            this.buildForm();
         });
+        // const empresas = this.app.projetos
+
     }
 
     buildForm() {

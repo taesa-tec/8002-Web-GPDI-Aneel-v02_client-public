@@ -94,18 +94,23 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
         }
     }
 
-    gerarXml(tipo: XmlType, versao: any) {
+    async gerarXml(tipo: XmlType, versao: any) {
         this.loading.show();
+
         versao = parseFloat(versao);
+
         if (versao < 10) {
             versao = `0${versao}`;
         }
-        this.projeto.gerarXml(tipo, versao).subscribe(result => {
-            this.loading.hide();
-        }, (error) => {
-            this.app.alert(error.inconsistencias || error.message, 'Erro!');
-            this.loading.hide();
-        });
+
+        try {
+            await this.projeto.gerarXml(tipo, versao);
+        } catch (error) {
+            this.app.alert(error.message, 'Erro não criação');
+        }
+
+        this.loading.hide();
+
     }
 
     gerarXmlInicioExecucao() {

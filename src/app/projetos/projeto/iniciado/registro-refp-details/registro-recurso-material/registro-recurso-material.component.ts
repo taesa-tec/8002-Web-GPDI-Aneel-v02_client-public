@@ -1,15 +1,15 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import {Component, OnInit, ViewChild, Input, Output, EventEmitter} from '@angular/core';
+import {FormGroup, FormControl, Validators, FormArray} from '@angular/forms';
 
 import * as moment from 'moment';
-import { zip, Observable, of, timer } from 'rxjs';
+import {zip, Observable, of, timer} from 'rxjs';
 
-import { AppService } from '@app/app.service';
-import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RecursoMaterial, AppValidators, CategoriasContabeis, RegistroREFP, ResultadoResponse } from '@app/models';
-import { ProjetoFacade } from '@app/facades';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { RegistroRecursoBase } from '../registro-recurso-base';
-import { map } from 'rxjs/operators';
+import {AppService} from '@app/app.service';
+import {RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RecursoMaterial, AppValidators, CategoriasContabeis, RegistroREFP, ResultadoResponse} from '@app/models';
+import {ProjetoFacade} from '@app/facades';
+import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {RegistroRecursoBase} from '../registro-recurso-base';
+import {map} from 'rxjs/operators';
 
 @Component({
     selector: 'app-registro-recurso-material',
@@ -35,12 +35,22 @@ export class RegistroRecursoMaterialComponent extends RegistroRecursoBase {
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
+    get cnpjCpfMask(): string {
+        const currentValue = this.form.get('cnpjBeneficiado').value;
+        if (currentValue) {
+            return currentValue.replace(/\D/, '').length < 12 ? '000.000.000-009' : '00.000.000/0000-00';
+        }
+        return '0';
+    }
+
     get categoriaContabil() {
         return this.form.get(this.projeto.isPG ? 'catalogCategoriaContabilGestaoId' : 'categoriaContabil');
     }
+
     get qtdItens() {
         return this.form.get('qtdItens');
     }
+
     get valorUnitario() {
         return this.form.get('valorUnitario');
     }
@@ -61,7 +71,7 @@ export class RegistroRecursoMaterialComponent extends RegistroRecursoBase {
             const c = this.categoriasContabeis.find(cc => String(cc.value) === String(this.categoriaContabil.value));
 
             return c ? c.atividades.map(a => {
-                return { text: a.nome, value: a.id };
+                return {text: a.nome, value: a.id};
             }) : [];
         } catch (e) {
 
@@ -79,7 +89,7 @@ export class RegistroRecursoMaterialComponent extends RegistroRecursoBase {
     }
 
     protected getRecursos(projeto: ProjetoFacade) {
-        return projeto.relations.recursosMateriais.get();
+        return projeto.REST.RecursoMateriais.listar();
     }
 
     buildForm() {
@@ -93,7 +103,7 @@ export class RegistroRecursoMaterialComponent extends RegistroRecursoBase {
         this.form = new FormGroup({
             id: new FormControl(this.registro.id),
             projetoId: new FormControl(this.projeto.id),
-            tipo: new FormControl("RM"),
+            tipo: new FormControl('RM'),
             tipoDocumento: new FormControl(this.registro.tipoDocumentoValor, [Validators.required]),
             numeroDocumento: new FormControl(this.registro.numeroDocumento, [Validators.required]),
             dataDocumento: new FormControl(dataDocumento, [Validators.required]),

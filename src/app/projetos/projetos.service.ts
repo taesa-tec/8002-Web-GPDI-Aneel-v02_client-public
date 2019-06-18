@@ -25,37 +25,64 @@ import {
     ProrrogarProjetoRequest,
     XmlType
 } from '@app/models';
-import {Subject, Observable, BehaviorSubject, observable} from 'rxjs';
+import {Subject, Observable, BehaviorSubject, of} from 'rxjs';
 import {tap, share, map} from 'rxjs/operators';
 import {ProjetoFacade} from '@app/facades';
 import {FileService} from '@app/shared/file.service';
 import {RequestCacheService} from '@app/request-cache.service';
 
 class ProjetoREST {
+
+    protected itemCache: Map<any, any> = new Map<any, any>();
+    protected listCache: Map<any, any> = new Map<any, any>();
+
     constructor(protected projetoComponentPath: string, protected http: HttpClient) {
+
+    }
+
+    clearCache() {
+        this.itemCache.clear();
+        this.listCache.clear();
     }
 
     listar(id_projeto: any): Observable<any>;
     listar<T>(id_projeto: any) {
-        return this.http.get<T>(`projeto/${id_projeto}/${this.projetoComponentPath}`);
+        if (this.listCache.has(id_projeto)) {
+            return of(this.listCache.get(id_projeto));
+        }
+
+        return this.http.get<T>(`projeto/${id_projeto}/${this.projetoComponentPath}`).pipe(tap(item => {
+            this.listCache.set(id_projeto, item);
+        }));
     }
 
     criar(data: any): Observable<any>;
     criar<D>(data: D) {
+        this.itemCache.clear();
+        this.listCache.clear();
         return this.http.post<ResultadoResponse>(`projeto/${this.projetoComponentPath}`, data);
     }
 
     obter(id_item: number): Observable<any>;
     obter<T>(id_item: number) {
-        return this.http.get<T>(`projeto/${this.projetoComponentPath}/${id_item}`);
+
+        if (this.itemCache.has(id_item)) {
+            return of(this.itemCache.get(id_item));
+        }
+
+        return this.http.get<T>(`projeto/${this.projetoComponentPath}/${id_item}`).pipe(tap(item => {
+            this.itemCache.set(id_item, item);
+        }));
     }
 
     editar(data: any): Observable<any>;
     editar<D>(data: D) {
+        this.itemCache.clear();
         return this.http.put<ResultadoResponse>(`projeto/${this.projetoComponentPath}`, data);
     }
 
     remover(id_item: any) {
+        this.itemCache.clear();
         return this.http.delete<ResultadoResponse>(`projeto/${this.projetoComponentPath}/${id_item}`);
     }
 
@@ -360,7 +387,7 @@ export class ProjetosService {
         let query = '';
         if (args) {
             const urlParams = new URLSearchParams();
-            for (let k in args) {
+            for (const k in args) {
                 if (args[k]) {
                     urlParams.append(k, args[k]);
                 }
@@ -387,34 +414,35 @@ export class ProjetosService {
         return this.http.get<Array<FileUploaded>>(`upload/${id}/obterlogduto`);
     }
 
-    gerarXml(projeto_id: number, versao: string, tipo: XmlType = XmlType.ProjetoPed) {
-        return new Observable(observer => {
-            this.validarDados(projeto_id, tipo).subscribe(result => {
-                if (result.sucesso) {
-                    this.http.get<ResultadoResponse>(`projeto/${projeto_id}/Xml/${tipo}/${versao}`).subscribe(xml_result => {
-                        this.obterXmls(projeto_id).subscribe(xmls => {
-                            const file = xmls.find(f => f.id === parseInt(xml_result.id, 10));
-                            if (file) {
-                                this.fileService.download(file);
-                                observer.next(file);
-                            } else {
-                                observer.error({success: false, id: null, inconsistencias: ['Arquivo não encontrado']});
-                            }
+    async gerarXml(projeto_id: number, versao: string, tipo: XmlType = XmlType.ProjetoPed) {
 
-                        }, error => {
-                            observer.error(error);
-                        });
 
-                    }, error1 => observer.error(error1));
+        const result = await this.validarDados(projeto_id, tipo).toPromise();
 
+        if (result.sucesso) {
+
+            const xml_result = await this.http.get<ResultadoResponse>(`projeto/${projeto_id}/Xml/${tipo}/${versao}`).toPromise();
+
+            if (xml_result.sucesso) {
+
+                const xmls = await this.obterXmls(projeto_id).toPromise();
+                const file = xmls.find(f => f.id === parseInt(xml_result.id, 10));
+
+                if (file) {
+                    this.fileService.download(file);
+                    return;
                 } else {
-                    observer.error(result);
+                    throw new Error('Arquivo não encontrado');
                 }
 
-            }, error => {
-                observer.error(error);
-            });
-        });
+            } else {
+                throw new Error(xml_result.inconsistencias.join(', '));
+            }
+
+        }
+        throw new Error(result.inconsistencias.join('<br />'));
+
+
     }
 
     gerarXmlProjetoPed(id: number, versao: number) {

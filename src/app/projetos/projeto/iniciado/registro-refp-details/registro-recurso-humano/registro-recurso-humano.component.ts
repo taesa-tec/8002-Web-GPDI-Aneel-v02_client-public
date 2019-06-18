@@ -40,7 +40,7 @@ export class RegistroRecursoHumanoComponent extends RegistroRecursoBase {
     }
 
     protected getRecursos(projeto: ProjetoFacade) {
-        return projeto.relations.recursosHumanos.get();
+        return projeto.REST.RecursoHumanos.listar();
     }
 
     buildForm() {

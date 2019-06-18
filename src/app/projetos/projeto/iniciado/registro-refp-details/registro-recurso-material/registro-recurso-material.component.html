@@ -13,9 +13,9 @@
     <div class="row">
         <div class="col-12">
 
-            <div>
-                <label for="">RECURSO MATERIAL ASSOCIADO</label>
-                <select name="" id="" class="form-control" formControlName="recursoMaterialId"
+            <div class="form-group">
+                <label>RECURSO MATERIAL ASSOCIADO</label>
+                <select class="form-control" formControlName="recursoMaterialId"
                         appLogItem="Recurso material associado">
                     <option value="">Selecionar</option>
                     <option [value]="r.id" *ngFor="let r of recursos">{{ r.nome }}</option>
@@ -59,8 +59,8 @@
         </div>
         <div class="col-6">
             <div class="form-group">
-                <label for="">CNPJ BENEFÍCIADO</label>
-                <input type="text" class="form-control" mask="00.000.000/0000-00" placeholder="00.000.000/0000-00"
+                <label for="">CNPJ OU CPF BENEFÍCIADO</label>
+                <input type="text" class="form-control" [mask]="cnpjCpfMask" placeholder="00.000.000/0000-00"
                        appLogItem="CNPJ benefíciado"
                        value="cnpjBeneficiado" formControlName="cnpjBeneficiado">
             </div>

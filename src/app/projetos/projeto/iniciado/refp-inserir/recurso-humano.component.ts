@@ -89,30 +89,27 @@ export class RecursoHumanoComponent implements OnInit {
         this.loadData();
     }
 
-    loadData() {
-        this.app.projetos.projetoLoaded.subscribe(projeto => {
+    async loadData() {
+        this.loading.show();
 
-            this.projeto = projeto;
+        this.projeto = await this.app.projetos.getCurrent();
 
-            const recursos$ = this.projeto.relations.recursosHumanos.get();
-            const empresas$ = this.projeto.REST.Empresas.listar<Array<EmpresaProjeto>>();
-            const etapas$ = this.projeto.REST.Etapas.listar<Array<Etapa>>(); // this.projeto.isPD ? this.projeto.REST.Etapas.listar<Array<Etapa>>() : of([]);
 
-            this.loading.show(1000);
-            zip(recursos$, empresas$, etapas$).subscribe(([recursos, empresas, etapas]) => {
-                this.etapas = etapas ? etapas : [];
-                this.recursos = recursos;
-                this.empresas = empresas.map(e => new EmpresaProjetoFacade(e));
-                try {
-                    this.validate();
-                    this.buildForm();
-                } catch (error) {
-                    this.isValid = false;
-                }
-            });
-            // const empresas = this.app.projetos
+        [this.empresas, this.etapas, this.recursos] = await Promise.all([
+            this.projeto.REST.Empresas.listar<Array<EmpresaProjeto>>().toPromise().then(empresas => empresas.map(e => new EmpresaProjetoFacade(e))),
+            this.projeto.REST.Etapas.listar<Array<Etapa>>().toPromise(),
+            this.projeto.REST.RecursoHumanos.listar<RecursoHumano[]>().toPromise()
+        ]);
 
-        });
+        try {
+            this.validate();
+            this.buildForm();
+        } catch (error) {
+            this.isValid = false;
+        }
+        this.loading.hide();
+        // const empresas = this.app.projetos
+
     }
 
     validate() {

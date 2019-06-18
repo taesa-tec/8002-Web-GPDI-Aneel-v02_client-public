@@ -75,10 +75,9 @@ export class RefpListComponent implements OnInit, OnDestroy {
         this.loading.show();
         this.projeto = await this.app.projetos.getCurrent();
 
-        [this.recursosHumanos, this.recursosMateriais, this.empresas] =
-            await Promise.all([this.projeto.relations.recursosHumanos.get().toPromise(),
-                this.projeto.relations.recursosMateriais.get().toPromise(),
-                this.projeto.relations.empresas.get().toPromise()]);
+        [this.recursosHumanos, this.recursosMateriais, this.empresas] = await Promise.all([this.projeto.relations.recursosHumanos.get().toPromise(),
+            this.projeto.relations.recursosMateriais.get().toPromise(),
+            this.projeto.relations.empresas.get().toPromise()]);
 
 
         const categorias$ = this.projeto.isPD ? of(CategoriasContabeis) : this.app.catalogo.categoriasContabeisGestao().pipe(map(cats => cats.map(c => {
@@ -90,6 +89,7 @@ export class RefpListComponent implements OnInit, OnDestroy {
         })));
 
         this.categorias = await categorias$.toPromise();
+
 
         this.routerChangeSubscription = this.route.paramMap.subscribe(paramsMap => {
             this.status = paramsMap.get('status');
@@ -124,7 +124,7 @@ export class RefpListComponent implements OnInit, OnDestroy {
 
             } else {
                 const recurso = this.recursosMateriais.find(r => r.id === registro.recursoMaterialId);
-                const categoriaContabil = this.categorias.find(c => String(c.value) === String(this.projeto.isPD ? recurso.categoriaContabilValor : recurso.categoriaContabilGestao.id));
+                const categoriaContabil = this.categorias.find(c => String(c.value) === String(this.projeto.isPD ? registro.categoriaContabilValor : recurso.categoriaContabilGestao.id));
                 registroItem.nome = registro.nomeItem;
                 registroItem.categoria = categoriaContabil ? categoriaContabil.text : '';
                 registroItem.valor = registro.qtdItens * registro.valorUnitario;
