@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import {NgControl} from '@angular/forms';
 import {LogItem, TextValue} from '@app/models';
-import {LoggerService} from '@app/logger/logger.service';
+import {LoggerService} from '@app/core/services/logger.service';
 
 
 @Directive({

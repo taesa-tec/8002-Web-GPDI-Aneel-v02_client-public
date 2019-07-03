@@ -1,0 +1,40 @@
+<div class="wrap-outlet-projeto">
+    <div class="side-bar">
+        <div class="projeto-side-info text-white fs-14 font-weight-light position-relative">
+            <app-loading type="fullparent"></app-loading>
+            <div *ngIf="projeto">
+                <div class=" p-3 border-bottom border-cinza-claro text-uppercase">
+                    {{projeto.numero}} - {{projeto.titulo}}
+                </div>
+                <div class="p-3 ">
+                    <div class="etapa">
+                        Etapa:{{projeto.catalogStatus.status}}
+                    </div>
+                    <div class="empresa">
+                        {{projeto.catalogEmpresa.nome}}
+                    </div>
+                    <div class="mt-2">
+                        <a routerLink="/dashboard/">
+                            <i class="ta-sync fs-18"></i>
+                            Tocar de projeto
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="side-nav">
+            <app-loading type="fullparent" background="transparent"></app-loading>
+            <ng-container *ngFor="let route of menu">
+                <a *appUserAccess="route.nivel" [routerLink]="route.path" class="side-nav-item"
+                   routerLinkActive="active" [hidden]="!projeto">
+                    <span class="fs-24 mr-3"><i [class]="route.icon"></i></span>
+                    {{route.text}}
+                </a>
+            </ng-container>
+        </nav>
+    </div>
+    <div class="py-4 px-5 mb-5">
+        <hr>
+        <router-outlet></router-outlet>
+    </div>
+</div>

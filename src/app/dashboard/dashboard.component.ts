@@ -1,9 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {LoadingComponent} from '@app/shared/loading/loading.component';
-import {AppService} from '@app/app.service';
+import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {AppService} from '@app/core/services/app.service';
 import {User} from '@app/models';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class DashboardComponent implements OnInit {
 
     currentUser: User;
 
-    constructor(protected app: AppService) {
+    constructor(protected app: AppService, protected modal: NgbModal) {
     }
 
     get avatar() {

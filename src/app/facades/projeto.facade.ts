@@ -3,7 +3,7 @@ import {tap, map} from 'rxjs/operators';
 
 import {Projeto, Empresa, ProjetoStatus, RegistroREFP, ProrrogarProjetoRequest, ResultadoResponse, XmlType} from '@app/models';
 import {GenericFacade} from './generic.facade';
-import {ProjetosService} from '../projetos/projetos.service';
+import {ProjetosService} from '@app/core/services/projetos.service';
 import {EmpresaProjetoFacade} from './empresa.facade';
 import {RecursoHumanoFacade} from './recurso-humano.facade';
 
@@ -106,6 +106,17 @@ export class ProjetoREST {
         try {
             if (this.service[this.path]) {
                 return this.service[this.path].remover(id_item);
+            }
+            return throwError('Relação não existente');
+        } catch (error) {
+            return throwError(error);
+        }
+    }
+
+    clearCache() {
+        try {
+            if (this.service[this.path]) {
+                return this.service[this.path].clearCache();
             }
             return throwError('Relação não existente');
         } catch (error) {

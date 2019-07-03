@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
 
-import { ResultadoResponse } from '@app/models';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { AuthService } from '../auth.service';
+import {ResultadoResponse} from '@app/models';
+import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {AuthService} from '@app/core/services/auth.service';
 
 @Component({
     selector: 'app-forget-pass',
@@ -22,7 +22,8 @@ export class ForgetPassComponent implements OnInit {
         email: new FormControl('', [Validators.required, Validators.email])
     });
 
-    constructor(protected authService: AuthService, private router: Router) { }
+    constructor(protected authService: AuthService, private router: Router) {
+    }
 
     ngOnInit() {
 

@@ -1,9 +1,8 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {UsersService} from '../users.service';
+import {UsersService} from '@app/core/services/users.service';
 import {User} from '@app/models';
-import {CatalogsService} from '@app/catalogs/catalogs.service';
-import {Observable} from 'rxjs';
-import {environment} from '../../../environments/environment';
+import {CatalogsService} from '@app/core/services/catalogs.service';
+import {environment} from '@env/environment';
 
 @Component({
     selector: 'app-list-users',

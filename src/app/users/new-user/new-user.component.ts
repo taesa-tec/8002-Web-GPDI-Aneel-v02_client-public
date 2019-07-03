@@ -1,12 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {CatalogsService} from '@app/catalogs/catalogs.service';
 import {Empresa, ResultadoResponse, UserRole, Roles, AppValidators, User} from '@app/models';
-import {UsersService} from '../users.service';
-import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
-import {AppService} from '@app/app.service';
+import {AppService} from '@app/core/services/app.service';
 
 @Component({
     selector: 'app-new-user',

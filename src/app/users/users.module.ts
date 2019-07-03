@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@app/shared/shared.module';
+import { SharedModule } from '@app/core/shared/shared.module';
 import { NewUserComponent } from './new-user/new-user.component';
 import { ListUsersComponent } from './list-users/list-users.component';
 import { UserStatusPipe } from './user-status.pipe';

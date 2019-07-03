@@ -5,8 +5,8 @@ import {AuthComponent} from './auth/auth.component';
 import {ForgetPassComponent} from './forget-pass/forget-pass.component';
 import {LoginComponent} from './login/login.component';
 import {NewpassComponent} from './newpass/newpass.component';
-import {SharedModule} from '../shared/shared.module';
-import {AuthService} from './auth.service';
+import {SharedModule} from '@app/core/shared/shared.module';
+import {AuthService} from '@app/core/services/auth.service';
 
 
 @NgModule({

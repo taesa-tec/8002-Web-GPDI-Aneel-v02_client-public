@@ -1,14 +1,10 @@
 import {Component, OnInit, Input, SimpleChanges, OnChanges} from '@angular/core';
 import {Projetos, User, Permissao, Projeto, ResultadoResponse, UserRole} from '@app/models';
-import {CatalogsService} from '@app/catalogs/catalogs.service';
-import {UsersService} from '../users.service';
-import {ProjetosService} from '@app/projetos/projetos.service';
 import {Router} from '@angular/router';
 import {zip, from, Observable} from 'rxjs';
 import {keyBy, mapValues} from 'lodash-es';
 import {FormGroup, FormControl} from '@angular/forms';
-import {concatAll} from 'rxjs/operators';
-import {AppService} from '@app/app.service';
+import {AppService} from '@app/core/services/app.service';
 
 @Component({
     selector: 'app-user-projetos',

@@ -1,12 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CatalogsService} from '@app/catalogs/catalogs.service';
-import {UsersService} from '../users.service';
-import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {Empresa, ResultadoResponse, User, AppValidators} from '@app/models';
 import {Observable, Observer} from 'rxjs';
 import {ActivatedRouteSnapshot, ActivatedRoute, Router} from '@angular/router';
-import {AppService} from '@app/app.service';
+import {AppService} from '@app/core/services/app.service';
 
 
 @Component({

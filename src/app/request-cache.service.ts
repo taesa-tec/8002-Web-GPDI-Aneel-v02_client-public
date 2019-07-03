@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpRequest, HttpResponse } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpRequest, HttpResponse} from '@angular/common/http';
 
 const maxAge = 5000;
 
@@ -8,7 +8,8 @@ const maxAge = 5000;
 })
 export class RequestCacheService {
 
-    constructor() { }
+    constructor() {
+    }
 
     cache = new Map();
 
@@ -20,9 +21,6 @@ export class RequestCacheService {
         const url = req.urlWithParams;
         const cached = this.cache.get(url);
 
-
-
-
         if (!cached) {
             return undefined;
         }
@@ -33,7 +31,7 @@ export class RequestCacheService {
 
     put(req: HttpRequest<any>, response: HttpResponse<any>): void {
         const url = req.url;
-        const entry = { url, response, lastRead: Date.now() };
+        const entry = {url, response, lastRead: Date.now()};
         this.cache.set(url, entry);
 
         const expired = Date.now() - maxAge;

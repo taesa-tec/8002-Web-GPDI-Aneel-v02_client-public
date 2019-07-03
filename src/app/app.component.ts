@@ -1,8 +1,8 @@
 import {Component, ViewChild} from '@angular/core';
-import {Router, NavigationStart, NavigationEnd, ActivationEnd} from '@angular/router';
+import {Router, NavigationStart, NavigationEnd, ActivationEnd, NavigationCancel, NavigationError} from '@angular/router';
 import {filter} from 'rxjs/operators';
-import {LoadingComponent} from './shared/loading/loading.component';
-import {AppService} from './app.service';
+import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {AppService} from '@app/core/services/app.service';
 
 @Component({
     selector: 'app-root',
@@ -21,7 +21,7 @@ export class AppComponent {
         this.app.router.events.pipe(filter(e => e instanceof NavigationStart)).subscribe(e => {
             this.loading.show();
         });
-        this.app.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(e => {
+        this.app.router.events.pipe(filter(e => (e instanceof NavigationEnd || e instanceof NavigationCancel || e instanceof NavigationError))).subscribe(e => {
             this.loading.hide();
         });
         if (this.app.auth.isLoggedIn) {

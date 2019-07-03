@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {AuthService} from '../auth.service';
+import {AuthService} from '@app/core/services/auth.service';
 import {Router} from '@angular/router';
 import {LoginRequest} from '@app/models';
-import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 import {environment} from '../../../environments/environment';
 
 
@@ -28,7 +28,9 @@ export class LoginComponent implements OnInit {
     constructor(protected authService: AuthService, private router: Router) {
     }
 
-    doLogin() {
+    doLogin(event) {
+
+        event.preventDefault();
 
         const self = this;
 

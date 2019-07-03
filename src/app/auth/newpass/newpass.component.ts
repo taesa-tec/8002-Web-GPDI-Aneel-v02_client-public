@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
+import {FormGroup, FormControl, Validators, AbstractControl, ValidationErrors} from '@angular/forms';
 
-import { ResultadoResponse, AppValidators } from '@app/models';
-import { LoadingComponent } from '@app/shared/loading/loading.component';
-import { AuthService } from '../auth.service';
+import {ResultadoResponse, AppValidators} from '@app/models';
+import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {AuthService} from '@app/core/services/auth.service';
 
 @Component({
     selector: 'app-newpass',
@@ -21,7 +21,8 @@ export class NewpassComponent implements OnInit {
 
     form: FormGroup;
 
-    constructor(protected authService: AuthService, protected router: Router, protected route: ActivatedRoute) { }
+    constructor(protected authService: AuthService, protected router: Router, protected route: ActivatedRoute) {
+    }
 
     get passwordConfirmed() {
         return this.form.get('passconfirm').value === this.form.get('newPassword').value;

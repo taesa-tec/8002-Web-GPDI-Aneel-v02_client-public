@@ -6,16 +6,11 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AuthModule} from './auth/auth.module';
 import {NotFoundComponent} from './not-found/not-found.component';
-import {DashboardModule} from './dashboard/dashboard.module';
-import {ProjetosModule} from './projetos/projetos.module';
-import {SharedModule} from './shared/shared.module';
-import {httpInterceptorProviders} from './http-interceptors';
+import {SharedModule} from '@app/core/shared/shared.module';
 import {UsersModule} from './users/users.module';
-import {CatalogsModule} from './catalogs/catalogs.module';
-import {AppService} from './app.service';
+import {AppService} from './core/services/app.service';
 import {registerLocaleData} from '@angular/common';
 import * as moment from 'moment';
-import {TestesComponent} from './testes/testes.component';
 import {HttpClientModule} from '@angular/common/http';
 import {LoggerModule} from '@app/logger/logger.module';
 
@@ -27,7 +22,6 @@ moment.locale('pt-br');
     declarations: [
         AppComponent,
         NotFoundComponent,
-        TestesComponent,
     ],
     imports: [
         BrowserModule,
@@ -35,9 +29,6 @@ moment.locale('pt-br');
         SharedModule,
         AuthModule,
         UsersModule,
-        CatalogsModule,
-        ProjetosModule,
-        DashboardModule,
         LoggerModule,
         AppRoutingModule,
 
@@ -45,7 +36,6 @@ moment.locale('pt-br');
     exports: [SharedModule],
     providers: [
         {provide: LOCALE_ID, useValue: 'pt'},
-        httpInterceptorProviders,
         AppService
     ],
     bootstrap: [AppComponent]

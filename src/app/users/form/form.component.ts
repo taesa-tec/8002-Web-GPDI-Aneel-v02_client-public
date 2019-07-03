@@ -1,18 +1,14 @@
 import {Component, OnInit, ViewChild, Input, Output, EventEmitter} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {CatalogsService} from '@app/catalogs/catalogs.service';
 import {
     Empresa, ResultadoResponse, UserRole, Roles, AppValidators, User, CreateUserRequest,
     Projeto, Projetos
 } from '@app/models';
-import {UsersService} from '../users.service';
-import {LoadingComponent} from '@app/shared/loading/loading.component';
+import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 import {Observable, Observer, zip, of, concat, throwError, timer, empty} from 'rxjs';
-import {Router} from '@angular/router';
-import {ProjetosService} from '@app/projetos/projetos.service';
 import {UserProjetosComponent} from '../user-projetos/user-projetos.component';
 import {mergeMap, last} from 'rxjs/operators';
-import {AppService} from '@app/app.service';
+import {AppService} from '@app/core/services/app.service';
 
 @Component({
     selector: 'app-form',
