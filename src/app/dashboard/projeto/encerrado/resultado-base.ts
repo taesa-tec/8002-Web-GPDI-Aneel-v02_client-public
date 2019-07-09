@@ -23,17 +23,15 @@ export abstract class ResultadoBase<T> implements OnInit {
     constructor(protected app: AppService, protected modal: NgbModal, protected restService: string, protected editor?: any) {
     }
 
-    ngOnInit(): void {
-        this.app.projetos.projetoLoaded.subscribe(projeto => {
-            try {
-                this.projeto = projeto;
-                this.projetoREST = this.projeto.REST[this.restService];
-                this.load();
-            } catch (e) {
-                console.log('REST não encontrada no projeto');
-            }
+    async ngOnInit() {
+        this.projeto = await this.app.projetos.getCurrent();
+        try {
+            this.projetoREST = this.projeto.REST[this.restService];
+            this.load();
+        } catch (e) {
+            console.log('REST não encontrada no projeto');
+        }
 
-        });
     }
 
     protected showLoading() {

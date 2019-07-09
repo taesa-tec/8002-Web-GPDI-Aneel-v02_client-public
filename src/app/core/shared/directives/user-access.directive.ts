@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Input, TemplateRef, ViewContainerRef} from '@angular/core';
+import {Directive, ElementRef, Input, OnInit, TemplateRef, ViewContainerRef} from '@angular/core';
 import {AppService} from '@app/core/services/app.service';
 import {NiveisUsuarios} from '@app/models';
 import {ProjetoFacade} from '@app/facades/index';
@@ -6,7 +6,7 @@ import {ProjetoFacade} from '@app/facades/index';
 @Directive({
     selector: '[appUserAccess], [appUserAdmin], [appUserAprovador], [appUserEscrita], [appUserLeitura]'
 })
-export class UserAccessDirective {
+export class UserAccessDirective implements OnInit {
 
     hasView = false;
     currentProject: ProjetoFacade;
@@ -43,10 +43,11 @@ export class UserAccessDirective {
         protected templateRef: TemplateRef<any>,
         protected viewContainer: ViewContainerRef) {
 
-        this.app.projetos.projetoLoaded.subscribe(projeto => {
-            this.currentProject = projeto;
-        });
+    }
 
+    async ngOnInit() {
+        this.currentProject = await this.app.projetos.getCurrent();
+        this.update(this.permissao);
     }
 
     hide() {

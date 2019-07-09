@@ -134,7 +134,6 @@ export class UsersService {
                         try {
                             const userp = this.niveisUsuarios[projetoAccess.catalogUserPermissao.valor];
                             const can = (userp & permissao) === permissao;
-                            console.log({can, userp});
                             observer.next(can);
                         } catch (error) {
 

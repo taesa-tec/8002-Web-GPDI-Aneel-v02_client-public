@@ -14,7 +14,7 @@ import {ProjetoFacade} from '@app/facades/index';
     templateUrl: './geracao-xml.component.html',
     styleUrls: []
 })
-export class GeracaoXmlComponent implements OnInit, OnDestroy {
+export class GeracaoXmlComponent implements OnInit {
 
 
     projeto: ProjetoFacade;
@@ -40,8 +40,6 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
-    protected projetoLoaded: Subscription;
-
     get inconsistencias() {
         return []; // this.avaliacaoResult ? this.avaliacaoResult.inconsistencias : [];
     }
@@ -49,7 +47,9 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
     constructor(protected app: AppService) {
     }
 
-    ngOnInit() {
+    async ngOnInit() {
+
+        this.projeto = await this.app.projetos.getCurrent();
 
         this.form = new FormGroup({
             // Projeto Pesquisa E Desenvolvimento
@@ -68,12 +68,11 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
 
         });
 
-        this.projetoLoaded = this.app.projetos.projetoLoaded.subscribe(projeto => {
-            this.projeto = projeto;
-            if (this.projeto.catalogStatus.status === 'Iniciado') {
-                this.app.router.navigate(['dashboard', 'projeto', projeto.id, 'central-administrativa', 'logs-duto']);
-            }
-        });
+
+        if (this.projeto.catalogStatus.status === 'Iniciado') {
+            this.app.router.navigate(['dashboard', 'projeto', this.projeto.id, 'central-administrativa', 'logs-duto']);
+        }
+
 
         this.validar().subscribe(result => {
 
@@ -86,12 +85,6 @@ export class GeracaoXmlComponent implements OnInit, OnDestroy {
         return this.app.projetos.validarDados(this.projeto.id).pipe(tap(result => {
             this.avaliacaoResult = result;
         }));
-    }
-
-    ngOnDestroy() {
-        if (this.projetoLoaded) {
-            this.projetoLoaded.unsubscribe();
-        }
     }
 
     async gerarXml(tipo: XmlType, versao: any) {

@@ -5,7 +5,7 @@ import {AppService} from '@app/core/services/app.service';
 import {zip, of} from 'rxjs';
 import {Projeto, RecursoHumano, Funcoes, Graduacoes} from '@app/models';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
-import {ProjetoFacade} from '@app/facades/index';
+import {ProjetoFacade, RecursoHumanoFacade} from '@app/facades/index';
 import {ScreenName} from '@app/decorators';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
@@ -46,26 +46,21 @@ export class RecursosHumanosComponent implements OnInit {
         this.loadData();
     }
 
-    loadData() {
-        this.loading.show();
-        const data$ = this.app.projetos.projetoLoaded.pipe(
-            mergeMap(p => zip(
-                of(p),
-                p.relations.recursosHumanos.get(),
-                p.relations.empresas.get(),
-                this.app.catalogo.empresas(),
-            ))
-        );
+    async loadData() {
 
-        data$.subscribe(([projeto, recursos_humanos, empresas, catalog_empresas]) => {
-            this.projeto = projeto;
-            this.recursosHumano = recursos_humanos.map(rec => {
-                rec.funcaoNome = Funcoes.find(e => rec.funcaoValor === e.value).text;
-                rec.titulacaoNome = Graduacoes.find(e => rec.titulacaoValor === e.value).text;
-                return rec;
-            });
-            this.loading.hide();
+        this.loading.show();
+
+        this.projeto = await this.app.projetos.getCurrent();
+
+        const recursos_humanos = await this.projeto.REST.RecursoHumanos.listar<Array<any>>().toPromise();
+
+        this.recursosHumano = recursos_humanos.map(rec => {
+            rec.funcaoNome = Funcoes.find(e => rec.funcaoValor === e.value).text;
+            rec.titulacaoNome = Graduacoes.find(e => rec.titulacaoValor === e.value).text;
+            return rec;
         });
+
+        this.loading.hide();
 
     }
 

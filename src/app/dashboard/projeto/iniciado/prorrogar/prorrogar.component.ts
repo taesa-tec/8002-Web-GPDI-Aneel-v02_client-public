@@ -34,63 +34,63 @@ export class ProrrogarComponent implements OnInit {
     constructor(protected app: AppService, private route: ActivatedRoute) {
     }
 
-    ngOnInit() {
+    async ngOnInit() {
 
         this.loading.show();
-        this.app.projetos.projetoLoaded.subscribe(projeto => {
-            this.projeto = projeto;
-            if (projeto.isPD) {
-                const etapas$ = this.projeto.REST.Etapas.listar<Array<Etapa>>();
-                const produtos$ = this.projeto.REST.Produtos.listar<Array<Produto>>();
-                zip(etapas$, produtos$).subscribe(([etapas, produtos]) => {
+        this.projeto = await this.app.projetos.getCurrent();
+
+        if (this.projeto.isPD) {
+            const etapas = await this.projeto.REST.Etapas.listar<Array<Etapa>>().toPromise();
+            const produtos = await this.projeto.REST.Produtos.listar<Array<Produto>>().toPromise();
 
 
-                    try {
-                        if (produtos == null) {
-                            throw new Error('Não há produtos cadastrados');
-                        }
-                        this.produtos = produtos;
-                        if (etapas) {
-                            this.etapas = [...etapas];
-                            const etapaFirst = etapas.shift();
-                            const etapaLast = this.etapas.length > 1 ? etapas.pop() : etapaFirst;
+            try {
+                if (produtos == null) {
+                    throw new Error('Não há produtos cadastrados');
+                }
 
-                            if (etapaLast.dataFim == null || etapaFirst.dataInicio == null) {
-                                throw new Error('Etapas sem datas definidas, certifique-se se a data inicial do projeto foi definida');
-                            }
+                this.produtos = produtos;
 
-                            const start = moment(etapaLast.dataFim).add(1, 'months'); // O ínício da prorrogação é a ultima etapa + 1 mês
-                            const end = moment(etapaFirst.dataInicio).add(60, 'months'); // O máximo é do ínicio do projeto + 60 meses
-                            while (start.isBefore(end)) {
-                                const ano = start.format('YYYY');
-                                const mes = start.format('MMMM'); // .padEnd(9, '*').replace(/\*/g, '&nbsp;');
-                                this.mesesRef.push({
-                                    text: `${mes} - ${ano}`,
-                                    value: start.format('YYYY-MM-DD')
-                                });
+                if (etapas) {
+                    this.etapas = [...etapas];
+                    const etapaFirst = etapas.shift();
+                    const etapaLast = this.etapas.length > 1 ? etapas.pop() : etapaFirst;
 
-                                start.add(1, 'months');
-                            }
-                            this.canExtend = true;
-                        } else {
-                            throw new Error('Não há etapas cadastradas');
-                        }
-                    } catch (e) {
-                        this.canExtendMessage = e.message;
-                        this.app.alert(['Não é possível prorrogar o projeto atual.', e.message], 'Erro');
+                    if (etapaLast.dataFim == null || etapaFirst.dataInicio == null) {
+                        throw new Error('Etapas sem datas definidas, certifique-se se a data inicial do projeto foi definida');
                     }
-                    this.loading.hide();
-                    this.setup();
-                });
-            } else {
-                this.loading.hide();
-                timer(10).subscribe(t => {
-                    this.app.router.navigate(['../recursos-humanos'], {relativeTo: this.route});
-                });
+
+                    const start = moment(etapaLast.dataFim).add(1, 'months'); // O ínício da prorrogação é a ultima etapa + 1 mês
+                    const end = moment(etapaFirst.dataInicio).add(60, 'months'); // O máximo é do ínicio do projeto + 60 meses
+                    while (start.isBefore(end)) {
+                        const ano = start.format('YYYY');
+                        const mes = start.format('MMMM'); // .padEnd(9, '*').replace(/\*/g, '&nbsp;');
+                        this.mesesRef.push({
+                            text: `${mes} - ${ano}`,
+                            value: start.format('YYYY-MM-DD')
+                        });
+
+                        start.add(1, 'months');
+                    }
+                    this.canExtend = true;
+                } else {
+                    throw new Error('Não há etapas cadastradas');
+                }
+            } catch (e) {
+                this.canExtendMessage = e.message;
+                this.app.alert(['Não é possível prorrogar o projeto atual.', e.message], 'Erro');
             }
+            this.loading.hide();
+            this.setup();
+
+        } else {
+            this.loading.hide();
+            timer(10).subscribe(t => {
+                this.app.router.navigate(['../recursos-humanos'], {relativeTo: this.route});
+            });
+        }
 
 
-        });
     }
 
     filtrarProdutos(atual = null) {

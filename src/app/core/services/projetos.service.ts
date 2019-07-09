@@ -94,15 +94,6 @@ class ProjetoREST {
     providedIn: 'root'
 })
 export class ProjetosService {
-
-    protected projetoCreatedSource = new Subject<CreateProjectRequest>();
-    protected projetoUpdatedSource = new Subject<Projeto>();
-    protected projetoLoadedSource = new BehaviorSubject<ProjetoFacade>(null);
-
-    projetoCreated = this.projetoCreatedSource.asObservable();
-    projetoUpdated = this.projetoUpdatedSource.asObservable();
-    projetoLoaded = this.projetoLoadedSource.asObservable();
-
     AtividadesGestao: ProjetoREST;
     AlocacaoRhs: ProjetoREST;
     AlocacaoRms: ProjetoREST;
@@ -120,6 +111,7 @@ export class ProjetosService {
     ResultadoEconomico: ProjetoREST;
     status: ProjetoStatus[];
     Temas: ProjetoREST;
+    protected CurrentProject: ProjetoFacade;
 
     constructor(protected http: HttpClient, protected fileService: FileService, protected requestCache: RequestCacheService) {
         const rest = [
@@ -136,12 +128,16 @@ export class ProjetosService {
     }
 
     async getCurrent(): Promise<ProjetoFacade> {
-        return new Promise((resolve => this.projetoLoaded.subscribe(projeto => resolve(projeto))));
+        return new Promise(resolve => resolve(this.CurrentProject));
     }
 
+    async setCurrent(id: number) {
+        const projeto = await this.getById(id).toPromise();
+        this.CurrentProject = new ProjetoFacade(projeto, this);
+    }
 
     meusProjetos() {
-        return this.http.get<Array<UserProjeto>>('UserProjetos/me');
+        return this.http.get<Array<Projeto>>('UserProjetos/me');
     }
 
     projetoUsers(permissoes: Array<UserProjeto>) {
@@ -157,26 +153,16 @@ export class ProjetosService {
     }
 
     criarProjeto(projeto: CreateProjectRequest) {
-        return this.http.post<ResultadoResponse>('Projetos', projeto).pipe(tap(r => this.projetoCreatedSource.next(projeto)), share());
+        return this.http.post<ResultadoResponse>('Projetos', projeto).pipe(share());
     }
 
     getById(id: number) {
-        return this.http.get<Projeto>(`Projetos/${id}`)
-            .pipe(
-                // map(p => {                    p.catalogStatusId = 1;                    p.catalogStatus = {id: 1, status: 'Proposta'};                    return p;                }),
-                tap(p => this.projetoLoadedSource.next(new ProjetoFacade(p, this))),
-                share()
-            );
+        return this.http.get<Projeto>(`Projetos/${id}`);
     }
-
 
     editar(projeto: Projeto) {
         projeto.catalogEmpresaId = parseInt(String(projeto.catalogEmpresaId), 10);
-        return this.http.put<ResultadoResponse>(`Projetos`, projeto).pipe(tap(result => {
-            if (result.sucesso) {
-                this.projetoUpdatedSource.next(projeto);
-            }
-        }));
+        return this.http.put<ResultadoResponse>(`Projetos`, projeto);
     }
 
     removerProjeto(id) {

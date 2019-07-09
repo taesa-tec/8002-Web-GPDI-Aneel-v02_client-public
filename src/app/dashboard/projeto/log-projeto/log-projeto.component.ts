@@ -44,7 +44,7 @@ export class LogProjetoComponent implements OnInit {
         delete this.args.pag;
         this.paginas = [1];
         this.currentPagina = 1;
-        this.reLoadData();
+        this.loadData();
     }
 
     mudarUsuario(value: string) {
@@ -58,74 +58,29 @@ export class LogProjetoComponent implements OnInit {
         delete this.args.pag;
         this.paginas = [1];
         this.currentPagina = 1;
-        this.reLoadData();
+        this.loadData();
     }
 
-    loadData() {
-
+    async loadData() {
         this.loading.show();
+
         this.args = {pag: this.currentPagina, size: this.size};
 
-        const data$ = this.app.projetos.projetoLoaded.pipe(
-            mergeMap(p =>
-                zip(
-                    of(p),
-                    this.app.projetos.getLogPorjeto(p.id, this.args),
-                    this.app.users.all()
-                ))
-        );
+        this.projeto = await this.app.projetos.getCurrent();
 
-        data$.subscribe(([projeto, logsProjeto, usuarios]) => {
-            this.projeto = projeto;
-            this.total = logsProjeto.total;
+        this.usuarios = await this.app.users.all().toPromise();
 
-            const paginas = Math.ceil(this.total / this.size);
-            this.paginas = Array(paginas).fill(0).map((x, i) => i + 1);
+        const logsProjeto = await this.app.projetos.getLogPorjeto(this.projeto.id, this.args).toPromise();
+        const paginas = Math.ceil(this.total / this.size);
 
-            this.usuarios = usuarios;
-
-            this.logsProjeto = logsProjeto.itens.map(log => {
-                log.acaoValor = this.status.find(stat => stat.value === log.acaoValor).text;
-                return log;
-            });
-
-            this.loading.hide();
-
+        this.paginas = Array(paginas).fill(0).map((x, i) => i + 1);
+        this.total = logsProjeto.total;
+        this.logsProjeto = logsProjeto.itens.map(log => {
+            log.acaoValor = this.status.find(stat => stat.value === log.acaoValor).text;
+            return log;
         });
 
-    }
-
-    reLoadData() {
-
-        this.logsProjeto = [];
-
-        this.loading.show();
-
-        const data$ = this.app.projetos.projetoLoaded.pipe(
-            mergeMap(p =>
-                zip(
-                    of(p),
-                    this.app.projetos.getLogPorjeto(p.id, this.args),
-                ))
-        );
-
-        data$.subscribe(([projeto, logsProjeto]) => {
-            this.projeto = projeto;
-            this.total = logsProjeto.total;
-
-            const paginas = Math.ceil(this.total / this.size);
-            this.paginas = Array(paginas).fill(0).map((x, i) => i + 1);
-
-            console.log(logsProjeto);
-
-            this.logsProjeto = logsProjeto.itens.map(log => {
-                log.acaoValor = this.status.find(stat => stat.value === log.acaoValor).text;
-                return log;
-            });
-
-            this.loading.hide();
-
-        });
+        this.loading.hide();
 
     }
 
@@ -133,7 +88,7 @@ export class LogProjetoComponent implements OnInit {
         if (pagina !== this.currentPagina) {
             this.currentPagina = pagina;
             this.args.pag = pagina;
-            this.reLoadData();
+            this.loadData();
 
         }
 

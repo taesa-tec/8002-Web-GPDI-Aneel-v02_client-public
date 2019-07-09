@@ -55,12 +55,9 @@ export class OrcamentoEtapasComponent implements OnInit {
     }
 
 
-    ngOnInit() {
-        const projeto$ = this.app.projetos.projetoLoaded;
-        zip(projeto$).subscribe(([projeto]) => {
-            this.projeto = projeto;
-            this.load();
-        });
+    async ngOnInit() {
+        this.projeto = await this.app.projetos.getCurrent();
+        this.load();
     }
 
     load() {

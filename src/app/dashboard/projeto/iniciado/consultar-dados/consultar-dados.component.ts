@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { AppService } from '@app/core/services/app.service';
-import { ProjetoFacade } from '@app/facades/index';
+import {Component, OnInit} from '@angular/core';
+import {AppService} from '@app/core/services/app.service';
+import {ProjetoFacade} from '@app/facades/index';
 
 @Component({
     selector: 'app-consultar-dados',
@@ -9,15 +9,17 @@ import { ProjetoFacade } from '@app/facades/index';
 })
 export class ConsultarDadosComponent implements OnInit {
 
-    projeto: ProjetoFacade
-    constructor(protected app: AppService) { }
+    projeto: ProjetoFacade;
+
+    constructor(protected app: AppService) {
+    }
 
     ngOnInit() {
         this.load();
     }
 
     async load() {
-        this.projeto = await this.app.projetos.projetoLoaded.toPromise();
+        this.projeto = await this.app.projetos.getCurrent();
     }
 
 }

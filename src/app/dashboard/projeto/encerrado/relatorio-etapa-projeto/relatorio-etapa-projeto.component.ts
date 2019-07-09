@@ -27,12 +27,9 @@ export class RelatorioEtapaProjetoComponent implements OnInit {
     constructor(protected app: AppService, protected modal: NgbModal) {
     }
 
-    ngOnInit() {
-        this.app.projetos.projetoLoaded.subscribe(projeto => {
-            this.projeto = projeto;
-            this.obterRelatoriosEtapas();
-            // this.projeto.relations.
-        });
+    async ngOnInit() {
+        this.projeto = await this.app.projetos.getCurrent();
+        this.obterRelatoriosEtapas();
     }
 
     obterRelatoriosEtapas() {

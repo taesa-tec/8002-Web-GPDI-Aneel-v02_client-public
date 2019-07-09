@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Subscription, Observable, of } from 'rxjs';
-import { Projeto, FileUploaded, User, UserProjeto } from '@app/models';
-import { AppService } from '@app/core/services/app.service';
-import { zip } from 'rxjs';
-import { FormArray, FormGroup, FormControl } from '@angular/forms';
-import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
-import { SafeUrl } from '@angular/platform-browser';
-import { map, catchError } from 'rxjs/operators';
-import { isNil, keyBy } from 'lodash-es';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Subscription, Observable, of} from 'rxjs';
+import {Projeto, FileUploaded, User, UserProjeto} from '@app/models';
+import {AppService} from '@app/core/services/app.service';
+import {zip} from 'rxjs';
+import {FormArray, FormGroup, FormControl} from '@angular/forms';
+import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {SafeUrl} from '@angular/platform-browser';
+import {map, catchError} from 'rxjs/operators';
+import {isNil, keyBy} from 'lodash-es';
 
 @Component({
     selector: 'app-usuarios',
@@ -17,13 +17,11 @@ import { isNil, keyBy } from 'lodash-es';
 export class UsuariosComponent implements OnInit {
 
     permissoes: Array<any>;
-    projetoLoaded: Subscription;
     projeto: Projeto;
     users: Array<User>;
 
     // usersProjeto: Array<UserProjeto> = [];
     usersPermissao: Array<{ user: User, formGroup: FormGroup }>;
-
 
 
     formArray: FormArray;
@@ -42,7 +40,8 @@ export class UsuariosComponent implements OnInit {
     @ViewChild(LoadingComponent) loading: LoadingComponent;
     @ViewChild('saving') loadingSaving: LoadingComponent;
 
-    constructor(protected app: AppService) { }
+    constructor(protected app: AppService) {
+    }
 
     get selectedUsers() {
         if (this.users) {
@@ -54,12 +53,9 @@ export class UsuariosComponent implements OnInit {
         return [];
     }
 
-    ngOnInit() {
-
-        this.projetoLoaded = this.app.projetos.projetoLoaded.subscribe(projeto => {
-            this.projeto = projeto;
-            this.loadUsers();
-        });
+    async ngOnInit() {
+        this.projeto = await this.app.projetos.getCurrent();
+        this.loadUsers();
     }
 
     getAvatar(user) {
@@ -94,7 +90,7 @@ export class UsuariosComponent implements OnInit {
 
                 this.usersPermissao = this.users.map(user => {
                     const item = ups.find(up => up.userId === user.id) ||
-                        { id: 0, userId: user.id, projetoId: this.projeto.id, catalogUserPermissaoId: '', applicationUser: user };
+                        {id: 0, userId: user.id, projetoId: this.projeto.id, catalogUserPermissaoId: '', applicationUser: user};
 
                     const formGroup = new FormGroup({
                         userId: new FormControl(user.id),
@@ -109,7 +105,7 @@ export class UsuariosComponent implements OnInit {
                     // }
                     this.formArray.push(formGroup);
 
-                    return { user, formGroup };
+                    return {user, formGroup};
                 });
 
                 this.selectAll.valueChanges.subscribe(value => {
@@ -129,13 +125,13 @@ export class UsuariosComponent implements OnInit {
         const formData = (this.formArray.value as Array<any>).filter(d => d.catalogUserPermissaoId !== '');
         this.loadingSaving.show();
         if (this.formArray.length === 0) {
-            this.app.alert("Não é possivel salvar");
+            this.app.alert('Não é possivel salvar');
         } else {
 
             this.app.projetos.projetoUsers(formData).subscribe(result => {
                 this.loadingSaving.hide();
                 if (result.sucesso) {
-                    this.app.alert("Alterações salvas com sucesso!");
+                    this.app.alert('Alterações salvas com sucesso!');
                 } else {
                     this.app.alert(result.inconsistencias);
                 }

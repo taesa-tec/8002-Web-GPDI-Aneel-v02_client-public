@@ -1,30 +1,37 @@
 import {Injectable} from '@angular/core';
 import {CanActivate, CanActivateChild, CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router} from '@angular/router';
-import {Observable} from 'rxjs';
 import {ProjetosService} from '@app/core/services/projetos.service';
-import {ProjetoFacade} from '@app/facades/projeto.facade';
 import {Projeto} from '@app/models';
+import {HttpErrorResponse} from '@angular/common/http';
+import {AppService} from '@app/core/services/app.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProjetoStatusGuard implements CanActivate, CanActivateChild {
-    constructor(protected projetoService: ProjetosService, protected router: Router) {
+    constructor(protected app: AppService, protected projetoService: ProjetosService, protected router: Router) {
     }
 
     async canActivate(
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Promise<boolean | UrlTree> {
-
+        console.log('canActive');
         const restrictStatus = next.routeConfig.path;
         //
-        const currentProject: Projeto = await this.projetoService.getById(next.parent.params.id).toPromise();
+        try {
+            const currentProject: Projeto = await this.projetoService.getCurrent();
 
-        if (currentProject) {
-            const currentStatus = currentProject.catalogStatus.status.toLowerCase();
+            if (currentProject) {
+                const currentStatus = currentProject.catalogStatus.status.toLowerCase();
 
-            return currentStatus === restrictStatus ? true : this.router.parseUrl(`/dashboard/projeto/${currentProject.id}/${currentStatus}`);
+                return currentStatus === restrictStatus ? true : this.router.parseUrl(`/dashboard/projeto/${currentProject.id}/${currentStatus}`);
+            }
+        } catch (e) {
+
+            console.log({e});
         }
+
+
         return this.router.parseUrl(`/dashboard`);
 
     }

@@ -73,13 +73,9 @@ export class AtividadesComponent implements OnInit {
     constructor(protected app: AppService) {
     }
 
-    ngOnInit() {
-        this.app.projetos.projetoLoaded.subscribe(projeto => {
-
-            this.projeto = projeto;
-            this.setup();
-        });
-
+    async ngOnInit() {
+        this.projeto = await this.app.projetos.getCurrent();
+        this.setup();
     }
 
     setup() {

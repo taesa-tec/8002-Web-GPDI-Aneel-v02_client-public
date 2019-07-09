@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ProjetoFacade } from '@app/facades/index';
-import { AppService } from '@app/core/services/app.service';
+import {Component, OnInit} from '@angular/core';
+import {ProjetoFacade} from '@app/facades/index';
+import {AppService} from '@app/core/services/app.service';
 
 @Component({
     selector: 'app-alterar-projeto',
@@ -11,17 +11,15 @@ export class AlterarProjetoComponent implements OnInit {
 
     projeto: ProjetoFacade;
 
-    constructor(protected app: AppService) { }
+    constructor(protected app: AppService) {
+    }
 
     ngOnInit() {
         this.load();
     }
 
-    load() {
-        this.app.projetos.projetoLoaded.subscribe(projeto => {
-            this.projeto = projeto;
-        });
-
+    async load() {
+        this.projeto = await this.app.projetos.getCurrent();
     }
 
 }

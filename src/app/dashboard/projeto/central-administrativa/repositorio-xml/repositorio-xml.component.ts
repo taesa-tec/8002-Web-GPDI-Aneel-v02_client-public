@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AppService } from '@app/core/services/app.service';
-import { Subscription } from 'rxjs';
-import { Projeto, FileUploaded } from '@app/models';
-import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {AppService} from '@app/core/services/app.service';
+import {Subscription} from 'rxjs';
+import {Projeto, FileUploaded} from '@app/models';
+import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 
 @Component({
     selector: 'app-repositorio-xml',
@@ -10,8 +10,6 @@ import { LoadingComponent } from '@app/core/shared/app-components/loading/loadin
     styles: []
 })
 export class RepositorioXmlComponent implements OnInit {
-
-    projetoLoaded: Subscription;
     projeto: Projeto;
     xmls: Array<FileUploaded> = [];
     listOrder: { field: string; direction: 'asc' | 'desc'; } = {
@@ -21,15 +19,15 @@ export class RepositorioXmlComponent implements OnInit {
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
-    constructor(protected app: AppService) { }
-
-    ngOnInit() {
-
-        this.projetoLoaded = this.app.projetos.projetoLoaded.subscribe(projeto => {
-            this.projeto = projeto;
-            this.loadXmlList();
-        });
+    constructor(protected app: AppService) {
     }
+
+    async ngOnInit() {
+        this.projeto = await this.app.projetos.getCurrent();
+        this.loadXmlList();
+
+    }
+
     loadXmlList() {
         this.loading.show();
         this.app.projetos.obterXmls(this.projeto.id).subscribe(result => {

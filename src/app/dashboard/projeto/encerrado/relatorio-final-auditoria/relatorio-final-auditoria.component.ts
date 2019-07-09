@@ -60,11 +60,9 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
         return [];
     }
 
-    ngOnInit() {
-        this.app.projetos.projetoLoaded.subscribe(projeto => {
-            this.projeto = projeto;
-            this.obterRelatorioFinal();
-        });
+    async ngOnInit() {
+        this.projeto = await this.app.projetos.getCurrent();
+        this.obterRelatorioFinal();
     }
 
     obterRelatorioFinal() {

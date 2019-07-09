@@ -52,51 +52,42 @@ export class AlocacaoComponent implements OnInit {
         this.loadData();
     }
 
-    loadData() {
+    async loadData() {
         this.loading.show();
+        this.projeto = await this.app.projetos.getCurrent();
+        this.catalogEmpresa = await this.app.catalogo.empresas().toPromise();
 
-        const data$ = this.app.projetos.projetoLoaded.pipe(
-            mergeMap(p => zip(
-                of(p),
-                this.app.projetos.getAlocacaoRH(p.id),
-                p.isPD ? this.app.projetos.getEtapas(p.id) : of([]),
-                this.app.catalogo.empresas(),
-                p.REST.Empresas.listar<Array<EmpresaProjeto>>().pipe(map(es => {
-                    return es.map(_e => new EmpresaProjetoFacade(_e));
-                }))
-            ))
-        );
+        const alocacoes = await this.app.projetos.getAlocacaoRH(this.projeto.id).toPromise();
+        const etapas = this.projeto.isPD ? await this.app.projetos.getEtapas(this.projeto.id).toPromise() : [];
+        const empresas = await this.projeto.REST.Empresas.listar<Array<EmpresaProjeto>>().pipe(map(es => {
+            return es.map(_e => new EmpresaProjetoFacade(_e));
+        })).toPromise();
 
-        data$.subscribe(([projeto, alocacoes, etapas, catalog_empresa, empresas]) => {
-            this.projeto = projeto;
-            this.catalogEmpresa = catalog_empresa;
+        if (etapas) {
+            this.etapas = etapas.map((etapa, i) => {
+                etapa.numeroEtapa = i + 1;
+                return etapa;
+            });
+        }
 
-            if (etapas) {
-                this.etapas = etapas.map((etapa, i) => {
-                    etapa.numeroEtapa = i + 1;
-                    return etapa;
-                });
+        this.alocacoes = alocacoes.map(aloc => {
+
+            aloc.currentEtapa = this.projeto.isPD ? this.etapas.find(eta => eta.id === aloc.etapaId) : false;
+            aloc.empresa = empresas.find(e => e.id === aloc.empresaId);
+            aloc.recursoHumano.empresa = empresas.find(e => e.id === aloc.recursoHumano.empresaId);
+            aloc.horasTotal = 0;
+
+            for (let i = 1; i <= (this.projeto.isPD ? 6 : 24); i++) {
+                aloc.horasTotal += (aloc['hrsMes' + i] || 0);
             }
 
-            this.alocacoes = alocacoes.map(aloc => {
+            aloc.valorTotal = aloc.horasTotal * aloc.recursoHumano.valorHora;
 
-                aloc.currentEtapa = this.projeto.isPD ? this.etapas.find(eta => eta.id === aloc.etapaId) : false;
-                aloc.empresa = empresas.find(e => e.id === aloc.empresaId);
-                aloc.recursoHumano.empresa = empresas.find(e => e.id === aloc.recursoHumano.empresaId);
-                aloc.horasTotal = 0;
-
-                for (let i = 1; i <= (this.projeto.isPD ? 6 : 24); i++) {
-                    aloc.horasTotal += (aloc['hrsMes' + i] || 0);
-                }
-
-                aloc.valorTotal = aloc.horasTotal * aloc.recursoHumano.valorHora;
-
-                aloc.valorTotal = Math.round(aloc.valorTotal * 100) / 100;
-                return aloc;
-            });
-
-            this.loading.hide();
+            aloc.valorTotal = Math.round(aloc.valorTotal * 100) / 100;
+            return aloc;
         });
+
+        this.loading.hide();
 
     }
 

@@ -2,7 +2,7 @@
 <ngb-alert [dismissible]="false" type="danger" *ngFor="let item of inconsistencias">
     {{item}}
 </ngb-alert>
-<div [formGroup]="form" *ngIf="avaliacaoResult && avaliacaoResult.sucesso || true">
+<div [formGroup]="form" *ngIf="form && (avaliacaoResult && avaliacaoResult.sucesso || form)">
     <div *ngIf="projeto.isProposta">
         <ng-container *ngIf="projeto.isPD">
             <h5>GERAR XML DO PROJETO DE PeD</h5>
@@ -11,7 +11,8 @@
                     <label class="d-block">Versão</label>
                     <div class="d-inline-flex">
                         <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlProjetoPed">
-                        <button class="btn btn-primary mx-3" [disabled]="XmlProjetoPed.invalid" style="white-space: nowrap;" (click)="gerarXmlProjetoPed()">
+                        <button class="btn btn-primary mx-3" [disabled]="XmlProjetoPed.invalid"
+                                style="white-space: nowrap;" (click)="gerarXmlProjetoPed()">
                             <i class="ta-download fs-18"></i> Gerar XML
                         </button>
                     </div>
@@ -28,7 +29,8 @@
                     <label class="d-block">Versão</label>
                     <div class="d-inline-flex">
                         <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlInteresseExecucao">
-                        <button class="btn btn-primary mx-3" [disabled]="XmlInteresseExecucao.invalid" style="white-space: nowrap;" (click)="gerarXmlInteresseExecucao()">
+                        <button class="btn btn-primary mx-3" [disabled]="XmlInteresseExecucao.invalid"
+                                style="white-space: nowrap;" (click)="gerarXmlInteresseExecucao()">
                             <i class="ta-download fs-18"></i> Gerar XML
                         </button>
                     </div>
@@ -46,7 +48,8 @@
                     <label class="d-block">Versão</label>
                     <div class="d-inline-flex">
                         <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlProjetoGestao">
-                        <button class="btn btn-primary mx-3" [disabled]="XmlProjetoGestao.invalid" style="white-space: nowrap;" (click)="gerarXmlProjetoGestao()">
+                        <button class="btn btn-primary mx-3" [disabled]="XmlProjetoGestao.invalid"
+                                style="white-space: nowrap;" (click)="gerarXmlProjetoGestao()">
                             <i class="ta-download fs-18"></i> Gerar XML
                         </button>
                     </div>
@@ -57,13 +60,14 @@
                 </div>
             </div>
         </ng-container>
-        <h5>GERAR  XML DE INICIO EXECUÇÃO PROJETO</h5>
+        <h5>GERAR XML DE INICIO EXECUÇÃO PROJETO</h5>
         <div class="rounded bg-cinza-claro p-3 mb-3">
             <div class="form-group">
                 <label class="d-block">Versão</label>
                 <div class="d-inline-flex">
                     <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlInicioExecucao">
-                    <button class="btn btn-primary mx-3" [disabled]="XmlInicioExecucao.invalid" style="white-space: nowrap;" (click)="gerarXmlInicioExecucao()">
+                    <button class="btn btn-primary mx-3" [disabled]="XmlInicioExecucao.invalid"
+                            style="white-space: nowrap;" (click)="gerarXmlInicioExecucao()">
                         <i class="ta-download fs-18"></i> Gerar XML
                     </button>
                 </div>
@@ -83,7 +87,8 @@
                     <label class="d-block">Versão</label>
                     <div class="d-inline-flex">
                         <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlRelatorioFinal">
-                        <button class="btn btn-primary mx-3" [disabled]="XmlRelatorioFinal.invalid" style="white-space: nowrap;" (click)="gerarXmlRelatorioFinal()">
+                        <button class="btn btn-primary mx-3" [disabled]="XmlRelatorioFinal.invalid"
+                                style="white-space: nowrap;" (click)="gerarXmlRelatorioFinal()">
                             <i class="ta-download fs-18"></i> Gerar XML
                         </button>
                     </div>
@@ -100,7 +105,8 @@
                     <label class="d-block">Versão</label>
                     <div class="d-inline-flex">
                         <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlAuditoriaContabil">
-                        <button class="btn btn-primary mx-3" [disabled]="XmlAuditoriaContabil.invalid" style="white-space: nowrap;" (click)="gerarXmlAuditoriaContabil()">
+                        <button class="btn btn-primary mx-3" [disabled]="XmlAuditoriaContabil.invalid"
+                                style="white-space: nowrap;" (click)="gerarXmlAuditoriaContabil()">
                             <i class="ta-download fs-18"></i> Gerar XML
                         </button>
                     </div>
@@ -118,8 +124,10 @@
                 <div class="form-group">
                     <label class="d-block">Versão</label>
                     <div class="d-inline-flex">
-                        <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlRelatorioFinalGestao">
-                        <button class="btn btn-primary mx-3" [disabled]="XmlRelatorioFinalGestao.invalid" style="white-space: nowrap;" (click)="gerarXmlRelatorioFinalGestao()">
+                        <input type="text" class="form-control h-auto" mask="0*"
+                               formControlName="XmlRelatorioFinalGestao">
+                        <button class="btn btn-primary mx-3" [disabled]="XmlRelatorioFinalGestao.invalid"
+                                style="white-space: nowrap;" (click)="gerarXmlRelatorioFinalGestao()">
                             <i class="ta-download fs-18"></i> Gerar XML
                         </button>
                     </div>
@@ -135,8 +143,10 @@
                 <div class="form-group">
                     <label class="d-block">Versão</label>
                     <div class="d-inline-flex">
-                        <input type="text" class="form-control h-auto" mask="0*" formControlName="XmlRelatorioAuditoriaGestao">
-                        <button class="btn btn-primary mx-3" [disabled]="XmlRelatorioAuditoriaGestao.invalid" style="white-space: nowrap;" (click)="gerarXmlRelatorioAuditoriaGestao()">
+                        <input type="text" class="form-control h-auto" mask="0*"
+                               formControlName="XmlRelatorioAuditoriaGestao">
+                        <button class="btn btn-primary mx-3" [disabled]="XmlRelatorioAuditoriaGestao.invalid"
+                                style="white-space: nowrap;" (click)="gerarXmlRelatorioAuditoriaGestao()">
                             <i class="ta-download fs-18"></i> Gerar XML
                         </button>
                     </div>
@@ -147,7 +157,6 @@
                 </div>
             </div>
         </ng-container>
-
 
 
     </div>

@@ -44,11 +44,9 @@ export class OrcamentoAtividadesComponent implements OnInit {
         return this.relatorio ? this.relatorio.valor : 0;
     }
 
-    ngOnInit() {
-        this.app.projetos.projetoLoaded.subscribe(projeto => {
-            this.projeto = projeto;
-            this.load();
-        });
+    async ngOnInit() {
+        this.projeto = await this.app.projetos.getCurrent();
+        this.load();
     }
 
     load() {

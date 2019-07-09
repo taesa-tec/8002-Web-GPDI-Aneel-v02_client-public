@@ -51,19 +51,13 @@ export class MeusProjetosComponent implements OnInit {
         });
     }
 
-    loadData() {
+    async loadData() {
         if (this.currentUser || this.projetos.length > 0) {
             // this.subProjetcs.unsubscribe();
         }
         this.loading.show();
-        const projetos$ = this.currentUser.role === UserRole.Administrador ? this.app.projetos.getProjetos() :
-            this.app.projetos.meusProjetos().pipe(map(projetos => projetos.map(p$ => p$.projeto)));
-
-        zip(projetos$).subscribe(([projetos]) => {
-            this.projetos = projetos;
-
-            this.loading.hide();
-        });
+        this.projetos = await this.app.projetos.meusProjetos().toPromise();
+        this.loading.hide();
     }
 
 }

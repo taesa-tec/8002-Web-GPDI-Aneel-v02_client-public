@@ -66,26 +66,17 @@ export class TemasComponent implements OnInit {
         return subtema && subtema.nome.match(/^Outros?\.?$/g) !== null;
     }
 
-    ngOnInit() {
+    async ngOnInit() {
         this.loading.show();
-
-        const temas$ = this.catalogo.temas();
-        const projeto$ = this.app.projetos.projetoLoaded;
-
-        zip(temas$, projeto$).subscribe(([temas, projeto]) => {
-            this.temas = temas;
-            this.projeto = projeto;
-            this.load();
-        });
+        this.temas = await this.catalogo.temas().toPromise();
+        this.projeto = await this.app.projetos.getCurrent();
+        await this.load();
+        this.loading.hide();
     }
 
-    load() {
-
-        this.projetoService.getTema(this.projeto.id).subscribe(temaProjeto => {
-            this.temaProjeto = temaProjeto;
-            this.setupForm(this.projeto, temaProjeto);
-            this.loading.hide();
-        });
+    async load() {
+        this.temaProjeto = await this.projetoService.getTema(this.projeto.id).toPromise();
+        this.setupForm(this.projeto, this.temaProjeto);
     }
 
     changeFile(event) {

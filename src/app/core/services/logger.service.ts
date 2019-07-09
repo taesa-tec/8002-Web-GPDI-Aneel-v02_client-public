@@ -57,7 +57,7 @@ export class LoggerService {
 
     constructor(protected ps: ProjetosService, protected  us: UsersService, protected router: Router) {
         try {
-            this.ps.projetoLoaded.subscribe(projeto => this.projeto = projeto);
+            this.ps.getCurrent().then(p => this.projeto = p);
             this.us.currentUserUpdated.subscribe(user => this.user = user);
         } catch (e) {
             console.error(e);
