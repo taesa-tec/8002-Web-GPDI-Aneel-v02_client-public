@@ -4,6 +4,7 @@ import {ProjetoComponent} from '@app/dashboard/projeto/projeto.component';
 import {ProjetoStatusGuard} from '@app/dashboard/projeto/guards/projeto-status.guard';
 import {LogProjetoComponent} from '@app/dashboard/projeto/log-projeto/log-projeto.component';
 import {ProjetoResolver} from '@app/dashboard/projeto/projeto.resolver';
+import {ProjetoAccessGuard} from '@app/dashboard/projeto/guards/projeto-access.guard';
 
 const routes: Routes = [
     {
@@ -35,6 +36,10 @@ const routes: Routes = [
             },
             {
                 path: 'central-administrativa',
+                data: {
+                    access: ['admin']
+                },
+                canActivate: [ProjetoAccessGuard],
                 loadChildren: './central-administrativa/central-administrativa.module#CentralAdministrativaModule'
             },
             {

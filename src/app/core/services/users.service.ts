@@ -17,15 +17,16 @@ export class UsersService {
 
     currentUserUpdated: Observable<any> = this.currentUserUpdatedSource.asObservable();
 
+
     niveisUsuarios = NiveisUsuarios;
 
     constructor(protected http: HttpClient, protected auth: AuthService, protected catalogo: CatalogsService) {
         setTimeout(() => {
-            this.auth.authEvent.pipe(filter(e => e !== null)).subscribe(e => {
+            this.auth.authEvent.pipe(filter(e => e !== null)).subscribe(async e => {
                 if (e.type === 'logout') {
                     this.currentUser = null;
                 } else {
-                    this.me(true);
+                    await this.setCurrentUser();
                 }
             });
         }, 0);
@@ -43,21 +44,16 @@ export class UsersService {
         this._currentUser = value;
     }
 
-
-    me(reloadUser = false) {
-        if (!reloadUser) {
-            return this.http.get<User>(`Users/me`);
-        } else {
-            this.me().subscribe(user => {
-                this.currentUser = user;
-            }, (error: HttpErrorResponse) => {
-                console.log({error});
-                if (error.status === 401) {
-                    this.auth.logout();
-                }
-            });
+    async setCurrentUser() {
+        try {
+            this.currentUser = await this.me().toPromise();
+        } catch (e) {
+            console.log(e);
         }
+    }
 
+    me() {
+        return this.http.get<User>(`Users/me`);
     }
 
     editMe(user: User) {

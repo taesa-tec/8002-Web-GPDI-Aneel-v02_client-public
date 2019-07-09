@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router, NavigationStart, NavigationEnd, ActivationEnd, NavigationCancel, NavigationError} from '@angular/router';
 import {filter} from 'rxjs/operators';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
@@ -9,7 +9,7 @@ import {AppService} from '@app/core/services/app.service';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
     version = '';
 
@@ -18,14 +18,21 @@ export class AppComponent {
     constructor(protected app: AppService) {
 
         this.version = app.config.version;
+
+    }
+
+    async ngOnInit() {
+        this.loading.show();
         this.app.router.events.pipe(filter(e => e instanceof NavigationStart)).subscribe(e => {
             this.loading.show();
         });
         this.app.router.events.pipe(filter(e => (e instanceof NavigationEnd || e instanceof NavigationCancel || e instanceof NavigationError))).subscribe(e => {
             this.loading.hide();
         });
+
         if (this.app.auth.isLoggedIn) {
-            this.app.users.me(true);
+            // await this.app.users.setCurrentUser();
         }
+        this.loading.hide();
     }
 }

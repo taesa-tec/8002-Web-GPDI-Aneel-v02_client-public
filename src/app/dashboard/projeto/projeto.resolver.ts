@@ -26,6 +26,7 @@ export class ProjetoResolver implements Resolve<Projeto>, CanActivate {
 
         try {
             await this.app.projetos.setCurrent(id);
+
         } catch (e) {
             if (e instanceof HttpErrorResponse) {
                 console.warn(e.message);

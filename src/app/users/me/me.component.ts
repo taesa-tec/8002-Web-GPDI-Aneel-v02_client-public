@@ -97,13 +97,11 @@ export class MeComponent implements OnInit {
                     this.form.value.catalogEmpresaId = null;
                 }
 
-                this.app.users.editMe(this.form.value).subscribe(resultado => {
+                this.app.users.editMe(this.form.value).subscribe(async resultado => {
                     this.loading.hide();
                     if (resultado.sucesso) {
                         this.app.alert('Suas informações foram atualizadas com sucesso');
-                        this.app.users.me().subscribe(user => {
-
-                        });
+                        await this.app.users.setCurrentUser();
                     } else {
                         this.app.alert(resultado.inconsistencias);
                     }

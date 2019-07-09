@@ -136,6 +136,11 @@ export class ProjetosService {
         this.CurrentProject = new ProjetoFacade(projeto, this);
     }
 
+    async getCurrentAccess() {
+        const p = await this.getCurrent();
+        return await this.getMyAccessProject(p.id).toPromise();
+    }
+
     meusProjetos() {
         return this.http.get<Array<Projeto>>('UserProjetos/me');
     }
@@ -158,6 +163,10 @@ export class ProjetosService {
 
     getById(id: number) {
         return this.http.get<Projeto>(`Projetos/${id}`);
+    }
+
+    getMyAccessProject(id: number) {
+        return this.http.get<{ nome: string; valor: string }>(`Projetos/${id}/me`);
     }
 
     editar(projeto: Projeto) {
