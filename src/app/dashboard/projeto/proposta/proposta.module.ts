@@ -4,7 +4,6 @@ import {SharedModule} from '@app/core/shared/shared.module';
 // Projeto Proposta
 import {InfoComponent} from '@app/dashboard/projeto/proposta/info/info.component';
 import {TemasComponent} from '@app/dashboard/projeto/proposta/temas/temas.component';
-import {SubTemasComponent} from '@app/dashboard/projeto/proposta/temas/sub-tema.component';
 import {EtapasComponent} from '@app/dashboard/projeto/proposta/etapas/etapas.component';
 import {EmpresasComponent} from '@app/dashboard/projeto/proposta/empresas/empresas.component';
 
@@ -17,7 +16,6 @@ import {CommonModule} from '../common/common.module';
     declarations: [
         InfoComponent,
         TemasComponent,
-        SubTemasComponent,
         EtapasComponent,
         EmpresasComponent,
         AtividadesComponent,

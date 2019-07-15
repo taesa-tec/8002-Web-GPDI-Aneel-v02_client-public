@@ -48,13 +48,11 @@ export class ResultadoSocioambientalComponent extends EditorResultado<ResultadoS
         return super.sanitizedValue(field, editable);
     }
 
-    afterSubmit(result: ResultadoResponse) {
-        return super.afterSubmit().pipe(tap(r => {
-            if (result && result.sucesso) {
-                this.activeModal.close(true);
-            }
-        }));
-
+    async afterSubmit(result: ResultadoResponse) {
+        if (result && result.sucesso) {
+            this.activeModal.close(true);
+        }
+        await super.afterSubmit(result);
     }
 
 }

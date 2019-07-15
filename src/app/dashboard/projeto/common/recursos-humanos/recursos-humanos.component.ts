@@ -3,9 +3,9 @@ import {RecursoHumanoFormComponent} from '@app/dashboard/projeto/common/recursos
 import {map, mergeMap} from 'rxjs/operators';
 import {AppService} from '@app/core/services/app.service';
 import {zip, of} from 'rxjs';
-import {Projeto, RecursoHumano, Funcoes, Graduacoes} from '@app/models';
+import {Projeto, RecursoHumano, Funcoes, Graduacoes, EmpresaProjeto} from '@app/models';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
-import {ProjetoFacade, RecursoHumanoFacade} from '@app/facades/index';
+import {EmpresaFacade, EmpresaProjetoFacade, ProjetoFacade, RecursoHumanoFacade} from '@app/facades/index';
 import {ScreenName} from '@app/decorators';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
@@ -36,27 +36,33 @@ export class RecursosHumanosComponent implements OnInit {
         modalRef.componentInstance.projeto = this.projeto;
 
         modalRef.result.then(result => {
-            this.loadData();
+            this.loadData(true);
         }, e => {
             //
         });
     }
 
-    ngOnInit() {
+    async ngOnInit() {
+        this.projeto = await this.app.projetos.getCurrent();
         this.loadData();
     }
 
-    async loadData() {
+    async loadData(clearCache = false) {
 
         this.loading.show();
 
-        this.projeto = await this.app.projetos.getCurrent();
-
+        if (clearCache) {
+            this.projeto.REST.RecursoHumanos.clearCache();
+        }
         const recursos_humanos = await this.projeto.REST.RecursoHumanos.listar<Array<any>>().toPromise();
 
         this.recursosHumano = recursos_humanos.map(rec => {
             rec.funcaoNome = Funcoes.find(e => rec.funcaoValor === e.value).text;
             rec.titulacaoNome = Graduacoes.find(e => rec.titulacaoValor === e.value).text;
+            if (!(rec.empresa instanceof EmpresaProjetoFacade)) {
+                rec.empresa = new EmpresaProjetoFacade(<EmpresaProjeto>rec.empresa);
+            }
+
             return rec;
         });
 

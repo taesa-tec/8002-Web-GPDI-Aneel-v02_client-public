@@ -34,6 +34,7 @@ export class RelatorioEtapaProjetoComponent implements OnInit {
 
     obterRelatoriosEtapas() {
         this.loading.show();
+        this.projeto.REST.Etapas.clearCache();
         this.projeto.REST.Etapas.listar<Array<Etapa>>().subscribe(etapas => {
             this.loading.hide();
             this.etapas = etapas;

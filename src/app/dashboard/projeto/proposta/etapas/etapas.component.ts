@@ -83,23 +83,24 @@ export class EtapasComponent implements OnInit {
 
         this.mes = parseFloat(dataInicio.format('MM')) - 1;
         this.ano = parseFloat(dataInicio.format('YYYY'));
-        this.loadEtapas();
+        await this.loadEtapas();
 
     }
 
 
-    loadEtapas(clearCache = false) {
+    async loadEtapas(clearCache = false) {
         if (clearCache) {
             this.projeto.REST.Etapas.clearCache();
         }
-        this.projeto.REST.Etapas.listar<Array<Etapa>>().subscribe(etapas => {
-            if (etapas) {
-                this.etapas = etapas.map((etapa, i) => {
-                    etapa.numeroEtapa = i + 1;
-                    return etapa;
-                });
-            }
-        });
+        this.etapas = [];
+        const etapas = await this.projeto.REST.Etapas.listar<Array<Etapa>>().toPromise();
+
+        if (etapas) {
+            this.etapas = etapas.map((etapa, i) => {
+                etapa.numeroEtapa = i + 1;
+                return etapa;
+            });
+        }
     }
 
     openModal(etapa: any = {}) {
@@ -123,17 +124,18 @@ export class EtapasComponent implements OnInit {
         });
     }
 
-    setDataInicio() {
+    async setDataInicio() {
         this.loading.show();
         // this.app.projetos.editarDataInicio(this.form.value)
-        this.projeto.editarDataInicio(this.form.get('dataInicio').value)
-            .subscribe(result => {
-                if (result.sucesso) {
-                    this.app.alert('Salvo com sucesso');
-                }
-                this.loading.hide();
-                this.loadEtapas();
-            });
+        const result = await this.projeto.editarDataInicio(this.form.get('dataInicio').value).toPromise();
+
+        if (result.sucesso) {
+            this.app.alert('Salvo com sucesso');
+        }
+
+        await this.loadEtapas();
+
+        this.loading.hide();
     }
 
 }

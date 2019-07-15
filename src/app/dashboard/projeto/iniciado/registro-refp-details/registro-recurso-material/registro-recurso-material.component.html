@@ -250,7 +250,7 @@
 
     <ng-container [ngSwitch]="status">
         <ng-container *ngSwitchCase="'pendente'">
-            <div class="row">
+            <div class="row" *appUserAprovador>
                 <div class="col-12 d-flex justify-content-around">
                     <button class="btn btn-danger" (click)="saveStatus('reprovado')">
                         <i class="ta-cancel-circle"></i>
@@ -264,7 +264,7 @@
             </div>
             <div class="row mt-4">
                 <div class="col-12">
-                    <button class="btn btn-link" (click)="removerRegistro()">
+                    <button class="btn btn-link" (click)="removerRegistro()" *appUserAdmin>
                         <i class="ta-cancel-circle"></i>
                         Excluir Registro
                     </button>
@@ -289,7 +289,7 @@
             </div>
             <div class="row mt-4">
                 <div class="col-12">
-                    <button class="btn btn-link" (click)="removerRegistro()">
+                    <button class="btn btn-link" (click)="removerRegistro()" *appUserAdmin>
                         <i class="ta-cancel-circle"></i>
                         Excluir Registro
                     </button>
@@ -299,11 +299,11 @@
         <ng-container *ngSwitchCase="'aprovado'">
             <div class="row mt-4">
                 <div class="col-12">
-                    <button class="btn btn-link" (click)="editarRegistro()">
+                    <button class="btn btn-link" (click)="editarRegistro()" *appUserAprovador>
                         <i class="ta-edit"></i>
                         Editar Registro
                     </button>
-                    <button class="btn btn-link" (click)="removerRegistro()">
+                    <button class="btn btn-link" (click)="removerRegistro()" *appUserAdmin>
                         <i class="ta-cancel-circle"></i>
                         Excluir Registro
                     </button>

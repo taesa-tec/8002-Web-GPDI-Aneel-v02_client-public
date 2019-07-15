@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { EditorResultado } from '../editor-resultado-base';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AppService } from '@app/core/services/app.service';
-import { PropriedadeIntelectual, RecursoHumano, Empresa, EmpresaProjeto, AppValidators, ResultadoPropriedade, ResultadoResponse } from '@app/models';
-import { Observable, zip } from 'rxjs';
-import { FormGroup, FormArray, FormControl, Validators, ValidationErrors } from '@angular/forms';
-import { tap } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {EditorResultado} from '../editor-resultado-base';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {AppService} from '@app/core/services/app.service';
+import {PropriedadeIntelectual, RecursoHumano, Empresa, EmpresaProjeto, AppValidators, ResultadoPropriedade, ResultadoResponse} from '@app/models';
+import {Observable, zip} from 'rxjs';
+import {FormGroup, FormArray, FormControl, Validators, ValidationErrors} from '@angular/forms';
+import {tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-resultado-propriedade-intelectual',
@@ -39,7 +39,9 @@ export class ResultadoPropriedadeIntelectualComponent extends EditorResultado<Re
         return 0;
     }
 
-    constructor(app: AppService, activeModal: NgbActiveModal) { super(app, activeModal, "ResultadoIntelectual"); }
+    constructor(app: AppService, activeModal: NgbActiveModal) {
+        super(app, activeModal, 'ResultadoIntelectual');
+    }
 
     load() {
         return new Observable<void>(observer => {
@@ -93,7 +95,7 @@ export class ResultadoPropriedadeIntelectualComponent extends EditorResultado<Re
     }
 
     adicionarInventor(recursoHumanoId: any = '') {
-        this.inventoresGroup.push(new FormGroup({ recursoHumanoId: new FormControl(String(recursoHumanoId), Validators.required) }));
+        this.inventoresGroup.push(new FormGroup({recursoHumanoId: new FormControl(String(recursoHumanoId), Validators.required)}));
     }
 
     removerInvetor(idx: number) {
@@ -129,27 +131,26 @@ export class ResultadoPropriedadeIntelectualComponent extends EditorResultado<Re
         if (values.length > 0) {
             const total = values.reduce((prev, curr) => prev + curr);
             if (total !== 100) {
-                return { maxPercent: total };
+                return {maxPercent: total};
             }
             return null;
         } else {
-            return { required: true };
+            return {required: true};
         }
     }
 
     validarInventores(control: FormArray): ValidationErrors | null {
         if (control.controls.length === 0) {
-            return { required: true };
+            return {required: true};
         }
         return null;
     }
 
-    afterSubmit(result?: ResultadoResponse) {
-        return super.afterSubmit().pipe(tap(r => {
-            if (result && result.sucesso) {
-                this.activeModal.close(true);
-            }
-        }));
+    async afterSubmit(result?: ResultadoResponse) {
+        if (result && result.sucesso) {
+            this.activeModal.close(true);
+        }
+        await super.afterSubmit();
     }
 }
 

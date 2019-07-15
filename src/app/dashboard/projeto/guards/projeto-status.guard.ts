@@ -15,10 +15,7 @@ export class ProjetoStatusGuard implements CanActivate, CanActivateChild {
     async canActivate(
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Promise<boolean | UrlTree> {
-        console.log('ProjetoStatusGuard');
-
         const restrictStatus = next.routeConfig.path;
-        //
         try {
             const currentProject: Projeto = await this.projetoService.getCurrent();
 

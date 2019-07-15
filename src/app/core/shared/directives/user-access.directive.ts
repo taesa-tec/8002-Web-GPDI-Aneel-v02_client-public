@@ -64,7 +64,7 @@ export class UserAccessDirective implements OnInit {
         this.hasView = true;
     }
 
-    update(permissao) {
+    async update(permissao) {
         this.permissao = permissao;
         if (typeof permissao === 'boolean' && permissao) {
             this.show();
@@ -74,9 +74,8 @@ export class UserAccessDirective implements OnInit {
         this.hide();
 
         if (this.currentProject !== undefined) {
-            this.app.users.currentUserCanAccess(this.currentProject, permissao).subscribe(can => {
-                can ? this.show() : this.hide();
-            });
+            const can = await this.app.users.currentUserCanAccess(this.currentProject, permissao);
+            can ? this.show() : this.hide();
         }
     }
 

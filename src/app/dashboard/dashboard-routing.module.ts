@@ -8,6 +8,7 @@ import {GerenciarUsuariosComponent} from './gerenciar-usuarios/gerenciar-usuario
 import {AuthGuard} from '@app/auth/auth.guard';
 import {NewUserComponent} from '@app/users/new-user/new-user.component';
 import {EditUserComponent} from '@app/users/edit-user/edit-user.component';
+import {AdminGuard} from '@app/core/guards/admin.guard';
 
 
 const routes: Routes = [
@@ -19,9 +20,9 @@ const routes: Routes = [
         children: [
             {path: '', component: MeusProjetosComponent},
             {path: 'meu-cadastro', component: MeuCadastroComponent},
-            {path: 'gerenciar-usuarios', component: GerenciarUsuariosComponent},
-            {path: 'gerenciar-usuarios/novo', component: NewUserComponent},
-            {path: 'gerenciar-usuarios/edit/:id', component: EditUserComponent},
+            {path: 'gerenciar-usuarios', component: GerenciarUsuariosComponent, canActivate: [AdminGuard]},
+            {path: 'gerenciar-usuarios/novo', component: NewUserComponent, canActivate: [AdminGuard]},
+            {path: 'gerenciar-usuarios/edit/:id', component: EditUserComponent, canActivate: [AdminGuard]},
 
             {
                 path: 'projeto',

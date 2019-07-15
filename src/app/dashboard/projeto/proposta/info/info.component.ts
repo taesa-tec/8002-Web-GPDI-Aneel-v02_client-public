@@ -64,8 +64,12 @@ export class InfoComponent implements OnInit {
             this.form.addControl('razoabilidade', new FormControl(p.razoabilidade));
             this.form.addControl('pesquisas', new FormControl(p.pesquisas));
         }
+        this.formMountend();
         this.loading.hide();
         // });
+    }
+
+    formMountend() {
     }
 
 

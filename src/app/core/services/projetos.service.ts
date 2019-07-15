@@ -112,6 +112,7 @@ export class ProjetosService {
     status: ProjetoStatus[];
     Temas: ProjetoREST;
     protected CurrentProject: ProjetoFacade;
+    protected CurrentAccess: { nome: string; valor: string };
 
     constructor(protected http: HttpClient, protected fileService: FileService, protected requestCache: RequestCacheService) {
         const rest = [
@@ -134,11 +135,15 @@ export class ProjetosService {
     async setCurrent(id: number) {
         const projeto = await this.getById(id).toPromise();
         this.CurrentProject = new ProjetoFacade(projeto, this);
+        this.CurrentAccess = null;
     }
 
     async getCurrentAccess() {
-        const p = await this.getCurrent();
-        return await this.getMyAccessProject(p.id).toPromise();
+        if (this.CurrentAccess === undefined || this.CurrentAccess === null) {
+            const p = await this.getCurrent();
+            this.CurrentAccess = await this.getMyAccessProject(p.id).toPromise();
+        }
+        return this.CurrentAccess;
     }
 
     meusProjetos() {

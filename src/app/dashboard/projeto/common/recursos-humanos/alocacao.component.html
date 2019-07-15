@@ -68,7 +68,14 @@
             </tr>
             <tr *ngFor="let alocacao of alocacoes | orderBy:listOrder.field:listOrder.direction">
                 <td>{{alocacao.recursoHumano.nomeCompleto}}</td>
-                <td *ngIf="projeto.isPD">Etapa {{alocacao.currentEtapa.numeroEtapa}}</td>
+                <td *ngIf="projeto.isPD">
+                    <span *ngIf="alocacao.currentEtapa">
+                    Etapa {{alocacao.currentEtapa.numeroEtapa}}
+                    </span>
+                    <span *ngIf="!alocacao.currentEtapa">
+                        Etapa não associada
+                    </span>
+                </td>
                 <td>{{alocacao.empresa.nome}}</td>
                 <td>
                     <span *ngIf="alocacao.recursoHumano.empresa">{{alocacao.recursoHumano.empresa.nome}}</span>

@@ -1,13 +1,13 @@
-import {Component, OnInit, ViewChild, Input, Output, EventEmitter, ElementRef} from '@angular/core';
-import {AppService} from '@app/core/services/app.service';
-import {RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RegistroREFP, ResultadoResponse, NoRequest, CategoriasContabeis} from '@app/models';
-import {ProjetoFacade} from '@app/facades/index';
-import {zip, Observable, of} from 'rxjs';
-import {FormGroup, FormControl, Validators, FormArray} from '@angular/forms';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, ElementRef } from '@angular/core';
+import { AppService } from '@app/core/services/app.service';
+import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RegistroREFP, ResultadoResponse, NoRequest, CategoriasContabeis } from '@app/models';
+import { ProjetoFacade } from '@app/facades/index';
+import { zip, Observable, of } from 'rxjs';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import * as moment from 'moment';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
-import {tap, map} from 'rxjs/operators';
-import {LoggerDirective} from '@app/logger/logger.directive';
+import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
+import { tap, map } from 'rxjs/operators';
+import { LoggerDirective } from '@app/logger/logger.directive';
 
 export abstract class RegistroRecursoBase implements OnInit {
 
@@ -68,7 +68,7 @@ export abstract class RegistroRecursoBase implements OnInit {
             };
         })));
 
-        this.loading.show(1000);
+        this.loading.show();
         zip(recursos$, empresas$, etapas$, categoriasContabeis$).subscribe(([recursos, empresas, etapas, categoriasContabeis]) => {
             this.etapas = etapas;
             this.recursos = recursos;
@@ -84,6 +84,7 @@ export abstract class RegistroRecursoBase implements OnInit {
             this.empresasRecebedoras = this.empresas;
 
             this.buildForm();
+            this.loading.hide();
         });
         // const empresas = this.app.projetos
 

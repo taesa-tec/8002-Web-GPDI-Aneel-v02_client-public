@@ -35,9 +35,12 @@ export class AlocacaoComponent implements OnInit {
 
     async loadData() {
 
+        console.log('Chamado');
         this.loading.show();
 
         this.projeto = await this.app.projetos.getCurrent();
+
+        this.projeto.REST.AlocacaoRms.clearCache();
 
         const alocacoes = await this.projeto.REST.AlocacaoRms.listar<Array<AlocacaoRM>>().toPromise();
         const categoriasContabeisGestao = await this.app.catalogo.categoriasContabeisGestao().toPromise();

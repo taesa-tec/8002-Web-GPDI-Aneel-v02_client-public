@@ -102,67 +102,45 @@ export class UsersService {
         return this.http.get<any>(`Users/${id}/avatar`);
     }
 
-    userCanAccess(id: string, projeto: Projeto, permissao: any = null) {
-        return new Observable<boolean>(observer => {
+    async userCanAccess(id: string, projeto: Projeto, permissao: any = null) {
 
-            const projetos$ = this.usersAccesses.has(id) ? of(this.usersAccesses.get(id)) : this.userProjetos(id);
+        const permissoes = await this.catalogo.permissoes().toPromise();
+        const projetos = this.usersAccesses.has(id) ? this.usersAccesses.get(id) : await this.userProjetos(id).toPromise();
 
-            const permissoes$ = this.catalogo.permissoes();
+        if (projetos.length === 0 || permissoes.length === 0) {
+            return false;
+        }
 
-            zip(projetos$, permissoes$).subscribe(([projetos, permissoes]) => {
+        this.usersAccesses.set(id, projetos);
 
-                if (projetos.length === 0 || permissoes.length === 0) {
-                    observer.next(false);
-                    return;
+        const projetoAccess = projetos.find(p => p.projetoId === projeto.id);
+
+        if (projetoAccess) {
+
+            if (permissao) {
+                try {
+                    const userp = this.niveisUsuarios[projetoAccess.catalogUserPermissao.valor];
+                    return (userp & permissao) === permissao;
+                } catch (error) {
+
+                    return false;
                 }
-
-                this.usersAccesses.set(id, projetos);
-
-                // Pega o acesso do usuário no projeto
-                const projetoAccess = projetos.find(p => p.projetoId === projeto.id);
-
-                if (projetoAccess) {
-                    /* 
-                        Se a verificação for por uma determina permissão 
-                        caso o contrário retorna que o usuário tem algum tipo de acesso ao projeto
-                    */
-                    if (permissao) {
-                        try {
-                            const userp = this.niveisUsuarios[projetoAccess.catalogUserPermissao.valor];
-                            const can = (userp & permissao) === permissao;
-                            observer.next(can);
-                        } catch (error) {
-
-                            observer.next(false);
-                        }
-                        return;
-                    }
-
-                    observer.next(true);
-                } else {
-                    observer.next(false);
-                }
-            });
-        });
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    currentUserCanAccess(projeto: Projeto, permissao: any = null) {
-
-        return new Observable(obsr => {
-            this.currentUserUpdated
-                .subscribe(user => {
-                    if (user) {
-                        if (user.role === UserRole.Administrador) {
-                            return obsr.next(true);
-                        }
-                        this.userCanAccess(user.id, projeto, permissao).subscribe(can => obsr.next(can));
-                    } else {
-                        return obsr.next(false);
-                    }
-                }, error => {
-                    return obsr.next(false);
-                });
-        });
-
+    async currentUserCanAccess(projeto: Projeto, permissao: any = null) {
+        const user = this.currentUser;
+        if (user) {
+            if (user.role === UserRole.Administrador) {
+                return true;
+            }
+            return await this.userCanAccess(user.id, projeto, permissao);
+        } else {
+            return false;
+        }
     }
 }

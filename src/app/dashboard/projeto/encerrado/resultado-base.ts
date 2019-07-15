@@ -50,8 +50,11 @@ export abstract class ResultadoBase<T> implements OnInit {
         }
     }
 
-    load() {
+    load(reload = false) {
         this.showLoading();
+        if (reload) {
+            this.projetoREST.clearCache();
+        }
         this.projetoREST.listar<Array<T>>().subscribe(resultados => {
             this.resultados = resultados;
             this.hideLoading();
@@ -76,7 +79,7 @@ export abstract class ResultadoBase<T> implements OnInit {
             }
             ref.result.then(updated => {
                 if (updated) {
-                    this.load();
+                    this.load(true);
                 }
             }, error => {
                 // Só fechou o modal -.-

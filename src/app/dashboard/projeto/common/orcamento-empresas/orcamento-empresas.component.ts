@@ -75,11 +75,13 @@ export class OrcamentoEmpresasComponent implements OnInit {
         this.load();
     }
 
-    load() {
+    async load() {
         this.loading.show();
         const extratos$ = this.projeto.getOrcamentoEmpresas(); // this.app.projetos.getOrcamentoEmpresas(this.projeto.id);
         const etapas$ = this.projeto.isPD ? this.projeto.REST.Etapas.listar<Array<Etapa>>() : of([]); // this.app.projetos.getEtapas(this.projeto.id);
         const empresas$ = this.projeto.REST.Empresas.listar<Array<EmpresaProjeto>>();
+        this.projeto.REST.AlocacaoRhs.clearCache();
+        this.projeto.REST.AlocacaoRms.clearCache();
 
         zip(extratos$, etapas$, empresas$, this.projeto.REST.AlocacaoRhs.listar<Array<any>>(), this.projeto.REST.AlocacaoRms.listar<Array<any>>())
             .subscribe(([extrato, etapas, empresas, alocacoesRH, alocacoesRM]) => {
@@ -115,9 +117,10 @@ export class OrcamentoEmpresasComponent implements OnInit {
         if (modal) {
             modal.componentInstance.projeto = this.projeto;
             modal.result.then(result => {
-                console.log(result);
                 if (result === 'deleted') {
                     itens.splice(itens.indexOf(item), 1);
+                } else {
+                    this.load();
                 }
             }, error => {
 

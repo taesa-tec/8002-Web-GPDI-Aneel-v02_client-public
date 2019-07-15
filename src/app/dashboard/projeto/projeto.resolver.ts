@@ -6,8 +6,6 @@ import {
 } from '@angular/router';
 import {Projeto} from '@app/models';
 import {AppService} from '@app/core/services/app.service';
-import {ProjetoFacade} from '@app/facades/projeto.facade';
-import {Observable} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
 
 @Injectable({
@@ -45,7 +43,6 @@ export class ProjetoResolver implements Resolve<Projeto>, CanActivate {
     }
 
     async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Projeto | null> {
-        console.log('resolve');
         return this.app.projetos.getCurrent();
 
     }

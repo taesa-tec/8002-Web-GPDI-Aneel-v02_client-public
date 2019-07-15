@@ -17,6 +17,8 @@ export abstract class EditorResultado<T extends { id: number; uploads?: Array<Fi
     form: FormGroup;
     sender: any;
 
+    protected submiting = false;
+
 
     get isEdit() {
         return this.editable && this.editable.id;
@@ -97,50 +99,57 @@ export abstract class EditorResultado<T extends { id: number; uploads?: Array<Fi
         this.activeModal.close(false);
     }
 
-    beforeSubmit() {
-        return Observable.create(o => o.next());
+    async beforeSubmit() {
+        return;
     }
 
-    submit() {
-        if (this.form.invalid) {
+    async submit() {
+        if (this.form.invalid || this.submiting) {
             return;
         }
-        this.beforeSubmit().subscribe(() => {
-            this.loadingShow();
+        this.submiting = true;
 
-            const request = this.editable ?
-                this.projetoREST.editar(this.form.value) :
-                this.projetoREST.criar(this.form.value);
+        this.loadingShow();
 
-            request.subscribe(result => {
-                this.afterSubmit(result).subscribe(() => {
-                    if (result.sucesso) {
-                        if (this.editable) {
-                            this.editable.id = result.id || this.editable.id;
-                        }
-                        this.app.alert('Salvo com sucesso');
-                        if (this.logger) {
-                            if (result.id) {
-                                this.logger.saveCreate();
-                            } else {
-                                this.logger.saveUpdate();
-                            }
-                        }
+
+        const request = this.editable ?
+            this.projetoREST.editar(this.form.value) :
+            this.projetoREST.criar(this.form.value);
+
+        try {
+            await this.beforeSubmit();
+
+            const result = await request.toPromise();
+
+            await this.afterSubmit(result);
+
+            if (result.sucesso) {
+                if (this.editable) {
+                    this.editable.id = result.id || this.editable.id;
+                }
+                this.app.alert('Salvo com sucesso');
+
+
+                if (this.logger) {
+                    if (result.id) {
+                        this.logger.saveCreate();
                     } else {
-                        this.app.alert(result.inconsistencias);
+                        this.logger.saveUpdate();
                     }
-                    this.loadingHide();
-                });
-            }, error => {
-                this.loadingHide();
-                this.app.alert(error);
-            });
-
-        });
+                }
+            } else {
+                this.app.alert(result.inconsistencias);
+            }
+        } catch (e) {
+            console.error(e);
+            this.app.alert(e.message);
+        }
+        this.submiting = false;
+        this.loadingHide();
     }
 
-    afterSubmit(result?: ResultadoResponse): Observable<any> {
-        return Observable.create(o => o.next());
+    async afterSubmit(result?: ResultadoResponse) {
+        return;
     }
 
     remove() {

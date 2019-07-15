@@ -5,9 +5,8 @@ import {ActivatedRoute} from '@angular/router';
 import {ProjetosService} from '@app/core/services/projetos.service';
 import {map, mergeMap, tap} from 'rxjs/operators';
 import {zip, of} from 'rxjs';
-import {Projeto, Tema, SubTema, SubTemaRequest, TemaProjeto, NoRequest, ResultadoResponse, CatalogTema} from '@app/models';
+import {Projeto, Tema, SubTema, SubTemaRequest, TemaProjeto, NoRequest, ResultadoResponse, CatalogTema, NiveisUsuarios} from '@app/models';
 import {FormGroup, FormControl, Validators, FormArray} from '@angular/forms';
-import {SubTemasComponent} from './sub-tema.component';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 import {LoggerDirective} from '@app/logger/logger.directive';
 
@@ -29,7 +28,6 @@ export class TemasComponent implements OnInit {
     temaControl = new FormControl('', [Validators.required]);
     subTemasForms = new FormArray([]);
 
-    @ViewChild(SubTemasComponent) subTemasComponent;
     @ViewChild(LoadingComponent) loading;
     @ViewChild('file') file: ElementRef;
     @ViewChild(LoggerDirective) logger: LoggerDirective;
@@ -68,6 +66,7 @@ export class TemasComponent implements OnInit {
 
     async ngOnInit() {
         this.loading.show();
+
         this.temas = await this.catalogo.temas().toPromise();
         this.projeto = await this.app.projetos.getCurrent();
         await this.load();

@@ -42,7 +42,7 @@ export class EtapaFormComponent implements OnInit {
 
     async ngOnInit() {
 
-
+        console.log(this.etapa);
         this.projeto = await this.app.projetos.getCurrent();
         if (this.projeto.isPD) {
             const produtos$ = this.projeto.REST.Produtos.listar<Array<Produto>>();

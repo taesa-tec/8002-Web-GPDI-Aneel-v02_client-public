@@ -14,6 +14,7 @@ import {PropostaBaseComponent} from './proposta-base/proposta-base.component';
 import {OrcamentoEmpresasComponent} from '../common/orcamento-empresas/orcamento-empresas.component';
 import {OrcamentoEtapasComponent} from '../common/orcamento-etapas/orcamento-etapas.component';
 import {ProjetoStatusGuard} from '@app/dashboard/projeto/guards/projeto-status.guard';
+import {ProjetoAccessGuard} from '@app/dashboard/projeto/guards/projeto-access.guard';
 
 
 export const routes: Routes = [
@@ -21,13 +22,20 @@ export const routes: Routes = [
         path: '', redirectTo: 'refp-inserir', pathMatch: 'full'
     },
     {
-        path: 'refp', redirectTo: 'refp/pendentes', pathMatch: 'full'
-    },
-    {
-        path: 'refp/:status', component: RefpListComponent
+        path: 'refp', redirectTo: 'refp/pendentes', pathMatch: 'full',
+        canActivate: [ProjetoAccessGuard],
+        data: {
+            access: ['admin', 'leituraEscrita', 'aprovador']
+
+        },
     },
     {
         path: 'refp-inserir', component: RefpInserirComponent,
+        canActivate: [ProjetoAccessGuard],
+        data: {
+            access: ProjetoAccessGuard.ESCRITA,
+            redirectTo: '/dashboard/projeto/:id/iniciado/extrato-financeiro'
+        },
         children: [
             {path: '', redirectTo: 'recurso-humano', pathMatch: 'full'},
             {path: 'recurso-material', component: REFP_RC_Component},
@@ -35,10 +43,21 @@ export const routes: Routes = [
         ]
     },
     {
+        path: 'refp/:status', component: RefpListComponent,
+        canActivate: [ProjetoAccessGuard],
+        data: {
+            access: ProjetoAccessGuard.ESCRITA,
+            redirectTo: '/dashboard/projeto/:id/iniciado/extrato-financeiro'
+        },
+    },
+
+    {
         path: 'extrato-financeiro', component: ExtratoFinanceiroEmpresasComponent,
     },
     {
         path: 'alterar', component: AlterarProjetoComponent,
+        canActivate: [ProjetoAccessGuard],
+        data: {access: ['admin']},
         children: [
             {path: '', redirectTo: 'prorrogar', pathMatch: 'full'},
             {path: 'prorrogar', component: ProrrogarComponent},

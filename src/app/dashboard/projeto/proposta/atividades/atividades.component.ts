@@ -111,6 +111,7 @@ export class AtividadesComponent implements OnInit {
             request.subscribe(result => {
                 this.loading.hide();
                 if (result.sucesso) {
+                    this.projeto.REST.AtividadesGestao.clearCache();
                     const idf = this.form.get('id');
                     this.form.removeControl('projetoId');
                     this.form.addControl('id', new FormControl(result.id));

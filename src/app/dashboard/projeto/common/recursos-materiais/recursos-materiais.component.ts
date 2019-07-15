@@ -32,15 +32,18 @@ export class RecursosMateriaisComponent implements OnInit {
         protected modalService: NgbModal) {
     }
 
-    ngOnInit() {
+    async ngOnInit() {
+        this.projeto = await this.app.projetos.getCurrent();
         this.loadData();
 
     }
 
-    async loadData() {
+    async loadData(clearCache = false) {
         this.loading.show();
 
-        this.projeto = await this.app.projetos.getCurrent();
+        if (clearCache) {
+            this.projeto.REST.RecursoMateriais.clearCache();
+        }
 
         const recursosMaterias = await this.projeto.REST.RecursoMateriais.listar<Array<any>>().toPromise();
 
@@ -65,7 +68,7 @@ export class RecursosMateriaisComponent implements OnInit {
         modalRef.componentInstance.projeto = this.projeto;
 
         modalRef.result.then(result => {
-            this.loadData();
+            this.loadData(true);
         }, e => {
 
         });

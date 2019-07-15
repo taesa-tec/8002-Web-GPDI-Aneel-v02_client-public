@@ -55,11 +55,11 @@ export class ResultadoCapacitacaoComponent extends EditorResultado<ResultadoCapa
         this.form.updateValueAndValidity();
     }
 
-    afterSubmit(result: ResultadoResponse) {
+    async afterSubmit(result: ResultadoResponse) {
         if (result && result.sucesso && (result.id || this.editable.id)) {
-            return this.uploadFile(result.id || this.editable.id).pipe(tap(() => this.activeModal.close(true)));
+            await this.uploadFile(result.id || this.editable.id).pipe(tap(() => this.activeModal.close(true))).toPromise();
         }
-        return super.afterSubmit();
+        await super.afterSubmit(result);
     }
 
     changeFile(event) {

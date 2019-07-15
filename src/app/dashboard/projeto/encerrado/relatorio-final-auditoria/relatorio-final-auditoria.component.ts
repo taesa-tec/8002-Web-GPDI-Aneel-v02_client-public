@@ -66,6 +66,7 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
     }
 
     obterRelatorioFinal() {
+        this.projeto.REST.RelatorioFinal.clearCache();
         this.projeto.REST.RelatorioFinal.listar<RelatorioFinal>().subscribe(relatorio => {
             this.relatorio = relatorio;
             this.buildForm(relatorio);

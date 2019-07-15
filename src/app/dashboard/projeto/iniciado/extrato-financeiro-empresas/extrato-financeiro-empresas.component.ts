@@ -1,13 +1,14 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {zip, of} from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { zip, of } from 'rxjs';
 
-import {AppService} from '@app/core/services/app.service';
-import {Projeto, OrcamentosEmpresas, Etapa, TextValue, CategoriasContabeis, ExtratoItem, ResultadoResponse, ExtratosEmpresas, ExtratoEmpresa} from '@app/models';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
-import {ProjetoFacade} from '@app/facades/index';
-import {RegistroRefpDetailsComponent} from '../registro-refp-details/registro-refp-details.component';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { AppService } from '@app/core/services/app.service';
+import { Projeto, OrcamentosEmpresas, Etapa, TextValue, CategoriasContabeis, ExtratoItem, ResultadoResponse, ExtratosEmpresas, ExtratoEmpresa } from '@app/models';
+import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
+import { ProjetoFacade } from '@app/facades/index';
+import { RegistroRefpDetailsComponent } from '../registro-refp-details/registro-refp-details.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-extrato-financeiro-empresas',
@@ -24,13 +25,13 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
     alocacoesRM: Array<any> = [];
 
     categoriasContabeis: { [propName: string]: TextValue } = {
-        'RH': {text: 'Recursos Humanos', value: 'RH'}
+        'RH': { text: 'Recursos Humanos', value: 'RH' }
     };
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
 
     get extratoEmpresas(): ExtratoEmpresa[] {
-        return this.extrato ? this.extrato.empresas.filter(e => e.total > 0) : [];
+        return this.extrato ? this.extrato.empresas.filter(e => e.valorAprovado > 0) : [];
     }
 
     get totalGeral() {
@@ -46,9 +47,7 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
 
 
     constructor(protected app: AppService, private route: ActivatedRoute, protected modal: NgbModal) {
-        CategoriasContabeis.forEach(c => {
-            this.categoriasContabeis[c.value] = c;
-        });
+
     }
 
     itemDesc(item: ExtratoItem) {
@@ -75,6 +74,21 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
 
     async ngOnInit() {
         this.projeto = await this.app.projetos.getCurrent();
+
+        if (this.projeto.isPD) {
+            CategoriasContabeis.forEach(c => {
+                this.categoriasContabeis[c.value] = c;
+            });
+        } else {
+            const ccg = await this.app.catalogo.categoriasContabeisGestao().toPromise();
+            ccg.forEach(c => {
+                this.categoriasContabeis[c.valor] = {
+                    text: c.nome,
+                    value: c.valor,
+                    atividades: c.atividades
+                };
+            });
+        }
         this.load();
     }
 
@@ -89,7 +103,7 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
                 this.alocacoesRM = alocacoesRM;
                 if (etapas) {
                     etapas.forEach((etapa, index) => {
-                        this.etapas[etapa.id] = Object.assign(etapa, {numeroEtapa: index + 1});
+                        this.etapas[etapa.id] = Object.assign(etapa, { numeroEtapa: index + 1 });
                     });
                 }
 
@@ -121,13 +135,13 @@ export class ExtratoFinanceiroEmpresasComponent implements OnInit {
             }
 
         } else {
-            const categoriaContabil = CategoriasContabeis.find(c => c.value === recurso.categoriaContabilValor);
+            const categoriaContabil = this.categoriasContabeis[recurso.categoriaContabilValor]; //this.categoriasContabeis.find(c => c.value === recurso.categoriaContabilValor);
             registroItem.nome = registro.nomeItem;
             registroItem.categoria = categoriaContabil.text;
             registroItem.valor = registro.qtdItens * registro.valorUnitario;
         }
 
-        const ref = this.modal.open(RegistroRefpDetailsComponent, {size: 'lg', backdrop: 'static'});
+        const ref = this.modal.open(RegistroRefpDetailsComponent, { size: 'lg', backdrop: 'static' });
 
         ref.componentInstance.setRegistro(registroItem);
 

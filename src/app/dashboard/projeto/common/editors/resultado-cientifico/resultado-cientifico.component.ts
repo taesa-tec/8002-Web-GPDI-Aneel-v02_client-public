@@ -1,11 +1,11 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { AppService } from '@app/core/services/app.service';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { EditorResultado } from '../editor-resultado-base';
-import { ResultadoProducao, TiposProducaoTC, AppValidators, NoRequest, ResultadoResponse } from '@app/models';
-import { Observable, of } from 'rxjs';
-import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { tap } from 'rxjs/operators';
+import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
+import {AppService} from '@app/core/services/app.service';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {EditorResultado} from '../editor-resultado-base';
+import {ResultadoProducao, TiposProducaoTC, AppValidators, NoRequest, ResultadoResponse} from '@app/models';
+import {Observable, of} from 'rxjs';
+import {Validators, FormGroup, FormControl} from '@angular/forms';
+import {tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-resultado-cientifico',
@@ -23,7 +23,9 @@ export class ResultadoCientificoComponent extends EditorResultado<any> {
 
     @ViewChild('file') file: ElementRef;
 
-    constructor(app: AppService, activeModal: NgbActiveModal) { super(app, activeModal, "ResultadoProducao"); }
+    constructor(app: AppService, activeModal: NgbActiveModal) {
+        super(app, activeModal, 'ResultadoProducao');
+    }
 
     load() {
         return new Observable<void>(observer => {
@@ -61,7 +63,8 @@ export class ResultadoCientificoComponent extends EditorResultado<any> {
         this.form.updateValueAndValidity();
     }
 
-    changeFile() { }
+    changeFile() {
+    }
 
     uploadFile(id) {
         const el = this.file.nativeElement as HTMLInputElement;
@@ -72,7 +75,7 @@ export class ResultadoCientificoComponent extends EditorResultado<any> {
             })).pipe(tap(result => {
                 if (result.sucesso) {
                     this.logger.save(`Arquivo ${el.files.item(0).name} adicionado`);
-                    this.file.nativeElement.value = "";
+                    this.file.nativeElement.value = '';
                 }
             }));
         }
@@ -80,11 +83,11 @@ export class ResultadoCientificoComponent extends EditorResultado<any> {
         return of(NoRequest);
     }
 
-    afterSubmit(result: ResultadoResponse) {
+    async afterSubmit(result: ResultadoResponse) {
         if (result && result.sucesso && (result.id || this.editable.id)) {
-            return this.uploadFile(result.id || this.editable.id).pipe(tap(() => this.activeModal.close(true)));
+            await this.uploadFile(result.id || this.editable.id).pipe(tap(() => this.activeModal.close(true))).toPromise();
         }
-        return super.afterSubmit();
+        await super.afterSubmit(result);
 
 
     }

@@ -4,6 +4,7 @@ import {Observable, BehaviorSubject, timer} from 'rxjs';
 import {LoginRequest, RecoverRequest, ResultadoResponse, NewpassRequest} from '@app/models';
 import {LoginResponse} from '@app/models';
 import {Router} from '@angular/router';
+import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 const storageKey = 'loggedUser';
 
@@ -19,7 +20,7 @@ export class AuthService {
     protected authEventsSource: BehaviorSubject<{ type: string, data?: any }>;
     authEvent: Observable<{ type: string, data?: any }>;
 
-    constructor(private http: HttpClient, protected router: Router) {
+    constructor(private http: HttpClient, protected router: Router, public modal: NgbModal) {
 
         const loggedUser = localStorage.getItem(storageKey);
         if (loggedUser) {
@@ -90,6 +91,9 @@ export class AuthService {
         localStorage.removeItem(storageKey);
         this.redirectTo = '/dashboard';
         this.router.navigate(['/login']);
+        if (this.modal.hasOpenModals()) {
+            this.modal.dismissAll('logout');
+        }
         this.authEventsSource.next({type: 'logout'});
     }
 
