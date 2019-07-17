@@ -436,6 +436,10 @@ export interface LogProjeto {
     statusAnterior: string;
     statusNovo: string;
     created: string;
+    data: {
+        statusAnterior?: Array<{ titulo: string; valor: any; type: string }>;
+        statusNovo?: Array<{ titulo: string; valor: any; type: string }>;
+    };
 }
 
 export type LogItem = Array<{

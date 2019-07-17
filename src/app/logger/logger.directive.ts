@@ -62,8 +62,7 @@ export class LoggerItemDirective implements AfterViewInit {
         }
     }
 
-    constructor(@Optional() protected control: NgControl, protected element: ElementRef) {
-    }
+    constructor(@Optional() protected control: NgControl, protected element: ElementRef) {}
 
 }
 

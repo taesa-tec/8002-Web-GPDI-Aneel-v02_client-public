@@ -18,18 +18,42 @@
             </td>
         </tr>
         <tr>
-            <td *ngIf="log.statusAnterior !== ''" [class]="log.statusAnterior !== '' ? 'w-50': ''"
-                [attr.colspan]="log.statusNovo === '' ? 2 : ''">
+            <td *ngIf="hasStatusAnterior" class="w-50"
+                [attr.colspan]="!hasStatusNovo ? 2 : ''">
                 <strong class="text-blue-light mb-3 d-inline-block">
                     Status Anterior
                 </strong>
-                <div class="app-log app-log-status-anterior" [innerHTML]="log.statusAnterior"></div>
+                <div class="app-log app-log-status-anterior" *ngIf="!hasLogDataStatusAnterior"
+                     [innerHTML]="log.statusAnterior"></div>
+
+                <div class="app-log app-log-status-anterior" *ngIf="hasLogDataStatusAnterior">
+                    <ng-container *ngFor="let prop of log.data.statusAnterior">
+                        <p>
+                            <strong>{{prop.titulo}}: </strong>
+                            <span>{{prop | logFormat}}</span>
+                        </p>
+                    </ng-container>
+                </div>
+
             </td>
-            <td *ngIf="log.statusNovo !== ''" [attr.colspan]="log.statusAnterior === '' ? 2 : ''">
+
+
+            <td *ngIf="hasStatusNovo" [attr.colspan]="!hasStatusAnterior ? 2 : ''">
                 <strong class="text-blue-light  mb-3 d-inline-block">
                     Novo Status
                 </strong>
-                <div class="app-log app-log-status-novo" [innerHTML]="log.statusNovo"></div>
+
+                <div class="app-log app-log-status-novo" [innerHTML]="log.statusNovo"
+                     *ngIf="!hasLogDataStatusNovo"></div>
+
+                <div class="app-log app-log-status-novo" *ngIf="hasLogDataStatusNovo">
+                    <ng-container *ngFor="let prop of logDataStatusNovo">
+                        <p>
+                            <strong>{{prop.titulo}}: </strong>
+                            <span>{{prop | logFormat}}</span>
+                        </p>
+                    </ng-container>
+                </div>
             </td>
         </tr>
     </table>

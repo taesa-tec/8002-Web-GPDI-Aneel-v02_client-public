@@ -101,14 +101,8 @@ export class ProdutoFormComponent implements OnInit {
             const request = this.produto.id ? this.app.projetos.editarProduto(this.form.value) : this.app.projetos.criarProduto(this.form.value);
             this.loading.show();
             request.subscribe(result => {
-                console.log(result);
                 if (result.sucesso) {
                     this.activeModal.close(result);
-                    if (this.produto.id) {
-                        this.logger.saveUpdate();
-                    } else {
-                        this.logger.saveCreate();
-                    }
                 } else {
                     this.inconsistencias = result.inconsistencias;
                 }

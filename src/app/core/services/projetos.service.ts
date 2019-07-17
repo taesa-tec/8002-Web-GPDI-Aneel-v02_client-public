@@ -380,7 +380,8 @@ export class ProjetosService {
      */
 
     criarLogProjeto(logprojeto: CreateLogProjetoRequest) {
-        return this.http.post<ResultadoResponse>('projeto/LogProjetos', logprojeto);
+        console.log({logprojeto});
+        return of(true); // this.http.post<ResultadoResponse>('projeto/LogProjetos', logprojeto);
     }
 
     getLogPorjeto(id: number, args?: { [propName: string]: any }) {

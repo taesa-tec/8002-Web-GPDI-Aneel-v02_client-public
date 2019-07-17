@@ -71,12 +71,18 @@ export class LogProjetoComponent implements OnInit {
         this.usuarios = await this.app.users.all().toPromise();
 
         const logsProjeto = await this.app.projetos.getLogPorjeto(this.projeto.id, this.args).toPromise();
+
         const paginas = Math.ceil(this.total / this.size);
 
         this.paginas = Array(paginas).fill(0).map((x, i) => i + 1);
         this.total = logsProjeto.total;
         this.logsProjeto = logsProjeto.itens.map(log => {
-            log.acaoValor = this.status.find(stat => stat.value === log.acaoValor).text;
+            try {
+                log.acaoValor = this.status.find(stat => stat.value === log.acaoValor).text;
+
+            } catch (e) {
+                log.acaoValor = 'Desconhecido';
+            }
             return log;
         });
 
