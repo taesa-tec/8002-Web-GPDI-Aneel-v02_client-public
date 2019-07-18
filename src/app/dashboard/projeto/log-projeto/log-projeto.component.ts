@@ -5,6 +5,8 @@ import {map, mergeMap} from 'rxjs/operators';
 import {zip, of} from 'rxjs';
 import {Projeto, LogProjeto, User, AcaoLog, TotalLog} from '@app/models';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {size} from 'lodash-es';
+
 
 @Component({
     selector: 'app-log-projeto',
@@ -12,7 +14,8 @@ import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.
     styleUrls: ['./log-projeto.component.scss']
 })
 export class LogProjetoComponent implements OnInit {
-
+    static readonly pageOffsetSize = 5;
+    size = 10;
     projeto: Projeto;
     totalLog: TotalLog;
     logsProjeto: Array<LogProjeto>;
@@ -21,7 +24,6 @@ export class LogProjetoComponent implements OnInit {
     total = 0;
     paginas = [1];
     currentPagina = 1;
-    size = 10;
     args: { pag: number, size: number, acao?: string, user?: string };
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
@@ -29,8 +31,23 @@ export class LogProjetoComponent implements OnInit {
     constructor(protected app: AppService, protected route: ActivatedRoute) {
     }
 
-    ngOnInit() {
-        this.loadData();
+    get pageOffset() {
+        return {
+            min: Math.max(1, this.currentPagina - LogProjetoComponent.pageOffsetSize),
+            max: this.total > 0 ? Math.min(Math.floor(this.total / this.size), this.currentPagina + LogProjetoComponent.pageOffsetSize) : 1
+        };
+    }
+
+    async ngOnInit() {
+
+        try {
+            await this.loadData();
+        } catch (e) {
+            console.log(e);
+            this.loading.hide();
+            await this.app.alert('Não foi possível carregar os logs no momento.', 'Erro');
+
+        }
     }
 
     mudarStatus(value: string) {
@@ -72,10 +89,11 @@ export class LogProjetoComponent implements OnInit {
 
         const logsProjeto = await this.app.projetos.getLogPorjeto(this.projeto.id, this.args).toPromise();
 
-        const paginas = Math.ceil(this.total / this.size);
-
-        this.paginas = Array(paginas).fill(0).map((x, i) => i + 1);
         this.total = logsProjeto.total;
+
+        const paginas = Math.ceil(this.total / this.size);
+        this.paginas = Array(paginas).fill(0).map((x, i) => i + 1);
+        //.filter(p => p >= this.pageOffset.min && p <= this.pageOffset.max);
         this.logsProjeto = logsProjeto.itens.map(log => {
             try {
                 log.acaoValor = this.status.find(stat => stat.value === log.acaoValor).text;

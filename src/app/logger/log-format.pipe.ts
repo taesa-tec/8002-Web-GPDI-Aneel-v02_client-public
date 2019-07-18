@@ -14,8 +14,10 @@ export class LogFormatPipe implements PipeTransform {
         switch (type) {
             case 'System.DateTime':
                 return moment(valor).format(args.format || 'DD [de] MMMM [de] YYYY');
+            case 'System.Decimal':
+                return (<Number>valor).toFixed(2).replace('.', '.');
             default:
-                return valor.toString();
+                return (valor && valor.toString()) || '';
 
         }
     }
