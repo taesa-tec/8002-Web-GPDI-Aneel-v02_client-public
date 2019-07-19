@@ -40,6 +40,7 @@ export class ProrrogarComponent implements OnInit {
         this.projeto = await this.app.projetos.getCurrent();
 
         if (this.projeto.isPD) {
+            this.projeto.REST.Etapas.clearCache();
             const etapas = await this.projeto.REST.Etapas.listar<Array<Etapa>>().toPromise();
             const produtos = await this.projeto.REST.Produtos.listar<Array<Produto>>().toPromise();
 

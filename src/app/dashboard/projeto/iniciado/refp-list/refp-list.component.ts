@@ -1,13 +1,13 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {AppService} from '@app/core/services/app.service';
-import {ProjetoFacade} from '@app/facades/index';
-import {Observable, zip, EMPTY, of, Subscription} from 'rxjs';
-import {RegistroREFP, RecursoHumano, RecursoMaterial, Empresa, EmpresaProjeto, CategoriasContabeis} from '@app/models';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
-import {RegistroRefpDetailsComponent} from '@app/dashboard/projeto/iniciado/registro-refp-details/registro-refp-details.component';
-import {map} from 'rxjs/operators';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AppService } from '@app/core/services/app.service';
+import { ProjetoFacade } from '@app/facades/index';
+import { Observable, zip, EMPTY, of, Subscription } from 'rxjs';
+import { RegistroREFP, RecursoHumano, RecursoMaterial, Empresa, EmpresaProjeto, CategoriasContabeis } from '@app/models';
+import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
+import { RegistroRefpDetailsComponent } from '@app/dashboard/projeto/iniciado/registro-refp-details/registro-refp-details.component';
+import { map } from 'rxjs/operators';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-refp-list',
@@ -40,10 +40,7 @@ export class RefpListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-
         this.load();
-
-
     }
 
     ngOnDestroy(): void {
@@ -51,34 +48,16 @@ export class RefpListComponent implements OnInit, OnDestroy {
     }
 
 
-    protected async loadRegistros() {
-        let req: Observable<RegistroREFP[]>;
-        switch (this.status) {
-            case 'pendentes':
-                req = this.projeto.relations.REFP.registrosPendentes();
-                break;
-            case 'reprovados':
-                req = this.projeto.relations.REFP.registrosReprovados();
-                break;
-            case 'aprovados':
-                req = this.projeto.relations.REFP.registrosAprovados();
-                break;
-        }
-
-        this.registros = await req.toPromise();
-
-        this.fillTable();
-
-    }
-
     async load() {
 
         this.loading.show();
         this.projeto = await this.app.projetos.getCurrent();
 
-        [this.recursosHumanos, this.recursosMateriais, this.empresas] = await Promise.all([this.projeto.relations.recursosHumanos.get().toPromise(),
+        [this.recursosHumanos, this.recursosMateriais, this.empresas] = await Promise.all([
+            this.projeto.relations.recursosHumanos.get().toPromise(),
             this.projeto.relations.recursosMateriais.get().toPromise(),
-            this.projeto.relations.empresas.get().toPromise()]);
+            this.projeto.relations.empresas.get().toPromise()
+        ]);
 
 
         const categorias$ = this.projeto.isPD ? of(CategoriasContabeis) : this.app.catalogo.categoriasContabeisGestao().pipe(map(cats => cats.map(c => {
@@ -99,6 +78,25 @@ export class RefpListComponent implements OnInit, OnDestroy {
         this.loading.hide();
     }
 
+    protected async loadRegistros() {
+        let req: Observable<RegistroREFP[]>;
+        switch (this.status) {
+            case 'pendentes':
+                req = this.projeto.relations.REFP.registrosPendentes();
+                break;
+            case 'reprovados':
+                req = this.projeto.relations.REFP.registrosReprovados();
+                break;
+            case 'aprovados':
+                req = this.projeto.relations.REFP.registrosAprovados();
+                break;
+        }
+
+        this.registros = await req.toPromise();
+
+        this.fillTable();
+
+    }
 
     fillTable() {
         this.tableRegistro = this.registros.map(registro => {
@@ -135,14 +133,16 @@ export class RefpListComponent implements OnInit, OnDestroy {
         });
     }
 
-    openDetails(registro) {
-        const ref = this.modal.open(RegistroRefpDetailsComponent, {size: 'lg', backdrop: 'static'});
+    async openDetails(registro) {
+        const ref = this.modal.open(RegistroRefpDetailsComponent, { size: 'lg', backdrop: 'static' });
         ref.componentInstance.setRegistro(registro);
-        ref.result.then(r => {
-            this.load();
-        }, e => {
-            // Só cancelou nada a fazer
-        });
+        try {
+            await ref.result;
+            this.loadRegistros();
+        } catch (e) {
+
+        }
+
     }
 
 }

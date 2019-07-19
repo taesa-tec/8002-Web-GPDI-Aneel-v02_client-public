@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter, ElementRef } from '@angular/core';
-import { AppService } from '@app/core/services/app.service';
-import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RegistroREFP, ResultadoResponse, NoRequest, CategoriasContabeis } from '@app/models';
-import { ProjetoFacade } from '@app/facades/index';
-import { zip, Observable, of } from 'rxjs';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import {Component, OnInit, ViewChild, Input, Output, EventEmitter, ElementRef} from '@angular/core';
+import {AppService} from '@app/core/services/app.service';
+import {RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RegistroREFP, ResultadoResponse, NoRequest, CategoriasContabeis} from '@app/models';
+import {ProjetoFacade} from '@app/facades/index';
+import {zip, Observable, of} from 'rxjs';
+import {FormGroup, FormControl, Validators, FormArray} from '@angular/forms';
 import * as moment from 'moment';
-import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
-import { tap, map } from 'rxjs/operators';
-import { LoggerDirective } from '@app/logger/logger.directive';
+import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {tap, map} from 'rxjs/operators';
+import {LoggerDirective} from '@app/logger/logger.directive';
 
 export abstract class RegistroRecursoBase implements OnInit {
 
@@ -166,9 +166,9 @@ export abstract class RegistroRecursoBase implements OnInit {
     }
 
     removerRegistro() {
-        this.app.confirm('Tem certeza que deseja remover este registro', 'Confirme').then(result => {
+        this.app.confirm('Tem certeza que deseja remover este registro', 'Confirme').then(response => {
 
-            if (result) {
+            if (response) {
                 this.loading.show();
                 this.projeto.relations.REFP.removerRegistro(this.registro.id).subscribe(result => {
                     this.loading.hide();

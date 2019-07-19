@@ -1,4 +1,4 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import * as moment from 'moment';
 
 @Pipe({
@@ -8,7 +8,7 @@ export class LogFormatPipe implements PipeTransform {
 
     transform(item: { type: string; valor: any; titulo: string }, args: any = {}): any {
 
-        const {type, valor} = item;
+        const { type, valor } = item;
 
 
         switch (type) {
@@ -16,6 +16,8 @@ export class LogFormatPipe implements PipeTransform {
                 return moment(valor).format(args.format || 'DD [de] MMMM [de] YYYY');
             case 'System.Decimal':
                 return (<Number>valor).toFixed(2).replace('.', '.');
+            case 'System.Boolean':
+                return valor ? "Sim" : "Não";
             default:
                 return (valor && valor.toString()) || '';
 
