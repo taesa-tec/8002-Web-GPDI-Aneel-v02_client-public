@@ -129,7 +129,7 @@ export class ProjetosService {
     }
 
     async getCurrent(): Promise<ProjetoFacade> {
-        return new Promise(resolve => resolve(this.CurrentProject));
+        return new Promise<ProjetoFacade>(resolve => resolve(this.CurrentProject));
     }
 
     async setCurrent(id: number) {
