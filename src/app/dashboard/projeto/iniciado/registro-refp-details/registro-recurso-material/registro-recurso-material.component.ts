@@ -1,15 +1,15 @@
-import {Component, OnInit, ViewChild, Input, Output, EventEmitter} from '@angular/core';
-import {FormGroup, FormControl, Validators, FormArray} from '@angular/forms';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 
 import * as moment from 'moment';
-import {zip, Observable, of, timer} from 'rxjs';
+import { zip, Observable, of, timer } from 'rxjs';
 
-import {AppService} from '@app/core/services/app.service';
-import {RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RecursoMaterial, AppValidators, CategoriasContabeis, RegistroREFP, ResultadoResponse} from '@app/models';
-import {ProjetoFacade} from '@app/facades/index';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
-import {RegistroRecursoBase} from '../registro-recurso-base';
-import {map} from 'rxjs/operators';
+import { AppService } from '@app/core/services/app.service';
+import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RecursoMaterial, AppValidators, CategoriasContabeis, RegistroREFP, ResultadoResponse } from '@app/models';
+import { ProjetoFacade } from '@app/facades/index';
+import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
+import { RegistroRecursoBase } from '../registro-recurso-base';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-registro-recurso-material',
@@ -71,7 +71,7 @@ export class RegistroRecursoMaterialComponent extends RegistroRecursoBase {
             const c = this.categoriasContabeis.find(cc => String(cc.value) === String(this.categoriaContabil.value));
 
             return c ? c.atividades.map(a => {
-                return {text: a.nome, value: a.id};
+                return { text: a.nome, value: a.id };
             }) : [];
         } catch (e) {
 
@@ -81,7 +81,10 @@ export class RegistroRecursoMaterialComponent extends RegistroRecursoBase {
     }
 
     get observacoes() {
-        return this.registro.obsInternas.filter(obs => obs.texto.trim().length > 0);
+        if (this.registro.obsInternas) {
+            return this.registro.obsInternas.filter(obs => obs.texto !== null && obs.texto.trim().length > 0);
+        }
+        return [];
     }
 
     constructor(protected app: AppService) {
