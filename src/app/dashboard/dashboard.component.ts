@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
-import {AppService} from '@app/core/services/app.service';
-import {User} from '@app/models';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
+import { AppService } from '@app/core/services/app.service';
+import { User } from '@app/models';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -18,6 +18,9 @@ export class DashboardComponent implements OnInit {
     private loading: LoadingComponent;
 
     currentUser: User;
+
+    m: Array<any>;
+
 
     constructor(protected app: AppService, protected modal: NgbModal) {
     }
@@ -46,5 +49,8 @@ export class DashboardComponent implements OnInit {
         });
 
     }
+   
+
+
 
 }

@@ -1,0 +1,162 @@
+<div class="row" *ngIf="!dem">
+    <div class="col">
+      <div class="alert border-dark border">
+        <i class="ta-sync"></i> Não existem aprovações Demandas cadastradas liberadas para o seu usuário. Clique no botão acima para criar uma.
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="gestao-demandas pt-5" *ngIf="dem">
+    <div class="gestao-etapas" *ngFor="let demanda of dem">
+      <div class="gestao-etapa text-white">
+        <div class="gestao-etapa-info">
+          <div class="text-cinza">
+            DEMANDA: {{ demanda.infoDemanda.id }}
+          </div>
+          <div class="text-blue">
+            {{ demanda.infoDemanda.nameDemanda }}
+          </div>
+          <div>
+            <a href="#" class="btn btn-link btn-sm"><i class="ta-edit"></i> EDITAR </a>
+          </div>
+        </div>
+      </div>
+  
+      <div class="gestao-etapa text-white"
+        [ngClass]="{'bg-verde-claro': demanda.etapaDemanda.elaboracao.status ===  'Aprovado'}">
+        <div class="gestao-etapa-info">
+          <div>
+            <div class="text-cinza">
+              Etapa:
+            </div>
+            <div class="">
+              <span class="text-blue">{{ demanda.etapaDemanda.elaboracao.titulo }}</span><br>
+              <span class="text-cinza">{{ demanda.etapaDemanda.elaboracao.aprovador }}</span>
+            </div>
+          </div>
+          <div>
+            <div class=""
+                 [ngClass]="{'bg-verde-claro': demanda.etapaDemanda.elaboracao.status ===  'Aprovado'}">
+              <div class="text-left">
+                <span class="badge" [ngClass]="{'badge-success': demanda.etapaDemanda.elaboracao.status ===  'Aprovado'}">
+                  {{ demanda.etapaDemanda.elaboracao.status }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="gestao-etapa text-white"
+           [ngClass]="{'bg-verde-claro': demanda.etapaDemanda.aprovacaoSuperiorDireto.status ===  'Concluído'}">
+        <div class="gestao-etapa-info">
+          <div>
+            <div class="text-cinza">
+              Etapa:
+            </div>
+            <div class="">
+              <span class="text-blue">{{ demanda.etapaDemanda.aprovacaoSuperiorDireto.titulo }}</span><br>
+              <span class="text-cinza">{{ demanda.etapaDemanda.aprovacaoSuperiorDireto.aprovador }}</span>
+            </div>
+          </div>
+          <div class="">
+            <div class="text-left">
+              <span class="badge"
+                [ngClass]="{'badge-success': demanda.etapaDemanda.aprovacaoSuperiorDireto.status ===  'Concluído'}">
+                {{ demanda.etapaDemanda.aprovacaoSuperiorDireto.status }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="gestao-etapa text-white"
+           [ngClass]="{'bg-red-secundario': demanda.etapaDemanda.aprovacaoRevisor.status ===  'Reprovado'}">
+        <div class="gestao-etapa-info">
+          <div>
+            <div class="text-cinza">
+              Etapa:
+            </div>
+            <div class="">
+              <span class="text-blue">{{ demanda.etapaDemanda.aprovacaoRevisor.titulo }}</span><br>
+              <span class="text-cinza">{{ demanda.etapaDemanda.aprovacaoRevisor.aprovador }}</span>
+            </div>
+          </div>
+          <div>
+            <div class="text-left">
+              <span class="badge" [ngClass]="{'badge-danger': demanda.etapaDemanda.aprovacaoRevisor.status ===  'Reprovado'}">
+                {{ demanda.etapaDemanda.aprovacaoRevisor.status }}
+              </span>
+            </div>
+          </div>
+        </div>
+    </div>
+  
+    <div class="gestao-etapa text-white"
+         [ngClass]="{'bg-cinza-claro': demanda.etapaDemanda.aprovacaoCoordenador.status ===  'Cancelado'}">
+      <div class="gestao-etapa-info">
+        <div>
+          <div class="text-cinza">
+            Etapa:
+          </div>
+          <div class="">
+            <span class="text-blue">{{ demanda.etapaDemanda.aprovacaoCoordenador.titulo }}</span><br>
+            <span class="text-cinza">{{ demanda.etapaDemanda.aprovacaoCoordenador.aprovador }}</span>
+          </div>
+        </div>
+        <div>
+          <div class="text-left">
+            <span class="badge" [ngClass]="{'badge-dark': demanda.etapaDemanda.aprovacaoCoordenador.status ===  'Cancelado'}">
+              {{ demanda.etapaDemanda.aprovacaoCoordenador.status }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="gestao-etapa text-white"
+         [ngClass]="{'bg-blue-light': demanda.etapaDemanda.aprovacaoGerente.status ===  'Andamento'}">
+      <div class="gestao-etapa-info">
+        <div>
+          <div class="text-cinza">
+            Etapa:
+          </div>
+          <div class="">
+            <span class="text-blue">{{ demanda.etapaDemanda.aprovacaoGerente.titulo }}</span><br>
+            <span class="text-cinza">{{ demanda.etapaDemanda.aprovacaoGerente.aprovador }}</span>
+          </div>
+        </div>
+        <div>
+          <div class="text-left">
+            <span class="badge" [ngClass]="{'badge-primary': demanda.etapaDemanda.aprovacaoGerente.status ===  'Andamento'}">
+              {{ demanda.etapaDemanda.aprovacaoGerente.status }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="gestao-etapa text-white"
+         [ngClass]="{'bg-cinza-claro': demanda.etapaDemanda.aprovacaoDiretor.status ===  'Pendente'}">
+      <div class="gestao-etapa-info">
+        <div>
+          <div class="text-cinza">
+            Etapa:
+          </div>
+          <div class="">
+            <span class="text-blue">{{ demanda.etapaDemanda.aprovacaoDiretor.titulo }}</span><br>
+            <span class="text-cinza">{{ demanda.etapaDemanda.aprovacaoDiretor.aprovador }}</span>
+          </div>
+        </div>
+        <div>
+          <div class="text-left">
+            <span class="badge" [ngClass]="{'badge-dark': demanda.etapaDemanda.aprovacaoDiretor.status ===  'Pendente'}">
+              {{ demanda.etapaDemanda.aprovacaoDiretor.status }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>

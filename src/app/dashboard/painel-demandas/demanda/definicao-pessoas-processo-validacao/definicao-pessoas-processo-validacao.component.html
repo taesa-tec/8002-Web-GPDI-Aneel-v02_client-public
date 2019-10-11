@@ -1,0 +1,69 @@
+<div class="row justify-content-between">
+  <div class="col">
+    <h5 class="text-uppercase text-blue font-weight-normal my-4">DEFINIÇÃO PESSOAS PROCESSO VALIDAÇÃO</h5>
+  </div>
+</div>
+
+
+<form [formGroup]="formDefinirPessoas" (ngSubmit)="salvar()">
+
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <label for="superiorDireto">SEU SUPERIOR DIRETO</label>
+        <select name="superiorDireto" id="superiorDireto" class="form-control" formControlName="superiorDireto">
+          <option value="{{ p.id }}" *ngFor="let p of pessoas">{{ p.name }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="form-group">
+        <label for="gerente">GERENTE P&D</label>
+        <select name="gerente" id="gerente" class="form-control" formControlName="gerente">
+          <option value="{{ p.id }}" *ngFor="let p of pessoas">{{ p.name }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <label for="revisor">REVISOR</label>
+        <select name="revisor" id="revisor" class="form-control" formControlName="revisor">
+          <option value="{{ p.id }}" *ngFor="let p of pessoas">{{ p.name }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="form-group">
+        <label for="diretor">DIRETOR P&D</label>
+        <select name="diretor" id="diretor" class="form-control" formControlName="diretor">
+          <option value="{{ p.id }}" *ngFor="let p of pessoas">{{ p.name }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <label for="coordenador">COORDENADOR P&D</label>
+        <select name="coordenador" id="coordenador" class="form-control" formControlName="coordenador">
+          <option value="{{ p.id }}" *ngFor="let p of pessoas">{{ p.name }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-12 text-left pt-5">
+      <button type="submit" class="btn btn-primary" [disabled]="formDefinirPessoas.invalid">
+        <i class="ta-save"></i> Salvar Alterações
+      </button>
+    </div>
+  </div>
+</form>

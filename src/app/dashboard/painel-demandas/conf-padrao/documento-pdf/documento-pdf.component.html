@@ -1,0 +1,94 @@
+<div class="row">
+  <div class="col">
+    <div class="area-pdf">
+      <div class="header-pdf">
+        <table class="w-100">
+          <tr>
+            <td>
+              <span class="logo">
+                <img src="http://localhost:4200/assets/logo-pdf.png" alt="" class="img-fluid">
+              </span>
+            </td>
+            <td>
+              <h5><span class="titulo">ESPECIFICAÇÃO TÉCNICA</span></h5>
+            </td>
+            <td class="info-header">
+              <table class="w-100">
+                <tr>
+                  <td class="codigo">
+                    <span>Documento: <strong>PED-00X/2018</strong></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="paginas">
+                    <span>Folha 2 de 5</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="body-pdf pt-4">
+        <h5>1. Apresentação e Objetivo</h5>
+        <p>A Transmissora Aliança de Energia Elétrica S.A (“TAESA”) apresenta, neste documento, as premissas para
+          elaboração de proposta técnica/comercial para contratação de instituições especializadas em execução de
+          projetos de Pesquisa e Desenvolvimento (“P&D”) regulados pela ANEEL.</p>
+
+        <h5>2. ESCOPO DE FORNECIMENTO</h5>
+        <h6>2.1. TEMA ANEEL</h6>
+        <p>SE04 - Novas tecnologias para inspeção e manutenção de sistemas elétricos.
+          verificar Subtemas Prioritários no site da ANEEL (CLIQUE AQUI)</p>
+
+        <h5>3. ESCOPO DE FORNECIMENTO</h5>
+        <h6>2.1. TEMA ANEEL</h6>
+        <p>SE04 - Novas tecnologias para inspeção e manutenção de sistemas elétricos.
+          verificar Subtemas Prioritários no site da ANEEL (CLIQUE AQUI)</p>
+
+        <hr>
+        <!-- {{dadosPDF}} -->
+        <div [innerHTML]="dadosPDF"></div>
+      </div>
+    </div>
+    <!-- <img src="http://localhost/pdf.png" alt="" class="img-fluid"> -->
+  </div>
+</div>
+
+<div class="row">
+  <div class="col text-right pt-2">
+    <button type="button" class="btn btn-link btn-sm" (click)="download()">
+      <i class="ta-download pr-2"></i>
+      <span>Download PDF</span>
+    </button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <div class="pt-2">
+      <div class="form-group">
+        <label for="">ARQUIVOS COMPLEMENTARES</label>
+      </div>
+
+      <div>
+        <label class="btn btn-link">
+          <i class="ta-upload mx-2 fs-22"></i>
+          <span>Selecionar arquivo</span>
+          <input type="file" multiple name="arquivosComplementares" id="" class="form-control d-none" (change)="anexar($event)" accept=".pdf">
+        </label>
+      </div>
+
+      <div *ngIf="files">
+        <div class="form-group">
+          <label for="">Arquivos anexados</label>
+        </div>
+        <span class="btn btn-link" *ngFor="let file of files; let i = index">
+            {{ file.name }}
+          <i class="ta-cancel-circle"></i>
+        </span> <br>
+      </div>
+
+    </div>
+  </div>
+</div>

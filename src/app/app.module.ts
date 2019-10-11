@@ -31,7 +31,6 @@ moment.locale('pt-br');
         UsersModule,
         LoggerModule,
         AppRoutingModule,
-
     ],
     exports: [SharedModule],
     providers: [
