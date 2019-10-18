@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Projeto, Empresa, User } from '@app/models';
 import { FormGroup, FormControl } from '@angular/forms';
-import { CatalogsService } from '@app/core/services/catalogs.service';
+import { CatalogsService } from '@app/services/catalogs.service';
 import { filter } from 'lodash-es';
 import { ActivatedRoute } from '@angular/router';
-import { AppService } from '@app/core/services/app.service';
+import { AppService } from '@app/services/app.service';
 import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NovoProjetoComponent } from '@app/core/shared/novo-projeto/novo-projeto.component';

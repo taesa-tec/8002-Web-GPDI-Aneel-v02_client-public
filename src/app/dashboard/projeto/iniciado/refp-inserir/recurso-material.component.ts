@@ -4,7 +4,7 @@ import {FormGroup, FormControl, Validators, FormArray} from '@angular/forms';
 import * as moment from 'moment';
 import {zip, of} from 'rxjs';
 
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RecursoMaterial, AppValidators, CategoriasContabeis, NoRequest} from '@app/models';
 import {ProjetoFacade, EmpresaProjetoFacade} from '@app/facades/index';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
@@ -151,19 +151,19 @@ export class RecursoMaterialComponent implements OnInit {
     validate() {
         this.errors = [];
         if (isNil(this.etapas) || this.etapas.length === 0) {
-            this.errors.push(new Error(`Este projeto ainda não tem nenhuma etapa cadastrada. 
-            Para inserir um registro REFP é necessário ter etapas cadastradas já que cada registro é vinculado a uma etapa. 
+            this.errors.push(new Error(`Este projeto ainda não tem nenhuma etapa cadastrada.
+            Para inserir um registro REFP é necessário ter etapas cadastradas já que cada registro é vinculado a uma etapa.
             Por favor, volte para o Planejamento do projeto e cadastre alguma etapa para continuar.`));
 
         }
         if (isNil(this.recursos) || this.recursos.length === 0) {
-            this.errors.push(new Error(`Este projeto ainda não tem nenhum Recurso Material cadastrado. 
-            Para inserir um registro REFP é necessário ter Recursos Materiais cadastrados já que cada registro é vinculado a um Recurso Material específico. 
+            this.errors.push(new Error(`Este projeto ainda não tem nenhum Recurso Material cadastrado.
+            Para inserir um registro REFP é necessário ter Recursos Materiais cadastrados já que cada registro é vinculado a um Recurso Material específico.
             Por favor, volte para o Planejamento do projeto e cadastre algum Recurso Material para continuar.`));
         }
         if (isNil(this.empresas) || this.empresas.length === 0) {
-            this.errors.push(new Error(`Este projeto ainda não tem nenhuma Empresa cadastrada. 
-            Para inserir um registro REFP é necessário ter Empresas cadastradas já que cada registro é vinculado a uma Empresa específica. 
+            this.errors.push(new Error(`Este projeto ainda não tem nenhuma Empresa cadastrada.
+            Para inserir um registro REFP é necessário ter Empresas cadastradas já que cada registro é vinculado a uma Empresa específica.
             Por favor, volte para o Planejamento do projeto e cadastre alguma Empresa para continuar.`));
         }
 
@@ -225,7 +225,7 @@ export class RecursoMaterialComponent implements OnInit {
             beneficiado: new FormControl('', [Validators.required]),
             cnpjBeneficiado: new FormControl('', [Validators.required, AppValidators.cnpjOrCpf]),
             // categoriaContabil: new FormControl(''),
-            // 
+            //
             equiparLabExistente: new FormControl(''),
             equiparLabNovo: new FormControl(''),
             itemNacional: new FormControl(''),

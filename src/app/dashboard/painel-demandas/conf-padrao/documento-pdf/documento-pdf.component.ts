@@ -1,6 +1,6 @@
-import { AppService } from './../../../../core/services/app.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { UploadFilesService } from '../services/upload-files.service';
+import { AppService } from '@app/services/app.service';
 
 @Component({
   selector: 'app-documento-pdf',
@@ -36,7 +36,7 @@ export class DocumentoPdfComponent implements OnInit {
       window.URL.revokeObjectURL(blob);
       link.remove();
     });
-    
+
   }
 
   anexar(event) {

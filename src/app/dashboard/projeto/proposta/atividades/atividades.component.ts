@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {ProjetoFacade} from '@app/facades/index';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 import {ProjetoGestaoAtividades} from '@app/models';
@@ -22,7 +22,7 @@ export class AtividadesComponent implements OnInit {
             resFormName: 'resDedicacaoHorario'
         },
         {
-            titulo: `Participação dos membros da equipe de gestão em eventos sobre pesquisa, 
+            titulo: `Participação dos membros da equipe de gestão em eventos sobre pesquisa,
             desenvolvimento e inovação relacionados ao setor elétrico e/ou em cursos de gestão tecnológica e da informação.`,
             formName: 'participacaoMembros',
             resFormName: 'resParticipacaoMembros',

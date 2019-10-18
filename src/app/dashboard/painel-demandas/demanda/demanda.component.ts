@@ -1,4 +1,4 @@
-import { AppService } from './../../../core/services/app.service';
+import { AppService } from '@app/services/app.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Component, OnInit, ViewChild } from '@angular/core';
 

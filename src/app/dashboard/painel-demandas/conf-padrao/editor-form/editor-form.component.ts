@@ -1,4 +1,4 @@
-import { AppService } from '@app/core/services/app.service';
+import { AppService } from '@app/services/app.service';
 import { CONFIG } from './config-editor';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';

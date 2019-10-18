@@ -1,4 +1,4 @@
-import { AppService } from './../../../../core/services/app.service';
+import { AppService } from '@app/services/app.service';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -57,8 +57,8 @@ export class EquipeComponent implements OnInit {
   add() {
     //(<FormArray>this.formEquipe.get('equipeOutros')).push(new FormControl('', [Validators.required]));
     this.equipeOutros.push(
-      new FormGroup({ 
-        id: new FormControl("", Validators.required) 
+      new FormGroup({
+        id: new FormControl("", Validators.required)
       })
     );
   }

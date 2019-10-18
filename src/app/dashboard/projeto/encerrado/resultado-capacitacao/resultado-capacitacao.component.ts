@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AppService } from '@app/core/services/app.service';
+import { AppService } from '@app/services/app.service';
 import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
 import { ResultadoBase } from '../resultado-base';
 import { ResultadoCapacitacaoComponent as Editor } from '../../common/editors/resultado-capacitacao/resultado-capacitacao.component';

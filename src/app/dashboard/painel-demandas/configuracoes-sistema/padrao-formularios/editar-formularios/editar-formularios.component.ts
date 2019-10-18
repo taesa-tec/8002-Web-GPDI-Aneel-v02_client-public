@@ -1,6 +1,6 @@
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AppService } from './../../../../../core/services/app.service';
+import { AppService } from '@app/services/app.service';
 import { Router } from "@angular/router";
 import { CONFIG } from './config-editor';
 import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';

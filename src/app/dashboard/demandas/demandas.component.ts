@@ -1,8 +1,8 @@
 import { TodasDemandas } from '@app/dashboard/demandas/demandas-teste';
-import {AppService} from '@app/core/services/app.service';
 import {Component, OnInit} from '@angular/core';
 import {NovaDemandaComponent} from "@app/dashboard/demandas/nova-demanda/nova-demanda.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { AppService } from '@app/services/app.service';
 
 
 @Component({

@@ -1,4 +1,4 @@
-import { AppService } from './../../../core/services/app.service';
+import { AppService } from '@app/services/app.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

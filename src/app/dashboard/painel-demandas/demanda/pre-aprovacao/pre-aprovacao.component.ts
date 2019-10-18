@@ -1,4 +1,4 @@
-import { AppService } from '@app/core/services/app.service';
+import { AppService } from '@app/services/app.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { validateConfig } from '@angular/router/src/config';

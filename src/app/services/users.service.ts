@@ -3,8 +3,8 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {CreateUserRequest, ResultadoResponse, User, UserProjeto, NiveisUsuarios, Permissao, Projeto, Roles, UserRole} from '@app/models';
 import {Observable, Subject, of, zip, BehaviorSubject, timer} from 'rxjs';
 import {share, delay, filter, tap} from 'rxjs/operators';
-import {AuthService} from '@app/core/services/auth.service';
-import {CatalogsService} from '@app/core/services/catalogs.service';
+import {AuthService} from '@app/services/auth.service';
+import {CatalogsService} from '@app/services/catalogs.service';
 
 @Injectable({
     providedIn: 'root'

@@ -5,7 +5,7 @@ import {
     ActivatedRouteSnapshot, CanActivate, UrlTree
 } from '@angular/router';
 import {Projeto} from '@app/models';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {HttpErrorResponse} from '@angular/common/http';
 
 @Injectable({

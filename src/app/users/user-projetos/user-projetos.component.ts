@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {zip, from, Observable} from 'rxjs';
 import {keyBy, mapValues} from 'lodash-es';
 import {FormGroup, FormControl} from '@angular/forms';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 
 @Component({
     selector: 'app-user-projetos',

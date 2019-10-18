@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ProdutoFormComponent} from '@app/dashboard/projeto/common/produtos/produto-form/produto-form.component';
 import {ActivatedRoute} from '@angular/router';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {map} from 'rxjs/operators';
 import {Projeto, Produto, Etapa} from '@app/models';
 import {zip} from 'rxjs';

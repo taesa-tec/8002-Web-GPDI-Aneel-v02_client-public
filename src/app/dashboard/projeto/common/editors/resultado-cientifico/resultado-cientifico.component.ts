@@ -1,5 +1,5 @@
 import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {EditorResultado} from '../editor-resultado-base';
 import {ResultadoProducao, TiposProducaoTC, AppValidators, NoRequest, ResultadoResponse} from '@app/models';

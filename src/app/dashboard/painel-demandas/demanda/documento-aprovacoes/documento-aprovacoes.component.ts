@@ -1,5 +1,4 @@
-import { environment } from './../../../../../environments/environment';
-import { AppService } from './../../../../core/services/app.service';
+import { AppService } from '@app/services/app.service';
 import { Component, OnInit } from '@angular/core';
 import { SafeUrl } from '@angular/platform-browser';
 

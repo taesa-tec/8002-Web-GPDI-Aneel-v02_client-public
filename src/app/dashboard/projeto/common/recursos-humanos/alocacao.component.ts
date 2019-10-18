@@ -1,10 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 
 import {AlocarRecursoHumanoFormComponent} from '@app/dashboard/projeto/common/recursos-humanos/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
-import {ProjetosService} from '@app/core/services/projetos.service';
+import {ProjetosService} from '@app/services/projetos.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ActivatedRoute} from '@angular/router';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 import {map, mergeMap} from 'rxjs/operators';
 import {zip, of} from 'rxjs';

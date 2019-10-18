@@ -1,5 +1,5 @@
 import {Directive, HostListener, Input} from '@angular/core';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {FileUploaded} from '@app/models';
 
 @Directive({

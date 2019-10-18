@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {ProjetoFacade} from '@app/facades/index';
 import {RelatorioFinal, ResultadoResponse, NoRequest, FileUploaded} from '@app/models';
 import {FormGroup, FormControl, Validators} from '@angular/forms';

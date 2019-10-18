@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {zip, of} from 'rxjs';
 
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {Projeto, OrcamentosEmpresas, Etapa, TextValue, CategoriasContabeis, ExtratoItem, ResultadoResponse, Empresa, EmpresaProjeto} from '@app/models';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
