@@ -4,7 +4,7 @@ import { UploadFilesService } from '../services/upload-files.service';
 
 @Component({
   selector: 'app-documento-pdf',
-  templateUrl: './documento-pdf.component.html',
+  templateUrl: './pdf.component.html',
   styleUrls: ['./documento-pdf.component.scss']
 })
 export class DocumentoPdfComponent implements OnInit {
