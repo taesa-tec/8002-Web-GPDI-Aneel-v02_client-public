@@ -1,7 +1,7 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {Projeto, Empresa} from '@app/models';
 import {FormGroup, FormControl} from '@angular/forms';
-import {CatalogsService} from '@app/core/services/catalogs.service';
+import {CatalogsService} from '@app/services/catalogs.service';
 import {filter} from 'lodash-es';
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AppService } from '@app/core/services/app.service';
+import { AppService } from '@app/services/app.service';
 import { ProjetoFacade } from '@app/facades/index';
 import { Observable, zip, EMPTY, of, Subscription } from 'rxjs';
 import { RegistroREFP, RecursoHumano, RecursoMaterial, Empresa, EmpresaProjeto, CategoriasContabeis } from '@app/models';

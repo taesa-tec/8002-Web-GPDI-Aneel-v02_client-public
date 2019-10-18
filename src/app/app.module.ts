@@ -8,7 +8,7 @@ import {AuthModule} from './auth/auth.module';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {SharedModule} from '@app/core/shared/shared.module';
 import {UsersModule} from './users/users.module';
-import {AppService} from './core/services/app.service';
+import {AppService} from './services/app.service';
 import {registerLocaleData} from '@angular/common';
 import * as moment from 'moment';
 import {HttpClientModule} from '@angular/common/http';

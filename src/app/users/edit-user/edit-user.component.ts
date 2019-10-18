@@ -4,7 +4,7 @@ import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {Empresa, ResultadoResponse, User, AppValidators} from '@app/models';
 import {Observable, Observer} from 'rxjs';
 import {ActivatedRouteSnapshot, ActivatedRoute, Router} from '@angular/router';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 
 
 @Component({

@@ -8,7 +8,7 @@ import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.
 import {Observable, Observer, zip, of, concat, throwError, timer, empty} from 'rxjs';
 import {UserProjetosComponent} from '../user-projetos/user-projetos.component';
 import {mergeMap, last} from 'rxjs/operators';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 
 @Component({
     selector: 'app-form',

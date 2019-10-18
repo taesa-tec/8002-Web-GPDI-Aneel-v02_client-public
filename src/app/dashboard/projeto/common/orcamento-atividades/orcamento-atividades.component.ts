@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {ProjetoFacade, EmpresaProjetoFacade} from '@app/facades/index';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {ExtratoItem, EmpresaProjeto, TextValue, CategoriasContabeis} from '@app/models';

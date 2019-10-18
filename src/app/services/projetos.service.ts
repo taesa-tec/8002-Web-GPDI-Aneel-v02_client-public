@@ -28,7 +28,7 @@ import {
 import {Subject, Observable, BehaviorSubject, of} from 'rxjs';
 import {tap, share, map} from 'rxjs/operators';
 import {ProjetoFacade} from '@app/facades';
-import {FileService} from '@app/core/services/file.service';
+import {FileService} from '@app/services/file.service';
 import {RequestCacheService} from '@app/request-cache.service';
 
 class ProjetoREST {

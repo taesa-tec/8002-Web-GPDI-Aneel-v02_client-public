@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ResultadoBase} from '../resultado-base';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 
 import {ResultadoCientificoComponent as Editor} from '../../common/editors/resultado-cientifico/resultado-cientifico.component';
 import {TiposProducaoTC} from '@app/models';

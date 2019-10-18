@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MessageAlert, User} from '@app/models';
 import {Observable} from 'rxjs';
-import {UsersService} from '@app/core/services/users.service';
+import {UsersService} from '@app/services/users.service';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 
 const alertMessages: { [propName: string]: MessageAlert } = {

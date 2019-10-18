@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import * as moment from 'moment';
 import { zip, Observable, of, timer } from 'rxjs';
 
-import { AppService } from '@app/core/services/app.service';
+import { AppService } from '@app/services/app.service';
 import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RecursoMaterial, AppValidators, CategoriasContabeis, RegistroREFP, ResultadoResponse } from '@app/models';
 import { ProjetoFacade } from '@app/facades/index';
 import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
@@ -122,7 +122,7 @@ export class RegistroRecursoMaterialComponent extends RegistroRecursoBase {
             valorUnitario: new FormControl(this.registro.valorUnitario, [Validators.required]),
             especificacaoTecnica: new FormControl(this.registro.especificacaoTecnica, [Validators.required]),
             funcaoRecurso: new FormControl(this.registro.funcaoRecurso, [Validators.required]),
-            // 
+            //
             equiparLabExistente: new FormControl(this.registro.equiparLabExistente),
             equiparLabNovo: new FormControl(this.registro.equiparLabNovo),
             itemNacional: new FormControl(this.registro.itemNacional),

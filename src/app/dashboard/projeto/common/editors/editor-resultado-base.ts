@@ -1,6 +1,6 @@
 import {FormGroup, FormControl, AbstractControlOptions, AsyncValidatorFn, ValidatorFn, Validators} from '@angular/forms';
 import {ProjetoFacade, ProjetoREST} from '@app/facades/index';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {OnInit, ViewChild} from '@angular/core';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';

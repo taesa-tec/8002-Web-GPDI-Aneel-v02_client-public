@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {EditorResultado} from '../editor-resultado-base';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {ResultadoInfra, TiposInfraestrutura, AppValidators, ResultadoResponse} from '@app/models';
 import {Validators} from '@angular/forms';

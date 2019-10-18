@@ -2,8 +2,8 @@ import {Injectable, Inject} from '@angular/core';
 import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {tap} from 'rxjs/operators';
-import {AppService} from '@app/core/services/app.service';
-import {AuthService} from '@app/core/services/auth.service';
+import {AppService} from '@app/services/app.service';
+import {AuthService} from '@app/services/auth.service';
 
 
 @Injectable()

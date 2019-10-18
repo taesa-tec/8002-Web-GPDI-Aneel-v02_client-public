@@ -1,6 +1,6 @@
 import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import {EditorResultado} from '../editor-resultado-base';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Observable, of} from 'rxjs';
 import {TiposCapacitacao, RecursoHumano, AppValidators, NoRequest, ResultadoResponse, ResultadoCapacitacao} from '@app/models';
