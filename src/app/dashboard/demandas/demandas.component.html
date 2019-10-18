@@ -1,27 +1,38 @@
 <div class="row justify-content-between">
-    <div class="col">
-        <h5 class="text-uppercase text-blue font-weight-normal my-4">DEMANDAS, NESCESSIDADES E PROBLEMAS</h5>
-    </div>
-    <div class="col-auto">
-        <button class="btn btn-outline-primary" type="button" (click)="novaDemanda()">
-            <i class="ta-plus-circle fs-24 align-middle align-middle"></i>
-            Nova Demanda
-        </button>
-    </div>
+  <div class="col">
+    <h5 class="text-uppercase text-blue font-weight-normal my-4">
+      DEMANDAS, NESCESSIDADES E PROBLEMAS
+    </h5>
+  </div>
+  <div class="col-auto">
+    <button
+      class="btn btn-outline-primary"
+      type="button"
+      (click)="novaDemanda()"
+    >
+      <i class="ta-plus-circle fs-24 align-middle align-middle"></i>
+      Nova Demanda
+    </button>
+  </div>
 </div>
 
 <div class="row">
-    <div class="col-12">
-        <ul class="nav nav-bar-row nav-justified pt-3">
-            <ng-container *ngFor="let route of m">
-                <li class="nav-item">
-                    <a routerLinkActive="active" class="nav-link" [routerLink]="route.path">{{route.text}} ({{ route.qtd }})</a>
-                </li>
-            </ng-container>
-        </ul>
-    </div>
+  <div class="col-12">
+    <ul class="nav nav-bar-row nav-justified pt-3">
+      <ng-container *ngFor="let route of m">
+        <li class="nav-item">
+          <a
+            routerLinkActive="active"
+            class="nav-link"
+            [routerLink]="route.path"
+            >{{ route.text }} ({{ route.qtd }})</a
+          >
+        </li>
+      </ng-container>
+    </ul>
+  </div>
 </div>
 
 <div class="wrap-outlet-projeto">
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>

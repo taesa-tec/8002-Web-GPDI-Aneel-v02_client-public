@@ -11,6 +11,9 @@ import { GestaoDeDemandasComponent } from './demandas.component';
 import { SharedModule } from '@app/core/shared/shared.module';
 import { ElaboracaoComponent } from './elaboracao/elaboracao.component';
 import { ReactiveFormsModule } from "@angular/forms";
+import { DemandasListComponent } from './demandas-list/demandas-list.component';
+import { DemandaProgressComponent } from './demanda-progress/demanda-progress.component';
+import { DemandaProgressEtapaComponent } from './demanda-progress/demanda-progress-etapa/demanda-progress-etapa.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +23,10 @@ import { ReactiveFormsModule } from "@angular/forms";
     GestaoDeDemandasComponent,
     ElaboracaoComponent,
     NovaDemandaComponent,
+    DemandasListComponent,
+    DemandaProgressComponent,
+    DemandaProgressEtapaComponent
+
   ],
   exports: [
     GestaoDeDemandasComponent

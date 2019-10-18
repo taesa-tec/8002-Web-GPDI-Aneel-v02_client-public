@@ -1,0 +1,21 @@
+<div class="demanda-progresso d-flex">
+  <div class="demanda-chunk demanda-info">
+    <header class="text-cinza text-uppercase fs-12 font-weight-bold">
+      Demanda: XXX
+    </header>
+    <main>
+      <div class="text-blue fs-14 font-weight-medium">
+        Faixa de Servidão e Análise Automática de Ocorrências
+      </div>
+    </main>
+    <footer>
+      <a href="" class="text-blue"><i class="ta-edit"></i> Editar</a>
+    </footer>
+  </div>
+  <app-demanda-progress-etapa
+    *ngFor="let etapa of etapas"
+    [etapa]="etapa"
+    [etapaDemanda]="etapaAtual"
+    [etapaDemandaStatus]="etapaAtualStatus"
+  ></app-demanda-progress-etapa>
+</div>

@@ -6,6 +6,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { GestaoDeDemandasComponent } from './demandas.component';
 import { ElaboracaoComponent } from './elaboracao/elaboracao.component';
+import { DemandasListComponent } from './demandas-list/demandas-list.component';
+import { DemandaEtapa, DemandaEtapaStatus } from './commons';
 
 const routes: Routes = [
   {
@@ -19,24 +21,30 @@ const routes: Routes = [
       },
       {
         path: 'elaboracao',
-        component: ElaboracaoComponent,
+        component: DemandasListComponent,
+        data: {
+          demandaEtapaStatus: DemandaEtapaStatus.EmElaboracao
+        }
       },
       {
         path: 'reprovadas',
-        component: ReprovadasComponent,
+        component: DemandasListComponent,
+        data: {
+          demandaEtapaStatus: DemandaEtapaStatus.Reprovada
+        }
       },
       {
         path: 'aprovadas',
-        component: AprovadasComponent,
+        component: DemandasListComponent,
         data: {
-          text: 'Aprovadas'
+          demandaEtapaStatus: DemandaEtapaStatus.Aprovada
         }
       },
       {
         path: 'enviadas-para-captacao',
-        component: EnviadasParaCaptacaoComponent,
+        component: DemandasListComponent,
         data: {
-          text: 'Enviadas Para Captação'
+          demandaEtapaStatus: DemandaEtapaStatus.Concluido
         }
       },
     ],
