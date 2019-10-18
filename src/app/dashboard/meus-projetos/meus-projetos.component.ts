@@ -4,7 +4,7 @@ import {Subscription, zip} from 'rxjs';
 import {NovoProjetoComponent} from '@app/core/shared/novo-projeto/novo-projeto.component';
 import {Projeto, User, Roles, UserRole} from '@app/models';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {map} from 'rxjs/operators';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 

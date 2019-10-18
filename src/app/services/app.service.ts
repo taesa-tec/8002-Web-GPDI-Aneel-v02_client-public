@@ -1,17 +1,17 @@
 import {Injectable, Inject} from '@angular/core';
 import {NgbModal, NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
-import {AlertComponent} from '../shared/entry-components/alert/alert.component';
-import {ConfirmComponent} from '../shared/entry-components/confirm/confirm.component';
-import {CatalogsService} from '@app/core/services/catalogs.service';
-import {ProjetosService} from '@app/core/services/projetos.service';
-import {AuthService} from '@app/core/services/auth.service';
-import {FileService} from '@app/core/services/file.service';
-import {UsersService} from '@app/core/services/users.service';
-import {PromptComponent} from '../shared/entry-components/prompt/prompt.component';
+import {AlertComponent} from '../core/shared/entry-components/alert/alert.component';
+import {ConfirmComponent} from '../core/shared/entry-components/confirm/confirm.component';
+import {CatalogsService} from '@app/services/catalogs.service';
+import {ProjetosService} from '@app/services/projetos.service';
+import {AuthService} from '@app/services/auth.service';
+import {FileService} from '@app/services/file.service';
+import {UsersService} from '@app/services/users.service';
+import {PromptComponent} from '../core/shared/entry-components/prompt/prompt.component';
 import {Router} from '@angular/router';
 import {environment} from '@env/environment';
 import {ModalPageComponent} from '@app/core/shared/entry-components/modal-page/modal-page.component';
-import {LoggerService} from '@app/core/services/logger.service';
+import {LoggerService} from '@app/services/logger.service';
 
 @Injectable({
     providedIn: 'root'

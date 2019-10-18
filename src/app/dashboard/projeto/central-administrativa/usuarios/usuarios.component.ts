@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Subscription, Observable, of} from 'rxjs';
 import {Projeto, FileUploaded, User, UserProjeto} from '@app/models';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {zip} from 'rxjs';
 import {FormArray, FormGroup, FormControl} from '@angular/forms';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';

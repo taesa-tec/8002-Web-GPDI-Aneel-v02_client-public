@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {EtapaFormComponent} from '@app/dashboard/projeto/common/etapa-form/etapa-form.component';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {zip} from 'rxjs';
 import {Projeto, Etapa} from '@app/models';
 import {FormGroup, FormControl} from '@angular/forms';

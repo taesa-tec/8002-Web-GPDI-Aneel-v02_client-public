@@ -3,7 +3,7 @@ import {User, Roles, Empresa, ResultadoResponse, Projetos, AppValidators} from '
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 import {Router} from '@angular/router';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 
 @Component({
     selector: 'app-edit-me',

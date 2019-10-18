@@ -4,7 +4,7 @@ import {FormGroup, FormControl, Validators, AbstractControl, ValidationErrors} f
 
 import {ResultadoResponse, AppValidators} from '@app/models';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
-import {AuthService} from '@app/core/services/auth.service';
+import {AuthService} from '@app/services/auth.service';
 
 @Component({
     selector: 'app-newpass',

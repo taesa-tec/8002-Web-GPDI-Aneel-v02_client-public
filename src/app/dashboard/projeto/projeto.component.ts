@@ -3,7 +3,7 @@ import {Routes, ActivatedRoute, RouterOutlet, NavigationEnd, NavigationCancel, N
 
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {ProjetoFacade} from '@app/facades/index';
 import {filter} from 'rxjs/operators';
 import {NiveisUsuarios, AppMenu} from '@app/models';

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {ProjetosService} from '@app/core/services/projetos.service';
-import {UsersService} from '@app/core/services/users.service';
+import {ProjetosService} from '@app/services/projetos.service';
+import {UsersService} from '@app/services/users.service';
 import {ProjetoFacade} from '@app/facades';
 import {LogItem, User} from '@app/models';
 import {HttpRequest} from '@angular/common/http';

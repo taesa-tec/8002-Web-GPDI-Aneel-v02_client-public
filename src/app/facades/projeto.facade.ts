@@ -3,7 +3,7 @@ import {tap, map} from 'rxjs/operators';
 
 import {Projeto, Empresa, ProjetoStatus, RegistroREFP, ProrrogarProjetoRequest, ResultadoResponse, XmlType} from '@app/models';
 import {GenericFacade} from './generic.facade';
-import {ProjetosService} from '@app/core/services/projetos.service';
+import {ProjetosService} from '@app/services/projetos.service';
 import {EmpresaProjetoFacade} from './empresa.facade';
 import {RecursoHumanoFacade} from './recurso-humano.facade';
 

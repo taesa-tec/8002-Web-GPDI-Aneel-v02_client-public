@@ -3,7 +3,7 @@ import {Routes, ActivatedRoute} from '@angular/router';
 import {map, filter} from 'rxjs/operators';
 import {zip} from 'rxjs';
 import {Projeto, AppMenu, NiveisUsuarios} from '@app/models';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {ProjetoFacade} from '@app/facades/index';
 
 @Component({

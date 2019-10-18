@@ -3,7 +3,7 @@ import {AlocarRecursoMaterialFormComponent} from '@app/dashboard/projeto/common/
 import {mergeMap} from 'rxjs/operators';
 import {AlocacaoRM, CategoriasContabeis} from '@app/models';
 import {zip, of} from 'rxjs';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 import {EmpresaProjetoFacade, ProjetoFacade} from '@app/facades/index';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';

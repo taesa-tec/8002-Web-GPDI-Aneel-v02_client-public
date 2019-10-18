@@ -3,7 +3,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Produto, TiposProdutos, FasesCadeiaInovacao, Projeto} from '@app/models';
 import {FormGroup, FormControl, Validators, AbstractControl} from '@angular/forms';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {zip} from 'rxjs';
 import {LoggerDirective} from '@app/logger/logger.directive';
 

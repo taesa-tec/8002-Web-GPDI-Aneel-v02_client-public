@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ProjetoFacade} from '@app/facades/index';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 
 @Component({
     selector: 'app-alterar-projeto',
