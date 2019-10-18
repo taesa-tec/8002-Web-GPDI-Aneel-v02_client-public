@@ -1,6 +1,6 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {Projeto, Empresa} from '@app/models';
-import {CatalogsService} from '@app/core/services/catalogs.service';
+import {CatalogsService} from '@app/services/catalogs.service';
 import {indexOf, find} from 'lodash-es';
 import {zip} from 'rxjs';
 import {map} from 'rxjs/operators';

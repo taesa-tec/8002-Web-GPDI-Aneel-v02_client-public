@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EditorResultado} from '../editor-resultado-base';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {PropriedadeIntelectual, RecursoHumano, Empresa, EmpresaProjeto, AppValidators, ResultadoPropriedade, ResultadoResponse} from '@app/models';
 import {Observable, zip} from 'rxjs';
 import {FormGroup, FormArray, FormControl, Validators, ValidationErrors} from '@angular/forms';

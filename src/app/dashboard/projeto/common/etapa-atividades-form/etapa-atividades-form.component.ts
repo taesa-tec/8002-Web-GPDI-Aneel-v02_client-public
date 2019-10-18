@@ -3,7 +3,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Produto, EtapaProduto, Projeto, EditEtapaRequest, CriarEtapaRequest, Etapa} from '@app/models';
 import {FormGroup, FormArray, FormControl, Validators} from '@angular/forms';
 import {zip, timer} from 'rxjs';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 import {ProjetoFacade} from '@app/facades/index';
 import {LoggerDirective} from '@app/logger/logger.directive';

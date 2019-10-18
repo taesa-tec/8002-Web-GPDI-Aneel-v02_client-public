@@ -1,7 +1,7 @@
 import {Component, OnInit, Input, ViewChild, AfterViewInit} from '@angular/core';
 import {NgbActiveModal, NgbTabChangeEvent, NgbTabset} from '@ng-bootstrap/ng-bootstrap';
 import {EmpresaProjeto, Projeto, Empresa, UF, AppValidators} from '@app/models';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {FormGroup, FormControl} from '@angular/forms';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 import {HttpErrorResponse} from '@angular/common/http';

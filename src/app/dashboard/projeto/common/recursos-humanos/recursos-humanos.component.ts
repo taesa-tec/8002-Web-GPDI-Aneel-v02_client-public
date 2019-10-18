@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {RecursoHumanoFormComponent} from '@app/dashboard/projeto/common/recursos-humanos/recurso-humano-form/recurso-humano-form.component';
 import {map, mergeMap} from 'rxjs/operators';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {zip, of} from 'rxjs';
 import {Projeto, RecursoHumano, Funcoes, Graduacoes, EmpresaProjeto} from '@app/models';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';

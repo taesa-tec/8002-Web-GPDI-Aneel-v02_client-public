@@ -4,7 +4,7 @@ import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {ProjetoStatus, Empresa, ResultadoResponse} from '@app/models';
 import {Observable} from 'rxjs';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {LoggerDirective} from '@app/logger/logger.directive';
 
 @Component({

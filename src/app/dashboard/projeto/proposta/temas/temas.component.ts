@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild, AfterViewInit, ElementRef} from '@angular/core';
-import {CatalogsService} from '@app/core/services/catalogs.service';
-import {AppService} from '@app/core/services/app.service';
+import {CatalogsService} from '@app/services/catalogs.service';
+import {AppService} from '@app/services/app.service';
 import {ActivatedRoute} from '@angular/router';
-import {ProjetosService} from '@app/core/services/projetos.service';
+import {ProjetosService} from '@app/services/projetos.service';
 import {map, mergeMap, tap} from 'rxjs/operators';
 import {zip, of} from 'rxjs';
 import {Projeto, Tema, SubTema, SubTemaRequest, TemaProjeto, NoRequest, ResultadoResponse, CatalogTema, NiveisUsuarios} from '@app/models';

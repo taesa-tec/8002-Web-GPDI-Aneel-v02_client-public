@@ -5,7 +5,7 @@ import {Projeto, RecursoMaterial, CategoriasContabeis} from '@app/models';
 import {ActivatedRoute} from '@angular/router';
 import {map, mergeMap} from 'rxjs/operators';
 import {zip, of} from 'rxjs';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 import {ProjetoFacade} from '@app/facades/projeto.facade';
 

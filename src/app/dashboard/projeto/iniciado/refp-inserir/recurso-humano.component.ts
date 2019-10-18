@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, NoRequest} from '@app/models';
 import {ProjetoFacade, EmpresaProjetoFacade} from '@app/facades/index';
 import {zip, of} from 'rxjs';
@@ -115,20 +115,20 @@ export class RecursoHumanoComponent implements OnInit {
     validate() {
         this.errors = [];
         if (isNil(this.etapas) || this.etapas.length === 0) {
-            this.errors.push(new Error(`Este projeto ainda não tem nenhuma etapa cadastrada. 
-            Para inserir um registro REFP é necessário ter etapas cadastradas já que cada registro é vinculado a uma etapa. 
+            this.errors.push(new Error(`Este projeto ainda não tem nenhuma etapa cadastrada.
+            Para inserir um registro REFP é necessário ter etapas cadastradas já que cada registro é vinculado a uma etapa.
             Por favor, volte para o Planejamento do projeto e cadastre alguma etapa para continuar.`));
 
         }
         if (isNil(this.recursos) || this.recursos.length === 0) {
             this.errors.push(new Error(`
-            Este projeto ainda não tem nenhum Recurso Humano cadastrado. 
-            Para inserir um registro REFP é necessário ter Recursos Humanos cadastrados já que cada registro é vinculado a um Recurso Humano específico. 
+            Este projeto ainda não tem nenhum Recurso Humano cadastrado.
+            Para inserir um registro REFP é necessário ter Recursos Humanos cadastrados já que cada registro é vinculado a um Recurso Humano específico.
             Por favor, volte para o Planejamento do projeto e cadastre algum Recurso Humano para continuar.`));
         }
         if (isNil(this.empresas) || this.empresas.length === 0) {
-            this.errors.push(new Error(`Este projeto ainda não tem nenhuma Empresa cadastrada. 
-            Para inserir um registro REFP é necessário ter Empresas cadastradas já que cada registro é vinculado a uma Empresa específica. 
+            this.errors.push(new Error(`Este projeto ainda não tem nenhuma Empresa cadastrada.
+            Para inserir um registro REFP é necessário ter Empresas cadastradas já que cada registro é vinculado a uma Empresa específica.
             Por favor, volte para o Planejamento do projeto e cadastre alguma Empresa para continuar.`));
         }
 

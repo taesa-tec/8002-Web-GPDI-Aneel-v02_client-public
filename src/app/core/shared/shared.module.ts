@@ -13,7 +13,7 @@ import {FormsModule as AppFormsModule} from './forms/forms.module';
 
 import {customCurrencyMaskConfig} from '@app/app.config';
 import {NgxCurrencyModule} from 'ngx-currency';
-import {FileService} from '@app/core/services/file.service';
+import {FileService} from '@app/services/file.service';
 import {DownloadFileDirective, DynamicHostDirective, UserAccessDirective} from './directives';
 import {ErrorComponent} from './screens/error.component';
 import {DebugComponent} from './screens/debug.component';

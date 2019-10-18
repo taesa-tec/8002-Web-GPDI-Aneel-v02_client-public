@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild, Input, Output, EventEmitter, ElementRef} from '@angular/core';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RegistroREFP, ResultadoResponse, NoRequest, CategoriasContabeis} from '@app/models';
 import {ProjetoFacade} from '@app/facades/index';
 import {zip, Observable, of} from 'rxjs';

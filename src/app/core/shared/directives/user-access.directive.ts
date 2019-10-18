@@ -1,5 +1,5 @@
 import {Directive, ElementRef, Input, OnInit, TemplateRef, ViewContainerRef} from '@angular/core';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {NiveisUsuarios} from '@app/models';
 import {ProjetoFacade} from '@app/facades/index';
 

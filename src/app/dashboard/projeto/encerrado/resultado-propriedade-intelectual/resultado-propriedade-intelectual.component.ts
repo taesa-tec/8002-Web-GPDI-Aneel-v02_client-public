@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ResultadoBase} from '../resultado-base';
-import {AppService} from '@app/core/services/app.service';
+import {AppService} from '@app/services/app.service';
 import {ResultadoPropriedadeIntelectualComponent as Editor} from '../../common/editors/resultado-propriedade-intelectual/resultado-propriedade-intelectual.component';
 import {ResultadoPropriedade, PropriedadeIntelectual} from '@app/models';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';

@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {LoggerService} from '@app/core/services/logger.service';
+import {LoggerService} from '@app/services/logger.service';
 import {SharedModule} from '@app/core/shared/shared.module';
 import {LoggerDirective, LoggerItemDirective} from './logger.directive';
 import {LogFormatPipe} from '@app/logger/log-format.pipe';
