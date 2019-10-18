@@ -1,14 +1,14 @@
-import { TodasDemandas } from '@app/dashboard/painel-demandas/gestao-de-demandas/demandas-teste';
+import { TodasDemandas } from '@app/dashboard/demandas/demandas-teste';
 import {AppService} from '@app/core/services/app.service';
 import {Component, OnInit} from '@angular/core';
-import {NovaDemandaComponent} from "@app/dashboard/painel-demandas/gestao-de-demandas/nova-demanda/nova-demanda.component";
+import {NovaDemandaComponent} from "@app/dashboard/demandas/nova-demanda/nova-demanda.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 
 @Component({
-    selector: 'app-gestao-de-demandas',
-    templateUrl: './gestao-de-demandas.component.html',
-    styleUrls: ['./gestao-de-demandas.component.scss']
+    selector: 'app-demandas',
+    templateUrl: './demandas.component.html',
+    styleUrls: ['./demandas.component.scss']
 })
 export class GestaoDeDemandasComponent implements OnInit {
 

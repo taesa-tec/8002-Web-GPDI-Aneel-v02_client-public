@@ -6,17 +6,11 @@ import { PainelDemandasRoutingModule } from './painel-demandas-routing.module';
 import { UsersModule } from './../../users/users.module';
 import { SharedModule } from './../../core/shared/shared.module';
 import { PainelDemandasComponent } from './painel-demandas.component';
-import { ProjetoEmPropostaComponent } from './projeto-em-proposta/projeto-em-proposta.component';
-import { ProjetoIniciadoComponent } from './projeto-iniciado/projeto-iniciado.component';
-import { ProjetoEncerradoComponent } from './projeto-encerrado/projeto-encerrado.component';
 
 
 @NgModule({
   declarations: [
-    PainelDemandasComponent,
-    ProjetoEmPropostaComponent,
-    ProjetoIniciadoComponent,
-    ProjetoEncerradoComponent,
+    PainelDemandasComponent
   ],
   imports: [
     SharedModule,

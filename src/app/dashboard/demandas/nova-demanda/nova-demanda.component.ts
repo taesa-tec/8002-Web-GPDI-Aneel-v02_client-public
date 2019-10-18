@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import { CriarDemanda } from '../../conf-padrao/services/criar-demanda.service';
+import { CriarDemanda } from '../../painel-demandas/conf-padrao/services/criar-demanda.service';
 
 @Component({
   selector: 'app-nova-demanda',
@@ -23,7 +23,7 @@ export class NovaDemandaComponent implements OnInit {
 
   async onSubmit(){
     this.statuscad = await this.add.novademanda(this.formNovaDemanda.value);
-    
+
   }
 
 }

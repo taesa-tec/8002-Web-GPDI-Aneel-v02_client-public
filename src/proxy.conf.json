@@ -1,6 +1,6 @@
 {
-    "/api": {
-        "target": "https://taesagestor.azurewebsites.net/api",
-        "secure": false
-    }
+  "/api": {
+    "target": "https://localhost:8080",
+    "secure": false
+  }
 }

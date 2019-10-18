@@ -1,4 +1,4 @@
-import {EtapasList, TodasDemandas} from './../demandas-teste';
+import {EtapasList, TodasDemandas} from '../demandas-teste';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

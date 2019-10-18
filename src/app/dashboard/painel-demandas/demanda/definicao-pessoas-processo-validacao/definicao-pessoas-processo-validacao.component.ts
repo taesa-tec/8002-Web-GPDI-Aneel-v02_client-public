@@ -1,4 +1,4 @@
-import { PessoasTeste } from './../../gestao-de-demandas/demandas-teste';
+import { PessoasTeste } from '../../../demandas/demandas-teste';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 

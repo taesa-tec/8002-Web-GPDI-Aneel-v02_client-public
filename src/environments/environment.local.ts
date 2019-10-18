@@ -6,7 +6,7 @@ import {version } from './version';
 
 export const environment = {
     production: false,
-    api_url: 'https://taesagestor.azurewebsites.net/api',
+    api_url: 'http://localhost:4200/api',
     version: version,
     autologin: {
         user: 'diego.franca@lojainterativa.com',

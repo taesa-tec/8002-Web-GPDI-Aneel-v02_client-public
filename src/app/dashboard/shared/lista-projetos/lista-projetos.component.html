@@ -1,0 +1,97 @@
+<div class="row ">
+  <div class="col d-flex justify-content-between align-items-center">
+    <h5 class="text-uppercase text-blue font-weight-normal my-4">
+      {{ titulo }}
+    </h5>
+    <div>
+      <button
+        type="button"
+        (click)="openNovoProjeto()"
+        class="btn btn-outline-primary"
+        *ngIf="canAddProject"
+      >
+        <fa-icon icon="plus-circle"></fa-icon>
+        Novo Projeto
+      </button>
+    </div>
+  </div>
+</div>
+<!-- Filtros -->
+
+<form>
+  <div class="row" *ngIf="projetos" [formGroup]="filterForm">
+    <div class="col">
+      <div class="form-group">
+        <select
+          name=""
+          id=""
+          class="form-control"
+          formControlName="catalogEmpresaId"
+        >
+          <option value="">Empresa Proponente</option>
+          <option *ngFor="let item of empresas | async" [value]="item.id">{{
+            item.nome
+          }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <input
+          type="search"
+          name=""
+          id=""
+          class="form-control"
+          formControlName="search"
+          placeholder="Buscar"
+        />
+      </div>
+    </div>
+    <div class="col d-flex align-items-center">
+      <span class="d-block mb-3 text-right flex-grow-1"
+        >{{ total_projetos }} projetos</span
+      >
+    </div>
+  </div>
+</form>
+<!-- Lista -->
+<div class="mb-3" *ngIf="projetos">
+  <div class="row">
+    <div class="col">
+      <div class="d-grid grid-gap-4 wrap-projetos-cards">
+        <app-projeto-card
+          *ngFor="let projeto of projetosFiltered | orderBy: 'id':'desc'"
+          [projeto]="projeto"
+        ></app-projeto-card>
+      </div>
+      <ngb-alert
+        [dismissible]="false"
+        type="dark"
+        *ngIf="projetosFiltered.length === 0 && projetos.length > 0"
+      >
+        <i class="ta-cancel-circle"></i> Lamentavelmente, sua busca não
+        encontrou nenhum resultado. Favor tentar novamente com outros
+        parâmetros.
+      </ngb-alert>
+    </div>
+  </div>
+</div>
+
+<div
+  class="py-4 text-center btn-sm"
+  *ngIf="projetos && projetos.length === 0 && !loading.isLoading"
+>
+  <button class="btn btn-primary" (click)="updateRequest.emit()">
+    Atualizar
+  </button>
+</div>
+<div class="row">
+  <div class="col-12 text-center">
+    <app-loading
+      type="inline"
+      background="transparent"
+      color="#AAA"
+      size="3x"
+    ></app-loading>
+  </div>
+</div>
