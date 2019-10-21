@@ -1,109 +1,147 @@
 <div class="modal-header">
-    <div class="text-uppercase modal-title text-blue-light fs-24">{{modalTitle}}</div>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        <i class="ta-cancel-circle"></i>
-    </button>
+  <div class="text-uppercase modal-title text-blue-light fs-24">
+    {{ modalTitle }}
+  </div>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <i class="ta-cancel-circle"></i>
+  </button>
 </div>
-<form class="modal-body" [formGroup]="form" *ngIf="form" appLogger="Alocar Recurso Humano">
-    <div class="row">
-        <div class="col-12">
-            <div class="form-group">
-                <label>Recurso Humano</label>
-                <select class="form-control" formControlName="recursoHumanoId"
-                        appLogItem="Recurso Humano">
-                    <option value="">Selecione</option>
-                    <option [value]="rh.id" *ngFor="let rh of recursosHumanos">{{rh.nomeCompleto}}</option>
-                </select>
-            </div>
-        </div>
-
+<form class="modal-body" [formGroup]="form" *ngIf="form">
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label>Recurso Humano</label>
+        <select class="form-control" formControlName="recursoHumanoId">
+          <option value="">Selecione</option>
+          <option [value]="rh.id" *ngFor="let rh of recursosHumanos">{{
+            rh.nomeCompleto
+          }}</option>
+        </select>
+      </div>
     </div>
-    <div class="row" *ngIf="projeto.isPD">
-        <div class="col-6">
-            <div class="form-group">
-                <label for="">Etapa Relacionada</label>
-                <select class="form-control" formControlName="etapaId" appLogItem="Etapa Relacionada">
-                    <option value="">Selecione</option>
-                    <option [value]="etapa.id" *ngFor="let etapa of etapas">Etapa {{etapa.numeroEtapa}}</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="form-group">
-
-                <label for="">Empresa Financiadora</label>
-                <select class="form-control" formControlName="empresaId" appLogItem="Empresa Financiadora">
-                    <option value="">Selecione</option>
-                    <option [value]="empresa.id" *ngFor="let empresa of empresasFinanciadoras">{{empresa.nome}}</option>
-                </select>
-            </div>
-        </div>
+  </div>
+  <div class="row" *ngIf="projeto.isPD">
+    <div class="col-6">
+      <div class="form-group">
+        <label for="">Etapa Relacionada</label>
+        <select class="form-control" formControlName="etapaId">
+          <option value="">Selecione</option>
+          <option [value]="etapa.id" *ngFor="let etapa of etapas"
+            >Etapa {{ etapa.numeroEtapa }}</option
+          >
+        </select>
+      </div>
     </div>
-    <div class="row" *ngIf="projeto.isPG">
-        <div class="col-12">
-            <div class="form-group">
-                <label for="">Empresa Financiadora</label>
-                <select class="form-control" formControlName="empresaId" appLogItem="Empresa Financiadora">
-                    <option value="">Selecione</option>
-                    <option [value]="empresa.id" *ngFor="let empresa of empresasFinanciadoras">{{empresa.nome}}</option>
-                </select>
-            </div>
-        </div>
+    <div class="col-6">
+      <div class="form-group">
+        <label for="">Empresa Financiadora</label>
+        <select class="form-control" formControlName="empresaId">
+          <option value="">Selecione</option>
+          <option
+            [value]="empresa.id"
+            *ngFor="let empresa of empresasFinanciadoras"
+            >{{ empresa.nome }}</option
+          >
+        </select>
+      </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="form-group m-0"><label for="">Horas Alocadas por mês</label></div>
-        </div>
-
+  </div>
+  <div class="row" *ngIf="projeto.isPG">
+    <div class="col-12">
+      <div class="form-group">
+        <label for="">Empresa Financiadora</label>
+        <select class="form-control" formControlName="empresaId">
+          <option value="">Selecione</option>
+          <option
+            [value]="empresa.id"
+            *ngFor="let empresa of empresasFinanciadoras"
+            >{{ empresa.nome }}</option
+          >
+        </select>
+      </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="row mx-0 p-3 bg-cinza-claro rounded mb-4">
-                <div class="col-2 mb-2" *ngFor="let i of totalMeses | n2array:1">
-                    <label for="">{{getMesAnoAt(i)}}</label>
-                    <input placeholder="Max {{maxHora}}h" mask="999" sufix="h"
-                           [formControlName]="'hrsMes' + i"
-                           [appLogItem]="'hrsMes' + i"
-                           type="text" class="form-control">
-                </div>
-            </div>
-        </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group m-0">
+        <label for="">Horas Alocadas por mês</label>
+      </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="form-group">
-                <label *ngIf="projeto.isPD">Justificativa detalhada do recurso na etapa</label>
-                <label *ngIf="projeto.isPG">Justificativa do recurso</label>
-                <app-textarea formControlName="justificativa" cols="30" rows="4" class="form-control"
-                              [appLogItem]="projeto.isPD?'Justificativa detalhada do recurso na etapa':'Justificativa do recurso'"
-                              maxlength="1000" placeholder="Por que o recurso é necessário?"></app-textarea>
-            </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="row mx-0 p-3 bg-cinza-claro rounded mb-4">
+        <div class="col-2 mb-2" *ngFor="let i of totalMeses | n2array: 1">
+          <label for="">{{ getMesAnoAt(i) }}</label>
+          <input
+            placeholder="Max {{ maxHora }}h"
+            mask="999"
+            sufix="h"
+            [formControlName]="'hrsMes' + i"
+            type="text"
+            class="form-control"
+          />
         </div>
+      </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-
-            <div class="d-flex justify-content-between">
-                <div>
-                    <div *appUserAdmin>
-                        <button class="btn btn-link" (click)="excluir()" *ngIf="alocacao.id"><i
-                                class="ta-cancel-circle"></i> Excluir
-                        </button>
-                    </div>
-                </div>
-                <div class="text-right">
-                    <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
-                    <button class="btn btn-primary" type="button" (click)="submit()"
-                            *appUserEscrita
-                            [disabled]="form.invalid || !form.touched || !form.dirty">
-                        <i [class]="buttonAction.icon"></i>
-                        {{buttonAction.text}}
-                    </button>
-                </div>
-
-            </div>
-
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label *ngIf="projeto.isPD"
+          >Justificativa detalhada do recurso na etapa</label
+        >
+        <label *ngIf="projeto.isPG">Justificativa do recurso</label>
+        <app-textarea
+          formControlName="justificativa"
+          cols="30"
+          rows="4"
+          class="form-control"
+          maxlength="1000"
+          placeholder="Por que o recurso é necessário?"
+        ></app-textarea>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-between">
+        <div>
+          <div *appUserAdmin>
+            <button
+              class="btn btn-link"
+              (click)="excluir()"
+              *ngIf="alocacao.id"
+            >
+              <i class="ta-cancel-circle"></i> Excluir
+            </button>
+          </div>
         </div>
+        <div class="text-right">
+          <div
+            class="button btn btn-link"
+            (click)="activeModal.dismiss('cancel')"
+          >
+            Cancelar
+          </div>
+          <button
+            class="btn btn-primary"
+            type="button"
+            (click)="submit()"
+            *appUserEscrita
+            [disabled]="form.invalid || !form.touched || !form.dirty"
+          >
+            <i [class]="buttonAction.icon"></i>
+            {{ buttonAction.text }}
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
 </form>
 <app-loading type="fullscreen"></app-loading>

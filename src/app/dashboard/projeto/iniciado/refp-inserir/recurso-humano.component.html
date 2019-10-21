@@ -7,12 +7,12 @@
         </div>
     </div>
 </div>
-<form [formGroup]="form" *ngIf="form && isValid" appLogger="REFP - Inserir Recurso Humano">
+<form [formGroup]="form" *ngIf="form && isValid"  >
     <div class="row">
         <div class="col-12">
             <div class="form-group">
                 <label for="">BENEFICIÁRIO (RECURSO HUMANO)</label>
-                <select name="" id="" class="form-control" formControlName="recursoHumanoId" appLogItem="Beneficiário">
+                <select name="" id="" class="form-control" formControlName="recursoHumanoId"  >
                     <option value="">Selecionar</option>
                     <option [value]="r.id" *ngFor="let r of recursos">{{ r.nomeCompleto }}</option>
                 </select>
@@ -25,7 +25,7 @@
 
             <div class="form-group">
                 <label for="">MÊS REFERÊNCIA</label>
-                <select name="" id="" class="form-control" formControlName="mes" appLogItem="Mês Referência">
+                <select name="" id="" class="form-control" formControlName="mes"  >
                     <option value="">Selecione</option>
                     <option [value]="item.value" *ngFor="let item of mesesRef" [innerHTML]="item.text"></option>
                 </select>
@@ -37,7 +37,7 @@
             <div class="form-group">
                 <label for="">QUANTIDADE HORAS</label>
                 <input type="text" class="form-control" maxlength="3" value="" placeholder="000" mask="0*"
-                       appLogItem="Quantidade horas"
+
                        formControlName="qtdHrs">
             </div>
         </div>
@@ -46,7 +46,7 @@
             <div class="form-group">
                 <label for="">EMPRESA FINACIADORA</label>
                 <select name="" id="" class="form-control" formControlName="empresaFinanciadoraId"
-                        appLogItem="Empresa Financiadora">
+                         >
                     <option value="">Selecionar Empresa</option>
                     <option [value]="e.id" *ngFor="let e of empresasFinanciadoras">{{e.nome}} </option>
                 </select>
@@ -60,7 +60,7 @@
             <div class="form-group">
                 <label>TIPO DE DOCUMENTO?</label>
                 <select class="form-control" formControlName="tipoDocumento"
-                        appLogItem="Tipo de documento">
+                         >
                     <option value="">Selecionar</option>
                     <option [value]="t.value" *ngFor="let t of tipoDocs">{{ t.text }}</option>
                 </select>
@@ -72,7 +72,7 @@
             <div class="form-group">
                 <label for="">NÚMERO DE DOCUMENTO</label>
                 <input type="text" class="form-control" value="" formControlName="numeroDocumento"
-                       appLogItem="Número de Documento">
+                        >
             </div>
         </div>
 
@@ -80,7 +80,7 @@
             <div class="form-group">
                 <label for="">DATA DO DOCUMENTO</label>
                 <input type="date" class="form-control" value="" placeholder="dd/mm/aaaa"
-                       appLogItem="Data do documento"
+
                        formControlName="dataDocumento">
             </div>
         </div>
@@ -91,7 +91,7 @@
             <div class="form-group">
                 <label for="">ATIVIDADE REALIZADA NA ETAPA PELA PESSOA</label>
                 <textarea cols="30" rows="4" class="form-control"
-                          appLogItem="Atividade realizada na etapa pela pessoa"
+
                           formControlName="atividadeRealizada"></textarea>
             </div>
 
@@ -103,7 +103,7 @@
             <div class="form-group" [formGroup]="obsInternas">
                 <label for="">OBSERVAÇÕES INTERNAS(OPCIONAL)</label>
                 <textarea name="" id="" cols="30" rows="4" class="form-control" formControlName="texto"
-                          appLogItem="Observações internas"></textarea>
+                           ></textarea>
             </div>
 
         </div>

@@ -1,11 +1,11 @@
 <app-loading type="fullscreen"></app-loading>
-<form [formGroup]="form" *ngIf="form" appLogger="Registro REFP">
+<form [formGroup]="form" *ngIf="form"  >
     <div class="row">
         <div class="col-12">
             <div class="form-group">
                 <label for="">NOME DO ITEM</label>
                 <input type="text" class="form-control" formControlName="nomeItem" placeholder="Nome"
-                       appLogItem="Nome do item">
+                        >
             </div>
         </div>
     </div>
@@ -16,7 +16,7 @@
             <div class="form-group">
                 <label>RECURSO MATERIAL ASSOCIADO</label>
                 <select class="form-control" formControlName="recursoMaterialId"
-                        appLogItem="Recurso material associado">
+                         >
                     <option value="">Selecionar</option>
                     <option [value]="r.id" *ngFor="let r of recursos">{{ r.nome }}</option>
                 </select>
@@ -30,7 +30,7 @@
             <div class="form-group">
                 <label for="">EMPRESA FINANCIADORA</label>
                 <select name="" id="" class="form-control" formControlName="empresaFinanciadoraId"
-                        appLogItem="Empresa financiadora">
+                         >
                     <option value="">Selecionar</option>
                     <option [value]="item.id" *ngFor="let item of empresasFinanciadoras">{{item.nome}}</option>
                 </select>
@@ -40,7 +40,7 @@
             <div class="form-group">
                 <label for="">EMPRESA RECEBEDORA</label>
                 <select name="" id="" class="form-control" formControlName="empresaRecebedoraId"
-                        appLogItem="Empresa recebedora">
+                         >
                     <option value="">Selecionar</option>
                     <option [value]="item.id" *ngFor="let item of empresasRecebedoras">{{item.nome}}</option>
                 </select>
@@ -54,14 +54,14 @@
         <div class="col-6">
             <div class="form-group">
                 <label for="">BENEFÍCIADO</label>
-                <input type="text" class="form-control" formControlName="beneficiado" appLogItem="Benefíciado">
+                <input type="text" class="form-control" formControlName="beneficiado"  >
             </div>
         </div>
         <div class="col-6">
             <div class="form-group">
                 <label for="">CNPJ OU CPF BENEFÍCIADO</label>
                 <input type="text" class="form-control" [mask]="cnpjCpfMask" placeholder="00.000.000/0000-00"
-                       appLogItem="CNPJ benefíciado"
+
                        value="cnpjBeneficiado" formControlName="cnpjBeneficiado">
             </div>
 
@@ -75,7 +75,7 @@
             <div class="form-group">
                 <label for="">CATEGORIA CONTÁBIL</label>
                 <select class="form-control"
-                        appLogItem="Categoria contábil"
+
                         [formControlName]="projeto.isPD?'categoriaContabil':'catalogCategoriaContabilGestaoId'">
                     <option value="">Selecionar</option>
                     <option [value]="c.value" *ngFor="let c of categoriasContabeis">{{c.text}}</option>
@@ -87,21 +87,21 @@
                 <div>
                     <label>
                         <app-checkbox formControlName="equiparLabExistente" class="d-inline-block"
-                                      appLogItem="Irá equipar laboratório existente"></app-checkbox>
+                                       ></app-checkbox>
                         IRÁ EQUIPAR LABORATÓRIO EXISTENTE?
                     </label>
                 </div>
                 <div>
                     <label>
                         <app-checkbox formControlName="equiparLabNovo" class="d-inline-block"
-                                      appLogItem="Irá equipar laboratório novo"></app-checkbox>
+                                       ></app-checkbox>
                         IRÁ EQUIPAR LABORATÓRIO NOVO?
                     </label>
                 </div>
                 <div>
                     <label>
                         <app-checkbox formControlName="itemNacional" class="d-inline-block"
-                                      appLogItem="Item nacional"></app-checkbox>
+                                       ></app-checkbox>
                         ITEM NACIONAL?
                     </label>
                 </div>
@@ -112,7 +112,7 @@
             <div class="form-group">
                 <label for="">TIPO DE ATIVIDADE</label>
                 <select class="form-control" formControlName="catalogAtividadeId"
-                        appLogItem="Tipo de atividade">
+                         >
                     <option value="">Selecionar</option>
                     <option [value]="c.value" *ngFor="let c of atividades">{{c.text}}</option>
                 </select>
@@ -125,7 +125,7 @@
 
             <div class="form-group">
                 <label for="">MÊS REFERÊNCIA</label>
-                <select name="" id="" class="form-control" formControlName="mes" appLogItem="Mês referência">
+                <select name="" id="" class="form-control" formControlName="mes"  >
                     <option value="">Selecione</option>
                     <option [value]="item.value" *ngFor="let item of mesesRef">{{item.text}}</option>
                 </select>
@@ -137,7 +137,7 @@
             <div class="form-group">
                 <label for="">QUANTIDADE ITENS</label>
                 <input type="text" class="form-control" maxlength="7" formControlName="qtdItens" mask="0*"
-                       appLogItem="Quantidade itens">
+                        >
             </div>
         </div>
 
@@ -145,7 +145,7 @@
             <div class="form-group">
                 <label for="">CUSTO UNITÁRIO</label>
                 <input type="text" class="form-control" currencyMask formControlName="valorUnitario"
-                       appLogItem="Custo unitário">
+                        >
             </div>
         </div>
     </div>
@@ -155,7 +155,7 @@
 
             <div class="form-group">
                 <label for="">TIPO DE DOCUMENTO?</label>
-                <select class="form-control" formControlName="tipoDocumento" appLogItem="Tipo de documento">
+                <select class="form-control" formControlName="tipoDocumento"  >
                     <option value="">Selecionar</option>
                     <option [value]="t.value" *ngFor="let t of tipoDocs">{{ t.text }}</option>
                 </select>
@@ -167,14 +167,14 @@
             <div class="form-group">
                 <label for="">NÚMERO DE DOCUMENTO</label>
                 <input type="text" class="form-control" formControlName="numeroDocumento"
-                       appLogItem="Número de documento">
+                        >
             </div>
         </div>
 
         <div class="col-4">
             <div class="form-group">
                 <label for="">DATA DO DOCUMENTO</label>
-                <input type="date" class="form-control" formControlName="dataDocumento" appLogItem="Data do documento">
+                <input type="date" class="form-control" formControlName="dataDocumento"  >
             </div>
         </div>
     </div>
@@ -184,7 +184,7 @@
             <div class="form-group">
                 <label for="">ESPECÍFICAÇÃO TÉCNICA</label>
                 <textarea cols="30" rows="4" class="form-control"
-                          appLogItem="Específicação técnica"
+
                           formControlName="especificacaoTecnica"></textarea>
             </div>
 
@@ -196,7 +196,7 @@
             <div class="form-group">
                 <label for="">FUNÇÃO DESTE RECURSO NESTA ETAPA DO PROJETO</label>
                 <textarea cols="30" rows="4" class="form-control"
-                          appLogItem="Função deste recurso nesta etapa do projeto"
+
                           formControlName="funcaoRecurso"></textarea>
             </div>
         </div>

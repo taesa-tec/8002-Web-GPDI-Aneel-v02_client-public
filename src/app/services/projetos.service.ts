@@ -25,11 +25,11 @@ import {
   ProrrogarProjetoRequest,
   XmlType
 } from '@app/models';
-import {Subject, Observable, BehaviorSubject, of} from 'rxjs';
-import {tap, share, map} from 'rxjs/operators';
-import {ProjetoFacade} from '@app/facades';
-import {FileService} from '@app/services/file.service';
-import {RequestCacheService} from '@app/request-cache.service';
+import { Subject, Observable, BehaviorSubject, of } from 'rxjs';
+import { tap, share, map } from 'rxjs/operators';
+import { ProjetoFacade } from '@app/facades';
+import { FileService } from '@app/services/file.service';
+import { RequestCacheService } from '@app/request-cache.service';
 
 class ProjetoREST {
 
@@ -386,7 +386,7 @@ export class ProjetosService {
    */
 
   criarLogProjeto(logprojeto: CreateLogProjetoRequest) {
-    console.log({ logprojeto });
+    console.trace("Log a remover");
     return of(true); // this.http.post<ResultadoResponse>('projeto/LogProjetos', logprojeto);
   }
 

@@ -7,7 +7,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {EMPTY, of, Observable} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ResultadoResponse, FileUploaded} from '@app/models';
-import {LoggerDirective} from '@app/logger/logger.directive';
+
 
 export abstract class EditorResultado<T extends { id: number; uploads?: Array<FileUploaded> }> implements OnInit {
 
@@ -29,7 +29,7 @@ export abstract class EditorResultado<T extends { id: number; uploads?: Array<Fi
     }
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
-    @ViewChild(LoggerDirective) logger: LoggerDirective;
+
 
     constructor(protected app: AppService, public activeModal: NgbActiveModal, protected restService: string) {
     }
@@ -128,15 +128,6 @@ export abstract class EditorResultado<T extends { id: number; uploads?: Array<Fi
                     this.editable.id = result.id || this.editable.id;
                 }
                 this.app.alert('Salvo com sucesso');
-
-
-                if (this.logger) {
-                    if (result.id) {
-                        this.logger.saveCreate();
-                    } else {
-                        this.logger.saveUpdate();
-                    }
-                }
             } else {
                 this.app.alert(result.inconsistencias);
             }
@@ -183,7 +174,7 @@ export abstract class EditorResultado<T extends { id: number; uploads?: Array<Fi
                     this.loadingHide();
                     if (result.sucesso) {
                         this.app.alert('Excluido com sucesso');
-                        this.logger.save(`Arquivo ${file.nomeArquivo} Excluído`, this.logger.getLog(), 'Delete');
+
                     } else {
                         this.app.alert(result.inconsistencias, 'Erro');
                     }

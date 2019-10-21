@@ -73,7 +73,6 @@ export class ResultadoCapacitacaoComponent extends EditorResultado<ResultadoCapa
                 ResultadoCapacitacaoId: new FormControl(id),
             })).pipe(tap(result => {
                 if (result.sucesso) {
-                    this.logger.save(`Arquivo ${el.files.item(0).name} adicionado`);
                     this.file.nativeElement.value = '';
                 }
             }));

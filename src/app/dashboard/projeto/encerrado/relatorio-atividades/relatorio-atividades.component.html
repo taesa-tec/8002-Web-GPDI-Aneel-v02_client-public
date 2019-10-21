@@ -1,6 +1,6 @@
 <h5 class="text-uppercase text-blue font-weight-normal my-3">Relatório Atividades projeto</h5>
 <app-loading type="fullscreen"></app-loading>
-<form *ngIf="form" [formGroup]="form" appLogger="Relatório de Atividades">
+<form *ngIf="form" [formGroup]="form"  >
     <div class="row">
         <div class="col-12">
             <app-accordion *ngFor="let atividade of atividades">
@@ -12,7 +12,7 @@
                         <label>DESCRIÇÃO, SUCINTA, DAS AÇÕES REALIZADAS PELA(S) EMPRESA(S) NA ATIVIDADE
                             SELECIONADA</label>
                         <app-textarea maxlength="1000" class="form-control" [formControlName]="atividade.resFormName"
-                                      rows="5" [appLogItem]="atividade.titulo"></app-textarea>
+                                      rows="5"  ></app-textarea>
                     </div>
                     <hr class="my-2">
                     <div class="text-cinza mb-3">DADOS CADASTRADOS NO PLANEJAMENTO DO PLANEJAMENTO (PARA REFERÊNCIA)

@@ -12,7 +12,6 @@ import {AppService} from './services/app.service';
 import {registerLocaleData} from '@angular/common';
 import * as moment from 'moment';
 import {HttpClientModule} from '@angular/common/http';
-import {LoggerModule} from '@app/logger/logger.module';
 
 registerLocaleData(localeBr, 'pt');
 moment.locale('pt-br');
@@ -29,7 +28,6 @@ moment.locale('pt-br');
         SharedModule,
         AuthModule,
         UsersModule,
-        LoggerModule,
         AppRoutingModule,
     ],
     exports: [SharedModule],
