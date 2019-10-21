@@ -5,7 +5,7 @@ import {zip} from 'rxjs';
 import {FormGroup, FormControl} from '@angular/forms';
 import {ProjetoFacade} from '@app/facades/index';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
-import {LoggerDirective} from '@app/logger/logger.directive';
+
 
 @Component({
     selector: 'app-alterar-status',
@@ -22,7 +22,7 @@ export class AlterarStatusComponent implements OnInit {
     projetoStatus: number;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
-    @ViewChild(LoggerDirective) logger: LoggerDirective;
+
 
     constructor(protected app: AppService) {
     }
@@ -58,7 +58,6 @@ export class AlterarStatusComponent implements OnInit {
                 this.projeto.catalogStatus = this.status.find(s => s.id === parseInt(this.catalogFC.value, 10));
                 await this.app.alert('Status alterado com sucesso');
                 this.app.router.navigate(['dashboard', 'projeto', this.projeto.id]);
-                // this.logger.saveChanges();
 
             } else {
                 this.app.alert(result.inconsistencias.join(', '), 'Erro!');

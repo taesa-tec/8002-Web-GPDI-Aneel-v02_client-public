@@ -1,5 +1,5 @@
 <app-loading type="fullscreen"></app-loading>
-<div *ngIf="form" [formGroup]="form" appLogger="Relatorio Final Base Projeto">
+<div *ngIf="form" [formGroup]="form"  >
     <div class="row">
         <div class="col">
             <h5 class="text-uppercase text-blue font-weight-normal my-3">RELATÓRIO FINAL E AUDITORIA</h5>
@@ -10,7 +10,7 @@
             <div class="form-group">
                 <label>PRODUTO PRINCIPAL PREVISTO FOI ALCANÇADO OU SUPERADO?</label>
                 <select class="form-control" formControlName="produtoAlcancado" #produtoAlcancado
-                        appLogItem="Produto principal previsto foi alcançado">
+                         >
                     <option value="">Selecione</option>
                     <option value="true">Sim</option>
                     <option value="false">Não</option>
@@ -23,7 +23,7 @@
             <div class="form-group">
                 <label for="">JUSTIFICATIVA PELO NÃO ALCANCE DO PRODUTO PRINCIPAL PREVISTO</label>
                 <app-textarea class="form-control" rows="4" formControlName="justificativaProduto"
-                              appLogItem="Justificativa pelo não alcance do produto principal previsto"
+
                               maxlength="1000"></app-textarea>
             </div>
         </div>
@@ -33,7 +33,7 @@
             <div class="form-group">
                 <label for="">ESPECIFICAÇÃO TÉCNICA DO PRODUTO PRINCIPAL OBTIDO</label>
                 <app-textarea class="form-control" rows="4" formControlName="especificacaoProduto"
-                              appLogItem="Especificação técnica do produto principal obtido"
+
                               maxlength="1000"></app-textarea>
             </div>
         </div>
@@ -44,7 +44,7 @@
                 <div>
                     <label for="">TÉCNICA PREVISTA FOI IMPLEMENTADA?</label>
                     <select class="form-control" formControlName="tecnicaPrevista"
-                            appLogItem="Técnica prevista foi implementada?">
+                             >
                         <option value="">Selecione</option>
                         <option value="true">Sim</option>
                         <option value="false">Não</option>
@@ -60,7 +60,7 @@
             <div class="form-group">
                 <label for="">JUSTIFICATIVA PELA NÃO IMPLEMENTAÇÃO DA TÉCNICA PREVISTA</label>
                 <app-textarea class="form-control" rows="4" formControlName="justificativaTecnica"
-                              appLogItem="Justificativa pela não implementação da técnica prevista"
+
                               maxlength="1000"></app-textarea>
             </div>
         </div>
@@ -70,7 +70,7 @@
             <div class="form-group">
                 <label for="">DESCRIÇÃO, SUCINTA, DA TÉCNICA EMPREGADA</label>
                 <app-textarea class="form-control" rows="4" formControlName="descTecnica"
-                              appLogItem="Descrição da técnica empregada"
+
                               maxlength="1000"></app-textarea>
             </div>
         </div>
@@ -81,7 +81,7 @@
                 <div>
                     <label for="">APLICABILIDADE PREVISTA FOI ALCANÇADA OU SUPERADA?</label>
                     <select class="form-control" formControlName="aplicabilidadePrevista"
-                            appLogItem="Aplicabilidade prevista foi alcançada ou superada?">
+                             >
                         <option value="">Selecione</option>
                         <option value="true">Sim</option>
                         <option value="false">Não</option>
@@ -95,7 +95,7 @@
             <div class="form-group">
                 <label for="">JUSTIFICATIVA PELO NÃO ALCANCE DA APLICABILIDADE PREVISTA</label>
                 <app-textarea class="form-control" rows="4" formControlName="justificativaAplicabilidade"
-                              appLogItem="Justificativa pelo não alcance da aplicabilidade prevista"
+
                               maxlength="1000"></app-textarea>
             </div>
         </div>
@@ -106,7 +106,7 @@
                 <label for="">DESCRIÇÃO, SUCINTA, DOS RESULTADOS DOS TESTES DE FUNCIONALIDADE DO PRODUTO PRINCIPAL E
                     SUAS RESTRIÇÕES</label>
                 <app-textarea class="form-control" rows="4" formControlName="descTestes"
-                              appLogItem="Descrição dos resultados dos testes de funcionalidade do produto principal e suas restrições"
+
                               maxlength="1000"></app-textarea>
             </div>
         </div>
@@ -116,7 +116,7 @@
             <div class="form-group">
                 <label for="">DESCRIÇÃO DA ABRANGÊNCIA DE APLICAÇÃO DO PRODUTO PRINCIPAL E SUAS RESTRIÇÕES</label>
                 <app-textarea class="form-control" rows="4" formControlName="descAbrangencia"
-                              appLogItem="Descrição da abrangência de aplicação do produto principal e suas restrições"
+
                               maxlength="1000"></app-textarea>
             </div>
         </div>
@@ -138,7 +138,7 @@
                 <label for="">DESCRIÇÃO, SUCINTA, DAS ATIVIDADES RELACIONADAS À TRANSFERÊNCIA/DIFUSÃO
                     TECNOLÓGICA</label>
                 <app-textarea class="form-control" rows="4" formControlName="descAtividades"
-                              appLogItem="Descrição das atividades relacionadas à transferência/difusão tecnológica"
+
                               maxlength="500"></app-textarea>
             </div>
         </div>

@@ -7,7 +7,7 @@ import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.
 import {zip, of} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
 import {EmpresaProjetoFacade, ProjetoFacade} from '@app/facades/index';
-import {LoggerDirective} from '@app/logger/logger.directive';
+
 
 @Component({
     selector: 'app-alocar-recurso-material-form',
@@ -26,7 +26,7 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
     form: FormGroup;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
-    @ViewChild(LoggerDirective) logger: LoggerDirective;
+
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -134,11 +134,6 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
                 if (result.sucesso) {
                     // this.logProjeto("Alocação de recursos Materias");
                     this.activeModal.close(result);
-                    if (this.alocacao.id) {
-                        this.logger.saveUpdate();
-                    } else {
-                        this.logger.saveCreate();
-                    }
                 } else {
                     this.app.alert(result.inconsistencias.join(', '));
                 }
@@ -158,7 +153,6 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
                         if (resultDelete.sucesso) {
                             // this.logProjeto("Alocação de recursos Materias", "Delete");
                             this.activeModal.close('deleted');
-                            this.logger.saveDelete();
                         } else {
                             this.app.alert(resultDelete.inconsistencias.join(', '));
                         }

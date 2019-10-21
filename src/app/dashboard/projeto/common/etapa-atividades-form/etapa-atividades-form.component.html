@@ -6,11 +6,11 @@
 </div>
 <div class="modal-body">
     <app-loading type="fullscreen"></app-loading>
-    <div appLogger="Relatório etapas projeto" *ngIf="form">
+    <div  >
         <div class="form-group" [formGroup]="form">
             <label>DESCRIÇÃO DAS ATIVIDADES REALIZADAS NA ETAPA SELECIONADA </label>
             <app-textarea cols="30" rows="4" class="form-control" formControlName="atividadesRealizadas" maxlength="300"
-                          appLogItem="Descrição das atividades realizadas na etapa selecionada"
+
                           placeholder="Escreva aqui a descrição das atividades que foram de fato realizadas nesta etapa."></app-textarea>
         </div>
         <hr>
@@ -20,7 +20,7 @@
         <div class="form-group">
             <label>Descrição das atividades</label>
             <app-textarea cols="30" rows="2" [value]="etapa.desc" disabled class="form-control"
-                          appLogItem="Descrição das atividades" [appLogItemValue]="etapa.desc"></app-textarea>
+                           ></app-textarea>
         </div>
         <div class="form-group">
             <div class="row mb-3" *ngIf="projeto.isPD">
@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-12" *ngIf="etapaProdutos">
                     <input type="text" *ngFor="let p of etapaProdutos" [value]="p.titulo" disabled class="form-control"
-                           appLogItem="Produto associado a esta etapa" [appLogItemValue]="p.titulo">
+                             >
                 </div>
             </div>
             <div class="row">

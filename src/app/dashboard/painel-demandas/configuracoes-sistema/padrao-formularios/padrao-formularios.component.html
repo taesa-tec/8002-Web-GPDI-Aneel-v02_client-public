@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="col-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th><input type="checkbox"></th>
+                    <th>&nbsp;</th>
+                    <th>
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">Titulo dp Formulário</span>
+                            <span class="d-flex flex-column">
+                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
+                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
+                            </span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">Módulo</span>
+                            <span class="d-flex flex-column">
+                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
+                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
+                            </span>
+                        </div>
+
+                    </th>
+                    <th>
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">Ações</span>
+                            <span class="d-flex flex-column">
+                                <fa-icon icon="caret-up" class="d-inline-flex" size="1x"></fa-icon>
+                                <fa-icon icon="caret-down" class="d-inline-flex" size="1x"></fa-icon>
+                            </span>
+                        </div>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <input type="checkbox">
+                    </td>
+                    <td>&nbsp;</td>
+                    <td> Especificação Técnica Demanda </td>
+                    <td>
+                        <span>
+                            Especificação Técnica
+                        </span>
+                    </td>
+                    <td class="w-25">
+                        <div>
+                            <a routerLink="./3" class="btn btn-primary btn-sm text-nowrap text-uppercase">
+                                <i class="ta-edit"></i> Editar
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">Alteração em massa:
+                        <br>
+                        <select class="d-inline-block form-control-sm">
+                            <option value=""> Excluir </option>
+                            <option value=""> Bloquear </option>
+                            <option value=""> Esconder </option>
+
+                        </select>
+                        <button class="btn btn-light btn-outline-cinza btn-sm d-inline-block ml-3"
+                            (click)="save()">Aplicar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

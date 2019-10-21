@@ -4,13 +4,13 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<div class="modal-body" *ngIf="form" [formGroup]="form" appLogger="Resultado Apoio a Infra-estrutura">
+<div class="modal-body" *ngIf="form" [formGroup]="form"  >
     <div class="row">
         <div class="col-12">
             <div class="form-group">
                 <label>TIPO DE INFRAESTRUTURA RECEPTORA DA CAPACITAÇÃO TECNOLÓGICA</label>
                 <select class="form-control" formControlName="tipo"
-                        appLogItem="Tipo de infraestrutura receptora da capacitação tecnológica">
+                         >
                     <option value="">Selecione</option>
                     <option *ngFor="let tipo of tiposInfras" [value]="tipo.value">{{tipo.text}}</option>
                 </select>
@@ -23,7 +23,7 @@
             <div class="form-group">
                 <label>CNPJ INSTITUIÇÃO RECEPTORA</label>
                 <input type="text" class="form-control" formControlName="cnpjReceptora" mask="00.000.000/0000-00"
-                       appLogItem="CNPJ Instituição receptora"
+
                        placeholder="00.000.000/0000-00">
             </div>
         </div>
@@ -34,7 +34,7 @@
             <div class="form-group">
                 <label>NOME DO LABORATÓRIO RECEPTOR DO APOIO À INFRAESTRUTURA</label>
                 <app-textarea class="form-control" formControlName="nomeLaboratorio" maxlength="100"
-                              appLogItem="Nome do laboratório receptor do apaio à infraestrutura"
+
                               rows="1"></app-textarea>
             </div>
         </div>
@@ -56,7 +56,7 @@
                 <label>LISTA DE MATERIAIS PERMANENTES E EQUIPAMENTOS, SEPARADOS POR VÍRGULA, DESTINADOS AO APOIO
                     À INFRAESTRUTURA DO LABORATÓRIO</label>
                 <app-textarea class="form-control" formControlName="listaMateriais" maxlength="300"
-                              appLogItem="Lista de materiais e equipamentos"
+
                               rows="1"></app-textarea>
             </div>
         </div>

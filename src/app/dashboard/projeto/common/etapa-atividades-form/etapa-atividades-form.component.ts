@@ -6,7 +6,7 @@ import {zip, timer} from 'rxjs';
 import {AppService} from '@app/services/app.service';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 import {ProjetoFacade} from '@app/facades/index';
-import {LoggerDirective} from '@app/logger/logger.directive';
+
 
 
 @Component({
@@ -22,7 +22,7 @@ export class EtapaAtividadesFormComponent implements OnInit {
     produtosGroup: FormArray = new FormArray([]);
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
-    @ViewChild(LoggerDirective) logger: LoggerDirective;
+
 
     constructor(public activeModal: NgbActiveModal, protected app: AppService) {
     }
@@ -91,7 +91,6 @@ export class EtapaAtividadesFormComponent implements OnInit {
                 if (r.sucesso) {
                     this.activeModal.close(r);
                     this.app.alert('Salvo com sucesso');
-                    this.logger.saveUpdate();
                 } else {
                     this.app.alert(r.inconsistencias.join(', '));
                 }

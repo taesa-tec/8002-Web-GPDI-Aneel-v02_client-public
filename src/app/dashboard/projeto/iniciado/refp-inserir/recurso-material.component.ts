@@ -10,7 +10,7 @@ import {ProjetoFacade, EmpresaProjetoFacade} from '@app/facades/index';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 import {tap, map} from 'rxjs/operators';
 import {isNil} from 'lodash-es';
-import {LoggerDirective} from '@app/logger/logger.directive';
+
 
 @Component({
     selector: 'app-recurso-material',
@@ -37,7 +37,7 @@ export class RecursoMaterialComponent implements OnInit {
     isValid = true;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
-    @ViewChild(LoggerDirective) logger: LoggerDirective;
+
     @ViewChild('file') file: ElementRef;
 
     //<editor-fold desc="Getter & Setters">
@@ -282,7 +282,6 @@ export class RecursoMaterialComponent implements OnInit {
                 if (result.sucesso) {
                     this.sendFile(result.id).subscribe(_result => {
                         this.loading.hide();
-                        this.logger.saveCreate();
                         this.form.reset();
                         this.form.get('tipo').setValue('RM');
                         this.form.get('projetoId').setValue(this.projeto.id);
@@ -307,7 +306,6 @@ export class RecursoMaterialComponent implements OnInit {
                 RegistroFinanceiroId: new FormControl(id),
             })).pipe(tap(result => {
                 if (result.sucesso) {
-                    this.logger.save(`Arquivo ${el.files.item(0).name} adicionado`);
                     this.file.nativeElement.value = '';
                 }
             }));

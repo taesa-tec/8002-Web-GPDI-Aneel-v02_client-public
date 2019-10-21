@@ -1,0 +1,50 @@
+@import "components-base";
+
+:host {
+  height: 100%;
+  // grid-template-areas: 'header''content';
+  // grid-template-rows: 110px auto;
+  // display: grid;
+}
+
+
+.wrap-outlet-projeto {
+  grid-area: content;
+  display: grid;
+  grid-template-columns: 256px auto;
+  height: 100%;
+}
+
+.side-bar {
+  background: $cinzaClaro;
+  position: relative;
+
+  .projeto-side-info {
+    background: $blueLight;
+    color: white;
+    min-height: 150px;
+  }
+
+  .side-nav {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 150px;
+
+    .side-nav-item {
+      display: flex;
+      align-items: center;
+      color: $cinzaEscuro;
+      padding: 0.5rem 1rem;
+      border-bottom: solid 2px white;
+      transition: all ease-in 200ms;
+
+      &:hover,
+      &.active {
+        text-decoration: none;
+        background: $blue;
+        color: white;
+      }
+    }
+  }
+}

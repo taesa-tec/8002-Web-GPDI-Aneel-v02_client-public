@@ -1,6 +1,6 @@
 <h5 class="text-uppercase text-blue font-weight-normal my-3">Temas e Sub-temas Aneel</h5>
 <app-loading type="fullscreen"></app-loading>
-<form [formGroup]="form" *ngIf="form" appLogger="Tema">
+<form [formGroup]="form" *ngIf="form"  >
     <div class="row">
         <div class="col-12">
             <div class="form-group">
@@ -34,7 +34,7 @@
                 <label for="">Tema
                     <app-tip [tipId]="31"></app-tip>
                 </label>
-                <select name="" id="" class="form-control w-50" formControlName="catalogTemaId" appLogItem="Tema">
+                <select name="" id="" class="form-control w-50" formControlName="catalogTemaId"  >
                     <option value="">Selecione</option>
                     <option [value]="tema.id" *ngFor="let tema of temas | orderBy:'order'">{{tema.nome}}
                         - {{tema.valor}}</option>
@@ -43,7 +43,7 @@
             <div class="form-group" *ngIf="tema && tema.valor === 'OU'">
                 <label for="">Outro Tema</label>
                 <app-textarea [maxlength]="200" rows="2" class="form-control"
-                              appLogItem="Outro Tema"
+
                               formControlName="outroDesc"></app-textarea>
             </div>
 
@@ -59,7 +59,7 @@
                         <app-tip [tipId]="34"></app-tip>
                     </label>
                     <select class="form-control" formControlName="catalogSubTemaId"
-                            appLogItem="Sub-tema">
+                             >
                         <option value="">Selecione</option>
                         <option [value]="subTema.subTemaId"
                                 *ngFor="let subTema of subtemasdisponiveis(formSubtema.get('catalogSubTemaId').value) | orderBy:'order'">{{subTema.nome}}
@@ -71,7 +71,7 @@
                     <label>Outro sub-tema</label>
                     <app-textarea [maxlength]="200" rows="2" class="form-control"
                                   formControlName="outroDesc"
-                                  appLogItem="Sub-tema outros"></app-textarea>
+                                   ></app-textarea>
                 </div>
                 <div class="text-right" *ngIf="i > 0">
                     <button type="button" class="btn btn-link text-cinza" (click)="delete(i)" *appUserEscrita>

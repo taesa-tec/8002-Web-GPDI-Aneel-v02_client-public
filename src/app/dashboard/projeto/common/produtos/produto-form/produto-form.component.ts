@@ -5,7 +5,7 @@ import {FormGroup, FormControl, Validators, AbstractControl} from '@angular/form
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 import {AppService} from '@app/services/app.service';
 import {zip} from 'rxjs';
-import {LoggerDirective} from '@app/logger/logger.directive';
+
 
 @Component({
     selector: 'app-produto-form',
@@ -26,7 +26,7 @@ export class ProdutoFormComponent implements OnInit {
     form: FormGroup;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
-    @ViewChild(LoggerDirective) logger: LoggerDirective;
+
 
     constructor(public activeModal: NgbActiveModal, protected app: AppService) {
     }

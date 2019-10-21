@@ -1,0 +1,17 @@
+<div class="wrap-outlet-projeto">
+    <div class="side-bar">
+        <nav class="side-nav">
+            <app-loading type="fullparent" background="transparent"></app-loading>
+            <ng-container *ngFor="let route of m">
+                <a [routerLink]="route.path" class="side-nav-item"
+                   routerLinkActive="active">
+                    <span class="fs-24 mr-3"><i [class]="route.icon"></i></span>
+                    {{route.text}} {{ route.qtd}}
+                </a>
+            </ng-container>
+        </nav>
+    </div>
+    <div class="py-4 px-5 mb-5">
+        <router-outlet></router-outlet>
+    </div>
+</div>

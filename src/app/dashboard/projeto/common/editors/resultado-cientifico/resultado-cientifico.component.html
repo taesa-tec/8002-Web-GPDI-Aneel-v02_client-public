@@ -4,12 +4,12 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<div class="modal-body" *ngIf="form" [formGroup]="form" appLogger="Resultados Produção técnico cientifica">
+<div class="modal-body" *ngIf="form" [formGroup]="form"  >
     <div class="row">
         <div class="col-12">
             <div class="form-group">
                 <label>TIPO DE PRODUÇÃO</label>
-                <select class="form-control" formControlName="tipo" appLogItem="Tipo de produção">
+                <select class="form-control" formControlName="tipo"  >
                     <option value="">Selecione</option>
                     <option *ngFor="let tipo of tiposProducao" [value]="tipo.value">{{tipo.text}}</option>
                 </select>
@@ -22,14 +22,14 @@
             <div class="form-group">
                 <label>DATA DA PUBLICAÇÃO</label>
                 <input type="date" class="form-control" formControlName="dataPublicacao"
-                       appLogItem="Data da publicação">
+                        >
             </div>
         </div>
         <div class="col-6">
             <div class="form-group">
                 <label>RECEBIDA A CONFIRMAÇÃO DA PUBLICAÇÃO?</label>
                 <select formControlName="confirmacao" class="form-control"
-                        appLogItem="Recebida a confirmação da publicação">
+                         >
                     <option value="">Selecione</option>
                     <option value="true">Sim</option>
                     <option value="false">Não</option>
@@ -43,7 +43,7 @@
             <div class="form-group">
                 <label>NOME DO PERIÓDICO OU DO EVENTO DE PUBLICAÇÃO DA PRODUÇÃO TÉCNICO-CIENTÍFICA</label>
                 <app-textarea class="form-control" formControlName="nome" maxlength="50" rows="1"
-                              appLogItem="Nome do periódico ou evento de publicação"></app-textarea>
+                               ></app-textarea>
             </div>
         </div>
     </div>
@@ -53,7 +53,7 @@
             <div class="form-group">
                 <label>ENDEREÇO NA INTERNET DO PERIÓDICO OU DO EVENTO DE PUBLICAÇÃO </label>
                 <app-textarea class="form-control" formControlName="url" rows="1"
-                              appLogItem="Endereço na internet do periódico ou do evento de publicação"></app-textarea>
+                               ></app-textarea>
             </div>
         </div>
     </div>
@@ -62,7 +62,7 @@
         <div class="col-6">
             <div class="form-group">
                 <label>PAÍS DA PUBLICAÇÃO</label>
-                <select class="form-control" formControlName="catalogPaisId" appLogItem="País da publicação">
+                <select class="form-control" formControlName="catalogPaisId"  >
                     <option value="">Selecione</option>
                     <option [value]="pais.id" *ngFor="let pais of paises">{{pais.nome}}</option>
                 </select>
@@ -71,7 +71,7 @@
         <div class="col-6">
             <div class="form-group">
                 <label>CIDADE DA PUBLICAÇÃO</label>
-                <input type="text" class="form-control" formControlName="cidade" appLogItem="Cidade da publicação">
+                <input type="text" class="form-control" formControlName="cidade"  >
             </div>
         </div>
     </div>
@@ -81,7 +81,7 @@
             <div class="form-group">
                 <label>TÍTULO DO TRABALHO QUE GEROU A PRODUÇÃO TÉCNICO-CIENTÍFICA</label>
                 <app-textarea class="form-control" formControlName="titulo" maxlength="200" rows="1"
-                              appLogItem="Título do trabalho que gerou a produção técnico-científica"></app-textarea>
+                               ></app-textarea>
             </div>
         </div>
     </div>

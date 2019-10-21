@@ -7,13 +7,13 @@
         </div>
     </div>
 </div>
-<form [formGroup]="form" *ngIf="form && isValid" appLogger="REFP - Inserir Recurso Material">
+<form [formGroup]="form" *ngIf="form && isValid"  >
     <div class="row">
         <div class="col-12">
             <div class="form-group">
                 <label for="">NOME DO ITEM</label>
                 <input type="text" class="form-control" formControlName="nomeItem" placeholder="Nome"
-                       appLogItem="Nome do item">
+                        >
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@
             <div class="form-group">
                 <label for="">RECURSO MATERIAL ASSOCIADO</label>
                 <select class="form-control" formControlName="recursoMaterialId"
-                        appLogItem="Recurso material associado">
+                         >
                     <option value="">Selecionar</option>
                     <option [value]="r.id" *ngFor="let r of recursos">{{ r.nome }}</option>
                 </select>
@@ -39,7 +39,7 @@
             <div class="form-group">
                 <label for="">EMPRESA FINANCIADORA <span [hidden]="projeto.isPD">e Recebedora</span></label>
                 <select class="form-control" formControlName="empresaFinanciadoraId"
-                        [appLogItem]="'Empresa financiadora'.concat(projeto.isPD?' e Recebedora':'')">
+                         >
                     <option value="">Selecionar</option>
                     <option [value]="item.id" *ngFor="let item of empresasFinanciadoras">{{item.nome}}</option>
                 </select>
@@ -51,7 +51,7 @@
             <div class="form-group">
                 <label for="">EMPRESA RECEBEDORA</label>
                 <select name="" id="" class="form-control" formControlName="empresaRecebedoraId"
-                        appLogItem="Empresa recebedora">
+                         >
                     <option value="">Selecionar</option>
                     <option [value]="item.id" *ngFor="let item of empresasRecebedoras">{{item.nome}}</option>
                 </select>
@@ -61,7 +61,7 @@
         <div class="col-4">
             <div class="form-group">
                 <label for="">BENEFÍCIADO</label>
-                <input type="text" class="form-control" formControlName="beneficiado" appLogItem="Benefíciado">
+                <input type="text" class="form-control" formControlName="beneficiado"  >
             </div>
         </div>
         <div class="col-4" *ngIf="projeto.isPG">
@@ -69,7 +69,7 @@
             <div class="form-group">
                 <label for="">CNPJ ou CPF BENEFICIADO</label>
                 <input type="text" class="form-control" [mask]="cnpjCpfMask" placeholder="00.000.000/0000-00"
-                       value="cnpjBeneficiado" formControlName="cnpjBeneficiado" appLogItem="CNPJ beneficiado">
+                       value="cnpjBeneficiado" formControlName="cnpjBeneficiado"  >
             </div>
 
         </div>
@@ -80,7 +80,7 @@
         <div class="col-4">
             <div class="form-group">
                 <label for="">MÊS REFERÊNCIA</label>
-                <select class="form-control" formControlName="mes" appLogItem="Mês referência">
+                <select class="form-control" formControlName="mes"  >
                     <option value="">Selecione</option>
                     <option [value]="item.value" *ngFor="let item of mesesRef" [innerHTML]="item.text"></option>
                 </select>
@@ -91,7 +91,7 @@
             <div class="form-group">
                 <label for="">CATEGORIA CONTÁBIL</label>
                 <select name="" id="" class="form-control"
-                        appLogItem="Categoria contábil"
+
                         [formControlName]="projeto.isPD?'categoriaContabil':'catalogCategoriaContabilGestaoId'">
                     <option value="">Selecionar</option>
                     <option [value]="c.value" *ngFor="let c of categoriasContabeis">{{c.text}}</option>
@@ -102,7 +102,7 @@
         <div class="col-4">
             <div class="form-group">
                 <label for="">TIPO DE DOCUMENTO?</label>
-                <select class="form-control" formControlName="tipoDocumento" appLogItem="Tipo de documento">
+                <select class="form-control" formControlName="tipoDocumento"  >
                     <option value="">Selecionar</option>
                     <option [value]="t.value" *ngFor="let t of tipoDocs">{{ t.text }}</option>
                 </select>
@@ -115,21 +115,21 @@
             <div class="form-group">
                 <label for="">NÚMERO DE DOCUMENTO</label>
                 <input type="text" class="form-control" formControlName="numeroDocumento"
-                       appLogItem="Número de documento">
+                        >
             </div>
         </div>
         <div class="col-4">
             <div class="form-group">
                 <label for="">QUANTIDADE ITENS</label>
                 <input type="text" class="form-control" maxlength="7" formControlName="qtdItens" mask="0*"
-                       appLogItem="Quantidade itens">
+                        >
             </div>
         </div>
         <div class="col-4">
             <div class="form-group">
                 <label for="">CUSTO UNITÁRIO</label>
                 <input type="text" class="form-control" currencyMask formControlName="valorUnitario"
-                       appLogItem="Custo unitário">
+                        >
             </div>
         </div>
     </div>
@@ -139,7 +139,7 @@
         <div class="col-4">
             <div class="form-group">
                 <label for="">DATA DO DOCUMENTO</label>
-                <input type="date" class="form-control" formControlName="dataDocumento" appLogItem="Data do documento">
+                <input type="date" class="form-control" formControlName="dataDocumento"  >
             </div>
         </div>
         <div class="col-8" *ngIf="projeto.isPD">
@@ -147,14 +147,14 @@
                 <label for="">CNPJ ou CPF BENEFICIADO</label>
 
                 <input type="text" class="form-control" [mask]="cnpjCpfMask" placeholder="00.000.000/0000-00"
-                       value="cnpjBeneficiado" formControlName="cnpjBeneficiado" appLogItem="CNPJ beneficiado">
+                       value="cnpjBeneficiado" formControlName="cnpjBeneficiado"  >
             </div>
         </div>
         <div class="col-8" *ngIf="projeto.isPG">
             <div class="form-group">
                 <label>TIPO DE ATIVIDADE</label>
                 <select class="form-control" formControlName="catalogAtividadeId"
-                        appLogItem="Tipo de atividade">
+                         >
                     <option value="">Selecionar</option>
                     <option [value]="c.value" *ngFor="let c of atividades">{{c.text}}</option>
                 </select>
@@ -167,7 +167,7 @@
             <div class="form-group">
                 <label>IRÁ EQUIPAR LABORATÓRIO EXISTENTE?</label>
                 <select class="form-control" formControlName="equiparLabExistente"
-                        appLogItem="Irá equipar laboratório existente?">
+                         >
                     <option value="">Selecionar</option>
                     <option [value]="true">Sim</option>
                     <option [value]="false">Não</option>
@@ -180,7 +180,7 @@
             <div class="form-group">
                 <label for="">IRÁ EQUIPAR LABORATÓRIO NOVO?</label>
                 <select class="form-control" formControlName="equiparLabNovo"
-                        appLogItem="Irá equipar laboratório novo?">
+                         >
                     <option value="">Selecionar</option>
                     <option [value]="true">Sim</option>
                     <option [value]="false">Não</option>
@@ -192,7 +192,7 @@
             <div class="form-group">
                 <label for="">ITEM NACIONAL?</label>
                 <select class="form-control" formControlName="itemNacional"
-                        appLogItem="Item nacional">
+                         >
                     <option value="">Selecionar</option>
                     <option [value]="true">Sim</option>
                     <option [value]="false">Não</option>
@@ -206,7 +206,7 @@
             <div class="form-group">
                 <label for="">ESPECÍFICAÇÃO TÉCNICA</label>
                 <textarea cols="30" rows="4" class="form-control"
-                          appLogItem="Específicação técnica"
+
                           formControlName="especificacaoTecnica"></textarea>
             </div>
 
@@ -218,7 +218,7 @@
             <div class="form-group">
                 <label for="">FUNÇÃO DESTE RECURSO NESTA ETAPA DO PROJETO</label>
                 <textarea cols="30" rows="4" class="form-control"
-                          appLogItem="Função deste recurso nesta etapa do projeto"
+
                           formControlName="funcaoRecurso"></textarea>
             </div>
         </div>
@@ -228,7 +228,7 @@
             <div class="form-group" [formGroup]="obsInternas">
                 <label for="">OBSERVAÇÕES INTERNAS(OPCIONAL)</label>
                 <textarea cols="30" rows="4" class="form-control" formControlName="texto"
-                          appLogItem="Observações internas"></textarea>
+                           ></textarea>
             </div>
 
         </div>

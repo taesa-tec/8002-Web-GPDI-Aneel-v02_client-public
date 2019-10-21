@@ -1,0 +1,275 @@
+<html>
+
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        .page:after {
+            content: counter(page);
+        }
+
+        table {
+            width: 100%;
+            border: 1px solid #555;
+            margin: 0;
+            padding: 15px;
+        }
+
+        .tabela th,
+        .tabela td {
+            border: none;
+        }
+
+        nav,
+        footer,
+        video,
+        audio,
+        object,
+        embed {
+            display: none;
+        }
+
+        .bPage {
+            page-break-before: always !important;
+            break-before: always !important;
+        }
+
+        .cinza {
+            color: #c5c5c5;
+        }
+
+        .cabecalho {
+            height: 20px;
+        }
+
+        .cabecalho td {
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .info-header {
+            padding: 0;
+        }
+
+        .info-header table,
+        .info-header tr,
+        .info-header td {
+            border: none;
+        }
+
+        .info-header .paginas,
+        .info-header .codigo {
+            border: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .info-header .codigo {
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <table width="100%" style="border: none">
+        <thead>
+            <tr>
+                <td>
+                    <!-- <table align="center" border="1" bordercolor="#ccc" cellpadding="5" cellspacing="0"
+                        style="border-collapse:collapse">
+                        <thead>
+                            <tr>
+                                <td style="border-style:none; text-align:center; vertical-align:middle"><img alt=""
+                                        src="http://localhost:4200/assets/logo-pdf.png" /></td>
+                                <td
+                                    style="border-bottom:none; border-top:none; text-align:center; vertical-align:middle">
+                                    <h4 class="cinza">ESPECIFICAÇÃO TÉCNICA</h4>
+                                </td>
+                                <td
+                                    style="border-collapse:collapse; border-style:none; text-align:center; vertical-align:middle" class="cinza">
+                                    <p>&nbsp;</p>
+
+                                    <p>Documento: <strong>PED-00XX-001-2019</strong></p>
+
+                                    <p>Folha de 0 de 5</p>
+
+                                    <p>&nbsp;</p>
+                                </td>
+                            </tr>
+                        </thead>
+                    </table> -->
+
+                    <table class="cabecalho" width="100%">
+                        <tr>
+                            <td>
+                                <span class="logo">
+                                    <img src="http://localhost:4200/assets/logo-pdf.png" alt="" class="img-fluid">
+                                </span>
+                            </td>
+                            <td>
+                                <h5><span class="titulo">ESPECIFICAÇÃO TÉCNICA</span></h5>
+                            </td>
+                            <td class="info-header">
+                                <table width="100%">
+                                    <tr>
+                                        <td class="codigo">
+                                            <span>Documento: <strong>PED-00X/2018</strong></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="paginas">
+                                            <span>Folha 2 de 5</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    <table align=" center" width="770" border="1" style="padding: 25px;">
+                        <tr align="center">
+                            <td style="border:none">
+                                <strong>TÍTULO DO DOCUMENTO:</strong>
+                            </td>
+                        </tr>
+                        <tr align="center">
+                            <td style="border:none">
+                                <span>Contratação de Projeto de P&D</span>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table align="center" width="770" border="1" style="padding: 25px;border-top: none;">
+                        <tr align="center">
+                            <td style="border:none">
+                                PROJETO:
+                            </td>
+                        </tr>
+                        <tr align="center">
+                            <td style="border:none">
+                                <span>
+                                    <strong>00XX-Titulo do projeto</strong>
+                                    (Descreva um título breve do Problema que busca
+                                    solução (3 palavras no máximo)
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    <table align="center" width="770" border="1" bordercolor="#000" cellpadding="5" cellspacing="0"
+                        style="border-collapse:collapse">
+                        <thead>
+                            <tr>
+                                <th scope="col">Revisão</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr align="center">
+                                <td scope="col">00</td>
+                                <td scope="col">Emissão inicial</td>
+                                <td scope="col">10/08/2016</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    <table align="center" border="1" width="770" bordercolor="#000" cellpadding="5" cellspacing="0"
+                        style="border-collapse:collapse; text-align: center;">
+
+                        <thead>
+                            <tr>
+                                <th scope="col">&nbsp;</th>
+                                <th scope="col">Autor</th>
+                                <th scope="col">Revisor</th>
+                                <th scope="col" colspan="3">Autorizado por</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Nome</strong></td>
+                                <td>Seu nome</td>
+                                <td>Marcio Barony</td>
+                                <td>Francisco de Assis Pereira</td>
+                                <td>Seu Gerente direto</td>
+                                <td>Marco Antônio Resende Faria</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Função</strong></td>
+                                <td>Descrição do seu cargo</td>
+                                <td>Coordenador de Pesquisa e Desenvolvimento</td>
+                                <td>Gerente de Gestão de Ativos</td>
+                                <td>Descrição do cargo do Gerente direto</td>
+                                <td>Diretor Técnico</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Assinatura</strong></td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <div class="bPage">&nbsp;</div>
+
+                    <div class="content">
+                        <div [innerHTML]="dadosPDF"></div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot id="foot">
+            <tr>
+                <td>
+                    <p style="text-align: center; text-decoration: underline;" class="cinza">
+                        <strong>
+                            <small>
+                                "O conteúdo deste documento é material reservado e de propriedade da TAESA sendo vedada
+                                a cópia
+                                ou edição por qualquer meio e/ou utilização sem autorização da mesma.”
+                            </small>
+                        </strong>
+                    </p>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+</body>
+
+</html>

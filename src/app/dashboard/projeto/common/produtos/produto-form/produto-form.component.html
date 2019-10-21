@@ -4,21 +4,21 @@
         <i class="ta-cancel-circle"></i>
     </button>
 </div>
-<form class="modal-body" *ngIf="form" [formGroup]="form" appLogger="Produto">
+<form class="modal-body" *ngIf="form" [formGroup]="form"  >
     <div class="mb-3">
         <div class="form-group m-0">
             <label>Classificação</label>
         </div>
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" id="input-r-produto-intermediario" value="Intermediario"
-                   appLogItem="Classificação"
+
                    appLogItemValue="Produto Intermediário"
                    formControlName="classificacao">
             <label class="form-check-label" for="input-r-produto-intermediario">Produto Intermediário</label>
         </div>
         <div class="form-check form-check-inline">
             <input class="form-check-input" #produtoFinal type="radio" id="input-r-produto-final" value="Final"
-                   appLogItem="Classificação"
+
                    appLogItemValue="Produto Final"
                    formControlName="classificacao">
             <label class="form-check-label" for="input-r-produto-final">Produto Final</label>
@@ -26,7 +26,7 @@
     </div>
     <div class="form-group" [hidden]="!produtoFinal.checked">
         <label>Tipo de produto</label>
-        <select class="form-control" formControlName="tipo" appLogItem="Tipo de produto">
+        <select class="form-control" formControlName="tipo"  >
             <option value="">Selecione</option>
             <option [value]="tipo.value" *ngFor="let tipo of tiposProdutos">{{tipo.text}}</option>
         </select>
@@ -34,7 +34,7 @@
     <div class="form-group" [hidden]="!produtoFinal.checked">
         <label>Fase da cadeia de inovação</label>
         <select class="form-control" formControlName="catalogProdutoFaseCadeiaId"
-                appLogItem="Fase da cadeia de inovação">
+                 >
             <option value="">Selecione</option>
             <option [value]="fase.id" *ngFor="let fase of fases">{{fase.nome}}</option>
         </select>
@@ -42,14 +42,14 @@
     <div class="form-group" [hidden]="!produtoFinal.checked">
         <label>Tipo de produto detalhado</label>
         <select class="form-control" formControlName="catalogProdutoTipoDetalhadoId"
-                appLogItem="Tipo de produto detalhado">
+                 >
             <option value="">Selecione</option>
             <option [value]="tipo.id" *ngFor="let tipo of tiposDetalhados">{{tipo.nome}}</option>
         </select>
     </div>
     <div class="form-group">
         <label>Titulo produto</label>
-        <input type="text" class="form-control" formControlName="titulo" appLogItem="Titulo produto">
+        <input type="text" class="form-control" formControlName="titulo"  >
     </div>
     <div class="form-group">
         <label>Descrição detalhada do produto</label>

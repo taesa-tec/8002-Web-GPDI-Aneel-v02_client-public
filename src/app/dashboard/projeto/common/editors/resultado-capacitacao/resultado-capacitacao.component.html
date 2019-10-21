@@ -4,13 +4,13 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<div class="modal-body" [formGroup]="form" *ngIf="form" appLogger="Registrar capacitação profissional">
+<div class="modal-body" [formGroup]="form" *ngIf="form"  >
     <div class="row">
         <div class="col-12">
             <div class="form-group">
                 <label for="">RECURSO HUMANO</label>
                 <select name="" id="" class="form-control" formControlName="recursoHumanoId"
-                        appLogItem="Recurso Humano">
+                         >
                     <option value="">Selecione o Recurso Humano</option>
                     <option [value]="recurso.id"
                             *ngFor="let recurso of recursosHumanos">{{recurso.nomeCompleto}}</option>
@@ -23,7 +23,7 @@
         <div class="col-6">
             <div class="form-group">
                 <label for="">TIPO DE CAPACITAÇÃO</label>
-                <select name="" id="" class="form-control" formControlName="tipo" appLogItem="Tipo de capacitação">
+                <select name="" id="" class="form-control" formControlName="tipo"  >
                     <option value="">Selecione</option>
                     <option *ngFor="let capacitacao of tiposCapacitacao"
                             [value]="capacitacao.value">{{capacitacao.text}}</option>
@@ -34,7 +34,7 @@
             <div class="form-group">
                 <label for="">CONCLUSÃO DA CAPACITAÇÃO?</label>
                 <select name="" id="" class="form-control" formControlName="conclusao"
-                        appLogItem="Conclusão da capacitação">
+                         >
                     <option value="">Selecione</option>
                     <option value="true">Sim</option>
                     <option value="false">Não</option>
@@ -48,14 +48,14 @@
             <div class="form-group">
                 <label for="">DATA DE CONCLUSÃO CAPACITAÇÃO</label>
                 <input type="date" class="form-control" formControlName="dataConclusao"
-                       appLogItem="Data de conclusão capacitação">
+                        >
             </div>
         </div>
         <div class="col-6">
             <div class="form-group">
                 <label for="">CNPJ INSTITUIÇÃO</label>
                 <input type="text" class="form-control" formControlName="cnpjInstituicao" mask="00.000.000/0000-00"
-                       appLogItem="CNPJ instituição">
+                        >
             </div>
         </div>
     </div>
@@ -65,7 +65,7 @@
             <div class="form-group">
                 <label for="">ÁREA DA PESQUISA DE CAPTAÇÃO PROFISSIONAL</label>
                 <app-textarea formControlName="areaPesquisa" class="form-control" maxlength="50"
-                              appLogItem="Área da pesquisa de captação profissional"
+
                               rows="1"></app-textarea>
             </div>
         </div>
@@ -76,7 +76,7 @@
             <div class="form-group">
                 <label for="">TÍTULO DO TRABALHO QUE DEU ORIGEM À CAPACITAÇÃO PROFISSIONAL</label>
                 <app-textarea formControlName="tituloTrabalho" class="form-control" maxlength="200"
-                              appLogItem="Título do trabalho que deu origem à capacitação profissional"
+
                               rows="4"></app-textarea>
             </div>
         </div>
