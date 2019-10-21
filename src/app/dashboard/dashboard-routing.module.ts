@@ -39,6 +39,11 @@ const routes: Routes = [
         component: MainComponent,
         loadChildren: '@app/dashboard/demandas/demandas.module#DemandasModule'
       },
+      {
+        path: 'configuracoes-do-sistema',
+        component: MainComponent,
+        loadChildren: '@app/dashboard/configuracoes-sistema/configuracoes-sistema.module#ConfiguracoesSistemaModule'
+      },
       /*
       {
         path: 'demanda',

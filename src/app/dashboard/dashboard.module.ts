@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 
-import { PainelDemandasModule } from './painel-demandas/painel-demandas.module';
 import { MeuCadastroComponent } from './meu-cadastro/meu-cadastro.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { GerenciarUsuariosComponent } from './gerenciar-usuarios/gerenciar-usuarios.component';
@@ -27,7 +26,6 @@ import { SharedModule } from './shared/shared.module';
     SharedModule,
     UsersModule,
     DashboardRoutingModule,
-    PainelDemandasModule
   ]
 })
 export class DashboardModule {

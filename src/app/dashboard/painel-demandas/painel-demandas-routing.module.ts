@@ -13,10 +13,6 @@ const routes: Routes = [
         redirectTo: 'gestao-de-demandas',
         pathMatch: 'full'
       },
-      {
-        path: 'configuracoes-do-sistema',
-        loadChildren: '@app/dashboard/painel-demandas/configuracoes-sistema/configuracoes-sistema.module#ConfiguracoesSistemaModule'
-      }
     ]
   },
 
