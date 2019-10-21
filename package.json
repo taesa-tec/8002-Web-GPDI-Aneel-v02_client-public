@@ -1,6 +1,6 @@
 {
   "name": "sistema-ped",
-  "version": "0.0.0",
+  "version": "2.42.103",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
