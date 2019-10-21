@@ -6,7 +6,7 @@ import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.
 import {AppService} from '@app/services/app.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ProjetoFacade} from '@app/facades/index';
-import {LoggerDirective} from '@app/logger/logger.directive';
+
 
 @Component({
     selector: 'app-recurso-material-form',
@@ -21,7 +21,7 @@ export class RecursoMaterialFormComponent implements OnInit {
     recursoMaterial: RecursoMaterial;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
-    @ViewChild(LoggerDirective) logger: LoggerDirective;
+
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -104,11 +104,6 @@ export class RecursoMaterialFormComponent implements OnInit {
             request.subscribe(result => {
                 if (result.sucesso) {
                     this.activeModal.close(result);
-                    if (this.recursoMaterial.id) {
-                        this.logger.saveUpdate();
-                    } else {
-                        this.logger.saveCreate();
-                    }
                 } else {
                     this.app.alert(result.inconsistencias.join(', '));
                 }
@@ -125,9 +120,7 @@ export class RecursoMaterialFormComponent implements OnInit {
                     this.app.projetos.delRecursoMaterial(this.recursoMaterial.id).subscribe(resultDelete => {
                         this.loading.hide();
                         if (resultDelete.sucesso) {
-                            // this.logProjeto("Recursos Materiais", "Delete");
                             this.activeModal.close('deleted');
-                            this.logger.saveDelete();
                         } else {
                             this.app.alert(resultDelete.inconsistencias.join(', '));
                         }

@@ -1,0 +1,33 @@
+.demanda-progresso {
+  margin: 16px 0;
+  .demanda-chunk {
+    &.demanda-info {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      flex: 1;
+      box-sizing: border-box;
+      padding: 8px 32px;
+      margin: 0 -8px;
+      flex: 2;
+      margin-left: 0;
+      padding-left: 12px;
+      background: #eee;
+      clip-path: polygon(
+        0px 0px,
+        calc(100% - 22px) 0,
+        100% 50%,
+        calc(100% - 22px) 100%,
+        0% 100%
+      );
+    }
+    header {
+    }
+    main {
+      flex: 1;
+    }
+    footer {
+      margin-top: 12px;
+    }
+  }
+}

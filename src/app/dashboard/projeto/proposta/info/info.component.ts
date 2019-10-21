@@ -5,10 +5,8 @@ import {zip} from 'rxjs';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 import {AppService} from '@app/services/app.service';
 import {ProjetoFacade} from '@app/facades/index';
-import {ScreenName} from '@app/decorators';
-import {LoggerDirective} from '@app/logger/logger.directive';
 
-@ScreenName({name: 'Projeto'})
+
 @Component({
     selector: 'app-info',
     templateUrl: './info.component.html',
@@ -24,7 +22,7 @@ export class InfoComponent implements OnInit {
     segmentos: Array<Segmento>;
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
-    @ViewChild(LoggerDirective) logger: LoggerDirective;
+
 
     public numeroPatterns = {
         'S': {pattern: /[A-Za-z]/, optional: true},
@@ -79,9 +77,6 @@ export class InfoComponent implements OnInit {
                 if (resultado.sucesso) {
                     this.app.alert('Salvo com sucesso');
                     this.projeto = Object.assign(this.projeto, this.form.value);
-                    if (this.logger) {
-                        this.logger.saveUpdate();
-                    }
                 } else {
                     this.app.alert(resultado.inconsistencias);
                 }

@@ -6,7 +6,6 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgxMaskModule} from 'ngx-mask';
 import {NgxCurrencyModule} from 'ngx-currency';
-import {LoggerModule} from '@app/logger/logger.module';
 import {AppPipesModule} from '@app/core/shared/pipes/app-pipes.module';
 import {RouterModule} from '@angular/router';
 
@@ -36,8 +35,6 @@ const components = [
         NgbModule,
         NgxMaskModule,
         NgxCurrencyModule,
-        // @todo remover Logger
-        LoggerModule
     ],
     exports: components
 })

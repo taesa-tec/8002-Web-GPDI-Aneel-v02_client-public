@@ -1,0 +1,43 @@
+.area-pdf {
+  border: 8px solid #e8e4e4;
+  border-radius: 8px;
+  padding: 20px;
+  display: block;
+  overflow-y: scroll;
+  height: 400px;
+  .header-pdf {
+    width: 100%;
+    .logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .titulo {
+      color: #818181;
+      font-weight: 600;
+    }
+    td {
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    .info-header {
+      padding: 0;
+      .paginas,
+      .codigo {
+        border: none;
+        justify-content: center;
+        align-items: center;
+      }
+      .codigo {
+        border-bottom: 1px solid #ccc;
+      }
+    }
+    // .codigo{
+    //   display: block;
+    //   border-bottom: 1px solid #ccc;
+    // }
+    // .pagina{
+    //   padding: 10px;
+    // }
+  }
+}

@@ -1,0 +1,85 @@
+<div class="row justify-content-between">
+  <div class="col">
+    <h5 class="text-uppercase text-blue font-weight-normal my-4">TEMA E SUB-TEMAS ANEEL</h5>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-4">
+    <div class="form-group">
+      <label for="">Tema</label>
+      <select name="" id="" class="form-control">
+        <option value="">Outro (ID 31)</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col">
+    <div class="form-group">
+      <label for="">Outro Tema</label>
+      <textarea class="form-control pt-2" name="outroTema" id="outroTema" rows="4"
+        placeholder=" Caso o tema selecionado seja “Outro” na tabela TTEMA_ANEEL, sugerir o tema proposto (ID 32)"></textarea>
+      <div class="text-right pt-2">
+        <span>200 caracteres sobrando</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-12">
+    <div class="bg-cinza-claro my-3 p-3 rounded">
+      <div class="form-group">
+        <label for="">Sub-Tema
+          <app-tip [tipId]="34"></app-tip>
+        </label>
+        <select class="form-control">
+          <option value="">Selecione</option>
+          <option>jujjjjj</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Outro sub-tema</label>
+        <textarea name="" id="" cols="30" rows="2" class="form-control"
+          placeholder="Caso o subtema selecionado seja “Outro” na tabela TDEMANDA_ANEEL, sugerir o subtema proposto (ID 35)"></textarea>
+        <div class="text-right pt-2">
+          <span>200 caracteres sobrando</span>
+        </div>
+      </div>
+      <div class="text-right">
+        <button type="button" class="btn btn-link text-cinza">
+          <i class="ta-cancel-circle"></i> Excluir
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 text-right">
+    <button type="button" class="btn btn-outline-primary">
+      <i class="ta-plus-circle"></i> Adicionar Sub-Tema
+    </button>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<hr>
+<div class="row">
+  <div class="col text-right">
+
+    <button type="submit" class="btn btn-primary" (click)="onSubmit()">
+      <i class="ta-save pr-2"></i>
+      <span>Salvar Dados</span>
+    </button>
+  </div>
+</div>

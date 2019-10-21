@@ -5,7 +5,7 @@
     PROJETO BASE DE GESTÃO
 </h5>
 <app-loading type="fullscreen"></app-loading>
-<form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()" appLogger="Projeto">
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()"  >
     <div class="row">
         <div class="col-6">
             <div class="form-group">
@@ -13,7 +13,7 @@
                     <app-tip [tipId]="7"></app-tip>
                 </label>
                 <input type="text" class="form-control" formControlName="numero" maxlength="6" mask="0000S"
-                       [patterns]="numeroPatterns" placeholder="00000X" appLogItem="Número do projeto">
+                       [patterns]="numeroPatterns" placeholder="00000X"  >
             </div>
         </div>
         <div class="col-6">
@@ -22,7 +22,7 @@
                     <app-tip [tipId]="10"></app-tip>
                 </label>
                 <select name="" id="" class="form-control" formControlName="catalogEmpresaId"
-                        appLogItem="Empresa Proponente">
+                         >
                     <option *ngFor="let empresa of empresas" [value]="empresa.id">{{empresa.nome}}</option>
                 </select>
             </div>
@@ -33,7 +33,7 @@
             <div class="form-group">
                 <label for="">Compartilhamento dos resultados</label>
                 <select name="" id="" class="form-control" formControlName="compartResultados"
-                        appLogItem="Compartilhamento dos resultados">
+                         >
                     <option value="">Selecione o tipo de Compartilhamento dos resultados</option>
                     <option *ngFor="let c of compartilhamentos" [value]="c.value">{{c.text }}</option>
                 </select>
@@ -42,7 +42,7 @@
         <div class="col-6">
             <div class="form-group">
                 <label for="">Código do projeto</label>
-                <input type="text" class="form-control" formControlName="codigo" appLogItem="Código do projeto">
+                <input type="text" class="form-control" formControlName="codigo"  >
             </div>
         </div>
     </div>
@@ -52,7 +52,7 @@
                 <label for="">Titulo resumido projeto
                     <app-tip [tipId]="8"></app-tip>
                 </label>
-                <input type="text" class="form-control" formControlName="titulo" appLogItem="Titulo resumido projeto">
+                <input type="text" class="form-control" formControlName="titulo"  >
             </div>
         </div>
     </div>
@@ -63,7 +63,7 @@
                     <app-tip [tipId]="9"></app-tip>
                 </label>
                 <app-textarea [maxlength]="1000" rows="4" class="form-control"
-                              appLogItem="Titulo do projeto"
+
                               formControlName="tituloDesc"></app-textarea>
             </div>
         </div>
@@ -72,7 +72,7 @@
         <div class="col-6">
             <div class="form-group">
                 <label for="">Segmento</label>
-                <select class="form-control" formControlName="catalogSegmentoId" appLogItem="Segmento">
+                <select class="form-control" formControlName="catalogSegmentoId"  >
                     <option value="">Selecione o Segmento</option>
                     <option *ngFor="let segmento of segmentos" [value]="segmento.id"> {{ segmento.nome }}</option>
                 </select>
@@ -82,7 +82,7 @@
             <div class="form-group">
                 <label for="">Avaliação inicial do projeto</label>
                 <select name="" id="" class="form-control" formControlName="avaliacaoInicial"
-                        appLogItem="Avaliação inicial do projeto">
+                         >
                     <option [value]="true">Sim</option>
                     <option [value]="false">Não</option>
                 </select>
@@ -94,7 +94,7 @@
             <div class="form-group">
                 <label for="">Compartilhamento dos resultados</label>
                 <select name="" id="" class="form-control" formControlName="compartResultados"
-                        appLogItem="Compartilhamento dos resultados">
+                         >
                     <option value="">Selecione o tipo de Compartilhamento dos resultados</option>
                     <option *ngFor="let c of compartilhamentos" [value]="c.value">{{c.text }}</option>
                 </select>
@@ -103,7 +103,7 @@
         <div class="col-6">
             <div class="form-group">
                 <label for="">Código do projeto</label>
-                <input type="text" class="form-control" formControlName="codigo" appLogItem="Código do projeto">
+                <input type="text" class="form-control" formControlName="codigo"  >
             </div>
         </div>
     </div>
@@ -112,7 +112,7 @@
             <div class="form-group">
                 <label for="">Motivação</label>
                 <app-textarea [maxlength]="1000" rows="4" class="form-control"
-                              appLogItem="Motivação"
+
                               formControlName="motivacao"></app-textarea>
             </div>
         </div>
@@ -123,7 +123,7 @@
             <div class="form-group">
                 <label for="">Originalidade</label>
                 <app-textarea [maxlength]="2000" rows="4" class="form-control"
-                              appLogItem="Originalidade"
+
                               formControlName="originalidade"></app-textarea>
             </div>
         </div>
@@ -134,7 +134,7 @@
             <div class="form-group">
                 <label for="">Aplicabilidade</label>
                 <app-textarea [maxlength]="1000" rows="4" class="form-control"
-                              appLogItem="Aplicabilidade"
+
                               formControlName="aplicabilidade"></app-textarea>
             </div>
         </div>
@@ -144,7 +144,7 @@
             <div class="form-group">
                 <label for="">Relevância</label>
                 <app-textarea [maxlength]="1000" rows="4" class="form-control"
-                              appLogItem="Relevância"
+
                               formControlName="relevancia"></app-textarea>
             </div>
         </div>
@@ -154,7 +154,7 @@
             <div class="form-group">
                 <label for="">Razoabilidade dos custos</label>
                 <app-textarea [maxlength]="1000" rows="4" class="form-control"
-                              appLogItem="Razoabilidade dos custos"
+
                               formControlName="razoabilidade"></app-textarea>
             </div>
         </div>
@@ -164,7 +164,7 @@
             <div class="form-group">
                 <label for="">Pesquisas Correlatas</label>
                 <app-textarea [maxlength]="1000" rows="4" class="form-control"
-                              appLogItem="Pesquisas Correlatas"
+
                               formControlName="pesquisas"></app-textarea>
             </div>
         </div>

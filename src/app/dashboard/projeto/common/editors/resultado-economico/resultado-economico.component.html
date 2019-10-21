@@ -4,14 +4,14 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<div class="modal-body" *ngIf="form" [formGroup]="form" appLogger="Resultados Indicadores Econômicos">
+<div class="modal-body" *ngIf="form" [formGroup]="form"  >
 
     <div class="row">
         <div class="col-12">
             <div class="form-group">
                 <label>TIPO DE INDICADOR ECONÔMICO OBTIDO COMO RESULTADO DO PROJETO</label>
                 <select class="form-control" formControlName="tipo"
-                        appLogItem="Tipo de indicador econômico obtido como resultado do projeto">
+                         >
                     <option value="">Selecione</option>
                     <option *ngFor="let tipo of indicadoresEconomicos" [value]="tipo.value">{{tipo.text}}</option>
                 </select>
@@ -24,7 +24,7 @@
             <div class="form-group">
                 <label>DESCRIÇÃO DO BENEFÍCIO ECONÔMICO PARA O INDICADOR ECONÔMICO SELECIONADO</label>
                 <app-textarea formControlName="desc" rows="5" maxlenght="400" class="form-control"
-                              appLogItem="Descrição do benefício econômico para o indicador econômico selecionado"></app-textarea>
+                               ></app-textarea>
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@
             <div class="form-group">
                 <label>UNIDADE DA BASE DO INDICADOR</label>
                 <input type="text" class="form-control" maxlength="10" formControlName="unidadeBase"
-                       appLogItem="Unidade da base do indicador"
+
                        placeholder="Até 10 caracteres">
             </div>
         </div>
@@ -42,7 +42,7 @@
             <div class="form-group">
                 <label>VALOR NUMÉRICO DO INDICADOR </label>
                 <input type="text" class="form-control" mask="0*" formControlName="valorIndicador"
-                       appLogItem="Valor númerico do indicador">
+                        >
             </div>
         </div>
     </div>
@@ -51,14 +51,14 @@
             <div class="form-group">
                 <label>PERCENTAGEM DO IMPACTO</label>
                 <input type="text" class="form-control" mask="percent" formControlName="percentagem"
-                       appLogItem="Percentagem do impacto">
+                        >
             </div>
         </div>
         <div class="col-6">
             <div class="form-group">
                 <label>CUSTO DO BENEFÍCIO ECONÔMICO</label>
                 <input type="text" class="form-control" currencyMask formControlName="valorBeneficio"
-                       appLogItem="Custo do benefício econômico">
+                        >
             </div>
         </div>
     </div>

@@ -7,7 +7,7 @@
     $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 
     .fs#{$infix} {
-      @each $v in $font-sizes{
+      @each $v in $font-sizes {
         &-#{$v} {
           font-size: #{$v}px !important;
         }
@@ -28,13 +28,13 @@
         }
         @for $i from 1 to 10 {
           &-percent-#{$i * 10} {
-            font-size: #{100+ ($i * 10)}#{'%'} !important;
+            font-size: #{100+ ($i * 10)}#{"%"} !important;
           }
         }
       }
       @for $i from 1 to 10 {
         &-p-#{$i * 10} {
-          font-size: #{($i * 10)}#{'%'} !important;
+          font-size: #{($i * 10)}#{"%"} !important;
         }
       }
 
@@ -63,4 +63,8 @@
       color: $value !important;
     }
   }
+}
+
+.font-weight-medium {
+  font-weight: 500;
 }

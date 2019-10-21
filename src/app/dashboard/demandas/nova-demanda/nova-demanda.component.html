@@ -1,0 +1,27 @@
+<div class="modal-header">
+  <div class="text-uppercase modal-title text-blue-light fs-24">Nova Demanda</div>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <i class="ta-cancel-circle"></i>
+  </button>
+</div>
+<app-loading type="fullscreen"></app-loading>
+<div class="modal-body" *ngIf="formNovaDemanda">
+  <form [formGroup]="formNovaDemanda" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>Titulo da Demanda</label>
+      <input type="text" formControlName="tituloDemanda" class="form-control" name="tituloDemanda" placeholder="Descreva um título breve do Problema que busca solução (3 palavras no máximo)">
+    </div>
+    <div class="form-group">
+      <div class="text-right">
+        <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">Cancelar</div>
+        <button type="submit" class="btn btn-primary" [disabled]="formNovaDemanda.invalid">
+          <i class="ta-plus-circle"></i>
+          Criar Demanda
+        </button>
+      </div>
+    </div>
+
+
+    {{this.statuscad}}
+  </form>
+</div>

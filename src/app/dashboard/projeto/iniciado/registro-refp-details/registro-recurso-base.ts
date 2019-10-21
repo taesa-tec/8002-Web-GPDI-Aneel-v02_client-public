@@ -7,7 +7,7 @@ import {FormGroup, FormControl, Validators, FormArray} from '@angular/forms';
 import * as moment from 'moment';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 import {tap, map} from 'rxjs/operators';
-import {LoggerDirective} from '@app/logger/logger.directive';
+
 
 export abstract class RegistroRecursoBase implements OnInit {
 
@@ -31,7 +31,7 @@ export abstract class RegistroRecursoBase implements OnInit {
 
     @ViewChild(LoadingComponent) loading: LoadingComponent;
     @ViewChild('file') file: ElementRef;
-    @ViewChild(LoggerDirective) logger: LoggerDirective;
+
 
     constructor(protected app: AppService) {
     }
@@ -155,9 +155,6 @@ export abstract class RegistroRecursoBase implements OnInit {
             if (result.sucesso) {
                 this.registroAlterado.emit();
                 this.app.alert('Alterado com sucesso!');
-                if (this.logger) {
-                    this.logger.saveStatus(status);
-                }
             } else {
                 this.app.alert(result.inconsistencias);
             }
@@ -176,9 +173,6 @@ export abstract class RegistroRecursoBase implements OnInit {
                     if (result.sucesso) {
                         this.registroAlterado.emit();
                         this.app.alert('Excluído com sucesso!');
-                        if (this.logger) {
-                            this.logger.saveDelete();
-                        }
                     } else {
                         this.app.alert(result.inconsistencias);
                     }
@@ -242,7 +236,6 @@ export abstract class RegistroRecursoBase implements OnInit {
                 RegistroFinanceiroId: new FormControl(id),
             })).pipe(tap(result => {
                 if (result.sucesso) {
-                    this.logger.save(`Arquivo ${el.files.item(0).name} adicionado`);
                     this.file.nativeElement.value = '';
                 }
             }));
