@@ -1,25 +1,25 @@
-import { TemasComponent } from './temas/temas.component';
-import { DocumentoAprovacoesComponent } from './documento-aprovacoes/documento-aprovacoes.component';
-import { DefinicaoPessoasProcessoValidacaoComponent } from './definicao-pessoas-processo-validacao/definicao-pessoas-processo-validacao.component';
-import { DemandaComponent } from './demanda.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { DemandaComponent } from './demanda.component';
+import { EquipeValidacaoComponent } from './equipe-validacao/equipe-validacao.component';
+import { DocumentoAprovacoesComponent } from './documento-aprovacoes/documento-aprovacoes.component';
+import { TemasComponent } from './temas/temas.component';
 import { EspecificacaoTecnicaComponent } from './especificacao-tecnica/especificacao-tecnica.component';
 import { PreAprovacaoComponent } from './pre-aprovacao/pre-aprovacao.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ":id",
     component: DemandaComponent,
     children: [
       {
         path: '',
-        redirectTo: 'definicao-pessoas-processo-validacao',
+        redirectTo: 'equipe-validacao',
         pathMatch: 'full',
       },
       {
-        path: 'definicao-pessoas-processo-validacao',
-        component: DefinicaoPessoasProcessoValidacaoComponent
+        path: 'equipe-validacao',
+        component: EquipeValidacaoComponent
       },
       {
         path: 'documento-e-aprovacoes',
@@ -39,18 +39,15 @@ const routes: Routes = [
       },
       {
         path: 'central-administrativa',
-        loadChildren: '@app/dashboard/painel-demandas/demanda/central-administrativa/central-administrativa.module#CentralAdministrativaModule'
+        loadChildren: '@app/dashboard/demanda/central-administrativa/central-administrativa.module#CentralAdministrativaModule'
       },
-      // {
-      //   path: 'log-demanda',
-      //   component: 
-      // }
-    ],
+    ]
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [],
+  declarations: [],
 })
 export class DemandaRoutingModule { }

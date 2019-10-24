@@ -44,11 +44,11 @@ const routes: Routes = [
         component: MainComponent,
         loadChildren: '@app/dashboard/configuracoes-sistema/configuracoes-sistema.module#ConfiguracoesSistemaModule'
       },
-      /*
       {
         path: 'demanda',
         loadChildren: '@app/dashboard/demanda/demanda.module#DemandaModule'
       },
+      /*
       */
       { path: '**', component: NotFoundComponent },
     ]

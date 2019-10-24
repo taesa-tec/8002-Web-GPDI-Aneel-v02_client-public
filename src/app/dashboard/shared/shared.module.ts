@@ -14,7 +14,7 @@ import { MeusProjetosComponent } from './meus-projetos/meus-projetos.component';
   ],
   entryComponents: [],
   imports: [
-    SharedCoreModule
+    SharedCoreModule,
   ],
   exports: [
     SharedCoreModule,

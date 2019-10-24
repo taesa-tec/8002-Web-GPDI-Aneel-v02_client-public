@@ -1,15 +1,4 @@
-@import "components-base";
-
-
-:host {
-  height: 100%;
-  // grid-template-areas: 'header''content';
-  // grid-template-rows: 110px auto;
-  // display: grid;
-}
-
-
-.wrap-outlet-projeto {
+.main-layout-side-bar {
   grid-area: content;
   display: grid;
   grid-template-columns: 256px auto;

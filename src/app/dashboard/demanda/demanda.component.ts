@@ -5,7 +5,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 @Component({
   selector: 'app-demanda',
   templateUrl: './demanda.component.html',
-  styleUrls: ['./demanda.component.scss']
+  styleUrls: []
 })
 export class DemandaComponent implements OnInit {
 
@@ -19,7 +19,7 @@ export class DemandaComponent implements OnInit {
 
   ngOnInit() {
     this.menu = [
-      { text: 'Definição Pessoas Processo Validação', icon: 'ta-user-id', path: 'definicao-pessoas-processo-validacao' },
+      { text: 'Definição Pessoas Processo Validação', icon: 'ta-user-id', path: 'equipe-validacao' },
       { text: 'Especificação Técnica', icon: 'ta-capacete', path: 'especificacao-tecnica' },
       { text: 'Temas', icon: 'ta-box', path: 'temas' },
       { text: 'Documento e Aprovações', icon: 'ta-projeto', path: 'documento-e-aprovacoes' },

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Demanda } from '@app/models/demandas';
 
 @Injectable({
   providedIn: 'root'
@@ -10,17 +11,21 @@ export class DemandasService {
   constructor(private http: HttpClient) { }
 
 
-  // Tudo sobre a Demanda
+
+  getDemandasByStatus(status: 'Reprovadas' | 'Aprovadas' | 'EmElaboracao' | 'Captacao') {
+    return this.http.get<Array<Demanda>>(`Demandas/${status}`);
+  }
+
   minhasDemadas() {
     return this.http.get<any>('');
   }
 
   getDemandaId(id: number) {
-    return this.http.get<any>(`demanda/${id}/user`);
+    return this.http.get<any>(`Demandas/${id}/user`);
   }
 
-  criarDemanda(demanda: any) {
-    return this.http.post('', demanda);
+  criarDemanda(titulo: any) {
+    return this.http.post('Demandas/Criar', `"${titulo}"`, { headers: { "Content-Type": "application/json" } });
   }
 
   editarDemanda(demandaUpdate: number) {
@@ -30,7 +35,7 @@ export class DemandasService {
   excluirDemanda(id: number) {
     return this.http.delete<any>(`delete/${id}/demanda`);
   }
- 
+
   aprovarDemanda(id: number, etapa: any) {
     return this.http.put<any>('', id);
   }
@@ -40,7 +45,7 @@ export class DemandasService {
 
   enviarParaAprovacao(id: number, motivo: any) {
     return this.http.post<any>('', id);
-  } 
+  }
 
   getComentario() {
     return this.http.get<any>('');
@@ -49,7 +54,7 @@ export class DemandasService {
   getRevisor() {
     return this.http.get<any>('');
   }
-   
+
   definirRevisor(revisor) {
     return this.http.put<any>('', revisor);
   }
@@ -58,7 +63,7 @@ export class DemandasService {
   definirSuperiorDireto(DemandaValue: any) {
     return this.http.put('', DemandaValue);
   }
- 
+
   especificaoTecnicaForm(especTec) {
     return this.http.post<any>('', especTec);
   }
@@ -77,6 +82,6 @@ export class DemandasService {
   }
 
 
-  
+
 
 }
