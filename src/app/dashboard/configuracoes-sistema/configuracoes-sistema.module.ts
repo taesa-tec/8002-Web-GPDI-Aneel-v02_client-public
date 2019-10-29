@@ -1,15 +1,12 @@
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { ConfiguracoesSistemaRoutingModule } from './configuracoes-sistema-routing.module';
-import { EditarFormulariosComponent } from './padrao-formularios/editar-formularios/editar-formularios.component';
-import { PadraoFormulariosComponent } from './padrao-formularios/padrao-formularios.component';
-import { EquipeComponent } from './equipe/equipe.component';
-import { ConfiguracoesSistemaComponent } from './configuracoes-sistema.component';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SharedModule } from '../shared/shared.module';
-import { FormFieldComponent } from './padrao-formularios/form-field/form-field.component';
-import { FormEditorComponent } from './padrao-formularios/form-editor/form-editor.component';
-import { FormFieldControlComponent } from './padrao-formularios/form-field/form-field-control.component';
+import {SharedModule} from '../shared/shared.module';
+import {ConfiguracoesSistemaRoutingModule} from './configuracoes-sistema-routing.module';
+import {PadraoFormulariosComponent} from './padrao-formularios/padrao-formularios.component';
+import {EquipeComponent} from './equipe/equipe.component';
+import {ConfiguracoesSistemaComponent} from './configuracoes-sistema.component';
+import {FormEditorComponent} from '@app/dashboard/configuracoes-sistema/form-editor/form-editor.component';
 
 
 @NgModule({
@@ -17,10 +14,7 @@ import { FormFieldControlComponent } from './padrao-formularios/form-field/form-
     ConfiguracoesSistemaComponent,
     EquipeComponent,
     PadraoFormulariosComponent,
-    EditarFormulariosComponent,
-    FormFieldComponent,
-    FormEditorComponent,
-    FormFieldControlComponent
+    FormEditorComponent
   ],
   imports: [
     CommonModule,
@@ -28,4 +22,5 @@ import { FormFieldControlComponent } from './padrao-formularios/form-field/form-
     SharedModule,
   ]
 })
-export class ConfiguracoesSistemaModule { }
+export class ConfiguracoesSistemaModule {
+}

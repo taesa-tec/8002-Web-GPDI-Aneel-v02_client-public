@@ -1,5 +1,4 @@
 <div class="form-editor-field" [ngSwitch]="field.fieldType" [formGroup]="form">
-
   <div class="form-group" *ngSwitchCase="'Text'">
     <input
       formControlName="value"
@@ -27,6 +26,12 @@
       [config]="configEditor"
       formControlName="value"
     ></ckeditor>
+  </div>
+
+  <div *ngSwitchCase="'Temas'">
+    <app-form-editor-temas
+      formControlName="value"
+    ></app-form-editor-temas>
   </div>
   <!--  -->
 </div>

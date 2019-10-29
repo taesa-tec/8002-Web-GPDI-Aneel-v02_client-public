@@ -32,9 +32,6 @@ export class FormFieldComponent implements OnInit {
   @Input() set field(value: FormField) {
     this.classname = value && value.fieldType.toLowerCase() || "";
     this._field = value;
-    if (this.field) {
-      console.log(this._field.key, { value: this.form });
-    }
   }
   get field() {
     return this._field;

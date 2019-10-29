@@ -150,6 +150,7 @@ export interface CatalogTema {
   id: number;
   nome: string;
   valor: string;
+
   subTemas: CatalogSubTema[];
 }
 

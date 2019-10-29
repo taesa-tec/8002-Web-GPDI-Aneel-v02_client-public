@@ -1,0 +1,36 @@
+<div class="row d-none">
+  <div class="col-6">
+    <pre *ngIf="form" style="max-height: 300px; overflow: auto;">{{
+        formField | json
+      }}</pre>
+  </div>
+  <div class="col-6">
+    <pre *ngIf="form" style="max-height: 300px; overflow: auto;">{{
+        form.value | json
+      }}</pre>
+  </div>
+</div>
+<div *ngIf="form">
+  <div class="row">
+    <div class="col-12">
+      <div class="form-editor my-3" [formGroup]="form">
+        <div class="form-editor-title fs-22 text-blue">{{ formField.title }}</div>
+        <app-form-editor-field
+          *ngFor="let child of formField.children"
+          [form]="form.get(child.key)"
+          [field]="child"
+        ></app-form-editor-field>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 d-flex justify-content-start">
+      <button class="btn btn-primary" type="button" (click)="saveData()" [disabled]="form.invalid">
+        Salvar Padrão Formulário
+      </button>
+      <button class="btn btn-link" type="button">
+        Cancelar Alterações
+      </button>
+    </div>
+  </div>
+</div>

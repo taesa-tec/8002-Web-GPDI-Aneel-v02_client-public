@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Demanda } from '@app/models/demandas';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Demanda, FormField} from '@app/models/demandas';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +8,8 @@ import { Demanda } from '@app/models/demandas';
 export class DemandasService {
 
 
-  constructor(private http: HttpClient) { }
-
+  constructor(private http: HttpClient) {
+  }
 
 
   getDemandasByStatus(status: 'Reprovadas' | 'Aprovadas' | 'EmElaboracao' | 'Captacao') {
@@ -25,7 +25,7 @@ export class DemandasService {
   }
 
   criarDemanda(titulo: any) {
-    return this.http.post('Demandas/Criar', `"${titulo}"`, { headers: { "Content-Type": "application/json" } });
+    return this.http.post('Demandas/Criar', `"${titulo}"`, {headers: {'Content-Type': 'application/json'}});
   }
 
   editarDemanda(demandaUpdate: number) {
@@ -39,6 +39,7 @@ export class DemandasService {
   aprovarDemanda(id: number, etapa: any) {
     return this.http.put<any>('', id);
   }
+
   reprovarDemanda(id: number, motivo: any) {
     return this.http.put<any>('', motivo);
   }
@@ -81,7 +82,21 @@ export class DemandasService {
     return this.http.get<any>('');
   }
 
+  getForms() {
+    return this.http.get<any>('Demandas/Forms');
+  }
 
+  getForm(key: string) {
+    return this.http.get<FormField>(`Demandas/Forms/${key}`);
+  }
+
+  getFormValue(key: string) {
+    return this.http.get<object>(`Demandas/Forms/${key}/Values`);
+  }
+
+  saveFormValue(key: string, values) {
+    return this.http.post<object>(`Demandas/Forms/${key}/Values`, values);
+  }
 
 
 }

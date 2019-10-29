@@ -33,7 +33,7 @@ export class TemasComponent implements OnInit {
 
 
   get tema() {
-    return this.temas ? this.temas.find(t => t.id === parseInt(this.temaControl.value, 10)) : null;
+    return this.temas ? this.temas.find(t => t.id === parseFloat(this.temaControl.value)) : null;
   }
 
   get subTemas() {
