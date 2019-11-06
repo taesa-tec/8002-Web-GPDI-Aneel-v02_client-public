@@ -30,7 +30,7 @@
                     <ng-container *ngFor="let prop of log.data.statusAnterior">
                         <p>
                             <strong>{{prop.titulo}}: </strong>
-                            <span>{{prop | logFormat}}</span>
+                            <span>{{prop | json}}</span>
                         </p>
                     </ng-container>
                 </div>
@@ -50,7 +50,7 @@
                     <ng-container *ngFor="let prop of logDataStatusNovo">
                         <p>
                             <strong>{{prop.titulo}}: </strong>
-                            <span>{{prop | logFormat}}</span>
+                            <span>{{prop | json}}</span>
                         </p>
                     </ng-container>
                 </div>

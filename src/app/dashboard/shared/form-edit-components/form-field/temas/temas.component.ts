@@ -47,13 +47,11 @@ export class TemasComponent implements OnInit, ControlValueAccessor {
   }
 
   set value(val) {
-    console.log(val);
     if (this.form) {
       this.form.patchValue(val);
       if (val.subTemas) {
         val.subTemas.forEach(v => this.addSubTema(v));
         this.subTemasForms.updateValueAndValidity();
-        console.log(this.subTemasForms.value);
       }
     }
     this.onChange(val);

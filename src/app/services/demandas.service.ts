@@ -20,8 +20,12 @@ export class DemandasService {
     return this.http.get<any>('');
   }
 
-  getDemandaId(id: number) {
-    return this.http.get<any>(`Demandas/${id}/user`);
+  getDemanda(id: number) {
+    return this.http.get<any>(`Demandas/${id}`);
+  }
+
+  getDemandaForm(id: number, key: string) {
+    return this.http.get<any>(`Demandas/${id}/Form/${key}`);
   }
 
   criarDemanda(titulo: any) {
@@ -30,6 +34,10 @@ export class DemandasService {
 
   editarDemanda(demandaUpdate: number) {
     return this.http.put<any>('', demandaUpdate);
+  }
+
+  editarDemandaForm(id: number, key: string, data: object) {
+    return this.http.put<any>(`Demandas/${id}/Form/${key}`, data);
   }
 
   excluirDemanda(id: number) {

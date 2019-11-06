@@ -5,13 +5,14 @@ export interface Demanda {
   criadorId: string;
   etapaAtual: number;
   etapaStatus: number;
+  etapaAtualText: string;
+  etapaStatusText: string;
   files?: any;
   id: number;
   superiorDiretor?: any;
   superiorDiretorId?: string;
   titulo: string;
 }
-
 
 
 export interface FormField {
@@ -25,8 +26,9 @@ export interface FormField {
   hasFixedSize?: boolean;
   children: Array<FormField>;
   order: number;
-  placeholder: "";
+  placeholder: '';
 }
+
 export enum FormFieldType {
   Empty,
   Form,
@@ -36,6 +38,7 @@ export enum FormFieldType {
   RitchTextList,
   Generic
 }
+
 export interface Form extends FormField {
-  fieldType: "Form";
+  fieldType: 'Form';
 }

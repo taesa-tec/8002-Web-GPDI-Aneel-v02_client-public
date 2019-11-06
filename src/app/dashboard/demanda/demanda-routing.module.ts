@@ -1,16 +1,22 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { DemandaComponent } from './demanda.component';
-import { EquipeValidacaoComponent } from './equipe-validacao/equipe-validacao.component';
-import { DocumentoAprovacoesComponent } from './documento-aprovacoes/documento-aprovacoes.component';
-import { TemasComponent } from './temas/temas.component';
-import { EspecificacaoTecnicaComponent } from './especificacao-tecnica/especificacao-tecnica.component';
-import { PreAprovacaoComponent } from './pre-aprovacao/pre-aprovacao.component';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+import {DemandaComponent} from './demanda.component';
+import {EquipeValidacaoComponent} from './equipe-validacao/equipe-validacao.component';
+import {DocumentoAprovacoesComponent} from './documento-aprovacoes/documento-aprovacoes.component';
+import {TemasComponent} from './temas/temas.component';
+import {EspecificacaoTecnicaComponent} from './especificacao-tecnica/especificacao-tecnica.component';
+import {PreAprovacaoComponent} from './pre-aprovacao/pre-aprovacao.component';
+import {FormEditorComponent} from '@app/dashboard/demanda/form-editor/form-editor.component';
+import {EtapaAvaliacaoComponent} from '@app/dashboard/demanda/etapa-avaliacao/etapa-avaliacao.component';
+import {DemandaResolver} from '@app/dashboard/demanda/demanda.resolver';
 
 const routes: Routes = [
   {
-    path: ":id",
+    path: ':id',
     component: DemandaComponent,
+    resolve: {
+      demanda: DemandaResolver
+    },
     children: [
       {
         path: '',
@@ -26,14 +32,6 @@ const routes: Routes = [
         component: DocumentoAprovacoesComponent
       },
       {
-        path: 'temas',
-        component: TemasComponent
-      },
-      {
-        path: 'especificacao-tecnica',
-        component: EspecificacaoTecnicaComponent
-      },
-      {
         path: 'pre-aprovacao',
         component: PreAprovacaoComponent
       },
@@ -41,6 +39,15 @@ const routes: Routes = [
         path: 'central-administrativa',
         loadChildren: '@app/dashboard/demanda/central-administrativa/central-administrativa.module#CentralAdministrativaModule'
       },
+      {
+        path: 'formulario/:form',
+        component: FormEditorComponent,
+      },
+      {
+        path: 'avaliacao',
+        component: EtapaAvaliacaoComponent,
+        children: []
+      }
     ]
   }
 ];
@@ -50,4 +57,5 @@ const routes: Routes = [
   exports: [],
   declarations: [],
 })
-export class DemandaRoutingModule { }
+export class DemandaRoutingModule {
+}

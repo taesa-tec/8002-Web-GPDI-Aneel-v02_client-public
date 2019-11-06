@@ -17,7 +17,7 @@
         <div class="form-editor-title fs-22 text-blue">{{ formField.title }}</div>
         <app-form-editor-field
           *ngFor="let child of formField.children"
-          [form]="form.get(child.key)"
+          [form]="form.get(['children',child.key])"
           [field]="child"
         ></app-form-editor-field>
       </div>

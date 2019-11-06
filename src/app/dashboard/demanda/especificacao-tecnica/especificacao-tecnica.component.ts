@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-especificacao-tecnica',
@@ -8,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 export class EspecificacaoTecnicaComponent implements OnInit {
 
   fr: any = 'Especificação Técnica';
-  constructor() { }
+
+  constructor() {
+  }
 
   ngOnInit() {
   }

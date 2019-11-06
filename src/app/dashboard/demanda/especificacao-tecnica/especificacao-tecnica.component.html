@@ -5,6 +5,9 @@
 </div>
 
 
+<app-form-editor *ngIf="formValue; else loading" [key]="key" [formValue]="formValue"
+                 (save)="submit($event)"></app-form-editor>
+<ng-template #loading>Carregando Formulário</ng-template>
 
 
 <div class="row">

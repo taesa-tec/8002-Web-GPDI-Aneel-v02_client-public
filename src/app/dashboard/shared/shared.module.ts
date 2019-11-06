@@ -8,6 +8,7 @@ import {FormFieldComponent} from './form-edit-components/form-field/form-field.c
 import {FormEditorComponent} from './form-edit-components/form-editor/form-editor.component';
 import {FormFieldControlComponent} from './form-edit-components/form-field/form-field-control.component';
 import {TemasComponent} from './form-edit-components/form-field/temas/temas.component';
+import {PdfViewerComponent} from '@app/dashboard/shared/pdf-viewer/pdf-viewer.component';
 
 const components = [
   MainComponent,
@@ -17,7 +18,8 @@ const components = [
   FormFieldComponent,
   FormEditorComponent,
   FormFieldControlComponent,
-  TemasComponent
+  TemasComponent,
+  PdfViewerComponent
 ];
 
 @NgModule({

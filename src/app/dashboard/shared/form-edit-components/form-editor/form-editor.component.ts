@@ -33,7 +33,6 @@ export class FormEditorComponent implements OnInit {
       this.form.patchValue(this.formValue);
     }
     this.form.updateValueAndValidity();
-    console.log(this.form);
   }
 
   buildControl(field: FormField) {
@@ -87,14 +86,20 @@ export class FormEditorComponent implements OnInit {
       console.error(error);
 
     }
-    return formControl;
 
+    const root = this.builder.group({
+      key: field.key
+    });
+    root.addControl('children', formControl);
+
+    return root;
 
   }
 
 
   saveData() {
     if (this.form.valid) {
+      // console.log(this.form.value);
       this.save.emit(this.form.value);
     }
   }
