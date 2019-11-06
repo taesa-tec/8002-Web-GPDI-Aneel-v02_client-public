@@ -6,16 +6,17 @@
   </div>
 </div>
 
-<form class="ve" [formGroup]="formEquipe" (ngSubmit)="salvar()">
+<form class="ve" [formGroup]="formEquipe" *ngIf="formEquipe" (ngSubmit)="salvar()">
   <div class="row">
     <div class="col-4">
       <div class="form-group">
-        <label for="">
+        <label>
           Diretor P&D
         </label>
         <select class="form-control flex-grow-1" formControlName="diretor">
           <option value="" hidden>Selecione o DIRETOR do projeto</option>
-          <option [value]="pess.id" *ngFor="let pess of PessoasEquipe">{{ pess.name }}</option>
+          <option [value]="pessoa.id"
+                  *ngFor="let pessoa of pessoasEquipe(formEquipe.value.diretor)">{{ pessoa.nomeCompleto }}</option>
         </select>
       </div>
     </div>
@@ -30,7 +31,8 @@
         </label>
         <select class="form-control flex-grow-1" formControlName="gerente">
           <option value="" hidden>Selecione o GERENTE do projeto</option>
-          <option [value]="pess.id" *ngFor="let pess of PessoasEquipe">{{ pess.name }}</option>
+          <option [value]="pessoa.id"
+                  *ngFor="let pessoa of pessoasEquipe(formEquipe.value.gerente)">{{ pessoa.nomeCompleto }}</option>
         </select>
       </div>
     </div>
@@ -45,12 +47,12 @@
         </label>
         <select class="form-control flex-grow-1" formControlName="coordenador">
           <option value="" hidden>Selecione o COORDENADOR do projeto</option>
-          <option [value]="pess.id" *ngFor="let pess of PessoasEquipe">{{ pess.name }}</option>
+          <option [value]="pessoa.id"
+                  *ngFor="let pessoa of pessoasEquipe(formEquipe.value.coordenador)">{{ pessoa.nomeCompleto }}</option>
         </select>
       </div>
     </div>
   </div>
-
 
 
   <div class="row justify-content-between">
@@ -62,12 +64,15 @@
 
   <div class="row">
     <div class="col-4">
-      <div class="d-flex pt-2" *ngFor="let formPe of equipeOutros.controls; let i = index" [formGroup]="formPe">
-        <select class="form-control flex-grow-1 pr-1" formControlName="id">
+      <div class="d-flex pt-2" *ngFor="let control of equipeOutros.controls; let i = index">
+        <select class="form-control flex-grow-1 pr-1" [formControl]="control">
           <option value="">Selecione uma pessoa</option>
-          <option [value]="pess.id" *ngFor="let pess of PessoasEquipe">{{ pess.name }}</option>
+          <option [value]="pessoa.id"
+                  *ngFor="let pessoa of pessoasEquipe(control.value)">{{ pessoa.nomeCompleto }}</option>
         </select>
-        <button type="button" class="btn btn-outline-danger btn-sm ml-4 p-1 text-nowrap" *ngIf="i > 0" (click)="remove(i)">
+        <button type="button" class="btn btn-outline-danger btn-sm ml-4 p-1 text-nowrap"
+                *ngIf="equipeOutros.controls.length > 1"
+                (click)="remove(i)">
           <i class="ta-trash"></i> Remover
         </button>
       </div>
