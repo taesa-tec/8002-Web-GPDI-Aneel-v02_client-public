@@ -1,0 +1,71 @@
+<div class="row justify-content-between">
+  <div class="col">
+    <h5 class="text-uppercase text-blue font-weight-normal my-4">
+      DEFINIÇÃO PESSOAS PROCESSO VALIDAÇÃO
+    </h5>
+  </div>
+</div>
+
+<form [formGroup]="form" *ngIf="form" (ngSubmit)="salvar()">
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <label for="superiorDireto">SEU SUPERIOR DIRETO</label>
+        <select
+          name="superiorDireto"
+          id="superiorDireto"
+          class="form-control"
+          formControlName="superiorDireto"
+        >
+          <option value="">Selecione</option>
+          <option [value]="pessoa.id"
+                  *ngFor="let pessoa of pessoas">{{ pessoa.nomeCompleto || pessoa.userName }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="form-group">
+        <label>GERENTE P&D</label>
+        <input type="text" class="form-control" [value]="getMembroNome(equipe.gerente)" readonly>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <label>REVISOR</label>
+        <input type="text" class="form-control" readonly value="A difinir">
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="form-group">
+        <label>DIRETOR P&D</label>
+        <input type="text" class="form-control" [value]="getMembroNome(equipe.diretor)" readonly>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <label>COORDENADOR P&D</label>
+        <input type="text" class="form-control" [value]="getMembroNome(equipe.coordenador)" readonly>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 text-left pt-5">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="form.invalid"
+      >
+        <i class="ta-save"></i> Salvar Alterações
+      </button>
+    </div>
+  </div>
+</form>

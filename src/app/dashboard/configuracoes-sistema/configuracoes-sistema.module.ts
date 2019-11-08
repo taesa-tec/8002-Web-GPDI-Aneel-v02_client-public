@@ -1,12 +1,12 @@
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { ConfiguracoesSistemaRoutingModule } from './configuracoes-sistema-routing.module';
-import { EditarFormulariosComponent } from './padrao-formularios/editar-formularios/editar-formularios.component';
-import { PadraoFormulariosComponent } from './padrao-formularios/padrao-formularios.component';
-import { EquipeComponent } from './equipe/equipe.component';
-import { ConfiguracoesSistemaComponent } from './configuracoes-sistema.component';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SharedModule } from '../shared/shared.module';
+import {SharedModule} from '../shared/shared.module';
+import {ConfiguracoesSistemaRoutingModule} from './configuracoes-sistema-routing.module';
+import {PadraoFormulariosComponent} from './padrao-formularios/padrao-formularios.component';
+import {EquipeComponent} from './equipe/equipe.component';
+import {ConfiguracoesSistemaComponent} from './configuracoes-sistema.component';
+import {FormEditorComponent} from '@app/dashboard/configuracoes-sistema/form-editor/form-editor.component';
 
 
 @NgModule({
@@ -14,8 +14,7 @@ import { SharedModule } from '../shared/shared.module';
     ConfiguracoesSistemaComponent,
     EquipeComponent,
     PadraoFormulariosComponent,
-    EditarFormulariosComponent,
-
+    FormEditorComponent
   ],
   imports: [
     CommonModule,
@@ -23,4 +22,5 @@ import { SharedModule } from '../shared/shared.module';
     SharedModule,
   ]
 })
-export class ConfiguracoesSistemaModule { }
+export class ConfiguracoesSistemaModule {
+}

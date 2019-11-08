@@ -1,6 +1,5 @@
 import { NovaDemandaComponent } from './nova-demanda/nova-demanda.component';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { DemandasRoutingModule } from './demandas-routing.module';
 import { ReprovadasComponent } from './reprovadas/reprovadas.component';
@@ -36,7 +35,6 @@ import { DemandaProgressEtapaComponent } from './demanda-progress/demanda-progre
   ],
   imports: [
     SharedModule,
-    CommonModule,
     DemandasRoutingModule,
     ReactiveFormsModule,
   ]

@@ -1,5 +1,6 @@
-import { AppService } from '@app/services/app.service';
-import { Component, OnInit } from '@angular/core';
+import {AppService} from '@app/services/app.service';
+import {Component, OnInit} from '@angular/core';
+import {TableComponentActions, TableComponentCols} from '@app/core/shared/app-components/table/table';
 
 @Component({
   selector: 'app-padrao-formularios',
@@ -7,15 +8,29 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./padrao-formularios.component.scss']
 })
 export class PadraoFormulariosComponent implements OnInit {
+  cols: TableComponentCols = [{
+    field: 'title',
+    title: 'Título',
+  }];
+  buttons: TableComponentActions = [{
+    action: 'edit',
+    text: 'Editar',
+    icon: 'ta-edit',
+    className: 'btn btn-primary'
+  }];
+  forms = [];
 
   constructor(protected app: AppService) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.forms = await this.app.demandas.getForms().toPromise();
   }
 
-  save() {
-    this.app.alert('Atualização aplicada com sucesso');
+  tableAction({action, data}) {
+    if (action === 'edit') {
+      this.app.router.navigate(['/dashboard/configuracoes-do-sistema/padrao-formularios', data.key]);
+    }
   }
 
 }

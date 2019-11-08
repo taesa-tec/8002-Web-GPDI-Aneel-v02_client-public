@@ -15,7 +15,6 @@ export class EventInterceptor implements HttpInterceptor {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        this.app.logger.request = req;
         const request = next.handle(req);
         return request.pipe(tap(event => {
             if (event instanceof HttpResponse) {

@@ -48,7 +48,7 @@ export class UsersService {
         try {
             this.currentUser = await this.me().toPromise();
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     }
 

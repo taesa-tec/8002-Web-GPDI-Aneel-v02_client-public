@@ -44,7 +44,7 @@ const routes: Routes = [
         path: 'enviadas-para-captacao',
         component: DemandasListComponent,
         data: {
-          demandaEtapaStatus: DemandaEtapaStatus.Concluido
+          demandaEtapa: DemandaEtapa.Captacao
         }
       },
     ],

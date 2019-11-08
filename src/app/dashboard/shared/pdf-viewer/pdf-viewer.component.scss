@@ -1,0 +1,9 @@
+.area-pdf {
+  border: 8px solid #e8e4e4;
+  border-radius: 8px;
+  display: block;
+
+  iframe {
+    min-height: 75vh;
+  }
+}

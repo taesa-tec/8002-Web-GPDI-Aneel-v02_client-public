@@ -1,15 +1,17 @@
 <div class="demanda-progresso d-flex">
   <div class="demanda-chunk demanda-info">
     <header class="text-cinza text-uppercase fs-12 font-weight-bold">
-      Demanda: XXX
+      Demanda: {{ demandaId }}
     </header>
     <main>
       <div class="text-blue fs-14 font-weight-medium">
-        Faixa de Servidão e Análise Automática de Ocorrências
+        {{ demanda.titulo }}
       </div>
     </main>
     <footer>
-      <a href="" class="text-blue"><i class="ta-edit"></i> Editar</a>
+      <a [routerLink]="['/dashboard/demanda', demanda.id]" class="text-blue"
+        ><i class="ta-edit"></i> Editar</a
+      >
     </footer>
   </div>
   <app-demanda-progress-etapa

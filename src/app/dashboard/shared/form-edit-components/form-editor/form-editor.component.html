@@ -1,0 +1,56 @@
+<div class="row d-none">
+  <div class="col-6">
+    <pre *ngIf="form" style="max-height: 300px; overflow: auto;">{{
+        formField | json
+      }}</pre>
+  </div>
+  <div class="col-6">
+    <pre *ngIf="form" style="max-height: 300px; overflow: auto;">{{
+        form.value | json
+      }}</pre>
+  </div>
+</div>
+<div *ngIf="form">
+
+  <div class="row">
+    <div class="col-12">
+      <div class="form-editor my-3" [formGroup]="form">
+        <div class="form-editor-title fs-22 text-blue">{{ formField.title }}</div>
+        <app-form-editor-field
+          *ngFor="let child of formField.children"
+          [form]="form.get(['children',child.key])"
+          [field]="child"
+        ></app-form-editor-field>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="canAppendFile">
+    <div class="col-12">
+      <h5 class="text-blue-light">
+        Arquivos Complentares (Opcional)
+      </h5>
+      <button class="btn btn-link" type="button" (click)="anexarArquivos()">
+        <i class="ta-attachment fs-22"></i> Anexar Arquivos
+      </button>
+      <div class="pr-3 mb-3">
+        <span *ngFor="let anexo of anexos;" style="cursor: pointer" class="text-blue d-block my-1"
+              (click)="download(anexo)">
+          <i class="ta-projeto"></i> -
+          <span>{{anexo.fileName}}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 d-flex justify-content-start">
+      <button class="btn btn-primary" type="button" (click)="saveData()" [disabled]="form.invalid">
+        <i class="ta-save"></i>
+        Salvar Dados
+      </button>
+      <button class="btn btn-link" type="button">
+        Cancelar Alterações
+      </button>
+    </div>
+  </div>
+</div>

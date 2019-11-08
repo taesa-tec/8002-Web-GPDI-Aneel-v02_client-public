@@ -1,9 +1,9 @@
-import { PadraoFormulariosComponent } from './padrao-formularios/padrao-formularios.component';
-import { EquipeComponent } from './equipe/equipe.component';
-import { ConfiguracoesSistemaComponent } from './configuracoes-sistema.component';
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { EditarFormulariosComponent } from './padrao-formularios/editar-formularios/editar-formularios.component';
+import {PadraoFormulariosComponent} from './padrao-formularios/padrao-formularios.component';
+import {EquipeComponent} from './equipe/equipe.component';
+import {ConfiguracoesSistemaComponent} from './configuracoes-sistema.component';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+import {FormEditorComponent} from '@app/dashboard/configuracoes-sistema/form-editor/form-editor.component';
 
 const routes: Routes = [
   {
@@ -24,8 +24,8 @@ const routes: Routes = [
         component: PadraoFormulariosComponent
       },
       {
-        path: 'padrao-formularios/:id',
-        component: EditarFormulariosComponent
+        path: 'padrao-formularios/:key',
+        component: FormEditorComponent
       }
     ],
 
@@ -36,4 +36,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ConfiguracoesSistemaRoutingModule { }
+export class ConfiguracoesSistemaRoutingModule {
+}

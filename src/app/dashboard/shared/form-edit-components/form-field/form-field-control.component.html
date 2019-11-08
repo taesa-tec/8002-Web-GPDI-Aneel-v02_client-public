@@ -1,0 +1,37 @@
+<div class="form-editor-field" [ngSwitch]="field.fieldType" [formGroup]="form">
+  <div class="form-group" *ngSwitchCase="'Text'">
+    <input
+      formControlName="value"
+      *ngIf="form && form.get('value')"
+      type="text"
+      class="form-control"
+      [placeholder]="field.placeholder"
+    />
+  </div>
+  <!--  -->
+  <div class="form-group" *ngSwitchCase="'Date'">
+    Date
+    <input
+      type="date"
+      *ngIf="form && form.get('value')"
+      formControlName="value"
+      class="form-control"
+      [placeholder]="field.placeholder"
+    />
+  </div>
+  <!--  -->
+  <div *ngSwitchCase="'RichText'">
+    <ckeditor
+      *ngIf="form && form.get('value')"
+      [config]="configEditor"
+      formControlName="value"
+    ></ckeditor>
+  </div>
+
+  <div *ngSwitchCase="'Temas'">
+    <app-form-editor-temas
+      formControlName="value"
+    ></app-form-editor-temas>
+  </div>
+  <!--  -->
+</div>

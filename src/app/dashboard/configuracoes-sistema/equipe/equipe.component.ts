@@ -1,6 +1,6 @@
-import { AppService } from '@app/services/app.service';
-import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import {AppService} from '@app/services/app.service';
+import {FormGroup, FormControl, FormArray, FormBuilder, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-equipe',
@@ -8,59 +8,49 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./equipe.component.scss']
 })
 export class EquipeComponent implements OnInit {
-
-  m: Array<any>;
-  PessoasEquipe: Array<any> = [];
-  i: number = 0;
-  adp = 1;
+  pessoas: Array<any> = [];
   formEquipe: FormGroup;
-  subTemasForms: Array<any>;
   equipeOutros = new FormArray([]);
 
-  constructor(protected app: AppService, private fb: FormBuilder) { }
+  constructor(protected app: AppService, private fb: FormBuilder) {
+  }
 
-  ngOnInit() {
-    this.m = [
-      { text: 'Equipe de P&D', path: 'equipe-ped' },
-      { text: 'Padrão Formulários', path: 'padrao-formularios' },
-    ];
-
-    this.configForm();
+  async ngOnInit() {
+    this.app.loading.show();
+    await this.configForm();
+    this.app.loading.hide();
   }
 
 
-  configForm() {
+  async configForm() {
+    const [equipe, pessoas] = await Promise.all([this.app.sistema.getEquipePeD(), this.app.users.all().toPromise()]);
     this.formEquipe = this.fb.group({
       diretor: ['', Validators.required],
       gerente: ['', Validators.required],
       coordenador: ['', Validators.required],
-      equipeOutros: this.equipeOutros
+      outros: this.equipeOutros
     });
 
 
+    this.pessoas = pessoas.filter(({nomeCompleto}) => nomeCompleto !== null);
 
-    this.PessoasEquipe = [
-      { id: 1, name: 'Jefferson Ferreira' },
-      { id: 3, name: 'Filipe Loiola' },
-      { id: 4, name: 'Diego França' },
-      { id: 5, name: 'João Victor' },
-      { id: 6, name: 'Lucas Matheus' },
-      { id: 7, name: 'Bruno Galindo' },
-      { id: 8, name: 'Ana Luisa' },
-      { id: 9, name: 'Kaffael Salvaterra' },
-      { id: 10, name: 'Clovis Markan' },
-    ];
-    this.add();
+    if (equipe.outros) {
+      equipe.outros.forEach(id => this.add(id));
+    } else {
+      this.add();
+    }
+    this.formEquipe.patchValue(equipe);
+  }
+
+  pessoasEquipe(current?: string) {
+    const value = this.formEquipe.value;
+    const selecteds = [value.diretor, value.gerente, value.coordenador, ...value.outros];
+    return this.pessoas.filter(p => selecteds.indexOf(p.id) === -1 || p.id === current);
   }
 
 
-  add() {
-    //(<FormArray>this.formEquipe.get('equipeOutros')).push(new FormControl('', [Validators.required]));
-    this.equipeOutros.push(
-      new FormGroup({
-        id: new FormControl("", Validators.required)
-      })
-    );
+  add(id = '') {
+    this.equipeOutros.push(new FormControl(id, [Validators.required]));
   }
 
   remove(index) {
@@ -68,12 +58,18 @@ export class EquipeComponent implements OnInit {
   }
 
   async salvar() {
-
-
-    await console.log(this.formEquipe.value);
-
-
-    await this.app.alert('Alterado com sucesso');
+    console.log(this.formEquipe.value);
+    if (this.formEquipe.valid) {
+      this.app.loading.show();
+      try {
+        await this.app.sistema.setEquipePeD(this.formEquipe.value);
+        this.app.alert('Alterado com sucesso');
+      } catch (e) {
+        this.app.alert('Não foi possível salvar a equipe');
+        console.error(e);
+      }
+      this.app.loading.hide();
+    }
   }
 
 }

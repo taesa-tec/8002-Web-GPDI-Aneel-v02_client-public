@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { CriarDemanda } from '../../painel-demandas/conf-padrao/services/criar-demanda.service';
+import { AppService } from '@app/services/app.service';
 
 @Component({
   selector: 'app-nova-demanda',
@@ -11,19 +12,28 @@ import { CriarDemanda } from '../../painel-demandas/conf-padrao/services/criar-d
 
 export class NovaDemandaComponent implements OnInit {
 
-  formNovaDemanda: FormGroup;
+  form: FormGroup;
   statuscad: any;
-  constructor(private fb: FormBuilder,public activeModal: NgbActiveModal, private add: CriarDemanda) { }
+  constructor(protected app: AppService, private fb: FormBuilder, public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
-    this.formNovaDemanda = this.fb.group({
-      tituloDemanda: ['Nova Demanda', [Validators.required]],
+    this.form = this.fb.group({
+      titulo: ['', [Validators.required]],
     });
   }
 
-  async onSubmit(){
-    this.statuscad = await this.add.novademanda(this.formNovaDemanda.value);
+  async onSubmit() {
+    if (this.form.valid) {
+      try {
+        await this.app.demandas.criarDemanda(this.form.value.titulo).toPromise();
+        this.app.alert("Demanda salva com sucesso!", "Sucesso");
+        this.activeModal.close();
+        this.app.router.navigate(["/dashboard", "demandas", "elaboracao"]);
+      } catch (error) {
+        console.error(error);
 
+      }
+    }
   }
 
 }
