@@ -25,7 +25,7 @@ export class FormEditorComponent implements OnInit {
   async submit(data) {
     this.app.loading.show();
     try {
-      await this.app.demandas.saveFormValue(this.key, data).toPromise();
+      await this.app.demandas.saveFormValue(this.key, data.form).toPromise();
       this.app.alert('Formulário Salvo com sucesso!');
     } catch (e) {
       console.log(e);

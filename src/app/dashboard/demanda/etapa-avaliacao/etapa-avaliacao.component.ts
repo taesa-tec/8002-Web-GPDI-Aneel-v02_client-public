@@ -3,6 +3,7 @@ import {AppService} from '@app/services/app.service';
 import {ActivatedRoute} from '@angular/router';
 import {Demanda} from '@app/models/demandas';
 import {DemandaEtapa, DemandaEtapaStatus} from '@app/dashboard/demandas/commons';
+import {environment} from '@env/environment';
 
 @Component({
   selector: 'app-etapa-avaliacao',
@@ -16,6 +17,9 @@ export class EtapaAvaliacaoComponent implements OnInit {
 
   protected $demanda: Demanda;
   readonly ETAPAS_VALUES = DemandaEtapa;
+  anexos = [];
+  formKey = 'especificacao-tecnica';
+  pdfUrl = null;
 
 
   get demanda(): Demanda {
@@ -23,11 +27,28 @@ export class EtapaAvaliacaoComponent implements OnInit {
   }
 
   set demanda(value: Demanda) {
+    this.pdfUrl = `${environment.api_url}/Demandas/${value.id}/Form/${this.formKey}/Pdf`;
     this.$demanda = value;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.demanda = this.route.parent.snapshot.data.demanda;
+    this.anexos = await this.app.demandas.getAnexos(this.demanda.id);
+  }
+
+  async download(anexo) {
+    console.log(anexo);
+    if (this.demanda.id) {
+      this.app.showLoading();
+      try {
+        await this.app.demandas.downloadAnexo(this.demanda.id, anexo);
+      } catch (e) {
+        console.error(e);
+      }
+      this.app.hideLoading();
+    } else {
+      console.error('Sem demanda!');
+    }
   }
 
 }

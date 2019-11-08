@@ -1,0 +1,16 @@
+{
+  "short_name": "P&D",
+  "name": "Sistema Taesa P&D",
+  "icons": [
+    {
+      "src": "/assets/logo-app.png",
+      "type": "image/png",
+      "sizes": "900x900"
+    }
+  ],
+  "start_url": "/?source=pwa",
+  "background_color": "#03286a",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#03286a"
+}

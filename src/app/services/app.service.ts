@@ -14,6 +14,7 @@ import {ModalPageComponent} from '@app/core/shared/entry-components/modal-page/m
 import {DemandasService} from './demandas.service';
 import {BehaviorSubject, timer} from 'rxjs';
 import {SistemaService} from '@app/services/sistema.service';
+import {FileUploaderComponent} from '@app/core/shared/entry-components/file-uploader/file-uploader.component';
 
 
 class LoadingController {
@@ -109,6 +110,11 @@ export class AppService {
     const ref = this.modal.open(PromptComponent, {backdrop: 'static'});
     ref.componentInstance.setMessage(message);
     ref.componentInstance.title = title;
+    return ref.result;
+  }
+
+  uploadForm() {
+    const ref = this.modal.open(FileUploaderComponent, {backdrop: 'static', size: 'lg'});
     return ref.result;
   }
 

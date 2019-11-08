@@ -14,30 +14,32 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgxMaskModule} from 'ngx-mask';
 import {NgxCurrencyModule} from 'ngx-currency';
 import {AppPipesModule} from '@app/core/shared/pipes/app-pipes.module';
+import {FileUploaderComponent} from '@app/core/shared/entry-components/file-uploader/file-uploader.component';
 
 
 const components = [
-    AlertComponent,
-    ConfirmComponent,
-    PromptComponent,
-    ModalPageComponent,
+  AlertComponent,
+  ConfirmComponent,
+  PromptComponent,
+  ModalPageComponent,
+  FileUploaderComponent
 ];
 
 @NgModule({
-    declarations: components,
-    entryComponents: components,
-    imports: [
-        CommonModule,
-        AppComponentsModule,
-        AppPipesModule,
-        FormsModule,
-        ReactiveFormsModule,
-        AppFormsModule,
-        FontAwesomeModule,
-        NgbModule,
-        NgxMaskModule,
-        NgxCurrencyModule,
-    ]
+  declarations: components,
+  entryComponents: components,
+  imports: [
+    CommonModule,
+    AppComponentsModule,
+    AppPipesModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppFormsModule,
+    FontAwesomeModule,
+    NgbModule,
+    NgxMaskModule,
+    NgxCurrencyModule,
+  ]
 })
 export class EntryComponentsModule {
 }

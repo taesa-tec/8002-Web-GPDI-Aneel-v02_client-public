@@ -23,9 +23,8 @@ export class PdfViewerComponent implements OnInit {
           responseType: 'blob'
         }).toPromise();
         this.loadedFileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(file));
-        console.log(file);
       } catch (e) {
-        console.log(e.message);
+        console.error(e.message);
       }
     }
   }

@@ -1,3 +1,5 @@
-<app-form-editor *ngIf="formValue; else loading" [key]="key" [formValue]="formValue"
-                 (save)="submit($event)"></app-form-editor>
+<app-form-editor *ngIf="formValue; else loading" [key]="key" [formValue]="formValue" [anexos]="anexos"
+                 [demandaId]="demandaId"
+                 (save)="submit($event)" [canAppendFile]="true"></app-form-editor>
+
 <ng-template #loading>Carregando Formulário</ng-template>

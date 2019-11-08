@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {AppService} from '@app/services/app.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-definicao-pessoas-processo-validacao',
@@ -8,26 +10,56 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class EquipeValidacaoComponent implements OnInit {
 
-  formDefinirPessoas: FormGroup;
+  form: FormGroup;
+  pessoas: Array<any> = [];
+  equipe: any;
+  demandaId: number;
 
-  constructor() { }
+
+  constructor(protected app: AppService, protected route: ActivatedRoute) {
+  }
 
   ngOnInit() {
+    this.demandaId = parseFloat(this.route.snapshot.parent.paramMap.get('id'));
     this.configForm();
   }
 
-  configForm() {
-    this.formDefinirPessoas = new FormGroup({
-      superiorDireto: new FormControl('', [Validators.required]),
-      gerente: new FormControl(''),
-      revisor: new FormControl(''),
-      diretor: new FormControl(''),
-      coordenador: new FormControl(''),
+  async configForm() {
+    let superiorDireto;
+
+    [this.equipe, this.pessoas, {superiorDireto}] = await Promise.all([
+      this.app.sistema.getEquipePeD(),
+      this.app.users.all().toPromise(),
+      this.app.demandas.getSuperiorDireto(this.demandaId)]);
+    this.form = new FormGroup({
+      superiorDireto: new FormControl(superiorDireto || '', [Validators.required]),
     });
   }
 
-  salvar() {
-    console.log(this.formDefinirPessoas.value);
+  getMembroEquipe(id: string) {
+    return this.pessoas.find(p => p.id === id);
+  }
+
+  getMembroNome(id: string) {
+    const membro = this.getMembroEquipe(id);
+    if (membro) {
+      return membro.nomeCompleto || membro.userName;
+    }
+    return 'Não encontrado';
+  }
+
+  async salvar() {
+    if (this.form.valid) {
+      this.app.showLoading();
+      try {
+        await this.app.demandas.setSuperiorDireto(this.demandaId, this.form.value);
+        this.app.alert('Demanda atualizada com sucesso!');
+      } catch (e) {
+        this.app.alert('Não foi possível atualizar a demanda');
+      }
+      this.app.hideLoading();
+    }
+    console.log(this.form.value);
   }
 
 }

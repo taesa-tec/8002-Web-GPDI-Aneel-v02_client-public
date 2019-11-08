@@ -11,6 +11,7 @@
   </div>
 </div>
 <div *ngIf="form">
+
   <div class="row">
     <div class="col-12">
       <div class="form-editor my-3" [formGroup]="form">
@@ -23,10 +24,29 @@
       </div>
     </div>
   </div>
+  <div class="row" *ngIf="canAppendFile">
+    <div class="col-12">
+      <h5 class="text-blue-light">
+        Arquivos Complentares (Opcional)
+      </h5>
+      <button class="btn btn-link" type="button" (click)="anexarArquivos()">
+        <i class="ta-attachment fs-22"></i> Anexar Arquivos
+      </button>
+      <div class="pr-3 mb-3">
+        <span *ngFor="let anexo of anexos;" style="cursor: pointer" class="text-blue d-block my-1"
+              (click)="download(anexo)">
+          <i class="ta-projeto"></i> -
+          <span>{{anexo.fileName}}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-12 d-flex justify-content-start">
       <button class="btn btn-primary" type="button" (click)="saveData()" [disabled]="form.invalid">
-        Salvar Padrão Formulário
+        <i class="ta-save"></i>
+        Salvar Dados
       </button>
       <button class="btn btn-link" type="button">
         Cancelar Alterações

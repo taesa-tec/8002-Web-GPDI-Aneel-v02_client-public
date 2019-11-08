@@ -24,6 +24,7 @@ import { AppComponentsModule } from '@app/core/shared/app-components/app-compone
 import { AppPipesModule } from '@app/core/shared/pipes/app-pipes.module';
 
 
+
 library.add(fas, far);
 
 @NgModule({

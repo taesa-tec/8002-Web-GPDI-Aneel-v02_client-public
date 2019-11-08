@@ -6,7 +6,7 @@
   </div>
 </div>
 
-<form [formGroup]="formDefinirPessoas" (ngSubmit)="salvar()">
+<form [formGroup]="form" *ngIf="form" (ngSubmit)="salvar()">
   <div class="row">
     <div class="col-6">
       <div class="form-group">
@@ -17,22 +17,17 @@
           class="form-control"
           formControlName="superiorDireto"
         >
-          <option value=""></option>
+          <option value="">Selecione</option>
+          <option [value]="pessoa.id"
+                  *ngFor="let pessoa of pessoas">{{ pessoa.nomeCompleto || pessoa.userName }}</option>
         </select>
       </div>
     </div>
 
     <div class="col-6">
       <div class="form-group">
-        <label for="gerente">GERENTE P&D</label>
-        <select
-          name="gerente"
-          id="gerente"
-          class="form-control"
-          formControlName="gerente"
-        >
-          <option value=""></option>
-        </select>
+        <label>GERENTE P&D</label>
+        <input type="text" class="form-control" [value]="getMembroNome(equipe.gerente)" readonly>
       </div>
     </div>
   </div>
@@ -40,29 +35,15 @@
   <div class="row">
     <div class="col-6">
       <div class="form-group">
-        <label for="revisor">REVISOR</label>
-        <select
-          name="revisor"
-          id="revisor"
-          class="form-control"
-          formControlName="revisor"
-        >
-          <option value=""></option>
-        </select>
+        <label>REVISOR</label>
+        <input type="text" class="form-control" readonly value="A difinir">
       </div>
     </div>
 
     <div class="col-6">
       <div class="form-group">
-        <label for="diretor">DIRETOR P&D</label>
-        <select
-          name="diretor"
-          id="diretor"
-          class="form-control"
-          formControlName="diretor"
-        >
-          <option value=""></option>
-        </select>
+        <label>DIRETOR P&D</label>
+        <input type="text" class="form-control" [value]="getMembroNome(equipe.diretor)" readonly>
       </div>
     </div>
   </div>
@@ -70,15 +51,8 @@
   <div class="row">
     <div class="col-6">
       <div class="form-group">
-        <label for="coordenador">COORDENADOR P&D</label>
-        <select
-          name="coordenador"
-          id="coordenador"
-          class="form-control"
-          formControlName="coordenador"
-        >
-          <option value=""></option>
-        </select>
+        <label>COORDENADOR P&D</label>
+        <input type="text" class="form-control" [value]="getMembroNome(equipe.coordenador)" readonly>
       </div>
     </div>
   </div>
@@ -88,7 +62,7 @@
       <button
         type="submit"
         class="btn btn-primary"
-        [disabled]="formDefinirPessoas.invalid"
+        [disabled]="form.invalid"
       >
         <i class="ta-save"></i> Salvar Alterações
       </button>

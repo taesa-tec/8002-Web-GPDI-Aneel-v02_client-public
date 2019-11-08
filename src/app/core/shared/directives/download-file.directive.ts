@@ -3,20 +3,21 @@ import {AppService} from '@app/services/app.service';
 import {FileUploaded} from '@app/models';
 
 @Directive({
-    selector: '[downloadFile]'
+  selector: '[downloadFile]'
 })
 export class DownloadFileDirective {
 
 
-    @Input() downloadFile: FileUploaded;
+  @Input() downloadFile: FileUploaded;
 
-    constructor(protected app: AppService) {
-    }
+  constructor(protected app: AppService) {
+  }
 
-    @HostListener('click') clicked() {
-        if (this.downloadFile) {
-            this.app.file.download(this.downloadFile);
-        }
+  @HostListener('click') clicked() {
+    console.log('Remover');
+    if (this.downloadFile) {
+      this.app.file.download(this.downloadFile);
     }
+  }
 
 }

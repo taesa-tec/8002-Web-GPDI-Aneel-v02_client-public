@@ -23,7 +23,7 @@ export class EquipeComponent implements OnInit {
 
 
   async configForm() {
-    const equipe = await this.app.sistema.getEquipePeD();
+    const [equipe, pessoas] = await Promise.all([this.app.sistema.getEquipePeD(), this.app.users.all().toPromise()]);
     this.formEquipe = this.fb.group({
       diretor: ['', Validators.required],
       gerente: ['', Validators.required],
@@ -31,7 +31,7 @@ export class EquipeComponent implements OnInit {
       outros: this.equipeOutros
     });
 
-    const pessoas = await this.app.users.all().toPromise();
+
     this.pessoas = pessoas.filter(({nomeCompleto}) => nomeCompleto !== null);
 
     if (equipe.outros) {

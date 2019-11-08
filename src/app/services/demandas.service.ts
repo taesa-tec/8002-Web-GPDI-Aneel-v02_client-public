@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Demanda, FormField} from '@app/models/demandas';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -32,8 +33,30 @@ export class DemandasService {
     return this.http.post('Demandas/Criar', `"${titulo}"`, {headers: {'Content-Type': 'application/json'}});
   }
 
-  editarDemanda(demandaUpdate: number) {
-    return this.http.put<any>('', demandaUpdate);
+  getSuperiorDireto(id: number) {
+    return this.http.get<{ superiorDireto: string }>(`Demandas/${id}/EquipeValidacao`).toPromise();
+  }
+
+  setSuperiorDireto(id: number, data: object) {
+    return this.http.put<any>(`Demandas/${id}/EquipeValidacao`, data).toPromise();
+  }
+
+  async getAnexos(id: number) {
+    return await this.http.get<Array<any>>(`Demandas/${id}/File/`).toPromise();
+  }
+
+  async downloadAnexo(demandaId: number, file) {
+    const blob = await this.http.get(`Demandas/${demandaId}/File/${file.id}`, {
+      responseType: 'blob'
+    }).toPromise();
+
+    const a = document.createElement('a');
+    const blobUrl = URL.createObjectURL(blob);
+    // PQP que gambiarra
+    a.href = blobUrl;
+    a.setAttribute('download', file.name);
+    a.click();
+    URL.revokeObjectURL(blobUrl);
   }
 
   editarDemandaForm(id: number, key: string, data: object) {
