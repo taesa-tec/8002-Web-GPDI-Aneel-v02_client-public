@@ -14,8 +14,8 @@
 </div>
 <div class="row">
   <div class="col-12 d-flex justify-content-end">
-    <a [href]="url.concat('?dl=1')" download class="btn btn-link" target="_blank">
+    <span  class="btn btn-link"  (click)="download()">
       <i class="ta-download"></i> Download PDF
-    </a>
+    </span>
   </div>
 </div>
