@@ -24,6 +24,7 @@ export class EquipeComponent implements OnInit {
 
   async configForm() {
     const [equipe, pessoas] = await Promise.all([this.app.sistema.getEquipePeD(), this.app.users.all().toPromise()]);
+    console.log({equipe, pessoas});
     this.formEquipe = this.fb.group({
       diretor: ['', Validators.required],
       gerente: ['', Validators.required],
@@ -35,11 +36,15 @@ export class EquipeComponent implements OnInit {
     this.pessoas = pessoas.filter(({nomeCompleto}) => nomeCompleto !== null);
 
     if (equipe.outros) {
-      equipe.outros.forEach(id => this.add(id));
+      equipe.outros.forEach(pessoa => this.add(pessoa.id));
     } else {
       this.add();
     }
-    this.formEquipe.patchValue(equipe);
+    this.formEquipe.patchValue({
+      diretor: equipe.diretor && equipe.diretor.id || '',
+      gerente: equipe.gerente && equipe.gerente.id || '',
+      coordenador: equipe.coordenador && equipe.coordenador.id || ''
+    });
   }
 
   pessoasEquipe(current?: string) {
@@ -50,6 +55,7 @@ export class EquipeComponent implements OnInit {
 
 
   add(id = '') {
+    console.log(id);
     this.equipeOutros.push(new FormControl(id, [Validators.required]));
   }
 

@@ -31,6 +31,7 @@ export class EquipeValidacaoComponent implements OnInit {
       this.app.sistema.getEquipePeD(),
       this.app.users.all().toPromise(),
       this.app.demandas.getSuperiorDireto(this.demandaId)]);
+
     this.form = new FormGroup({
       superiorDireto: new FormControl(superiorDireto || '', [Validators.required]),
     });
@@ -59,7 +60,6 @@ export class EquipeValidacaoComponent implements OnInit {
       }
       this.app.hideLoading();
     }
-    console.log(this.form.value);
   }
 
 }

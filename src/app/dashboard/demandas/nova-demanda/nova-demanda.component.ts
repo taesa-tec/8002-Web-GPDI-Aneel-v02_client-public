@@ -25,7 +25,7 @@ export class NovaDemandaComponent implements OnInit {
   async onSubmit() {
     if (this.form.valid) {
       try {
-        await this.app.demandas.criarDemanda(this.form.value.titulo).toPromise();
+        await this.app.demandas.criarDemanda(this.form.value.titulo);
         this.app.alert("Demanda salva com sucesso!", "Sucesso");
         this.activeModal.close();
         this.app.router.navigate(["/dashboard", "demandas", "elaboracao"]);

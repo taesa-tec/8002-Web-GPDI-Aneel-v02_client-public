@@ -7,7 +7,7 @@
       {{ etapa && etapa.titulo }}
     </div>
     <div class="font-weight-medium fs-12">
-      {{ responsavel }}
+      {{ (responsavel && (responsavel.nomeCompleto || responsavel.userName)) || "Pendente" }}
     </div>
   </main>
   <footer>

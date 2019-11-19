@@ -6,31 +6,37 @@ import {SharedModule} from '../shared/shared.module';
 import {EspecificacaoTecnicaComponent} from './especificacao-tecnica/especificacao-tecnica.component';
 import {TemasComponent} from './temas/temas.component';
 import {DocumentoAprovacoesComponent} from './documento-aprovacoes/documento-aprovacoes.component';
-import {PreAprovacaoComponent} from './pre-aprovacao/pre-aprovacao.component';
+import {AprovacaoComponent} from './aprovacao/aprovacao.component';
 import {EquipeValidacaoComponent} from './equipe-validacao/equipe-validacao.component';
 import {FormEditorComponent} from '@app/dashboard/demanda/form-editor/form-editor.component';
-import { EtapaAvaliacaoComponent } from './etapa-avaliacao/etapa-avaliacao.component';
-import { EnviarProximaEtapaComponent } from './etapa-avaliacao/enviar-proxima-etapa/enviar-proxima-etapa.component';
-import { AvaliarDemandaComponent } from './etapa-avaliacao/avaliar-demanda/avaliar-demanda.component';
-import { DefinirRevisorComponent } from './etapa-avaliacao/definir-revisor/definir-revisor.component';
+import {EtapaAvaliacaoComponent} from './etapa-avaliacao/etapa-avaliacao.component';
+import {AvaliarDemandaComponent} from './aprovacao/avaliar-demanda/avaliar-demanda.component';
+import {DefinirRevisorComponent} from './aprovacao/definir-revisor/definir-revisor.component';
+import {DemandaComentarioComponent} from './demanda-comentarios/demanda-comentario/demanda-comentario.component';
+import {DemandaComentariosComponent} from './demanda-comentarios/demanda-comentarios.component';
+import {equipePeDProvider} from '@app/providers/equipe-ped.providers';
+import {DemandaGuard} from '@app/dashboard/demanda/guards/demanda.guard';
+
 
 @NgModule({
   imports: [DemandaRoutingModule, SharedModule],
   exports: [],
   declarations: [
+
     DemandaComponent,
     FormEditorComponent,
     EquipeValidacaoComponent,
     EspecificacaoTecnicaComponent,
     TemasComponent,
     DocumentoAprovacoesComponent,
-    PreAprovacaoComponent,
+    AprovacaoComponent,
     EtapaAvaliacaoComponent,
-    EnviarProximaEtapaComponent,
     AvaliarDemandaComponent,
-    DefinirRevisorComponent
+    DefinirRevisorComponent,
+    DemandaComentarioComponent,
+    DemandaComentariosComponent
   ],
-  providers: [],
+  providers: [equipePeDProvider, DemandaGuard],
 })
 export class DemandaModule {
 }

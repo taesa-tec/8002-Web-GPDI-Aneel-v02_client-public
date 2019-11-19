@@ -8,7 +8,7 @@ import {environment} from '@env/environment';
 @Component({
   selector: 'app-etapa-avaliacao',
   templateUrl: './etapa-avaliacao.component.html',
-  styleUrls: ['./etapa-avaliacao.component.scss']
+  styleUrls: []
 })
 export class EtapaAvaliacaoComponent implements OnInit {
 
@@ -17,6 +17,7 @@ export class EtapaAvaliacaoComponent implements OnInit {
 
   protected $demanda: Demanda;
   readonly ETAPAS_VALUES = DemandaEtapa;
+  readonly ETAPAS_STATUS = DemandaEtapaStatus;
   anexos = [];
   formKey = 'especificacao-tecnica';
   pdfUrl = null;

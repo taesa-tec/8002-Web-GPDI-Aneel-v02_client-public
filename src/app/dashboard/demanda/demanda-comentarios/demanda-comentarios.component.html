@@ -1,0 +1,7 @@
+<div class="row my-4" *ngIf="demanda.comentarios && demanda.comentarios.length > 0">
+  <div class="col-12">
+    <h6 class="text-uppercase text-blue-light font-weight-bold">Histórico de comentários</h6>
+    <app-demanda-comentario *ngFor="let comentario of demanda.comentarios"
+                            [comentario]="comentario"></app-demanda-comentario>
+  </div>
+</div>

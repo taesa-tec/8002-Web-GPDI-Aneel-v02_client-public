@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
-import { AppService } from '@app/services/app.service'
-import { User } from '@app/models';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {AppService} from '@app/services/app.service';
+import {User} from '@app/models';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {currentUserProvider} from '@app/providers/user.provider';
 
 
 @Component({
@@ -23,8 +24,7 @@ export class DashboardComponent implements OnInit {
   }
 
   get avatar() {
-    return (this.currentUser && this.currentUser.fotoPerfil) ?
-      `data:image/jpeg;base64,${this.currentUser.fotoPerfil.file}` : '/assets/default_avatar.png';
+    return this.currentUser.fotoPerfil;
   }
 
   get empresa() {

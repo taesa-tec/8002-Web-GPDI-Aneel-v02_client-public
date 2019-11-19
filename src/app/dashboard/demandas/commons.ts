@@ -1,4 +1,4 @@
-import { Dictionary } from 'lodash';
+import {Dictionary} from 'lodash';
 
 export enum DemandaEtapa {
   Elaboracao = 0,
@@ -20,14 +20,15 @@ export enum DemandaEtapaStatus {
   Pendente,
   Cancelada
 }
+
 export const DemandaEtapaStatusText: Dictionary<string> = {};
-DemandaEtapaStatusText[DemandaEtapaStatus.EmElaboracao] = "Andamento";
-DemandaEtapaStatusText[DemandaEtapaStatus.Reprovada] = "Reprovada";
-DemandaEtapaStatusText[DemandaEtapaStatus.ReprovadaPermanente] = "Reprovada";
-DemandaEtapaStatusText[DemandaEtapaStatus.Aprovada] = "Aprovada";
-DemandaEtapaStatusText[DemandaEtapaStatus.Concluido] = "Concluído";
-DemandaEtapaStatusText[DemandaEtapaStatus.Pendente] = "Pendente";
-DemandaEtapaStatusText[DemandaEtapaStatus.Cancelada] = "Cancelada";
+DemandaEtapaStatusText[DemandaEtapaStatus.EmElaboracao] = 'Andamento';
+DemandaEtapaStatusText[DemandaEtapaStatus.Reprovada] = 'Reprovada';
+DemandaEtapaStatusText[DemandaEtapaStatus.ReprovadaPermanente] = 'Reprovada';
+DemandaEtapaStatusText[DemandaEtapaStatus.Aprovada] = 'Aprovada';
+DemandaEtapaStatusText[DemandaEtapaStatus.Concluido] = 'Concluído';
+DemandaEtapaStatusText[DemandaEtapaStatus.Pendente] = 'Pendente';
+DemandaEtapaStatusText[DemandaEtapaStatus.Cancelada] = 'Cancelada';
 
 export interface DemandaEtapaItem {
   etapa: DemandaEtapa;
@@ -37,30 +38,30 @@ export interface DemandaEtapaItem {
 export const DemandaEtapaItems: Array<DemandaEtapaItem> = [
   {
     etapa: DemandaEtapa.Elaboracao,
-    titulo: "Elaboração"
+    titulo: 'Elaboração'
   },
   {
     etapa: DemandaEtapa.PreAprovacao,
-    titulo: "Pré-Aprovação Superior Direto"
+    titulo: 'Pré-Aprovação Superior Direto'
   },
   {
     etapa: DemandaEtapa.RevisorPendente,
-    titulo: "Revisor Pendente"
+    titulo: 'Revisor Pendente'
   },
   {
     etapa: DemandaEtapa.AprovacaoRevisor,
-    titulo: "Aprovação Revisor"
+    titulo: 'Aprovação Revisor'
   },
   {
     etapa: DemandaEtapa.AprovacaoCoordenador,
-    titulo: "Aprovação Coordenador P&D"
+    titulo: 'Aprovação Coordenador P&D'
   },
   {
     etapa: DemandaEtapa.AprovacaoGerente,
-    titulo: "Aprovação Gerente P&D"
+    titulo: 'Aprovação Gerente P&D'
   },
   {
     etapa: DemandaEtapa.AprovacaoDiretor,
-    titulo: "Aprovação Diretor P&D"
-  },
+    titulo: 'Aprovação Diretor P&D'
+  }
 ];

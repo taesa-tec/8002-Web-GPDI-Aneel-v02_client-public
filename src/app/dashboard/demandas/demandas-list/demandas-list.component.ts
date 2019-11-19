@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { EtapasList, TodasDemandas } from "@app/dashboard/demandas/demandas-teste";
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { AppService } from '@app/services/app.service';
-import { DemandaEtapaStatus } from '../commons';
-import { filter } from 'rxjs/operators';
-import { Demanda } from '@app/models/demandas';
+import {Component, Inject, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AppService} from '@app/services/app.service';
+import {DemandaEtapa, DemandaEtapaStatus} from '../commons';
+import {Demanda} from '@app/models/demandas';
+import {EQUIPE_PED} from '@app/providers/equipe-ped.providers';
+import {EquipePeD} from '@app/models';
 
 @Component({
   selector: 'app-demandas-list',
@@ -13,15 +13,27 @@ import { Demanda } from '@app/models/demandas';
 })
 export class DemandasListComponent implements OnInit {
 
-  list = EtapasList;
+  list = [
+    {value: DemandaEtapa.Elaboracao, text: 'Elaboração'},
+    {value: DemandaEtapa.PreAprovacao, text: 'Pré - Aprovação Superior Direto'},
+    {value: DemandaEtapa.RevisorPendente, text: 'Revisor Pendente'},
+    {value: DemandaEtapa.AprovacaoRevisor, text: 'Aprovação Revisor'},
+    {value: DemandaEtapa.AprovacaoCoordenador, text: 'Aprovação Coordenador P&D'},
+    {value: DemandaEtapa.AprovacaoGerente, text: 'Aprovação Gerente P&D'},
+    {value: DemandaEtapa.AprovacaoDiretor, text: 'Aprovação Diretor P&D'},
+  ];
   demandas: Array<Demanda> = [];
+  _demandas: Array<Demanda> = [];
+  etapaFilter = '';
+  equipe: EquipePeD;
 
 
-  constructor(protected route: ActivatedRoute, protected router: Router, protected app: AppService) { }
+  constructor(protected route: ActivatedRoute, protected router: Router, protected app: AppService) {
+  }
 
   async ngOnInit() {
-
     const data = this.route.snapshot.data;
+    this.equipe = await this.app.sistema.getEquipePeD();
     if (data.demandaEtapaStatus !== undefined) {
       const status: DemandaEtapaStatus = data.demandaEtapaStatus;
       this.getDemandas(status);
@@ -31,29 +43,38 @@ export class DemandasListComponent implements OnInit {
 
   }
 
+  filter() {
+    if (this.etapaFilter === '') {
+      this.demandas = this._demandas;
+    } else {
+      this.demandas = this._demandas.filter(demanda => demanda.etapaAtual === parseFloat(this.etapaFilter));
+    }
+  }
+
+
   async getDemandas(status: DemandaEtapaStatus | 'Captacao') {
 
 
-    let _status: 'Reprovadas' | 'Aprovadas' | 'EmElaboracao' | 'Captacao' = "EmElaboracao";
+    let _status: 'Reprovadas' | 'Aprovadas' | 'EmElaboracao' | 'Captacao' = 'EmElaboracao';
 
     switch (status) {
       case DemandaEtapaStatus.EmElaboracao:
-        _status = "EmElaboracao";
+        _status = 'EmElaboracao';
         break;
       case DemandaEtapaStatus.ReprovadaPermanente:
       case DemandaEtapaStatus.Reprovada:
 
-        _status = "Reprovadas";
+        _status = 'Reprovadas';
         break;
       case DemandaEtapaStatus.Aprovada:
-        _status = "Aprovadas";
+        _status = 'Aprovadas';
         break;
       case 'Captacao':
         _status = 'Captacao';
 
     }
-    this.demandas = await this.app.demandas.getDemandasByStatus(_status).toPromise();
-
+    this._demandas = await this.app.demandas.getDemandasByStatus(_status).toPromise();
+    this.filter();
   }
 }
 

@@ -1,0 +1,21 @@
+<div class="card bg-cinza-claro my-3">
+  <div class="card-header d-flex justify-content-between  align-items-center py-2">
+    <div class="comment-author d-flex align-items-center">
+      <div style="width: 42px;">
+        <div class="embed-responsive embed-responsive-1by1">
+          <div class="embed-responsive-item rounded-circle"
+               [ngStyle]="{'background-size':'cover', 'background-position':'center', 'background-image': 'url('+ comentario.user.fotoPerfil +')'}"></div>
+        </div>
+      </div>
+      <span class="px-3 text-blue-light font-weight-bold">
+      {{comentario.user.nomeCompleto}}
+      </span>
+    </div>
+    <div class="comment-datetime text-blue-light">
+      {{comentario.createdAt | date:'d/M/yy'}} às {{comentario.createdAt | date : 'H:mm'}}
+    </div>
+  </div>
+  <div class="card-body">
+    <p>{{comentario.content}}</p>
+  </div>
+</div>

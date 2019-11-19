@@ -71,7 +71,14 @@ export class AuthService {
       this.http.post<LoginResponse>(`Login`, loginRequest).subscribe(loginResponse => {
         if (loginResponse.authenticated) {
           const storage = remember ? localStorage : sessionStorage;
+
+          if (remember) {
+            sessionStorage.setItem('last_login_user', loginRequest.email);
+          } else {
+            sessionStorage.removeItem('last_login_user');
+          }
           this.loginResponse = loginResponse;
+
           storage.setItem(storageKey, JSON.stringify(loginResponse));
           this.router.navigateByUrl(this.redirectTo).then(() => {
             this.authEventsSource.next({type: 'login', data: loginResponse});
