@@ -25,6 +25,7 @@
       *ngIf="form && form.get('value')"
       [config]="configEditor"
       formControlName="value"
+      [readOnly]="form.get('value').disabled"
     ></ckeditor>
   </div>
 

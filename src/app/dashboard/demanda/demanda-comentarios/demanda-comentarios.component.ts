@@ -2,12 +2,11 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Demanda} from '@app/models/demandas';
 
 @Component({
-  selector: 'app-avaliar-demanda',
-  templateUrl: './avaliar-demanda.component.html',
-  styleUrls: ['./avaliar-demanda.component.scss']
+  selector: 'app-demanda-comentarios',
+  templateUrl: './demanda-comentarios.component.html',
+  styles: []
 })
-export class AvaliarDemandaComponent implements OnInit {
-
+export class DemandaComentariosComponent implements OnInit {
   @Input() demanda: Demanda;
 
   constructor() {

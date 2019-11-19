@@ -1,16 +1,19 @@
 export interface Demanda {
+  id: number;
   comentarios: Array<any>;
   createdAt: string;
+  captacaoDate?: string;
   criador?: any;
   criadorId: string;
+  revisor?: any;
+  revisorId?: string;
   etapaAtual: number;
-  etapaStatus: number;
+  status: number;
   etapaAtualText: string;
   etapaStatusText: string;
   files?: any;
-  id: number;
-  superiorDiretor?: any;
-  superiorDiretorId?: string;
+  superiorDireto?: any;
+  superiorDiretoId?: string;
   titulo: string;
 }
 

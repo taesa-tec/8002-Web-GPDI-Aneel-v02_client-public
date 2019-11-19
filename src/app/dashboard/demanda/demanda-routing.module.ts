@@ -5,48 +5,44 @@ import {EquipeValidacaoComponent} from './equipe-validacao/equipe-validacao.comp
 import {DocumentoAprovacoesComponent} from './documento-aprovacoes/documento-aprovacoes.component';
 import {TemasComponent} from './temas/temas.component';
 import {EspecificacaoTecnicaComponent} from './especificacao-tecnica/especificacao-tecnica.component';
-import {PreAprovacaoComponent} from './pre-aprovacao/pre-aprovacao.component';
+import {AprovacaoComponent} from './aprovacao/aprovacao.component';
 import {FormEditorComponent} from '@app/dashboard/demanda/form-editor/form-editor.component';
 import {EtapaAvaliacaoComponent} from '@app/dashboard/demanda/etapa-avaliacao/etapa-avaliacao.component';
 import {DemandaResolver} from '@app/dashboard/demanda/demanda.resolver';
+import {DemandaGuard} from '@app/dashboard/demanda/guards/demanda.guard';
 
 const routes: Routes = [
   {
     path: ':id',
     component: DemandaComponent,
+    canActivate: [DemandaGuard],
     resolve: {
       demanda: DemandaResolver
     },
     children: [
       {
-        path: '',
-        redirectTo: 'equipe-validacao',
-        pathMatch: 'full',
-      },
-      {
         path: 'equipe-validacao',
         component: EquipeValidacaoComponent
-      },
-      {
-        path: 'documento-e-aprovacoes',
-        component: DocumentoAprovacoesComponent
-      },
-      {
-        path: 'pre-aprovacao',
-        component: PreAprovacaoComponent
-      },
-      {
-        path: 'central-administrativa',
-        loadChildren: '@app/dashboard/demanda/central-administrativa/central-administrativa.module#CentralAdministrativaModule'
       },
       {
         path: 'formulario/:form',
         component: FormEditorComponent,
       },
       {
-        path: 'avaliacao',
-        component: EtapaAvaliacaoComponent,
-        children: []
+        path: 'documento-aprovacoes',
+        component: DocumentoAprovacoesComponent
+      },
+      {
+        path: 'aprovacao',
+        component: AprovacaoComponent
+      },
+      {
+        path: 'historico',
+        component: AprovacaoComponent
+      },
+      {
+        path: 'central-administrativa',
+        loadChildren: '@app/dashboard/demanda/central-administrativa/central-administrativa.module#CentralAdministrativaModule'
       }
     ]
   }

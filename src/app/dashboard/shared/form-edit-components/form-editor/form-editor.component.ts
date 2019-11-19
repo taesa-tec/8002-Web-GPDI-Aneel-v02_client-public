@@ -23,6 +23,7 @@ export class FormEditorComponent implements OnInit {
   @Input() formValue: object;
   @Input() anexos: Array<any> = [];
   @Input() canAppendFile = false;
+  @Input() disabled = false;
   @Output() save: EventEmitter<object> = new EventEmitter<object>();
 
 
@@ -46,6 +47,10 @@ export class FormEditorComponent implements OnInit {
     });
 
     this.form.updateValueAndValidity();
+    console.log(this.disabled);
+    if (this.disabled) {
+      this.form.disable();
+    }
   }
 
   async anexarArquivos() {

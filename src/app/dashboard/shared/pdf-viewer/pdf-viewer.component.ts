@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import {HttpClient, HttpEvent, HttpEventType} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpEvent, HttpEventType} from '@angular/common/http';
 
 @Component({
   selector: 'app-pdf-viewer',
@@ -13,6 +13,8 @@ export class PdfViewerComponent implements OnInit {
   protected realUrlFile: string;
   filename: string;
   loadedFileUrl: SafeResourceUrl;
+  isLoading = false;
+  errorMessage: string = null;
 
   constructor(protected http: HttpClient, protected sanitizer: DomSanitizer) {
   }
@@ -20,8 +22,8 @@ export class PdfViewerComponent implements OnInit {
 
   async ngOnInit() {
     if (this.url) {
+      this.isLoading = true;
       try {
-
         const response = await this.http.get(this.url, {observe: 'response', responseType: 'blob'}).toPromise();
         const content = response.headers.get('content-disposition');
         if (content) {
@@ -33,8 +35,11 @@ export class PdfViewerComponent implements OnInit {
         this.realUrlFile = URL.createObjectURL(response.body);
         this.loadedFileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.realUrlFile);
       } catch (e) {
-        console.error(e.message);
+        if (e instanceof HttpErrorResponse && e.status === 404) {
+          this.errorMessage = 'Arquivo não encontrado';
+        }
       }
+      this.isLoading = false;
     }
   }
 

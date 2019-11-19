@@ -28,7 +28,7 @@ const components = [
   imports: [
     SharedCoreModule,
   ],
-  exports: [SharedCoreModule, ...components]
+  exports: [SharedCoreModule, ...components],
 })
 export class SharedModule {
 }

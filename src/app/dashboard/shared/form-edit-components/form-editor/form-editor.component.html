@@ -1,17 +1,4 @@
-<div class="row d-none">
-  <div class="col-6">
-    <pre *ngIf="form" style="max-height: 300px; overflow: auto;">{{
-        formField | json
-      }}</pre>
-  </div>
-  <div class="col-6">
-    <pre *ngIf="form" style="max-height: 300px; overflow: auto;">{{
-        form.value | json
-      }}</pre>
-  </div>
-</div>
 <div *ngIf="form">
-
   <div class="row">
     <div class="col-12">
       <div class="form-editor my-3" [formGroup]="form">
@@ -29,7 +16,7 @@
       <h5 class="text-blue-light">
         Arquivos Complentares (Opcional)
       </h5>
-      <button class="btn btn-link" type="button" (click)="anexarArquivos()">
+      <button class="btn btn-link" type="button" (click)="anexarArquivos()" [disabled]="form.disabled">
         <i class="ta-attachment fs-22"></i> Anexar Arquivos
       </button>
       <div class="pr-3 mb-3">
@@ -44,11 +31,11 @@
 
   <div class="row">
     <div class="col-12 d-flex justify-content-start">
-      <button class="btn btn-primary" type="button" (click)="saveData()" [disabled]="form.invalid">
+      <button class="btn btn-primary" type="button" (click)="saveData()" [disabled]="form.invalid || form.disabled">
         <i class="ta-save"></i>
         Salvar Dados
       </button>
-      <button class="btn btn-link" type="button">
+      <button class="btn btn-link" type="button" routerLink="/dashboard">
         Cancelar Alterações
       </button>
     </div>

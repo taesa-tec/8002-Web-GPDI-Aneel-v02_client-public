@@ -8,17 +8,15 @@ import {map} from 'rxjs/operators';
 })
 export class DemandasService {
 
-
   constructor(private http: HttpClient) {
   }
-
 
   getDemandasByStatus(status: 'Reprovadas' | 'Aprovadas' | 'EmElaboracao' | 'Captacao') {
     return this.http.get<Array<Demanda>>(`Demandas/${status}`);
   }
 
-  minhasDemadas() {
-    return this.http.get<any>('');
+  demandaExist(id: number) {
+    return this.http.head(`Demandas/${id}`).toPromise();
   }
 
   getDemanda(id: number) {
@@ -30,7 +28,7 @@ export class DemandasService {
   }
 
   criarDemanda(titulo: any) {
-    return this.http.post('Demandas/Criar', `"${titulo}"`, {headers: {'Content-Type': 'application/json'}});
+    return this.http.post('Demandas/Criar', `"${titulo}"`, {headers: {'Content-Type': 'application/json'}}).toPromise();
   }
 
   getSuperiorDireto(id: number) {
@@ -39,6 +37,14 @@ export class DemandasService {
 
   setSuperiorDireto(id: number, data: object) {
     return this.http.put<any>(`Demandas/${id}/EquipeValidacao`, data).toPromise();
+  }
+
+  definirRevisor(id: number, data: object) {
+    return this.http.put<any>(`Demandas/${id}/Revisor`, data).toPromise();
+  }
+
+  enviarCaptacao(id: number) {
+    return this.http.put<any>(`Demandas/${id}/Captacao`, {}).toPromise();
   }
 
   async getAnexos(id: number) {
@@ -63,54 +69,21 @@ export class DemandasService {
     return this.http.put<any>(`Demandas/${id}/Form/${key}`, data);
   }
 
-  excluirDemanda(id: number) {
-    return this.http.delete<any>(`delete/${id}/demanda`);
+  proximaEtapa(id: number, data) {
+
+    return this.http.put<any>(`Demandas/${id}/ProximaEtapa`, data).toPromise();
   }
 
-  aprovarDemanda(id: number, etapa: any) {
-    return this.http.put<any>('', id);
+  excluir(id: number) {
+    return this.http.delete<any>(`Demandas/${id}/`);
   }
 
   reprovarDemanda(id: number, motivo: any) {
-    return this.http.put<any>('', motivo);
+    return this.http.put<any>(`Demandas/${id}/Reiniciar`, {motivo}).toPromise();
   }
 
-  enviarParaAprovacao(id: number, motivo: any) {
-    return this.http.post<any>('', id);
-  }
-
-  getComentario() {
-    return this.http.get<any>('');
-  }
-
-  getRevisor() {
-    return this.http.get<any>('');
-  }
-
-  definirRevisor(revisor) {
-    return this.http.put<any>('', revisor);
-  }
-
-  // Processo depois da demanda criada
-  definirSuperiorDireto(DemandaValue: any) {
-    return this.http.put('', DemandaValue);
-  }
-
-  especificaoTecnicaForm(especTec) {
-    return this.http.post<any>('', especTec);
-  }
-
-
-  getDocumentoAprovacoes(id: number) {
-    return this.http.get<any>('');
-  }
-
-  downloadDocAprovacoes() {
-    return this.http.get<any>('');
-  }
-
-  downloadDocComplementar() {
-    return this.http.get<any>('');
+  reprovarPermanente(id: number, motivo: any) {
+    return this.http.put<any>(`Demandas/${id}/ReprovarPermanente`, {motivo}).toPromise();
   }
 
   getForms() {
@@ -128,6 +101,5 @@ export class DemandasService {
   saveFormValue(key: string, values) {
     return this.http.post<object>(`Demandas/Forms/${key}/Values`, values);
   }
-
 
 }

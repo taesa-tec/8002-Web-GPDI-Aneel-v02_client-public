@@ -27,7 +27,7 @@
     <div class="col-6">
       <div class="form-group">
         <label>GERENTE P&D</label>
-        <input type="text" class="form-control" [value]="getMembroNome(equipe.gerente)" readonly>
+        <input type="text" class="form-control" [value]="equipe.gerente.nomeCompleto" readonly>
       </div>
     </div>
   </div>
@@ -43,7 +43,7 @@
     <div class="col-6">
       <div class="form-group">
         <label>DIRETOR P&D</label>
-        <input type="text" class="form-control" [value]="getMembroNome(equipe.diretor)" readonly>
+        <input type="text" class="form-control" [value]="equipe.diretor.nomeCompleto" readonly>
       </div>
     </div>
   </div>
@@ -52,7 +52,7 @@
     <div class="col-6">
       <div class="form-group">
         <label>COORDENADOR P&D</label>
-        <input type="text" class="form-control" [value]="getMembroNome(equipe.coordenador)" readonly>
+        <input type="text" class="form-control" [value]="equipe.coordenador.nomeCompleto" readonly>
       </div>
     </div>
   </div>

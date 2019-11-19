@@ -1,12 +1,14 @@
 import {AppService} from '@app/services/app.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {Demanda} from '@app/models/demandas';
 
 @Component({
   selector: 'app-demanda',
   templateUrl: './demanda.component.html',
-  styleUrls: []
+  styleUrls: [],
+  providers: []
 })
 export class DemandaComponent implements OnInit {
 
@@ -14,7 +16,7 @@ export class DemandaComponent implements OnInit {
   DemandaTitulo: string;
   DemandaEtapa: string;
 
-  protected $demanda: any;
+  protected $demanda: Demanda;
 
   get demanda() {
     return this.$demanda;
@@ -22,7 +24,7 @@ export class DemandaComponent implements OnInit {
 
   set demanda(value) {
     this.$demanda = value;
-    if (!this.$demanda == null || this.$demanda == undefined) {
+    if (!this.$demanda == null || this.$demanda === undefined) {
       return;
     }
     if (this.$demanda.id) {
@@ -47,18 +49,19 @@ export class DemandaComponent implements OnInit {
   };
 
   constructor(private app: AppService, protected modal: NgbModal, protected route: ActivatedRoute) {
+
   }
 
   ngOnInit() {
-    this.demanda = this.route.snapshot.data.demanda;
-    this.menu = [
-      {text: 'Definição Pessoas Processo Validação', icon: 'ta-user-id', path: 'equipe-validacao'},
-      {text: 'Especificação Técnica', icon: 'ta-capacete', path: 'formulario/especificacao-tecnica'},
-      {text: 'Documento e Aprovações', icon: 'ta-projeto', path: 'avaliacao'},
-      // {text: 'Processo Aprovação Demanda', icon: 'ta-projeto', path: 'pre-aprovacao'},
-      {text: 'Central Administrativa', icon: 'ta-central-admin', path: 'central-administrativa'},
-      {text: 'Log Projeto', icon: 'ta-log', path: 'log-projeto'},
-    ];
+    const dataResolved = this.route.snapshot.data['demanda'];
+    this.demanda = dataResolved.demanda;
+    this.menu = dataResolved.menu;
+
+    if (dataResolved.defaultPage && this.route.children.length === 0) {
+      this.app.router.navigate(dataResolved.defaultPage.split('/'), {relativeTo: this.route});
+    }
+
+
   }
 
 }

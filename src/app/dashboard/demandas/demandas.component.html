@@ -25,7 +25,7 @@
             routerLinkActive="active"
             class="nav-link"
             [routerLink]="route.path"
-            >{{ route.text }}</a
+          >{{ route.text }}</a
           >
         </li>
       </ng-container>
@@ -33,6 +33,6 @@
   </div>
 </div>
 
-<div class="wrap-outlet-projeto">
+<div class="wrap-outlet-projeto" *ngIf="showChild">
   <router-outlet></router-outlet>
 </div>
