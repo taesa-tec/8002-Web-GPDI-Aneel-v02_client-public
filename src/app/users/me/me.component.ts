@@ -55,7 +55,7 @@ export class MeComponent implements OnInit {
       }
       this.user = u;
       this.fotoPerfil = new FormGroup({
-        file: new FormControl(u.fotoPerfil ? u.fotoPerfil : '')
+        file: new FormControl('')
       });
 
       this.form = new FormGroup({
@@ -65,7 +65,8 @@ export class MeComponent implements OnInit {
         status: new FormControl({value: u.status, disabled: true}),
         role: new FormControl(u.role),
         catalogEmpresaId: new FormControl({value: u.catalogEmpresaId || (u.razaoSocial ? '0' : ''), disabled: false}),
-        fotoPerfil: this.fotoPerfil
+        fotoPerfil: this.fotoPerfil,
+        cargo: new FormControl(u.cargo, Validators.required)
       });
 
       if (u.id) {
