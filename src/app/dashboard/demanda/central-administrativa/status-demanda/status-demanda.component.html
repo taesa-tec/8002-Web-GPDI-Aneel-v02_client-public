@@ -1,16 +1,13 @@
 <div class="row">
   <div class="col-4">
-    <div class="form-group">
+    <div class="form-group" [formGroup]="form">
       <label for="statusProjeto">STATUS PROJETO SISTEMA</label>
-      <select name="statusProjeto" id="statusProjeto" class="form-control">
+      <select name="statusProjeto" id="statusProjeto" class="form-control" formControlName="status">
         <option value="{{ item.value }}" *ngFor="let item of menuStatusEtapas">{{ item.text }}</option>
       </select>
     </div>
   </div>
 </div>
-
-
-
 <div class="row">
   <div class="col text-left">
     <button type="submit" class="btn btn-primary" (click)="saveStatus()">

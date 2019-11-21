@@ -102,4 +102,8 @@ export class DemandasService {
     return this.http.post<object>(`Demandas/Forms/${key}/Values`, values);
   }
 
+  setEtapa(id: number, data: object) {
+    return this.http.put<any>(`Demandas/${id}/Etapa`, data).toPromise();
+  }
+
 }
