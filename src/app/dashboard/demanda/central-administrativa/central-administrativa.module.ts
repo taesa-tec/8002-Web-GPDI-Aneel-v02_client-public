@@ -1,15 +1,17 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { CentralAdministrativaRoutingModule } from './central-administrativa-routing.module';
-import { StatusDemandaComponent } from './status-demanda/status-demanda.component';
-import { CentralAdministrativaComponent } from './central-administrativa.component';
+import {CentralAdministrativaRoutingModule} from './central-administrativa-routing.module';
+import {StatusDemandaComponent} from './status-demanda/status-demanda.component';
+import {CentralAdministrativaComponent} from './central-administrativa.component';
+import {SharedModule} from '@app/dashboard/shared/shared.module';
 
 @NgModule({
-  declarations: [StatusDemandaComponent,CentralAdministrativaComponent],
+  declarations: [StatusDemandaComponent, CentralAdministrativaComponent],
   imports: [
-    CommonModule,
+    SharedModule,
     CentralAdministrativaRoutingModule
   ]
 })
-export class CentralAdministrativaModule { }
+export class CentralAdministrativaModule {
+}

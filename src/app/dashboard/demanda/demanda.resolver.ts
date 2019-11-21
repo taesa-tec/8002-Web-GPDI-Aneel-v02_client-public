@@ -3,6 +3,7 @@ import {Demanda} from '@app/models/demandas';
 import {Injectable} from '@angular/core';
 import {AppService} from '@app/services/app.service';
 import {DemandaEtapaStatus} from '@app/dashboard/demandas/commons';
+import {Roles, UserRole} from '@app/models';
 
 @Injectable({providedIn: 'root'})
 export class DemandaResolver implements Resolve<{ demanda: Demanda, menu: Array<any>, defaultPage?: string }> {
@@ -22,11 +23,11 @@ export class DemandaResolver implements Resolve<{ demanda: Demanda, menu: Array<
   }
 
   protected defaultPage(demanda: Demanda, equipe): string {
-    const menu = [
+    const user = this.app.users.currentUser;
+    const menu = user.role === UserRole.Administrador ? [
       {text: 'Central Administrativa', icon: 'ta-central-admin', path: 'central-administrativa'},
       {text: 'Log Projeto', icon: 'ta-log', path: 'log-projeto'}
-    ];
-    const user = this.app.users.currentUser;
+    ] : [];
     switch (user.id) {
       case demanda.criadorId:
         if (demanda.superiorDiretoId) {
@@ -46,11 +47,11 @@ export class DemandaResolver implements Resolve<{ demanda: Demanda, menu: Array<
   }
 
   protected menu(demanda: Demanda, equipe): Array<any> {
-    const menu = [
+    const user = this.app.users.currentUser;
+    const menu = user.role === UserRole.Administrador ? [
       {text: 'Central Administrativa', icon: 'ta-central-admin', path: 'central-administrativa'},
       {text: 'Log Projeto', icon: 'ta-log', path: 'log-projeto'}
-    ];
-    const user = this.app.users.currentUser;
+    ] : [];
     switch (user.id) {
       case demanda.criadorId:
         return this.menuCriador(menu, demanda);
