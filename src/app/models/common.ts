@@ -1,4 +1,4 @@
-import { UserRole } from './enums';
+import {UserRole} from './enums';
 
 export interface TextValue {
   text: string;
@@ -105,6 +105,7 @@ export interface User {
   razaoSocial?: any;
   fotoPerfil?: { file: string; id: number; userId?: any };
   cpf?: any;
+  cargo?: string;
   catalogEmpresa?: Empresa;
   catalogEmpresaId?: number | '';
   ultimoLogin?: string;
@@ -150,6 +151,7 @@ export interface CatalogTema {
   id: number;
   nome: string;
   valor: string;
+
   subTemas: CatalogSubTema[];
 }
 

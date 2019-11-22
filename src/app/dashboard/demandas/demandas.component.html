@@ -19,13 +19,13 @@
 <div class="row">
   <div class="col-12">
     <ul class="nav nav-bar-row nav-justified pt-3">
-      <ng-container *ngFor="let route of m">
+      <ng-container *ngFor="let route of menu">
         <li class="nav-item">
           <a
             routerLinkActive="active"
             class="nav-link"
             [routerLink]="route.path"
-            >{{ route.text }} ({{ route.qtd }})</a
+          >{{ route.text }}</a
           >
         </li>
       </ng-container>
@@ -33,6 +33,6 @@
   </div>
 </div>
 
-<div class="wrap-outlet-projeto">
+<div class="wrap-outlet-projeto" *ngIf="showChild">
   <router-outlet></router-outlet>
 </div>

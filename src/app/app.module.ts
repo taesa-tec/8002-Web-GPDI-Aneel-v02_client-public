@@ -12,30 +12,32 @@ import {AppService} from './services/app.service';
 import {registerLocaleData} from '@angular/common';
 import * as moment from 'moment';
 import {HttpClientModule} from '@angular/common/http';
+import {currentUserProvider} from '@app/providers/user.provider';
 
 registerLocaleData(localeBr, 'pt');
 moment.locale('pt-br');
 
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        NotFoundComponent,
-    ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        SharedModule,
-        AuthModule,
-        UsersModule,
-        AppRoutingModule,
-    ],
-    exports: [SharedModule],
-    providers: [
-        {provide: LOCALE_ID, useValue: 'pt'},
-        AppService
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    NotFoundComponent,
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    SharedModule,
+    AuthModule,
+    UsersModule,
+    AppRoutingModule,
+  ],
+  exports: [SharedModule],
+  providers: [
+    {provide: LOCALE_ID, useValue: 'pt'},
+    AppService,
+    currentUserProvider
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

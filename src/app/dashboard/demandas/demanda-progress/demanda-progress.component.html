@@ -1,21 +1,54 @@
 <div class="demanda-progresso d-flex">
   <div class="demanda-chunk demanda-info">
-    <header class="text-cinza text-uppercase fs-12 font-weight-bold">
-      Demanda: XXX
+    <header class="text-cinza text-uppercase fs-12 font-weight-bold mb-1">
+      Demanda: {{ demandaId }}
     </header>
     <main>
       <div class="text-blue fs-14 font-weight-medium">
-        Faixa de Servidão e Análise Automática de Ocorrências
+        {{ demanda.titulo }}
       </div>
     </main>
     <footer>
-      <a href="" class="text-blue"><i class="ta-edit"></i> Editar</a>
+
+      <div [ngSwitch]="demanda.etapaAtual" class="text-blue fs-12 font-weight-medium">
+
+        <ng-container *ngSwitchCase="ETAPAS_VALUES.Captacao">
+          <div *ngIf="demanda.captacaoDate; else enviado">
+            ENVIADO PARA CAPTAÇÃO <br>
+            EM {{demanda.captacaoDate | date:'short'}}
+          </div>
+          <ng-template #enviado>Demanda enviada</ng-template>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="ETAPAS_VALUES.AprovacaoDiretor">
+          <button *ngIf="demanda.status === ETAPAS_STATUS.Aprovada"
+                  class="btn btn-link text-uppercase p-0 fs-12 font-weight-medium" (click)="enviarCaptacao(demanda.id)">
+            <i class="ta-ok"></i>
+            Enviar para Captação
+          </button>
+          <a [routerLink]="['/dashboard/demanda', demanda.id]"
+             *ngIf="demanda.status !== ETAPAS_STATUS.Aprovada"
+             class="text-blue text-uppercase"
+          ><i class="ta-edit"></i> {{canEdit ? 'Editar' : 'Visualizar'}}</a>
+        </ng-container>
+
+        <ng-container *ngSwitchDefault>
+          <a [routerLink]="['/dashboard/demanda', demanda.id]"
+             class="text-blue text-uppercase"
+          ><i class="ta-edit"></i> {{canEdit ? 'Editar' : 'Visualizar'}}</a>
+        </ng-container>
+
+      </div>
     </footer>
   </div>
-  <app-demanda-progress-etapa
-    *ngFor="let etapa of etapas"
-    [etapa]="etapa"
-    [etapaDemanda]="etapaAtual"
-    [etapaDemandaStatus]="etapaAtualStatus"
-  ></app-demanda-progress-etapa>
+  <ng-container *ngIf="responsaveis">
+    <app-demanda-progress-etapa
+      *ngFor="let etapa of etapas; let i = index;"
+      [responsavel]="responsaveis[i]"
+      [etapa]="etapa"
+      [demanda]="demanda"
+      [etapaDemanda]="etapaAtual"
+      [etapaDemandaStatus]="etapaAtualStatus"
+    ></app-demanda-progress-etapa>
+  </ng-container>
 </div>

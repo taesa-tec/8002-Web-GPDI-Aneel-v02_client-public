@@ -1,82 +1,109 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Demanda, FormField} from '@app/models/demandas';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DemandasService {
 
-
-  constructor(private http: HttpClient) { }
-
-
-  // Tudo sobre a Demanda
-  minhasDemadas() {
-    return this.http.get<any>('');
+  constructor(private http: HttpClient) {
   }
 
-  getDemandaId(id: number) {
-    return this.http.get<any>(`demanda/${id}/user`);
+  getDemandasByStatus(status: 'Reprovadas' | 'Aprovadas' | 'EmElaboracao' | 'Captacao') {
+    return this.http.get<Array<Demanda>>(`Demandas/${status}`);
   }
 
-  criarDemanda(demanda: any) {
-    return this.http.post('', demanda);
+  demandaExist(id: number) {
+    return this.http.head(`Demandas/${id}`).toPromise();
   }
 
-  editarDemanda(demandaUpdate: number) {
-    return this.http.put<any>('', demandaUpdate);
+  getDemanda(id: number) {
+    return this.http.get<any>(`Demandas/${id}`);
   }
 
-  excluirDemanda(id: number) {
-    return this.http.delete<any>(`delete/${id}/demanda`);
+  getDemandaForm(id: number, key: string) {
+    return this.http.get<any>(`Demandas/${id}/Form/${key}`);
   }
- 
-  aprovarDemanda(id: number, etapa: any) {
-    return this.http.put<any>('', id);
+
+  criarDemanda(titulo: any) {
+    return this.http.post('Demandas/Criar', `"${titulo}"`, {headers: {'Content-Type': 'application/json'}}).toPromise();
   }
+
+  getSuperiorDireto(id: number) {
+    return this.http.get<{ superiorDireto: string }>(`Demandas/${id}/EquipeValidacao`).toPromise();
+  }
+
+  setSuperiorDireto(id: number, data: object) {
+    return this.http.put<any>(`Demandas/${id}/EquipeValidacao`, data).toPromise();
+  }
+
+  definirRevisor(id: number, data: object) {
+    return this.http.put<any>(`Demandas/${id}/Revisor`, data).toPromise();
+  }
+
+  enviarCaptacao(id: number) {
+    return this.http.put<any>(`Demandas/${id}/Captacao`, {}).toPromise();
+  }
+
+  async getAnexos(id: number) {
+    return await this.http.get<Array<any>>(`Demandas/${id}/File/`).toPromise();
+  }
+
+  async downloadAnexo(demandaId: number, file) {
+    const blob = await this.http.get(`Demandas/${demandaId}/File/${file.id}`, {
+      responseType: 'blob'
+    }).toPromise();
+
+    const a = document.createElement('a');
+    const blobUrl = URL.createObjectURL(blob);
+    // PQP que gambiarra
+    a.href = blobUrl;
+    a.setAttribute('download', file.name);
+    a.click();
+    URL.revokeObjectURL(blobUrl);
+  }
+
+  editarDemandaForm(id: number, key: string, data: object) {
+    return this.http.put<any>(`Demandas/${id}/Form/${key}`, data);
+  }
+
+  proximaEtapa(id: number, data) {
+
+    return this.http.put<any>(`Demandas/${id}/ProximaEtapa`, data).toPromise();
+  }
+
+  excluir(id: number) {
+    return this.http.delete<any>(`Demandas/${id}/`);
+  }
+
   reprovarDemanda(id: number, motivo: any) {
-    return this.http.put<any>('', motivo);
+    return this.http.put<any>(`Demandas/${id}/Reiniciar`, {motivo}).toPromise();
   }
 
-  enviarParaAprovacao(id: number, motivo: any) {
-    return this.http.post<any>('', id);
-  } 
-
-  getComentario() {
-    return this.http.get<any>('');
+  reprovarPermanente(id: number, motivo: any) {
+    return this.http.put<any>(`Demandas/${id}/ReprovarPermanente`, {motivo}).toPromise();
   }
 
-  getRevisor() {
-    return this.http.get<any>('');
-  }
-   
-  definirRevisor(revisor) {
-    return this.http.put<any>('', revisor);
+  getForms() {
+    return this.http.get<any>('Demandas/Forms');
   }
 
-  // Processo depois da demanda criada
-  definirSuperiorDireto(DemandaValue: any) {
-    return this.http.put('', DemandaValue);
-  }
- 
-  especificaoTecnicaForm(especTec) {
-    return this.http.post<any>('', especTec);
+  getForm(key: string) {
+    return this.http.get<FormField>(`Demandas/Forms/${key}`);
   }
 
-
-  getDocumentoAprovacoes(id: number) {
-    return this.http.get<any>('');
+  getFormValue(key: string) {
+    return this.http.get<object>(`Demandas/Forms/${key}/Values`);
   }
 
-  downloadDocAprovacoes() {
-    return this.http.get<any>('');
+  saveFormValue(key: string, values) {
+    return this.http.post<object>(`Demandas/Forms/${key}/Values`, values);
   }
 
-  downloadDocComplementar() {
-    return this.http.get<any>('');
+  setEtapa(id: number, data: object) {
+    return this.http.put<any>(`Demandas/${id}/Etapa`, data).toPromise();
   }
-
-
-  
 
 }

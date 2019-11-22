@@ -1,60 +1,60 @@
 <div class="card my-3">
-    <div class="card-header bg-blue-light text-white d-flex justify-content-between">
-        <div>
-            <img *ngIf="avatar" [src]="avatar" width="32" height="32" alt="" class="rounded-circle mr-3">
-            <span>{{log.user.nomeCompleto}} - {{log.created | date:'short'}}</span>
-        </div>
-        <div>
-            ID: {{log.id}}
-        </div>
+  <div class="card-header bg-blue-light text-white d-flex justify-content-between">
+    <div>
+      <img *ngIf="avatar" [src]="avatar" width="32" height="32" alt="" class="rounded-circle mr-3">
+      <span>{{log.user.nomeCompleto}} - {{log.created | date:'short'}}</span>
     </div>
-    <table class="table table-bordered mb-0">
-        <tr>
-            <td class="w-50">
-                <strong class="text-blue">Url:</strong> {{log.tela}}
-            </td>
-            <td class="w-50">
-                <strong class="text-blue">Ação:</strong> {{log.acaoValor}}
-            </td>
-        </tr>
-        <tr>
-            <td *ngIf="hasStatusAnterior" class="w-50"
-                [attr.colspan]="!hasStatusNovo ? 2 : ''">
-                <strong class="text-blue-light mb-3 d-inline-block">
-                    Status Anterior
-                </strong>
-                <div class="app-log app-log-status-anterior" *ngIf="!hasLogDataStatusAnterior"
-                     [innerHTML]="log.statusAnterior"></div>
+    <div>
+      ID: {{log.id}}
+    </div>
+  </div>
+  <table class="table table-bordered mb-0">
+    <tr>
+      <td class="w-50">
+        <strong class="text-blue">Url:</strong> {{log.tela}}
+      </td>
+      <td class="w-50">
+        <strong class="text-blue">Ação:</strong> {{log.acaoValor}}
+      </td>
+    </tr>
+    <tr>
+      <td *ngIf="hasStatusAnterior" class="w-50"
+          [attr.colspan]="!hasStatusNovo ? 2 : ''">
+        <strong class="text-blue-light mb-3 d-inline-block">
+          Status Anterior
+        </strong>
+        <div class="app-log app-log-status-anterior" *ngIf="!hasLogDataStatusAnterior"
+             [innerHTML]="log.statusAnterior"></div>
 
-                <div class="app-log app-log-status-anterior" *ngIf="hasLogDataStatusAnterior">
-                    <ng-container *ngFor="let prop of log.data.statusAnterior">
-                        <p>
-                            <strong>{{prop.titulo}}: </strong>
-                            <span>{{prop | logFormat}}</span>
-                        </p>
-                    </ng-container>
-                </div>
+        <div class="app-log app-log-status-anterior" *ngIf="hasLogDataStatusAnterior">
+          <ng-container *ngFor="let prop of log.data.statusAnterior">
+            <p>
+              <strong>{{prop.titulo}}: </strong>
+              <span>{{prop | logFormat}}</span>
+            </p>
+          </ng-container>
+        </div>
 
-            </td>
+      </td>
 
 
-            <td *ngIf="hasStatusNovo" [attr.colspan]="!hasStatusAnterior ? 2 : ''">
-                <strong class="text-blue-light  mb-3 d-inline-block">
-                    Novo Status
-                </strong>
+      <td *ngIf="hasStatusNovo" [attr.colspan]="!hasStatusAnterior ? 2 : ''">
+        <strong class="text-blue-light  mb-3 d-inline-block">
+          Novo Status
+        </strong>
 
-                <div class="app-log app-log-status-novo" [innerHTML]="log.statusNovo"
-                     *ngIf="!hasLogDataStatusNovo"></div>
+        <div class="app-log app-log-status-novo" [innerHTML]="log.statusNovo"
+             *ngIf="!hasLogDataStatusNovo"></div>
 
-                <div class="app-log app-log-status-novo" *ngIf="hasLogDataStatusNovo">
-                    <ng-container *ngFor="let prop of logDataStatusNovo">
-                        <p>
-                            <strong>{{prop.titulo}}: </strong>
-                            <span>{{prop | logFormat}}</span>
-                        </p>
-                    </ng-container>
-                </div>
-            </td>
-        </tr>
-    </table>
+        <div class="app-log app-log-status-novo" *ngIf="hasLogDataStatusNovo">
+          <ng-container *ngFor="let prop of logDataStatusNovo">
+            <p>
+              <strong>{{prop.titulo}}: </strong>
+              <span>{{prop | logFormat}}</span>
+            </p>
+          </ng-container>
+        </div>
+      </td>
+    </tr>
+  </table>
 </div>

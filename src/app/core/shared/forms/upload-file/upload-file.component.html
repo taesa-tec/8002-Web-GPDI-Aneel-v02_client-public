@@ -1,0 +1,37 @@
+<div class="d-block" (drag)="onDrag($event)" (drop)="onDrop($event)" (dragover)="onDragover($event)">
+  <div class="d-flex flex-column">
+
+    <label class="embed-responsive embed-responsive-4by1">
+      <div class="embed-responsive-item d-flex justify-content-between">
+        <input type="file" (name)="name" (disabled)="disabled" multiple class="d-none" #input
+               (change)=elOnChange($event)>
+        <div class="align-items-center border d-flex flex-grow-1 justify-content-center">
+          <div class="text-cinza text-center py-2">
+            <div>
+              <i class="ta-upload fs-48"></i>
+            </div>
+            <div>
+              Selecione os arquivos ou Arraste-os aqui
+            </div>
+          </div>
+        </div>
+      </div>
+    </label>
+
+    <!--
+    <div class="p-2">
+
+      <div class="d-flex flex-column">
+        <ul>
+          <ng-container *ngFor="let file of fileinfo">
+            <li>
+              <span>{{file.name}} - ({{file.size | filesize}})</span>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+     -->
+
+  </div>
+</div>

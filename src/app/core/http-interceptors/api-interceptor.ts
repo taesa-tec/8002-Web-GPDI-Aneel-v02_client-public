@@ -8,13 +8,16 @@ import {environment} from '@env/environment';
 @Injectable()
 export class APIInterceptor implements HttpInterceptor {
 
-    url: string;
+  url: string;
 
-    constructor(protected auth: AuthService) {
-    }
+  constructor(protected auth: AuthService) {
+  }
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const apiReq = req.clone({url: `${environment.api_url}/${req.url}`});
-        return next.handle(apiReq);
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (req.url.match(/^\w+:\/\//) === null) {
+      const apiReq = req.clone({url: `${environment.api_url}/${req.url}`});
+      return next.handle(apiReq);
     }
+    return next.handle(req);
+  }
 }

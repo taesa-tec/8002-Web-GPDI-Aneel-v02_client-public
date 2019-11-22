@@ -1,10 +1,9 @@
 <div class="row">
   <div class="col-3">
     <div class="d-flex my-3">
-      <select class="form-control flex-grow-1">
-        <option [value]="item.id" *ngFor="let item of list">{{
-          item.value
-        }}</option>
+      <select class="form-control flex-grow-1" [(ngModel)]="etapaFilter" (change)="filter()">
+        <option value="">Escolha uma etapa</option>
+        <option [value]="item.value" *ngFor="let item of list">{{item.text}}</option>
       </select>
     </div>
   </div>
@@ -12,8 +11,17 @@
 
 <div class="row">
   <div class="col-12">
-    <app-demanda-progress
-      *ngFor="let demanda of demandas"
-    ></app-demanda-progress>
+    <ng-container *ngIf="demandas.length > 0; else zerodemandas">
+      <app-demanda-progress
+        [demanda]="demanda"
+        [equipe]="equipe"
+        *ngFor="let demanda of demandas"
+      ></app-demanda-progress>
+    </ng-container>
   </div>
 </div>
+<ng-template #zerodemandas>
+  <div class="d-flex justify-content-center">
+    <span>Não há demandas no filtro escolhido</span>
+  </div>
+</ng-template>

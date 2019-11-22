@@ -1,39 +1,41 @@
-import { TodasDemandas } from '@app/dashboard/demandas/demandas-teste';
 import {Component, OnInit} from '@angular/core';
-import {NovaDemandaComponent} from "@app/dashboard/demandas/nova-demanda/nova-demanda.component";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import { AppService } from '@app/services/app.service';
+import {NovaDemandaComponent} from '@app/dashboard/demandas/nova-demanda/nova-demanda.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {AppService} from '@app/services/app.service';
 
 
 @Component({
-    selector: 'app-demandas',
-    templateUrl: './demandas.component.html',
-    styleUrls: ['./demandas.component.scss']
+  selector: 'app-demandas',
+  templateUrl: './demandas.component.html',
+  styleUrls: ['./demandas.component.scss']
 })
 export class GestaoDeDemandasComponent implements OnInit {
 
-    m: Array<any>;
-    totalDem = TodasDemandas;
-    constructor(private app: AppService, protected modal: NgbModal) {
-    }
+  menu: Array<any>;
+  showChild = true;
 
-    ngOnInit() {
-        this.m = [
-            {text: 'Em Elaboração', qtd: this.totalDem.length, path: 'elaboracao'},
-            {text: 'Reprovadas', qtd: this.totalDem.length, path: 'reprovadas'},
-            {text: 'Aprovadas', qtd: this.totalDem.length, path: 'aprovadas'},
-            {text: 'Enviadas para Captação', qtd: this.totalDem.length, path: 'enviadas-para-captacao'},
-        ];
-    }
+  constructor(private app: AppService, protected modal: NgbModal) {
+  }
+
+  ngOnInit() {
+    this.menu = [
+      {text: 'Em Elaboração', path: 'elaboracao'},
+      {text: 'Reprovadas', path: 'reprovadas'},
+      {text: 'Aprovadas', path: 'aprovadas'},
+      {text: 'Enviadas para Captação', path: 'enviadas-para-captacao'},
+    ];
+  }
 
 
-    novaDemanda(demanda: any = {}) {
-        const modalRef = this.modal.open(NovaDemandaComponent, {size: 'lg'});
-        modalRef.componentInstance.demanda = demanda;
-        modalRef.result.then(r => {
-            console.log('Modal Aberto');
-        }, e => {
-          console.log('Modal Fechado');
-        });
+  async novaDemanda(demanda: any = {}) {
+    const modalRef = this.modal.open(NovaDemandaComponent, {size: 'lg'});
+    modalRef.componentInstance.demanda = demanda;
+    this.showChild = false;
+    try {
+      await modalRef.result;
+    } catch (e) {
+
     }
+    this.showChild = true;
+  }
 }

@@ -14,29 +14,31 @@ import {HeaderComponent} from '@app/core/shared/app-components/header/header.com
 import {AccordionComponent} from '@app/core/shared/app-components/accordion/accordion.component';
 import {TipComponent} from '@app/core/shared/app-components/tip/tip.component';
 import {OrdersComponent} from '@app/core/shared/app-components/orders/orders.component';
+import {TableComponent} from '@app/core/shared/app-components/table/table.component';
 
 
 const components = [
-    LoadingComponent,
-    HeaderComponent,
-    AccordionComponent,
-    TipComponent,
-    OrdersComponent,
+  LoadingComponent,
+  HeaderComponent,
+  AccordionComponent,
+  TipComponent,
+  OrdersComponent,
+  TableComponent
 ];
 
 @NgModule({
-    declarations: components,
-    imports: [
-        RouterModule,
-        CommonModule,
-        FormsModule,
-        AppPipesModule,
-        FontAwesomeModule,
-        NgbModule,
-        NgxMaskModule,
-        NgxCurrencyModule,
-    ],
-    exports: components
+  declarations: components,
+  imports: [
+    RouterModule,
+    CommonModule,
+    FormsModule,
+    AppPipesModule,
+    FontAwesomeModule,
+    NgbModule,
+    NgxMaskModule,
+    NgxCurrencyModule,
+  ],
+  exports: components
 })
 export class AppComponentsModule {
 }
