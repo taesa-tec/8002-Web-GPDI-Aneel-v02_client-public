@@ -5,7 +5,7 @@ import {ProjetoRoutingModule} from './projeto-routing.module';
 import {ProjetoComponent} from '@app/dashboard/projeto/projeto.component';
 import {LogProjetoComponent} from '@app/dashboard/projeto/log-projeto/log-projeto.component';
 import {LogComponent} from '@app/dashboard/projeto/log-projeto/log.component';
-import {LoggerModule} from '@app/dashboard/projeto/logger/logger.module';
+import {LoggerModule} from '@app/dashboard/logger/logger.module';
 
 
 @NgModule({

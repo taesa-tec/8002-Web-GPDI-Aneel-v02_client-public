@@ -7,6 +7,7 @@
           *ngFor="let child of formField.children"
           [form]="form.get(['children',child.key])"
           [field]="child"
+          [readonly]="readonly"
         ></app-form-editor-field>
       </div>
     </div>
@@ -14,9 +15,10 @@
   <div class="row" *ngIf="canAppendFile">
     <div class="col-12">
       <h5 class="text-blue-light">
-        Arquivos Complentares (Opcional)
+        Arquivos Complentares <span [hidden]="readonly">(Opcional)</span>
       </h5>
-      <button class="btn btn-link" type="button" (click)="anexarArquivos()" [disabled]="form.disabled">
+      <button class="btn btn-link" type="button" (click)="anexarArquivos()" *ngIf="!readonly"
+              [disabled]="form.disabled">
         <i class="ta-attachment fs-22"></i> Anexar Arquivos
       </button>
       <div class="pr-3 mb-3">
@@ -29,7 +31,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" *ngIf="!readonly">
     <div class="col-12 d-flex justify-content-start">
       <button class="btn btn-primary" type="button" (click)="saveData()" [disabled]="form.invalid || form.disabled">
         <i class="ta-save"></i>

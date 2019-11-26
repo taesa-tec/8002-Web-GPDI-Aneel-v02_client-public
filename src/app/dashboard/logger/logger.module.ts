@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {LoggerService} from '@app/services/logger.service';
 import {SharedModule} from '@app/core/shared/shared.module';
 import {LoggerDirective, LoggerItemDirective} from './logger.directive';
-import {LogFormatPipe} from '@app/dashboard/projeto/logger/log-format.pipe';
+import {LogFormatPipe} from '@app/dashboard/logger/log-format.pipe';
 
 @NgModule({
     declarations: [LoggerDirective, LoggerItemDirective, LogFormatPipe],

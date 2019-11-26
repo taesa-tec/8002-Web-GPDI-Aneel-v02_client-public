@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, AfterViewInit, ElementRef, forwardRef} from '@angular/core';
+import {Component, OnInit, ViewChild, AfterViewInit, ElementRef, forwardRef, Input} from '@angular/core';
 import {CatalogsService} from '@app/services/catalogs.service';
 import {AppService} from '@app/services/app.service';
 import {ActivatedRoute} from '@angular/router';
@@ -40,7 +40,7 @@ export class TemasComponent implements OnInit, ControlValueAccessor {
 
   @ViewChild(LoadingComponent) loading;
   @ViewChild('file') file: ElementRef;
-
+  @Input() readonly = false;
 
   get value() {
     return this.form.value;

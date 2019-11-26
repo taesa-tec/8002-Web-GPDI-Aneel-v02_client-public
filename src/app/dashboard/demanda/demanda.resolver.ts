@@ -24,10 +24,7 @@ export class DemandaResolver implements Resolve<{ demanda: Demanda, menu: Array<
 
   protected defaultPage(demanda: Demanda, equipe): string {
     const user = this.app.users.currentUser;
-    const menu = user.role === UserRole.Administrador ? [
-      {text: 'Central Administrativa', icon: 'ta-central-admin', path: 'central-administrativa'},
-      {text: 'Log Projeto', icon: 'ta-log', path: 'log-projeto'}
-    ] : [];
+
     switch (user.id) {
       case demanda.criadorId:
         if (demanda.superiorDiretoId) {
@@ -50,7 +47,7 @@ export class DemandaResolver implements Resolve<{ demanda: Demanda, menu: Array<
     const user = this.app.users.currentUser;
     const menu = user.role === UserRole.Administrador ? [
       {text: 'Central Administrativa', icon: 'ta-central-admin', path: 'central-administrativa'},
-      {text: 'Log Projeto', icon: 'ta-log', path: 'log-projeto'}
+      {text: 'Logs', icon: 'ta-log', path: 'logs'}
     ] : [];
     switch (user.id) {
       case demanda.criadorId:

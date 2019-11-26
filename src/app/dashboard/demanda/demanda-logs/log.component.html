@@ -1,0 +1,31 @@
+<div class="card my-3">
+  <div class="card-header bg-blue-light text-white d-flex justify-content-between">
+    <div>
+      <img [src]="log.user.fotoPerfil" width="32" height="32" alt="" class="rounded-circle mr-3">
+      <span>{{log.user.nomeCompleto}} - {{log.created | date:'short'}}</span>
+    </div>
+    <div>
+      ID: {{log.id}}
+    </div>
+  </div>
+  <table class="table table-bordered mb-0">
+    <tr>
+      <td>
+
+        <div class="app-log app-log-status-novo" [innerHTML]="log.statusNovo"
+             *ngIf="!hasLogDataStatusNovo"></div>
+        <div class="app-log app-log-status-novo" *ngIf="hasLogDataStatusNovo">
+          <ng-container *ngFor="let prop of logDataStatusNovo">
+            <h6>{{prop.titulo}}: </h6>
+            <p *ngIf="prop.type !== 'demanda-form'">
+              <span>{{prop | logFormat}}</span>
+            </p>
+            <button *ngIf="prop.type === 'demanda-form'" class="btn btn-link"
+                    (click)="visualizarDemandaForm(prop.valor)">Visualizar Informações
+            </button>
+          </ng-container>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
