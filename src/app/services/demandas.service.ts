@@ -106,4 +106,8 @@ export class DemandasService {
     return this.http.put<any>(`Demandas/${id}/Etapa`, data).toPromise();
   }
 
+  async getLogs(id: number) {
+    return await this.http.get<Array<any>>(`Demandas/${id}/Logs/`).toPromise();
+  }
+
 }

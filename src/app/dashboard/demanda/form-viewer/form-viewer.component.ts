@@ -4,13 +4,14 @@ import {ActivatedRoute} from '@angular/router';
 import {merge} from 'lodash-es';
 import {Demanda} from '@app/models/demandas';
 import {DemandaEtapa, DemandaEtapaStatus} from '@app/dashboard/demandas/commons';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
-  selector: 'app-form-edit-template',
-  templateUrl: './form-editor.component.html'
+  selector: 'app-form-viewer',
+  templateUrl: './form-viewer.component.html'
 })
-export class FormEditorComponent implements OnInit {
+export class FormViewerComponent implements OnInit {
   demanda: Demanda;
   key: string;
   formValue: any;
@@ -20,7 +21,7 @@ export class FormEditorComponent implements OnInit {
   readonly ETAPAS_VALUES = DemandaEtapa;
   readonly ETAPAS_STATUS = DemandaEtapaStatus;
 
-  constructor(protected app: AppService, protected route: ActivatedRoute) {
+  constructor(protected app: AppService, protected route: ActivatedRoute, public activeModal: NgbActiveModal) {
   }
 
   async ngOnInit() {

@@ -10,6 +10,8 @@ import {FormEditorComponent} from '@app/dashboard/demanda/form-editor/form-edito
 import {EtapaAvaliacaoComponent} from '@app/dashboard/demanda/etapa-avaliacao/etapa-avaliacao.component';
 import {DemandaResolver} from '@app/dashboard/demanda/demanda.resolver';
 import {DemandaGuard} from '@app/dashboard/demanda/guards/demanda.guard';
+import {LogComponent} from '@app/dashboard/projeto/log-projeto/log.component';
+import {DemandaLogsComponent} from '@app/dashboard/demanda/demanda-logs/demanda-logs.component';
 
 const routes: Routes = [
   {
@@ -43,6 +45,10 @@ const routes: Routes = [
       {
         path: 'central-administrativa',
         loadChildren: '@app/dashboard/demanda/central-administrativa/central-administrativa.module#CentralAdministrativaModule'
+      },
+      {
+        path: 'logs',
+        component: DemandaLogsComponent
       }
     ]
   }

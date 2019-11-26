@@ -16,13 +16,17 @@ import {DemandaComentarioComponent} from './demanda-comentarios/demanda-comentar
 import {DemandaComentariosComponent} from './demanda-comentarios/demanda-comentarios.component';
 import {equipePeDProvider} from '@app/providers/equipe-ped.providers';
 import {DemandaGuard} from '@app/dashboard/demanda/guards/demanda.guard';
+import {DemandaLogsComponent} from '@app/dashboard/demanda/demanda-logs/demanda-logs.component';
+import {LogComponent} from '@app/dashboard/demanda/demanda-logs/log.component';
+import {LoggerModule} from '@app/dashboard/logger/logger.module';
+import {FormEditorComponent as FormEditorSharedComponent} from '@app/dashboard/shared/form-edit-components/form-editor/form-editor.component';
+import {FormViewerComponent} from '@app/dashboard/demanda/form-viewer/form-viewer.component';
 
 
 @NgModule({
-  imports: [DemandaRoutingModule, SharedModule],
+  imports: [DemandaRoutingModule, SharedModule, LoggerModule],
   exports: [],
   declarations: [
-
     DemandaComponent,
     FormEditorComponent,
     EquipeValidacaoComponent,
@@ -34,8 +38,12 @@ import {DemandaGuard} from '@app/dashboard/demanda/guards/demanda.guard';
     AvaliarDemandaComponent,
     DefinirRevisorComponent,
     DemandaComentarioComponent,
-    DemandaComentariosComponent
+    DemandaComentariosComponent,
+    DemandaLogsComponent,
+    LogComponent,
+    FormViewerComponent
   ],
+  entryComponents: [FormViewerComponent],
   providers: [equipePeDProvider, DemandaGuard],
 })
 export class DemandaModule {

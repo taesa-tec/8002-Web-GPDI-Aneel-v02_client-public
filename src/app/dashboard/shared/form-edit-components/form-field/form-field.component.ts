@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
-import { FormField } from '@app/models/demandas';
-import { AbstractControl, FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import {Component, OnInit, Input, ViewEncapsulation} from '@angular/core';
+import {FormField} from '@app/models/demandas';
+import {AbstractControl, FormGroup, FormBuilder, Validators, FormArray, FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-form-editor-field',
@@ -14,13 +14,16 @@ export class FormFieldComponent implements OnInit {
   protected _form: AbstractControl;
   classname: string;
   children: FormGroup;
+  @Input() readonly = false;
 
   @Input() set form(value: AbstractControl) {
     this._form = value;
   }
+
   get form() {
     return this._form;
   }
+
   get formArray(): FormArray {
     if (this.field && this.field.isArray) {
       return <FormArray>this.form;
@@ -30,14 +33,16 @@ export class FormFieldComponent implements OnInit {
 
 
   @Input() set field(value: FormField) {
-    this.classname = value && value.fieldType.toLowerCase() || "";
+    this.classname = value && value.fieldType.toLowerCase() || '';
     this._field = value;
   }
+
   get field() {
     return this._field;
   }
 
-  constructor(protected builder: FormBuilder) { }
+  constructor(protected builder: FormBuilder) {
+  }
 
   ngOnInit() {
   }
@@ -45,7 +50,7 @@ export class FormFieldComponent implements OnInit {
   add() {
     if (this.field.isArray) {
       const formArray = <FormArray>this.form;
-      formArray.push(this.builder.group({ value: "" }));
+      formArray.push(this.builder.group({value: ''}));
     }
   }
 

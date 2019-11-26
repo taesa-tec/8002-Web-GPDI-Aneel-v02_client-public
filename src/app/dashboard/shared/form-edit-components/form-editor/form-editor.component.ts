@@ -24,6 +24,7 @@ export class FormEditorComponent implements OnInit {
   @Input() anexos: Array<any> = [];
   @Input() canAppendFile = false;
   @Input() disabled = false;
+  @Input() readonly = false;
   @Output() save: EventEmitter<object> = new EventEmitter<object>();
 
 
@@ -34,7 +35,7 @@ export class FormEditorComponent implements OnInit {
     if (this.key === undefined || this.key === null) {
       throw new Error('Key form is undefined or null. Please give a key value');
     }
-
+    this.anexos = this.anexos || [];
     this.formField = await this.app.demandas.getForm(this.key).toPromise();
     this.anexosFormArray = this.builder.array(this.anexos.map(item => item.id));
     this.form = this.buildForm(this.formField);
