@@ -55,6 +55,7 @@ export class DocumentoAprovacoesComponent implements OnInit {
     this.app.showLoading();
     try {
       this.demanda = await this.app.demandas.proximaEtapa(this.demanda.id, this.form.value);
+      this.app.router.navigate(['/dashboard']);
       this.form.reset();
     } catch (e) {
       console.error(e);

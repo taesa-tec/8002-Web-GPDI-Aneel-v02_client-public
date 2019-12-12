@@ -35,7 +35,6 @@ export class FormEditorComponent implements OnInit {
     if (this.key === undefined || this.key === null) {
       throw new Error('A key do formulário não foi informada');
     }
-
     const formValue = await this.app.demandas.getDemandaForm(this.demandaId, this.key).toPromise();
     this.anexos = formValue && formValue.files.map(file => file.file) || [];
     this.formValueDefault = await this.app.demandas.getFormValue(this.key).toPromise() || {};
@@ -44,13 +43,14 @@ export class FormEditorComponent implements OnInit {
 
   async submit(data) {
     this.app.loading.show();
-    console.log(data);
     try {
       await this.app.demandas.editarDemandaForm(this.demandaId, this.key, data).toPromise();
-      this.app.alert('Formulário Salvo com sucesso!');
+      this.app.loading.hide();
+      await this.app.alert('Formulário Salvo com sucesso!');
+      this.app.router.navigate(['/dashboard', 'demanda', this.demandaId, 'documento-aprovacoes']);
     } catch (e) {
-      console.log(e);
+      console.error(e);
+      this.app.loading.hide();
     }
-    this.app.loading.hide();
   }
 }

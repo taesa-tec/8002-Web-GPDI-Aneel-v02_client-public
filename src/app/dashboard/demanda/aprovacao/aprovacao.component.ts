@@ -75,6 +75,7 @@ export class AprovacaoComponent implements OnInit {
 
   async avaliacao(demanda) {
     this.demanda = demanda;
+    this.app.router.navigate(['/dashboard']);
   }
 
   async userSelected(value) {
@@ -83,6 +84,7 @@ export class AprovacaoComponent implements OnInit {
     try {
       this.demanda = await this.app.demandas.definirRevisor(this.demanda.id, value);
       this.app.alert('Revisor definido com sucesso!');
+      this.app.router.navigate(['/dashboard']);
     } catch (e) {
       console.error(e);
     }

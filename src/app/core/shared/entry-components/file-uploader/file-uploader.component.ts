@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClient, HttpEvent, HttpEventType, HttpRequest} from '@angular/common/http';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
@@ -9,11 +9,16 @@ import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
   styleUrls: ['./file-uploader.component.scss']
 })
 export class FileUploaderComponent implements OnInit {
+  protected _preSelecteds: Array<number> = [];
   files: FileList;
-
   isSending = false;
   progress: number;
   form: FormGroup;
+  pathUpload = 'File';
+
+  @Input() set preSelected(value: Array<number>) {
+    this._preSelecteds = value;
+  }
 
   protected _filesSent: Array<any>;
 
@@ -23,10 +28,17 @@ export class FileUploaderComponent implements OnInit {
 
   set filesSent(value) {
     this._filesSent = value;
-    this.form = new FormGroup({});
+    const form = new FormGroup({});
     this._filesSent.forEach(file => {
-      this.form.addControl(file.id, this.fb.control(false));
+      form.addControl(file.id, this.fb.control(false));
     });
+    setTimeout(() => {
+      this._filesSent.forEach(file => {
+        form.get(file.id.toString()).setValue(this._preSelecteds.indexOf(file.id) > -1);
+      });
+      this._preSelecteds = [];
+    }, 10);
+    this.form = form;
   }
 
 
@@ -39,7 +51,7 @@ export class FileUploaderComponent implements OnInit {
   }
 
   async getFiles() {
-    return await this.http.get<Array<any>>('File').toPromise();
+    return await this.http.get<Array<any>>(this.pathUpload).toPromise();
   }
 
   fileChange(event) {
@@ -55,8 +67,8 @@ export class FileUploaderComponent implements OnInit {
         formdata.append(`files[${i}]`, file);
       }
       // const request = new HttpRequest('POST', 'File', formdata, {reportProgress: true});
-
-      this.http.post('File', formdata, {reportProgress: true, observe: 'events'})
+      this._preSelecteds = this.filesSent.filter(f => this.form.value[f.id]).map(f => f.id);
+      this.http.post(this.pathUpload, formdata, {reportProgress: true, observe: 'events'})
         .subscribe((event: HttpEvent<any>) => {
           switch (event.type) {
             case HttpEventType.Sent:
@@ -70,10 +82,8 @@ export class FileUploaderComponent implements OnInit {
               this.progress = 100;
               this.isSending = false;
               if (event.status === 200) {
-                this.filesSent = [...this.filesSent, ...event.body].map((f, i) => {
-                  f.id = i;
-                  return f;
-                });
+                this._preSelecteds = [...this._preSelecteds, ...event.body.map(f => f.id)];
+                this.filesSent = [...this.filesSent, ...event.body];
               }
           }
         }, error => {

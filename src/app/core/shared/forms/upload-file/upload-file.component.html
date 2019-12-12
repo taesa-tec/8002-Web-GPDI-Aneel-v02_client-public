@@ -3,7 +3,7 @@
 
     <label class="embed-responsive embed-responsive-4by1">
       <div class="embed-responsive-item d-flex justify-content-between">
-        <input type="file" (name)="name" (disabled)="disabled" multiple class="d-none" #input
+        <input type="file" [disabled]="disabled" multiple class="d-none"
                (change)=elOnChange($event)>
         <div class="align-items-center border d-flex flex-grow-1 justify-content-center">
           <div class="text-cinza text-center py-2">

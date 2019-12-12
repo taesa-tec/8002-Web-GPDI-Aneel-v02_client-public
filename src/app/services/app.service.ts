@@ -113,8 +113,12 @@ export class AppService {
     return ref.result;
   }
 
-  uploadForm() {
+  uploadForm(selecteds: Array<any> = [], path: string = 'File') {
     const ref = this.modal.open(FileUploaderComponent, {backdrop: 'static', size: 'lg'});
+    const cmp = (ref.componentInstance as FileUploaderComponent);
+    cmp.pathUpload = path;
+    cmp.preSelected = selecteds;
+
     return ref.result;
   }
 

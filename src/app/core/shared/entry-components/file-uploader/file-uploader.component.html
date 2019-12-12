@@ -5,7 +5,7 @@
   <div>
     <div class="row">
       <div class="col-12">
-        <app-upload-file [(ngModel)]="files" (change)="fileChange($event)"></app-upload-file>
+        <app-upload-file [(ngModel)]="files" (ngModelChange)="fileChange($event)"></app-upload-file>
       </div>
     </div>
     <div class="row" *ngIf="progress && isSending">
@@ -15,10 +15,11 @@
     </div>
     <div class="row">
       <div class="col-12">
+        <h5 class="my-3">Arquivos Selecionados:</h5>
         <div class="list-group" [formGroup]="form" *ngIf="form">
           <label *ngFor="let file of filesSent; "
                  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                 [ngClass]="{active:element.checked}">
+                 [ngClass]="{active: element && element.checked}">
             <input type="checkbox" [formControlName]="file.id" hidden #element>
             <span>{{file.name}}</span>
             <span class="badge badge-primary badge-pill">{{file.size | filesize}}</span>

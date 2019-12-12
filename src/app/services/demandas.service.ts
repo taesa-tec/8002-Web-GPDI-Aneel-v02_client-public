@@ -28,7 +28,7 @@ export class DemandasService {
   }
 
   criarDemanda(titulo: any) {
-    return this.http.post('Demandas/Criar', `"${titulo}"`, {headers: {'Content-Type': 'application/json'}}).toPromise();
+    return this.http.post<Demanda>('Demandas/Criar', `"${titulo}"`, {headers: {'Content-Type': 'application/json'}}).toPromise();
   }
 
   getSuperiorDireto(id: number) {

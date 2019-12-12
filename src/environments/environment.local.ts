@@ -6,7 +6,7 @@ import {version } from './version';
 
 export const environment = {
     production: false,
-    api_url: 'http://localhost:4200/api',
+    api_url: 'http://192.168.1.68:4200/api',
     version: version,
     autologin: {
         user: 'diego.franca@lojainterativa.com',

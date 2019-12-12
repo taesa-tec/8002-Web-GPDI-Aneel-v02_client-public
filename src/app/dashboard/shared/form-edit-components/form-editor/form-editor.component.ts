@@ -48,7 +48,6 @@ export class FormEditorComponent implements OnInit {
     });
 
     this.form.updateValueAndValidity();
-    console.log(this.disabled);
     if (this.disabled) {
       this.form.disable();
     }
@@ -56,7 +55,7 @@ export class FormEditorComponent implements OnInit {
 
   async anexarArquivos() {
     try {
-      const files = await this.app.uploadForm();
+      const files = await this.app.uploadForm(this.anexos.map(f => f.id), `Demandas/${this.demandaId}/Files`);
       files.forEach(file => {
         this.anexosFormArray.push(this.builder.control(file.id));
       });
@@ -67,7 +66,6 @@ export class FormEditorComponent implements OnInit {
   }
 
   async download(anexo) {
-    console.log(anexo);
     if (this.demandaId) {
       this.app.showLoading();
       try {

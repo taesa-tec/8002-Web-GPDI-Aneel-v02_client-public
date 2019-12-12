@@ -103,7 +103,7 @@ export interface User {
   role: string;
   status: number;
   razaoSocial?: any;
-  fotoPerfil?: { file: string; id: number; userId?: any };
+  fotoPerfil?: string;
   cpf?: any;
   cargo?: string;
   catalogEmpresa?: Empresa;

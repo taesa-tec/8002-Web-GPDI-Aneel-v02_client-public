@@ -5,75 +5,78 @@ import {Demanda} from '@app/models/demandas';
 
 
 @Component({
-  selector: 'app-demanda-progress-etapa',
-  templateUrl: 'demanda-progress-etapa.component.html',
-  styleUrls: ['demanda-progress-etapa.component.scss']
+    selector: 'app-demanda-progress-etapa',
+    templateUrl: 'demanda-progress-etapa.component.html',
+    styleUrls: ['demanda-progress-etapa.component.scss']
 })
 
 export class DemandaProgressEtapaComponent implements OnInit {
-  constructor() {
-  }
-
-  @Input() etapa: DemandaEtapaItem;
-  @Input() etapaDemanda: DemandaEtapaItem;
-  @Input() etapaDemandaStatus: DemandaEtapaStatus;
-  @Input() responsavel: User;
-  @Input() demanda: Demanda;
-
-  get ordemEtapa() {
-    return DemandaEtapaItems.indexOf(this.etapa);
-  }
-
-  get ordemEtapaDemanda() {
-    return DemandaEtapaItems.indexOf(this.etapaDemanda);
-  }
-
-  get etapaStatus(): DemandaEtapaStatus {
-    if (this.demanda && this.demanda.etapaAtual === DemandaEtapa.Captacao) {
-      return DemandaEtapaStatus.Concluido;
+    constructor() {
     }
-    switch (true) {
-      case this.ordemEtapa < this.ordemEtapaDemanda:
-        return this.etapa.etapa === DemandaEtapa.Elaboracao ? DemandaEtapaStatus.Concluido : DemandaEtapaStatus.Aprovada;
-      case this.ordemEtapa > this.ordemEtapaDemanda:
-        switch (this.etapaDemandaStatus) {
-          case DemandaEtapaStatus.Reprovada:
-          case DemandaEtapaStatus.ReprovadaPermanente:
-            return DemandaEtapaStatus.Cancelada;
-          default:
-            return DemandaEtapaStatus.Pendente;
+
+    @Input() etapa: DemandaEtapaItem;
+    @Input() etapaDemanda: DemandaEtapaItem;
+    @Input() etapaDemandaStatus: DemandaEtapaStatus;
+    @Input() responsavel: User;
+    @Input() demanda: Demanda;
+
+    get ordemEtapa() {
+        return DemandaEtapaItems.indexOf(this.etapa);
+    }
+
+    get ordemEtapaDemanda() {
+        return DemandaEtapaItems.indexOf(this.etapaDemanda);
+    }
+
+    get etapaStatus(): DemandaEtapaStatus {
+        if (this.demanda && this.demanda.etapaAtual === DemandaEtapa.Captacao) {
+            return DemandaEtapaStatus.Concluido;
         }
-      default:
+        switch (true) {
+            case this.ordemEtapa < this.ordemEtapaDemanda:
+                return this.etapa.etapa === DemandaEtapa.Elaboracao ? DemandaEtapaStatus.Concluido : DemandaEtapaStatus.Aprovada;
+            case this.ordemEtapa > this.ordemEtapaDemanda:
+                switch (this.etapaDemandaStatus) {
+                    case DemandaEtapaStatus.Reprovada:
+                    case DemandaEtapaStatus.ReprovadaPermanente:
+                        return DemandaEtapaStatus.Cancelada;
+                    default:
+                        return DemandaEtapaStatus.Pendente;
+                }
+            default:
 
-        return this.etapaDemandaStatus;
-    }
-  }
-
-  get className() {
-
-    switch (this.etapaStatus) {
-      case DemandaEtapaStatus.Aprovada:
-      case DemandaEtapaStatus.Concluido:
-        return 'etapa-sucesso';
-      case DemandaEtapaStatus.EmElaboracao:
-        return 'etapa-elaboracao';
-      case DemandaEtapaStatus.Pendente:
-        return this.ordemEtapa === this.ordemEtapaDemanda ? 'etapa-elaboracao' : '';
-      case DemandaEtapaStatus.Reprovada:
-      case DemandaEtapaStatus.ReprovadaPermanente:
-        return 'etapa-reprovada';
-      case DemandaEtapaStatus.Cancelada:
-        return 'etapa-cancelada';
-      default:
-        return '';
+                return this.etapaDemandaStatus;
+        }
     }
 
-  }
+    get className() {
 
-  get etapaStatusText() {
-    return DemandaEtapaStatusText[this.etapaStatus];
-  }
+        switch (this.etapaStatus) {
+            case DemandaEtapaStatus.Aprovada:
+            case DemandaEtapaStatus.Concluido:
+                return 'etapa-sucesso';
+            case DemandaEtapaStatus.EmElaboracao:
+                return 'etapa-elaboracao';
+            case DemandaEtapaStatus.Pendente:
+                return this.ordemEtapa === this.ordemEtapaDemanda ? 'etapa-elaboracao' : '';
+            case DemandaEtapaStatus.Reprovada:
+            case DemandaEtapaStatus.ReprovadaPermanente:
+                return 'etapa-reprovada';
+            case DemandaEtapaStatus.Cancelada:
+                return 'etapa-cancelada';
+            default:
+                return '';
+        }
 
-  ngOnInit() {
-  }
+    }
+
+    get etapaStatusText() {
+        if (this.etapa.etapa === DemandaEtapa.RevisorPendente && this.ordemEtapa < this.ordemEtapaDemanda) {
+            return 'Definido';
+        }
+        return DemandaEtapaStatusText[this.etapaStatus];
+    }
+
+    ngOnInit() {
+    }
 }
