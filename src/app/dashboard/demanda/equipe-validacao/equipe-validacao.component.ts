@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {AppService} from '@app/services/app.service';
-import {ActivatedRoute} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AppService } from '@app/services/app.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-definicao-pessoas-processo-validacao',
@@ -26,8 +26,9 @@ export class EquipeValidacaoComponent implements OnInit {
 
   async configForm() {
     let superiorDireto;
+    console.log("configForm");
 
-    [this.equipe, this.pessoas, {superiorDireto}] = await Promise.all([
+    [this.equipe, this.pessoas, { superiorDireto }] = await Promise.all([
       this.app.sistema.getEquipePeD(),
       this.app.users.all().toPromise(),
       this.app.demandas.getSuperiorDireto(this.demandaId)]);

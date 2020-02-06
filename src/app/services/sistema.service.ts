@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {EquipePeD} from '@app/models';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { EquipePeD } from '@app/models';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +24,7 @@ export class SistemaService {
   }
 
   setEquipePeD(equipe: object) {
+    this._equipePeD = null;
     return this.http.put('Sistema/Equipe', equipe).toPromise();
   }
 }

@@ -55,7 +55,6 @@ export class EquipeComponent implements OnInit {
 
 
   add(id = '') {
-    console.log(id);
     this.equipeOutros.push(new FormControl(id, [Validators.required]));
   }
 
