@@ -1,8 +1,12 @@
 <ng-container *ngIf="form && form.get('value')">
-  <div class="form-editor-field" [ngSwitch]="field.fieldType" [formGroup]="form">
+  <div
+    class="form-editor-field"
+    [ngSwitch]="field.fieldType"
+    [formGroup]="form"
+  >
     <div class="form-group" *ngSwitchCase="'Text'">
       <ng-container *ngIf="readonly">
-        {{form.value.value}}
+        {{ form.value.value }}
       </ng-container>
       <ng-container *ngIf="!readonly">
         <input
@@ -17,7 +21,7 @@
     <div class="form-group" *ngSwitchCase="'Date'">
       Date
       <ng-container *ngIf="readonly">
-        {{form.value.value | date:'short'}}
+        {{ form.value.value | date: "short" }}
       </ng-container>
       <ng-container *ngIf="!readonly">
         <input
@@ -49,5 +53,10 @@
       ></app-form-editor-temas>
     </div>
     <!--  -->
+    <div *ngIf="canRemove" class="align-items-center d-flex justify-content-center p-1">
+      <button (click)="remove.emit()" class="btn btn-sm btn-outline-danger">
+        <i class="ta-trash"></i>
+      </button>
+    </div>
   </div>
 </ng-container>

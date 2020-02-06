@@ -1,14 +1,15 @@
-import {Component, OnInit, ViewChild, Input, Output, EventEmitter} from '@angular/core';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
   Empresa, ResultadoResponse, UserRole, Roles, AppValidators, User, CreateUserRequest,
   Projeto, Projetos
 } from '@app/models';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
-import {Observable, Observer, zip, of, concat, throwError, timer, empty} from 'rxjs';
-import {UserProjetosComponent} from '../user-projetos/user-projetos.component';
-import {mergeMap, last} from 'rxjs/operators';
-import {AppService} from '@app/services/app.service';
+import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
+import { Observable, Observer, zip, of, concat, throwError, timer, empty } from 'rxjs';
+import { UserProjetosComponent } from '../user-projetos/user-projetos.component';
+import { mergeMap, last } from 'rxjs/operators';
+import { AppService } from '@app/services/app.service';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-form',
@@ -37,6 +38,10 @@ export class FormComponent implements OnInit {
   constructor(protected app: AppService) {
   }
 
+  get previewAvatar() {
+    return `${environment.api_url}/Users/${this.user.id}/avatar`;
+  }
+
   get empresaControl(): FormControl {
     return this.form.get('catalogEmpresaId') as FormControl;
   }
@@ -57,7 +62,7 @@ export class FormComponent implements OnInit {
 
       this.userId = u.id;
       this.fotoPerfil = new FormGroup({
-        file: new FormControl(u.fotoPerfil ? u.fotoPerfil : '')
+        file: new FormControl('')
       });
 
       this.form = new FormGroup({
@@ -104,25 +109,25 @@ export class FormComponent implements OnInit {
         }
 
         const requests = concat(this.handler(this.form.value).pipe(mergeMap(result => {
-            if (result.sucesso) {
+          if (result.sucesso) {
 
-              if (result.id) {
-                return this.userProjetos.updatePermissoes(result.id);
-              }
-              return of(result);
+            if (result.id) {
+              return this.userProjetos.updatePermissoes(result.id);
             }
-            return throwError(result);
+            return of(result);
+          }
+          return throwError(result);
 
-          })),
+        })),
           this.userId ? this.userProjetos.updatePermissoes(this.userId) : empty())
           .pipe(last());
 
 
         requests.subscribe(result => {
-            this.loading.hide();
-            this.submited.emit(result);
-            this.resultado = result;
-          },
+          this.loading.hide();
+          this.submited.emit(result);
+          this.resultado = result;
+        },
           error => {
 
             console.log(error);

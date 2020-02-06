@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {User} from '@app/models';
-import {AppService} from '@app/services/app.service';
-import {AuthService} from '@app/services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { User } from '@app/models';
+import { AppService } from '@app/services/app.service';
+import { AuthService } from '@app/services/auth.service';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-header',
@@ -19,7 +20,7 @@ export class HeaderComponent implements OnInit {
   }
 
   get avatar() {
-    return this.currentUser.fotoPerfil;
+    return `url(${environment.api_url}/Users/${this.currentUser.id}/avatar)`;
   }
 
   get empresa() {

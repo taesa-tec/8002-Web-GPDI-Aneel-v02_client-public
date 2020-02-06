@@ -56,12 +56,16 @@ export class FormEditorComponent implements OnInit {
   async anexarArquivos() {
     try {
       const files = await this.app.uploadForm(this.anexos.map(f => f.id), `Demandas/${this.demandaId}/Files`);
+      while (this.anexosFormArray.length > 0) {
+        this.anexosFormArray.removeAt(0);
+      }
       files.forEach(file => {
         this.anexosFormArray.push(this.builder.control(file.id));
       });
       this.anexos = files; // uniqBy([...this.anexos, ...files], item => item.id);
+      console.log(files);
     } catch (e) {
-
+      console.log(e);
     }
   }
 

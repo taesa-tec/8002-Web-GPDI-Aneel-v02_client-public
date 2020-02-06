@@ -1,8 +1,6 @@
 @import "components-base";
 
 .form-editor {
-  .form-editor-title {
-  }
   app-form-editor-field {
     counter-increment: formeditor;
 
@@ -34,6 +32,9 @@
             &::after {
               content: counters(formlistitem, ".", upper-alpha);
             }
+          }
+          .form-editor-field {
+            display: flex;
           }
         }
       }

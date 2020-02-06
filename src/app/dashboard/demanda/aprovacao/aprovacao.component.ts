@@ -1,11 +1,11 @@
-import {AppService} from '@app/services/app.service';
-import {Component, Inject, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Demanda} from '@app/models/demandas';
-import {DemandaEtapa, DemandaEtapaItems, DemandaEtapaStatus} from '@app/dashboard/demandas/commons';
-import {environment} from '@env/environment';
-import {EQUIPE_PED} from '@app/providers/equipe-ped.providers';
-import {EquipePeD, User} from '@app/models';
+import { AppService } from '@app/services/app.service';
+import { Component, Inject, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Demanda } from '@app/models/demandas';
+import { DemandaEtapa, DemandaEtapaItems, DemandaEtapaStatus } from '@app/dashboard/demandas/commons';
+import { environment } from '@env/environment';
+import { EQUIPE_PED } from '@app/providers/equipe-ped.providers';
+import { EquipePeD, User } from '@app/models';
 
 
 @Component({
@@ -18,6 +18,7 @@ export class AprovacaoComponent implements OnInit {
 
   protected user: User;
   protected $demanda: Demanda;
+  equipe: EquipePeD;
   readonly ETAPAS_VALUES = DemandaEtapa;
   readonly ETAPAS_STATUS = DemandaEtapaStatus;
   anexos = [];
@@ -62,14 +63,14 @@ export class AprovacaoComponent implements OnInit {
   }
 
   constructor(
-    protected  app: AppService,
-    protected route: ActivatedRoute,
-    @Inject(EQUIPE_PED) protected equipe: EquipePeD) {
+    protected app: AppService,
+    protected route: ActivatedRoute) {
   }
 
   async ngOnInit() {
     this.user = this.app.users.currentUser;
     this.demanda = this.route.parent.snapshot.data.demanda.demanda;
+    this.equipe = await this.app.sistema.getEquipePeD();
     this.anexos = await this.app.demandas.getAnexos(this.demanda.id);
   }
 

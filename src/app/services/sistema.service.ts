@@ -13,7 +13,7 @@ export class SistemaService {
   }
 
   constructor(protected http: HttpClient) {
-    this.getEquipePeD();
+    //this.getEquipePeD();
   }
 
   async getEquipePeD() {

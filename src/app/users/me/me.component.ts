@@ -1,9 +1,10 @@
-import {Component, OnInit, Input, ViewChild, Output, EventEmitter} from '@angular/core';
-import {User, Roles, Empresa, ResultadoResponse, Projetos, AppValidators} from '@app/models';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
-import {Router} from '@angular/router';
-import {AppService} from '@app/services/app.service';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { User, Roles, Empresa, ResultadoResponse, Projetos, AppValidators } from '@app/models';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
+import { Router } from '@angular/router';
+import { AppService } from '@app/services/app.service';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-edit-me',
@@ -30,6 +31,10 @@ export class MeComponent implements OnInit {
     protected app: AppService,
     protected router: Router
   ) {
+  }
+
+  get previewAvatar() {
+    return `${environment.api_url}/Users/${this.user.id}/avatar`;
   }
 
   get empresaControl(): FormControl {
@@ -61,10 +66,10 @@ export class MeComponent implements OnInit {
       this.form = new FormGroup({
         nomeCompleto: new FormControl(u.nomeCompleto, [Validators.required]),
         email: new FormControl(u.email, [Validators.email, Validators.required]),
-        cpf: new FormControl({value: u.cpf, disabled: true}),
-        status: new FormControl({value: u.status, disabled: true}),
+        cpf: new FormControl({ value: u.cpf, disabled: true }),
+        status: new FormControl({ value: u.status, disabled: true }),
         role: new FormControl(u.role),
-        catalogEmpresaId: new FormControl({value: u.catalogEmpresaId || (u.razaoSocial ? '0' : ''), disabled: false}),
+        catalogEmpresaId: new FormControl({ value: u.catalogEmpresaId || (u.razaoSocial ? '0' : ''), disabled: false }),
         fotoPerfil: this.fotoPerfil,
         cargo: new FormControl(u.cargo, Validators.required)
       });

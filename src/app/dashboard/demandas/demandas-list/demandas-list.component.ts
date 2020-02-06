@@ -3,7 +3,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AppService} from '@app/services/app.service';
 import {DemandaEtapa, DemandaEtapaStatus} from '../commons';
 import {Demanda} from '@app/models/demandas';
-import {EQUIPE_PED} from '@app/providers/equipe-ped.providers';
 import {EquipePeD} from '@app/models';
 
 @Component({

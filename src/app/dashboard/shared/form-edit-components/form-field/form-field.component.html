@@ -1,22 +1,22 @@
 <div class="form-editor-field" [ngClass]="classname" [formGroup]="form">
-  <div
-    class="form-editor-field-title"
-  >
+  <div class="form-editor-field-title">
     {{ field.title }}
   </div>
   <ng-container *ngIf="field.isArray">
     <div class="form-editor-field-list">
       <div
         class="form-editor-field-list-item"
-        *ngFor="let fieldItem of formArray.controls"
+        *ngFor="let fieldItem of formArray.controls; let i = index"
       >
         <div class="form-editor-field-list-item-title">
           {{ field.itemTitle }}
         </div>
         <app-form-field-control
+          (remove)="remove(i)"
           [form]="fieldItem"
           [field]="field"
           [readonly]="readonly"
+          [canRemove]="!readonly && formArray.controls.length > 1"
         ></app-form-field-control>
       </div>
     </div>

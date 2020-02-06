@@ -1,6 +1,6 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {AbstractControl} from '@angular/forms';
-import {FormField} from '@app/models/demandas';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
+import { FormField } from '@app/models/demandas';
 import _configEditor from './config-editor';
 
 @Component({
@@ -14,7 +14,10 @@ export class FormFieldControlComponent implements OnInit {
   @Input() form: AbstractControl;
   @Input() field: FormField;
   @Input() readonly = false;
+  @Input() canRemove = false;
   configEditor = _configEditor;
+
+  @Output() remove = new EventEmitter<any>();
 
   ngOnInit() {
   }
