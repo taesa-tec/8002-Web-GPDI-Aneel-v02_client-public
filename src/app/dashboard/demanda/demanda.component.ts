@@ -1,8 +1,9 @@
-import {AppService} from '@app/services/app.service';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Demanda} from '@app/models/demandas';
+import { AppService } from '@app/services/app.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Demanda } from '@app/models/demandas';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-demanda',
@@ -58,10 +59,10 @@ export class DemandaComponent implements OnInit {
     this.menu = dataResolved.menu;
 
     if (dataResolved.defaultPage && this.route.children.length === 0) {
-      this.app.router.navigate(dataResolved.defaultPage.split('/'), {relativeTo: this.route});
+      this.app.router.navigate(dataResolved.defaultPage.split('/'), { relativeTo: this.route, skipLocationChange: true });
     }
 
-
+    // this.Subscriptions.push(fromEvent(window, 'popstate').subscribe((event) => this.historyBack(event)));
   }
 
 }

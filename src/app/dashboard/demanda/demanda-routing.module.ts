@@ -1,17 +1,17 @@
-import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
-import {DemandaComponent} from './demanda.component';
-import {EquipeValidacaoComponent} from './equipe-validacao/equipe-validacao.component';
-import {DocumentoAprovacoesComponent} from './documento-aprovacoes/documento-aprovacoes.component';
-import {TemasComponent} from './temas/temas.component';
-import {EspecificacaoTecnicaComponent} from './especificacao-tecnica/especificacao-tecnica.component';
-import {AprovacaoComponent} from './aprovacao/aprovacao.component';
-import {FormEditorComponent} from '@app/dashboard/demanda/form-editor/form-editor.component';
-import {EtapaAvaliacaoComponent} from '@app/dashboard/demanda/etapa-avaliacao/etapa-avaliacao.component';
-import {DemandaResolver} from '@app/dashboard/demanda/demanda.resolver';
-import {DemandaGuard} from '@app/dashboard/demanda/guards/demanda.guard';
-import {LogComponent} from '@app/dashboard/projeto/log-projeto/log.component';
-import {DemandaLogsComponent} from '@app/dashboard/demanda/demanda-logs/demanda-logs.component';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { DemandaComponent } from './demanda.component';
+import { EquipeValidacaoComponent } from './equipe-validacao/equipe-validacao.component';
+import { DocumentoAprovacoesComponent } from './documento-aprovacoes/documento-aprovacoes.component';
+import { TemasComponent } from './temas/temas.component';
+import { EspecificacaoTecnicaComponent } from './especificacao-tecnica/especificacao-tecnica.component';
+import { AprovacaoComponent } from './aprovacao/aprovacao.component';
+import { FormEditorComponent } from '@app/dashboard/demanda/form-editor/form-editor.component';
+import { EtapaAvaliacaoComponent } from '@app/dashboard/demanda/etapa-avaliacao/etapa-avaliacao.component';
+import { DemandaResolver } from '@app/dashboard/demanda/demanda.resolver';
+import { DemandaGuard } from '@app/dashboard/demanda/guards/demanda.guard';
+import { LogComponent } from '@app/dashboard/projeto/log-projeto/log.component';
+import { DemandaLogsComponent } from '@app/dashboard/demanda/demanda-logs/demanda-logs.component';
 
 const routes: Routes = [
   {
@@ -21,6 +21,7 @@ const routes: Routes = [
     resolve: {
       demanda: DemandaResolver
     },
+    runGuardsAndResolvers: 'always',
     children: [
       {
         path: 'equipe-validacao',
