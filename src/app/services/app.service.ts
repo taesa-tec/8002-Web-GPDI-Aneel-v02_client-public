@@ -92,6 +92,13 @@ export class AppService {
     ref.componentInstance.setMessage(message);
     return ref.result;
   }
+  alertError(message: string | Array<string>, title: string = 'Error') {
+    const ref = this.modal.open(AlertComponent, { backdrop: 'static' });
+    ref.componentInstance.title = title;
+    ref.componentInstance.className = "border-danger";
+    ref.componentInstance.setMessage(message);
+    return ref.result;
+  }
 
   confirm(message: string, title: string = 'Confirme',
     options: { text: string, value: any, cssClass: string }[] =
