@@ -28,22 +28,7 @@
               "src/manifest.json",
               "src/favicon.ico",
               "src/assets",
-              "src/Web.config",
-              {
-                "glob": "**/*",
-                "input": "node_modules/tinymce/skins",
-                "output": "/tinymce/skins/"
-              },
-              {
-                "glob": "**/*",
-                "input": "node_modules/tinymce/themes",
-                "output": "/tinymce/themes/"
-              },
-              {
-                "glob": "**/*",
-                "input": "node_modules/tinymce/plugins",
-                "output": "/tinymce/plugins/"
-              }
+              "src/Web.config"
             ],
             "styles": [
               "src/styles.scss"
@@ -53,9 +38,7 @@
                 "src/styles"
               ]
             },
-            "scripts": [
-              "node_modules/tinymce/tinymce.min.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {

@@ -13,3 +13,10 @@ html,
 body {
   height: 100%;
 }
+app-form-editor,
+app-form-edit-template {
+  display: block;
+}
+:root {
+  --side-bar-width: 256px;
+}

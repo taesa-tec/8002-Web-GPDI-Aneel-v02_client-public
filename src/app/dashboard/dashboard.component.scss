@@ -6,6 +6,7 @@
     grid-template-areas: 'header''content';
     grid-template-rows: 110px auto;
     display: grid;
+    max-width: 100vw;
     .wrap-outlet {
         grid-area: content;
 

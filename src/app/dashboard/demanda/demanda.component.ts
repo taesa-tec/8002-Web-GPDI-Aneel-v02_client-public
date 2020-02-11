@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-demanda',
   templateUrl: './demanda.component.html',
-  styleUrls: [],
+  styleUrls: ['demanda.component.scss'],
   providers: []
 })
 export class DemandaComponent implements OnInit {

@@ -5,7 +5,8 @@ import _configEditor from './config-editor';
 
 @Component({
   selector: 'app-form-field-control',
-  templateUrl: 'form-field-control.component.html'
+  templateUrl: 'form-field-control.component.html',
+  styleUrls: ['form-field-control.component.scss']
 })
 export class FormFieldControlComponent implements OnInit {
   constructor() {
