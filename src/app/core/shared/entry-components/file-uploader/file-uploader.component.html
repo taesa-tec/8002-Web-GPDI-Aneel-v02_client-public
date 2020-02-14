@@ -7,9 +7,13 @@
   <div>
     <div class="row">
       <div class="col-12">
+        <h5 class="my-3">
+          Faça o upload dos arquivos complementares usando o box abaixo:
+        </h5>
         <app-upload-file
           [(ngModel)]="files"
           (ngModelChange)="fileChange($event)"
+          (error)="fileChangeError($event)"
         ></app-upload-file>
       </div>
     </div>
@@ -24,7 +28,8 @@
     </div>
     <div class="row" *ngIf="filesSent">
       <div class="col-12">
-        <h5 class="my-3">Arquivos Selecionados:</h5>
+        <h5 class="mt-3 mb-2">Seus arquivos complementares</h5>
+        <div class="mb-2">Arquivos destacados em azul serão anexados ao projeto</div>
         <ng-container>
           <div class="list-group">
             <label
@@ -61,9 +66,9 @@
   <button
     type="button"
     class="btn btn-primary"
-    [disabled]="filesSent === undefined || filesSent.length === 0 || isSending"
+    [disabled]="isSending"
     (click)="selectFiles()"
   >
-    <i class="ta-upload"></i> Selecionar Arquivos
+    <i class="ta-save"></i> Salvar
   </button>
 </div>

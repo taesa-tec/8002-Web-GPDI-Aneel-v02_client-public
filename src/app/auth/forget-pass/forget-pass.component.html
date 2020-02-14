@@ -5,7 +5,7 @@
     de uma nova senha.
   </p>
   <div class="form-group position-relative" *ngIf="!(resultadoResponse && resultadoResponse.sucesso)">
-    <input type="email" formControlName="email" class="form-control form-control-lg" placeholder="Email">
+    <input type="email" formControlName="email" class="form-control form-control-lg pr-5" placeholder="Email">
     <i class="ta-envelope position-absolute text-cinza fs-18" style="top: 0.8em; right: 1em;"></i>
   </div>
   <div class="alert border-success text-success font-weight-bold d-flex justify-content-center align-items-center" *ngIf="resultadoResponse && resultadoResponse.sucesso">

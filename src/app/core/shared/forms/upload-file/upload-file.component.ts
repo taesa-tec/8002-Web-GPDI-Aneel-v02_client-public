@@ -1,5 +1,6 @@
-import {Component, forwardRef, Input, OnInit, Output} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import { Component, forwardRef, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import FilesizeFunc from 'filesize';
 
 @Component({
   selector: 'app-upload-file',
@@ -17,6 +18,8 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
   @Input() name = '';
   @Input() disabled;
   @Input('value') val: FileList;
+  @Input() maxsize = 100 * 1024 * 1024; // 100mb
+  @Output() error = new EventEmitter<any>();
 
   fileinfo: Array<{ name: string, size: number }> = [];
 
@@ -25,6 +28,9 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
   }
 
   set value(val) {
+
+    if (!this.checkFiles(val)) { return; }
+
     this.val = val;
     this.onChange(val);
     this.onTouched();
@@ -34,11 +40,24 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
   constructor() {
   }
 
+  protected checkFiles(fileList: FileList) {
+    let size = 0;
+    for (let i = 0; i < fileList.length; i++) {
+      const f = fileList.item(i);
+      size += f.size;
+    }
+    if (size > this.maxsize) {
+      const ms = FilesizeFunc(this.maxsize);
+      this.error.emit(`Total do upload é grande demais para ser enviado, o upload máximo é de ${ms}`);
+      return false;
+    }
+    return true;
+  }
   protected updateFileInfo() {
     this.fileinfo = [];
     for (let i = 0; i < this.value.length; i++) {
       const file = this.value.item(i);
-      this.fileinfo.push({name: file.name, size: file.size});
+      this.fileinfo.push({ name: file.name, size: file.size });
     }
   }
 

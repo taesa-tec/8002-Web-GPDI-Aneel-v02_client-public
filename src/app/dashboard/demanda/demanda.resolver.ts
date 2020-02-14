@@ -45,19 +45,24 @@ export class DemandaResolver implements Resolve<{ demanda: Demanda, menu: Array<
 
   protected menu(demanda: Demanda, equipe): Array<any> {
     const user = this.app.users.currentUser;
-    const menu = user.role === UserRole.Administrador ? [
-      { text: 'Central Administrativa', icon: 'ta-central-admin', path: 'central-administrativa' },
-      { text: 'Logs', icon: 'ta-log', path: 'logs' }
-    ] : [];
+    if (user.role === UserRole.Administrador) {
+      return this.menuAprovadores(this.menuCriador([
+        { text: 'Central Administrativa', icon: 'ta-central-admin', path: 'central-administrativa' },
+        { text: 'Logs', icon: 'ta-log', path: 'logs' }
+      ], demanda), demanda);
+    }
+
+
+
     switch (user.id) {
       case demanda.criadorId:
-        return this.menuCriador(menu, demanda);
+        return this.menuCriador([], demanda);
       case demanda.superiorDiretoId:
       case demanda.revisorId:
       case equipe.coordenador.id:
       case equipe.diretor.id:
       case equipe.gerente.id:
-        return this.menuAprovadores(menu, demanda);
+        return this.menuAprovadores([], demanda);
       default:
         return this.menuAprovadores([], demanda);
     }

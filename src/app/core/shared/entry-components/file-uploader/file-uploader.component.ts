@@ -63,6 +63,10 @@ export class FileUploaderComponent implements OnInit {
   fileChange(event) {
     this.sendFiles();
   }
+  fileChangeError(message) {
+    this._app.alertError(message);
+  }
+
 
   async sendFiles() {
     try {
