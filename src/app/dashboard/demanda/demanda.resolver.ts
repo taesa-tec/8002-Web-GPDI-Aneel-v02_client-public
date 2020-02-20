@@ -46,10 +46,10 @@ export class DemandaResolver implements Resolve<{ demanda: Demanda, menu: Array<
   protected menu(demanda: Demanda, equipe): Array<any> {
     const user = this.app.users.currentUser;
     if (user.role === UserRole.Administrador) {
-      return this.menuAprovadores(this.menuCriador([
+      return this.menuCriador([
         { text: 'Central Administrativa', icon: 'ta-central-admin', path: 'central-administrativa' },
         { text: 'Logs', icon: 'ta-log', path: 'logs' }
-      ], demanda), demanda);
+      ], demanda);
     }
 
 
