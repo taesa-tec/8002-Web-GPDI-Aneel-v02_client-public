@@ -1,10 +1,10 @@
-import {AppService} from '@app/services/app.service';
-import {Component, Inject, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Demanda} from '@app/models/demandas';
-import {DemandaEtapa, DemandaEtapaItems, DemandaEtapaStatus} from '@app/dashboard/demandas/commons';
-import {environment} from '@env/environment';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { AppService } from '@app/services/app.service';
+import { Component, Inject, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Demanda } from '@app/models/demandas';
+import { DemandaEtapa, DemandaEtapaItems, DemandaEtapaStatus } from '@app/dashboard/demandas/commons';
+import { environment } from '@env/environment';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-documento-aprovacoes',
@@ -21,7 +21,7 @@ export class DocumentoAprovacoesComponent implements OnInit {
   pdfUrl = null;
   form = new FormGroup({});
 
-  constructor(protected  app: AppService, protected route: ActivatedRoute) {
+  constructor(protected app: AppService, protected route: ActivatedRoute) {
   }
 
   get demanda(): Demanda {
@@ -29,7 +29,8 @@ export class DocumentoAprovacoesComponent implements OnInit {
   }
 
   set demanda(value: Demanda) {
-    this.pdfUrl = `${environment.api_url}/Demandas/${value.id}/Form/${this.formKey}/Pdf`;
+    const clearCache = Date.now();
+    this.pdfUrl = `${environment.api_url}/Demandas/${value.id}/Form/${this.formKey}/Pdf?time=${clearCache}`;
     this.$demanda = value;
   }
 
