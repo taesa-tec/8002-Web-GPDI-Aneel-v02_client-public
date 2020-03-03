@@ -39,7 +39,7 @@
       </ng-container>
       <ng-container *ngIf="!readonly">
         <ckeditor
-          [config]="configEditor"
+          style="max-width: max-content;"
           formControlName="value"
           [readOnly]="form.get('value').disabled"
         ></ckeditor>

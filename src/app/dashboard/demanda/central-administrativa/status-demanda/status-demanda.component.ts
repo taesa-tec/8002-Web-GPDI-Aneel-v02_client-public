@@ -34,7 +34,6 @@ export class StatusDemandaComponent implements OnInit {
   ngOnInit() {
     const demandaRoute = this.route.snapshot.parent.parent.parent.data['demanda'];
     this.demanda = demandaRoute.demanda;
-    console.log(this.demanda.etapaAtual);
     this.form.get('status').setValue(this.demanda.etapaAtual);
   }
 

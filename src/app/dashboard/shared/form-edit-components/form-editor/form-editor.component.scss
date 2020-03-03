@@ -6,21 +6,25 @@
 
     .form-editor-field {
       padding: 4px 0;
+
       .form-editor-field-title {
         color: $blueLight;
         font-weight: 500;
         text-transform: uppercase;
         margin: 12px 0;
+
         &::before {
           content: counters(formeditor, ".");
         }
       }
+
       .form-editor-field-children {
         padding-left: 64px;
       }
 
       .form-editor-field-list {
         padding-left: 32px;
+
         .form-editor-field-list-item {
           margin: 12px 0;
           counter-increment: formlistitem;
@@ -29,10 +33,12 @@
             color: $blueLight;
             font-weight: 500;
             text-transform: uppercase;
+
             &::after {
               content: counters(formlistitem, ".", upper-alpha);
             }
           }
+
           .form-editor-field {
             display: flex;
           }
@@ -40,14 +46,17 @@
       }
     }
   }
+
   > app-form-editor-field {
     display: block;
     margin-bottom: 16px;
+
     > .form-editor-field {
       > .form-editor-field-title {
         &::before {
           content: counters(formeditor, ".") ". ";
         }
+
         color: $cinza;
         font-size: 20px;
         padding: 8px 0;
@@ -60,4 +69,12 @@
 
 .form-editor-field-children {
   counter-reset: formeditor;
+}
+
+.actions-bar {
+  position: sticky;
+  z-index: 1;
+  bottom: 0px;
+  background: $body-bg;
+  box-shadow: 6px 0px 0px $body-bg, -6px 0px 2px $body-bg, 0 -2px 4px rgba(0, 0, 0, 0.3);
 }
