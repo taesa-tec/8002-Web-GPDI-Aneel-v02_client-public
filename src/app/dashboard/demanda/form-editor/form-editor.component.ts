@@ -8,6 +8,7 @@ import {DemandaEtapa, DemandaEtapaStatus} from '@app/dashboard/demandas/commons'
 
 @Component({
   selector: 'app-form-edit-template',
+  styleUrls: ['form-editor.component.scss'],
   templateUrl: './form-editor.component.html'
 })
 export class FormEditorComponent implements OnInit {

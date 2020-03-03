@@ -13,10 +13,53 @@ html,
 body {
   height: 100%;
 }
+
 app-form-editor,
 app-form-edit-template {
   display: block;
 }
+
 :root {
   --side-bar-width: 256px;
+  --header-height: 7rem;
+}
+
+::-webkit-scrollbar {
+  //background: $cinzaClaro;
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background: $cinzaClaro;
+  opacity: 0.5;
+}
+
+::-webkit-scrollbar-track-piece {
+  width: 9px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $blueLight;
+}
+
+
+.sticky-sidebar {
+  position: sticky;
+  top: var(--header-height);
+}
+
+
+ckeditor {
+  display: block;
+  max-width: 99%;
+
+  p {
+    img {
+      max-width: 99% !important;
+      height: auto !important;
+      margin: 0;
+      padding: 0;
+      display: inline-block;
+    }
+  }
 }

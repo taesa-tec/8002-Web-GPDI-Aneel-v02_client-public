@@ -31,8 +31,9 @@
     </div>
   </div>
 
-  <div class="row" *ngIf="!readonly">
-    <div class="col-12 d-flex justify-content-start">
+  <div class="row actions-bar py-3" *ngIf="!readonly">
+    <div class="col-12 d-flex justify-content-start actions-bar-content">
+      <div class="cover-action-bar-shadow"></div>
       <button class="btn btn-primary" type="button" (click)="saveData()" [disabled]="form.invalid || form.disabled">
         <i class="ta-save"></i>
         Salvar Dados
