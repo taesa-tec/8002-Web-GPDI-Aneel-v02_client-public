@@ -22,17 +22,17 @@ const routes: Routes = [
             {
                 path: 'proposta',
                 canActivate: [ProjetoStatusGuard],
-                loadChildren: './proposta/proposta.module#PropostaModule'
+                loadChildren: () => import('./proposta/proposta.module').then(m => m.PropostaModule)
             },
             {
                 path: 'iniciado',
                 canActivate: [ProjetoStatusGuard],
-                loadChildren: './iniciado/iniciado.module#IniciadoModule'
+                loadChildren: () => import('./iniciado/iniciado.module').then(m => m.IniciadoModule)
             },
             {
                 path: 'encerrado',
                 canActivate: [ProjetoStatusGuard],
-                loadChildren: './encerrado/encerrado.module#EncerradoModule'
+                loadChildren: () => import('./encerrado/encerrado.module').then(m => m.EncerradoModule)
             },
             {
                 path: 'central-administrativa',
@@ -40,7 +40,7 @@ const routes: Routes = [
                     access: ['admin', 'aprovador']
                 },
                 canActivate: [ProjetoAccessGuard],
-                loadChildren: './central-administrativa/central-administrativa.module#CentralAdministrativaModule'
+                loadChildren: () => import('./central-administrativa/central-administrativa.module').then(m => m.CentralAdministrativaModule)
             },
             {
                 path: 'logs',

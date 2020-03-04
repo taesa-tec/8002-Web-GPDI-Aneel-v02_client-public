@@ -28,25 +28,25 @@ const routes: Routes = [
       {
         path: 'projetos',
         component: MainComponent,
-        loadChildren: '@app/dashboard/projetos/projetos.module#ProjetosModule'
+        loadChildren: () => import('@app/dashboard/projetos/projetos.module').then(m => m.ProjetosModule)
       },
       {
         path: 'projeto',
-        loadChildren: '@app/dashboard/projeto/projeto.module#ProjetoModule'
+        loadChildren: () => import('@app/dashboard/projeto/projeto.module').then(m => m.ProjetoModule)
       },
       {
         path: 'demandas',
         component: MainComponent,
-        loadChildren: '@app/dashboard/demandas/demandas.module#DemandasModule'
+        loadChildren: () => import('@app/dashboard/demandas/demandas.module').then(m => m.DemandasModule)
       },
       {
         path: 'configuracoes-do-sistema',
         component: MainComponent,
-        loadChildren: '@app/dashboard/configuracoes-sistema/configuracoes-sistema.module#ConfiguracoesSistemaModule'
+        loadChildren: () => import('@app/dashboard/configuracoes-sistema/configuracoes-sistema.module').then(m => m.ConfiguracoesSistemaModule)
       },
       {
         path: 'demanda',
-        loadChildren: '@app/dashboard/demanda/demanda.module#DemandaModule'
+        loadChildren: () => import('@app/dashboard/demanda/demanda.module').then(m => m.DemandaModule)
       },
       /*
       */

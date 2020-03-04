@@ -45,7 +45,7 @@ const routes: Routes = [
       },
       {
         path: 'central-administrativa',
-        loadChildren: '@app/dashboard/demanda/central-administrativa/central-administrativa.module#CentralAdministrativaModule'
+        loadChildren: () => import('@app/dashboard/demanda/central-administrativa/central-administrativa.module').then(m => m.CentralAdministrativaModule)
       },
       {
         path: 'logs',

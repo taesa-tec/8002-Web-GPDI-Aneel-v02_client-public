@@ -18,7 +18,7 @@ const routes: Routes = [
 
   {
     path: 'demanda',
-    loadChildren: '@app/dashboard/painel-demandas/demanda/demanda.module#DemandaModule'
+    loadChildren: () => import('@app/dashboard/painel-demandas/demanda/demanda.module').then(m => m.DemandaModule)
   },
 ];
 
