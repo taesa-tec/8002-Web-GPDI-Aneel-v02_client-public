@@ -21,7 +21,7 @@ export class EtapaAtividadesFormComponent implements OnInit {
     produtos: Produto[] = [];
     produtosGroup: FormArray = new FormArray([]);
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
 
     constructor(public activeModal: NgbActiveModal, protected app: AppService) {

@@ -18,7 +18,7 @@ export class NewUserComponent implements OnInit {
     ) {
     }
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
     form: FormGroup;
     roles = Roles;

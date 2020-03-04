@@ -24,7 +24,7 @@ export class EtapaFormComponent implements OnInit {
   mesesGroup: FormGroup = new FormGroup({});
   meses: Array<TextValue> = [];
 
-  @ViewChild(LoadingComponent) loading: LoadingComponent;
+  @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
 
   constructor(public activeModal: NgbActiveModal, protected app: AppService) {

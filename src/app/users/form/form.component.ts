@@ -17,7 +17,7 @@ import { environment } from '@env/environment';
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit {
-  @ViewChild(LoadingComponent) loading: LoadingComponent;
+  @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
   @ViewChild(UserProjetosComponent) userProjetos: UserProjetosComponent;
 

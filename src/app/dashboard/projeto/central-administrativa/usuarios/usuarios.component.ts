@@ -37,8 +37,8 @@ export class UsuariosComponent implements OnInit {
     avatars: { [propName: string]: Observable<SafeUrl> } = {};
 
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
-    @ViewChild('saving') loadingSaving: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
+    @ViewChild('saving', { static: true }) loadingSaving: LoadingComponent;
 
     constructor(protected app: AppService) {
     }

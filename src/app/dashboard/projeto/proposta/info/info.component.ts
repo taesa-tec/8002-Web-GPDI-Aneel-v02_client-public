@@ -21,7 +21,7 @@ export class InfoComponent implements OnInit {
     compartilhamentos: Array<TextValue>;
     segmentos: Array<Segmento>;
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
 
     public numeroPatterns = {

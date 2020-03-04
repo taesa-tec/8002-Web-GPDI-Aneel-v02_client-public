@@ -25,7 +25,7 @@ export class AlocarRecursoMaterialFormComponent implements OnInit {
     projeto: ProjetoFacade;
     form: FormGroup;
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
 
     constructor(

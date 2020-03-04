@@ -23,7 +23,7 @@ export class RecursosHumanosComponent implements OnInit {
     direction: 'asc'
   };
 
-  @ViewChild(LoadingComponent) loading: LoadingComponent;
+  @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
   constructor(protected app: AppService, protected modal: NgbModal) {
   }

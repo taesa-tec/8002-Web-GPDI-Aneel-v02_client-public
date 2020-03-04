@@ -38,7 +38,7 @@ export class GeracaoXmlComponent implements OnInit {
 
     avaliacaoResult: ResultadoResponse;
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
     get inconsistencias() {
         return []; // this.avaliacaoResult ? this.avaliacaoResult.inconsistencias : [];

@@ -21,7 +21,7 @@ export class AlterarStatusComponent implements OnInit {
     catalogFC: FormControl;
     projetoStatus: number;
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
 
     constructor(protected app: AppService) {

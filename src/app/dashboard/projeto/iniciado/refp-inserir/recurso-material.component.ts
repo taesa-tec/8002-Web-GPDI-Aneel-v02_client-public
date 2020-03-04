@@ -36,7 +36,7 @@ export class RecursoMaterialComponent implements OnInit {
     errors: Array<Error>;
     isValid = true;
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
     @ViewChild('file') file: ElementRef;
 

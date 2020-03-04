@@ -13,6 +13,7 @@ import {registerLocaleData} from '@angular/common';
 import * as moment from 'moment';
 import {HttpClientModule} from '@angular/common/http';
 import {currentUserProvider} from '@app/providers/user.provider';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 registerLocaleData(localeBr, 'pt');
 moment.locale('pt-br');
@@ -30,6 +31,7 @@ moment.locale('pt-br');
     AuthModule,
     UsersModule,
     AppRoutingModule,
+    FontAwesomeModule,
   ],
   exports: [SharedModule],
   providers: [

@@ -21,7 +21,7 @@ export class EmpresasComponent implements OnInit {
     empresasCatalog: Array<Empresa>;
     estados: Array<UF>;
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
     constructor(protected app: AppService, private route: ActivatedRoute, protected modal: NgbModal) {
     }

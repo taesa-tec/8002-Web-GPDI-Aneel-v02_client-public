@@ -25,7 +25,7 @@ export class ListaProjetosComponent implements OnInit {
 
   currentUser: User;
 
-  @ViewChild(LoadingComponent) loading: LoadingComponent;
+  @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
   @Input() projetos: Array<Projeto>;
   @Input() titulo = "Projetos";
   @Input() projetoStatus;

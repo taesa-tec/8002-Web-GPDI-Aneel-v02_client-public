@@ -20,7 +20,7 @@ export class RecursoMaterialFormComponent implements OnInit {
     projeto: ProjetoFacade;
     recursoMaterial: RecursoMaterial;
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
 
     constructor(

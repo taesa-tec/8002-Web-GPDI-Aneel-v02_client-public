@@ -28,7 +28,7 @@ export class NovoProjetoComponent implements OnInit {
     '0': { pattern: /\d/, optional: false }
   };
 
-  @ViewChild(LoadingComponent) loading: LoadingComponent;
+  @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
   constructor(public activeModal: NgbActiveModal, protected app: AppService) {
   }

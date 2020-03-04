@@ -28,8 +28,8 @@ export class ProrrogarComponent implements OnInit {
     canExtend = false;
     canExtendMessage = '';
 
-    @ViewChild('loading') loading: LoadingComponent;
-    @ViewChild('xmlLoading') xmlLoading: LoadingComponent;
+    @ViewChild('loading', { static: true }) loading: LoadingComponent;
+    @ViewChild('xmlLoading', { static: true }) xmlLoading: LoadingComponent;
 
     constructor(protected app: AppService, private route: ActivatedRoute) {
     }

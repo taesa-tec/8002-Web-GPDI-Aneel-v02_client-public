@@ -30,7 +30,7 @@ export class OrcamentoEmpresasComponent implements OnInit {
         'RH': {text: 'Recursos Humanos', value: 'RH'}
     };
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
     get extratoEmpresas() {
         return this.extrato ? this.extrato.empresas.filter(e => e.total > 0) : [];

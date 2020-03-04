@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, Input, Output, EventEmitter, ElementRef} from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, ElementRef, Directive } from '@angular/core';
 import {AppService} from '@app/services/app.service';
 import {RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RegistroREFP, ResultadoResponse, NoRequest, CategoriasContabeis} from '@app/models';
 import {ProjetoFacade} from '@app/facades/index';
@@ -9,6 +9,7 @@ import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.
 import {tap, map} from 'rxjs/operators';
 
 
+@Directive()
 export abstract class RegistroRecursoBase implements OnInit {
 
     etapas: Array<Etapa>;
@@ -29,7 +30,7 @@ export abstract class RegistroRecursoBase implements OnInit {
 
     @Output() registroAlterado: EventEmitter<void> = new EventEmitter();
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
     @ViewChild('file') file: ElementRef;
 
 

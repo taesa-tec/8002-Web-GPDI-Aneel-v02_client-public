@@ -19,7 +19,7 @@ export class MeComponent implements OnInit {
   empresas: Array<Empresa>;
   resultado: ResultadoResponse;
 
-  @ViewChild(LoadingComponent) loading: LoadingComponent;
+  @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
   @Output() submited: EventEmitter<ResultadoResponse> = new EventEmitter<ResultadoResponse>();
 

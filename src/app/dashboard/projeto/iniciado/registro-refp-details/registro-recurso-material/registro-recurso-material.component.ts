@@ -33,7 +33,7 @@ export class RegistroRecursoMaterialComponent extends RegistroRecursoBase {
 
     @Output() registroAlterado: EventEmitter<void> = new EventEmitter();
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
     get cnpjCpfMask(): string {
         const currentValue = this.form.get('cnpjBeneficiado').value;

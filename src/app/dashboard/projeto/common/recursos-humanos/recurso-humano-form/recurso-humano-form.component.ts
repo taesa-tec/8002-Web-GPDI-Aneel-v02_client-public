@@ -28,7 +28,7 @@ export class RecursoHumanoFormComponent implements OnInit {
   form: FormGroup;
   hasManager = false;
 
-  @ViewChild(LoadingComponent) loading: LoadingComponent;
+  @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
 
   constructor(

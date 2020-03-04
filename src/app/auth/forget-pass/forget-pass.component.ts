@@ -13,7 +13,7 @@ import {AuthService} from '@app/services/auth.service';
 })
 export class ForgetPassComponent implements OnInit {
 
-    @ViewChild(LoadingComponent)
+    @ViewChild(LoadingComponent, { static: true })
     private loading: LoadingComponent;
 
     resultadoResponse: ResultadoResponse;

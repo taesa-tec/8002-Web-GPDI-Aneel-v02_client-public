@@ -1,11 +1,10 @@
-import { AppService } from '@app/services/app.service';
-import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Demanda } from '@app/models/demandas';
-import { DemandaEtapa, DemandaEtapaItems, DemandaEtapaStatus } from '@app/dashboard/demandas/commons';
-import { environment } from '@env/environment';
-import { EQUIPE_PED } from '@app/providers/equipe-ped.providers';
-import { EquipePeD, User } from '@app/models';
+import {AppService} from '@app/services/app.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Demanda} from '@app/models/demandas';
+import {DemandaEtapa, DemandaEtapaItems, DemandaEtapaStatus} from '@app/dashboard/demandas/commons';
+import {environment} from '@env/environment';
+import {EquipePeD, User} from '@app/models';
 
 
 @Component({
@@ -16,7 +15,7 @@ import { EquipePeD, User } from '@app/models';
 export class AprovacaoComponent implements OnInit {
 
 
-  protected user: User;
+  user: User;
   protected $demanda: Demanda;
   equipe: EquipePeD;
   readonly ETAPAS_VALUES = DemandaEtapa;

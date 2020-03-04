@@ -28,7 +28,7 @@ export class TemasComponent implements OnInit {
   temaControl = new FormControl('', [Validators.required]);
   subTemasForms = new FormArray([]);
 
-  @ViewChild(LoadingComponent) loading;
+  @ViewChild(LoadingComponent, { static: true }) loading;
   @ViewChild('file') file: ElementRef;
 
 

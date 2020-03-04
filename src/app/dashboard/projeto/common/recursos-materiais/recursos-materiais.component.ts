@@ -16,7 +16,7 @@ import {ProjetoFacade} from '@app/facades/projeto.facade';
 })
 export class RecursosMateriaisComponent implements OnInit {
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
     recursosMaterias: Array<any>;
     categoriaContabel = CategoriasContabeis;

@@ -25,7 +25,7 @@ export class ProdutoFormComponent implements OnInit {
     fases: Array<any>;
     form: FormGroup;
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
 
     constructor(public activeModal: NgbActiveModal, protected app: AppService) {

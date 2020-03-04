@@ -1,4 +1,4 @@
-import {OnInit, ViewChild} from '@angular/core';
+import { OnInit, ViewChild, Directive } from '@angular/core';
 import {AppService} from '@app/services/app.service';
 import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
 import {ProjetoFacade, ProjetoREST} from '@app/facades/index';
@@ -7,9 +7,10 @@ import {EditorResultado} from '../common/editors/editor-resultado-base';
 import {Projeto} from '@app/models';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
+@Directive()
 export abstract class ResultadoBase<T> implements OnInit {
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
     projeto: ProjetoFacade;
     projetoREST: ProjetoREST;

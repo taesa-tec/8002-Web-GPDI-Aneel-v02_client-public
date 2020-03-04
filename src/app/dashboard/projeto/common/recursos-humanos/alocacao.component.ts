@@ -34,7 +34,7 @@ export class AlocacaoComponent implements OnInit {
         protected modalService: NgbModal) {
     }
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
     openModal(alocacao: AlocacaoRH | any = {}) {
         const modalRef = this.modalService.open(AlocarRecursoHumanoFormComponent, {size: 'lg'});

@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
   version = '';
 
-  @ViewChild(LoadingComponent) loading: LoadingComponent;
+  @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
   constructor(protected app: AppService) {
 

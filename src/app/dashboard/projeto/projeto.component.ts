@@ -18,7 +18,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 export class ProjetoComponent implements OnInit {
 
     @ViewChildren(LoadingComponent) sidebarsLoading !: QueryList<LoadingComponent>;
-    @ViewChild(RouterOutlet) outlet: RouterOutlet;
+    @ViewChild(RouterOutlet, { static: true }) outlet: RouterOutlet;
 
     projeto: ProjetoFacade;
 

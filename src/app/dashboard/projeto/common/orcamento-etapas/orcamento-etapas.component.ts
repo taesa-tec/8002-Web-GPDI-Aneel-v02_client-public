@@ -28,7 +28,7 @@ export class OrcamentoEtapasComponent implements OnInit {
     alocacoesRH: Array<any> = [];
     alocacoesRM: Array<any> = [];
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
     get extratoEtapas() {
         return this.extrato ? this.extrato.etapas.filter(e => e.total > 0) : [];

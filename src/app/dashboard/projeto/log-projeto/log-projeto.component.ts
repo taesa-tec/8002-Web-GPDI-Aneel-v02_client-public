@@ -26,7 +26,7 @@ export class LogProjetoComponent implements OnInit {
     currentPagina = 1;
     args: { pag: number, size: number, acao?: string, user?: string };
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
     constructor(protected app: AppService, protected route: ActivatedRoute) {
     }

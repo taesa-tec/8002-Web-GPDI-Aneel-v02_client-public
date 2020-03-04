@@ -67,7 +67,7 @@ export class AtividadesComponent implements OnInit {
   projetoAtividades: any;
   projeto: ProjetoFacade;
 
-  @ViewChild(LoadingComponent) loading: LoadingComponent;
+  @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
 
   constructor(protected app: AppService) {

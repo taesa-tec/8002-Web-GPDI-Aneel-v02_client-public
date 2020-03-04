@@ -38,7 +38,7 @@ export class TemasComponent implements OnInit, ControlValueAccessor {
     subTemas: this.subTemasForms
   });
 
-  @ViewChild(LoadingComponent) loading;
+  @ViewChild(LoadingComponent, { static: true }) loading;
   @ViewChild('file') file: ElementRef;
   @Input() readonly = false;
 

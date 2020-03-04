@@ -24,8 +24,8 @@ export class LogsDutoComponent implements OnInit {
         direction: 'asc'
     };
 
-    @ViewChild('sendFile') sendFileLoading: LoadingComponent;
-    @ViewChild('loading') loading: LoadingComponent;
+    @ViewChild('sendFile', { static: true }) sendFileLoading: LoadingComponent;
+    @ViewChild('loading', { static: true }) loading: LoadingComponent;
 
     constructor(protected app: AppService) {
     }

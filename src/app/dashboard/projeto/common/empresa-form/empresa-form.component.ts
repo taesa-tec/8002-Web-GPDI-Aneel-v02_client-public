@@ -28,8 +28,8 @@ export class EmpresaFormComponent implements OnInit, AfterViewInit {
 
   protected tabFixed = false;
 
-  @ViewChild(LoadingComponent) loading: LoadingComponent;
-  @ViewChild(NgbTabset) tabs: NgbTabset;
+  @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
+  @ViewChild(NgbTabset, { static: true }) tabs: NgbTabset;
 
   constructor(public activeModal: NgbActiveModal, protected app: AppService) {
   }

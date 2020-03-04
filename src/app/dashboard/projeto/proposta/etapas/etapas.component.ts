@@ -27,7 +27,7 @@ export class EtapasComponent implements OnInit {
         direction: 'asc'
     };
 
-    @ViewChild('loading') loading: LoadingComponent;
+    @ViewChild('loading', { static: true }) loading: LoadingComponent;
 
     get ano() {
         return this.dataInicio.getFullYear();

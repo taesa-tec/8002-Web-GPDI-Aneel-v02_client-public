@@ -30,7 +30,7 @@ export class AlocarRecursoHumanoFormComponent implements OnInit {
   totalMeses: number;
   mesInicial: moment.Moment = moment();
 
-  @ViewChild(LoadingComponent) loading: LoadingComponent;
+  @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
 
   constructor(

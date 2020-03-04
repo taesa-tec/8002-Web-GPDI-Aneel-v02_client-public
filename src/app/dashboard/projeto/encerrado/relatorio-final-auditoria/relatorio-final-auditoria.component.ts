@@ -24,7 +24,7 @@ export class RelatorioFinalAuditoriaComponent implements OnInit {
   @ViewChild('file') file: ElementRef;
   @ViewChild('fileAuditoria') fileAuditoria: ElementRef;
 
-  @ViewChild(LoadingComponent) loading: LoadingComponent;
+  @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
 
   constructor(protected app: AppService) {

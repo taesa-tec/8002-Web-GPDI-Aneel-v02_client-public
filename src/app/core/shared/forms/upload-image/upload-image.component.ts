@@ -22,7 +22,7 @@ export class UploadImageComponent implements OnInit, ControlValueAccessor {
   @Input()
   previewImage: string;
 
-  @ViewChild('input') input: ElementRef;
+  @ViewChild('input', { static: true }) input: ElementRef;
 
   @Input() name = '';
   @Input() disabled = '';

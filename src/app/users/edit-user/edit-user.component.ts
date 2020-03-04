@@ -25,7 +25,7 @@ export class EditUserComponent implements OnInit {
     constructor(protected app: AppService, protected route: ActivatedRoute) {
     }
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
     ngOnInit() {
         this.getUser();

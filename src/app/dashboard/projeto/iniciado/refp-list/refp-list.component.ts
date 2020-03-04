@@ -34,7 +34,7 @@ export class RefpListComponent implements OnInit, OnDestroy {
         valor: number;
     }> = [];
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
     constructor(protected route: ActivatedRoute, protected app: AppService, protected modal: NgbModal) {
     }

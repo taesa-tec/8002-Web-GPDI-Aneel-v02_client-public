@@ -13,7 +13,7 @@ import {environment} from '../../../environments/environment';
 })
 export class LoginComponent implements OnInit {
 
-  @ViewChild(LoadingComponent)
+  @ViewChild(LoadingComponent, { static: true })
   private loading: LoadingComponent;
 
   errorMessage: string;

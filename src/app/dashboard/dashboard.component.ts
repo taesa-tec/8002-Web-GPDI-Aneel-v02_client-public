@@ -15,7 +15,7 @@ import {currentUserProvider} from '@app/providers/user.provider';
 })
 export class DashboardComponent implements OnInit {
 
-  @ViewChild(LoadingComponent)
+  @ViewChild(LoadingComponent, { static: true })
   private loading: LoadingComponent;
 
   currentUser: User;

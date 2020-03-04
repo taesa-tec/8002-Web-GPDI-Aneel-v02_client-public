@@ -12,7 +12,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 })
 export class MainComponent implements OnInit {
 
-  @ViewChild(LoadingComponent)
+  @ViewChild(LoadingComponent, { static: true })
   private loading: LoadingComponent;
   projetos: any;
   menu: Array<any>;

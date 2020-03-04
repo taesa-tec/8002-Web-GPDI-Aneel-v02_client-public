@@ -22,7 +22,7 @@ export class MeusProjetosComponent implements OnInit {
 
   protected subProjetcs: Subscription;
 
-  @ViewChild(LoadingComponent) loading: LoadingComponent;
+  @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
   get canAddProject() {
     return this.currentUser && this.currentUser.role === "Admin-APIGestor";

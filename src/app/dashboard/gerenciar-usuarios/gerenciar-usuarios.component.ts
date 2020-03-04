@@ -28,7 +28,7 @@ const alertMessages: { [propName: string]: MessageAlert } = {
 })
 export class GerenciarUsuariosComponent implements OnInit {
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
 
     constructor(protected activatedRoute: ActivatedRoute, protected usersService: UsersService) {
     }
