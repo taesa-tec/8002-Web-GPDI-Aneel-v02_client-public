@@ -1,31 +1,28 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {RouterModule} from '@angular/router';
 
-import { CKEditorModule } from 'ckeditor4-angular';
-import { NgxMaskModule } from 'ngx-mask';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { far } from '@fortawesome/free-regular-svg-icons';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule as AppFormsModule } from './forms/forms.module';
+import {CKEditorModule} from 'ckeditor4-angular';
+import {NgxMaskModule} from 'ngx-mask';
+import {FontAwesomeModule, FaIconLibrary} from '@fortawesome/angular-fontawesome';
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {fas} from '@fortawesome/free-solid-svg-icons';
+import {far} from '@fortawesome/free-regular-svg-icons';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {FormsModule as AppFormsModule} from './forms/forms.module';
 
-import { customCurrencyMaskConfig } from '@app/app.config';
-import { NgxCurrencyModule } from 'ngx-currency';
-import { FileService } from '@app/services/file.service';
-import { DownloadFileDirective, DynamicHostDirective, UserAccessDirective } from './directives';
-import { ErrorComponent } from './screens/error.component';
-import { DebugComponent } from './screens/debug.component';
-import { httpInterceptorProviders } from '@app/core/http-interceptors';
-import { EntryComponentsModule } from '@app/core/shared/entry-components/entry-components.module';
-import { AppComponentsModule } from '@app/core/shared/app-components/app-components.module';
-import { AppPipesModule } from '@app/core/shared/pipes/app-pipes.module';
+import {customCurrencyMaskConfig} from '@app/app.config';
+import {NgxCurrencyModule} from 'ngx-currency';
+import {FileService} from '@app/services/file.service';
+import {DownloadFileDirective, DynamicHostDirective, UserAccessDirective} from './directives';
+import {ErrorComponent} from './screens/error.component';
+import {DebugComponent} from './screens/debug.component';
+import {httpInterceptorProviders} from '@app/core/http-interceptors';
+import {EntryComponentsModule} from '@app/core/shared/entry-components/entry-components.module';
+import {AppComponentsModule} from '@app/core/shared/app-components/app-components.module';
+import {AppPipesModule} from '@app/core/shared/pipes/app-pipes.module';
 
-
-
-library.add(fas, far);
 
 @NgModule({
   declarations: [
@@ -80,4 +77,7 @@ library.add(fas, far);
   ]
 })
 export class SharedModule {
+  constructor(library: FaIconLibrary) {
+    library.addIconPacks(fas, far);
+  }
 }

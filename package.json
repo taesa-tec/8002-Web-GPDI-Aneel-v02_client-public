@@ -51,7 +51,7 @@
     "@angular/language-service": "~9.0.5",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "^12.11.1",
+    "@types/node": "^12.12.29",
     "codelyzer": "^5.1.2",
     "fast-csv": "^2.4.1",
     "glob": "^7.1.3",
