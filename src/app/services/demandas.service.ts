@@ -27,6 +27,14 @@ export class DemandasService {
     return this.http.get<any>(`Demandas/${id}/Form/${key}`);
   }
 
+  getDemandaFormHistorico(id: number, key: string) {
+    return this.http.get<Array<{ id: number, createdAt: string, revisao: number }>>(`Demandas/${id}/Form/${key}/History`).toPromise();
+  }
+
+  getDemandaFormHistoricoDiff(id: number, key: string, revisao: number) {
+    return this.http.get<{ revisaoAtual: string, html: string, lastUpdate: string }>(`Demandas/${id}/Form/${key}/Diff/${revisao}`).toPromise();
+  }
+
   criarDemanda(titulo: any) {
     return this.http.post<Demanda>('Demandas/Criar', `"${titulo}"`, {headers: {'Content-Type': 'application/json'}}).toPromise();
   }

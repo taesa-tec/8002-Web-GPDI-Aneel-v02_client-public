@@ -1,10 +1,12 @@
-import { AppService } from '@app/services/app.service';
-import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Demanda } from '@app/models/demandas';
-import { DemandaEtapa, DemandaEtapaItems, DemandaEtapaStatus } from '@app/dashboard/demandas/commons';
-import { environment } from '@env/environment';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {AppService} from '@app/services/app.service';
+import {Component, Inject, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Demanda} from '@app/models/demandas';
+import {DemandaEtapa, DemandaEtapaItems, DemandaEtapaStatus} from '@app/dashboard/demandas/commons';
+import {environment} from '@env/environment';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {HistoricoComponent} from '@app/dashboard/demanda/historico/historico.component';
 
 @Component({
   selector: 'app-documento-aprovacoes',
@@ -21,7 +23,7 @@ export class DocumentoAprovacoesComponent implements OnInit {
   pdfUrl = null;
   form = new FormGroup({});
 
-  constructor(protected app: AppService, protected route: ActivatedRoute) {
+  constructor(protected app: AppService, protected route: ActivatedRoute, protected modal: NgbModal) {
   }
 
   get demanda(): Demanda {
@@ -56,12 +58,14 @@ export class DocumentoAprovacoesComponent implements OnInit {
     this.app.showLoading();
     try {
       this.demanda = await this.app.demandas.proximaEtapa(this.demanda.id, this.form.value);
-      this.app.router.navigate(['/dashboard']);
       this.form.reset();
+      await this.app.router.navigate(['/dashboard']);
     } catch (e) {
       console.error(e);
+    } finally {
+
+      this.app.hideLoading();
     }
-    this.app.hideLoading();
   }
 
   async download(anexo) {
@@ -76,6 +80,19 @@ export class DocumentoAprovacoesComponent implements OnInit {
       this.app.hideLoading();
     } else {
       console.error('Sem demanda!');
+    }
+  }
+
+  async exibirHistorico() {
+    try {
+      const ref = this.modal.open(HistoricoComponent, {size: 'xl', scrollable: true});
+      const comp = ref.componentInstance as HistoricoComponent;
+      comp.demandaId = this.demanda.id;
+      comp.form = this.formKey;
+
+      await ref.result;
+    } catch (e) {
+      await this.app.alert(e);
     }
   }
 }

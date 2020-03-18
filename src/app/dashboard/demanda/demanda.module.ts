@@ -18,6 +18,7 @@ import {DemandaLogsComponent} from '@app/dashboard/demanda/demanda-logs/demanda-
 import {LogComponent} from '@app/dashboard/demanda/demanda-logs/log.component';
 import {LoggerModule} from '@app/dashboard/logger/logger.module';
 import {FormViewerComponent} from '@app/dashboard/demanda/form-viewer/form-viewer.component';
+import {HistoricoComponent} from './historico/historico.component';
 
 
 @NgModule({
@@ -36,9 +37,10 @@ import {FormViewerComponent} from '@app/dashboard/demanda/form-viewer/form-viewe
     DemandaComentariosComponent,
     DemandaLogsComponent,
     LogComponent,
-    FormViewerComponent
+    FormViewerComponent,
+    HistoricoComponent
   ],
-  entryComponents: [FormViewerComponent],
+  entryComponents: [FormViewerComponent, HistoricoComponent],
   providers: [equipePeDProvider, DemandaGuard],
 })
 export class DemandaModule {

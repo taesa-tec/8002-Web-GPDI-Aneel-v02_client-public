@@ -6,6 +6,14 @@
     </div>
   </div>
   <div class="row">
+    <div class="col d-flex justify-content-end">
+      <button class="btn btn-link" (click)="exibirHistorico()">
+        <i class="ta-ampulheta"></i>
+        Histórico de Versões
+      </button>
+    </div>
+  </div>
+  <div class="row">
     <div class="col">
       <app-pdf-viewer [url]="pdfUrl"></app-pdf-viewer>
     </div>
