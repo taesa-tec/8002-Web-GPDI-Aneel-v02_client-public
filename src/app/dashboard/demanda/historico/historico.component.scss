@@ -1,4 +1,34 @@
 app-historico {
+  .unchanged {
+
+  }
+
+  .modified {
+    background-color: orange;
+    color: white;
+  }
+
+  .inserted {
+    color: #96aa96 !important;
+    background-color: #e1f5e1;
+    position: relative;
+  }
+
+  .deleted {
+    background-color: #f7dfdf !important;
+    color: #7c6464 !important;
+  }
+
+  .diff-text {
+    display: inline-block;
+    position: relative;
+    padding: 0.2em 0.5em;
+    z-index: 0;
+  }
+
+  .legenda {
+
+  }
 
   .modal-body {
     display: flex;
@@ -107,32 +137,6 @@ app-historico {
         }
       }
 
-      .unchanged {
-
-      }
-
-      .modified {
-        background-color: orange;
-        color: white;
-      }
-
-      .inserted {
-        color: #96aa96 !important;
-        background-color: #e1f5e1;
-        position: relative;
-      }
-
-      .deleted {
-        background-color: #f7dfdf !important;
-        color: #7c6464 !important;
-      }
-
-      .diff-text {
-        display: inline-block;
-        position: relative;
-        padding: 0.2em 0.5em;
-        z-index: 0;
-      }
 
       .page:after {
         content: counter(page);

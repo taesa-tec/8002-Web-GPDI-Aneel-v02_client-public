@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
-import { FormField } from '@app/models/demandas';
-import { AbstractControl, FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import {Component, OnInit, Input, ViewEncapsulation} from '@angular/core';
+import {FormField} from '@app/models/demandas';
+import {AbstractControl, FormGroup, FormBuilder, Validators, FormArray, FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-form-editor-field',
@@ -50,9 +50,10 @@ export class FormFieldComponent implements OnInit {
   add() {
     if (this.field.isArray) {
       const formArray = <FormArray>this.form;
-      formArray.push(this.builder.group({ value: '' }));
+      formArray.push(this.builder.group({value: ''}));
     }
   }
+
   remove(idx: number) {
     if (this.field.isArray) {
       const formArray = <FormArray>this.form;

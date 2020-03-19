@@ -20,7 +20,7 @@ export class FormEditorComponent implements OnInit {
   anexosFormArray: FormArray;
   @Input() key: string;
   @Input() demandaId: number;
-  @Input() formValue: object;
+  @Input() formValue: { value: any, children?: any };
   @Input() anexos: Array<any> = [];
   @Input() canAppendFile = false;
   @Input() disabled = false;
@@ -38,9 +38,10 @@ export class FormEditorComponent implements OnInit {
     this.anexos = this.anexos || [];
     this.formField = await this.app.demandas.getForm(this.key).toPromise();
     this.anexosFormArray = this.builder.array(this.anexos.map(item => item.id));
-    this.form = this.buildForm(this.formField);
+    this.form = this.buildForm(this.formField, this.formValue);
     if (this.formValue) {
       this.form.patchValue(this.formValue);
+      console.log(this.formField, this.formValue, this.form.value);
     }
     this.mainForm = this.builder.group({
       form: this.form,
@@ -83,13 +84,14 @@ export class FormEditorComponent implements OnInit {
     }
   }
 
-  buildControl(field: FormField) {
+  buildControl(field: FormField, controlValue?: any) {
 
     const formControl = this.builder.group({});
 
     if (field.fieldType.match(/RichText|Text|Date|Options|Temas/)) {
       //formControl.addControl("fieldValue", field.isArray ? new FormArray([]) : new FormControl("", [Validators.required]));
-      formControl.addControl('value', new FormControl('', [Validators.required]));
+
+      formControl.addControl('value', new FormControl(controlValue?.value ?? '', [Validators.required]));
     }
 
     try {
@@ -97,10 +99,13 @@ export class FormEditorComponent implements OnInit {
         const children = this.builder.group({});
         //
         field.children.forEach(child => {
-          const childControl = this.buildControl(child);
+          const value = controlValue?.children?.[child.key];
           if (child.isArray) {
-            children.addControl(child.key, this.builder.array([childControl]));
+            const childControls = (value as Array<{ value: any }>).map(v => this.builder.group(v));
+            const childControl = this.buildControl(child, value);
+            children.addControl(child.key, this.builder.array(childControls));
           } else {
+            const childControl = this.buildControl(child, value);
             children.addControl(child.key, childControl);
           }
         });
@@ -120,14 +125,16 @@ export class FormEditorComponent implements OnInit {
 
   }
 
-  buildForm(field: FormField) {
+  buildForm(field: FormField, formValue: { value: any, children?: any }) {
 
     const formControl = this.builder.group({});
 
     try {
       if (field.children) {
         field.children.forEach(child => {
-          formControl.addControl(child.key, this.buildControl(child));
+          console.log(child.key, formValue?.children?.[child.key]);
+          const value = formValue?.children?.[child.key];
+          formControl.addControl(child.key, this.buildControl(child, value));
         });
       }
     } catch (error) {
