@@ -18,6 +18,7 @@ export class HistoricoComponent implements OnInit {
   html: SafeHtml;
   revisaoAtual: string;
   lastUpdate: string;
+  loading = false;
 
   set compartivo(value: { revisaoAtual: string, html: string, lastUpdate: string }) {
     this.html = value.html;
@@ -38,15 +39,16 @@ export class HistoricoComponent implements OnInit {
       this.activeModal.dismiss('Form ou demanda não informado');
       return;
     }
+    this.loading = true;
     this.historico = await this.app.demandas.getDemandaFormHistorico(this.demandaId, this.form);
     if (this.historico.length > 0) {
       this.revisaoId = this.historico[0].id;
       await this.loadDiff(this.revisaoId);
     }
+    this.loading = false;
   }
 
   async loadDiff(revisaoId) {
-    console.log(revisaoId);
     this.compartivo = {revisaoAtual: '', html: '', lastUpdate: ''};
     this.compartivo = await this.app.demandas.getDemandaFormHistoricoDiff(this.demandaId, this.form, revisaoId);
   }
