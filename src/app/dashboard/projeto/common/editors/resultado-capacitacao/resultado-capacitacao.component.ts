@@ -8,77 +8,90 @@ import {Validators, FormGroup, FormControl} from '@angular/forms';
 import {tap} from 'rxjs/operators';
 
 @Component({
-    selector: 'app-resultado-capacitacao',
-    templateUrl: './resultado-capacitacao.component.html',
-    styleUrls: []
+  selector: 'app-resultado-capacitacao',
+  templateUrl: './resultado-capacitacao.component.html',
+  styleUrls: []
 })
 export class ResultadoCapacitacaoComponent extends EditorResultado<ResultadoCapacitacao> {
 
-    readonly formFields: string[] = ['recursoHumanoId', 'tipo', 'conclusao', 'dataConclusao', 'cnpjInstituicao', 'areaPesquisa', 'tituloTrabalho'];
-    readonly tiposCapacitacao = TiposCapacitacao;
+  readonly formFields: string[] = ['recursoHumanoId', 'tipo', 'conclusao', 'dataConclusao', 'cnpjInstituicao', 'areaPesquisa', 'tituloTrabalho'];
+  readonly tiposCapacitacao = TiposCapacitacao;
 
-    recursosHumanos: Array<RecursoHumano>;
+  recursosHumanos: Array<RecursoHumano>;
 
-    @ViewChild('file') file: ElementRef;
+  @ViewChild('file') file: ElementRef;
 
-    constructor(app: AppService, activeModal: NgbActiveModal) {
-        super(app, activeModal, 'ResultadoCapacitacao');
+  constructor(app: AppService, activeModal: NgbActiveModal) {
+    super(app, activeModal, 'ResultadoCapacitacao');
+  }
+
+  load() {
+    return new Observable<void>(observer => {
+      this.projeto.REST.RecursoHumanos.listar<Array<RecursoHumano>>().subscribe(recursosHumanos => {
+        this.recursosHumanos = recursosHumanos;
+        observer.next();
+      }, error => {
+        console.error(error);
+        observer.error(error);
+      });
+    });
+  }
+
+  sanitizedValue(field: string, editable?: ResultadoCapacitacao) {
+    if (editable) {
+      switch (field) {
+        case 'tipo':
+          return editable.tipoValor;
+        case 'dataConclusao':
+          return editable.dataConclusao.substr(0, 10);
+      }
+    }
+    return super.sanitizedValue(field, editable);
+  }
+
+  configForm(): void {
+    this.formFields.forEach(f => this.form.get(f).setValidators(Validators.required));
+    this.form.get('cnpjInstituicao').setValidators([Validators.required, AppValidators.cnpj]);
+    this.form.updateValueAndValidity();
+  }
+
+  async afterSubmit(result: ResultadoResponse) {
+    if (result && result.sucesso && (result.id || this.editable.id)) {
+      await this.uploadFile(result.id || this.editable.id).pipe(tap(() => this.activeModal.close(true))).toPromise();
+    }
+    await super.afterSubmit(result);
+  }
+
+  changeFile(event: Event) {
+    console.log(event);
+    const el = this.file.nativeElement as HTMLInputElement;
+    const maxSizeFile = 1024 * 1024 * 8;
+    let filelist: FileList = el.files;
+    console.log(filelist);
+    const file = filelist.item(0);
+    console.log(file);
+    if (file.size > maxSizeFile) {
+      event.preventDefault();
+      this.app.alert('Peso máximo do arquivo: 8 MB');
+      el.value = '';
     }
 
-    load() {
-        return new Observable<void>(observer => {
-            this.projeto.REST.RecursoHumanos.listar<Array<RecursoHumano>>().subscribe(recursosHumanos => {
-                this.recursosHumanos = recursosHumanos;
-                observer.next();
-            }, error => {
-                console.error(error);
-                observer.error(error);
-            });
-        });
-    }
+  }
 
-    sanitizedValue(field: string, editable?: ResultadoCapacitacao) {
-        if (editable) {
-            switch (field) {
-                case 'tipo':
-                    return editable.tipoValor;
-                case 'dataConclusao':
-                    return editable.dataConclusao.substr(0, 10);
-            }
+  uploadFile(id) {
+    const el = this.file.nativeElement as HTMLInputElement;
+
+    if (el.files.length > 0) {
+      return this.app.file.upload(el.files.item(0), new FormGroup({
+        ResultadoCapacitacaoId: new FormControl(id),
+      })).pipe(tap(result => {
+        if (result.sucesso) {
+          this.logger.save(`Arquivo ${el.files.item(0).name} adicionado`);
+          this.file.nativeElement.value = '';
         }
-        return super.sanitizedValue(field, editable);
+      }));
     }
 
-    configForm(): void {
-        this.formFields.forEach(f => this.form.get(f).setValidators(Validators.required));
-        this.form.get('cnpjInstituicao').setValidators([Validators.required, AppValidators.cnpj]);
-        this.form.updateValueAndValidity();
-    }
-
-    async afterSubmit(result: ResultadoResponse) {
-        if (result && result.sucesso && (result.id || this.editable.id)) {
-            await this.uploadFile(result.id || this.editable.id).pipe(tap(() => this.activeModal.close(true))).toPromise();
-        }
-        await super.afterSubmit(result);
-    }
-
-    changeFile(event) {
-    }
-
-    uploadFile(id) {
-        const el = this.file.nativeElement as HTMLInputElement;
-
-        if (el.files.length > 0) {
-            return this.app.file.upload(el.files.item(0), new FormGroup({
-                ResultadoCapacitacaoId: new FormControl(id),
-            })).pipe(tap(result => {
-                if (result.sucesso) {
-                    this.logger.save(`Arquivo ${el.files.item(0).name} adicionado`);
-                    this.file.nativeElement.value = '';
-                }
-            }));
-        }
-
-        return of(NoRequest);
-    }
+    return of(NoRequest);
+  }
 }
