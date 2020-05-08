@@ -1,9 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { ListaProjetosComponent } from '../shared/lista-projetos/lista-projetos.component';
+import { ProjetosCaptacaoModule } from './projetos-captacao/projetos-captacao.module';
 
 
 const routes: Routes = [
+  {
+    path: 'captacao',
+    loadChildren: () => import('./projetos-captacao/projetos-captacao.module').then(m => ProjetosCaptacaoModule)
+  },
   {
     path: "proposta",
     component: ListaProjetosComponent,

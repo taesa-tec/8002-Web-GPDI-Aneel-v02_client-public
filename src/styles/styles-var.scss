@@ -3,6 +3,7 @@
 $blue: #03286a;
 $blueLight: #7082A4;
 $green: #259821;
+$grey-light: #BFCDD5;
 $verde-claro: #77BB6B;
 $yellow: #F7A30F;
 $red: #D95F5F;
@@ -16,7 +17,20 @@ $cinza: #656565;
 $red-secundario: #e48585;
 
 
-$theme-colors: ("blue": $blue, "blue-light": $blueLight, "red": $red, "red-secundario": $red-secundario, "orange": $orange, "yellow": $yellow, "green": $green, "cinza-escuro": $cinzaEscuro, "cinza-claro": $cinzaClaro, "cinza": $cinza, "verde-claro": $verde-claro);
+$theme-colors: (
+        "blue": $blue, 
+        "blue-light": $blueLight, 
+        "red": $red, 
+        "red-secundario": $red-secundario, 
+        "orange": $orange, 
+        "yellow": $yellow, 
+        "green": $green, 
+        "grey-light": $grey-light,
+        "cinza-escuro": $cinzaEscuro, 
+        "cinza-claro": $cinzaClaro, 
+        "cinza": $cinza, 
+        "verde-claro": $verde-claro
+);
 
 $font-family-base: "Roboto", sans-serif;
 $font-sizes: 8, 10, 12, 14, 16, 18, 20, 22, 24, 28, 32, 36, 48, 64, 72 !default;

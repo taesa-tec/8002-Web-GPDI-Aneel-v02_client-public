@@ -3,9 +3,9 @@
 @font-face {
   font-family: '#{$icomoon-font-family}';
   src:
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?6fiu58') format('truetype'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?6fiu58') format('woff'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?6fiu58##{$icomoon-font-family}') format('svg');
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?x87sak') format('truetype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?x87sak') format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?x87sak##{$icomoon-font-family}') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -26,6 +26,21 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.ta-work-plan {
+  &:before {
+    content: $ta-work-plan; 
+  }
+}
+.ta-gavel {
+  &:before {
+    content: $ta-gavel; 
+  }
+}
+.ta-file-check {
+  &:before {
+    content: $ta-file-check; 
+  }
+}
 .ta-attachment {
   &:before {
     content: $ta-attachment; 

@@ -1,0 +1,67 @@
+<div class="row justify-content-between">
+    <div class="col mb-4">
+        <h5 class="text-uppercase text-blue font-weight-normal my-4">RECURSOS MATERIAIS</h5>
+    </div>
+    <div class="col-auto">
+        <button type="button" class="btn btn-outline-primary" (click)="salvarRecurso()" >
+            <i class="ta-plus-circle fs-24 align-middle"></i>
+            Novo Recurso Material
+        </button>
+    </div>
+</div>
+
+<div class="row pb-4" *ngIf="filters && filters.length > 0">
+    <div class="form-group col-3" *ngFor="let filter of filters">
+        <select
+        class="form-control"
+        [(ngModel)]="filter.value"
+        (change)="setCurrentData()"
+        >
+        <option
+            *ngFor="let f of filter.options | orderBy: 'text'"
+            [value]="f.value"
+            >{{ f.text }}</option
+        >
+        </select>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <ng-container *ngIf="!loading; else loadingTpl">
+            <app-table 
+                [cols]="cols" 
+                [data]="recursosMateriais.data" 
+                [buttons]="buttons" 
+                (action)="tableAction($event)">
+            </app-table>
+        </ng-container>
+        <ng-container *ngTemplateOutlet="paginacao"></ng-container>
+    </div>
+</div>
+
+<ng-template #loadingTpl>
+    <h6 class="text-center py-3">
+        Carregando recursos Materiais...
+    </h6>
+</ng-template>
+<ng-template #paginacao>
+    <div class="d-flex justify-content-center" *ngIf="recursosMateriais && !hidePagination">
+        <ngb-pagination [(page)]="recursosMateriais.page" 
+                        [pageSize]="recursosMateriais.perPage"
+                        [collectionSize]="recursosMateriais.totalItems" 
+                        (pageChange)="gotoPage($event)"
+                        [ellipses]="true" 
+                        [rotate]="true" 
+                        [maxSize]="5">
+        </ngb-pagination>
+    </div>
+</ng-template>
+
+<div class="row">
+    <div class="col">
+        <div class="mt-4">
+            Última atualização em 16.02.2019, às 19:30 por André Moraes
+        </div>
+    </div>
+</div>

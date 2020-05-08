@@ -1,0 +1,23 @@
+<div class="row justify-content-between">
+    <div class="col">
+        <h5 class="text-uppercase text-blue font-weight-normal my-4">
+            GERENCIAMENTO PROPOSTAS
+        </h5>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-12">
+        <ul class="nav nav-bar-row nav-justified pt-3">
+            <ng-container *ngFor="let route of menu">
+                <li class="nav-item">
+                    <a routerLinkActive="active" class="nav-link" [routerLink]="route.path">{{ route.text }}</a>
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+</div>
+
+<div class="wrap-outlet-projeto">
+    <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,92 @@
+<div class="row justify-content-between">
+    <div class="col-12">
+        <h5 class="text-uppercase text-blue font-weight-normal my-4">
+            ALTERAÇÕES RECEBIMENTO PROPOSTAS
+        </h5>
+    </div>
+</div>
+
+<hr class="mb-0">
+
+<div class="row">
+    <div class="col-12">
+        <h5 class="text-uppercase text-blue font-weight-normal my-4">
+            DADOS ORIGINAIS
+        </h5>
+
+        <div class="bg-cinza-claro p-3 rounded">
+
+            <div class="form-group">
+                <label>Modelos Contratos</label>
+                <div>{{ proposta.modeloContrato }}</div>
+            </div>
+
+            <div class="form-group">
+                <label>Arquivos disponibilizados para o fornecedor</label>
+                <div class="d-flex flex-column align-items-start">
+                    <div class="btn btn-link py-1" *ngFor="let arquivo of proposta.arquivos">
+                        <span>
+                            <i class="ta-attachment"></i>
+                        </span>
+                        {{ arquivo }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Considerações estras para os fornecedores</label>
+                <div class="border border-blue-light rounded p-3">
+                    {{ proposta.consideracoes }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Data máxima de envio proposta</label>
+                <div>{{ proposta.dataProposta | date: 'dd/MM/yyyy' }}</div>
+            </div>
+
+            <div class="form-group">
+                <label>Fornecedores convidados</label>
+                <div *ngFor="let fornecedor of proposta.fornecedores">
+                    {{ fornecedor }}
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+</div>
+
+<hr class="mt-4 mb-0">
+
+<div class="row">
+    <div class="col-12">
+        <h5 class="text-uppercase text-blue font-weight-normal my-4">
+            ALTERAR PROJETO
+        </h5>
+
+        <form [formGroup]="formProposta" (ngSubmit)="onSubmit()">
+
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="data-proposta">Alterar data máxima de participação</label>
+                        <input type="date" class="form-control" formControlName="dataProposta" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary mr-3" [disabled]="formProposta.invalid">
+                    <i class="ta-plus-circle mr-1"></i>
+                    Alterar Projeto
+                </button>
+                <div class="button btn btn-link" (click)="cancelarCaptacao()">
+                    <i class="ta-cancel-circle"></i>
+                    Cancelar Processo de Captação
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

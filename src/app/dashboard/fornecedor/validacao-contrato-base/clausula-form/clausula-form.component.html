@@ -1,0 +1,45 @@
+<div class="modal-header">
+    <div class="text-uppercase modal-title text-blue-light fs-24">
+        SUGIRA AQUI UMA REDAÇÃO PARA ESTA CLÁUSULA
+    </div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <i class="ta-cancel-circle"></i>
+    </button>
+</div>
+
+<app-loading type="fullscreen"></app-loading>
+
+<div class="modal-body">
+
+    <div class="d-flex bg-cinza-claro rounded mb-3">
+        <div class="text-center mx-3 m-4">
+            <h6 class="text-blue mb-4">
+                {{ clausula.title }}
+            </h6>
+            <div class="text-left">
+                {{ clausula.data.text }}
+            </div>
+        </div>
+    </div>
+
+    <form [formGroup]="formClausula" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+            <textarea class="form-control" rows="6" maxlength="1000" formControlName="texto" placeholder="Digite o seu texto"></textarea>
+        </div>
+
+        <div class="form-group">
+            <div class="text-right">
+                <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">
+                    Cancelar
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="formClausula.invalid">
+                    <i class="ta-save mr-1"></i>
+                    Salvar Dados
+                </button>
+            </div>
+        </div>
+
+    </form>
+    
+</div>

@@ -1,0 +1,67 @@
+<div class="row justify-content-between">
+    <div class="col">
+        <h5 class="text-uppercase text-blue font-weight-normal my-4">ENVIO PROPOSTA APROVAÇÃO</h5>
+    </div>
+</div>
+
+<!-- <div class="row">
+    <div class="col">
+        <div class="alert border border-danger d-flex align-items-center" *ngIf="!propostaAprovacao.status">
+            <div class="mr-3">
+                <i class="ta-cancel-circle fs-48 text-danger"></i>
+            </div>
+            <div class="text-danger">
+                Riscos não Cadastrados.<br />
+                Produtos não Cadastrados.<br />
+                Recursos Humanos não Cadastrados.
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="alert border border-success d-flex align-items-center" *ngIf="propostaAprovacao.status">
+            <div class="mr-3">
+                <i class="ta-ok fs-48 text-success"></i>
+            </div>
+            <div class="text-success">
+                Seu Plano de Trabalho e os contratos criados foram todos enviados com sucesso e você não precisa mais
+                fazer nada para participar da próxima etapa. Entretanto, você poderá editar qualquer item até a data
+                máxima do envio da proposta.
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="row">
+    <div class="col">
+        <div class="text-right">
+            <div class="button btn btn-link px-0">
+                <i class="ta-ampulheta"></i>
+                Histórico de Versões
+            </div>
+        </div>
+        <app-pdf-viewer [url]="pdfUrl"></app-pdf-viewer>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col mb-4">
+        <h6 class="text-uppercase text-blue-light">Arquivos complementares</h6>
+        <div *ngFor="let arquivo of propostaAprovacao.arquivos">
+            <div class="btn btn-link px-0 py-1">
+                {{ arquivo }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col text-right">
+        <button type="button" class="btn btn-green">
+            <i class="ta-ok"></i>
+            Marcar como Finalizado
+        </button>
+    </div>
+</div>

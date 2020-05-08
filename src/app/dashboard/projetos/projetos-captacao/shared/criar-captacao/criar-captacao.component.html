@@ -1,0 +1,77 @@
+<div class="modal-header">
+  <div class="text-uppercase modal-title text-blue-light fs-24">
+    Nova Captação
+  </div>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <i class="ta-cancel-circle"></i>
+  </button>
+</div>
+
+<app-loading type="fullscreen"></app-loading>
+
+<div class="modal-body" *ngIf="formCaptacao">
+  <form [formGroup]="formCaptacao" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label>Fornecedores sugeridos (Opcional)</label>
+      <div class="d-flex mb-2" *ngFor="let control of arrayFornecedores.controls; let i = index">
+          <select class="form-control" [formControl]="control">
+              <option value="" hidden>Escolha um fornecedor</option>
+              <option [value]="fornecedor.id" *ngFor="let fornecedor of getFornecedores(control.value)">
+                  {{ fornecedor.nome }}
+              </option>
+          </select>
+          <button 
+              type="button" 
+              class="btn btn-link text-decoration-none p-2"
+              *ngIf="i === 0"
+              [disabled]="fornecedores.length <= arrayFornecedores.controls.length"
+              (click)="addFornecedor()"
+          >
+              <i class="ta-plus-circle"></i>
+          </button>
+          <button 
+              type="button" 
+              class="btn btn-link text-decoration-none p-2"
+              *ngIf="i > 0"
+              (click)="removeFornecedor(i)"
+          >
+              <i class="ta-remove-circle"></i>
+          </button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="observacoes">Observações para equipe suprimentos (Opcional)</label>
+      <textarea class="form-control mt-2" id="observacoes" rows="7" formControlName="observacoes"></textarea>
+    </div>
+
+    <div class="form-group">
+      <div class="btn btn-link px-0">
+        <i class="ta-attachment"></i>
+        Anexar Arquivos (opcional)
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="text-right">
+        <div
+          class="button btn btn-link"
+          (click)="activeModal.dismiss('cancel')"
+        >
+          Cancelar
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="formCaptacao.invalid">
+          <i class="ta-plus-circle"></i>
+          Enviar captação para Suprimentos
+        </button>
+      </div>
+    </div>
+
+  </form>
+</div>

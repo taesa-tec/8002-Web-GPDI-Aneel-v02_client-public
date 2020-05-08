@@ -1,0 +1,90 @@
+<div class="modal-header">
+    <div class="text-uppercase modal-title text-blue-light fs-24">
+        {{ status ? 'EDITAR EMPRESA CO-EXECUTORA' : 'REGISTRAR EMPRESA CO-EXECUTORA' }}
+    </div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <i class="ta-cancel-circle"></i>
+    </button>
+</div>
+
+<app-loading type="fullscreen"></app-loading>
+
+<div class="modal-body">
+    <form [formGroup]="formCoExecutor" (ngSubmit)="onSubmit()">
+
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="cpnj">CNPJ</label>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    id="cnpj" 
+                    formControlName="cnpj"
+                    mask="00.000.000/0000-00"
+                    placeholder="00.000.000/0000-00"
+                >
+            </div>
+            <div class="form-group col">
+                <label for="uf">UF de cadastro na fazenda</label>
+                <select class="form-control" id="uf" formControlName="uf">
+                    <option value="" hidden>Selecione</option>
+                    <option [value]="uf.nome" *ngFor="let uf of ufs">
+                        {{ uf.nome }}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="razao-social">Razão social</label>
+            <input type="text" class="form-control" id="razao-social" formControlName="razaoSocial">
+        </div>
+
+        <div class="form-group">
+            <label for="modelos-contratos">Modelos contratos</label>
+            <div class="d-flex">
+                <select class="form-control" id="modelos-contratos" formControlName="contrato">
+                    <option value="" hidden>Selecione</option>
+                    <option [value]="modeloContrato.nome" *ngFor="let modeloContrato of modelosContratos">
+                        {{ modeloContrato.nome }}
+                    </option>
+                </select>
+                <button 
+                    type="button" 
+                    class="btn btn-link text-decoration-none p-2"
+                    [disabled]="!formCoExecutor.get('contrato').value.length"
+                    (click)="abrirContrato()"
+                >
+                    <i class="ta-eye fs-22"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="d-flex">
+                <div 
+                    class="button btn btn-link px-0" 
+                    (click)="excluirEmpresa()"
+                    *ngIf="status"
+                >
+                    <i class="ta-cancel-circle"></i>
+                    Excluir Empresa
+                </div>
+                <div class="ml-auto">
+                    <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">
+                        Cancelar
+                    </div>
+                    <button type="submit" class="btn btn-primary" [disabled]="formCoExecutor.invalid" *ngIf="status">
+                        <i class="ta-save mr-1"></i>
+                        Salvar Co Executara
+                    </button>
+                    <button type="submit" class="btn btn-primary" [disabled]="formCoExecutor.invalid" *ngIf="!status">
+                        <i class="ta-plus-circle mr-1"></i>
+                        Adicionar Co Executara
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

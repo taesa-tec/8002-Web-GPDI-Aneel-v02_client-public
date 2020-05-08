@@ -1,0 +1,62 @@
+<div class="modal-header">
+    <div class="text-uppercase modal-title text-blue-light fs-24">
+        NOVA ETAPA
+    </div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <i class="ta-cancel-circle"></i>
+    </button>
+</div>
+
+<app-loading type="fullscreen"></app-loading>
+
+<div class="modal-body">
+    <form [formGroup]="formEtapa" (ngSubmit)="onSubmit()">
+       
+        <div class="form-group">
+            <label>Descrição das atividades</label>
+            <app-textarea class="form-control" rows="4" maxlength="1000" formControlName="descricao"></app-textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Produtos associados a esta etapa</label>
+            <div class="d-flex mb-2" *ngFor="let control of arrayProdutos.controls; let i = index">
+                <select class="form-control" [formControl]="control">
+                    <option value="" hidden>Selecione</option>
+                    <option [value]="produto.id" *ngFor="let produto of getProdutos(control.value)">
+                        {{ produto.nome }}
+                    </option>
+                </select>
+                <button 
+                    type="button" 
+                    class="btn btn-link text-decoration-none p-2"
+                    *ngIf="i === 0"
+                    [disabled]="produtos.length <= arrayProdutos.controls.length"
+                    (click)="addProduto()"
+                >
+                    <i class="ta-plus-circle"></i>
+                </button>
+                <button 
+                    type="button" 
+                    class="btn btn-link text-decoration-none p-2"
+                    *ngIf="i > 0"
+                    (click)="removeProduto(i)"
+                >
+                    <i class="ta-remove-circle"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="text-right">
+                <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">
+                    Cancelar
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="formEtapa.invalid">
+                    <i class="ta-plus-circle mr-1"></i>
+                    Adicionar Etapa
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>

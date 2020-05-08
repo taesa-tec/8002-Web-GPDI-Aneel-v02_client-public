@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <div class="text-uppercase modal-title text-blue-light fs-24">
+        TÍTULO DO CONTRATO
+    </div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <i class="ta-cancel-circle"></i>
+    </button>
+</div>
+
+<app-loading type="fullscreen"></app-loading>
+
+<div class="modal-body">
+    
+    <div class="bg-cinza-claro rounded p-2">
+        <div class="bg-white p-3" [innerHTML]="contrato.texto"></div>
+    </div>
+    <div class="d-flex justify-content-center mt-3">
+        <button class="btn btn-outline-primary" type="button" (click)="activeModal.dismiss('Cross click')">
+            <i class="ta-arrow-left fs-28 align-middle"></i>
+            Voltar
+        </button>
+    </div>
+
+</div>

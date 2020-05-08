@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <div class="text-uppercase modal-title text-blue-light fs-24">
+    Enviar para Seleção
+  </div>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <i class="ta-cancel-circle"></i>
+  </button>
+</div>
+<app-loading type="fullscreen"></app-loading>
+<div class="modal-body">
+  {{ projeto | json }}
+</div>

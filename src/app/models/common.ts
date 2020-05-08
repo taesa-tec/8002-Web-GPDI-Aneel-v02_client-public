@@ -574,3 +574,11 @@ export interface MenuItem {
 }
 
 export type AppMenu = Array<MenuItem>;
+
+export interface Pagination<T> {
+  data: Array<T>;
+  page: number;
+  perPage: number;
+  totalPages: number;
+  totalItems: number;
+}

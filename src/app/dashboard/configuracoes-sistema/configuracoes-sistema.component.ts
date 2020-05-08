@@ -19,6 +19,9 @@ export class ConfiguracoesSistemaComponent implements OnInit {
     this.m = [
       { text: 'Equipe de P&D', path: 'equipe-ped' },
       { text: 'Padrão Formulários', path: 'padrao-formularios' },
+      { text: 'Contratos Padrão', path: 'contratos-padrao' },
+      { text: 'Contrato Base', path: 'contrato-base' },
+      { text: 'Fornecedores', path: 'fornecedores' },
     ];
 
     this.PessoasEquipe = [

@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-12 px-4 py-5">
+    <form [formGroup]="formContrato" *ngIf="formContrato" (ngSubmit)="onSubmit()">
+      <div class="row mb-3">
+        <div class="form-group col">
+          <label for="titulo-contrato">Título Contrato</label>
+          <input type="text" class="form-control" id="titulo-contrato" formControlName="titulo">
+        </div>
+        <div class="form-group col">
+          <label for="categoria-contrato">Categoria Contrato</label>
+          <select class="form-control" id="categoria-contrato" formControlName="categoria">
+            <option value="" hidden>Escolha uma categoria</option>
+            <option [value]="categoria" *ngFor="let categoria of categorias">{{ categoria }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <ckeditor
+          [config]="configEditor"
+          formControlName="texto"
+        ></ckeditor>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary" [disabled]="formContrato.invalid">
+          <i class="ta-save"></i>
+          Salvar Dados
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

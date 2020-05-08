@@ -1,0 +1,104 @@
+<div class="modal-header">
+    <div class="text-uppercase modal-title text-blue-light fs-24">
+        {{ status ? 'EDITAR RECURSO HUMANO' : 'REGISTRAR RECURSO HUMANO' }}
+    </div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <i class="ta-cancel-circle"></i>
+    </button>
+</div>
+
+<app-loading type="fullscreen"></app-loading>
+
+<div class="modal-body">
+    <form [formGroup]="formRecursoHumano" (ngSubmit)="onSubmit()">
+
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="empresa">Empresa</label>
+                <select class="form-control" id="empresa" formControlName="empresa">
+                    <option value="" hidden>Selecione um Empresa</option>
+                    <option [value]="empresa.nome" *ngFor="let empresa of empresas">
+                        {{ empresa.nome }}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col">
+                <label for="valor-hora">Valor hora</label>
+                <input 
+                type="text" 
+                class="form-control" 
+                id="valor-hora" 
+                formControlName="valorHora" 
+                currencyMask 
+            />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="nome-completo">Nome Completo</label>
+            <input type="text" class="form-control" id="nome-completo" formControlName="nome" placeholder="Digite o seu nome completo">
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="titulacao">Titulação</label>
+                <select class="form-control" id="titulacao" formControlName="titulacao">
+                    <option value="" hidden>Selecione uma Titulação</option>
+                    <option [value]="titulacao.nome" *ngFor="let titulacao of titulacoes">
+                        {{ titulacao.nome }}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col">
+                <label for="funcao">Função</label>
+                <select class="form-control" id="funcao" formControlName="funcao">
+                    <option value="" hidden>Selecione uma Função</option>
+                    <option [value]="funcao.nome" *ngFor="let funcao of funcoes">
+                        {{ funcao.nome }}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="brasileiro">Brasileiro?</label>
+                <select class="form-control" id="brasileiro" formControlName="brasileiro">
+                    <option value="" hidden>Selecione</option>
+                    <option [value]="true">Sim</option>
+                    <option [value]="false">Não</option>
+                </select>
+            </div>
+            <div class="form-group col">
+                <label for="cpf">Cpf ou passaporte</label>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    id="cpf" 
+                    [mask]="cnpjCpfMask"
+                    formControlName="cpf" 
+                    placeholder="00.000.000/0000-00"
+                />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="curriculo-lattes">Endereço currículo lattes</label>
+            <input type="text" class="form-control" id="curriculo-lattes" formControlName="curriculoLattes" placeholder="Insira aqui o URL do currículo">
+        </div>
+
+        <div class="form-group">
+            <div class="text-right">
+                <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">
+                    Cancelar
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="formRecursoHumano.invalid">
+                    <i class="ta-save mr-1" *ngIf="status"></i>
+                    <i class="ta-plus-circle mr-1" *ngIf="!status"></i>
+                    Salvar Pessoa
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>

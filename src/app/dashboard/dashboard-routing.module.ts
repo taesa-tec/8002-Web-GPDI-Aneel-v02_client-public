@@ -48,8 +48,16 @@ const routes: Routes = [
         path: 'demanda',
         loadChildren: () => import('@app/dashboard/demanda/demanda.module').then(m => m.DemandaModule)
       },
-      /*
-      */
+      // PROVISÓRIO
+      {
+        path: 'suprimentos',
+        loadChildren: () => import('@app/dashboard/suprimentos/suprimentos.module').then(m => m.SuprimentosModule)
+      },
+      {
+        path: 'fornecedor',
+        loadChildren: () => import('@app/dashboard/fornecedor/fornecedor.module').then(m => m.FornecedorModule)
+      },
+      //-----------------------------------------------------------------------------------------------------------
       {path: '**', component: NotFoundComponent},
     ]
   }

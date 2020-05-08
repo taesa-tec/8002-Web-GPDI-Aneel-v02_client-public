@@ -1,0 +1,84 @@
+<div class="modal-header">
+    <div class="text-uppercase modal-title text-blue-light fs-24">
+        {{ status ? 'EDITAR ALOCAÇÃO DE RECURSO MATERIAL' : 'ALOCAR RECURSO MATERIAL' }}
+    </div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <i class="ta-cancel-circle"></i>
+    </button>
+</div>
+
+<app-loading type="fullscreen"></app-loading>
+
+<div class="modal-body">
+    <form [formGroup]="formAlocarRecurso" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+            <label for="recurso-material">Selecione um recurso material</label>
+            <select class="form-control" id="recurso-material" formControlName="recursoMaterial">
+                <option value="" hidden>Selecione aqui</option>
+                <option [value]="recurso.nome" *ngFor="let recurso of recursosMateriais">
+                    {{ recurso.nome }}
+                </option>
+            </select>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="empresa-financiadora">Empresa financiadora</label>
+                <select class="form-control" id="empresa-financiadora" formControlName="empresaFinanciadora">
+                    <option value="" hidden>Selecione</option>
+                    <option [value]="empresaFinanciadora.nome" *ngFor="let empresaFinanciadora of empresasFinanciadoras">
+                        {{ empresaFinanciadora.nome }}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col">
+                <label for="empresa-recebedora">Empresa recebedora</label>
+                <select class="form-control" id="empresa-recebedora" formControlName="empresaRecebedora">
+                    <option value="" hidden>Selecione</option>
+                    <option [value]="empresaRecebedora.nome" *ngFor="let empresaRecebedora of empresasRecebedoras">
+                        {{ empresaRecebedora.nome }}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="etapa">Etapa</label>
+                <select class="form-control" id="etapa" formControlName="etapa">
+                    <option value="" hidden>Selecione</option>
+                    <option [value]="etapa.nome" *ngFor="let etapa of etapas">
+                        {{ etapa.nome }}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col">
+                <label for="quantidade">Quantidade</label>
+                <input type="text" class="form-control" id="quantidade" formControlName="quantidade" placeholder="Digite">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Justificativa do recurso nesta etapa</label>
+            <app-textarea class="form-control" formControlName="justificativa" rows="4" maxlength="1000"></app-textarea>
+        </div>
+
+        <div class="form-group">
+            <div class="text-right">
+                <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">
+                    Cancelar
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="formAlocarRecurso.invalid" *ngIf="status">
+                    <i class="ta-save mr-1"></i>
+                    Salvar Alterações
+                </button>
+                <button type="submit" class="btn btn-primary" [disabled]="formAlocarRecurso.invalid" *ngIf="!status">
+                    <i class="ta-plus-circle mr-1"></i>
+                    Adicionar Recurso
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>
