@@ -8,54 +8,55 @@ import {AppService} from '@app/services/app.service';
 
 
 @Component({
-    selector: 'app-edit-user',
-    templateUrl: './edit-user.component.html',
-    styleUrls: ['./edit-user.component.scss']
+  selector: 'app-edit-user',
+  templateUrl: './edit-user.component.html',
+  styleUrls: ['./edit-user.component.scss']
 })
 export class EditUserComponent implements OnInit {
 
-    form: FormGroup;
+  form: FormGroup;
 
-    empresas: Observable<Array<Empresa>>;
+  empresas: Observable<Array<Empresa>>;
 
-    resultado: ResultadoResponse;
+  resultado: ResultadoResponse;
 
-    user: User;
+  user: User;
 
-    constructor(protected app: AppService, protected route: ActivatedRoute) {
-    }
+  constructor(protected app: AppService, protected route: ActivatedRoute) {
+  }
 
-    @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
+  @ViewChild(LoadingComponent, {static: true}) loading: LoadingComponent;
 
-    ngOnInit() {
-        this.getUser();
-    }
+  ngOnInit() {
+    // @todo Resolver
+    this.getUser();
+  }
 
-    protected getUser() {
-        this.loading.show();
-        this.app.users.byId(this.route.snapshot.params.id).subscribe(user => {
-            this.user = user;
-            this.loading.hide();
+  protected getUser() {
+    this.loading.show();
+    this.app.users.byId(this.route.snapshot.params.id).subscribe(user => {
+      this.user = user;
+      this.loading.hide();
+    });
+  }
+
+  submit(value: any) {
+    return this.app.users.edit(value);
+  }
+
+  onSubmited(value: ResultadoResponse) {
+
+    try {
+      if (value.sucesso) {
+        this.app.router.navigate(['/dashboard', 'gerenciar-usuarios'], {
+          queryParams: {
+            message: 'user-updated'
+          }
         });
-    }
-
-    submit(value: any) {
-        return this.app.users.edit(value);
-    }
-
-    onSubmited(value: ResultadoResponse) {
-
-        try {
-            if (value.sucesso) {
-                this.app.router.navigate(['/dashboard', 'gerenciar-usuarios'], {
-                    queryParams: {
-                        message: 'user-updated'
-                    }
-                });
-            }
-        } catch (e) {
-
-        }
+      }
+    } catch (e) {
 
     }
+
+  }
 }

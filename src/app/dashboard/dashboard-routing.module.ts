@@ -22,6 +22,7 @@ const routes: Routes = [
       {path: '', redirectTo: 'demandas', pathMatch: 'full'},
       {path: 'meus-projetos', component: MeusProjetosComponent},
       {path: 'meu-cadastro', component: MeuCadastroComponent},
+      // @todo Criar modulo
       {path: 'gerenciar-usuarios', component: GerenciarUsuariosComponent, canActivate: [AdminGuard]},
       {path: 'gerenciar-usuarios/novo', component: NewUserComponent, canActivate: [AdminGuard]},
       {path: 'gerenciar-usuarios/edit/:id', component: EditUserComponent, canActivate: [AdminGuard]},
@@ -30,10 +31,10 @@ const routes: Routes = [
         component: MainComponent,
         loadChildren: () => import('@app/dashboard/projetos/projetos.module').then(m => m.ProjetosModule)
       },
-      {
-        path: 'projeto',
-        loadChildren: () => import('@app/dashboard/projeto/projeto.module').then(m => m.ProjetoModule)
-      },
+      // {
+      //   path: 'projeto',
+      //   loadChildren: () => import('@app/dashboard/projeto/projeto.module').then(m => m.ProjetoModule)
+      // },
       {
         path: 'demandas',
         component: MainComponent,

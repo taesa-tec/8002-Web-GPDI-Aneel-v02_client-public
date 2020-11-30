@@ -33,9 +33,9 @@ export class MainComponent implements OnInit {
     this.menu = [
       {text: 'Gestão de Demandas', icon: 'ta-projeto', path: '/dashboard/demandas'},
       {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: '/dashboard/projetos/captacao'},
-      {text: 'Projetos Em Proposta', icon: 'ta-projeto', path: '/dashboard/projetos/proposta'},
-      {text: 'Projetos Em Execução', icon: 'ta-box', path: '/dashboard/projetos/iniciado'},
-      {text: 'Projetos Em Finalização', icon: 'ta-ficha', path: '/dashboard/projetos/encerrado'},
+      // {text: 'Projetos Em Proposta', icon: 'ta-projeto', path: '/dashboard/projetos/proposta'},
+      // {text: 'Projetos Em Execução', icon: 'ta-box', path: '/dashboard/projetos/iniciado'},
+      // {text: 'Projetos Em Finalização', icon: 'ta-ficha', path: '/dashboard/projetos/encerrado'},
       {text: 'Configurações do Sistema', icon: 'ta-gear', path: '/dashboard/configuracoes-do-sistema'},
     ];
   }

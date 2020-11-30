@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 
-import { ListaProjetosComponent } from '../shared/lista-projetos/lista-projetos.component';
-import { ProjetosCaptacaoModule } from './projetos-captacao/projetos-captacao.module';
+import {ListaProjetosComponent} from '../shared/lista-projetos/lista-projetos.component';
+import {ProjetosCaptacaoModule} from './projetos-captacao/projetos-captacao.module';
 
 
 const routes: Routes = [
@@ -10,34 +10,35 @@ const routes: Routes = [
     path: 'captacao',
     loadChildren: () => import('./projetos-captacao/projetos-captacao.module').then(m => ProjetosCaptacaoModule)
   },
-  {
-    path: "proposta",
-    component: ListaProjetosComponent,
-    data: {
-      titulo: "Projetos - Etapa Proposta",
-      projetoStatus: "Proposta"
-    }
-  },
-  {
-    path: "iniciado",
-    component: ListaProjetosComponent,
-    data: {
-      titulo: "Projetos Em Execução",
-      projetoStatus: "Iniciado"
-    }
-  },
-  {
-    path: "encerrado",
-    component: ListaProjetosComponent,
-    data: {
-      titulo: "Projetos em Finalização",
-      projetoStatus: "Encerrado"
-    }
-  }
+  // {
+  //   path: "proposta",
+  //   component: ListaProjetosComponent,
+  //   data: {
+  //     titulo: "Projetos - Etapa Proposta",
+  //     projetoStatus: "Proposta"
+  //   }
+  // },
+  // {
+  //   path: "iniciado",
+  //   component: ListaProjetosComponent,
+  //   data: {
+  //     titulo: "Projetos Em Execução",
+  //     projetoStatus: "Iniciado"
+  //   }
+  // },
+  // {
+  //   path: "encerrado",
+  //   component: ListaProjetosComponent,
+  //   data: {
+  //     titulo: "Projetos em Finalização",
+  //     projetoStatus: "Encerrado"
+  //   }
+  // }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ProjetosRoutingModule { }
+export class ProjetosRoutingModule {
+}

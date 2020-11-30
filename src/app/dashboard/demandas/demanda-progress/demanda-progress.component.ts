@@ -47,7 +47,7 @@ export class DemandaProgressComponent implements OnInit {
     this.etapaAtualStatus = this.demanda.status;
     const {criador, superiorDireto, revisor} = this.demanda;
     const {coordenador, gerente, diretor} = this.equipePeD;
-    this.responsaveis = [criador, superiorDireto, coordenador, revisor, coordenador, gerente, diretor];
+    this.responsaveis = [criador, superiorDireto, coordenador.nomeCompleto, revisor, coordenador.nomeCompleto, gerente.nomeCompleto, diretor.nomeCompleto];
   }
 
   async enviarCaptacao(id) {

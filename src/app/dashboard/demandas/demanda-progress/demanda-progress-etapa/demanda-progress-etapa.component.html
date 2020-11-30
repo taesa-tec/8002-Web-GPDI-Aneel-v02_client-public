@@ -6,8 +6,8 @@
     <div class="text-blue fs-12 font-weight-medium">
       {{ etapa && etapa.titulo }}
     </div>
-    <div class="font-weight-medium fs-12">
-      {{ (responsavel && (responsavel.nomeCompleto || responsavel.userName)) || "Pendente" }}
+    <div class="font-weight-medium fs-12 responsavel-nome" [ngbTooltip]="responsavel" container="body" placement="bottom">
+      {{ responsavel || "Pendente" }}
     </div>
   </main>
   <footer>
