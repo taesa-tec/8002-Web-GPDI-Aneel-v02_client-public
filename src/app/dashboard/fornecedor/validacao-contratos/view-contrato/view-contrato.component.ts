@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { AppService } from '@app/services/app.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AppService} from '@app/services/app.service';
+import _configEditor from '@app/core/config-editor';
 
 @Component({
   selector: 'app-view-contrato',
@@ -10,21 +10,22 @@ import { AppService } from '@app/services/app.service';
   styleUrls: ['./view-contrato.component.scss']
 })
 export class ViewContratoComponent implements OnInit {
-
+  configEditor = _configEditor;
   formContrato: FormGroup;
 
   constructor(
     private app: AppService,
     private route: ActivatedRoute,
     private fb: FormBuilder
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.configForm();
   }
 
   configForm() {
-    const idControto = this.route.snapshot.params["id"]; 
+    const idControto = this.route.snapshot.params['id'];
     const contrato = this._getContrato(idControto);
 
     this.formContrato = this.fb.group({
@@ -34,17 +35,17 @@ export class ViewContratoComponent implements OnInit {
   }
 
   onSubmit() {
-    if(this.formContrato.valid) {
+    if (this.formContrato.valid) {
       console.log(this.formContrato.value);
     }
   }
 
   _getContrato(id) {
-    switch(id) {
-      case "1": 
-        return { id: 1, texto: "Contrato 1" } 
-      case "2": 
-        return { id: 2, texto: "Contrato 2" }
+    switch (id) {
+      case '1':
+        return {id: 1, texto: 'Contrato 1'};
+      case '2':
+        return {id: 2, texto: 'Contrato 2'};
     }
   }
 

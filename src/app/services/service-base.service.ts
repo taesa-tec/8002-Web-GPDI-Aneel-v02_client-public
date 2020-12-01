@@ -1,0 +1,75 @@
+import {HttpClient} from '@angular/common/http';
+import {BaseEntity} from '@app/models';
+
+export class ServiceBase<T extends { id?: any }> {
+
+  constructor(protected http: HttpClient, protected controller: string) {
+  }
+
+  sanitizeQuery(query: any) {
+
+    if (typeof query === 'object') {
+      const urlQuery = new URLSearchParams();
+      const keys = Object.keys(query);
+      keys.forEach(key => {
+        if (query[key]) {
+          urlQuery.append(key, query[key]);
+        }
+      });
+      return `?${urlQuery.toString()}`;
+    } else if (typeof query === 'string') {
+      if (query.trim().substring(0, 1) !== '?') {
+        query = `?${query.trim()}`;
+      }
+      return query.length > 1 ? query : '';
+    }
+    return '';
+  }
+
+  async obter<QT>(id: string, query?: string | object): Promise<QT>;
+  async obter(id: number, query?: string | object): Promise<T>;
+  async obter(id?: string, query?: string | object): Promise<Array<T>>;
+  async obter(id: any = '', query?: string | object): Promise<any> {
+    const append = this.sanitizeQuery(query);
+    if (typeof id === 'number') {
+      return await this.http.get<T>(`${this.controller}/${id}${append}`).toPromise();
+    }
+    return await this.http.get<Array<T>>(`${this.controller}/${id}${append}`).toPromise();
+  }
+
+  async listaSimples<TQ>(query?: string | object): Promise<Array<TQ>>;
+  async listaSimples(query?: string | object): Promise<Array<T>> {
+    return await this.obter('SimpleList', query);
+  }
+
+  /*
+  async page<TQ>(page: number, query?: string | object): Promise<Pagination<TQ>>;
+  async page(page: number, query?: string | object): Promise<Pagination<T>> {
+    return await this.obter(`Page/${page}`, query);
+  }*/
+
+  async editar<QT>(id: string, query?: string): Promise<QT> {
+    return this.obter<QT>(`${id}/Edit`, query);
+  }
+
+  async criar(data: any, query?: string | object) {
+    const append = this.sanitizeQuery(query);
+    return await this.http.post<T>(`${this.controller}/${append}`, data).toPromise();
+  }
+
+
+  async atualizar(data, query?: string | object) {
+    const append = this.sanitizeQuery(query);
+    return await this.http.put<T>(`${this.controller}/${append}`, data).toPromise();
+  }
+
+  async salvar(data: BaseEntity, query?: string) {
+    return await ((data.id && data.id > 0) ? this.atualizar(data, query) : this.criar(data, query));
+  }
+
+  async excluir(id: any) {
+    return await this.http.delete(`${this.controller}/?id=${id}`).toPromise();
+  }
+
+
+}

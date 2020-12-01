@@ -1,4 +1,6 @@
 import {PipeTransform} from '@angular/core';
+import {SafeHtml} from '@angular/platform-browser';
+import {Pagination} from '@app/models';
 
 export interface TableActionEvent<T = any> {
   action: string;
@@ -10,15 +12,29 @@ export interface TableComponentCol<T = any> {
   field: string;
   value?: (item: T) => any;
   order?: boolean;
+  orderType?: 'number' | 'date' | 'alpha';
+  priority?: number;
   type?: string;
   pipe?: string | PipeTransform;
+  width?: string;
+  permission?: string | Array<string>;
 }
 
 export type TableComponentCols<T = any> = Array<TableComponentCol<T>>;
 
 export class TableComponentRow {
   selected = false;
-  rendered = {};
+  rendered: { [key: string]: string | SafeHtml } = {};
+  value: { [key: string]: string } = {};
+  originalValue: { [key: string]: any } = {};
+  protected propToArray = prop => Object.keys(prop)
+    .filter(key => key in prop && prop[key])
+    .map(key => prop[key]);
+
+
+  valueToArray = () => this.propToArray(this.value);
+  originalValueToArray = () => this.propToArray(this.value);
+  toArray = () => this.propToArray(this.data);
 
   constructor(public data: any) {
   }
@@ -26,6 +42,8 @@ export class TableComponentRow {
   toggleSelect() {
     this.selected = !this.selected;
   }
+
+
 }
 
 export interface TableComponentAction {
@@ -33,6 +51,8 @@ export interface TableComponentAction {
   action: string;
   icon?: string;
   className?: string;
+  permission?: string;
+  isLink?: boolean;
   isGroupAction?: boolean;
 }
 
@@ -47,6 +67,8 @@ export interface TableComponentFilter {
   field: string;
   options: Array<{ text: string; value: string }>;
   value?: any;
+  class?: string;
+  filter?: (item: any, value: string) => boolean;
 }
 
 export interface TableComponentOptions<T = any> {
@@ -56,3 +78,18 @@ export interface TableComponentOptions<T = any> {
   hasSelect?: boolean;
 }
 
+export interface TableCellData {
+  originalValue: any;
+  value: string;
+  slug: string;
+  col: TableComponentCol;
+}
+
+export interface TableOrder {
+  field: string;
+  direction: 'asc' | 'desc';
+  type?: 'date' | 'number' | 'alpha';
+}
+
+export type TableDataRequester<T> = (page?: number, filter?: Array<TableComponentFilter>, order?: Array<TableOrder>, search?: string)
+  => Promise<Pagination<T>>;

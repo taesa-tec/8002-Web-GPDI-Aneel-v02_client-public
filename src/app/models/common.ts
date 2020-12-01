@@ -1,5 +1,18 @@
 import {UserRole} from './enums';
 
+export interface BaseEntity {
+  id: number;
+
+  [prop: string]: any;
+}
+
+
+export interface Searchable<T> {
+  item: T;
+  texts: Array<string>;
+}
+
+
 export interface TextValue {
   text: string;
   value: any;
@@ -581,4 +594,5 @@ export interface Pagination<T> {
   perPage: number;
   totalPages: number;
   totalItems: number;
+  filters?: Array<{ name: string; field: string; values: { [key: string]: string } }>;
 }

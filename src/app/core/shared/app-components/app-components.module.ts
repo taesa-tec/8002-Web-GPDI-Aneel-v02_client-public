@@ -17,6 +17,7 @@ import {OrdersComponent} from '@app/core/shared/app-components/orders/orders.com
 import {TableComponent} from '@app/core/shared/app-components/table/table.component';
 
 
+
 const components = [
   LoadingComponent,
   HeaderComponent,

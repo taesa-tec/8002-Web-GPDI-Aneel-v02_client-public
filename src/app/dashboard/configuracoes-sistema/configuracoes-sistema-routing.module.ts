@@ -5,11 +5,11 @@ import {EquipeComponent} from './equipe/equipe.component';
 import {ConfiguracoesSistemaComponent} from './configuracoes-sistema.component';
 import {FormEditorComponent} from '@app/dashboard/configuracoes-sistema/form-editor/form-editor.component';
 import {PadraoFormulariosComponent} from './padrao-formularios/padrao-formularios.component';
-import { ContratosPadraoComponent } from './contratos-padrao/contratos-padrao.component';
-import { ContratoPadraoFormComponent } from './contratos-padrao/contrato-padrao-form/contrato-padrao-form.component';
-import { ContratoBaseComponent } from './contrato-base/contrato-base.component';
-import { FornecedoresComponent } from './fornecedores/fornecedores.component';
-import { FornecedorFormComponent } from './fornecedores/fornecedor-form/fornecedor-form.component';
+import {ContratosPadraoComponent} from './contratos-padrao/contratos-padrao.component';
+import {ContratoPadraoFormComponent} from './contratos-padrao/contrato-padrao-form/contrato-padrao-form.component';
+import {ContratoBaseComponent} from './contrato-base/contrato-base.component';
+import {FornecedoresComponent} from './fornecedores/fornecedores.component';
+import {FornecedorFormComponent} from './fornecedores/fornecedor-form/fornecedor-form.component';
 
 const routes: Routes = [
   {
@@ -35,16 +35,9 @@ const routes: Routes = [
       },
       {
         path: 'contratos-padrao',
-        component: ContratosPadraoComponent
+        loadChildren: () => import('./contratos-padrao/contratos-padrao.module').then(m => m.ContratosPadraoModule)
       },
-      {
-        path: 'contratos-padrao/novo',
-        component: ContratoPadraoFormComponent
-      },
-      {
-        path: 'contratos-padrao/editar/:id',
-        component: ContratoPadraoFormComponent
-      },
+
       {
         path: 'contrato-base',
         component: ContratoBaseComponent

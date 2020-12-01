@@ -1,18 +1,29 @@
 <div>
-  <div class="row py-4" *ngIf="filters && filters.length > 0">
-    <div class="form-group col" *ngFor="let filter of filters">
-      <select
-        class="form-control"
-        [(ngModel)]="filter.value"
-        (change)="setCurrentData()"
-      >
-        <option
-          *ngFor="let f of filter.options | orderBy: 'text'"
-          [value]="f.value"
-        >{{ f.text }}</option
+  <div class="row py-4">
+    <ng-container *ngIf="hasSearch">
+      <div class="form-group col-auto">
+        <div class="position-relative">
+          <input type="search" class="form-control" placeholder="Buscar" [(ngModel)]="searchTerm"
+                 (ngModelChange)="setCurrentData()">
+          <span class="ta-search fs-22 text-cinza-claro-4" style="position: absolute; right: 4px; top:10px"></span>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="filters && filters.length > 0">
+      <div class="form-group" [ngClass]="filter.class" *ngFor="let filter of filters">
+        <select
+          class="form-control"
+          [(ngModel)]="filter.value"
+          (change)="setCurrentData(1)"
         >
-      </select>
-    </div>
+          <option
+            *ngFor="let f of filter.options | orderBy: 'text'"
+            [value]="f.value"
+          >{{ f.text }}</option
+          >
+        </select>
+      </div>
+    </ng-container>
   </div>
 
   <table class="table">
@@ -34,15 +45,16 @@
             <span class="mr-2">{{ col.title }}</span>
             <app-handler-order
               *ngIf="col.order"
-              [current]="listOrder"
+              [currents]="listOrder"
               [field]="col.field"
+              [type]="col.orderType"
               (order)="reorderItems($event)"
             >
             </app-handler-order>
           </div>
         </th>
       </ng-container>
-      <th *ngIf="_buttons.length > 0">
+      <th *ngIf="$buttons.length > 0">
         <div class="d-flex align-items-center">
           <span class="mx-2">Ações</span>
         </div>
@@ -70,25 +82,44 @@
           <td
             [innerHTML]="item.rendered[col.field]"
             [className]="getFieldClass(col)"
+            [attr.width]="col.width"
           ></td>
         </ng-container>
       </ng-container>
-      <td *ngIf="_buttons.length > 0" width="1%">
-        <ng-container *ngFor="let actionItem of _buttons">
-          <button
-            type="button"
-            class="btn btn-sm text-nowrap"
-            [ngClass]="actionItem.className"
-            (click)="doAction(actionItem.action, item.data)"
-          >
-            <i [class]="actionItem.icon" *ngIf="actionItem.icon"></i>
-            {{ actionItem.text }}
-          </button>
-        </ng-container>
+      <td *ngIf="$buttons.length > 0" width="1%">
+        <div class="d-flex flex-row">
+          <ng-container *ngFor="let actionItem of $buttons">
+            <button
+              *ngIf="!actionItem.isLink"
+              type="button"
+              class="btn btn-sm mx-1 text-nowrap"
+              [ngClass]="actionItem.className"
+              (click)="doAction(actionItem.action, item.data)"
+            >
+              <i [class]="actionItem.icon" *ngIf="actionItem.icon"></i>
+              {{ actionItem.text }}
+            </button>
+            <a
+              *ngIf="actionItem.isLink"
+              [routerLink]="getActionLink(actionItem, item)"
+              [fragment]="getActionLinkFragment(actionItem,item)"
+              class="btn btn-sm mx-1 text-nowrap"
+              [ngClass]="actionItem.className"
+            >
+              <i [class]="actionItem.icon" *ngIf="actionItem.icon"></i>
+              {{ actionItem.text }}
+            </a>
+          </ng-container>
+        </div>
       </td>
     </tr>
-    <tr *ngIf="currentData.length === 0">
+    <tr *ngIf="currentData.length === 0 && !requesting">
       <td [colSpan]="colLength" class="text-center">{{ emptyText }}</td>
+    </tr>
+    <tr *ngIf="requesting">
+      <td [colSpan]="colLength" class="text-center">
+        <div class="spinner-border"></div>
+      </td>
     </tr>
     </tbody>
     <tfoot *ngIf="showSelect">
@@ -102,7 +133,7 @@
           >
             <option value="">Ações em massa</option>
             <option
-              *ngFor="let actionItem of _groups_buttons"
+              *ngFor="let actionItem of $groupsButtons"
               [value]="actionItem.action"
             >
               {{ actionItem.text }}
@@ -121,4 +152,17 @@
     </tr>
     </tfoot>
   </table>
+
+  <div class="row" *ngIf="pagination && pagination.totalItems > pagination.perPage">
+    <div class="col d-flex justify-content-center">
+      <ngb-pagination [(page)]="pagination.page"
+                      [pageSize]="pagination.perPage"
+                      [collectionSize]="pagination.totalItems"
+                      (pageChange)="setCurrentData()"
+                      [ellipses]="true"
+                      [rotate]="true"
+                      [maxSize]="5">
+      </ngb-pagination>
+    </div>
+  </div>
 </div>

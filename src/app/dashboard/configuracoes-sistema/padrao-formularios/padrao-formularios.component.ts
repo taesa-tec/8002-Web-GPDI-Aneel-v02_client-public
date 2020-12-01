@@ -29,7 +29,7 @@ export class PadraoFormulariosComponent implements OnInit {
 
   tableAction({action, data}) {
     if (action === 'edit') {
-      this.app.router.navigate(['/dashboard/configuracoes-do-sistema/padrao-formularios', data.key]);
+      this.app.router.navigate(['/dashboard/configuracoes/padrao-formularios', data.key]);
     }
   }
 
