@@ -15,7 +15,7 @@ import {AccordionComponent} from '@app/core/shared/app-components/accordion/acco
 import {TipComponent} from '@app/core/shared/app-components/tip/tip.component';
 import {OrdersComponent} from '@app/core/shared/app-components/orders/orders.component';
 import {TableComponent} from '@app/core/shared/app-components/table/table.component';
-
+import {OrderContentComponent} from '@app/core/shared/app-components/order-content/order-content.component';
 
 
 const components = [
@@ -24,7 +24,8 @@ const components = [
   AccordionComponent,
   TipComponent,
   OrdersComponent,
-  TableComponent
+  TableComponent,
+  OrderContentComponent
 ];
 
 @NgModule({

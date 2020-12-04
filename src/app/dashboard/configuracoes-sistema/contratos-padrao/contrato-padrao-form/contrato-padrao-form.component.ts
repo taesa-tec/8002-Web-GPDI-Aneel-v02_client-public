@@ -33,8 +33,9 @@ export class ContratoPadraoFormComponent implements OnInit {
     this.form = this.fb.group({
       id: '0',
       titulo: ['', [Validators.required]],
-      tipo: ['', [Validators.required]],
-      conteudo: ['', Validators.required]
+      header: ['', Validators.required],
+      conteudo: ['', Validators.required],
+      footer: ['', Validators.required]
     });
     if (this.route.snapshot.data.contrato) {
       this.form.patchValue(this.route.snapshot.data.contrato);
@@ -47,6 +48,8 @@ export class ContratoPadraoFormComponent implements OnInit {
       try {
         await this.service.salvar(this.form.value);
         this.app.alert('Contrato salvo com sucesso').then();
+        this.app.router.navigateByUrl('/dashboard/configuracoes/contratos-padrao').then();
+
       } catch (e) {
         this.app.alert('Não foi possível salvar o contrato').then();
         console.error(e);

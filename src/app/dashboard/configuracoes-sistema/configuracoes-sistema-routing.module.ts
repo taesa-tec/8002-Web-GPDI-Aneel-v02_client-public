@@ -5,9 +5,6 @@ import {EquipeComponent} from './equipe/equipe.component';
 import {ConfiguracoesSistemaComponent} from './configuracoes-sistema.component';
 import {FormEditorComponent} from '@app/dashboard/configuracoes-sistema/form-editor/form-editor.component';
 import {PadraoFormulariosComponent} from './padrao-formularios/padrao-formularios.component';
-import {ContratosPadraoComponent} from './contratos-padrao/contratos-padrao.component';
-import {ContratoPadraoFormComponent} from './contratos-padrao/contrato-padrao-form/contrato-padrao-form.component';
-import {ContratoBaseComponent} from './contrato-base/contrato-base.component';
 import {FornecedoresComponent} from './fornecedores/fornecedores.component';
 import {FornecedorFormComponent} from './fornecedores/fornecedor-form/fornecedor-form.component';
 
@@ -39,20 +36,12 @@ const routes: Routes = [
       },
 
       {
-        path: 'contrato-base',
-        component: ContratoBaseComponent
+        path: 'clausulas',
+        loadChildren: () => import('./clausulas/clausulas.module').then(m => m.ClausulasModule)
       },
       {
         path: 'fornecedores',
-        component: FornecedoresComponent
-      },
-      {
-        path: 'fornecedores/novo',
-        component: FornecedorFormComponent
-      },
-      {
-        path: 'fornecedores/editar/:id',
-        component: FornecedorFormComponent
+        loadChildren: () => import('./fornecedores/fornecedores.module').then(m => m.FornecedoresModule)
       }
     ],
 

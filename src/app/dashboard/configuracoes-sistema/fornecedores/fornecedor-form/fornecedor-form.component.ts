@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
-import { AppService } from '@app/services/app.service';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AppValidators } from '@app/models';
+import {AppService} from '@app/services/app.service';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {AppValidators} from '@app/models';
+import {ServiceBase} from '@app/services/service-base.service';
 
 @Component({
   selector: 'app-fornecedor-form',
@@ -12,61 +13,60 @@ import { AppValidators } from '@app/models';
 })
 export class FornecedorFormComponent implements OnInit {
 
-  fornecedor: any;
-  status: boolean;
+  private _fornecedor: any;
 
-  formFornecedor: FormGroup;
-
-  constructor(
-    protected app: AppService, 
-    private fb: FormBuilder, 
-    public activeModal: NgbActiveModal
-  ) { }
-
-  ngOnInit() {
-    this.configForm();
+  get fornecedor(): any {
+    return this._fornecedor;
   }
 
-  configForm() {
-    const fornecedor: any = this.fornecedor;
-    this.status = this.fornecedor ? true:false;
+  set fornecedor(value: any) {
+    this._fornecedor = value;
+    this.form.patchValue(value);
+    this.form.get('responsavelNome').disable();
+    this.form.get('responsavelEmail').disable();
+  }
 
-    this.formFornecedor = this.fb.group({
-      id: [fornecedor && fornecedor.id || ''],
-      nome: [fornecedor && fornecedor.nome || '', [Validators.required]],
-      cnpj: [fornecedor && fornecedor.cnpj || '', [Validators.required, AppValidators.cnpj]],
-      nomeResponsavel: [{value: fornecedor && fornecedor.nomeResponsavel || '', disabled: this.status}, [Validators.required]],
-      emailResponsavel: [{value: fornecedor && fornecedor.nomeResponsavel || '', disabled: this.status}, [Validators.email, Validators.required]],
-      status: [fornecedor && fornecedor.status || true],
+  form = this.fb.group({
+    id: [0, Validators.required],
+    ativo: [true],
+    nome: ['', Validators.required],
+    cnpj: ['', Validators.required],
+    responsavelNome: [''],
+    responsavelEmail: [''],
+    trocarResponsavel: [false]
+  });
+
+  constructor(
+    protected app: AppService,
+    protected service: ServiceBase<any>,
+    private fb: FormBuilder,
+    public activeModal: NgbActiveModal
+  ) {
+  }
+
+  ngOnInit() {
+    this.form.get('trocarResponsavel').valueChanges.subscribe(trocar => {
+      if (trocar) {
+        this.form.get('responsavelNome').enable();
+        this.form.get('responsavelEmail').enable();
+      } else {
+        this.form.get('responsavelNome').disable();
+        this.form.get('responsavelEmail').disable();
+      }
     });
   }
 
-  trocarResponsavel(status) {
-    if(status) {
-      this.formFornecedor.get('nomeResponsavel').enable();
-      this.formFornecedor.get('emailResponsavel').enable();
-    } else {
-      this.formFornecedor.get('nomeResponsavel').disable();
-      this.formFornecedor.get('emailResponsavel').disable();
-    }
-  }
 
   async onSubmit() {
-    if (this.formFornecedor.valid) {
-      const fornecedor: any = this.formFornecedor.value;
+    if (this.form.valid) {
 
       try {
-        if (fornecedor.id) {
-          // await this.app.fornecedores.editarFornecedor(fornecedor);
-          this.app.alert('Fornecedor editado com sucesso');
-        } else {
-          //await this.app.fornecedores.criarFornecedor(fornecedor);
-          this.app.alert('Fornecedor adicionado com sucesso');
-        }
-        this.activeModal.close();
+        await this.service.salvar(this.form.value);
+        this.app.alert('Fornecedor salvo com sucesso').then();
+        this.activeModal.close(true);
 
       } catch (e) {
-        this.app.alert('Não foi possível salvar o fornecedor');
+        this.app.alert('Não foi possível salvar o fornecedor').then();
         console.error(e);
       }
     }

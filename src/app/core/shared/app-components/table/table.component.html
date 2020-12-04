@@ -25,7 +25,6 @@
       </div>
     </ng-container>
   </div>
-
   <table class="table">
     <thead *ngIf="showHeader">
     <tr>
@@ -62,6 +61,7 @@
     </tr>
     </thead>
     <tbody>
+
     <tr
       *ngFor="let item of currentData; index as i; trackBy: trackFunc"
       [ngClass]="{ selected: item.selected }"

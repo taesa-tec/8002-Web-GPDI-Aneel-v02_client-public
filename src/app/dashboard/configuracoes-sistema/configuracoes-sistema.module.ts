@@ -7,9 +7,6 @@ import {PadraoFormulariosComponent} from './padrao-formularios/padrao-formulario
 import {EquipeComponent} from './equipe/equipe.component';
 import {ConfiguracoesSistemaComponent} from './configuracoes-sistema.component';
 import {FormEditorComponent} from '@app/dashboard/configuracoes-sistema/form-editor/form-editor.component';
-import {ContratoBaseComponent} from './contrato-base/contrato-base.component';
-import {FornecedoresComponent} from './fornecedores/fornecedores.component';
-import {FornecedorFormComponent} from './fornecedores/fornecedor-form/fornecedor-form.component';
 
 
 @NgModule({
@@ -18,9 +15,6 @@ import {FornecedorFormComponent} from './fornecedores/fornecedor-form/fornecedor
     EquipeComponent,
     PadraoFormulariosComponent,
     FormEditorComponent,
-    ContratoBaseComponent,
-    FornecedoresComponent,
-    FornecedorFormComponent
   ],
   imports: [
     CommonModule,

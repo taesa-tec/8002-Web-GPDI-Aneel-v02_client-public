@@ -18,17 +18,11 @@ export class ContratosPadraoComponent implements OnInit {
   cols: TableComponentCols = [
     {
       field: 'id',
-      title: 'Título'
+      title: 'Id'
     },
     {
       field: 'titulo',
       title: 'Título do Contrato',
-      order: true
-    },
-    {
-      field: 'tipo',
-      title: 'Categoria',
-      value: (item => item.tipo === 0 ? 'Executor' : 'Co-Executor'),
       order: true
     }
   ];

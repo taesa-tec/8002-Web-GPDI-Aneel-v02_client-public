@@ -6,19 +6,26 @@
           <label for="titulo-contrato">Título Contrato</label>
           <input type="text" class="form-control" id="titulo-contrato" formControlName="titulo">
         </div>
-        <div class="form-group col">
-          <label for="categoria-contrato">Categoria Contrato</label>
-          <select class="form-control" id="categoria-contrato" formControlName="tipo">
-            <option value="" hidden>Escolha uma categoria</option>
-            <option value="0">Executor</option>
-            <option value="1">Co-Executor</option>
-          </select>
-        </div>
       </div>
       <div class="form-group">
+        <label>PARTE INICIAL (NÃO EDITÁVEL PELO FORNECEDOR)</label>
+        <ckeditor
+          [config]="configEditor"
+          formControlName="header"
+        ></ckeditor>
+      </div>
+      <div class="form-group">
+        <label>PARTE CENTRAL (EDITÁVEL PELO FORNECEDOR)</label>
         <ckeditor
           [config]="configEditor"
           formControlName="conteudo"
+        ></ckeditor>
+      </div>
+      <div class="form-group">
+        <label>PARTE FINAL (NÃO EDITÁVEL PELO FORNECEDOR)</label>
+        <ckeditor
+          [config]="configEditor"
+          formControlName="footer"
         ></ckeditor>
       </div>
       <div class="form-group">

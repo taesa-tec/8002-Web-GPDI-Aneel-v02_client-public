@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, AfterViewInit} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit, Output, AfterViewInit} from '@angular/core';
 import {
   TableActionEvent,
   TableComponentActions,
@@ -7,17 +7,17 @@ import {
   TableComponentOptions,
   TableComponentFilter,
   TableComponentCol, TableCellData, TableOrder, TableComponentAction, TableDataRequester
-} from "./table";
-import {chunk, get, isNil, orderBy, kebabCase, camelCase, template, uniqBy} from "lodash-es";
+} from './table';
+import {chunk, get, isNil, orderBy, kebabCase, camelCase, template, uniqBy} from 'lodash-es';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {CurrencyPipe} from '@angular/common';
-import * as moment from "moment";
-import {Searchables} from "@app/core/util";
+import * as moment from 'moment';
+import {Searchables} from '@app/core/util';
 
 @Component({
-  selector: "app-table",
-  templateUrl: "./table.component.html",
-  styleUrls: ["./table.component.scss"]
+  selector: 'app-table',
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit, AfterViewInit {
 
@@ -31,15 +31,15 @@ export class TableComponent implements OnInit, AfterViewInit {
   // Botões
   $buttons: TableComponentActions = [];
   $groupsButtons: TableComponentActions = [];
-  actionGroup = "";
+  actionGroup = '';
   currentData: Array<TableComponentRow> = [];
   showSelect = false;
 
 
   @Input() dataRequester: TableDataRequester<any>;
-  @Input() emptyText = "Lista Vazia";
+  @Input() emptyText = 'Lista Vazia';
   @Input() showHeader = true;
-  @Input() itemIdentity = "id";
+  @Input() itemIdentity = 'id';
   @Input() hasSelect = false;
   @Input() filters: Array<TableComponentFilter> = [];
   @Input() hasSearch = true;
@@ -105,6 +105,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Input() set data(value: Array<any>) {
     if (value && Array.isArray(value)) {
       this.$data = this.buildData(value.map(data => new TableComponentRow(data)));
+      this.$index = new Searchables<TableComponentRow>();
       this.$data.forEach(item => {
         this.$index.push({
           item,
@@ -151,7 +152,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   filterRows($data: Array<TableComponentRow>) {
     let filteredData = $data;
     this.filters.forEach(f => {
-      if (typeof f.filter === "function") {
+      if (typeof f.filter === 'function') {
         filteredData = filteredData.filter(item => f.filter(item, f.value));
       } else if (f.value || f.value !== '') {
 
@@ -165,10 +166,10 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.listOrder.forEach(listOrder => {
       let interator: any;
       switch (listOrder.type) {
-        case "date":
+        case 'date':
           interator = [(item) => moment(get(item, `originalValue.${camelCase(listOrder.field)}`)).unix()];
           break;
-        case "number":
+        case 'number':
           interator = (item) => {
             const value = parseFloat(get(item, `value.${camelCase(listOrder.field)}`));
             return isNaN(value) ? 0 : value;
@@ -235,14 +236,14 @@ export class TableComponent implements OnInit, AfterViewInit {
     let menus: Array<{ action?: CallableFunction, label: string }> = [];
     col.priority = col.priority || 0;
     menus.push({
-      label: "Aumentar Prioridade",
+      label: 'Aumentar Prioridade',
       action: () => {
         col.priority++;
         this.setCurrentData().then();
       }
     });
     menus.push({
-      label: "Diminuir Prioridade",
+      label: 'Diminuir Prioridade',
       action: () => {
         col.priority--;
         this.setCurrentData().then();
@@ -266,11 +267,11 @@ export class TableComponent implements OnInit, AfterViewInit {
         this.filters = response.filters.map(filter => {
           const keys = Object.keys(filter.values);
           return {
-            class: "col-auto",
+            class: 'col-auto',
             field: filter.field,
-            value: "",
+            value: '',
             options: [
-              {value: "", text: ` Selecionar ${filter.name}`},
+              {value: '', text: ` Selecionar ${filter.name}`},
               ...keys.map(k => ({text: filter.values[k], value: k}))
             ]
           };
@@ -303,7 +304,7 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   itemClick(event, item: TableComponentRow) {
     try {
-      if (this.hasSelect && event.target.tagName === "TD") {
+      if (this.hasSelect && event.target.tagName === 'TD') {
         item.toggleSelect();
       }
     } catch (e) {
@@ -323,7 +324,7 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   getActionLink(action: TableComponentAction, item: TableComponentRow) {
     try {
-      return template(action.action)(item.data).split("#")[0];
+      return template(action.action)(item.data).split('#')[0];
     } catch (e) {
       return '';
     }
@@ -343,18 +344,18 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   doActionGroup(action: string, data: any) {
-    this.actionGroup = "";
+    this.actionGroup = '';
     this.doAction(action, data);
   }
 
   protected getTableCellData(col: TableComponentCol, item): TableCellData {
-    let value = "";
+    let value = '';
     const originalValue = get(item, col.field);
     const slug = kebabCase(col.field);
-    if (typeof col.value === "function") {
+    if (typeof col.value === 'function') {
       value = col.value(item);
     } else {
-      value = isNil(originalValue) ? "" : originalValue;
+      value = isNil(originalValue) ? '' : originalValue;
     }
     return {
       slug,
@@ -381,7 +382,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   protected toPipe(cellData: TableCellData) {
     const {slug, col} = cellData;
     let value = cellData.value;
-    if (typeof col.pipe !== "string") {
+    if (typeof col.pipe !== 'string') {
       if (Array.isArray(value)) {
         value = col.pipe.transform(value[0], ...value.splice(1));
       } else {
@@ -393,7 +394,7 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   toCurrency(cellData: TableCellData) {
     const {value, slug, col} = cellData;
-    const v = new CurrencyPipe("PT-BR").transform(value || 0, 'R$');
+    const v = new CurrencyPipe('PT-BR').transform(value || 0, 'R$');
     return `<span class="table-field-${col.type || 'default'}-${slug}">${v}</span>`;
   }
 
@@ -421,7 +422,7 @@ export class TableComponent implements OnInit, AfterViewInit {
       }
     } catch (e) {
       console.error(e, {cell: cellData});
-      return "";
+      return '';
     }
   }
 
