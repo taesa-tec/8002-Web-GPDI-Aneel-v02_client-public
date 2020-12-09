@@ -15,6 +15,7 @@ import {TipComponent} from '@app/core/components/tip/tip.component';
 import {DebugComponent} from '@app/core/components/screens/debug.component';
 import {ErrorComponent} from '@app/core/components/screens/error.component';
 import {SharedModule} from '@app/core/shared';
+import {FormsModule} from '@app/core/components/forms';
 
 const components = [
   AccordionComponent,
@@ -37,11 +38,12 @@ const components = [
     ...components
   ],
   imports: [
+    FormsModule,
     SharedModule,
     DirectivesModule,
     PipesModule
   ],
-  exports: [...components, SharedModule],
+  exports: [...components, FormsModule],
 
 })
 export class ComponentsModule {

@@ -41,7 +41,6 @@ export class FormEditorComponent implements OnInit {
     this.form = this.buildForm(this.formField, this.formValue);
     if (this.formValue) {
       this.form.patchValue(this.formValue);
-      console.log(this.formField, this.formValue, this.form.value);
     }
     this.mainForm = this.builder.group({
       form: this.form,
@@ -132,7 +131,6 @@ export class FormEditorComponent implements OnInit {
     try {
       if (field.children) {
         field.children.forEach(child => {
-          console.log(child.key, formValue?.children?.[child.key]);
           const value = formValue?.children?.[child.key];
           formControl.addControl(child.key, this.buildControl(child, value));
         });

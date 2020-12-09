@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { DemandaComponent } from './demanda.component';
-import { EquipeValidacaoComponent } from './equipe-validacao/equipe-validacao.component';
-import { DocumentoAprovacoesComponent } from './documento-aprovacoes/documento-aprovacoes.component';
-import { AprovacaoComponent } from './aprovacao/aprovacao.component';
-import { FormEditorComponent } from '@app/dashboard/demanda/form-editor/form-editor.component';
-import { DemandaResolver } from '@app/dashboard/demanda/demanda.resolver';
-import { DemandaGuard } from '@app/dashboard/demanda/guards/demanda.guard';
-import { DemandaLogsComponent } from '@app/dashboard/demanda/demanda-logs/demanda-logs.component';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+import {DemandaComponent} from './demanda.component';
+import {EquipeValidacaoComponent} from './equipe-validacao/equipe-validacao.component';
+import {DocumentoAprovacoesComponent} from './documento-aprovacoes/documento-aprovacoes.component';
+import {AprovacaoComponent} from './aprovacao/aprovacao.component';
+import {FormEditorComponent} from '@app/dashboard/demanda/form-editor/form-editor.component';
+import {DemandaResolver} from '@app/dashboard/demanda/demanda.resolver';
+import {DemandaGuard} from '@app/dashboard/demanda/guards/demanda.guard';
+import {DemandaLogsComponent} from '@app/dashboard/demanda/demanda-logs/demanda-logs.component';
 
 const routes: Routes = [
   {

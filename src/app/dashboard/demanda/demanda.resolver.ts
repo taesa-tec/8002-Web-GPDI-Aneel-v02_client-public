@@ -1,11 +1,11 @@
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { Demanda } from '@app/models/demandas';
-import { Injectable } from '@angular/core';
-import { AppService } from '@app/services/app.service';
-import { DemandaEtapaStatus } from '@app/dashboard/demandas/commons';
-import { Roles, UserRole } from '@app/models';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import {Demanda} from '@app/models/demandas';
+import {Injectable} from '@angular/core';
+import {AppService} from '@app/services/app.service';
+import {DemandaEtapaStatus} from '@app/dashboard/demandas/commons';
+import {Roles, UserRole} from '@app/models';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class DemandaResolver implements Resolve<{ demanda: Demanda, menu: Array<any>, defaultPage?: string }> {
   constructor(protected app: AppService) {
   }
@@ -19,7 +19,7 @@ export class DemandaResolver implements Resolve<{ demanda: Demanda, menu: Array<
     const equipe = await this.app.sistema.getEquipePeD();
     const menu = this.menu(demanda, equipe);
     const defaultPage = this.defaultPage(demanda, equipe);
-    return { demanda, menu, defaultPage };
+    return {demanda, menu, defaultPage};
   }
 
   protected defaultPage(demanda: Demanda, equipe): string {
@@ -47,11 +47,10 @@ export class DemandaResolver implements Resolve<{ demanda: Demanda, menu: Array<
     const user = this.app.users.currentUser;
     if (user.role === UserRole.Administrador) {
       return this.menuCriador([
-        { text: 'Central Administrativa', icon: 'ta-central-admin', path: 'central-administrativa' },
-        { text: 'Logs', icon: 'ta-log', path: 'logs' }
+        {text: 'Central Administrativa', icon: 'ta-central-admin', path: 'central-administrativa'},
+        {text: 'Logs', icon: 'ta-log', path: 'logs'}
       ], demanda);
     }
-
 
 
     switch (user.id) {
@@ -70,22 +69,23 @@ export class DemandaResolver implements Resolve<{ demanda: Demanda, menu: Array<
 
   protected menuCriador(menu: Array<any>, demanda: Demanda) {
     return [
-      { text: 'Definição Pessoas Processo Validação', icon: 'ta-user-id', path: 'equipe-validacao' },
-      { text: 'Especificação Técnica', icon: 'ta-capacete', path: 'formulario/especificacao-tecnica' },
-      { text: 'Documento e Aprovações', icon: 'ta-projeto', path: 'documento-aprovacoes' },
+      {text: 'Definição Pessoas Processo Validação', icon: 'ta-user-id', path: 'equipe-validacao'},
+      {text: 'Especificação Técnica', icon: 'ta-capacete', path: 'formulario/especificacao-tecnica'},
+      {text: 'Documento e Aprovações', icon: 'ta-projeto', path: 'documento-aprovacoes'},
       ...menu
     ];
   }
 
   protected menuAprovadores(menu: Array<any>, demanda: Demanda) {
+    console.log(demanda);
     if (demanda.status !== DemandaEtapaStatus.ReprovadaPermanente) {
       return [
-        { text: 'Processo Aprovação Demanda', icon: 'ta-projeto', path: 'aprovacao' },
+        {text: 'Processo Aprovação Demanda', icon: 'ta-projeto', path: 'aprovacao'},
         ...menu
       ];
     }
     return [
-      { text: 'Hístórico Demanda', icon: 'ta-projeto', path: 'historico' },
+      {text: 'Hístórico Demanda', icon: 'ta-projeto', path: 'historico'},
       ...menu
     ];
   }

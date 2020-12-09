@@ -1,0 +1,12 @@
+<nav class="side-nav">
+  <ng-container *ngFor="let route of menu">
+    <a
+      [routerLink]="route.path"
+      class="side-nav-item"
+      routerLinkActive="active"
+    >
+      <span class="fs-24 mr-3"><i [class]="route.icon"></i></span>
+      {{ route.text }}
+    </a>
+  </ng-container>
+</nav>

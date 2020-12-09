@@ -23,6 +23,7 @@ export class CriarComponent implements OnInit {
     id: ['', [Validators.required]],
     fornecedores: this.fornecedoresFormArray,
     observacoes: [''],
+    files: ['']
   });
 
 
