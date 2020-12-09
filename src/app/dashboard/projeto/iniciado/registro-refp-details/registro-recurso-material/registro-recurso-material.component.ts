@@ -7,7 +7,7 @@ import { zip, Observable, of, timer } from 'rxjs';
 import { AppService } from '@app/services/app.service';
 import { RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RecursoMaterial, AppValidators, CategoriasContabeis, RegistroREFP, ResultadoResponse } from '@app/models';
 import { ProjetoFacade } from '@app/facades/index';
-import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
+import { LoadingComponent } from '@app/core/components/loading/loading.component';
 import { RegistroRecursoBase } from '../registro-recurso-base';
 import { map } from 'rxjs/operators';
 

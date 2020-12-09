@@ -5,7 +5,7 @@ import {Empresa, Projeto, EmpresaProjeto, UF} from '@app/models';
 import {ActivatedRoute} from '@angular/router';
 import {map, mergeMap} from 'rxjs/operators';
 import {zip, of} from 'rxjs';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ProjetoFacade} from '@app/facades/projeto.facade';
 

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { TableComponentCols, TableComponentActions, TableComponentFilter } from '@app/core/shared/app-components/table/table';
+import { TableComponentCols, TableComponentActions, TableComponentFilter } from '@app/core/components/table/table';
 import { RecursoHumanoFormComponent } from './recurso-humano-form/recurso-humano-form.component';
 import { Pagination } from '@app/models/common';
-import { at, chunk, uniqBy } from 'lodash-es'; 
+import { at, chunk, uniqBy } from 'lodash-es';
 
 @Component({
   selector: 'app-recursos-humanos',
@@ -74,7 +74,7 @@ export class RecursosHumanosComponent implements OnInit {
 
     // Função
     this.filters.push({
-      field: "funcao", 
+      field: "funcao",
       options: [
         {text: " Todas as Funções", value: ""},
         ...uniqBy(this.data.recursosHumanosAll, 'funcao').map((v: any) => ({text: v.funcao, value: v.funcao}))
@@ -84,7 +84,7 @@ export class RecursosHumanosComponent implements OnInit {
 
     // Titulação
     this.filters.push({
-      field: "titulacao", 
+      field: "titulacao",
       options: [
         {text: " Todas as Titulações", value: ""},
         ...uniqBy(this.data.recursosHumanosAll, 'titulacao').map((v: any) => ({text: v.titulacao, value: v.titulacao}))
@@ -168,7 +168,7 @@ export class RecursosHumanosComponent implements OnInit {
         empresa: 'Ivision Sistemas de Imagem e Visão S.A',
         valorHora: 10.00,
         nome: 'Frederico Souto dos Santos',
-        titulacao: 'Doutor', 
+        titulacao: 'Doutor',
         funcao: 'Coodernador',
         brasileiro: true,
         cpf: '12345678909',
@@ -179,7 +179,7 @@ export class RecursosHumanosComponent implements OnInit {
         empresa: 'TAESA (7527)',
         valorHora: 25.00,
         nome: 'André dos Santos',
-        titulacao: 'Doutor', 
+        titulacao: 'Doutor',
         funcao: 'Diretor',
         brasileiro: true,
         cpf: '12345678909',

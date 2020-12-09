@@ -1,0 +1,27 @@
+@import 'src/styles/components-base';
+
+.order-handler {
+  user-select: none;
+
+  span {
+    line-height: 1;
+    cursor: pointer;
+
+    &:hover {
+      color: $blue;
+    }
+  }
+
+  &.active {
+    &.asc .order-asc,
+    &.desc .order-desc {
+      color: $blueLight;
+    }
+  }
+  &.last-active {
+    &.asc .order-asc,
+    &.desc .order-desc {
+      color: $blue;
+    }
+  }
+}

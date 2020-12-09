@@ -1,0 +1,91 @@
+<div class="modal-header">
+  <div class="text-uppercase modal-title text-blue-light fs-24">
+    Nova Captação
+  </div>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')">
+    <i class="ta-cancel-circle"></i>
+  </button>
+</div>
+
+<app-loading type="fullscreen"></app-loading>
+
+<div class="modal-body" *ngIf="form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label>Fornecedores sugeridos (Opcional)</label>
+      <div class="d-flex mb-2" *ngFor="let control of fornecedoresFormArray.controls; let i = index">
+        <select class="form-control" [formControl]="control">
+          <option value="" hidden>Escolha um fornecedor</option>
+          <option [value]="fornecedor.id" *ngFor="let fornecedor of fornecedores">
+            {{ fornecedor.responsavelNome }}
+          </option>
+        </select>
+        <button
+          type="button"
+          class="btn btn-link text-decoration-none p-2"
+          *ngIf="i > 0"
+        >
+          <i class="ta-remove-circle"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <div class="mb-3 d-flex justify-content-end"
+         [ngClass]="{'justify-content-center':fornecedoresFormArray.controls.length === 0}">
+      <button
+        type="button"
+        class="btn btn-link text-decoration-none p-2"
+        (click)="adicionarFornecedor()"
+        [disabled]="fornecedores.length <= fornecedoresFormArray.controls.length"
+      >
+        <i class="ta-plus-circle"></i>
+        Adicionar Fornecedor
+      </button>
+    </div>
+
+    <div class="form-group">
+      <label for="contrato">Contrato Base Sugerido</label>
+      <select id="contrato" class="form-control">
+        <option value="" hidden>Escolha um contrato</option>
+        <option [value]="contrato.id" *ngFor="let contrato of contratos">
+          {{ contrato.titulo }}
+        </option>
+
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="observacoes">Observações para equipe suprimentos (Opcional)</label>
+      <textarea class="form-control mt-2" id="observacoes" rows="5" formControlName="observacoes"></textarea>
+    </div>
+
+    <div class="form-group">
+      <div class="btn btn-link px-0">
+        <i class="ta-attachment"></i>
+        Anexar Arquivos (opcional)
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="text-right">
+        <div
+          class="button btn btn-link"
+          (click)="activeModal.dismiss('cancel')"
+        >
+          Cancelar
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          <i class="ta-plus-circle"></i>
+          Enviar captação para Suprimentos
+        </button>
+      </div>
+    </div>
+
+  </form>
+</div>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { AppService } from '@app/services/app.service';
-import { TableComponentCols, TableComponentActions, TableComponentFilter } from '@app/core/shared/app-components/table/table';
+import { TableComponentCols, TableComponentActions, TableComponentFilter } from '@app/core/components/table/table';
 import { Pagination } from '@app/models/common';
 import { at, chunk, uniqBy } from 'lodash-es';
 
@@ -70,7 +70,7 @@ export class ValidacaoContratosComponent implements OnInit {
 
     // Listagem Contratos
     this.filters.push({
-      field: "titulo", 
+      field: "titulo",
       options: [
         {text: " Todos os Contratos", value: ""},
         ...uniqBy(this.data.contratosAll, 'titulo').map((v: any) => ({text: v.titulo, value: v.titulo}))
@@ -80,7 +80,7 @@ export class ValidacaoContratosComponent implements OnInit {
 
     // Empresa
     this.filters.push({
-      field: "empresaRelacionada", 
+      field: "empresaRelacionada",
       options: [
         {text: " Todas as Empresa", value: ""},
         ...uniqBy(this.data.contratosAll, 'empresaRelacionada').map((v: any) => ({text: v.empresaRelacionada, value: v.empresaRelacionada}))

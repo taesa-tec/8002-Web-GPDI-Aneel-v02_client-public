@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 import {AppService} from '@app/services/app.service';
-import {TableComponentActions, TableComponentCols, TableComponentFilter} from '@app/core/shared/app-components/table/table';
+import {TableComponentActions, TableComponentCols, TableComponentFilter} from '@app/core/components/table/table';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Pagination} from '@app/models/common';
 import {ActivatedRoute} from '@angular/router';

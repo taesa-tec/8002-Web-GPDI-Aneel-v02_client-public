@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {Empresa, ResultadoResponse, UserRole, Roles, AppValidators, User} from '@app/models';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {AppService} from '@app/services/app.service';

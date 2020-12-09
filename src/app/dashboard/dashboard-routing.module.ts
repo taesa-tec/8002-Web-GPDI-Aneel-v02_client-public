@@ -41,6 +41,11 @@ const routes: Routes = [
         loadChildren: () => import('@app/dashboard/demandas/demandas.module').then(m => m.DemandasModule)
       },
       {
+        path: 'captacao',
+        component: MainComponent,
+        loadChildren: () => import('@app/dashboard/captacao/captacao.module').then(m => m.CaptacaoModule)
+      },
+      {
         path: 'configuracoes',
         component: MainComponent,
         loadChildren: () => import('@app/dashboard/configuracoes-sistema/configuracoes-sistema.module').then(m => m.ConfiguracoesSistemaModule)

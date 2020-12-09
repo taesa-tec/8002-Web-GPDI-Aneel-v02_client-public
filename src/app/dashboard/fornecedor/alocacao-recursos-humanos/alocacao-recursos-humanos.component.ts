@@ -1,10 +1,10 @@
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Component, OnInit } from '@angular/core';
 
-import { TableComponentCols, TableComponentActions, TableComponentFilter } from '@app/core/shared/app-components/table/table';
+import { TableComponentCols, TableComponentActions, TableComponentFilter } from '@app/core/components/table/table';
 import { AlocarRecursoHumanoFormComponent } from './alocar-recurso-humano-form/alocar-recurso-humano-form.component';
 import { Pagination } from '@app/models/common';
-import { at, chunk, uniqBy } from 'lodash-es'; 
+import { at, chunk, uniqBy } from 'lodash-es';
 
 @Component({
   selector: 'app-alocacao-recursos-humanos',
@@ -74,7 +74,7 @@ export class AlocacaoRecursosHumanosComponent implements OnInit {
 
     // Etapa
     this.filters.push({
-      field: "etapa", 
+      field: "etapa",
       options: [
         {text: " Todas as Etapas", value: ""},
         ...uniqBy(this.data.recursosHumanosAll, 'etapa').map((v: any) => ({text: v.etapa, value: v.etapa}))
@@ -84,7 +84,7 @@ export class AlocacaoRecursosHumanosComponent implements OnInit {
 
     // Empresa Financiadora
     this.filters.push({
-      field: "empresaFinanciadora", 
+      field: "empresaFinanciadora",
       options: [
         {text: " Todas as Empresas", value: ""},
         ...uniqBy(this.data.recursosHumanosAll, 'empresaFinanciadora').map((v: any) => ({text: v.empresaFinanciadora, value: v.empresaFinanciadora}))
@@ -165,7 +165,7 @@ export class AlocacaoRecursosHumanosComponent implements OnInit {
     return [
       {
         id: 1,
-        recursoHumano: 'Frederico Souto dos Santos', 
+        recursoHumano: 'Frederico Souto dos Santos',
         etapa: 'Etapa 1',
         empresaFinanciadora: 'Empresa Financiadora 1',
         valor: 'R$9.999,00',
@@ -174,7 +174,7 @@ export class AlocacaoRecursosHumanosComponent implements OnInit {
       },
       {
         id: 2,
-        recursoHumano: 'Carlos das Silva', 
+        recursoHumano: 'Carlos das Silva',
         etapa: 'Etapa 2',
         empresaFinanciadora: 'Empresa Financiadora 2',
         valor: 'R$9.999,00',

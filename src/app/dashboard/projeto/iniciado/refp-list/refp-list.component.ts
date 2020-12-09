@@ -4,7 +4,7 @@ import { AppService } from '@app/services/app.service';
 import { ProjetoFacade } from '@app/facades/index';
 import { Observable, zip, EMPTY, of, Subscription } from 'rxjs';
 import { RegistroREFP, RecursoHumano, RecursoMaterial, Empresa, EmpresaProjeto, CategoriasContabeis } from '@app/models';
-import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
+import { LoadingComponent } from '@app/core/components/loading/loading.component';
 import { RegistroRefpDetailsComponent } from '@app/dashboard/projeto/iniciado/registro-refp-details/registro-refp-details.component';
 import { map } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';

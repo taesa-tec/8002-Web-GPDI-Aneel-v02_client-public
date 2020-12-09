@@ -5,9 +5,9 @@ import { CatalogsService } from '@app/services/catalogs.service';
 import { filter } from 'lodash-es';
 import { ActivatedRoute } from '@angular/router';
 import { AppService } from '@app/services/app.service';
-import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
+import { LoadingComponent } from '@app/core/components/loading/loading.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NovoProjetoComponent } from '@app/core/shared/novo-projeto/novo-projeto.component';
+import { NovoProjetoComponent } from '@app/dashboard/shared/novo-projeto/novo-projeto.component';
 
 @Component({
   selector: 'app-projetos-list',

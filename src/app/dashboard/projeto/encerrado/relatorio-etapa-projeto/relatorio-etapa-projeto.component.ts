@@ -3,7 +3,7 @@ import {AppService} from '@app/services/app.service';
 import {ProjetoFacade} from '@app/facades/index';
 import {Etapa} from '@app/models';
 import {EtapaAtividadesFormComponent} from '../../common/etapa-atividades-form/etapa-atividades-form.component';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import * as moment from 'moment';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 

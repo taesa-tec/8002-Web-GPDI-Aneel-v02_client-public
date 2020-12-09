@@ -3,7 +3,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {RecursoMaterial, Projeto, AlocacaoRM, Empresa, EmpresaProjeto} from '@app/models';
 import {AppService} from '@app/services/app.service';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {zip, of} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
 import {EmpresaProjetoFacade, ProjetoFacade} from '@app/facades/index';

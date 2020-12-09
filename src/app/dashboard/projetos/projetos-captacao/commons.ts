@@ -14,4 +14,3 @@ CaptacaoEtapaText[CaptacaoEtapa.EmElaboracao] = 'elaboracao';
 CaptacaoEtapaText[CaptacaoEtapa.Aberta] = 'aberta';
 CaptacaoEtapaText[CaptacaoEtapa.Encerrada] = 'encerrada';
 CaptacaoEtapaText[CaptacaoEtapa.Cancelada] = 'cancelada';
-  

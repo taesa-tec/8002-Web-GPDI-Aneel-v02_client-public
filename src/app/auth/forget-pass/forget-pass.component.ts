@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 
 import {ResultadoResponse} from '@app/models';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {AuthService} from '@app/services/auth.service';
 
 @Component({

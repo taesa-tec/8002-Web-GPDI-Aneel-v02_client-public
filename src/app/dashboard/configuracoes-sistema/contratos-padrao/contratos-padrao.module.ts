@@ -9,6 +9,7 @@ import {ServiceBase} from '@app/services/service-base.service';
 import {HttpClient} from '@angular/common/http';
 import {ContratosPadraoResolver} from '@app/dashboard/configuracoes-sistema/contratos-padrao/contratos-padrao.resolver';
 import {ContratoPadraoResolver} from '@app/dashboard/configuracoes-sistema/contratos-padrao/contrato-padrao.resolver';
+import {CoreModule} from '@app/core';
 
 
 @NgModule({
@@ -18,7 +19,7 @@ import {ContratoPadraoResolver} from '@app/dashboard/configuracoes-sistema/contr
   ],
   imports: [
     CommonModule,
-    SharedModule,
+    CoreModule,
     ContratosPadraoRoutingModule
   ],
   providers: [

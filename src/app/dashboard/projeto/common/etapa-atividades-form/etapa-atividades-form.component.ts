@@ -4,7 +4,7 @@ import {Produto, EtapaProduto, Projeto, EditEtapaRequest, CriarEtapaRequest, Eta
 import {FormGroup, FormArray, FormControl, Validators} from '@angular/forms';
 import {zip, timer} from 'rxjs';
 import {AppService} from '@app/services/app.service';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {ProjetoFacade} from '@app/facades/index';
 
 

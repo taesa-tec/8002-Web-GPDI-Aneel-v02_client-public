@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {AppService} from '@app/services/app.service';
 import {ProjetoFacade} from '@app/facades/index';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {FileUploaded} from '@app/models';
 
 @Component({

@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Empresa, Segmento, TextValue} from '@app/models';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {zip} from 'rxjs';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {AppService} from '@app/services/app.service';
 import {ProjetoFacade} from '@app/facades/index';
 

@@ -14,6 +14,7 @@ import {DemandasListComponent} from './demandas-list/demandas-list.component';
 import {DemandaProgressComponent} from './demanda-progress/demanda-progress.component';
 import {DemandaProgressEtapaComponent} from './demanda-progress/demanda-progress-etapa/demanda-progress-etapa.component';
 import {equipePeDProvider} from '@app/providers/equipe-ped.providers';
+import {CoreModule} from '@app/core';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import {equipePeDProvider} from '@app/providers/equipe-ped.providers';
     NovaDemandaComponent
   ],
   imports: [
-    SharedModule,
+    CoreModule,
     DemandasRoutingModule,
     ReactiveFormsModule,
   ],

@@ -2,10 +2,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { TableComponentCols, TableComponentActions, TableComponentFilter } from '@app/core/shared/app-components/table/table';
+import { TableComponentCols, TableComponentActions, TableComponentFilter } from '@app/core/components/table/table';
 import { CoExecutorFormComponent } from './co-executor-form/co-executor-form.component';
 import { Pagination } from '@app/models/common';
-import { at, chunk, uniqBy } from 'lodash-es'; 
+import { at, chunk, uniqBy } from 'lodash-es';
 
 @Component({
   selector: 'app-co-executores',
@@ -65,7 +65,7 @@ export class CoExecutoresComponent implements OnInit {
 
     // Nome ou Razão Social
     this.filters.push({
-      field: "razaoSocial", 
+      field: "razaoSocial",
       options: [
         {text: " Todos os Nome ou Razão Social", value: ""},
         ...uniqBy(this.data.coExecutoresAll, 'razaoSocial').map((v: any) => ({text: v.razaoSocial, value: v.razaoSocial}))
@@ -75,7 +75,7 @@ export class CoExecutoresComponent implements OnInit {
 
     // CNPJ
     this.filters.push({
-      field: "cnpj", 
+      field: "cnpj",
       options: [
         {text: " Todos os CNPJ", value: ""},
         ...uniqBy(this.data.coExecutoresAll, 'cnpj').map((v: any) => ({text: v.cnpj, value: v.cnpj}))

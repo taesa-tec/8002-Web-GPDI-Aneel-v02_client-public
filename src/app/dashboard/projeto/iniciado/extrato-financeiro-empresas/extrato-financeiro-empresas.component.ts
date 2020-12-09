@@ -4,7 +4,7 @@ import { zip, of } from 'rxjs';
 
 import { AppService } from '@app/services/app.service';
 import { Projeto, OrcamentosEmpresas, Etapa, TextValue, CategoriasContabeis, ExtratoItem, ResultadoResponse, ExtratosEmpresas, ExtratoEmpresa } from '@app/models';
-import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
+import { LoadingComponent } from '@app/core/components/loading/loading.component';
 import { ProjetoFacade } from '@app/facades/index';
 import { RegistroRefpDetailsComponent } from '../registro-refp-details/registro-refp-details.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';

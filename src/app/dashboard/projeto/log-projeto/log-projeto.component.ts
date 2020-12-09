@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {map, mergeMap} from 'rxjs/operators';
 import {zip, of} from 'rxjs';
 import {Projeto, LogProjeto, User, AcaoLog, TotalLog} from '@app/models';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {size} from 'lodash-es';
 
 

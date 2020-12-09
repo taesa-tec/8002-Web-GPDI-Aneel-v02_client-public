@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {MessageAlert, User} from '@app/models';
 import {Observable} from 'rxjs';
 import {UsersService} from '@app/services/users.service';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
 
 const alertMessages: { [propName: string]: MessageAlert } = {
     'user-created': {

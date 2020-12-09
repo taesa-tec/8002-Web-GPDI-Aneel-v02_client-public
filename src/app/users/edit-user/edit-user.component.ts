@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {Empresa, ResultadoResponse, User, AppValidators} from '@app/models';
 import {Observable, Observer} from 'rxjs';

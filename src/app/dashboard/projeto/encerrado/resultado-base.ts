@@ -1,6 +1,6 @@
 import { OnInit, ViewChild, Directive } from '@angular/core';
 import {AppService} from '@app/services/app.service';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {ProjetoFacade, ProjetoREST} from '@app/facades/index';
 import {Observable} from 'rxjs';
 import {EditorResultado} from '../common/editors/editor-resultado-base';

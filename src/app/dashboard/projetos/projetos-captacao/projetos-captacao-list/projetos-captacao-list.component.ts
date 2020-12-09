@@ -4,11 +4,11 @@ import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppService } from '@app/services/app.service';
 import { CaptacaoEtapa, CaptacaoEtapaText } from '../commons';
-import { TableComponentCols, TableComponentActions, TableComponentFilter } from '@app/core/shared/app-components/table/table';
+import { TableComponentCols, TableComponentActions, TableComponentFilter } from '@app/core/components/table/table';
 import { CriarCaptacaoComponent } from '../shared/criar-captacao/criar-captacao.component';
 import { EnviarSelecaoComponent } from '../shared/enviar-selecao/enviar-selecao.component';
 import { Pagination } from '@app/models/common';
-import { at, chunk, uniqBy } from 'lodash-es'; 
+import { at, chunk, uniqBy } from 'lodash-es';
 
 @Component({
   selector: 'app-projetos-captacao-list',
@@ -39,8 +39,8 @@ export class ProjetosCaptacaoListComponent implements OnInit {
   //========
 
   constructor(
-    protected route: ActivatedRoute, 
-    protected app: AppService, 
+    protected route: ActivatedRoute,
+    protected app: AppService,
     protected modal: NgbModal
   ) { }
 
@@ -55,7 +55,7 @@ export class ProjetosCaptacaoListComponent implements OnInit {
 
     // Projetos
     this.filters.push({
-      field: "titulo", 
+      field: "titulo",
       options: [
         {text: " Todos os Projetos", value: ""},
         ...uniqBy(this.data.captacoesAll, 'titulo').map((v: any) => ({text: v.titulo, value: v.titulo}))
@@ -95,7 +95,7 @@ export class ProjetosCaptacaoListComponent implements OnInit {
           {field: 'dataTerminoCaptacao', title: 'Data Término Captação', order: true},
         ];
 
-      case CaptacaoEtapa.Encerrada:      
+      case CaptacaoEtapa.Encerrada:
         return [
           {field: 'titulo', title: 'Título Resumido Projeto', order: true},
           {field: 'equipeSuprimento', title: 'Equipe de Suprimentos Usuário Designado', order: true},
@@ -103,7 +103,7 @@ export class ProjetosCaptacaoListComponent implements OnInit {
           {field: 'dataTerminoCaptacao', title: 'Data Término Captação', order: true},
         ];
 
-      case CaptacaoEtapa.Cancelada:      
+      case CaptacaoEtapa.Cancelada:
         return [
           {field: 'titulo', title: 'Título Resumido Projeto', order: true},
           {field: 'equipeSuprimento', title: 'Equipe de Suprimentos Usuário Designado', order: true},
@@ -116,7 +116,7 @@ export class ProjetosCaptacaoListComponent implements OnInit {
 
   createButtons() {
     if(this.captacaoEtapa == CaptacaoEtapa.Pendente) {
-      return [ 
+      return [
         {action: 'criar-captacao', text: 'CRIAR CAPTAÇÃO', icon: 'ta-edit', className: 'btn btn-primary'}
       ];
 
@@ -124,7 +124,7 @@ export class ProjetosCaptacaoListComponent implements OnInit {
       return [
         {action: 'ver-detalhes', text: 'VER DETALHES', icon: 'ta-edit', className: 'btn btn-primary'}
       ];
-    
+
     } else if(this.captacaoEtapa == CaptacaoEtapa.Encerrada) {
       return [
         {action: 'enviar-para-selecao', text: 'ENVIAR PARA SELEÇÃO', icon: 'ta-edit', className: 'btn btn-primary'}
@@ -135,10 +135,10 @@ export class ProjetosCaptacaoListComponent implements OnInit {
   tableAction(values) {
     if(this.captacaoEtapa == CaptacaoEtapa.Pendente) {
       this.actionPendente(values);
-    
+
     } else if(this.captacaoEtapa == CaptacaoEtapa.Aberta) {
       this.actionAberta(values);
-    
+
     } else if(this.captacaoEtapa == CaptacaoEtapa.Encerrada) {
       this.actionEncerrada(values);
     }
@@ -165,7 +165,7 @@ export class ProjetosCaptacaoListComponent implements OnInit {
 
   formatLine(fornecedores) {
     const { status, convidados, propostas } = fornecedores;
-            
+
     return `
           <div>${convidados} Convidados</div>
           <div class="${propostas ? 'text-verde-claro':'text-red'}">
@@ -284,7 +284,7 @@ export class ProjetosCaptacaoListComponent implements OnInit {
           status: "elaboracao"
         }
        ];
-      case 'aberta':  
+      case 'aberta':
         return [
           {
             id: 7,
@@ -319,7 +319,7 @@ export class ProjetosCaptacaoListComponent implements OnInit {
             status: "aberta"
           }
         ] ;
-      case 'encerrada':  
+      case 'encerrada':
         return [
           {
             id: 10,
@@ -354,7 +354,7 @@ export class ProjetosCaptacaoListComponent implements OnInit {
             status: "encerrada"
           }
         ];
-      case 'cancelada': 
+      case 'cancelada':
         return [
           {
             id: 13,

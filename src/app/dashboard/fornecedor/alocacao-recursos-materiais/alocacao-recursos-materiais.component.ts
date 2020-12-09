@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { TableComponentCols, TableComponentActions, TableComponentFilter } from '@app/core/shared/app-components/table/table';
+import { TableComponentCols, TableComponentActions, TableComponentFilter } from '@app/core/components/table/table';
 import { AlocarRecursoMaterialFormComponent } from './alocar-recurso-material-form/alocar-recurso-material-form.component';
 import { Pagination } from '@app/models/common';
-import { at, chunk, uniqBy } from 'lodash-es'; 
+import { at, chunk, uniqBy } from 'lodash-es';
 
 @Component({
   selector: 'app-alocacao-recursos-materiais',
@@ -69,7 +69,7 @@ export class AlocacaoRecursosMateriaisComponent implements OnInit {
 
     // Recursos
     this.filters.push({
-      field: "recursoMaterial", 
+      field: "recursoMaterial",
       options: [
         {text: " Todos os Recursos", value: ""},
         ...uniqBy(this.data.recursosMateriaisAll, 'recursoMaterial').map((v: any) => ({text: v.recursoMaterial, value: v.recursoMaterial}))
@@ -79,7 +79,7 @@ export class AlocacaoRecursosMateriaisComponent implements OnInit {
 
     // Categoria Contábil
     this.filters.push({
-      field: "categoriaContabil", 
+      field: "categoriaContabil",
       options: [
         {text: " Todas as Categorias", value: ""},
         ...uniqBy(this.data.recursosMateriaisAll, 'categoriaContabil').map((v: any) => ({text: v.categoriaContabil, value: v.categoriaContabil}))

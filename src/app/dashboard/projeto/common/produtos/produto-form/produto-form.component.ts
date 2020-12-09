@@ -2,7 +2,7 @@ import {Component, OnInit, Input, ViewChild} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Produto, TiposProdutos, FasesCadeiaInovacao, Projeto} from '@app/models';
 import {FormGroup, FormControl, Validators, AbstractControl} from '@angular/forms';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {AppService} from '@app/services/app.service';
 import {zip} from 'rxjs';
 

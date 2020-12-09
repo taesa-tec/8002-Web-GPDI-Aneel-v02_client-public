@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '@app/services/app.service';
-import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
+import { LoadingComponent } from '@app/core/components/loading/loading.component';
 import { ResultadoBase } from '../resultado-base';
 import { ResultadoCapacitacaoComponent as Editor } from '../../common/editors/resultado-capacitacao/resultado-capacitacao.component';
 import { ResultadoCapacitacao, TiposCapacitacao } from '@app/models';

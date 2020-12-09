@@ -1,0 +1,17 @@
+@import "../../../../styles/components-base";
+
+:host {
+  background: $body-bg url("/assets/fundo.png") no-repeat center;
+  background-size: cover;
+  grid-area: header;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+}
+
+.wrap-menu-dropdown {
+  .dropdown-toggle::after {
+    display: none;
+  }
+}

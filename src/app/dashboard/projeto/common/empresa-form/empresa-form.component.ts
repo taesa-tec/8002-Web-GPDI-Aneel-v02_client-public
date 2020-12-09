@@ -3,7 +3,7 @@ import { NgbActiveModal, NgbTabChangeEvent, NgbTabset } from '@ng-bootstrap/ng-b
 import { EmpresaProjeto, Projeto, Empresa, UF, AppValidators } from '@app/models';
 import { AppService } from '@app/services/app.service';
 import { FormGroup, FormControl } from '@angular/forms';
-import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
+import { LoadingComponent } from '@app/core/components/loading/loading.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProjetoFacade } from '@app/facades/index';
 

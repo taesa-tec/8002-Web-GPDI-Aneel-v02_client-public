@@ -1,20 +1,20 @@
 import {Injectable, Inject} from '@angular/core';
 import {NgbModal, NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
-import {AlertComponent} from '../core/shared/entry-components/alert/alert.component';
-import {ConfirmComponent} from '../core/shared/entry-components/confirm/confirm.component';
+import {AlertComponent} from '../core/components/alert/alert.component';
+import {ConfirmComponent} from '../core/components/confirm/confirm.component';
 import {CatalogsService} from '@app/services/catalogs.service';
 import {ProjetosService} from '@app/services/projetos.service';
 import {AuthService} from '@app/services/auth.service';
 import {FileService} from '@app/services/file.service';
 import {UsersService} from '@app/services/users.service';
-import {PromptComponent} from '../core/shared/entry-components/prompt/prompt.component';
+import {PromptComponent} from '../core/components/prompt/prompt.component';
 import {Router} from '@angular/router';
 import {environment} from '@env/environment';
-import {ModalPageComponent} from '@app/core/shared/entry-components/modal-page/modal-page.component';
+import {ModalPageComponent} from '@app/core/components/modal-page/modal-page.component';
 import {DemandasService} from './demandas.service';
 import {BehaviorSubject, timer} from 'rxjs';
 import {SistemaService} from '@app/services/sistema.service';
-import {FileUploaderComponent} from '@app/core/shared/entry-components/file-uploader/file-uploader.component';
+import {FileUploaderComponent} from '@app/core/components/file-uploader/file-uploader.component';
 
 
 class LoadingController {

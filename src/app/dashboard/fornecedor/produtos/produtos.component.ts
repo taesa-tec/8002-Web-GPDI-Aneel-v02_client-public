@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppService } from '@app/services/app.service';
-import { TableComponentCols, TableComponentActions, TableComponentFilter } from '@app/core/shared/app-components/table/table';
+import { TableComponentCols, TableComponentActions, TableComponentFilter } from '@app/core/components/table/table';
 import { ProdutoFormComponent } from './produto-form/produto-form.component';
 import { Pagination } from '@app/models/common';
-import { at, chunk, uniqBy } from 'lodash-es'; 
+import { at, chunk, uniqBy } from 'lodash-es';
 
 @Component({
   selector: 'app-produtos',
@@ -70,7 +70,7 @@ export class ProdutosComponent implements OnInit {
 
     // Produto
     this.filters.push({
-      field: "titulo", 
+      field: "titulo",
       options: [
         {text: " Todos os Produtos", value: ""},
         ...uniqBy(this.data.produtosAll, 'titulo').map((v: any) => ({text: v.titulo, value: v.titulo}))
@@ -80,7 +80,7 @@ export class ProdutosComponent implements OnInit {
 
     // Classificação
     this.filters.push({
-      field: "classificacao", 
+      field: "classificacao",
       options: [
         {text: " Todas as Classificações", value: ""},
         ...uniqBy(this.data.produtosAll, 'classificacao').map((v: any) => ({text: v.classificacao, value: v.classificacao}))

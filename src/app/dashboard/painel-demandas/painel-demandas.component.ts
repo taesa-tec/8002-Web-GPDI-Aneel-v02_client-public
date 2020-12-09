@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
+import { LoadingComponent } from '@app/core/components/loading/loading.component';
 import { AppService } from '@app/services/app.service';
 import { User } from '@app/models';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';

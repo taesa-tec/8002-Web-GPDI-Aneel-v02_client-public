@@ -4,7 +4,7 @@ import {ProjetoStatus, Projeto, ResultadoResponse, RegistroREFP} from '@app/mode
 import {zip} from 'rxjs';
 import {FormGroup, FormControl} from '@angular/forms';
 import {ProjetoFacade} from '@app/facades/index';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
 
 
 @Component({

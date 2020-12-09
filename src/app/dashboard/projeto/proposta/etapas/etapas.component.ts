@@ -5,7 +5,7 @@ import {zip} from 'rxjs';
 import {Projeto, Etapa} from '@app/models';
 import {FormGroup, FormControl} from '@angular/forms';
 import {DatePipe} from '@angular/common';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {ProjetoFacade} from '@app/facades/index';
 import * as moment from 'moment';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';

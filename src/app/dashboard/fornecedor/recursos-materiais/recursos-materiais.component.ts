@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { TableComponentCols, TableComponentActions, TableComponentFilter } from '@app/core/shared/app-components/table/table';
+import { TableComponentCols, TableComponentActions, TableComponentFilter } from '@app/core/components/table/table';
 import { RecursoMaterialFormComponent } from './recurso-material-form/recurso-material-form.component';
 import { Pagination } from '@app/models/common';
 import { at, chunk, uniqBy } from 'lodash-es';
@@ -69,7 +69,7 @@ export class RecursosMateriaisComponent implements OnInit {
 
     // Nome
     this.filters.push({
-      field: "nome", 
+      field: "nome",
       options: [
         {text: " Todos os Recursos", value: ""},
         ...uniqBy(this.data.recursosMateriaisAll, 'nome').map((v: any) => ({text: v.nome, value: v.nome}))
@@ -79,7 +79,7 @@ export class RecursosMateriaisComponent implements OnInit {
 
     // Entidade Recebedora
     this.filters.push({
-      field: "entidadeRecebedora", 
+      field: "entidadeRecebedora",
       options: [
         {text: " Todas as Entidade Recebedoras", value: ""},
         ...uniqBy(this.data.recursosMateriaisAll, 'entidadeRecebedora').map((v: any) => ({text: v.entidadeRecebedora, value: v.entidadeRecebedora}))

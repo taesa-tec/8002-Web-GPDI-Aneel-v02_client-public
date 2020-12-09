@@ -1,4 +1,4 @@
-import { NovoProjetoComponent } from '@app/core/shared/novo-projeto/novo-projeto.component';
+import { NovoProjetoComponent } from '@app/dashboard/shared/novo-projeto/novo-projeto.component';
 import { NgModule } from '@angular/core';
 
 import { CommonModule } from './../projeto/common/common.module';

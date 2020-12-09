@@ -7,13 +7,14 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 import { FormComponent } from './form/form.component';
 import { MeComponent } from './me/me.component';
 import { UserProjetosComponent } from './user-projetos/user-projetos.component';
+import {CoreModule} from '@app/core';
 
 @NgModule({
     declarations: [
         NewUserComponent, ListUsersComponent, UserStatusPipe, EditUserComponent, FormComponent, MeComponent, UserProjetosComponent
     ],
     imports: [
-        SharedModule
+        CoreModule
     ],
     exports: [NewUserComponent, ListUsersComponent, MeComponent]
 })

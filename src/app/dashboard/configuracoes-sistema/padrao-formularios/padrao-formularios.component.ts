@@ -1,6 +1,6 @@
 import {AppService} from '@app/services/app.service';
 import {Component, OnInit} from '@angular/core';
-import {TableComponentActions, TableComponentCols} from '@app/core/shared/app-components/table/table';
+import {TableComponentActions, TableComponentCols} from '@app/core/components/table/table';
 
 @Component({
   selector: 'app-padrao-formularios',

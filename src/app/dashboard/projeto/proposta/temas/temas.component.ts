@@ -7,7 +7,7 @@ import { map, mergeMap, tap } from 'rxjs/operators';
 import { zip, of } from 'rxjs';
 import { Projeto, Tema, SubTema, SubTemaRequest, TemaProjeto, NoRequest, ResultadoResponse, CatalogTema, NiveisUsuarios } from '@app/models';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
+import { LoadingComponent } from '@app/core/components/loading/loading.component';
 
 
 @Component({

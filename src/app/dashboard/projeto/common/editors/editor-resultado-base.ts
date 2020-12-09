@@ -2,7 +2,7 @@ import {FormGroup, FormControl, AbstractControlOptions, AsyncValidatorFn, Valida
 import {ProjetoFacade, ProjetoREST} from '@app/facades/index';
 import {AppService} from '@app/services/app.service';
 import {OnInit, ViewChild, Directive} from '@angular/core';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {EMPTY, of, Observable} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';

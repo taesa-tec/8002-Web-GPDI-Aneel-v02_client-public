@@ -3,7 +3,7 @@ import { AppService } from '@app/services/app.service';
 import { ProjetoFacade } from '@app/facades/index';
 import { RelatorioFinal, ResultadoResponse, NoRequest, FileUploaded } from '@app/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
+import { LoadingComponent } from '@app/core/components/loading/loading.component';
 import { timer, of, from, zip } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 

@@ -4,7 +4,7 @@ import {
   Empresa, ResultadoResponse, UserRole, Roles, AppValidators, User, CreateUserRequest,
   Projeto, Projetos
 } from '@app/models';
-import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
+import { LoadingComponent } from '@app/core/components/loading/loading.component';
 import { Observable, Observer, zip, of, concat, throwError, timer, empty } from 'rxjs';
 import { UserProjetosComponent } from '../user-projetos/user-projetos.component';
 import { mergeMap, last } from 'rxjs/operators';

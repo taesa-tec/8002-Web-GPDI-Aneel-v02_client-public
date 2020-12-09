@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
-import { TableComponentCols, TableComponentFilter } from '@app/core/shared/app-components/table/table';
+import { TableComponentCols, TableComponentFilter } from '@app/core/components/table/table';
 import { Pagination } from '@app/models/common';
-import { at, chunk, uniqBy } from 'lodash-es'; 
+import { at, chunk, uniqBy } from 'lodash-es';
 
 @Component({
   selector: 'app-propostas-list',
@@ -62,7 +62,7 @@ export class PropostasListComponent implements OnInit {
 
     // Fornecedor
     this.filters.push({
-      field: "nomeFornecedor", 
+      field: "nomeFornecedor",
       options: [
         {text: " Todos os Fornecedores", value: ""},
         ...uniqBy(this.data.propostasAll, 'nomeFornecedor').map((v: any) => ({text: v.nomeFornecedor, value: v.nomeFornecedor}))
@@ -72,7 +72,7 @@ export class PropostasListComponent implements OnInit {
 
     // Status
     this.filters.push({
-      field: "status", 
+      field: "status",
       options: [
         {text: " Todos os Status", value: ""},
         //...uniqBy(this.data.propostasAll, 'status').map((v: any) => ({text: v.status, value: v.status}))
@@ -159,7 +159,7 @@ export class PropostasListComponent implements OnInit {
             dataRecebimento: '23/07/2020',
             status: 'Minuta Contrato (<span class="text-green">Submetido</span>)<br>Plano de Trabalho (<span class="text-green">Submetido</span>)'
           }
-        ];  
+        ];
 
       case 'negadas':
         return [

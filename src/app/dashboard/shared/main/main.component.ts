@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {AppService} from '@app/services/app.service';
 import {User} from '@app/models';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -12,7 +12,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 })
 export class MainComponent implements OnInit {
 
-  @ViewChild(LoadingComponent, { static: true })
+  @ViewChild(LoadingComponent, {static: true})
   private loading: LoadingComponent;
   projetos: any;
   menu: Array<any>;
@@ -32,7 +32,7 @@ export class MainComponent implements OnInit {
     });
     this.menu = [
       {text: 'Gestão de Demandas', icon: 'ta-projeto', path: '/dashboard/demandas'},
-      {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: '/dashboard/projetos/captacao'},
+      {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: '/dashboard/captacao'},
       // {text: 'Projetos Em Proposta', icon: 'ta-projeto', path: '/dashboard/projetos/proposta'},
       // {text: 'Projetos Em Execução', icon: 'ta-box', path: '/dashboard/projetos/iniciado'},
       // {text: 'Projetos Em Finalização', icon: 'ta-ficha', path: '/dashboard/projetos/encerrado'},

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { User, Roles, Empresa, ResultadoResponse, Projetos, AppValidators } from '@app/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LoadingComponent } from '@app/core/shared/app-components/loading/loading.component';
+import { LoadingComponent } from '@app/core/components/loading/loading.component';
 import { Router } from '@angular/router';
 import { AppService } from '@app/services/app.service';
 import { environment } from '@env/environment';

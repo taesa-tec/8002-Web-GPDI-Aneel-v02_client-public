@@ -5,7 +5,7 @@ import {ProjetoFacade, EmpresaProjetoFacade} from '@app/facades/index';
 import {zip, of} from 'rxjs';
 import {FormGroup, FormControl, Validators, FormArray} from '@angular/forms';
 import * as moment from 'moment';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {tap} from 'rxjs/operators';
 import {isNil} from 'lodash-es';
 

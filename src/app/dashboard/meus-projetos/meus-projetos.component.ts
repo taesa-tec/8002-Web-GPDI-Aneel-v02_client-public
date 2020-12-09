@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Subscription, zip} from 'rxjs';
 
-import {NovoProjetoComponent} from '@app/core/shared/novo-projeto/novo-projeto.component';
+import {NovoProjetoComponent} from '@app/dashboard/shared/novo-projeto/novo-projeto.component';
 import {Projeto, User, Roles, UserRole} from '@app/models';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {AppService} from '@app/services/app.service';
 import {map} from 'rxjs/operators';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';

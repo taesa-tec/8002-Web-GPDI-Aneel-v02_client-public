@@ -41,11 +41,11 @@ export class AprovacaoComponent implements OnInit {
           return this.demanda.revisorId;
         case DemandaEtapa.AprovacaoCoordenador:
         case DemandaEtapa.RevisorPendente:
-          return this.equipe.coordenador.id;
+          return this.equipe?.coordenador.id;
         case DemandaEtapa.AprovacaoGerente:
-          return this.equipe.gerente.id;
+          return this.equipe?.gerente.id;
         case DemandaEtapa.AprovacaoDiretor:
-          return this.equipe.diretor.id;
+          return this.equipe?.diretor.id;
       }
     }
 

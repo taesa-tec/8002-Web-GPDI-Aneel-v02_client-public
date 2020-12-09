@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppService } from '@app/services/app.service';
-import { TableComponentCols, TableComponentActions, TableComponentFilter } from '@app/core/shared/app-components/table/table';
+import { TableComponentCols, TableComponentActions, TableComponentFilter } from '@app/core/components/table/table';
 import { RiscoFormComponent } from './risco-form/risco-form.component';
 import { Pagination } from '@app/models/common';
-import { at, chunk, uniqBy } from 'lodash-es'; 
+import { at, chunk, uniqBy } from 'lodash-es';
 
 @Component({
   selector: 'app-riscos',
@@ -71,7 +71,7 @@ export class RiscosComponent implements OnInit {
 
     // Classificação
     this.filters.push({
-      field: "classificacao", 
+      field: "classificacao",
       options: [
         {text: " Todas as Classificações", value: ""},
         ...uniqBy(this.data.riscosAll, 'classificacao').map((v: any) => ({text: v.classificacao, value: v.classificacao}))
@@ -81,13 +81,13 @@ export class RiscosComponent implements OnInit {
 
     // Probabilidade
     this.filters.push({
-      field: "probabilidade", 
+      field: "probabilidade",
       options: [
         {text: " Todas as Probabilidades", value: ""},
         ...uniqBy(this.data.riscosAll, 'probabilidade').map((v: any) => ({text: v.probabilidade, value: v.probabilidade}))
       ],
       value: ""
-    }); 
+    });
   }
 
   async tableAction({ action, data }) {

@@ -7,6 +7,7 @@ import {HttpClient} from '@angular/common/http';
 import {ClausulasComponent} from './clausulas.component';
 import {ClausulasRoutingModule} from '@app/dashboard/configuracoes-sistema/clausulas/clausulas-routing.module';
 import {ClausulasResolver} from '@app/dashboard/configuracoes-sistema/clausulas/clausulas.resolver';
+import {CoreModule} from '@app/core';
 
 
 @NgModule({
@@ -15,7 +16,7 @@ import {ClausulasResolver} from '@app/dashboard/configuracoes-sistema/clausulas/
   ],
   imports: [
     CommonModule,
-    SharedModule,
+    CoreModule,
     ClausulasRoutingModule
   ],
   providers: [

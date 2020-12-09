@@ -4,7 +4,7 @@ import {Projeto, FileUploaded, User, UserProjeto} from '@app/models';
 import {AppService} from '@app/services/app.service';
 import {zip} from 'rxjs';
 import {FormArray, FormGroup, FormControl} from '@angular/forms';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {SafeUrl} from '@angular/platform-browser';
 import {map, catchError} from 'rxjs/operators';
 import {isNil, keyBy} from 'lodash-es';
