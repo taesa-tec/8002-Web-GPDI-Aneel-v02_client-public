@@ -13,7 +13,7 @@ import {environment} from '../../../environments/environment';
 })
 export class LoginComponent implements OnInit {
 
-  @ViewChild(LoadingComponent, { static: true })
+  @ViewChild(LoadingComponent, {static: true})
   private loading: LoadingComponent;
 
   errorMessage: string;
@@ -28,29 +28,19 @@ export class LoginComponent implements OnInit {
   constructor(protected authService: AuthService, private router: Router) {
   }
 
-  doLogin(event) {
+  async doLogin(event) {
 
     event.preventDefault();
 
-    const self = this;
-
     this.loading.show();
-
     this.errorMessage = null;
-
-    this.authService.login(this.loginRequest, this.remember).subscribe(
-      result => {
-        self.loading.hide();
-        if (!result.authenticated) {
-          self.errorMessage = result.message;
-        } else {
-          // self.router.navigate(['/dashboard']);
-        }
-      }, e => {
-        console.log(e);
-        self.loading.hide();
-      });
-
+    try {
+      await this.authService.login(this.loginRequest, this.remember);
+    } catch (e) {
+      this.errorMessage = e.message;
+    } finally {
+      this.loading.hide();
+    }
   }
 
   ngOnInit(): void {

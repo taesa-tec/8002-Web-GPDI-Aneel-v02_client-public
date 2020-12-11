@@ -13,12 +13,36 @@ const storageKey = 'loggedUser';
 })
 export class AuthService {
 
-
-  public redirectTo = '/dashboard';
-  private loginResponse: LoginResponse;
-
+  protected loginResponse: LoginResponse;
   protected authEventsSource: BehaviorSubject<{ type: string, data?: any }>;
+
+  redirectTo = '/dashboard';
   authEvent: Observable<{ type: string, data?: any }>;
+
+  get expiration() {
+    if (this.loginResponse && this.loginResponse.expiration) {
+      return new Date(this.loginResponse.expiration);
+    }
+    return null;
+  }
+
+  get token() {
+    if (this.loginResponse && this.loginResponse) {
+      return this.loginResponse.accessToken;
+    }
+    return false;
+  }
+
+  get isLoggedIn() {
+    return (this.token && this.expiration !== null && this.expiration.getTime() > Date.now());
+
+  }
+
+  get user() {
+    if (this.isLoggedIn) {
+      return this.loginResponse.user;
+    }
+  }
 
   constructor(private http: HttpClient, protected router: Router, public modal: NgbModal) {
     let loggedUser;
@@ -32,7 +56,6 @@ export class AuthService {
       try {
         this.loginResponse = JSON.parse(loggedUser);
         this.authEventsSource = new BehaviorSubject<{ type: string, data?: any }>({type: 'login', data: this.loginResponse});
-        console.log('Usuário logado');
       } catch (e) {
         console.error(e.message);
         this.authEventsSource = new BehaviorSubject<{ type: string, data?: any }>(null);
@@ -43,57 +66,25 @@ export class AuthService {
     this.authEvent = this.authEventsSource.asObservable();
   }
 
-  get expiration() {
-    if (this.loginResponse && this.loginResponse.expiration) {
-      return new Date(this.loginResponse.expiration);
+
+  async login(loginRequest: LoginRequest, remember: boolean = false, redirectTo: string | null = null) {
+    if (redirectTo) {
+      this.redirectTo = redirectTo;
+    } else {
+      this.redirectTo = '/dashboard';
     }
-    return null;
-  }
+    const loginResponse = await this.http.post<LoginResponse>(`Login`, loginRequest).toPromise();
+    const storage = remember ? localStorage : sessionStorage;
 
-  get token() {
-    if (this.loginResponse && this.loginResponse.authenticated) {
-      return this.loginResponse.accessToken;
+    if (remember) {
+      sessionStorage.setItem('last_login_user', loginRequest.email);
+    } else {
+      sessionStorage.removeItem('last_login_user');
     }
-    return false;
-  }
-
-  get isLoggedIn() {
-    return (this.token && this.expiration !== null && this.expiration.getTime() > Date.now());
-
-  }
-
-  login(loginRequest: LoginRequest, remember: boolean = false, redirectTo: string | null = null): Observable<LoginResponse> {
-    return new Observable<LoginResponse>(rootObserver => {
-      if (redirectTo) {
-        this.redirectTo = redirectTo;
-      }
-
-      this.http.post<LoginResponse>(`Login`, loginRequest).subscribe(loginResponse => {
-        if (loginResponse.authenticated) {
-          const storage = remember ? localStorage : sessionStorage;
-
-          if (remember) {
-            sessionStorage.setItem('last_login_user', loginRequest.email);
-          } else {
-            sessionStorage.removeItem('last_login_user');
-          }
-          this.loginResponse = loginResponse;
-
-          storage.setItem(storageKey, JSON.stringify(loginResponse));
-          this.router.navigateByUrl(this.redirectTo).then(() => {
-            this.authEventsSource.next({type: 'login', data: loginResponse});
-          }, error => {
-            console.log(error);
-          });
-        }
-        rootObserver.next(loginResponse);
-      }, error => {
-        rootObserver.error(error);
-      }, () => {
-        rootObserver.complete();
-      });
-    });
-    // this.http.post(`${this.api}/login`, user);
+    this.loginResponse = loginResponse;
+    storage.setItem(storageKey, JSON.stringify(loginResponse));
+    await this.router.navigateByUrl(this.redirectTo);
+    return this.loginResponse;
   }
 
   logout(): void {
@@ -101,7 +92,7 @@ export class AuthService {
     localStorage.removeItem(storageKey);
     sessionStorage.removeItem(storageKey);
     this.redirectTo = '/dashboard';
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']).then();
     if (this.modal.hasOpenModals()) {
       this.modal.dismissAll('logout');
     }

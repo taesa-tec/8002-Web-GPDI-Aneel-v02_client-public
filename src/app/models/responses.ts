@@ -1,9 +1,10 @@
+import {User} from '@app/models/common';
+
 export interface LoginResponse {
-  authenticated: boolean;
   created?: string;
   expiration?: string;
   accessToken?: string;
-  message: string;
+  user: User;
 }
 
 export interface ResultadoResponse {

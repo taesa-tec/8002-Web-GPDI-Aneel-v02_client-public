@@ -21,7 +21,7 @@ export const CaptacaoCols: { [prop: string]: TableComponentCols } = {
     {field: 'titulo', title: 'Título Resumido Projeto', order: true},
     {field: 'equipeSuprimento', title: 'Equipe de Suprimentos Usuário Designado', order: true},
     {field: 'tema', title: 'Tema', order: true},
-    {field: 'dataEnvioCaptacao', title: 'Data Envio para Captação Demanda', order: true},
+    {field: 'envioCaptacao', title: 'Data Envio para Captação Demanda', order: true, type: 'ng-pipe', pipe: new DatePipe('pt-BR'), value: item => [item.envioCaptacao, 'short']},
   ],
 
   Aberta: [
