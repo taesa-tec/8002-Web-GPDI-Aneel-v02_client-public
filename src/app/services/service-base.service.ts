@@ -1,9 +1,17 @@
 import {HttpClient} from '@angular/common/http';
 import {BaseEntity} from '@app/models';
+import {UploadFilesService} from '@app/dashboard/painel-demandas/conf-padrao/services/upload-files.service';
 
-export class ServiceBase<T extends { id?: any }> {
+export class ServiceBase<T extends { id?: any }> extends UploadFilesService {
+
+  get: (url, ...args) => Promise<any> = (url, ...args) => this.http.get(`${this.controller}/${url}`, ...args).toPromise();
+  delete: (url, ...args) => Promise<any> = (url, ...args) => this.http.delete(`${this.controller}/${url}`, ...args).toPromise();
+  head: (url, ...args) => Promise<any> = (url, ...args) => this.http.head(`${this.controller}/${url}`, ...args).toPromise();
+  put: (url, ...args) => Promise<any> = (url, data, ...args) => this.http.put(`${this.controller}/${url}`, data, ...args).toPromise();
+  post: (url, ...args) => Promise<any> = (url, data, ...args) => this.http.post(`${this.controller}/${url}`, data, ...args).toPromise();
 
   constructor(protected http: HttpClient, protected controller: string) {
+    super(http);
   }
 
   sanitizeQuery(query: any) {
@@ -71,6 +79,8 @@ export class ServiceBase<T extends { id?: any }> {
     return await this.http.delete(`${this.controller}/?id=${id}`).toPromise();
   }
 
-
+  upload(files: Array<File>, url: string) {
+    return super.upload(files, `${this.controller}/${url}`);
+  }
 }
 

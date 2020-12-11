@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormGroup, FormBuilder, Validators, FormArray} from '@angular/forms';
 
 import {AppService} from '@app/services/app.service';
@@ -6,6 +6,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {ServiceBase} from '@app/services/service-base.service';
 import {FornecedoresService} from '@app/services/configuracoes-sistema/fornecedores.service';
 import {ContratosService} from '@app/services/configuracoes-sistema/contratos.service';
+import {LoadingComponent} from '@app/core/components';
 
 @Component({
   selector: 'app-criar-captacao',
@@ -14,6 +15,7 @@ import {ContratosService} from '@app/services/configuracoes-sistema/contratos.se
 })
 export class CriarComponent implements OnInit {
 
+  @ViewChild(LoadingComponent) loading: LoadingComponent;
 
   projeto: any;
   fornecedores: Array<{ id: number; responsavelNome: string }> = [];
@@ -22,6 +24,7 @@ export class CriarComponent implements OnInit {
   form: FormGroup = this.fb.group({
     id: ['', [Validators.required]],
     fornecedores: this.fornecedoresFormArray,
+    contratoId: [''],
     observacoes: [''],
     files: ['']
   });
@@ -50,7 +53,6 @@ export class CriarComponent implements OnInit {
     this.fornecedores = await this.fornecedorService.obter();
     this.contratos = await this.contratosService.obter();
     this.fornecedoresFormArray = this.form.get('fornecedores') as FormArray;
-    console.log(this.fornecedores);
   }
 
   adicionarFornecedor(id = '') {
@@ -59,14 +61,25 @@ export class CriarComponent implements OnInit {
 
   async onSubmit() {
     if (this.form.valid) {
-      const projeto: any = this.form.value;
-
+      this.loading.show();
+      const {files, ...projeto} = this.form.value as { files: Array<File> };
       try {
-        //await this.app.captacao.criarCaptacao(projeto);
+        await this.service.post('NovaCaptacao', projeto);
+        if (files.length > 0) {
+          const fd = new FormData();
+          files.forEach(file => {
+            fd.append('file', file);
+          });
+          await this.service.upload(files, `${this.id}/Arquivos`).toPromise();
+        }
+
         this.app.alert('Captação criada com sucesso!', 'Sucesso').then();
         this.activeModal.close();
       } catch (error) {
+        this.app.alert('Erro na criação da Captação', 'Erro!').then();
         console.error(error);
+      } finally {
+        this.loading.hide();
       }
     }
   }

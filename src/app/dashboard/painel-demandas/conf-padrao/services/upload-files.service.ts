@@ -1,14 +1,15 @@
-import { Injectable } from '@angular/core';
-import { HttpRequest, HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpRequest, HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadFilesService {
 
-  constructor(private http: HttpClient) { }
+  constructor(protected http: HttpClient) {
+  }
 
-  upload(files: Set<File>, url: string) {
+  upload(files: Array<File>, url: string) {
 
     const formData = new FormData();
 
@@ -18,10 +19,10 @@ export class UploadFilesService {
 
     const request = new HttpRequest('POST', url, formData);
 
-    return this.http.request(request);
+    return this.http.request<any>(request);
   }
 
-  download(url: string){
+  download(url: string) {
     return this.http.get(url, {
       responseType: 'blob' as 'json'
     });

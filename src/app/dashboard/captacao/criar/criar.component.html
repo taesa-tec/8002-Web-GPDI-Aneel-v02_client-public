@@ -51,7 +51,7 @@
 
     <div class="form-group">
       <label for="contrato">Contrato Base Sugerido</label>
-      <select id="contrato" class="form-control">
+      <select id="contrato" class="form-control" formControlName="contratoId">
         <option value="" hidden>Escolha um contrato</option>
         <option [value]="contrato.id" *ngFor="let contrato of contratos">
           {{ contrato.titulo }}
@@ -66,7 +66,8 @@
     </div>
 
     <div class="form-group">
-      <app-file-list></app-file-list>
+      <label>Anexar Arquivos (opcional)</label>
+      <app-file-list formControlName="files"></app-file-list>
     </div>
 
     <div class="form-group">

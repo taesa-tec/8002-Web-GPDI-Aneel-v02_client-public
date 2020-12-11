@@ -16,9 +16,10 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 export class FileListComponent implements OnInit, ControlValueAccessor {
   @Input() name = '';
   @Input() disabled;
-  @Input('value') val: FileList;
+  @Input('value') val: Array<File>;
   @Input() maxsize = 100 * 1024 * 1024; // 100mb
   @Output() error = new EventEmitter<any>();
+  protected files: Array<File> = [];
 
   fileinfo: Array<{ name: string, size: number }> = [];
 
@@ -51,7 +52,8 @@ export class FileListComponent implements OnInit, ControlValueAccessor {
 
   writeValue(value: FileList) {
     if (value) {
-      this.value = value;
+      this.files.push(value.item(0));
+      this.value = this.files;
     }
   }
 
@@ -69,14 +71,18 @@ export class FileListComponent implements OnInit, ControlValueAccessor {
 
   elOnChange(event: Event) {
     const input = event.target as HTMLInputElement;
-    console.log(input.files);
     this.writeValue(input.files);
   }
 
-  protected checkFiles(fileList: FileList) {
+  removeAt(i) {
+    this.files.splice(i, 1);
+    this.value = this.files;
+  }
+
+  protected checkFiles(fileList: Array<File>) {
     let size = 0;
     for (let i = 0; i < fileList.length; i++) {
-      const f = fileList.item(i);
+      const f = fileList[i];
       size += f.size;
     }
     if (size > this.maxsize) {
@@ -90,7 +96,7 @@ export class FileListComponent implements OnInit, ControlValueAccessor {
   protected updateFileInfo() {
     this.fileinfo = [];
     for (let i = 0; i < this.value.length; i++) {
-      const file = this.value.item(i);
+      const file = this.value[i];
       this.fileinfo.push({name: file.name, size: file.size});
     }
   }
