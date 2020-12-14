@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from '@app/models';
-import { AppService } from '@app/services/app.service';
-import { AuthService } from '@app/services/auth.service';
-import { environment } from '@env/environment';
+import {Component, Inject, OnInit} from '@angular/core';
+import {User} from '@app/models';
+import {AppService} from '@app/services/app.service';
+import {AuthService} from '@app/services/auth.service';
+import {environment} from '@env/environment';
 
 @Component({
   selector: 'app-header',
@@ -13,23 +13,21 @@ export class HeaderComponent implements OnInit {
 
   currentUser: User;
 
-  constructor(
-    protected app: AppService,
-    protected auth: AuthService
-  ) {
-  }
-
   get avatar() {
     return `url(${environment.api_url}/Users/${this.currentUser.id}/avatar)`;
   }
 
   get empresa() {
     if (this.currentUser) {
-      return this.currentUser.catalogEmpresa ?
-        this.currentUser.catalogEmpresa.nome :
-        (this.currentUser.razaoSocial ? this.currentUser.razaoSocial : '');
+      return this.currentUser.empresa || this.currentUser.razaoSocial || '';
     }
     return '';
+  }
+
+  constructor(
+    protected app: AppService,
+    protected auth: AuthService
+  ) {
   }
 
   logout() {
@@ -37,9 +35,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.app.users.currentUserUpdated.subscribe(user => {
-      this.currentUser = user;
-    });
+    this.currentUser = this.auth.user;
   }
 
 }

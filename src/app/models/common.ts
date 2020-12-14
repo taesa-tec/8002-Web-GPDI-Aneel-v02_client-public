@@ -119,7 +119,7 @@ export interface User {
   fotoPerfil?: string;
   cpf?: any;
   cargo?: string;
-  catalogEmpresa?: Empresa;
+  empresa?: string;
   catalogEmpresaId?: number | '';
   ultimoLogin?: string;
   dataCadastro?: string;

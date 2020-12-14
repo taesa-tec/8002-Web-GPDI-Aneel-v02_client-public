@@ -8,6 +8,9 @@ import {MeuCadastroComponent} from './meu-cadastro/meu-cadastro.component';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {GerenciarUsuariosComponent} from './gerenciar-usuarios/gerenciar-usuarios.component';
 import {DashboardComponent} from './dashboard.component';
+import {currentUserProvider} from '@app/providers/user.provider';
+import {UsersService} from '@app/services/users.service';
+import {AdminGuard} from '@app/dashboard/guards/admin.guard';
 
 
 @NgModule({
@@ -21,6 +24,11 @@ import {DashboardComponent} from './dashboard.component';
     SharedModule,
     UsersModule,
     DashboardRoutingModule,
+  ],
+  providers: [
+    UsersService,
+    AdminGuard,
+    currentUserProvider
   ]
 })
 export class DashboardModule {

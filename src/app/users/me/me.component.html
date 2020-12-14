@@ -52,7 +52,7 @@
                 <option value="">Selecione</option>
                 <option *ngFor="let empresa of empresas" [value]="empresa.id">{{
                   empresa.nome
-                }}</option>
+                  }}</option>
                 <option value="0">Outra (Empresa Externa)</option>
               </select>
             </div>
@@ -104,18 +104,9 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-12">
-            <hr />
-            <app-user-projetos
-              [user]="user"
-              [readonly]="true"
-            ></app-user-projetos>
-          </div>
-        </div>
-        <div class="row">
           <div class="col-12 text-right">
             <a routerLink="/dashboard/gerenciar-usuarios" class="btn btn-link"
-              >Cancelar</a
+            >Cancelar</a
             >
             <button class="btn btn-primary" [disabled]="form.invalid">
               <i class="ta-save"></i> Salvar

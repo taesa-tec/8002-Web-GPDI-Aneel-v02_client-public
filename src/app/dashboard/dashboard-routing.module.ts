@@ -8,7 +8,7 @@ import {GerenciarUsuariosComponent} from './gerenciar-usuarios/gerenciar-usuario
 import {AuthGuard} from '@app/auth/auth.guard';
 import {NewUserComponent} from '@app/users/new-user/new-user.component';
 import {EditUserComponent} from '@app/users/edit-user/edit-user.component';
-import {AdminGuard} from '@app/core/guards/admin.guard';
+import {AdminGuard} from '@app/dashboard/guards/admin.guard';
 import {MainComponent} from './shared/main/main.component';
 
 
@@ -65,7 +65,8 @@ const routes: Routes = [
       },
       //-----------------------------------------------------------------------------------------------------------
       {path: '**', component: NotFoundComponent},
-    ]
+    ],
+
   }
 ];
 

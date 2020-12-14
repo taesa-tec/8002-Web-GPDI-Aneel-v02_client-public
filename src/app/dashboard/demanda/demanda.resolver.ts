@@ -4,10 +4,11 @@ import {Injectable} from '@angular/core';
 import {AppService} from '@app/services/app.service';
 import {DemandaEtapaStatus} from '@app/dashboard/demandas/commons';
 import {Roles, UserRole} from '@app/models';
+import {UsersService} from '@app/services/users.service';
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class DemandaResolver implements Resolve<{ demanda: Demanda, menu: Array<any>, defaultPage?: string }> {
-  constructor(protected app: AppService) {
+  constructor(protected app: AppService, protected usersService: UsersService) {
   }
 
 
@@ -23,7 +24,7 @@ export class DemandaResolver implements Resolve<{ demanda: Demanda, menu: Array<
   }
 
   protected defaultPage(demanda: Demanda, equipe): string {
-    const user = this.app.users.currentUser;
+    const user = this.usersService.currentUser;
 
     switch (user.id) {
       case demanda.criadorId:
@@ -44,7 +45,7 @@ export class DemandaResolver implements Resolve<{ demanda: Demanda, menu: Array<
   }
 
   protected menu(demanda: Demanda, equipe): Array<any> {
-    const user = this.app.users.currentUser;
+    const user = this.usersService.currentUser;
     if (user.role === UserRole.Administrador) {
       return this.menuCriador([
         {text: 'Central Administrativa', icon: 'ta-central-admin', path: 'central-administrativa'},

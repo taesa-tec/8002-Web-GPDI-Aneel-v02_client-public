@@ -7,57 +7,60 @@ import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {AppService} from '@app/services/app.service';
 import {map} from 'rxjs/operators';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {UsersService} from '@app/services/users.service';
 
 @Component({
-    selector: 'app-meus-projetos',
-    templateUrl: './meus-projetos.component.html',
-    styleUrls: []
+  selector: 'app-meus-projetos',
+  templateUrl: './meus-projetos.component.html',
+  styleUrls: []
 })
 export class MeusProjetosComponent implements OnInit {
 
-    projetos: Projeto[];
-    currentUser: User;
+  projetos: Projeto[];
+  currentUser: User;
 
-    protected subProjetcs: Subscription;
+  protected subProjetcs: Subscription;
 
-    @ViewChild(LoadingComponent) loading: LoadingComponent;
+  @ViewChild(LoadingComponent) loading: LoadingComponent;
 
-    constructor(protected app: AppService, public modal: NgbModal) {
-        this.projetos = [];
-    }
+  constructor(protected app: AppService,
+              protected usersService: UsersService,
+              public modal: NgbModal) {
+    this.projetos = [];
+  }
 
-    openNovoProjeto() {
+  openNovoProjeto() {
 
-        this.modal.open(NovoProjetoComponent, {size: 'lg'}).result.then(value => {
-            if (value.sucesso) {
-                this.loadData();
-            }
-        }).catch(reason => {
-            console.log(reason);
-        });
+    this.modal.open(NovoProjetoComponent, {size: 'lg'}).result.then(value => {
+      if (value.sucesso) {
+        this.loadData();
+      }
+    }).catch(reason => {
+      console.log(reason);
+    });
 
-    }
+  }
 
-    ngOnInit() {
-        this.subProjetcs = this.app.users.currentUserUpdated.subscribe(user => {
-            if (user !== null) {
-                const curr = this.currentUser;
-                this.currentUser = user;
-                if ((curr && curr.id !== user.id) || this.projetos.length === 0) {
-                    this.loadData();
-                }
-
-            }
-        });
-    }
-
-    async loadData() {
-        if (this.currentUser || this.projetos.length > 0) {
-            // this.subProjetcs.unsubscribe();
+  ngOnInit() {
+    this.subProjetcs = this.usersService.currentUserUpdated.subscribe(user => {
+      if (user !== null) {
+        const curr = this.currentUser;
+        this.currentUser = user;
+        if ((curr && curr.id !== user.id) || this.projetos.length === 0) {
+          this.loadData();
         }
-        this.loading.show();
-        this.projetos = await this.app.projetos.meusProjetos().toPromise();
-        this.loading.hide();
+
+      }
+    });
+  }
+
+  async loadData() {
+    if (this.currentUser || this.projetos.length > 0) {
+      // this.subProjetcs.unsubscribe();
     }
+    this.loading.show();
+    this.projetos = await this.app.projetos.meusProjetos().toPromise();
+    this.loading.hide();
+  }
 
 }

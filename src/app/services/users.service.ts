@@ -1,18 +1,16 @@
 import {Injectable, Inject} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {CreateUserRequest, ResultadoResponse, User, UserProjeto, NiveisUsuarios, Permissao, Projeto, Roles, UserRole} from '@app/models';
-import {Observable, Subject, of, zip, BehaviorSubject, timer} from 'rxjs';
-import {share, delay, filter, tap} from 'rxjs/operators';
+import {Observable, BehaviorSubject} from 'rxjs';
+
 import {AuthService} from '@app/services/auth.service';
 import {CatalogsService} from '@app/services/catalogs.service';
 import {SistemaService} from '@app/services/sistema.service';
+import {CURRENT_USER} from '@app/providers/user.provider';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class UsersService {
 
-  protected _currentUser: User;
   protected currentUserUpdatedSource = new BehaviorSubject<User>(null);
   protected usersAccesses = new Map<string, Array<UserProjeto>>();
 
@@ -21,28 +19,20 @@ export class UsersService {
 
   niveisUsuarios = NiveisUsuarios;
 
-  constructor(protected http: HttpClient, protected auth: AuthService, protected catalogo: CatalogsService, protected sistema: SistemaService) {
-    setTimeout(() => {
-      this.auth.authEvent.pipe(filter(e => e !== null)).subscribe(async e => {
-        if (e.type === 'logout') {
-          this.currentUser = null;
-        } else {
-          await this.setCurrentUser();
-        }
-      });
-    }, 0);
+  constructor(protected http: HttpClient, protected auth: AuthService, protected catalogo: CatalogsService, protected sistema: SistemaService,
+              @Inject(CURRENT_USER) protected _currentUser: User) {
     console.log('UsersService Ok');
   }
 
   get currentUser() {
-    return this._currentUser;
+    return this.auth.user;
   }
 
   set currentUser(value) {
     if (value && value !== this._currentUser) {
       this.currentUserUpdatedSource.next(value);
     }
-    this._currentUser = value;
+    this.auth.user = value;
   }
 
   async setCurrentUser() {

@@ -1,14 +1,14 @@
 import {InjectionToken, Provider} from '@angular/core';
 import {User} from '@app/models';
-import {UsersService} from '@app/services/users.service';
+import {AuthService} from '@app/services/auth.service';
 
 export const CURRENT_USER = new InjectionToken<User>('current_user');
 
 export const currentUserProvider: Provider = {
   provide: CURRENT_USER,
-  useFactory: (userservice: UsersService) => userservice.currentUser,
+  useFactory: (authService: AuthService) => authService.user,
   multi: false,
-  deps: [UsersService]
+  deps: [AuthService]
 };
 
 

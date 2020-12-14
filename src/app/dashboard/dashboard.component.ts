@@ -1,11 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {AppService} from '@app/services/app.service';
 import {User} from '@app/models';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {currentUserProvider} from '@app/providers/user.provider';
+import {AuthService} from '@app/services/auth.service';
 
 
 @Component({
@@ -15,12 +15,12 @@ import {currentUserProvider} from '@app/providers/user.provider';
 })
 export class DashboardComponent implements OnInit {
 
-  @ViewChild(LoadingComponent, { static: true })
+  @ViewChild(LoadingComponent, {static: true})
   private loading: LoadingComponent;
 
   currentUser: User;
 
-  constructor(protected app: AppService, protected modal: NgbModal) {
+  constructor(protected app: AppService, protected modal: NgbModal, public auth: AuthService) {
   }
 
   get avatar() {
@@ -29,9 +29,7 @@ export class DashboardComponent implements OnInit {
 
   get empresa() {
     if (this.currentUser) {
-      return this.currentUser.catalogEmpresa ?
-        this.currentUser.catalogEmpresa.nome :
-        (this.currentUser.razaoSocial ? this.currentUser.razaoSocial : '');
+      return this.currentUser.empresa;
     }
     return '';
   }
@@ -41,10 +39,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.app.users.currentUserUpdated.subscribe(user => {
-      this.currentUser = user;
-    });
-
+    this.currentUser = this.auth.user;
   }
 
 }

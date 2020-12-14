@@ -1,6 +1,7 @@
 import {AppService} from '@app/services/app.service';
 import {FormGroup, FormControl, FormArray, FormBuilder, Validators} from '@angular/forms';
 import {Component, OnInit} from '@angular/core';
+import {UsersService} from '@app/services/users.service';
 
 @Component({
   selector: 'app-equipe',
@@ -12,19 +13,18 @@ export class EquipeComponent implements OnInit {
   formEquipe: FormGroup;
   equipeOutros = new FormArray([]);
 
-  constructor(protected app: AppService, private fb: FormBuilder) {
+  constructor(protected app: AppService, protected usersService: UsersService, private fb: FormBuilder) {
   }
 
   async ngOnInit() {
-    this.app.loading.show();
+    await this.app.loading.show();
     await this.configForm();
     this.app.loading.hide();
   }
 
 
   async configForm() {
-    const [equipe, pessoas] = await Promise.all([this.app.sistema.getEquipePeD(), this.app.users.all().toPromise()]);
-    console.log({equipe, pessoas});
+    const [equipe, pessoas] = await Promise.all([this.app.sistema.getEquipePeD(), this.usersService.all().toPromise()]);
     this.formEquipe = this.fb.group({
       diretor: ['', Validators.required],
       gerente: ['', Validators.required],

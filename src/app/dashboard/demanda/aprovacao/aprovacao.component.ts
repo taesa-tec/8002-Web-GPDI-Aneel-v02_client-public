@@ -5,6 +5,7 @@ import {Demanda} from '@app/models/demandas';
 import {DemandaEtapa, DemandaEtapaItems, DemandaEtapaStatus} from '@app/dashboard/demandas/commons';
 import {environment} from '@env/environment';
 import {EquipePeD, User} from '@app/models';
+import {UsersService} from '@app/services/users.service';
 
 
 @Component({
@@ -63,11 +64,12 @@ export class AprovacaoComponent implements OnInit {
 
   constructor(
     protected app: AppService,
+    protected usersService: UsersService,
     protected route: ActivatedRoute) {
   }
 
   async ngOnInit() {
-    this.user = this.app.users.currentUser;
+    this.user = this.usersService.currentUser;
     this.demanda = this.route.parent.snapshot.data.demanda.demanda;
     this.equipe = await this.app.sistema.getEquipePeD();
     this.anexos = await this.app.demandas.getAnexos(this.demanda.id);

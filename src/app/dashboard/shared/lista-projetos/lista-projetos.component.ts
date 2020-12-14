@@ -1,13 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { Projeto, Empresa, User } from '@app/models';
-import { FormGroup, FormControl } from '@angular/forms';
-import { CatalogsService } from '@app/services/catalogs.service';
-import { filter } from 'lodash-es';
-import { ActivatedRoute } from '@angular/router';
-import { AppService } from '@app/services/app.service';
-import { LoadingComponent } from '@app/core/components/loading/loading.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NovoProjetoComponent } from '@app/dashboard/shared/novo-projeto/novo-projeto.component';
+import {Component, OnInit, Input, Output, EventEmitter, ViewChild} from '@angular/core';
+import {Projeto, Empresa, User} from '@app/models';
+import {FormGroup, FormControl} from '@angular/forms';
+import {CatalogsService} from '@app/services/catalogs.service';
+import {filter} from 'lodash-es';
+import {ActivatedRoute} from '@angular/router';
+import {AppService} from '@app/services/app.service';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NovoProjetoComponent} from '@app/dashboard/shared/novo-projeto/novo-projeto.component';
+import {UsersService} from '@app/services/users.service';
 
 @Component({
   selector: 'app-projetos-list',
@@ -25,18 +26,18 @@ export class ListaProjetosComponent implements OnInit {
 
   currentUser: User;
 
-  @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
+  @ViewChild(LoadingComponent, {static: true}) loading: LoadingComponent;
   @Input() projetos: Array<Projeto>;
-  @Input() titulo = "Projetos";
+  @Input() titulo = 'Projetos';
   @Input() projetoStatus;
 
   @Output() updateRequest: EventEmitter<any> = new EventEmitter();
 
   get canAddProject() {
-    return this.currentUser && this.currentUser.role === "Admin-APIGestor";
+    return this.currentUser && this.currentUser.role === 'Admin-APIGestor';
   }
 
-  constructor(protected catalog: CatalogsService, protected route: ActivatedRoute, protected app: AppService, public modal: NgbModal) {
+  constructor(protected catalog: CatalogsService, protected usersService: UsersService, protected route: ActivatedRoute, protected app: AppService, public modal: NgbModal) {
   }
 
   async ngOnInit() {
@@ -51,13 +52,14 @@ export class ListaProjetosComponent implements OnInit {
     }
     this.updateRequest.subscribe(() => this.updateProjetos());
 
-    this.app.users.currentUserUpdated.subscribe(user => {
+    this.usersService.currentUserUpdated.subscribe(user => {
       if (user !== null) {
         this.currentUser = user;
       }
     });
 
   }
+
   async updateProjetos() {
     if (this.projetoStatus) {
       this.projetos = await this.app.projetos.getProjetos(this.projetoStatus).toPromise();
@@ -93,7 +95,7 @@ export class ListaProjetosComponent implements OnInit {
 
   openNovoProjeto() {
 
-    this.modal.open(NovoProjetoComponent, { size: 'lg' }).result.then(value => {
+    this.modal.open(NovoProjetoComponent, {size: 'lg'}).result.then(value => {
       if (value.sucesso) {
         // this.loadData();
       }

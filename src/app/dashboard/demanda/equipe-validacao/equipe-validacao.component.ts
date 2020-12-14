@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AppService } from '@app/services/app.service';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {AppService} from '@app/services/app.service';
+import {ActivatedRoute} from '@angular/router';
+import {UsersService} from '@app/services/users.service';
 
 @Component({
   selector: 'app-definicao-pessoas-processo-validacao',
@@ -16,7 +17,7 @@ export class EquipeValidacaoComponent implements OnInit {
   demandaId: number;
 
 
-  constructor(protected app: AppService, protected route: ActivatedRoute) {
+  constructor(protected app: AppService, protected usersService: UsersService, protected route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -26,11 +27,11 @@ export class EquipeValidacaoComponent implements OnInit {
 
   async configForm() {
     let superiorDireto;
-    console.log("configForm");
+    console.log('configForm');
 
-    [this.equipe, this.pessoas, { superiorDireto }] = await Promise.all([
+    [this.equipe, this.pessoas, {superiorDireto}] = await Promise.all([
       this.app.sistema.getEquipePeD(),
-      this.app.users.all().toPromise(),
+      this.usersService.all().toPromise(),
       this.app.demandas.getSuperiorDireto(this.demandaId)]);
 
     this.form = new FormGroup({

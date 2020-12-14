@@ -9,12 +9,12 @@ import {UserAccessDirective} from '@app/core/directives/user-access.directive';
   declarations: [
     DownloadFileDirective,
     DynamicHostDirective,
-    UserAccessDirective,
+    //UserAccessDirective,
   ],
   exports: [
     DownloadFileDirective,
     DynamicHostDirective,
-    UserAccessDirective,
+    // UserAccessDirective,
   ],
   imports: [
     CommonModule

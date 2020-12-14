@@ -1,15 +1,16 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {Component, OnInit, ViewChild, Input, Output, EventEmitter} from '@angular/core';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {
   Empresa, ResultadoResponse, UserRole, Roles, AppValidators, User, CreateUserRequest,
   Projeto, Projetos
 } from '@app/models';
-import { LoadingComponent } from '@app/core/components/loading/loading.component';
-import { Observable, Observer, zip, of, concat, throwError, timer, empty } from 'rxjs';
-import { UserProjetosComponent } from '../user-projetos/user-projetos.component';
-import { mergeMap, last } from 'rxjs/operators';
-import { AppService } from '@app/services/app.service';
-import { environment } from '@env/environment';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
+import {Observable, Observer, zip, of, concat, throwError, timer, empty} from 'rxjs';
+import {UserProjetosComponent} from '../user-projetos/user-projetos.component';
+import {mergeMap, last} from 'rxjs/operators';
+import {AppService} from '@app/services/app.service';
+import {environment} from '@env/environment';
+import {UsersService} from '@app/services/users.service';
 
 @Component({
   selector: 'app-form',
@@ -17,7 +18,7 @@ import { environment } from '@env/environment';
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit {
-  @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
+  @ViewChild(LoadingComponent, {static: true}) loading: LoadingComponent;
 
   @ViewChild(UserProjetosComponent) userProjetos: UserProjetosComponent;
 
@@ -35,7 +36,7 @@ export class FormComponent implements OnInit {
   projetoAcessosEnabled = true;
 
 
-  constructor(protected app: AppService) {
+  constructor(protected app: AppService, protected usersService: UsersService) {
   }
 
   get previewAvatar() {
@@ -109,25 +110,25 @@ export class FormComponent implements OnInit {
         }
 
         const requests = concat(this.handler(this.form.value).pipe(mergeMap(result => {
-          if (result.sucesso) {
+            if (result.sucesso) {
 
-            if (result.id) {
-              return this.userProjetos.updatePermissoes(result.id);
+              if (result.id) {
+                return this.userProjetos.updatePermissoes(result.id);
+              }
+              return of(result);
             }
-            return of(result);
-          }
-          return throwError(result);
+            return throwError(result);
 
-        })),
+          })),
           this.userId ? this.userProjetos.updatePermissoes(this.userId) : empty())
           .pipe(last());
 
 
         requests.subscribe(result => {
-          this.loading.hide();
-          this.submited.emit(result);
-          this.resultado = result;
-        },
+            this.loading.hide();
+            this.submited.emit(result);
+            this.resultado = result;
+          },
           error => {
 
             console.log(error);
@@ -152,7 +153,7 @@ export class FormComponent implements OnInit {
 
   removeUser() {
     this.app.confirm('Tem certeza que deseja remover este usuário?').then(result => {
-      this.app.users.remove(this.userId).subscribe(r => {
+      this.usersService.remove(this.userId).subscribe(r => {
         if (r.sucesso) {
           this.app.alert('Usuário removido com sucesso');
           this.app.router.navigate(['/dashboard', 'gerenciar-usuarios'], {

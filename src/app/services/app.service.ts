@@ -74,7 +74,7 @@ export class AppService {
     public catalogo: CatalogsService,
     public projetos: ProjetosService,
     public demandas: DemandasService,
-    public users: UsersService,
+    //public users: UsersService,
     public file: FileService,
     public auth: AuthService,
     public sistema: SistemaService,

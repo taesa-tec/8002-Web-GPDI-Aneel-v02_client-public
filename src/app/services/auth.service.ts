@@ -39,12 +39,17 @@ export class AuthService {
   }
 
   get user() {
-    if (this.isLoggedIn) {
-      return this.loginResponse.user;
+    return this.loginResponse?.user;
+  }
+
+  set user(value) {
+    if (this.loginResponse) {
+      this.loginResponse.user = value;
     }
   }
 
   constructor(private http: HttpClient, protected router: Router, public modal: NgbModal) {
+    console.log('AuthService');
     let loggedUser;
     if (localStorage.getItem(storageKey) != null) {
       loggedUser = localStorage.getItem(storageKey);
@@ -83,7 +88,7 @@ export class AuthService {
     }
     this.loginResponse = loginResponse;
     storage.setItem(storageKey, JSON.stringify(loginResponse));
-    await this.router.navigateByUrl(this.redirectTo);
+    this.router.navigateByUrl(this.redirectTo).then();
     return this.loginResponse;
   }
 

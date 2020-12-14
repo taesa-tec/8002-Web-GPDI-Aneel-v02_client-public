@@ -3,6 +3,7 @@ import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {AppService} from '@app/services/app.service';
 import {User} from '@app/models';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {UsersService} from '@app/services/users.service';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class MainComponent implements OnInit {
   menu: Array<any>;
   protected currentUser: User;
 
-  constructor(protected app: AppService, protected modal: NgbModal) {
+  constructor(protected app: AppService, protected usersService: UsersService, protected modal: NgbModal) {
   }
 
   logout() {
@@ -26,8 +27,8 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentUser = this.app.users.currentUser;
-    this.app.users.currentUserUpdated.subscribe(user => {
+    this.currentUser = this.usersService.currentUser;
+    this.usersService.currentUserUpdated.subscribe(user => {
       this.currentUser = user;
     });
     this.menu = [

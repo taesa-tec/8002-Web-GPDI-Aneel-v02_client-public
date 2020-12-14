@@ -5,6 +5,7 @@ import {Empresa, ResultadoResponse, User, AppValidators} from '@app/models';
 import {Observable, Observer} from 'rxjs';
 import {ActivatedRouteSnapshot, ActivatedRoute, Router} from '@angular/router';
 import {AppService} from '@app/services/app.service';
+import {UsersService} from '@app/services/users.service';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class EditUserComponent implements OnInit {
 
   user: User;
 
-  constructor(protected app: AppService, protected route: ActivatedRoute) {
+  constructor(protected app: AppService, protected usersService: UsersService, protected route: ActivatedRoute) {
   }
 
   @ViewChild(LoadingComponent, {static: true}) loading: LoadingComponent;
@@ -34,14 +35,14 @@ export class EditUserComponent implements OnInit {
 
   protected getUser() {
     this.loading.show();
-    this.app.users.byId(this.route.snapshot.params.id).subscribe(user => {
+    this.usersService.byId(this.route.snapshot.params.id).subscribe(user => {
       this.user = user;
       this.loading.hide();
     });
   }
 
   submit(value: any) {
-    return this.app.users.edit(value);
+    return this.usersService.edit(value);
   }
 
   onSubmited(value: ResultadoResponse) {

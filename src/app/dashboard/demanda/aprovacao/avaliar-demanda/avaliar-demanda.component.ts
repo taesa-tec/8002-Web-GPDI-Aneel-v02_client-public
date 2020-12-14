@@ -3,6 +3,7 @@ import {Demanda} from '@app/models/demandas';
 import {AppService} from '@app/services/app.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {User} from '@app/models';
+import {UsersService} from '@app/services/users.service';
 
 @Component({
   selector: 'app-avaliar-demanda',
@@ -18,12 +19,12 @@ export class AvaliarDemandaComponent implements OnInit {
   formReprovacao: FormGroup = null;
   canUpdate = false;
 
-  constructor(protected  app: AppService, protected fb: FormBuilder) {
+  constructor(protected  app: AppService, protected usersService: UsersService, protected fb: FormBuilder) {
 
   }
 
   ngOnInit() {
-    this.user = this.app.users.currentUser;
+    this.user = this.usersService.currentUser;
     if (this.demanda === undefined) {
       throw new Error('Demanda não passada para o componete');
     }

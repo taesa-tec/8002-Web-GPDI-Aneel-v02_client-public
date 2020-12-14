@@ -37,9 +37,7 @@ moment.locale('pt-br');
     FontAwesomeModule,
   ],
   providers: [
-    {provide: LOCALE_ID, useValue: 'pt'},
-    AppService,
-    currentUserProvider
+    {provide: LOCALE_ID, useValue: 'pt'}
   ],
   bootstrap: [AppComponent]
 })
