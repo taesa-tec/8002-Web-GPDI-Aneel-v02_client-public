@@ -47,12 +47,9 @@ export class MeComponent implements OnInit {
     return this.form.get('razaoSocial') as FormControl;
   }
 
-  ngOnInit() {
-    this.app.catalogo.empresas().subscribe(e => {
-      this.empresas = e;
-      this.getCurrentUser();
-    });
-
+  async ngOnInit() {
+    this.empresas = await this.app.catalogo.empresas();
+    this.getCurrentUser();
   }
 
   getCurrentUser() {

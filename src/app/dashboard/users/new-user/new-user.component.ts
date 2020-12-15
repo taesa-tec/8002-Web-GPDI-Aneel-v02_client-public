@@ -24,7 +24,6 @@ export class NewUserComponent implements OnInit {
 
   form: FormGroup;
   roles = Roles;
-  empresas: Observable<Array<Empresa>>;
   resultado: ResultadoResponse;
 
   user: User = {
@@ -54,7 +53,7 @@ export class NewUserComponent implements OnInit {
           queryParams: {
             message: 'user-created'
           }
-        });
+        }).then();
       }
     } catch (e) {
 

@@ -31,6 +31,7 @@ export class NewpassComponent implements OnInit {
 
     ngOnInit() {
         const query = this.route.snapshot.queryParams;
+      console.log(query);
         this.passconfirm = new FormControl('', [Validators.required]);
         this.form = new FormGroup({
             email: new FormControl(query.email, [Validators.required]),

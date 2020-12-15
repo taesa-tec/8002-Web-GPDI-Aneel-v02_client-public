@@ -9,7 +9,7 @@ import localeBr from '@angular/common/locales/pt';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AuthModule} from './auth/auth.module';
-import {UsersModule} from './users/users.module';
+import {UsersModule} from './dashboard/users/users.module';
 import {CoreModule} from '@app/core';
 
 import {AppComponent} from './app.component';

@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {DashboardRoutingModule} from './dashboard-routing.module';
 
-import {UsersModule} from '@app/users/users.module';
+import {UsersModule} from '@app/dashboard/users/users.module';
 import {SharedModule} from '@app/dashboard/shared';
 
 import {MeuCadastroComponent} from './meu-cadastro/meu-cadastro.component';

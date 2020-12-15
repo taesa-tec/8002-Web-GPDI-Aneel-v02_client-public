@@ -3,8 +3,6 @@ import {CatalogsService} from '@app/services/catalogs.service';
 import {AppService} from '@app/services/app.service';
 import {ActivatedRoute} from '@angular/router';
 import {ProjetosService} from '@app/services/projetos.service';
-import {map, mergeMap, tap} from 'rxjs/operators';
-import {zip, of} from 'rxjs';
 import {Projeto, Tema, SubTema, SubTemaRequest, TemaProjeto, NoRequest, ResultadoResponse, CatalogTema, NiveisUsuarios} from '@app/models';
 import {FormGroup, FormControl, Validators, FormArray, FormBuilder, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
@@ -101,8 +99,8 @@ export class TemasComponent implements OnInit, ControlValueAccessor {
 
   async ngOnInit() {
     this.loading.show();
-    this.temas = await this.catalogo.temas().toPromise();
-    this.load();
+    this.temas = await this.catalogo.temas();
+    await this.load();
     this.loading.hide();
   }
 

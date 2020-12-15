@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ProjetoStatus, Empresa, ResultadoResponse } from '@app/models';
-import { Observable } from 'rxjs';
-import { LoadingComponent } from '@app/core/components/loading/loading.component';
-import { AppService } from '@app/services/app.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {ProjetoStatus, Empresa, ResultadoResponse} from '@app/models';
+import {Observable} from 'rxjs';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
+import {AppService} from '@app/services/app.service';
 
 @Component({
   selector: 'app-novo-projeto',
@@ -15,20 +15,16 @@ export class NovoProjetoComponent implements OnInit {
 
 
   maxTituloContent = 500;
-
   resultado: ResultadoResponse;
-
-  empresas: Observable<Array<Empresa>> = this.app.catalogo.empresas();
-
-
+  empresas: Promise<Array<Empresa>> = this.app.catalogo.empresas();
   form: FormGroup;
 
   readonly numeroPatterns = {
-    'S': { pattern: /[A-Za-z]/, optional: true },
-    '0': { pattern: /\d/, optional: false }
+    'S': {pattern: /[A-Za-z]/, optional: true},
+    '0': {pattern: /\d/, optional: false}
   };
 
-  @ViewChild(LoadingComponent, { static: true }) loading: LoadingComponent;
+  @ViewChild(LoadingComponent, {static: true}) loading: LoadingComponent;
 
   constructor(public activeModal: NgbActiveModal, protected app: AppService) {
   }
@@ -53,29 +49,28 @@ export class NovoProjetoComponent implements OnInit {
     return this.form.get('empresaProponente');
   }
 
-  ngOnInit() {
-    this.app.catalogo.status().subscribe(status => {
+  async ngOnInit() {
+    const status = await this.app.catalogo.status();
+    const catalogoStatus = status.find(s => s.status === 'Proposta');
 
-      const catalogoStatus = status.find(s => s.status === 'Proposta');
-      this.form = new FormGroup({
-        Numero: new FormControl('', [
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(5),
-        ]),
-        Titulo: new FormControl('', [
-          Validators.maxLength(60),
-          Validators.required
-        ]),
-        TituloDesc: new FormControl('', [
-          Validators.maxLength(this.maxTituloContent),
-          Validators.required
-        ]),
-        CatalogEmpresaId: new FormControl('', [Validators.required]),
-        CatalogStatusId: new FormControl(catalogoStatus.id, [Validators.required])
-      });
-      console.log(this);
+    this.form = new FormGroup({
+      Numero: new FormControl('', [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(5),
+      ]),
+      Titulo: new FormControl('', [
+        Validators.maxLength(60),
+        Validators.required
+      ]),
+      TituloDesc: new FormControl('', [
+        Validators.maxLength(this.maxTituloContent),
+        Validators.required
+      ]),
+      CatalogEmpresaId: new FormControl('', [Validators.required]),
+      CatalogStatusId: new FormControl(catalogoStatus.id, [Validators.required])
     });
+    console.log(this);
   }
 
   onSubmit() {

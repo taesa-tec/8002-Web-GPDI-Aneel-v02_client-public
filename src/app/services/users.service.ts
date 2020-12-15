@@ -76,8 +76,8 @@ export class UsersService {
     return this.http.delete<ResultadoResponse>(`Users/${id}`);
   }
 
-  userProjetos(id: string) {
-    return this.http.get<Array<UserProjeto>>(`UserProjetos/${id}`);
+  async userProjetos(id: string) {
+    return await this.http.get<Array<UserProjeto>>(`UserProjetos/${id}`).toPromise();
   }
 
   criarUserProjeto(userProjetos: Array<UserProjeto>) {
@@ -90,8 +90,8 @@ export class UsersService {
 
   async userCanAccess(id: string, projeto: Projeto, permissao: any = null) {
 
-    const permissoes = await this.catalogo.permissoes().toPromise();
-    const projetos = this.usersAccesses.has(id) ? this.usersAccesses.get(id) : await this.userProjetos(id).toPromise();
+    const permissoes = await this.catalogo.permissoes();
+    const projetos = this.usersAccesses.has(id) ? this.usersAccesses.get(id) : await this.userProjetos(id);
 
     if (projetos.length === 0 || permissoes.length === 0) {
       return false;
@@ -128,5 +128,9 @@ export class UsersService {
     } else {
       return false;
     }
+  }
+
+  async usersInRole(role: string) {
+    return await this.http.get<Array<User>>(`Users/Role/${role}`).toPromise();
   }
 }

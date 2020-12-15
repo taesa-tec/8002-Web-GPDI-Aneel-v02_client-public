@@ -13,14 +13,12 @@ export const CaptacaoCols: { [prop: string]: TableComponentCols } = {
   Pendente: [
     {field: 'titulo', title: 'Título Resumido Projeto', order: true},
     {field: 'criador', title: 'Elaborado por', order: true},
-    {field: 'tema', title: 'Tema', order: true},
     {field: 'aprovacao', title: 'Data Aprovação Demanda', order: true, type: 'ng-pipe', pipe: new DatePipe('pt-BR'), value: item => [item.aprovacao, 'short']},
   ],
 
   EmElaboracao: [
     {field: 'titulo', title: 'Título Resumido Projeto', order: true},
-    {field: 'equipeSuprimento', title: 'Equipe de Suprimentos Usuário Designado', order: true},
-    {field: 'tema', title: 'Tema', order: true},
+    {field: 'usuarioSuprimento', title: 'Equipe de Suprimentos Usuário Designado', order: true},
     {field: 'envioCaptacao', title: 'Data Envio para Captação Demanda', order: true, type: 'ng-pipe', pipe: new DatePipe('pt-BR'), value: item => [item.envioCaptacao, 'short']},
   ],
 

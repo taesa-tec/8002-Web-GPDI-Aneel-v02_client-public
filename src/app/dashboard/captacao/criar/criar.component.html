@@ -17,12 +17,21 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
     <div class="form-group">
+      <label for="contrato">Equipe de Suprimentos - Usuário Designado</label>
+      <select id="usuarioSuprimentoId" class="form-control" formControlName="usuarioSuprimentoId">
+        <option value="" hidden>Escolha um usuário</option>
+        <option [value]="usuario.id" *ngFor="let usuario of equipe">
+          {{ usuario.nomeCompleto }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
       <label>Fornecedores sugeridos (Opcional)</label>
       <div class="d-flex mb-2" *ngFor="let control of fornecedoresFormArray.controls; let i = index">
         <select class="form-control" [formControl]="control">
           <option value="" hidden>Escolha um fornecedor</option>
           <option [value]="fornecedor.id" *ngFor="let fornecedor of fornecedores">
-            {{ fornecedor.responsavelNome }}
+            {{ fornecedor.nome }}
           </option>
         </select>
         <button
@@ -59,6 +68,7 @@
 
       </select>
     </div>
+
 
     <div class="form-group">
       <label for="observacoes">Observações para equipe suprimentos (Opcional)</label>

@@ -6,8 +6,8 @@ import {NotFoundComponent} from './not-found/not-found.component';
 import {MeusProjetosComponent} from '@app/dashboard/shared/meus-projetos/meus-projetos.component';
 import {GerenciarUsuariosComponent} from './gerenciar-usuarios/gerenciar-usuarios.component';
 import {AuthGuard} from '@app/auth/auth.guard';
-import {NewUserComponent} from '@app/users/new-user/new-user.component';
-import {EditUserComponent} from '@app/users/edit-user/edit-user.component';
+import {NewUserComponent} from '@app/dashboard/users/new-user/new-user.component';
+import {EditUserComponent} from '@app/dashboard/users/edit-user/edit-user.component';
 import {AdminGuard} from '@app/dashboard/guards/admin.guard';
 import {MainComponent} from './shared/main/main.component';
 

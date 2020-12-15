@@ -35,10 +35,6 @@ export class FormComponent implements OnInit {
   userId: string;
   projetoAcessosEnabled = true;
 
-
-  constructor(protected app: AppService, protected usersService: UsersService) {
-  }
-
   get previewAvatar() {
     return `${environment.api_url}/Users/${this.user.id}/avatar`;
   }
@@ -49,6 +45,9 @@ export class FormComponent implements OnInit {
 
   get razaoSocial(): FormControl {
     return this.form.get('razaoSocial') as FormControl;
+  }
+
+  constructor(protected app: AppService, protected usersService: UsersService) {
   }
 
   ngOnInit() {
