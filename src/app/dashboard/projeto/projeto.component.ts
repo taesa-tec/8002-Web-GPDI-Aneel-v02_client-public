@@ -6,7 +6,7 @@ import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {AppService} from '@app/services/app.service';
 import {ProjetoFacade} from '@app/facades/index';
 import {filter} from 'rxjs/operators';
-import {NiveisUsuarios, AppMenu} from '@app/models';
+import {NiveisUsuarios, AppMenu} from '@app/commons';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 

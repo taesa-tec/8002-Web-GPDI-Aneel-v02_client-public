@@ -1,5 +1,5 @@
 import {Component, OnInit, Input, SimpleChanges, OnChanges} from '@angular/core';
-import {Projetos, User, Permissao, Projeto, ResultadoResponse, UserRole} from '@app/models';
+import {Projetos, User, Permissao, Projeto, ResultadoResponse, UserRole} from '@app/commons';
 import {Router} from '@angular/router';
 import {zip, from, Observable} from 'rxjs';
 import {keyBy, mapValues} from 'lodash-es';

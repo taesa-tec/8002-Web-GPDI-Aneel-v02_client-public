@@ -4,7 +4,7 @@ import {map} from 'rxjs/operators';
 import {zip, of} from 'rxjs';
 
 import {AppService} from '@app/services/app.service';
-import {Projeto, OrcamentosEmpresas, Etapa, TextValue, CategoriasContabeis, ExtratoItem, ResultadoResponse, Empresa, EmpresaProjeto} from '@app/models';
+import {Projeto, OrcamentosEmpresas, Etapa, TextValue, CategoriasContabeis, ExtratoItem, ResultadoResponse, Empresa, EmpresaProjeto} from '@app/commons';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {AlocarRecursoHumanoFormComponent} from '@app/dashboard/projeto/common/recursos-humanos/alocar-recurso-humano-form/alocar-recurso-humano-form.component';

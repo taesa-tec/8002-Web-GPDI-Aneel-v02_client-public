@@ -11,7 +11,7 @@ import {
     QueryList, ViewChildren,
 } from '@angular/core';
 import {NgControl} from '@angular/forms';
-import {LogItem, TextValue} from '@app/models';
+import {LogItem, TextValue} from '@app/commons';
 import {LoggerService} from '@app/services/logger.service';
 
 

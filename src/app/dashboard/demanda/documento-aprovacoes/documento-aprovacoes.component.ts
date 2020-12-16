@@ -1,7 +1,7 @@
 import {AppService} from '@app/services/app.service';
 import {Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Demanda} from '@app/models/demandas';
+import {Demanda} from '@app/commons/demandas';
 import {DemandaEtapa, DemandaEtapaItems, DemandaEtapaStatus} from '@app/dashboard/demandas/commons';
 import {environment} from '@env/environment';
 import {FormControl, FormGroup, Validators} from '@angular/forms';

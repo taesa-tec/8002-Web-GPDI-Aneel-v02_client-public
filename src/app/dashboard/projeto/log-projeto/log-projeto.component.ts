@@ -3,7 +3,7 @@ import {AppService} from '@app/services/app.service';
 import {ActivatedRoute} from '@angular/router';
 import {map, mergeMap} from 'rxjs/operators';
 import {zip, of} from 'rxjs';
-import {Projeto, LogProjeto, User, AcaoLog, TotalLog} from '@app/models';
+import {Projeto, LogProjeto, User, AcaoLog, TotalLog} from '@app/commons';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {size} from 'lodash-es';
 import {UsersService} from '@app/services/users.service';

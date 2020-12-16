@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { TableComponentCols, TableComponentFilter } from '@app/core/components/table/table';
-import { Pagination } from '@app/models/common';
+import { Pagination } from '@app/commons/common';
 import { at, chunk, uniqBy } from 'lodash-es';
 
 @Component({

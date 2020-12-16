@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {AppService} from '@app/services/app.service';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {Projeto, ResultadoResponse, XmlType} from '@app/models';
+import {Projeto, ResultadoResponse, XmlType} from '@app/commons';
 import {Subscription} from 'rxjs';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {tap} from 'rxjs/operators';

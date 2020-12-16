@@ -4,7 +4,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AppService} from '@app/services/app.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ActivatedRoute} from '@angular/router';
-import {Demanda} from '@app/models/demandas';
+import {Demanda} from '@app/commons/demandas';
 
 @Component({
   selector: 'app-status-demanda',

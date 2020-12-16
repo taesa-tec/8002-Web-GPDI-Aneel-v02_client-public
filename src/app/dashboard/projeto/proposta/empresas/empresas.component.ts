@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {EmpresaFormComponent} from '@app/dashboard/projeto/common/empresa-form/empresa-form.component';
 import {AppService} from '@app/services/app.service';
-import {Empresa, Projeto, EmpresaProjeto, UF} from '@app/models';
+import {Empresa, Projeto, EmpresaProjeto, UF} from '@app/commons';
 import {ActivatedRoute} from '@angular/router';
 import {map, mergeMap} from 'rxjs/operators';
 import {zip, of} from 'rxjs';

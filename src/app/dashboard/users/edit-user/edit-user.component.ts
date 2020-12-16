@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {Empresa, ResultadoResponse, User, AppValidators} from '@app/models';
+import {Empresa, ResultadoResponse, User, AppValidators} from '@app/commons';
 import {Observable, Observer} from 'rxjs';
 import {ActivatedRouteSnapshot, ActivatedRoute, Router} from '@angular/router';
 import {AppService} from '@app/services/app.service';
@@ -42,7 +42,7 @@ export class EditUserComponent implements OnInit {
   }
 
   submit(value: any) {
-    return this.usersService.edit(value);
+    return this.usersService.edit(value).toPromise();
   }
 
   onSubmited(value: ResultadoResponse) {

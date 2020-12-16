@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AtividadesComponent } from '../../proposta/atividades/atividades.component';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { ProjetoGestaoAtividades } from '@app/models';
+import { ProjetoGestaoAtividades } from '@app/commons';
 
 @Component({
     selector: 'app-relatorio-atividades',

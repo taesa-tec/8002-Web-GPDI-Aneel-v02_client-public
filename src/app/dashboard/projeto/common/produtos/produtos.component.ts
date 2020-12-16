@@ -3,7 +3,7 @@ import {ProdutoFormComponent} from '@app/dashboard/projeto/common/produtos/produ
 import {ActivatedRoute} from '@angular/router';
 import {AppService} from '@app/services/app.service';
 import {map} from 'rxjs/operators';
-import {Projeto, Produto, Etapa} from '@app/models';
+import {Projeto, Produto, Etapa} from '@app/commons';
 import {zip} from 'rxjs';
 import {ProjetoFacade} from '@app/facades/index';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';

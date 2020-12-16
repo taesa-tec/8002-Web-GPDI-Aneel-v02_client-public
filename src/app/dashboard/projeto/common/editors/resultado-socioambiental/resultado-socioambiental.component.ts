@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {EditorResultado} from '../editor-resultado-base';
 import {AppService} from '@app/services/app.service';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {IndicadoresSocioambientais, ResultadoResponse, ResultadoSocialAmbiental} from '@app/models';
+import {IndicadoresSocioambientais, ResultadoResponse, ResultadoSocialAmbiental} from '@app/commons';
 import {tap} from 'rxjs/operators';
 import {isNil} from 'lodash-es';
 import {Validators} from '@angular/forms';

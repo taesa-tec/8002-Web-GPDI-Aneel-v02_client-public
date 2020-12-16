@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AppService} from '@app/services/app.service';
 import {ProjetoFacade} from '@app/facades/index';
-import {Etapa} from '@app/models';
+import {Etapa} from '@app/commons';
 import {EtapaAtividadesFormComponent} from '../../common/etapa-atividades-form/etapa-atividades-form.component';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import * as moment from 'moment';

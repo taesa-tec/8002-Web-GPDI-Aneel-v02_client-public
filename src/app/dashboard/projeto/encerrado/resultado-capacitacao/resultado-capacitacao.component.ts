@@ -3,7 +3,7 @@ import { AppService } from '@app/services/app.service';
 import { LoadingComponent } from '@app/core/components/loading/loading.component';
 import { ResultadoBase } from '../resultado-base';
 import { ResultadoCapacitacaoComponent as Editor } from '../../common/editors/resultado-capacitacao/resultado-capacitacao.component';
-import { ResultadoCapacitacao, TiposCapacitacao } from '@app/models';
+import { ResultadoCapacitacao, TiposCapacitacao } from '@app/commons';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({

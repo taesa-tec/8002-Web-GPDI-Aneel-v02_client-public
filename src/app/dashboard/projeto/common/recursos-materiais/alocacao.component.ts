@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AlocarRecursoMaterialFormComponent} from '@app/dashboard/projeto/common/recursos-materiais/alocar-recurso-material-form/alocar-recurso-material-form.component';
 import {mergeMap} from 'rxjs/operators';
-import {AlocacaoRM, CategoriasContabeis} from '@app/models';
+import {AlocacaoRM, CategoriasContabeis} from '@app/commons';
 import {zip, of} from 'rxjs';
 import {AppService} from '@app/services/app.service';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';

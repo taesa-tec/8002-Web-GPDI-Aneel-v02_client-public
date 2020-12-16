@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import {zip, of} from 'rxjs';
 
 import {AppService} from '@app/services/app.service';
-import {RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RecursoMaterial, AppValidators, CategoriasContabeis, NoRequest} from '@app/models';
+import {RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RecursoMaterial, AppValidators, CategoriasContabeis, NoRequest} from '@app/commons';
 import {ProjetoFacade, EmpresaProjetoFacade} from '@app/facades/index';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {tap, map} from 'rxjs/operators';

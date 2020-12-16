@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProjetosService } from '@app/services/projetos.service';
 import { map, mergeMap, tap } from 'rxjs/operators';
 import { zip, of } from 'rxjs';
-import { Projeto, Tema, SubTema, SubTemaRequest, TemaProjeto, NoRequest, ResultadoResponse, CatalogTema, NiveisUsuarios } from '@app/models';
+import { Projeto, Tema, SubTema, SubTemaRequest, TemaProjeto, NoRequest, ResultadoResponse, CatalogTema, NiveisUsuarios } from '@app/commons';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { LoadingComponent } from '@app/core/components/loading/loading.component';
 

@@ -4,7 +4,7 @@ import {
     RouterStateSnapshot,
     ActivatedRouteSnapshot, CanActivate, UrlTree
 } from '@angular/router';
-import {Projeto} from '@app/models';
+import {Projeto} from '@app/commons';
 import {AppService} from '@app/services/app.service';
 import {HttpErrorResponse} from '@angular/common/http';
 

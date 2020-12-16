@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ComponentFactoryResolver } from '@angular/core';
-import { RegistroREFP } from '@app/models';
+import { RegistroREFP } from '@app/commons';
 import { DynamicHostDirective } from '@app/core/directives/dynamic-host.directive';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 

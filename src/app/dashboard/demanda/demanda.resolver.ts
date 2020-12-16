@@ -1,9 +1,9 @@
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
-import {Demanda} from '@app/models/demandas';
+import {Demanda} from '@app/commons/demandas';
 import {Injectable} from '@angular/core';
 import {AppService} from '@app/services/app.service';
 import {DemandaEtapaStatus} from '@app/dashboard/demandas/commons';
-import {Roles, UserRole} from '@app/models';
+import {Roles, UserRole} from '@app/commons';
 import {UsersService} from '@app/services/users.service';
 
 @Injectable()

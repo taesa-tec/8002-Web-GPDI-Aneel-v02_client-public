@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
 import {AppService} from '@app/services/app.service';
-import {ProjetoStatus, Projeto, ResultadoResponse, RegistroREFP} from '@app/models';
+import {ProjetoStatus, Projeto, ResultadoResponse, RegistroREFP} from '@app/commons';
 import {zip} from 'rxjs';
 import {FormGroup, FormControl} from '@angular/forms';
 import {ProjetoFacade} from '@app/facades/index';

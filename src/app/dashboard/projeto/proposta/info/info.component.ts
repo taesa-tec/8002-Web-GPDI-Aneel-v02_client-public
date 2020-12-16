@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Empresa, Segmento, TextValue} from '@app/models';
+import {Empresa, Segmento, TextValue} from '@app/commons';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {zip} from 'rxjs';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';

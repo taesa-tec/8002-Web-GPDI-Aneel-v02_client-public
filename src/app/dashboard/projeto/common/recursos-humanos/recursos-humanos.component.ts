@@ -3,7 +3,7 @@ import { RecursoHumanoFormComponent } from '@app/dashboard/projeto/common/recurs
 import { map, mergeMap } from 'rxjs/operators';
 import { AppService } from '@app/services/app.service';
 import { zip, of } from 'rxjs';
-import { Projeto, RecursoHumano, Funcoes, Graduacoes, EmpresaProjeto } from '@app/models';
+import { Projeto, RecursoHumano, Funcoes, Graduacoes, EmpresaProjeto } from '@app/commons';
 import { LoadingComponent } from '@app/core/components/loading/loading.component';
 import { EmpresaFacade, EmpresaProjetoFacade, ProjetoFacade, RecursoHumanoFacade } from '@app/facades/index';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';

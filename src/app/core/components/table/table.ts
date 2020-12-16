@@ -1,6 +1,6 @@
 import {PipeTransform} from '@angular/core';
 import {SafeHtml} from '@angular/platform-browser';
-import {Pagination} from '@app/models';
+import {Pagination} from '@app/commons';
 
 export interface TableActionEvent<T = any> {
   action: string;

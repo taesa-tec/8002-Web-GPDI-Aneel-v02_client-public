@@ -3,7 +3,7 @@ import {AppService} from '@app/services/app.service';
 import {ProjetoFacade} from '@app/facades/index';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
-import {FileUploaded} from '@app/models';
+import {FileUploaded} from '@app/commons';
 
 @Component({
     selector: 'app-logs-duto',

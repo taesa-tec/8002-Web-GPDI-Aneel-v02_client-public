@@ -1,5 +1,5 @@
 import {InjectionToken, Provider} from '@angular/core';
-import {EquipePeD, User} from '@app/models';
+import {EquipePeD, User} from '@app/commons';
 import {UsersService} from '@app/services/users.service';
 import {SistemaService} from '@app/services/sistema.service';
 

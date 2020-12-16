@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AppService} from '@app/services/app.service';
 import {ProjetoFacade, EmpresaProjetoFacade} from '@app/facades/index';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {ExtratoItem, EmpresaProjeto, TextValue, CategoriasContabeis} from '@app/models';
+import {ExtratoItem, EmpresaProjeto, TextValue, CategoriasContabeis} from '@app/commons';
 import {zip} from 'rxjs';
 import {AlocarRecursoHumanoFormComponent} from '../recursos-humanos/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
 import {AlocarRecursoMaterialFormComponent} from '../recursos-materiais/alocar-recurso-material-form/alocar-recurso-material-form.component';

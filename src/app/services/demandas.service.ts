@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Demanda, FormField} from '@app/models/demandas';
+import {Demanda, FormField} from '@app/commons/demandas';
 import {map} from 'rxjs/operators';
 
 @Injectable({

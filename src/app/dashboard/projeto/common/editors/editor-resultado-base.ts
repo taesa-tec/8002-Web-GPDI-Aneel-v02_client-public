@@ -6,7 +6,7 @@ import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {EMPTY, of, Observable} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
-import {ResultadoResponse, FileUploaded} from '@app/models';
+import {ResultadoResponse, FileUploaded} from '@app/commons';
 
 
 @Directive()

@@ -24,7 +24,7 @@ import {
   ExtratosEmpresas,
   ProrrogarProjetoRequest,
   XmlType
-} from '@app/models';
+} from '@app/commons';
 import { Subject, Observable, BehaviorSubject, of } from 'rxjs';
 import { tap, share, map } from 'rxjs/operators';
 import { ProjetoFacade } from '@app/facades';

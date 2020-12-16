@@ -1,7 +1,7 @@
 import {throwError, Subject, Observable} from 'rxjs';
 import {tap, map} from 'rxjs/operators';
 
-import {Projeto, Empresa, ProjetoStatus, RegistroREFP, ProrrogarProjetoRequest, ResultadoResponse, XmlType} from '@app/models';
+import {Projeto, Empresa, ProjetoStatus, RegistroREFP, ProrrogarProjetoRequest, ResultadoResponse, XmlType} from '@app/commons';
 import {GenericFacade} from './generic.facade';
 import {ProjetosService} from '@app/services/projetos.service';
 import {EmpresaProjetoFacade} from './empresa.facade';

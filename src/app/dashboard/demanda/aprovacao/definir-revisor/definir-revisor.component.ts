@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Demanda} from '@app/models/demandas';
-import {User} from '@app/models';
+import {Demanda} from '@app/commons/demandas';
+import {User} from '@app/commons';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({

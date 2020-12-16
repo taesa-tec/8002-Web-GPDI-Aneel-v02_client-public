@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '@app/services/auth.service';
 import {Router} from '@angular/router';
-import {LoginRequest} from '@app/models';
+import {LoginRequest} from '@app/commons';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {environment} from '../../../environments/environment';
 

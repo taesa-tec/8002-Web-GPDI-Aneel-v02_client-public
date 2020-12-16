@@ -3,7 +3,7 @@ import {ResultadoBase} from '../resultado-base';
 import {AppService} from '@app/services/app.service';
 
 import {ResultadoCientificoComponent as Editor} from '../../common/editors/resultado-cientifico/resultado-cientifico.component';
-import {TiposProducaoTC} from '@app/models';
+import {TiposProducaoTC} from '@app/commons';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({

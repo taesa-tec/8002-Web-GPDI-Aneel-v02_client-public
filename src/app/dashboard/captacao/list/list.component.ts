@@ -10,6 +10,15 @@ import {CriarComponent} from '@app/dashboard/captacao/criar/criar.component';
 import {EnviarComponent} from '@app/dashboard/captacao/enviar/enviar.component';
 import {filter} from 'rxjs/operators';
 
+export interface CaptacaoTableConfig {
+  captacoes: Array<any>;
+  cols: TableComponentCols;
+  buttons: TableComponentActions;
+  captacaoEtapaStatus: CaptacaoEtapa;
+
+  [prop: string]: any;
+}
+
 @Component({
   selector: 'app-projetos-captacao-list',
   templateUrl: './list.component.html',
@@ -50,11 +59,14 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    this.subscriptions.push(this.route.data.subscribe(data => {
-      this.captacoes = data.captacoes;
-      this.captacaoEtapa = data.captacaoEtapaStatus;
-      this.cols = data.cols;
-      this.buttons = data.buttons;
+    this.subscriptions.push(this.route.data.subscribe(({
+                                                         captacaoTable,
+                                                         captacoes
+                                                       }: { captacaoTable: CaptacaoTableConfig, captacoes: Array<any> }) => {
+      this.captacoes = captacoes;
+      this.captacaoEtapa = captacaoTable.captacaoEtapaStatus;
+      this.cols = captacaoTable.cols;
+      this.buttons = captacaoTable.buttons;
     }));
     this.addListeners();
   }

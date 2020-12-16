@@ -1,5 +1,5 @@
 import {GenericFacade} from './generic.facade';
-import {RecursoHumano} from '@app/models';
+import {RecursoHumano} from '@app/commons';
 import {EmpresaProjetoFacade} from './empresa.facade';
 
 export class RecursoHumanoFacade extends GenericFacade<RecursoHumano> implements RecursoHumano {

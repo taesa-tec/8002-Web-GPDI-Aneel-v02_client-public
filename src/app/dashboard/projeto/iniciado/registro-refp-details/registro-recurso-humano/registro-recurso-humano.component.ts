@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, Input, Output, EventEmitter} from '@angular/core';
 import {AppService} from '@app/services/app.service';
-import {RecursoHumano} from '@app/models';
+import {RecursoHumano} from '@app/commons';
 import {ProjetoFacade} from '@app/facades/index';
 import {FormGroup, FormControl, Validators, FormArray} from '@angular/forms';
 import * as moment from 'moment';

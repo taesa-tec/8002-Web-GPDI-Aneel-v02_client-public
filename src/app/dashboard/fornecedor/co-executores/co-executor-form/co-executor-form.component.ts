@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppService } from '@app/services/app.service';
-import { AppValidators } from '@app/models';
+import { AppValidators } from '@app/commons';
 import { ViewContratoComponent } from './../view-contrato/view-contrato.component';
 
 @Component({
@@ -23,13 +23,13 @@ export class CoExecutorFormComponent implements OnInit {
     {nome: 'RJ'},
     {nome: 'SP'},
     {nome: 'CE'}
-  ]; 
+  ];
 
   modelosContratos = [
     {nome: 'Contrato 1'},
     {nome: 'Contrato 2'},
     {nome: 'Contrato 3'}
-  ]; 
+  ];
 
   constructor(
     private app: AppService,
@@ -59,7 +59,7 @@ export class CoExecutorFormComponent implements OnInit {
 
   async abrirContrato() {
     console.log(this.formCoExecutor.get('contrato').value);
-    
+
     const modalRef = this.modal.open(ViewContratoComponent, {size: 'lg'});
     modalRef.componentInstance.contrato = this.formCoExecutor.get('contrato').value;
 
@@ -78,7 +78,7 @@ export class CoExecutorFormComponent implements OnInit {
   async onSubmit() {
     if (this.formCoExecutor.valid) {
       const coExecutor = this.formCoExecutor.value;
-      
+
       try {
         if (this.coExecutor) {
           console.log(coExecutor, 'Editar');

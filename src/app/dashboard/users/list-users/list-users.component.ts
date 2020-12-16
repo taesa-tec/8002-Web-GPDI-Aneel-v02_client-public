@@ -1,6 +1,6 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {UsersService} from '@app/services/users.service';
-import {User} from '@app/models';
+import {User} from '@app/commons';
 import {CatalogsService} from '@app/services/catalogs.service';
 import {environment} from '@env/environment';
 

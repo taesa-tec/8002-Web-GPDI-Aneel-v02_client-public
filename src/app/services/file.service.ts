@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpResponse} from '@angular/common/http';
-import {ResultadoResponse, FileUploaded} from '@app/models';
+import {ResultadoResponse, FileUploaded} from '@app/commons';
 import {FormGroup} from '@angular/forms';
 import {mapTo, map} from 'rxjs/operators';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -32,7 +32,7 @@ export class FileService {
     protected doDownload(file: File, filename?: string) {
         const a = document.createElement('a');
         const blobUrl = URL.createObjectURL(file);
-        // PQP que gambiarra 
+        // PQP que gambiarra
         a.href = blobUrl;
         a.setAttribute('download', filename || file.name);
         a.click();

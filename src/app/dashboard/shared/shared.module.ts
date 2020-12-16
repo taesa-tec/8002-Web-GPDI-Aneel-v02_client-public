@@ -1,36 +1,35 @@
 import {NgModule} from '@angular/core';
-import {MainComponent} from './main/main.component';
-import {ListaProjetosComponent} from './lista-projetos/lista-projetos.component';
-import {ProjetoCardComponent} from './projeto-card/projeto-card.component';
-import {MeusProjetosComponent} from './meus-projetos/meus-projetos.component';
-// @todo Exportar para um modulo único de Demandas
-import {FormFieldComponent, FormEditorComponent, FormFieldControlComponent, TemasComponent} from '@app/dashboard/shared/forms-demandas';
-import {PdfViewerComponent} from '@app/dashboard/shared/pdf-viewer/pdf-viewer.component';
 import {CoreModule} from '@app/core';
-import {HeaderComponent} from '@app/dashboard/shared/header/header.component';
-import {NovoProjetoComponent} from '@app/dashboard/shared/novo-projeto/novo-projeto.component';
+import {ComponentsModule} from '@app/dashboard/shared/components/components.module';
+import {DirectivesModule} from '@app/dashboard/shared/directives/directives.module';
+// @todo Exportar para um modulo único de Demandas
+import {
+  FormFieldComponent,
+  FormEditorComponent,
+  FormFieldControlComponent,
+  TemasComponent
+} from '@app/dashboard/shared/components/forms-demandas';
+import {AdminGuard, HasRoleGuard} from '@app/dashboard/shared/guards';
 
 const components = [
   FormFieldComponent,
   FormEditorComponent,
   FormFieldControlComponent,
-  HeaderComponent,
-  ListaProjetosComponent,
-  MainComponent,
-  MeusProjetosComponent,
-  NovoProjetoComponent,
-  PdfViewerComponent,
-  ProjetoCardComponent,
   TemasComponent
 ];
 
 @NgModule({
   declarations: components,
-  entryComponents: [],
   imports: [
+    DirectivesModule,
+    ComponentsModule,
     CoreModule,
   ],
-  exports: [CoreModule, ...components],
+  exports: [CoreModule, ...components, ComponentsModule],
+  providers: [
+    AdminGuard,
+    HasRoleGuard
+  ]
 })
 export class SharedModule {
 }

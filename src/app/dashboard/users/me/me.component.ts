@@ -1,5 +1,5 @@
 import {Component, OnInit, Input, ViewChild, Output, EventEmitter} from '@angular/core';
-import {User, Roles, Empresa, ResultadoResponse} from '@app/models';
+import {User, Roles, Empresa, ResultadoResponse} from '@app/commons';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {Router} from '@angular/router';

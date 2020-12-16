@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {MessageAlert, User} from '@app/models';
+import {MessageAlert, User} from '@app/commons';
 import {Observable} from 'rxjs';
 import {UsersService} from '@app/services/users.service';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';

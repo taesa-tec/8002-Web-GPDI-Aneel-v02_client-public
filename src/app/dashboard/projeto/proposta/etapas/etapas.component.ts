@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {EtapaFormComponent} from '@app/dashboard/projeto/common/etapa-form/etapa-form.component';
 import {AppService} from '@app/services/app.service';
 import {zip} from 'rxjs';
-import {Projeto, Etapa} from '@app/models';
+import {Projeto, Etapa} from '@app/commons';
 import {FormGroup, FormControl} from '@angular/forms';
 import {DatePipe} from '@angular/common';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';

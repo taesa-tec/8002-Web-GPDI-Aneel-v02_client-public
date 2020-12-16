@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {EditorResultado} from '../editor-resultado-base';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppService} from '@app/services/app.service';
-import {PropriedadeIntelectual, RecursoHumano, Empresa, EmpresaProjeto, AppValidators, ResultadoPropriedade, ResultadoResponse} from '@app/models';
+import {PropriedadeIntelectual, RecursoHumano, Empresa, EmpresaProjeto, AppValidators, ResultadoPropriedade, ResultadoResponse} from '@app/commons';
 import {Observable, zip} from 'rxjs';
 import {FormGroup, FormArray, FormControl, Validators, ValidationErrors} from '@angular/forms';
 import {tap} from 'rxjs/operators';

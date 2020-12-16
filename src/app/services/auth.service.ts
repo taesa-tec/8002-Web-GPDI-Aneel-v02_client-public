@@ -1,8 +1,8 @@
 import {Injectable, Inject} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, BehaviorSubject, timer} from 'rxjs';
-import {LoginRequest, RecoverRequest, ResultadoResponse, NewpassRequest} from '@app/models';
-import {LoginResponse} from '@app/models';
+import {LoginRequest, RecoverRequest, ResultadoResponse, NewpassRequest, UserRole} from '@app/commons';
+import {LoginResponse} from '@app/commons';
 import {Router} from '@angular/router';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
@@ -49,7 +49,6 @@ export class AuthService {
   }
 
   constructor(private http: HttpClient, protected router: Router, public modal: NgbModal) {
-    console.log('AuthService');
     let loggedUser;
     if (localStorage.getItem(storageKey) != null) {
       loggedUser = localStorage.getItem(storageKey);
@@ -71,6 +70,11 @@ export class AuthService {
     this.authEvent = this.authEventsSource.asObservable();
   }
 
+  userHasRoles(...roles: string[]) {
+    return roles
+      .reduce((p, c) => [...p, ...(Array.isArray(c) ? c : [c])], [])
+      .some(role => this.user.roles.indexOf(role as UserRole) >= 0);
+  }
 
   async login(loginRequest: LoginRequest, remember: boolean = false, redirectTo: string | null = null) {
     if (redirectTo) {

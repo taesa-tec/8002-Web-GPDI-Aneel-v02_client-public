@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {BaseEntity} from '@app/models';
+import {BaseEntity} from '@app/commons';
 import {UploadFilesService} from '@app/dashboard/painel-demandas/conf-padrao/services/upload-files.service';
 
 export class ServiceBase<T extends { id?: any }> extends UploadFilesService {

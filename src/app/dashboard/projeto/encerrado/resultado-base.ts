@@ -4,7 +4,7 @@ import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {ProjetoFacade, ProjetoREST} from '@app/facades/index';
 import {Observable} from 'rxjs';
 import {EditorResultado} from '../common/editors/editor-resultado-base';
-import {Projeto} from '@app/models';
+import {Projeto} from '@app/commons';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Directive()

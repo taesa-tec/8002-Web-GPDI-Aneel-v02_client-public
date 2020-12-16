@@ -3,7 +3,7 @@ import {EditorResultado} from '../editor-resultado-base';
 import {AppService} from '@app/services/app.service';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Observable, of} from 'rxjs';
-import {TiposCapacitacao, RecursoHumano, AppValidators, NoRequest, ResultadoResponse, ResultadoCapacitacao} from '@app/models';
+import {TiposCapacitacao, RecursoHumano, AppValidators, NoRequest, ResultadoResponse, ResultadoCapacitacao} from '@app/commons';
 import {Validators, FormGroup, FormControl} from '@angular/forms';
 import {tap} from 'rxjs/operators';
 

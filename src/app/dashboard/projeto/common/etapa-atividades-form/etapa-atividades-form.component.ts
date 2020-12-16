@@ -1,6 +1,6 @@
 import {Component, OnInit, Input, ViewChild} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Produto, EtapaProduto, Projeto, EditEtapaRequest, CriarEtapaRequest, Etapa} from '@app/models';
+import {Produto, EtapaProduto, Projeto, EditEtapaRequest, CriarEtapaRequest, Etapa} from '@app/commons';
 import {FormGroup, FormArray, FormControl, Validators} from '@angular/forms';
 import {zip, timer} from 'rxjs';
 import {AppService} from '@app/services/app.service';

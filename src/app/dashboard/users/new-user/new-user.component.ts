@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {Empresa, ResultadoResponse, UserRole, Roles, AppValidators, User} from '@app/models';
+import {Empresa, ResultadoResponse, UserRole, Roles, AppValidators, User} from '@app/commons';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';

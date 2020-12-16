@@ -13,13 +13,27 @@ export const CaptacaoCols: { [prop: string]: TableComponentCols } = {
   Pendente: [
     {field: 'titulo', title: 'Título Resumido Projeto', order: true},
     {field: 'criador', title: 'Elaborado por', order: true},
-    {field: 'aprovacao', title: 'Data Aprovação Demanda', order: true, type: 'ng-pipe', pipe: new DatePipe('pt-BR'), value: item => [item.aprovacao, 'short']},
+    {
+      field: 'aprovacao',
+      title: 'Data Aprovação Demanda',
+      order: true,
+      type: 'ng-pipe',
+      pipe: new DatePipe('pt-BR'),
+      value: item => [item.aprovacao, 'short']
+    },
   ],
 
   EmElaboracao: [
     {field: 'titulo', title: 'Título Resumido Projeto', order: true},
     {field: 'usuarioSuprimento', title: 'Equipe de Suprimentos Usuário Designado', order: true},
-    {field: 'envioCaptacao', title: 'Data Envio para Captação Demanda', order: true, type: 'ng-pipe', pipe: new DatePipe('pt-BR'), value: item => [item.envioCaptacao, 'short']},
+    {
+      field: 'envioCaptacao',
+      title: 'Data Envio para Captação Demanda',
+      order: true,
+      type: 'ng-pipe',
+      pipe: new DatePipe('pt-BR'),
+      value: item => [item.envioCaptacao, 'short']
+    },
   ],
 
   Aberta: [
@@ -47,7 +61,7 @@ export const CaptacaoCols: { [prop: string]: TableComponentCols } = {
 
 export const CaptacaoButtons = {
   Pendente: [{action: 'criar', text: 'CRIAR CAPTAÇÃO', icon: 'ta-edit', className: 'btn btn-primary'}],
-  EmElaboracao: [],
+  EmElaboracao: [{action: 'configurar', text: 'Configurar', icon: 'ta-edit', className: 'btn btn-primary'}],
   Aberta: [{action: 'ver', text: 'VER DETALHES', icon: 'ta-edit', className: 'btn btn-primary'}],
   Encerrada: [{action: 'enviar', text: 'ENVIAR PARA SELEÇÃO', icon: 'ta-edit', className: 'btn btn-primary'}],
   Cancelada: []

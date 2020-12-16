@@ -1,6 +1,6 @@
 import {Injectable, Inject} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {CreateUserRequest, ResultadoResponse, User, UserProjeto, NiveisUsuarios, Permissao, Projeto, Roles, UserRole} from '@app/models';
+import {CreateUserRequest, ResultadoResponse, User, UserProjeto, NiveisUsuarios, Permissao, Projeto, Roles, UserRole} from '@app/commons';
 import {Observable, BehaviorSubject} from 'rxjs';
 
 import {AuthService} from '@app/services/auth.service';

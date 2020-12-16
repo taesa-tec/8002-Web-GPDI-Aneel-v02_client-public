@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {ProjetosService} from '@app/services/projetos.service';
 import {UsersService} from '@app/services/users.service';
 import {ProjetoFacade} from '@app/facades';
-import {LogItem, User} from '@app/models';
+import {LogItem, User} from '@app/commons';
 import {HttpRequest} from '@angular/common/http';
 import {NavigationEnd, Router} from '@angular/router';
-import {CreateLogProjetoRequest} from '@app/models';
+import {CreateLogProjetoRequest} from '@app/commons';
 
 const method2action = {
     'POST': 'Create',

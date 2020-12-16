@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {RecursoMaterial, Projeto, AlocacaoRM, Empresa, EmpresaProjeto} from '@app/models';
+import {RecursoMaterial, Projeto, AlocacaoRM, Empresa, EmpresaProjeto} from '@app/commons';
 import {AppService} from '@app/services/app.service';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';

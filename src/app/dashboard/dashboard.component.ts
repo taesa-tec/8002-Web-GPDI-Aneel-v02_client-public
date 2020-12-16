@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {AppService} from '@app/services/app.service';
-import {User} from '@app/models';
+import {User} from '@app/commons';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AuthService} from '@app/services/auth.service';
 

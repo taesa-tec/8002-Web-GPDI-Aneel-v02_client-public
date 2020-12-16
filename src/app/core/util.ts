@@ -1,5 +1,5 @@
 import {termMatch} from './functions';
-import {Searchable} from '@app/models';
+import {Searchable} from '@app/commons';
 
 export class Searchables<T> extends Array<Searchable<T>> {
   constructor() {

@@ -2,7 +2,7 @@ import {AppService} from '@app/services/app.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Demanda} from '@app/models/demandas';
+import {Demanda} from '@app/commons/demandas';
 import {Subscription} from 'rxjs';
 
 @Component({

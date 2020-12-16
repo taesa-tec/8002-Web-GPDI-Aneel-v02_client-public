@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AppValidators } from '@app/models';
+import { AppValidators } from '@app/commons';
 import { AppService } from '@app/services/app.service';
 
 @Component({
@@ -32,7 +32,7 @@ export class RecursoHumanoFormComponent implements OnInit {
     {nome: 'Gerente'},
   ]
   //-------------------------------------------------
-  
+
   get cnpjCpfMask(): string {
     const currentValue = this.formRecursoHumano.get('cpf').value;
     if (currentValue) {
@@ -72,7 +72,7 @@ export class RecursoHumanoFormComponent implements OnInit {
   async onSubmit() {
     if (this.formRecursoHumano.valid) {
       const recursoHumano = this.formRecursoHumano.value;
-      
+
       try {
         if (this.recursoHumano) {
           console.log(recursoHumano, 'Editar');

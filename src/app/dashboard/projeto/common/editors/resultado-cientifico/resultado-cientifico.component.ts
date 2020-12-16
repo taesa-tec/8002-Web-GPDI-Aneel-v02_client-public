@@ -2,7 +2,7 @@ import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import {AppService} from '@app/services/app.service';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {EditorResultado} from '../editor-resultado-base';
-import {ResultadoProducao, TiposProducaoTC, AppValidators, NoRequest, ResultadoResponse} from '@app/models';
+import {ResultadoProducao, TiposProducaoTC, AppValidators, NoRequest, ResultadoResponse} from '@app/commons';
 import {Observable, of} from 'rxjs';
 import {Validators, FormGroup, FormControl} from '@angular/forms';
 import {tap} from 'rxjs/operators';

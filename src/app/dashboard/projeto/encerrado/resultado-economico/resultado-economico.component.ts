@@ -3,7 +3,7 @@ import {ResultadoBase} from '../resultado-base';
 import {AppService} from '@app/services/app.service';
 
 import {ResultadoEconomicoComponent as Editor} from '../../common/editors/resultado-economico/resultado-economico.component';
-import {IndicadoresEconomicos, ResultadoEconomico} from '@app/models';
+import {IndicadoresEconomicos, ResultadoEconomico} from '@app/commons';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({

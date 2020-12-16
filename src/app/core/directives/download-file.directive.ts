@@ -1,6 +1,6 @@
 import {Directive, HostListener, Input} from '@angular/core';
 import {AppService} from '@app/services/app.service';
-import {FileUploaded} from '@app/models';
+import {FileUploaded} from '@app/commons';
 
 @Directive({
   selector: '[downloadFile]'

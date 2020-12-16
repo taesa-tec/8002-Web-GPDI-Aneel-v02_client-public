@@ -8,7 +8,7 @@ import {AppService} from '@app/services/app.service';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {map, mergeMap} from 'rxjs/operators';
 import {zip, of} from 'rxjs';
-import {Projeto, AlocacaoRH, Etapa, Empresa, EmpresaProjeto} from '@app/models';
+import {Projeto, AlocacaoRH, Etapa, Empresa, EmpresaProjeto} from '@app/commons';
 import {ProjetoFacade, EmpresaFacade, EmpresaProjetoFacade} from '@app/facades/index';
 
 @Component({

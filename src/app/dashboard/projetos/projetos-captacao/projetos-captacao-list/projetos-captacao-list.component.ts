@@ -7,7 +7,7 @@ import { CaptacaoEtapa, CaptacaoEtapaText } from '../commons';
 import { TableComponentCols, TableComponentActions, TableComponentFilter } from '@app/core/components/table/table';
 import { CriarCaptacaoComponent } from '../shared/criar-captacao/criar-captacao.component';
 import { EnviarSelecaoComponent } from '../shared/enviar-selecao/enviar-selecao.component';
-import { Pagination } from '@app/models/common';
+import { Pagination } from '@app/commons/common';
 import { at, chunk, uniqBy } from 'lodash-es';
 
 @Component({

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {CanActivate, CanActivateChild, CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router, ActivatedRoute} from '@angular/router';
 import {ProjetosService} from '@app/services/projetos.service';
-import {Projeto} from '@app/models';
+import {Projeto} from '@app/commons';
 import {HttpErrorResponse} from '@angular/common/http';
 import {AppService} from '@app/services/app.service';
 

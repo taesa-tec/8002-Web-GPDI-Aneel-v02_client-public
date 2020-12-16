@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AppService} from '@app/services/app.service';
 import {ActivatedRoute} from '@angular/router';
 import {merge} from 'lodash-es';
-import {Demanda} from '@app/models/demandas';
+import {Demanda} from '@app/commons/demandas';
 import {DemandaEtapa, DemandaEtapaStatus} from '@app/dashboard/demandas/commons';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 

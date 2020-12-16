@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ResultadoBase} from '../resultado-base';
 import {AppService} from '@app/services/app.service';
 import {ResultadoInfraEstruturaComponent as Editor} from '../../common/editors/resultado-infra-estrutura/resultado-infra-estrutura.component';
-import {ResultadoInfra} from '@app/models';
+import {ResultadoInfra} from '@app/commons';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 

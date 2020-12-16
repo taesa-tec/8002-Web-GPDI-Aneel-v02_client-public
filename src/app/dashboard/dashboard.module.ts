@@ -10,7 +10,9 @@ import {GerenciarUsuariosComponent} from './gerenciar-usuarios/gerenciar-usuario
 import {DashboardComponent} from './dashboard.component';
 import {currentUserProvider} from '@app/providers/user.provider';
 import {UsersService} from '@app/services/users.service';
-import {AdminGuard} from '@app/dashboard/guards/admin.guard';
+import {AdminGuard} from '@app/dashboard/shared/guards/admin.guard';
+import {IndexComponent} from './index/index.component';
+import {HasRoleGuard} from '@app/dashboard/shared/guards/has-role.guard';
 
 
 @NgModule({
@@ -19,6 +21,7 @@ import {AdminGuard} from '@app/dashboard/guards/admin.guard';
     MeuCadastroComponent,
     NotFoundComponent,
     GerenciarUsuariosComponent,
+    IndexComponent,
   ],
   imports: [
     SharedModule,
@@ -27,7 +30,6 @@ import {AdminGuard} from '@app/dashboard/guards/admin.guard';
   ],
   providers: [
     UsersService,
-    AdminGuard,
     currentUserProvider
   ]
 })

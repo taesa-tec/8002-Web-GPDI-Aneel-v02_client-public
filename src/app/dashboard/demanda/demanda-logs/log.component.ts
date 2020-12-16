@@ -1,5 +1,5 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {LogProjeto} from '@app/models';
+import {LogProjeto} from '@app/commons';
 import {AppService} from '@app/services/app.service';
 import {SafeUrl} from '@angular/platform-browser';
 import {environment} from '@env/environment';

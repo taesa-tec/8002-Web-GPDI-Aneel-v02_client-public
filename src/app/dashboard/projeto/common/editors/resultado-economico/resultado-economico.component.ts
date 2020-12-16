@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AppService} from '@app/services/app.service';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {EditorResultado} from '../editor-resultado-base';
-import {IndicadoresEconomicos, ResultadoResponse} from '@app/models';
+import {IndicadoresEconomicos, ResultadoResponse} from '@app/commons';
 import {Validators} from '@angular/forms';
 import {tap} from 'rxjs/operators';
 

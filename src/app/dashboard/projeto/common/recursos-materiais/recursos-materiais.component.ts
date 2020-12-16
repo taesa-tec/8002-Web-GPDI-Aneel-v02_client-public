@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {RecursoMaterialFormComponent} from '@app/dashboard/projeto/common/recursos-materiais/recurso-material-form/recurso-material-form.component';
-import {Projeto, RecursoMaterial, CategoriasContabeis} from '@app/models';
+import {Projeto, RecursoMaterial, CategoriasContabeis} from '@app/commons';
 import {ActivatedRoute} from '@angular/router';
 import {map, mergeMap} from 'rxjs/operators';
 import {zip, of} from 'rxjs';

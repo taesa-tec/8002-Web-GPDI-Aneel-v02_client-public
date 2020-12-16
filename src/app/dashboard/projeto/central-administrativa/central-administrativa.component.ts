@@ -2,7 +2,7 @@ import {Component, OnInit, Input} from '@angular/core';
 import {Routes, ActivatedRoute} from '@angular/router';
 import {map, filter} from 'rxjs/operators';
 import {zip} from 'rxjs';
-import {Projeto, AppMenu, NiveisUsuarios} from '@app/models';
+import {Projeto, AppMenu, NiveisUsuarios} from '@app/commons';
 import {AppService} from '@app/services/app.service';
 import {ProjetoFacade} from '@app/facades/index';
 

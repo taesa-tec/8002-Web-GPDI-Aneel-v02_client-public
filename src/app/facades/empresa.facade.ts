@@ -1,4 +1,4 @@
-import { Empresa, EmpresaProjeto, UF } from '@app/models';
+import { Empresa, EmpresaProjeto, UF } from '@app/commons';
 import { GenericFacade } from './generic.facade';
 
 export class EmpresaFacade implements Empresa {

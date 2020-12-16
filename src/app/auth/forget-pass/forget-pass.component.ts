@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 
-import {ResultadoResponse} from '@app/models';
+import {ResultadoResponse} from '@app/commons';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {AuthService} from '@app/services/auth.service';
 

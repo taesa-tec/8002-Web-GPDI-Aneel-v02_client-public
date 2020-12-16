@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter, ElementRef, Directive } from '@angular/core';
 import {AppService} from '@app/services/app.service';
-import {RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RegistroREFP, ResultadoResponse, NoRequest, CategoriasContabeis} from '@app/models';
+import {RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, RegistroREFP, ResultadoResponse, NoRequest, CategoriasContabeis} from '@app/commons';
 import {ProjetoFacade} from '@app/facades/index';
 import {zip, Observable, of} from 'rxjs';
 import {FormGroup, FormControl, Validators, FormArray} from '@angular/forms';

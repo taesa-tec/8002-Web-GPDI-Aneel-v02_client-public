@@ -1,9 +1,9 @@
 export * from './shared.module';
-export * from './header/header.component';
-export * from './lista-projetos/lista-projetos.component';
-export * from './main/main.component';
-export * from './meus-projetos/meus-projetos.component';
-export * from './novo-projeto/novo-projeto.component';
-export * from './pdf-viewer/pdf-viewer.component';
-export * from './projeto-card/projeto-card.component';
+export * from './components/header/header.component';
+export * from './components/lista-projetos/lista-projetos.component';
+export * from './components/main/main.component';
+export * from './components/meus-projetos/meus-projetos.component';
+export * from './components/novo-projeto/novo-projeto.component';
+export * from './components/pdf-viewer/pdf-viewer.component';
+export * from './components/projeto-card/projeto-card.component';
 

@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Subscription, Observable, of} from 'rxjs';
-import {Projeto, FileUploaded, User, UserProjeto} from '@app/models';
+import {Projeto, FileUploaded, User, UserProjeto} from '@app/commons';
 import {AppService} from '@app/services/app.service';
 import {zip} from 'rxjs';
 import {FormArray, FormGroup, FormControl} from '@angular/forms';

@@ -3,13 +3,16 @@ import {Routes, RouterModule} from '@angular/router';
 import {DashboardComponent} from './dashboard.component';
 import {MeuCadastroComponent} from './meu-cadastro/meu-cadastro.component';
 import {NotFoundComponent} from './not-found/not-found.component';
-import {MeusProjetosComponent} from '@app/dashboard/shared/meus-projetos/meus-projetos.component';
+import {MeusProjetosComponent} from '@app/dashboard/shared/components/meus-projetos/meus-projetos.component';
 import {GerenciarUsuariosComponent} from './gerenciar-usuarios/gerenciar-usuarios.component';
 import {AuthGuard} from '@app/auth/auth.guard';
 import {NewUserComponent} from '@app/dashboard/users/new-user/new-user.component';
 import {EditUserComponent} from '@app/dashboard/users/edit-user/edit-user.component';
-import {AdminGuard} from '@app/dashboard/guards/admin.guard';
-import {MainComponent} from './shared/main/main.component';
+import {AdminGuard} from '@app/dashboard/shared/guards/admin.guard';
+import {MainComponent} from './shared/components/main/main.component';
+import {IndexComponent} from '@app/dashboard/index/index.component';
+import {HasRoleGuard} from '@app/dashboard/shared/guards';
+import {UserRole} from '@app/commons';
 
 
 const routes: Routes = [
@@ -19,7 +22,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
-      {path: '', redirectTo: 'demandas', pathMatch: 'full'},
+      {path: '', component: IndexComponent, pathMatch: 'full'},
       {path: 'meus-projetos', component: MeusProjetosComponent},
       {path: 'meu-cadastro', component: MeuCadastroComponent},
       // @todo Criar modulo
@@ -47,8 +50,12 @@ const routes: Routes = [
       },
       {
         path: 'configuracoes',
+        canActivate: [HasRoleGuard],
         component: MainComponent,
-        loadChildren: () => import('@app/dashboard/configuracoes-sistema/configuracoes-sistema.module').then(m => m.ConfiguracoesSistemaModule)
+        data: {
+          roles: [UserRole.Administrador]
+        },
+        loadChildren: () => import('@app/dashboard/configuracoes/configuracoes-sistema.module').then(m => m.ConfiguracoesSistemaModule)
       },
       {
         path: 'demanda',

@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AppService} from '@app/services/app.service';
 import {Subscription} from 'rxjs';
-import {Projeto, FileUploaded} from '@app/models';
+import {Projeto, FileUploaded} from '@app/commons';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
 
 @Component({

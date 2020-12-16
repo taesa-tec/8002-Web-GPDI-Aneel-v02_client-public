@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Projeto, Funcoes, Graduacoes, EmpresaProjeto, Empresa, AppValidators, RecursoHumano, LogItem } from '@app/models';
+import { Projeto, Funcoes, Graduacoes, EmpresaProjeto, Empresa, AppValidators, RecursoHumano, LogItem } from '@app/commons';
 import { AppService } from '@app/services/app.service';
 import { zip } from 'rxjs';
 import { LoadingComponent } from '@app/core/components/loading/loading.component';

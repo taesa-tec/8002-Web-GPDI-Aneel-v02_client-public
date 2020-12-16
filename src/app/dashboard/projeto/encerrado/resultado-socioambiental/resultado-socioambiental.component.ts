@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ResultadoBase } from '../resultado-base';
 import { AppService } from '@app/services/app.service';
 import { ResultadoSocioambientalComponent as Editor } from '../../common/editors/resultado-socioambiental/resultado-socioambiental.component';
-import { ResultadoSocialAmbiental, IndicadoresSocioambientais } from '@app/models';
+import { ResultadoSocialAmbiental, IndicadoresSocioambientais } from '@app/commons';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({

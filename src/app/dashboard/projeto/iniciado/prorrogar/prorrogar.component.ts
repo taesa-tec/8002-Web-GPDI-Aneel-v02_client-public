@@ -4,7 +4,7 @@ import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ProjetoFacade} from '@app/facades/index';
 import {FormControl, Validators, FormGroup, FormArray} from '@angular/forms';
-import {Produto, EtapaProduto, TextValue, Etapa} from '@app/models';
+import {Produto, EtapaProduto, TextValue, Etapa} from '@app/commons';
 import {zip, timer} from 'rxjs';
 import * as moment from 'moment';
 import {ActivatedRoute} from '@angular/router';

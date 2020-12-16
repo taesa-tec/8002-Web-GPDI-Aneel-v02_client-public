@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { NgbActiveModal, NgbTabChangeEvent, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
-import { EmpresaProjeto, Projeto, Empresa, UF, AppValidators } from '@app/models';
+import { EmpresaProjeto, Projeto, Empresa, UF, AppValidators } from '@app/commons';
 import { AppService } from '@app/services/app.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { LoadingComponent } from '@app/core/components/loading/loading.component';

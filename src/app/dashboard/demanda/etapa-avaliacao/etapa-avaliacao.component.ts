@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AppService} from '@app/services/app.service';
 import {ActivatedRoute} from '@angular/router';
-import {Demanda} from '@app/models/demandas';
+import {Demanda} from '@app/commons/demandas';
 import {DemandaEtapa, DemandaEtapaStatus} from '@app/dashboard/demandas/commons';
 import {environment} from '@env/environment';
 

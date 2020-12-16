@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {AppService} from '@app/services/app.service';
-import {RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, NoRequest} from '@app/models';
+import {RecursoHumano, Projeto, Empresa, TiposDoc, EmpresaProjeto, Etapa, TextValue, NoRequest} from '@app/commons';
 import {ProjetoFacade, EmpresaProjetoFacade} from '@app/facades/index';
 import {zip, of} from 'rxjs';
 import {FormGroup, FormControl, Validators, FormArray} from '@angular/forms';

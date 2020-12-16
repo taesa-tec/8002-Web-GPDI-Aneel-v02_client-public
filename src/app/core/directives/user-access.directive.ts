@@ -1,6 +1,6 @@
 import {Directive, ElementRef, Input, OnInit, TemplateRef, ViewContainerRef} from '@angular/core';
 import {AppService} from '@app/services/app.service';
-import {NiveisUsuarios} from '@app/models';
+import {NiveisUsuarios} from '@app/commons';
 import {ProjetoFacade} from '@app/facades/index';
 import {UsersService} from '@app/services/users.service';
 // @todo mudar para dentro de Dashboard

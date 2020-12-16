@@ -8,7 +8,7 @@ import {FornecedoresService} from '@app/services/configuracoes/fornecedores.serv
 import {ContratosService} from '@app/services/configuracoes/contratos.service';
 import {LoadingComponent} from '@app/core/components';
 import {UsersService} from '@app/services';
-import {UserRole} from '@app/models';
+import {UserRole} from '@app/commons';
 
 @Component({
   selector: 'app-criar-captacao',

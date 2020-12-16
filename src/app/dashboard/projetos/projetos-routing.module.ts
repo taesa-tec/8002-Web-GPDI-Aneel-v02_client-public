@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
-import {ListaProjetosComponent} from '../shared/lista-projetos/lista-projetos.component';
+import {ListaProjetosComponent} from '../shared/components/lista-projetos/lista-projetos.component';
 import {ProjetosCaptacaoModule} from './projetos-captacao/projetos-captacao.module';
 
 
