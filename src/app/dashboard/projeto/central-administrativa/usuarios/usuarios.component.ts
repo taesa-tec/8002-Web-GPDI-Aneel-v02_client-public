@@ -99,10 +99,10 @@ export class UsuariosComponent implements OnInit {
             catalogUserPermissaoId: new FormControl(item.catalogUserPermissaoId)
           });
           this.formUsersSelecteds.addControl(user.id, new FormControl(false));
-          // if (user.id === this.app.users.currentUser.id) {
-          //     this.formUsersSelecteds.addControl(user.id, new FormControl({ value: false, disabled: true }));
+          // if (user-gestor.id === this.app.users.currentUser.id) {
+          //     this.formUsersSelecteds.addControl(user-gestor.id, new FormControl({ value: false, disabled: true }));
           // } else {
-          //     this.formUsersSelecteds.addControl(user.id, new FormControl(false));
+          //     this.formUsersSelecteds.addControl(user-gestor.id, new FormControl(false));
           // }
           this.formArray.push(formGroup);
 
@@ -141,7 +141,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   aplicarPermissoes() {
-    const forms = keyBy(this.usersPermissao, 'user.id');
+    const forms = keyBy(this.usersPermissao, 'user-gestor.id');
 
 
     this.selectedUsers.forEach(userid => {

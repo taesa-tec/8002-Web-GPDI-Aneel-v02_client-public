@@ -126,7 +126,7 @@ export class FormComponent implements OnInit {
           this.app.alert('Usuário removido com sucesso');
           this.app.router.navigate(['/dashboard', 'gerenciar-usuarios'], {
             queryParams: {
-              message: 'user-removed'
+              message: 'user-gestor-removed'
             }
           });
         } else {

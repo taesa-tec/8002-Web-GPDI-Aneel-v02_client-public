@@ -37,7 +37,7 @@ const routes: Routes = [
             {
                 path: 'central-administrativa',
                 data: {
-                    access: ['admin', 'aprovador']
+                    access: ['user-gestor-admin', 'aprovador']
                 },
                 canActivate: [ProjetoAccessGuard],
                 loadChildren: () => import('./central-administrativa/central-administrativa.module').then(m => m.CentralAdministrativaModule)
@@ -45,7 +45,7 @@ const routes: Routes = [
             {
                 path: 'logs',
                 data: {
-                    access: ['admin', 'aprovador']
+                    access: ['user-gestor-admin', 'aprovador']
                 },
                 canActivate: [ProjetoAccessGuard],
                 component: LogProjetoComponent

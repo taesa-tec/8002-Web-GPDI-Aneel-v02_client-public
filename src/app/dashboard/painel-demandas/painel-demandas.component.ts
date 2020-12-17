@@ -28,8 +28,8 @@ export class PainelDemandasComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.app.users.currentUserUpdated.subscribe(user => {
-        //     this.currentUser = user;
+        // this.app.users.currentUserUpdated.subscribe(user-gestor => {
+        //     this.currentUser = user-gestor;
         // });
         this.contaProjetos();
         this.m = [

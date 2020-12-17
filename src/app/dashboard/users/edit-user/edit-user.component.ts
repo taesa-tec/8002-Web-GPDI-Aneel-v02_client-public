@@ -45,18 +45,18 @@ export class EditUserComponent implements OnInit {
     return this.usersService.edit(value).toPromise();
   }
 
-  onSubmited(value: ResultadoResponse) {
+  async onSubmited(value: ResultadoResponse) {
 
     try {
       if (value.sucesso) {
-        this.app.router.navigate(['/dashboard', 'gerenciar-usuarios'], {
+        await this.app.router.navigate(['/admin', 'gerenciar-usuarios'], {
           queryParams: {
-            message: 'user-updated'
+            message: 'user-gestor-updated'
           }
         });
       }
     } catch (e) {
-
+      console.error(e);
     }
 
   }

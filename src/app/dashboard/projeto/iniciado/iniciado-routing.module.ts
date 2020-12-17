@@ -25,7 +25,7 @@ export const routes: Routes = [
         path: 'refp', redirectTo: 'refp/pendentes', pathMatch: 'full',
         canActivate: [ProjetoAccessGuard],
         data: {
-            access: ['admin', 'leituraEscrita', 'aprovador']
+            access: ['user-gestor-admin', 'leituraEscrita', 'aprovador']
 
         },
     },
@@ -57,7 +57,7 @@ export const routes: Routes = [
     {
         path: 'alterar', component: AlterarProjetoComponent,
         canActivate: [ProjetoAccessGuard],
-        data: {access: ['admin']},
+        data: {access: ['user-gestor-admin']},
         children: [
             {path: '', redirectTo: 'prorrogar', pathMatch: 'full'},
             {path: 'prorrogar', component: ProrrogarComponent},

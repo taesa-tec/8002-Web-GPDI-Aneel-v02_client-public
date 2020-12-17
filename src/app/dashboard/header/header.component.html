@@ -1,0 +1,73 @@
+<header class="dashboard-header">
+  <div class="container-fluid py-4 text-white">
+    <div class="row">
+      <div class="col-12 d-flex justify-content-between px-5">
+        <div class="align-items-center d-flex">
+          <div class="d-inline-block border-right border-white px-3 mr-3">
+            <a routerLink="/">
+              <img src="/assets/logo.png" alt="TAESATEC"/>
+            </a>
+          </div>
+          <span class="fs-24">GESTOR P&D</span>
+        </div>
+        <div>
+          <div class="d-flex flex-row">
+            <div style="width: 48px;">
+              <div
+                *ngIf="currentUser"
+                class="embed-responsive embed-responsive-1by1"
+              >
+                <div
+                  class="embed-responsive-item rounded-circle"
+                  [ngStyle]="{
+                    'background-size': 'cover',
+                    'background-position': 'center',
+                    'background-image': avatar
+                  }"
+                ></div>
+              </div>
+            </div>
+            <div
+              *ngIf="currentUser"
+              class="px-3 mr-3 border-right border-white"
+            >
+              <strong>{{ currentUser.nomeCompleto }} </strong>
+              <br/>
+              <span>{{ empresa }}</span>
+            </div>
+            <div class="wrap-menu-dropdown">
+              <div
+                ngbDropdown
+                class="d-inline-block"
+                #menuDrop="ngbDropdown"
+                placement="bottom-right"
+              >
+                <button class="btn text-white" id="menuDrop" ngbDropdownToggle>
+                  <div class="ta-gear fs-36"></div>
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <ng-container *ngFor="let route of menu">
+                    <a [routerLink]="route.path"
+                       class="dropdown-item"
+                       routerLinkActive="active"
+                    >
+                      <span class="fs-24 mr-3"><i [class]="route.icon"></i></span>
+                      {{ route.text }}
+                    </a>
+                  </ng-container>
+                  <a (click)="logout()"
+                     class="dropdown-item"
+                     routerLink="/login"
+                  >
+                    <span class="fs-24 mr-3"><i class="ta-exit"></i></span>
+                    Logout
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

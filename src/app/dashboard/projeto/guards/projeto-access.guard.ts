@@ -11,10 +11,10 @@ import {AppService} from '@app/services/app.service';
 export class ProjetoAccessGuard implements CanActivate, CanActivateChild {
 
 
-    public static readonly ADMIN = ['admin'];
-    public static readonly APROVADOR = ['admin', 'aprovador'];
-    public static readonly ESCRITA = ['admin', 'aprovador', 'leituraEscrita'];
-    public static readonly LEITURA = ['admin', 'aprovador', 'leituraEscrita', 'leitura'];
+    public static readonly ADMIN = ['user-gestor-admin'];
+    public static readonly APROVADOR = ['user-gestor-admin', 'aprovador'];
+    public static readonly ESCRITA = ['user-gestor-admin', 'aprovador', 'leituraEscrita'];
+    public static readonly LEITURA = ['user-gestor-admin', 'aprovador', 'leituraEscrita', 'leitura'];
 
 
     constructor(protected app: AppService, protected projetoService: ProjetosService, protected router: Router, protected  activedRoute: ActivatedRoute) {

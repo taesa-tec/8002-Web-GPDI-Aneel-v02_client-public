@@ -49,9 +49,9 @@ export class NewUserComponent implements OnInit {
 
     try {
       if (value.sucesso) {
-        this.router.navigate(['/dashboard', 'gerenciar-usuarios'], {
+        this.router.navigate(['/admin', 'gerenciar-usuarios'], {
           queryParams: {
-            message: 'user-created'
+            message: 'user-gestor-created'
           }
         }).then();
       }

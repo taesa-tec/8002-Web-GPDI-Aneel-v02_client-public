@@ -1,0 +1,38 @@
+<div class="bg-light py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="d-flex justify-content-between">
+          <h3 class="text-uppercase text-dark">Gerenciador de Usuários</h3>
+          <a routerLink="./novo" class="btn btn-outline-primary">
+            <fa-icon icon="plus-circle"></fa-icon>
+            Novo Usuário
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container my-4">
+  <div class="row mb-4">
+    <div class="col-12">
+      <ul class="nav nav-bar-row pt-3">
+        <li class="nav-item" (click)="ativos = true;" style="cursor: pointer">
+          <span class="nav-link px-3" [ngClass]="{active:ativos}">Ativos</span>
+        </li>
+        <li class="nav-item" (click)="ativos = false;" style="cursor: pointer">
+          <span class="nav-link px-3" [ngClass]="{active:!ativos}">Inativos</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+
+      <ngb-alert *ngIf="dashboardAlert" [type]="dashboardAlert.type" (close)="dashboardAlert=null">{{
+        dashboardAlert.message }}</ngb-alert>
+      <app-list-users [users]="users"></app-list-users>
+    </div>
+  </div>
+  <app-loading></app-loading>
+</div>

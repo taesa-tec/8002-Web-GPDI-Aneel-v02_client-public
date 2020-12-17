@@ -16,6 +16,7 @@ import {DebugComponent} from '@app/core/components/screens/debug.component';
 import {ErrorComponent} from '@app/core/components/screens/error.component';
 import {SharedModule} from '@app/core/shared';
 import {FormsModule} from '@app/core/components/forms';
+import {PdfViewerComponent} from '@app/core/components/pdf-viewer/pdf-viewer.component';
 
 const components = [
   AccordionComponent,
@@ -28,6 +29,7 @@ const components = [
   ModalPageComponent,
   OrderContentComponent,
   OrdersComponent,
+  PdfViewerComponent,
   PromptComponent,
   TableComponent,
   TipComponent

@@ -1,12 +1,11 @@
-import {Injectable, Inject} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {CreateUserRequest, ResultadoResponse, User, UserProjeto, NiveisUsuarios, Permissao, Projeto, Roles, UserRole} from '@app/commons';
 import {Observable, BehaviorSubject} from 'rxjs';
 
 import {AuthService} from '@app/services/auth.service';
 import {CatalogsService} from '@app/services/catalogs.service';
 import {SistemaService} from '@app/services/sistema.service';
-import {CURRENT_USER} from '@app/providers/user.provider';
 
 @Injectable()
 export class UsersService {
@@ -19,8 +18,8 @@ export class UsersService {
 
   niveisUsuarios = NiveisUsuarios;
 
-  constructor(protected http: HttpClient, protected auth: AuthService, protected catalogo: CatalogsService, protected sistema: SistemaService,
-              @Inject(CURRENT_USER) protected _currentUser: User) {
+  constructor(protected http: HttpClient,
+              protected auth: AuthService, protected catalogo: CatalogsService, protected sistema: SistemaService) {
     console.log('UsersService Ok');
   }
 
@@ -29,7 +28,7 @@ export class UsersService {
   }
 
   set currentUser(value) {
-    if (value && value !== this._currentUser) {
+    if (value && value !== this.auth.user) {
       this.currentUserUpdatedSource.next(value);
     }
     this.auth.user = value;
@@ -55,8 +54,8 @@ export class UsersService {
     return response;
   }
 
-  all() {
-    return this.http.get<Array<User>>(`Users`);
+  async all() {
+    return await this.http.get<Array<User>>(`Users`).toPromise();
   }
 
   byId(id: string) {

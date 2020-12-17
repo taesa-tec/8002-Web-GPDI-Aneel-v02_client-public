@@ -8,6 +8,15 @@ import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 const storageKey = 'loggedUser';
 
+const rolePath = new Map<string, string>([
+  [UserRole.Administrador, 'admin'],
+  [UserRole.User, 'gestor'],
+  [UserRole.Suprimento, 'suprimento'],
+  [UserRole.Fornecedor, 'fornecedor'],
+
+
+]);
+
 @Injectable({
   providedIn: 'root'
 })
@@ -40,6 +49,14 @@ export class AuthService {
 
   get user() {
     return this.loginResponse?.user;
+  }
+
+  get role() {
+    return this.user?.role;
+  }
+
+  get roles() {
+    return this.user?.role;
   }
 
   set user(value) {
@@ -77,14 +94,9 @@ export class AuthService {
   }
 
   async login(loginRequest: LoginRequest, remember: boolean = false, redirectTo: string | null = null) {
-    if (redirectTo) {
-      this.redirectTo = redirectTo;
-    } else {
-      this.redirectTo = '/dashboard';
-    }
+
     const loginResponse = await this.http.post<LoginResponse>(`Login`, loginRequest).toPromise();
     const storage = remember ? localStorage : sessionStorage;
-
     if (remember) {
       sessionStorage.setItem('last_login_user', loginRequest.email);
     } else {
@@ -92,8 +104,23 @@ export class AuthService {
     }
     this.loginResponse = loginResponse;
     storage.setItem(storageKey, JSON.stringify(loginResponse));
-    this.router.navigateByUrl(this.redirectTo).then();
-    return this.loginResponse;
+
+    if (redirectTo) {
+      this.redirectTo = redirectTo;
+    } else {
+      this.redirectTo = this.getHomeUrl();
+    }
+    try {
+      await this.router.navigateByUrl(this.redirectTo);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  getHomeUrl() {
+    const path = rolePath.has(this.role) ? rolePath.get(this.role) : 'error';
+    return `/${path}`;
+
   }
 
   logout(): void {

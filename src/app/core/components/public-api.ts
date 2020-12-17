@@ -5,7 +5,7 @@ export * from './confirm/confirm.component';
 export * from './screens/debug.component'; // @todo Verificar uso
 export * from './screens/error.component';
 export * from './file-uploader/file-uploader.component';
-export * from '../../dashboard/shared/components/header/header.component';
+export * from '../../dashboard/header/header.component';
 export * from './loading/loading.component';
 export * from './modal-page/modal-page.component';
 export * from '../../dashboard/shared/components/novo-projeto/novo-projeto.component';

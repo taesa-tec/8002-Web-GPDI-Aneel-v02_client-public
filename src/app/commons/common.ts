@@ -1,4 +1,5 @@
 import {UserRole} from './enums';
+import {InjectionToken} from '@angular/core';
 
 export interface BaseEntity {
   id: number;
@@ -598,3 +599,7 @@ export interface Pagination<T> {
   totalItems: number;
   filters?: Array<{ name: string; field: string; values: { [key: string]: string } }>;
 }
+
+export const SIDEBAR_MENU = new InjectionToken<Array<MenuItem>>('Sidebar menu');
+export const HEADER_MENU = new InjectionToken<Array<MenuItem>>('Header menu');
+export const ROOT_URL = new InjectionToken<string>('Root Url');

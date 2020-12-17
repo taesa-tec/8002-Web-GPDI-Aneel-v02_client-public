@@ -57,7 +57,7 @@ export class UserProjetosComponent implements OnInit, OnChanges {
     zip(projetos$, userProjetos$, permissoes$).subscribe(([projetos, userProjetos, permissoes]) => {
 
       this.permissoes = permissoes;
-      // const adminPermission = this.permissoes.find(p => p.valor === 'admin');
+      // const adminPermission = this.permissoes.find(p => p.valor === 'user-gestor-admin');
       const permissoesAtuais = mapValues(keyBy(userProjetos, 'projetoId'), 'catalogUserPermissaoId');
 
       this.projetos = projetos.map(p => {

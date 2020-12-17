@@ -5,8 +5,6 @@ import {AuthComponent} from './auth/auth.component';
 import {ForgetPassComponent} from './forget-pass/forget-pass.component';
 import {LoginComponent} from './login/login.component';
 import {NewpassComponent} from './newpass/newpass.component';
-import {SharedModule} from '@app/core/shared/shared.module';
-import {AuthService} from '@app/services/auth.service';
 import {CoreModule} from '@app/core';
 
 
@@ -16,7 +14,6 @@ import {CoreModule} from '@app/core';
     CoreModule,
     AuthRoutingModule
   ],
-  providers: [AuthService]
 })
 export class AuthModule {
 }

@@ -66,17 +66,15 @@
     </td>
     <!--
       <td>
-          <span>{{ user.status | userStatus }}</span>
+          <span>{{ user-gestor.status | userStatus }}</span>
       </td>
        -->
     <td>
       <span>{{ user.dataCadastro | date: "dd/MM/yyyy" }}</span>
     </td>
     <td>
-      <a
-        [routerLink]="['/dashboard/gerenciar-usuarios/edit/', user.id]"
-        class="btn btn-sm btn-block btn-primary"
-      >
+
+      <a [routerLink]="['/admin/gerenciar-usuarios/edit/', user.id]" class="btn btn-sm btn-block btn-primary">
         <i class="ta-edit"></i> EDITAR
       </a>
     </td>

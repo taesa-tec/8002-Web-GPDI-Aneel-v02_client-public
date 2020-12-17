@@ -51,7 +51,7 @@ export class ProjetoComponent implements OnInit {
             {text: {pg: 'Relatório Final e Auditoria', pd: 'Relatório Final Base Projeto'}, icon: 'ta-edit', path: 'relatorio-final-auditoria'},
             {text: {pd: 'Relatório Etapas Projeto', pg: 'Relatório Etapas'}, icon: 'ta-etapas', path: 'relatorio-etapas-projeto'},
             {text: 'Relatório Atividades', icon: 'ta-edit', path: 'relatorio-atividades', only: 'PG'},
-            {text: {pd: 'Resultados Capacitação', pg: 'Resultados Capacitação Profissional'}, icon: 'ta-user-id', path: 'resultados-capacitacao'},
+            {text: {pd: 'Resultados Capacitação', pg: 'Resultados Capacitação Profissional'}, icon: 'ta-user-gestor-id', path: 'resultados-capacitacao'},
             {text: 'Resultados Apoio a Infra-estrutura', icon: 'ta-tubo-ensaio', path: 'resultados-infra-estrutura', only: 'PD'},
             {text: 'Resultados Produção Técnico Cientifica', icon: 'ta-torre', path: 'resultados-cientificos'},
             {text: 'Resultados Propriedade Intelectual', icon: 'ta-lamp', path: 'resultados-propriedade-intelectual', only: 'PD'},
@@ -61,7 +61,7 @@ export class ProjetoComponent implements OnInit {
     };
 
     commonMenu: AppMenu = [
-        {text: 'Central Administrativa', icon: 'ta-central-admin', path: 'central-administrativa', nivel: NiveisUsuarios.aprovador},
+        {text: 'Central Administrativa', icon: 'ta-central-user-gestor-admin', path: 'central-administrativa', nivel: NiveisUsuarios.aprovador},
         {text: 'Logs', icon: 'ta-log', path: 'logs', nivel: NiveisUsuarios.aprovador},
     ];
 

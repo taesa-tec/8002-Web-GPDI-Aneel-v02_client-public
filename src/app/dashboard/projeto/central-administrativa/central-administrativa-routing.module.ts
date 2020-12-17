@@ -32,12 +32,12 @@ export const routes: Routes = [
             {
                 canActivate: [ProjetoAccessGuard],
                 path: 'alteracao-status-projeto', component: AlterarStatusComponent,
-                data: {text: 'Alteração Status Projeto', access: ['admin']}
+                data: {text: 'Alteração Status Projeto', access: ['user-gestor-admin']}
             },
             {
                 canActivate: [ProjetoAccessGuard],
                 path: 'usuarios', component: UsuariosComponent,
-                data: {text: 'Usuários', access: ['admin']}
+                data: {text: 'Usuários', access: ['user-gestor-admin']}
             }],
     },
 

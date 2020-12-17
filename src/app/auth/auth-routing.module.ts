@@ -9,7 +9,7 @@ import { NewpassGuard } from './newpass.guard';
 
 const routes: Routes = [
     {
-        path: 'login',
+        path: '',
         component: AuthComponent,
         canActivate: [GuestGuard],
         canActivateChild: [GuestGuard],

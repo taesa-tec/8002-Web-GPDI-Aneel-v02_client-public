@@ -41,12 +41,12 @@ const routes: Routes = [
       {
         path: 'demandas',
         component: MainComponent,
-        loadChildren: () => import('@app/dashboard/demandas/demandas.module').then(m => m.DemandasModule)
+        loadChildren: () => import('@app/shared/demandas/demandas.module').then(m => m.DemandasModule)
       },
       {
         path: 'captacao',
         component: MainComponent,
-        loadChildren: () => import('@app/dashboard/captacao/captacao.module').then(m => m.CaptacaoModule)
+        loadChildren: () => import('@app/shared/captacao/captacao.module').then(m => m.CaptacaoModule)
       },
       {
         path: 'configuracoes',
@@ -55,12 +55,12 @@ const routes: Routes = [
         data: {
           roles: [UserRole.Administrador]
         },
-        loadChildren: () => import('@app/dashboard/configuracoes/configuracoes-sistema.module').then(m => m.ConfiguracoesSistemaModule)
+        loadChildren: () => import('@app/user-admin/configuracoes/configuracoes-sistema.module').then(m => m.ConfiguracoesSistemaModule)
       },
-      {
-        path: 'demanda',
-        loadChildren: () => import('@app/dashboard/demanda/demanda.module').then(m => m.DemandaModule)
-      },
+      // {
+      //   path: 'demanda',
+      //   loadChildren: () => import('@app/shared/demanda/demanda.module').then(m => m.DemandaModule)
+      // },
       // PROVISÓRIO
       {
         path: 'suprimentos',
