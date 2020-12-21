@@ -41,12 +41,12 @@ const routes: Routes = [
       {
         path: 'demandas',
         component: MainComponent,
-        loadChildren: () => import('@app/shared/demandas/demandas.module').then(m => m.DemandasModule)
+        loadChildren: () => import('@app/user-shared/demandas/demandas.module').then(m => m.DemandasModule)
       },
       {
-        path: 'captacao',
+        path: 'captacoes',
         component: MainComponent,
-        loadChildren: () => import('@app/shared/captacao/captacao.module').then(m => m.CaptacaoModule)
+        loadChildren: () => import('@app/user-shared/captacao/captacao.module').then(m => m.CaptacaoModule)
       },
       {
         path: 'configuracoes',
@@ -59,16 +59,16 @@ const routes: Routes = [
       },
       // {
       //   path: 'demanda',
-      //   loadChildren: () => import('@app/shared/demanda/demanda.module').then(m => m.DemandaModule)
+      //   loadChildren: () => import('@app/user-shared/demanda/demanda.module').then(m => m.DemandaModule)
       // },
       // PROVISÓRIO
       {
         path: 'suprimentos',
-        loadChildren: () => import('@app/dashboard/suprimentos/suprimentos.module').then(m => m.SuprimentosModule)
+        loadChildren: () => import('@app/user-suprimento/suprimentos/suprimentos.module').then(m => m.SuprimentosModule)
       },
       {
         path: 'fornecedor',
-        loadChildren: () => import('@app/dashboard/fornecedor/fornecedor.module').then(m => m.FornecedorModule)
+        loadChildren: () => import('@app/user-fornecedor/fornecedor/fornecedor.module').then(m => m.FornecedorModule)
       },
       //-----------------------------------------------------------------------------------------------------------
       {path: '**', component: NotFoundComponent},

@@ -24,7 +24,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     canLoad: [AuthGuard],
-    loadChildren: () => import('@app/user-gestor/user.module').then(m => m.UserModule)
+    loadChildren: () => import('@app/user-gestor/gestor.module').then(m => m.GestorModule)
   },
   {
     path: 'suprimento',

@@ -6,3 +6,11 @@ export interface EquipePeD {
   gerente: User;
   outros: Array<User>;
 }
+
+export interface ContratoPadrao {
+  titulo: string;
+  header: string;
+  conteudo: string;
+  footer: string;
+  id: number;
+}

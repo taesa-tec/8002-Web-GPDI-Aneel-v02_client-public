@@ -117,7 +117,7 @@ export class ProjetosCaptacaoListComponent implements OnInit {
   createButtons() {
     if(this.captacaoEtapa == CaptacaoEtapa.Pendente) {
       return [
-        {action: 'criar-captacao', text: 'CRIAR CAPTAÇÃO', icon: 'ta-edit', className: 'btn btn-primary'}
+        {action: 'criar-captacoes', text: 'CRIAR CAPTAÇÃO', icon: 'ta-edit', className: 'btn btn-primary'}
       ];
 
     } else if(this.captacaoEtapa == CaptacaoEtapa.Aberta) {
@@ -145,7 +145,7 @@ export class ProjetosCaptacaoListComponent implements OnInit {
   }
 
   actionPendente({action, data}){
-    if (action === 'criar-captacao') {
+    if (action === 'criar-captacoes') {
       const modalRef = this.modal.open(CriarCaptacaoComponent, {size: 'lg'});
       modalRef.componentInstance.projeto = data;
     }

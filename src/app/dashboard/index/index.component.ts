@@ -25,7 +25,7 @@ export class IndexComponent implements OnInit {
       return await this.router.navigateByUrl('/dashboard/demandas');
     }
     if (this.auth.userHasRoles(UserRole.Suprimento, UserRole.Fornecedor)) {
-      return await this.router.navigateByUrl('/dashboard/captacao');
+      return await this.router.navigateByUrl('/dashboard/captacoes');
     }
 
   }

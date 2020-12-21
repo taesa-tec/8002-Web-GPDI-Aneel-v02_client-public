@@ -7,8 +7,8 @@ import {ContratosPadraoComponent} from '@app/user-admin/configuracoes/contratos-
 import {ContratoPadraoFormComponent} from '@app/user-admin/configuracoes/contratos-padrao/contrato-padrao-form/contrato-padrao-form.component';
 import {ServiceBase} from '@app/services/service-base.service';
 import {HttpClient} from '@angular/common/http';
-import {ContratosPadraoResolver} from '@app/user-admin/configuracoes/contratos-padrao/contratos-padrao.resolver';
-import {ContratoPadraoResolver} from '@app/user-admin/configuracoes/contratos-padrao/contrato-padrao.resolver';
+import {ContratosPadroesResolver} from '@app/resolvers/contratos-padroes.resolver';
+import {ContratoPadraoResolver} from '@app/resolvers/contrato-padrao.resolver';
 import {CoreModule} from '@app/core';
 
 
@@ -23,7 +23,7 @@ import {CoreModule} from '@app/core';
     ContratosPadraoRoutingModule
   ],
   providers: [
-    ContratosPadraoResolver,
+    ContratosPadroesResolver,
     ContratoPadraoResolver,
     {provide: ServiceBase, deps: [HttpClient], useFactory: (httpClient) => new ServiceBase(httpClient, 'Sistema/Contratos')}
   ]

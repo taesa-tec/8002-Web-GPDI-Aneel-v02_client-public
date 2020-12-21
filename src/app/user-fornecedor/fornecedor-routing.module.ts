@@ -12,10 +12,10 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'captacao'
+        redirectTo: 'captacoes'
       },
       {
-        path: 'captacao',
+        path: 'captacoes',
         component: SidebarComponent
       }
     ]

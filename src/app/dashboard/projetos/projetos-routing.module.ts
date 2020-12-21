@@ -7,7 +7,7 @@ import {ProjetosCaptacaoModule} from './projetos-captacao/projetos-captacao.modu
 
 const routes: Routes = [
   {
-    path: 'captacao',
+    path: 'captacoes',
     loadChildren: () => import('./projetos-captacao/projetos-captacao.module').then(m => ProjetosCaptacaoModule)
   },
   // {

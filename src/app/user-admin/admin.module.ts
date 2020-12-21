@@ -18,7 +18,7 @@ import {HEADER_MENU, ROOT_URL, SIDEBAR_MENU, UserRole} from '@app/commons';
       provide: SIDEBAR_MENU,
       useValue: [
         {text: 'Gestão de Demandas', icon: 'ta-projeto', path: '/admin/demandas'},
-        {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: '/admin/captacao'},
+        {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: '/admin/captacoes'},
         {text: 'Configurações do Sistema', icon: 'ta-gear', path: '/admin/configuracoes'},
       ]
     }, {

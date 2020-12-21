@@ -3,6 +3,7 @@
     <div class="sticky-sidebar">
       <nav class="side-nav">
         <app-loading type="fullparent" background="transparent"></app-loading>
+        <ng-content></ng-content>
         <ng-container *ngFor="let route of menu">
           <a
             [routerLink]="route.path"

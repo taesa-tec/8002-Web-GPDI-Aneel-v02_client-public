@@ -1,0 +1,46 @@
+<div *ngIf="captacao">
+  <div class="row justify-content-between">
+    <div class="col">
+      <h5 class="text-uppercase text-blue font-weight-normal my-4">DETALHES DO PROJETO</h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h6 class="text-uppercase text-blue-light">Específicação técnica</h6>
+      <app-pdf-viewer [url]="captacao.especificacaoTecnicaUrl"></app-pdf-viewer>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col mb-4">
+      <h6 class="text-uppercase text-blue-light">Arquivos complementares</h6>
+      <div *ngFor="let arquivo of captacao.arquivos">
+        <a class="btn btn-link px-0 py-1" [href]="arquivo.uri" target="_blank">
+          {{ arquivo.name }}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col mb-4">
+      <h6 class="text-uppercase text-blue-light">Fornecedores sugeridos pela equipe de P&D</h6>
+      <div *ngFor="let fornecedor of captacao.fornecedoresSugeridos">
+        <div class="text-primary px-0 py-1">
+          {{ fornecedor.nome }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h6 class="text-uppercase text-blue-light">Observações para equipe suprimentos</h6>
+      <div class="bg-cinza-claro rounded p-4">
+        {{captacao.observacoes}}
+      </div>
+    </div>
+  </div>
+
+</div>

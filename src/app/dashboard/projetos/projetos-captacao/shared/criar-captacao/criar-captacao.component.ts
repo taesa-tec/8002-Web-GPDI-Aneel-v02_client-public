@@ -18,8 +18,8 @@ export class CriarCaptacaoComponent implements OnInit {
   arrayFornecedores = new FormArray([]);
 
   constructor(
-    protected app: AppService, 
-    private fb: FormBuilder, 
+    protected app: AppService,
+    private fb: FormBuilder,
     public activeModal: NgbActiveModal
   ) { }
 
@@ -58,7 +58,7 @@ export class CriarCaptacaoComponent implements OnInit {
       const projeto: any = this.formCaptacao.value;
 
       try {
-        //await this.app.captacao.criarCaptacao(projeto);
+        //await this.app.captacoes.criarCaptacao(projeto);
         this.app.alert('Captação criada com sucesso!', 'Sucesso');
         this.activeModal.close();
       } catch (error) {

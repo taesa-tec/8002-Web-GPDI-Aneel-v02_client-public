@@ -3,11 +3,11 @@ import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {AppService} from '@app/services/app.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {UsersService} from '@app/services/users.service';
-import {UserRole, MenuItem, SIDEBAR_MENU} from '@app/commons';
+import {MenuItem, SIDEBAR_MENU} from '@app/commons';
 
 
 @Component({
-  selector: 'app-main',
+  selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: []
 })

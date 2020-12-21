@@ -1,0 +1,165 @@
+<div class="row justify-content-between">
+  <div class="col-12">
+    <h5 class="text-uppercase text-blue font-weight-normal my-4">
+      CONFIGURAÇÕES DA PROPOSTA
+    </h5>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <form [formGroup]="form" *ngIf="form" (ngSubmit)="onSubmit()">
+
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label>Modelos Contratos</label>
+            <div class="d-flex mb-2" *ngFor="let control of contratosControls.controls; let i = index">
+              <select class="form-control" [formControl]="control">
+                <option value="" hidden>Escolha um contrato</option>
+                <option [value]="contrato.id" *ngFor="let contrato of contratos">
+                  {{ contrato.titulo }}
+                </option>
+              </select>
+              <button
+                type="button"
+                class="btn btn-link text-decoration-none p-2"
+                *ngIf="i > 0"
+                (click)="removeContrato(i)"
+              >
+                <i class="ta-remove-circle"></i>
+              </button>
+              <div class="border-right" style="height: 22px; margin-top: 10px;"></div>
+              <button
+                type="button"
+                [disabled]="!control.value"
+                class="btn btn-link text-decoration-none p-2"
+                (click)="abrirContrato(control.value)"
+              >
+                <i class="ta-eye fs-22"></i>
+              </button>
+            </div>
+            <div>
+              <button
+                type="button"
+                class="btn btn-link text-decoration-none p-2"
+                [disabled]="contratos.length === contratosControls.controls.length"
+                (click)="addContrato()"
+              >
+                <i class="ta-plus-circle"></i> Adicionar mais contratos
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-12">
+          <div class="form-group">
+            <label>Arquivos disponibilizados para o fornecedor</label>
+          </div>
+          <div>
+            <!-- Enviados anteriormente -->
+            <div class="d-flex flex-column align-items-start" style="width: fit-content"
+                 *ngIf="captacao && captacao.arquivos">
+              <div *ngFor="let file of arquivos; let i = index;" class="w-100 d-flex justify-content-between">
+                <div class="btn btn-link py-1">
+                  <span>
+                    <i class="ta-attachment"></i>
+                  </span>
+                  {{file.name}}
+                </div>
+                <div class="btn btn-link text-danger p-0 align-self-end" (click)="deletarArquivo(i)">
+                  <i class="ta-cancel-circle"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Novos -->
+            <div class="d-flex flex-column align-items-start" *ngIf="uploads">
+              <div *ngFor="let file of uploads; let i = index">
+                <div class="btn btn-link py-1">
+                                    <span (click)="deletarArquivo(i)">
+                                        <i class="ta-attachment"></i>
+                                    </span>
+                  {{file.name}}
+                </div>
+                <div class="btn btn-link text-danger p-0" (click)="deletarArquivo(file)">
+                  <i class="ta-cancel-circle"></i>
+                </div>
+              </div>
+            </div>
+            <label class="btn btn-link">
+              <i class="ta-plus-circle"></i>
+              <span> Adicionar mais arquivos</span>
+              <input type="file" class="form-control d-none" (change)="changeFile($event)">
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="consideracoes">Considerações estras para os fornecedores</label>
+            <textarea class="form-control" id="consideracoes" rows="5"
+                      formControlName="consideracoes"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-4">
+          <div class="form-group">
+            <label for="dataMaxima">Data máxima de envio proposta</label>
+            <input type="date" class="form-control" id="dataMaxima" formControlName="dataMaxima"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group" formArrayName="fornecedores">
+            <label>Fornecedores convidados</label>
+            <div class="d-flex mb-2" *ngFor="let control of fornecedoresControls.controls; let i = index">
+              <select class="form-control" [formControl]="control">
+                <option value="" hidden>Escolha um fornecedor</option>
+                <option [value]="fornecedor.id"
+                        *ngFor="let fornecedor of fornecedores | listUnique: [control.value]: fornecedoresControls.value: 'id'">
+                  {{ fornecedor.nome }}</option>
+              </select>
+              <button
+                type="button"
+                class="btn btn-link text-decoration-none p-2"
+                *ngIf="fornecedoresControls.controls.length > 1"
+                (click)="removeFornecedor(i)"
+              >
+                <i class="ta-remove-circle"></i>
+              </button>
+            </div>
+            <button
+              type="button"
+              class="btn btn-link text-decoration-none p-2"
+              *ngIf="fornecedores.length > fornecedoresControls.controls.length"
+              (click)="addFornecedor()"
+            >
+              <i class="ta-plus-circle"></i> Adicionar Fornecedor
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group mt-4">
+            <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+              <i class="ta-plus-circle"></i>
+              Enviar demanda para fornecedores
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>

@@ -18,12 +18,12 @@ const routes: Routes = [
       {
         path: 'demandas',
         // component: SidebarComponent,
-        loadChildren: () => import('@app/shared/demandas/demandas.module').then(m => m.DemandasModule)
+        loadChildren: () => import('@app/user-shared/demandas/demandas.module').then(m => m.DemandasModule)
       },
       {
-        path: 'captacao',
+        path: 'captacoes',
         component: SidebarComponent,
-        loadChildren: () => import('@app/shared/captacao/captacao.module').then(m => m.CaptacaoModule)
+        loadChildren: () => import('@app/user-shared/captacao/captacao.module').then(m => m.CaptacaoModule)
       },
       {
         path: 'configuracoes',

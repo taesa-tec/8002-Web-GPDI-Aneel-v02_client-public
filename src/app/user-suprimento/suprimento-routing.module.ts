@@ -12,11 +12,11 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'captacao'
+        redirectTo: 'captacoes'
       },
       {
-        path: 'captacao',
-        component: SidebarComponent
+        path: 'captacoes',
+        loadChildren: () => import('./captacoes/captacoes.module').then(m => m.CaptacoesModule)
       }
     ]
   }

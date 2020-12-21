@@ -28,7 +28,7 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.menu = [
       {text: 'Gestão de Demandas', icon: 'ta-projeto', path: '/dashboard/demandas', role: [UserRole.Administrador, UserRole.User]},
-      {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: '/dashboard/captacao'},
+      {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: '/dashboard/captacoes'},
       // {text: 'Projetos Em Proposta', icon: 'ta-projeto', path: '/dashboard/projetos/proposta'},
       // {text: 'Projetos Em Execução', icon: 'ta-box', path: '/dashboard/projetos/iniciado'},
       // {text: 'Projetos Em Finalização', icon: 'ta-ficha', path: '/dashboard/projetos/encerrado'},

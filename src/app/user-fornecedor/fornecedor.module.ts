@@ -17,7 +17,7 @@ import {HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
     {
       provide: SIDEBAR_MENU,
       useValue: [
-        {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: '/fornecedor/captacao'},
+        {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: '/fornecedor/captacoes'},
       ]
     }, {
       provide: HEADER_MENU,

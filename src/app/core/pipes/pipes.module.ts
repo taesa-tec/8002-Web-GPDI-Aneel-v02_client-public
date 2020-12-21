@@ -4,23 +4,22 @@ import {OrderByPipe} from '@app/core/pipes/order-by.pipe';
 import {TipoProjetoPipe} from '@app/core/pipes/tipo-projeto.pipe';
 import {N2arrayPipe} from '@app/core/pipes/n2array.pipe';
 import {FilesizePipe} from '@app/core/pipes/filesize.pipe';
+import {PadCharPipe} from '@app/core/pipes/pad-char.pipe';
+import {ListUniquePipe} from '@app/core/pipes/list-unique.pipe';
 
+const pipes = [
+  NotDefinedPipe,
+  OrderByPipe,
+  TipoProjetoPipe,
+  N2arrayPipe,
+  FilesizePipe,
+  PadCharPipe,
+  ListUniquePipe
+];
 
 @NgModule({
-  declarations: [
-    NotDefinedPipe,
-    OrderByPipe,
-    TipoProjetoPipe,
-    N2arrayPipe,
-    FilesizePipe
-  ],
-  exports: [
-    NotDefinedPipe,
-    OrderByPipe,
-    TipoProjetoPipe,
-    N2arrayPipe,
-    FilesizePipe
-  ]
+  declarations: pipes,
+  exports: pipes
 })
 export class PipesModule {
 
