@@ -35,10 +35,12 @@
     <div class="form-editor-field-children" *ngIf="field.children">
       <div *ngFor="let child of field.children">
         <app-form-editor-field
+          *ngIf="form.get(['children', child.key])"
           [form]="form.get(['children', child.key])"
           [field]="child"
           [readonly]="readonly"
         ></app-form-editor-field>
+        <div *ngIf="!form.get(['children', child.key])">{{child.key}}</div>
       </div>
     </div>
   </ng-container>

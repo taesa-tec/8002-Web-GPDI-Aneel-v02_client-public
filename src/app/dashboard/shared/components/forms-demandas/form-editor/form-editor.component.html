@@ -3,12 +3,14 @@
     <div class="col-12">
       <div class="form-editor my-3" [formGroup]="form">
         <div class="form-editor-title fs-22 text-blue">{{ formField.title }}</div>
-        <app-form-editor-field
-          *ngFor="let child of formField.children"
-          [form]="form.get(['children',child.key])"
-          [field]="child"
-          [readonly]="readonly"
-        ></app-form-editor-field>
+        <ng-container *ngFor="let child of formField.children">
+          <app-form-editor-field
+            *ngIf="form.get(['children',child.key])"
+            [form]="form.get(['children',child.key])"
+            [field]="child"
+            [readonly]="readonly"
+          ></app-form-editor-field>
+        </ng-container>
       </div>
     </div>
   </div>

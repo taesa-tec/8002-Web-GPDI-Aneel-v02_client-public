@@ -62,12 +62,12 @@ export class UsersService {
     return this.http.get<User>(`Users/${id}`);
   }
 
-  create(user: CreateUserRequest) {
-    return this.http.post<ResultadoResponse>(`Users`, user);
+  async create(user: CreateUserRequest) {
+    return await this.http.post<ResultadoResponse>(`Users`, user).toPromise();
   }
 
-  edit(user: User) {
-    return this.http.put<ResultadoResponse>(`Users`, user);
+  async edit(user: User) {
+    return await this.http.put<ResultadoResponse>(`Users`, user).toPromise();
   }
 
   remove(user: User | string) {

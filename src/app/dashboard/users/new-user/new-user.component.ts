@@ -41,19 +41,21 @@ export class NewUserComponent implements OnInit {
 
   }
 
-  submit(value: any) {
-    return this.usersService.create(value);
+  async submit(value: any) {
+    return await this.usersService.create(value);
   }
 
-  onSubmited(value: ResultadoResponse) {
+  async onSubmited(value: ResultadoResponse) {
 
     try {
       if (value.sucesso) {
-        this.router.navigate(['/admin', 'gerenciar-usuarios'], {
+        return this.router.navigate(['/admin', 'gerenciar-usuarios'], {
           queryParams: {
             message: 'user-gestor-created'
           }
-        }).then();
+        });
+      } else {
+        await this.app.alert(value.inconsistencias[0], 'Usuário não pode ser criado');
       }
     } catch (e) {
 

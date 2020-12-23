@@ -11,7 +11,6 @@ import {UsersService} from '@app/services/users.service';
 export class EquipeComponent implements OnInit {
   pessoas: Array<any> = [];
   formEquipe: FormGroup;
-  equipeOutros = new FormArray([]);
 
   constructor(protected app: AppService, protected usersService: UsersService, private fb: FormBuilder) {
   }
@@ -29,17 +28,11 @@ export class EquipeComponent implements OnInit {
       diretor: ['', Validators.required],
       gerente: ['', Validators.required],
       coordenador: ['', Validators.required],
-      outros: this.equipeOutros
     });
 
 
     this.pessoas = pessoas.filter(({nomeCompleto}) => nomeCompleto !== null);
 
-    if (equipe.outros) {
-      equipe.outros.forEach(pessoa => this.add(pessoa.id));
-    } else {
-      this.add();
-    }
     this.formEquipe.patchValue({
       diretor: equipe.diretor && equipe.diretor.id || '',
       gerente: equipe.gerente && equipe.gerente.id || '',
@@ -49,28 +42,19 @@ export class EquipeComponent implements OnInit {
 
   pessoasEquipe(current?: string) {
     const value = this.formEquipe.value;
-    const selecteds = [value.diretor, value.gerente, value.coordenador, ...value.outros];
+    const selecteds = [value.diretor, value.gerente, value.coordenador];
     return this.pessoas.filter(p => selecteds.indexOf(p.id) === -1 || p.id === current);
   }
 
 
-  add(id = '') {
-    this.equipeOutros.push(new FormControl(id, [Validators.required]));
-  }
-
-  remove(index) {
-    this.equipeOutros.removeAt(index);
-  }
-
   async salvar() {
-    console.log(this.formEquipe.value);
     if (this.formEquipe.valid) {
-      this.app.loading.show();
+      this.app.loading.show().then();
       try {
         await this.app.sistema.setEquipePeD(this.formEquipe.value);
-        this.app.alert('Alterado com sucesso');
+        this.app.alert('Alterado com sucesso').then();
       } catch (e) {
-        this.app.alert('Não foi possível salvar a equipe');
+        this.app.alert('Não foi possível salvar a equipe').then();
         console.error(e);
       }
       this.app.loading.hide();

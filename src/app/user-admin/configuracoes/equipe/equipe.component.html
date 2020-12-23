@@ -53,43 +53,6 @@
       </div>
     </div>
   </div>
-
-
-  <div class="row justify-content-between">
-    <div class="col">
-      <h5 class="text-uppercase text-cinza font-weight-normal my-4">OUTRAS PESSOAS EQUIPE P&D</h5>
-      <hr>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-4">
-      <div class="d-flex pt-2" *ngFor="let control of equipeOutros.controls; let i = index">
-        <select class="form-control flex-grow-1 pr-1" [formControl]="control">
-          <option value="">Selecione uma pessoa</option>
-          <option [value]="pessoa.id"
-                  *ngFor="let pessoa of pessoasEquipe(control.value)">{{ pessoa.nomeCompleto }}</option>
-        </select>
-        <button type="button" class="btn btn-outline-danger btn-sm ml-4 p-1 text-nowrap"
-                *ngIf="equipeOutros.controls.length > 1"
-                (click)="remove(i)">
-          <i class="ta-trash"></i> Remover
-        </button>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-4">
-      <div class="d-flex py-3">
-        <button type="button" class="btn btn-outline-blue btn-sm py-2 text-nowrap" (click)="add()">
-          <i class="ta-plus-circle"></i> Adicionar Mais Pessoas
-        </button>
-      </div>
-    </div>
-  </div>
-
   <div class="row">
     <div class="col-12 text-left pt-5">
       <button type="submit" class="btn btn-primary" [disabled]="formEquipe.invalid">

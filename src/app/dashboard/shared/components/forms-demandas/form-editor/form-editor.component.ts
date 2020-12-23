@@ -97,12 +97,18 @@ export class FormEditorComponent implements OnInit {
       if (field.children) {
         const children = this.builder.group({});
         //
+
         field.children.forEach(child => {
+
+
           const value = controlValue?.children?.[child.key];
           if (child.isArray) {
-            const childControls = (value as Array<{ value: any }>).map(v => this.builder.group(v));
-            const childControl = this.buildControl(child, value);
-            children.addControl(child.key, this.builder.array(childControls));
+            const childControls = (value as Array<{ value: any }> || [])?.map(v => this.builder.group(v));
+            this.buildControl(child, value);
+            if (childControls) {
+
+              children.addControl(child.key, this.builder.array(childControls));
+            }
           } else {
             const childControl = this.buildControl(child, value);
             children.addControl(child.key, childControl);
@@ -144,7 +150,6 @@ export class FormEditorComponent implements OnInit {
       key: field.key
     });
     root.addControl('children', formControl);
-
     return root;
 
   }

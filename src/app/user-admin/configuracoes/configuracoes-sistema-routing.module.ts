@@ -5,8 +5,6 @@ import {EquipeComponent} from './equipe/equipe.component';
 import {ConfiguracoesSistemaComponent} from './configuracoes-sistema.component';
 import {FormEditorComponent} from '@app/user-admin/configuracoes/form-editor/form-editor.component';
 import {PadraoFormulariosComponent} from './padrao-formularios/padrao-formularios.component';
-import {FornecedoresComponent} from './fornecedores/fornecedores.component';
-import {FornecedorFormComponent} from './fornecedores/fornecedor-form/fornecedor-form.component';
 
 const routes: Routes = [
   {

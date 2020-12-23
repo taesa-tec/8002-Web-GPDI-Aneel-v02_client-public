@@ -19,7 +19,7 @@ export class FormEditorComponent implements OnInit {
     if (this.key === undefined || this.key === null) {
       throw new Error('Key form is undefined or null. Please give a key value');
     }
-    this.formValue = await this.app.demandas.getFormValue(this.key).toPromise() || {};
+    this.formValue = await this.app.demandas.getFormValue(this.key).toPromise() || {value: ''};
   }
 
   async submit(data) {

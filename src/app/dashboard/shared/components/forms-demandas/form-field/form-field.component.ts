@@ -26,7 +26,7 @@ export class FormFieldComponent implements OnInit {
 
   get formArray(): FormArray {
     if (this.field && this.field.isArray) {
-      return <FormArray>this.form;
+      return <FormArray>this.form || new FormArray([]);
     }
     return new FormArray([]);
   }
