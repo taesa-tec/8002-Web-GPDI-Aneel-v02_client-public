@@ -1,10 +1,17 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {AuthGuard} from '@app/auth/auth.guard';
+import {MeuCadastroComponent} from '@app/meu-cadastro/meu-cadastro.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', pathMatch: 'full', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
+  {
+    path: 'meu-cadastro',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('@app/meu-cadastro/meu-cadastro.module').then(m => m.MeuCadastroModule)
+
+  },
   {
     path: 'dashboard',
     canActivate: [AuthGuard],

@@ -18,17 +18,17 @@ $red-secundario: #e48585;
 
 
 $theme-colors: (
-        "blue": $blue, 
-        "blue-light": $blueLight, 
-        "red": $red, 
-        "red-secundario": $red-secundario, 
-        "orange": $orange, 
-        "yellow": $yellow, 
-        "green": $green, 
+        "blue": $blue,
+        "blue-light": $blueLight,
+        "red": $red,
+        "red-secundario": $red-secundario,
+        "orange": $orange,
+        "yellow": $yellow,
+        "green": $green,
         "grey-light": $grey-light,
-        "cinza-escuro": $cinzaEscuro, 
-        "cinza-claro": $cinzaClaro, 
-        "cinza": $cinza, 
+        "cinza-escuro": $cinzaEscuro,
+        "cinza-claro": $cinzaClaro,
+        "cinza": $cinza,
         "verde-claro": $verde-claro
 );
 
@@ -67,5 +67,5 @@ $label-margin-bottom: 0.2rem;
 $input-height: 2.5rem;
 //$input-padding-y:1rem;
 
-$icomoon-font-path: "assets/fonts";
+$icomoon-font-path: "../../assets/fonts";
 $header-height: 7rem;

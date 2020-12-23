@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 import {UsersModule} from '@app/dashboard/users/users.module';
 import {HeaderComponent, SharedModule} from '@app/dashboard/shared';
 
-import {MeuCadastroComponent} from './meu-cadastro/meu-cadastro.component';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {GerenciarUsuariosComponent} from './gerenciar-usuarios/gerenciar-usuarios.component';
 import {DashboardComponent} from './dashboard.component';
@@ -17,7 +16,6 @@ import {SidebarComponent} from '@app/dashboard/side-bar/sidebar.component';
     DashboardComponent,
     SidebarComponent,
     HeaderComponent,
-    MeuCadastroComponent,
     NotFoundComponent,
     GerenciarUsuariosComponent,
     IndexComponent,
@@ -31,7 +29,6 @@ import {SidebarComponent} from '@app/dashboard/side-bar/sidebar.component';
     DashboardComponent,
     HeaderComponent,
     SidebarComponent,
-    MeuCadastroComponent,
     NotFoundComponent,
     GerenciarUsuariosComponent,
   ],

@@ -10,6 +10,7 @@ import {UsersModule} from './dashboard/users/users.module';
 import {CoreModule} from '@app/core';
 import {AppComponent} from './app.component';
 import {NotFoundComponent} from './core/components/not-found/not-found.component';
+import {MeuCadastroComponent} from '@app/meu-cadastro/meu-cadastro.component';
 
 
 registerLocaleData(localeBr, 'pt');
