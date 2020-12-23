@@ -1,5 +1,5 @@
-import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable, Inject} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {
   CreateProjectRequest,
   Projeto, ResultadoResponse,
@@ -25,11 +25,11 @@ import {
   ProrrogarProjetoRequest,
   XmlType
 } from '@app/commons';
-import { Subject, Observable, BehaviorSubject, of } from 'rxjs';
-import { tap, share, map } from 'rxjs/operators';
-import { ProjetoFacade } from '@app/facades';
-import { FileService } from '@app/services/file.service';
-import { RequestCacheService } from '@app/request-cache.service';
+import {Subject, Observable, BehaviorSubject, of} from 'rxjs';
+import {tap, share, map} from 'rxjs/operators';
+import {ProjetoFacade} from '@app/facades';
+import {FileService} from '@app/services/file.service';
+import {RequestCacheService} from '@app/request-cache.service';
 
 class ProjetoREST {
 
@@ -123,7 +123,7 @@ export class ProjetosService {
 
     rest.forEach(path => {
       const projetoRest = new ProjetoREST(path, this.http);
-      Object.defineProperty(this, path, { get: () => projetoRest });
+      Object.defineProperty(this, path, {get: () => projetoRest});
     });
     console.log('ProjetosService Ok');
   }
@@ -156,11 +156,11 @@ export class ProjetosService {
 
   getProjetos(status?) {
 
-    let query = "";
+    let query = '';
     if (status) {
       query = `?status=${status}`;
     }
-    console.log({ status, query });
+    console.log({status, query});
     return this.http.get<Array<Projeto>>(`Projetos${query}`);
   }
 
@@ -386,7 +386,6 @@ export class ProjetosService {
    */
 
   criarLogProjeto(logprojeto: CreateLogProjetoRequest) {
-    console.trace("Log a remover");
     return of(true); // this.http.post<ResultadoResponse>('projeto/LogProjetos', logprojeto);
   }
 

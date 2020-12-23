@@ -37,7 +37,11 @@ export class ListaProjetosComponent implements OnInit {
     return this.currentUser && this.currentUser.role === 'Admin-APIGestor';
   }
 
-  constructor(protected catalog: CatalogsService, protected usersService: UsersService, protected route: ActivatedRoute, protected app: AppService, public modal: NgbModal) {
+  constructor(protected catalog: CatalogsService,
+              protected usersService: UsersService,
+              protected route: ActivatedRoute,
+              protected app: AppService,
+              public modal: NgbModal) {
   }
 
   async ngOnInit() {

@@ -19,7 +19,7 @@ export class FileService {
         const formData = new FormData();
 
         if (form) {
-            for (let key in form.value) {
+            for (const key in form.value) {
                 if (form.get(key)) {
                     formData.append(key, form.get(key).value);
                 }

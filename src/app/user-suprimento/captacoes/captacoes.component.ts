@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject, Subscription} from 'rxjs';
 import {CaptacaoEtapa} from '@app/user-suprimento/captacoes/commons';
 import {TableComponentActions, TableComponentCols, TableComponentFilter} from '@app/core/components';
@@ -22,7 +22,7 @@ export interface CaptacaoTableConfig {
   selector: 'app-projetos-captacao',
   templateUrl: './captacoes.component.html',
 })
-export class CaptacoesComponent implements OnInit {
+export class CaptacoesComponent implements OnInit, OnDestroy {
 
   protected subscriptions: Array<Subscription> = [];
   protected events = new Subject<{ action: string; data: any; }>();

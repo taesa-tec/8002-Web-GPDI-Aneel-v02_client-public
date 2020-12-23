@@ -6,7 +6,6 @@ export class AppValidators {
     /**
      *
      * @description Validar CPF
-     * @param control
      */
     static cpf(control: AbstractControl): ValidationErrors | null {
         if (control.value === null || control.value === '') {
@@ -26,7 +25,6 @@ export class AppValidators {
 
     /**
      * @description Validar CNPJ
-     * @param control
      */
     static cnpj(control: AbstractControl): ValidationErrors | null {
         if (control.value === null || control.value === '') {

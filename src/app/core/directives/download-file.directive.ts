@@ -3,6 +3,7 @@ import {AppService} from '@app/services/app.service';
 import {FileUploaded} from '@app/commons';
 
 @Directive({
+  // tslint:disable-next-line:directive-selector
   selector: '[downloadFile]'
 })
 export class DownloadFileDirective {

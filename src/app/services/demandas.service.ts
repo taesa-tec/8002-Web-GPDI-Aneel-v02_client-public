@@ -32,11 +32,13 @@ export class DemandasService {
   }
 
   getDemandaFormHistoricoDiff(id: number, key: string, revisao: number) {
-    return this.http.get<{ revisaoAtual: string, html: string, lastUpdate: string }>(`Demandas/${id}/Form/${key}/Diff/${revisao}`).toPromise();
+    return this.http.get<{ revisaoAtual: string, html: string, lastUpdate: string }>(`Demandas/${id}/Form/${key}/Diff/${revisao}`)
+      .toPromise();
   }
 
   criarDemanda(titulo: any) {
-    return this.http.post<Demanda>('Demandas/Criar', `"${titulo}"`, {headers: {'Content-Type': 'application/json'}}).toPromise();
+    return this.http.post<Demanda>('Demandas/Criar', `"${titulo}"`, {headers: {'Content-Type': 'application/json'}})
+      .toPromise();
   }
 
   getSuperiorDireto(id: number) {

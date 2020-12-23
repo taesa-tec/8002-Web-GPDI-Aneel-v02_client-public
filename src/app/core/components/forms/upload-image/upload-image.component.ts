@@ -113,10 +113,10 @@ export class UploadImageComponent implements OnInit, ControlValueAccessor {
   }
 
   onChange: any = () => {
-  };
+  }
 
   onTouched: any = () => {
-  };
+  }
 
   writeValue(value: any) {
     if (value) {

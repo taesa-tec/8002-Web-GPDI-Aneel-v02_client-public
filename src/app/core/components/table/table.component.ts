@@ -262,7 +262,10 @@ export class TableComponent implements OnInit, AfterViewInit {
       try {
         this.requesting = true;
         this.currentData = [];
-        const response = await this.dataRequester(this.pagination ? this.pagination.page : 1, this.filters, this.$listOrder, this.searchTerm);
+
+        const response = await this.dataRequester(this.pagination ? this.pagination.page : 1,
+          this.filters, this.$listOrder, this.searchTerm);
+
         this.currentData = this.buildData(response.data.map(r => new TableComponentRow(r)));
         this.filters = response.filters.map(filter => {
           const keys = Object.keys(filter.values);
@@ -435,7 +438,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    if (this.data.length == 0 && this.dataRequester) {
+    if (this.data.length === 0 && this.dataRequester) {
       this.setCurrentData().then();
     }
   }

@@ -61,9 +61,9 @@ export class TextareaComponent implements ControlValueAccessor {
   }
 
   onChange: any = () => {
-  };
+  }
   onTouched: any = () => {
-  };
+  }
 
   writeValue(value: any) {
     if (value) {

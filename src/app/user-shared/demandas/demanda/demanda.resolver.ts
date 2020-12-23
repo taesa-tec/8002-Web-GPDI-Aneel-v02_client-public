@@ -12,7 +12,8 @@ export class DemandaResolver implements Resolve<{ demanda: Demanda, menu: Array<
   }
 
 
-  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<{ demanda: Demanda, menu: Array<any>, defaultPage?: string }> {
+  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
+    Promise<{ demanda: Demanda, menu: Array<any>, defaultPage?: string }> {
     // Menu
     // Demanda
     // Superior Direto, Revisor, Coordenador, Gerente, Diretor

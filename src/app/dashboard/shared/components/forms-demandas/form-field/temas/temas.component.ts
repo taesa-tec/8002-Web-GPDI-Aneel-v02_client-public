@@ -82,9 +82,9 @@ export class TemasComponent implements OnInit, ControlValueAccessor {
   }
 
   onChange: any = () => {
-  };
+  }
   onTouched: any = () => {
-  };
+  }
 
   subtemasdisponiveis(current?: any) {
     return this.subTemas.filter(tema => {

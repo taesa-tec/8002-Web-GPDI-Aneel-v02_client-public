@@ -65,9 +65,9 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
   }
 
   onChange: any = () => {
-  };
+  }
   onTouched: any = () => {
-  };
+  }
 
   writeValue(value: FileList) {
     if (value) {
