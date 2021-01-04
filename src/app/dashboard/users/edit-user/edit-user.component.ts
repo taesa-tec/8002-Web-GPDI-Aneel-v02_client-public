@@ -42,7 +42,7 @@ export class EditUserComponent implements OnInit {
   }
 
   submit(value: any) {
-    return this.usersService.edit(value).toPromise();
+    return this.usersService.edit(value);
   }
 
   async onSubmited(value: ResultadoResponse) {

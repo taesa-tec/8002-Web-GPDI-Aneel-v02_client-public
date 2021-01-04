@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {DashboardComponent} from './dashboard.component';
-import {MeuCadastroComponent} from './meu-cadastro/meu-cadastro.component';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {MeusProjetosComponent} from '@app/dashboard/shared/components/meus-projetos/meus-projetos.component';
 import {GerenciarUsuariosComponent} from './gerenciar-usuarios/gerenciar-usuarios.component';
@@ -24,7 +23,6 @@ const routes: Routes = [
     children: [
       {path: '', component: IndexComponent, pathMatch: 'full'},
       {path: 'meus-projetos', component: MeusProjetosComponent},
-      {path: 'meu-cadastro', component: MeuCadastroComponent},
       // @todo Criar modulo
       {path: 'gerenciar-usuarios', component: GerenciarUsuariosComponent, canActivate: [AdminGuard]},
       {path: 'gerenciar-usuarios/novo', component: NewUserComponent, canActivate: [AdminGuard]},
