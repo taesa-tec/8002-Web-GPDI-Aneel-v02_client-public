@@ -6,6 +6,8 @@ import {DetalhesComponent} from '@app/user-suprimento/captacoes/captacao/detalhe
 import {PropostasComponent} from '@app/user-suprimento/captacoes/captacao/propostas/propostas.component';
 import {ContratosPadroesResolver} from '@app/resolvers/contratos-padroes.resolver';
 import {FornecedoresResolver} from '@app/resolvers/fornecedores.resolver';
+import {PropostasResolver} from '@app/user-suprimento/resolvers/propostas.resolver';
+import {ListComponent} from '@app/user-suprimento/captacoes/captacao/propostas/list.component';
 
 
 const routes: Routes = [
@@ -32,7 +34,17 @@ const routes: Routes = [
       },
       {
         path: 'propostas',
-        component: PropostasComponent
+        component: PropostasComponent,
+        children: [
+          {path: '', pathMatch: 'full', redirectTo: 'pendente'},
+          {
+            path: ':status',
+            component: ListComponent,
+            resolve: {
+              propostas: PropostasResolver
+            }
+          }
+        ]
       }
     ]
   }

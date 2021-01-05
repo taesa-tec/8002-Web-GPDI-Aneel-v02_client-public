@@ -1,19 +1,29 @@
 pre.debug {
-    position: fixed;
-    top: 32px;
-    right: 32px;
-    width: 25%;
-    height: 25%;
-    opacity: 0.9;
-    border-radius: 8px;
-    padding: 16px;
-    background: $cinzaClaro;
-    border: solid 1px $cinzaEscuro;
-    z-index: 9999;
-    &:hover {
-        opacity: 0.1;
-    }
-    &:focus{
-        opacity: 1;
-    }
+  position: fixed;
+  top: 32px;
+  right: 32px;
+  width: 25%;
+  height: 25%;
+  opacity: 0.9;
+  border-radius: 8px;
+  padding: 16px;
+  background: $cinzaClaro;
+  border: solid 1px $cinzaEscuro;
+  z-index: 9999;
+  resize: both;
+  direction: rtl;
+
+  .inner-debug {
+    white-space: pre-wrap;
+    direction: ltr;
+  }
+
+
+  &:hover {
+    opacity: 0.1;
+  }
+
+  &:focus {
+    opacity: 1;
+  }
 }

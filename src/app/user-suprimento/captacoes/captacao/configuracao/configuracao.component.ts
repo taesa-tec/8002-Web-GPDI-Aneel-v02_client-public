@@ -6,6 +6,7 @@ import {ViewContratoComponent} from '@app/user-shared/components';
 import {ActivatedRoute} from '@angular/router';
 import {CaptacaoDetalhes} from '@app/user-shared/captacao';
 import {CaptacaoComponent} from '@app/user-suprimento/captacoes/captacao/captacao.component';
+import {CaptacoesService} from '@app/user-suprimento/services/captacoes.service';
 
 @Component({
   selector: 'app-configuracao',
@@ -24,7 +25,7 @@ export class ConfiguracaoComponent implements OnInit {
     arquivos: this.fb.array([]),
     fornecedores: this.fb.array([]),
     consideracoes: this.fb.control(''),
-    dataMaxima: this.fb.control(''),
+    termino: this.fb.control('', [Validators.required, Validators.pattern(/\d{4}-\d{2}-\d{2}/)]),
   });
 
   arquivosControls = this.form.get('arquivos') as FormArray;
@@ -41,6 +42,7 @@ export class ConfiguracaoComponent implements OnInit {
 
   constructor(
     protected app: AppService,
+    protected service: CaptacoesService,
     public parent: CaptacaoComponent,
     protected route: ActivatedRoute,
     private fb: FormBuilder,
@@ -110,9 +112,14 @@ export class ConfiguracaoComponent implements OnInit {
     // this.uploads.splice(index, 1);
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.form.valid) {
-      this.app.alert('Configuração da proposta salva com sucesso');
+      try {
+        await this.service.put(this.captacao.id, this.form.value);
+        this.app.alert('Configuração da proposta salva com sucesso').then();
+      } catch (e) {
+
+      }
     }
   }
 

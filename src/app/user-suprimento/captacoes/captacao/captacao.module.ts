@@ -10,10 +10,12 @@ import {PropostasComponent} from './propostas/propostas.component';
 import {FornecedoresResolver} from '@app/resolvers/fornecedores.resolver';
 import {ContratoPadraoResolver, ContratosPadroesResolver} from '@app/resolvers';
 import {ComponentsModule} from '@app/user-shared/components';
+import {PropostasResolver} from '@app/user-suprimento/resolvers/propostas.resolver';
+import {ListComponent } from './propostas/list.component';
 
 
 @NgModule({
-  declarations: [CaptacaoComponent, DetalhesComponent, ConfiguracaoComponent, PropostasComponent],
+  declarations: [CaptacaoComponent, DetalhesComponent, ConfiguracaoComponent, PropostasComponent, ListComponent],
   imports: [
     SharedModule,
     ComponentsModule,
@@ -22,6 +24,7 @@ import {ComponentsModule} from '@app/user-shared/components';
   ],
   providers: [
     ContratoPadraoResolver,
+    PropostasResolver,
     ContratosPadroesResolver,
     FornecedoresResolver
   ]

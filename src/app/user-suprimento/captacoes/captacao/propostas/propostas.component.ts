@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-propostas',
@@ -7,7 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PropostasComponent implements OnInit {
 
-  constructor() { }
+  menu = [
+    {text: 'Propostas Em Aberto', path: 'pendente'},
+    {text: 'Propostas Recebidas', path: 'aceito'},
+    {text: 'Propostas Negadas', path: 'rejeitado'},
+  ];
+
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

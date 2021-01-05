@@ -6,6 +6,7 @@
   </div>
 </div>
 
+<pre class="debug"><div class="inner-debug">{{form.value | json}}</div></pre>
 <div class="row">
   <div class="col-12">
     <form [formGroup]="form" *ngIf="form" (ngSubmit)="onSubmit()">
@@ -112,7 +113,7 @@
         <div class="col-4">
           <div class="form-group">
             <label for="dataMaxima">Data máxima de envio proposta</label>
-            <input type="date" class="form-control" id="dataMaxima" formControlName="dataMaxima"/>
+            <input type="date" class="form-control" id="dataMaxima" formControlName="termino"/>
           </div>
         </div>
       </div>
