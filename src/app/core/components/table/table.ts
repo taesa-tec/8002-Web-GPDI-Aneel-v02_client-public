@@ -11,6 +11,7 @@ export interface TableComponentCol<T = any> {
   title: string;
   field: string;
   value?: (item: T) => any;
+  template?: string | ((item: T) => string);
   order?: boolean;
   orderType?: 'number' | 'date' | 'alpha';
   priority?: number;
@@ -25,11 +26,11 @@ export type TableComponentCols<T = any> = Array<TableComponentCol<T>>;
 export class TableComponentRow {
   selected = false;
   rendered: { [key: string]: string | SafeHtml } = {};
-  value: { [key: string]: string } = {};
+  value: { [key: string]: string | object } = {};
   originalValue: { [key: string]: any } = {};
   protected propToArray = prop => Object.keys(prop)
     .filter(key => key in prop && prop[key])
-    .map(key => prop[key])
+    .map(key => prop[key]);
 
 
   valueToArray = () => this.propToArray(this.value);
@@ -80,7 +81,7 @@ export interface TableComponentOptions<T = any> {
 
 export interface TableCellData {
   originalValue: any;
-  value: string;
+  value: string | object;
   slug: string;
   col: TableComponentCol;
 }

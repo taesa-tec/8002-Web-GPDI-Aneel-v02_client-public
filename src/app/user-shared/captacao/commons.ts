@@ -9,6 +9,16 @@ export enum CaptacaoEtapa {
   Cancelada
 }
 
+const templatePropostas = item => {
+  try {
+    const className = item.totalPropostas > 0 ? 'text-success' : 'text-danger';
+    return `<div>\${totalConvidados} Convidados</div><div class="${className}">\${totalPropostas} propostas recebidas</div>`;
+  } catch (e) {
+    console.error(e);
+    return '';
+  }
+};
+
 export const CaptacaoCols: { [prop: string]: TableComponentCols } = {
   Pendente: [
     {field: 'titulo', title: 'Título Resumido Projeto', order: true},
@@ -38,22 +48,30 @@ export const CaptacaoCols: { [prop: string]: TableComponentCols } = {
 
   Aberta: [
     {field: 'titulo', title: 'Título Resumido Projeto', order: true},
-    {field: 'equipeSuprimento', title: 'Equipe de Suprimentos Usuário Designado', order: true},
-    {field: 'fornecedores', title: 'Fornecedores', order: true, value: ({fornecedores}) => this.formatLine(fornecedores)},
-    {field: 'dataTerminoCaptacao', title: 'Data Término Captação', order: true},
+    {field: 'usuarioSuprimento', title: 'Equipe de Suprimentos Usuário Designado', order: true},
+    {
+      field: 'fornecedores', title: 'Fornecedores', order: true, type: 'template',
+      value: item => item,
+      template: templatePropostas,
+    },
+    {
+      field: 'termino', title: 'Data Término Captação', order: true,
+      pipe: new DatePipe('pt-BR'),
+      value: item => [item.termino, 'shortDate']
+    },
   ],
 
   Encerrada: [
     {field: 'titulo', title: 'Título Resumido Projeto', order: true},
     {field: 'equipeSuprimento', title: 'Equipe de Suprimentos Usuário Designado', order: true},
-    {field: 'fornecedores', title: 'Fornecedores', order: true, value: ({fornecedores}) => this.formatLine(fornecedores)},
+    {field: 'convidadosTotal', title: 'Fornecedores', order: true},
     {field: 'dataTerminoCaptacao', title: 'Data Término Captação', order: true},
   ],
 
   Cancelada: [
     {field: 'titulo', title: 'Título Resumido Projeto', order: true},
     {field: 'equipeSuprimento', title: 'Equipe de Suprimentos Usuário Designado', order: true},
-    {field: 'fornecedores', title: 'Fornecedores', order: true, value: ({fornecedores}) => this.formatLine(fornecedores)},
+    {field: 'fornecedores', title: 'Fornecedores', order: true},
     {field: 'dataTerminoCaptacao', title: 'Data Término Captação', order: true},
     {field: 'dataCancelamentoCaptacao', title: 'Data de Cancelamento', order: true},
   ]

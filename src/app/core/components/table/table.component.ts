@@ -140,9 +140,9 @@ export class TableComponent implements OnInit, AfterViewInit {
       if (this.cols) {
         this.cols.forEach(col => {
           const cellData = this.getTableCellData(col, row.data);
+          row.originalValue[col.field] = cellData.originalValue;
           row.rendered[col.field] = this.renderCell(cellData);
           row.value[camelCase(col.field)] = cellData.value;
-          row.originalValue[col.field] = cellData.originalValue;
         });
       }
       return row;
@@ -403,7 +403,6 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   renderCell(cellData: TableCellData): string | SafeHtml {
     try {
-
       if (cellData.col.pipe) {
         return this.toPipe(cellData);
       }
@@ -419,6 +418,10 @@ export class TableComponent implements OnInit, AfterViewInit {
           return this.toCurrency(cellData);
         case 'ng-pipe':
           return this.toPipe(cellData);
+        case 'template':
+          console.log(cellData);
+          const text = typeof cellData.col.template === 'function' ? cellData.col.template(cellData.value) : cellData.col.template;
+          return template(text)(typeof cellData.value === 'object' ? cellData.value : cellData);
         default:
           return this.toSimple(cellData);
 

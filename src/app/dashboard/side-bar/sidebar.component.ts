@@ -24,10 +24,6 @@ export class SidebarComponent implements OnInit {
     this.menu = menu;
   }
 
-  logout() {
-    this.app.auth.logout();
-  }
-
   ngOnInit() {
 
   }
