@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {Routes, RouterModule, UrlSegment} from '@angular/router';
 import {DemandaComponent} from './demanda.component';
 import {EquipeValidacaoComponent} from './equipe-validacao/equipe-validacao.component';
 import {DocumentoAprovacoesComponent} from './documento-aprovacoes/documento-aprovacoes.component';
@@ -11,7 +11,11 @@ import {DemandaLogsComponent} from '@app/user-shared/demandas/demanda/demanda-lo
 
 const routes: Routes = [
   {
-    path: ':id',
+    //path: ':id',
+    matcher: (url: UrlSegment[]) => {
+      console.log(url);
+      return url.length > 0 && url[0].path.match(/^\d+$/) ? ({consumed: [url[0]], posParams: {id: url[0]}}) : null;
+    },
     component: DemandaComponent,
     canActivate: [DemandaGuard],
     resolve: {

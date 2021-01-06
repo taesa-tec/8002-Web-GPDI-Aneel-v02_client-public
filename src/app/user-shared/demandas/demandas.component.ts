@@ -22,7 +22,7 @@ export class GestaoDeDemandasComponent implements OnInit {
       {text: 'Em Elaboração', path: 'elaboracao'},
       {text: 'Reprovadas', path: 'reprovadas'},
       {text: 'Aprovadas', path: 'aprovadas'},
-      {text: 'Enviadas para Captação', path: 'enviadas-para-captacoes'},
+      {text: 'Enviadas para Captação', path: 'enviadas-para-captacao'},
     ];
   }
 
