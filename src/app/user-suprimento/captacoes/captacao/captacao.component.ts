@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MenuItem, SIDEBAR_MENU} from '@app/commons';
 import {CaptacaoDetalhes} from '@app/user-shared/captacao';
+import {CaptacoesService} from '@app/user-suprimento/services/captacoes.service';
 
 
 @Component({
@@ -10,11 +11,19 @@ import {CaptacaoDetalhes} from '@app/user-shared/captacao';
   providers: [
     {
       provide: SIDEBAR_MENU,
-      useValue: [
-        {text: 'Detalhes do Projeto', icon: 'ta-file-check', path: 'detalhes'},
-        {text: 'Configuração Propostas', icon: 'ta-gear', path: 'configuracao'},
-        {text: 'Gerencimento Propostas', icon: 'ta-extrato', path: 'propostas'},
-      ]
+      useFactory: (route: ActivatedRoute) => {
+        const {captacao} = route.snapshot.data as { captacao: CaptacaoDetalhes };
+        const menuConfigurar = {text: 'Configuração Propostas', icon: 'ta-gear', path: 'configuracao'};
+        // @todo mudar o path "configuracao"
+        const menuAlterar = {text: 'Alterações Recebimento Propostas', icon: 'ta-gear', path: 'configuracao'};
+        return [
+          {text: 'Detalhes do Projeto', icon: 'ta-file-check', path: 'detalhes'},
+          (captacao.status === 'Fornecedor' ? menuAlterar : menuConfigurar),
+          {text: 'Gerencimento Propostas', icon: 'ta-extrato', path: 'propostas'},
+        ];
+      },
+      deps: [ActivatedRoute]
+
     }
   ]
 })

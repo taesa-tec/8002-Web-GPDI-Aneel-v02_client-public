@@ -11,7 +11,7 @@ import {FornecedoresResolver} from '@app/resolvers/fornecedores.resolver';
 import {ContratoPadraoResolver, ContratosPadroesResolver} from '@app/resolvers';
 import {ComponentsModule} from '@app/user-shared/components';
 import {PropostasResolver} from '@app/user-suprimento/resolvers/propostas.resolver';
-import {ListComponent } from './propostas/list.component';
+import {ListComponent} from './propostas/list.component';
 
 
 @NgModule({

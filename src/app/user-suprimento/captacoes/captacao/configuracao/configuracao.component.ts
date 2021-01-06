@@ -3,7 +3,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AppService} from '@app/services';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ViewContratoComponent} from '@app/user-shared/components';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CaptacaoDetalhes} from '@app/user-shared/captacao';
 import {CaptacaoComponent} from '@app/user-suprimento/captacoes/captacao/captacao.component';
 import {CaptacoesService} from '@app/user-suprimento/services/captacoes.service';
@@ -45,6 +45,7 @@ export class ConfiguracaoComponent implements OnInit {
     protected service: CaptacoesService,
     public parent: CaptacaoComponent,
     protected route: ActivatedRoute,
+    protected router: Router,
     private fb: FormBuilder,
     private modal: NgbModal
   ) {
@@ -65,6 +66,7 @@ export class ConfiguracaoComponent implements OnInit {
       });
 
     }
+
   }
 
   async configForm() {
@@ -106,19 +108,17 @@ export class ConfiguracaoComponent implements OnInit {
   }
 
   deletarArquivo(idx) {
-    console.log(idx);
-
     this.arquivosControls.removeAt(idx);
-    // this.uploads.splice(index, 1);
   }
 
   async onSubmit() {
     if (this.form.valid) {
       try {
         await this.service.put(this.captacao.id, this.form.value);
+        this.router.navigate(['../../']).then();
         this.app.alert('Configuração da proposta salva com sucesso').then();
       } catch (e) {
-
+        console.error(e);
       }
     }
   }
