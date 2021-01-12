@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MenuItem, SIDEBAR_MENU} from '@app/commons';
-import {CaptacaoDetalhes} from '@app/user-shared/captacao';
-import {DevelopmentComponent} from '@app/user-fornecedor/propostas/proposta/development/development.component';
 
 
 @Component({
