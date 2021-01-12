@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {DashboardComponent} from '@app/dashboard';
-import {SidebarComponent} from '@app/dashboard/side-bar/sidebar.component';
 
 
 const routes: Routes = [
@@ -12,11 +11,11 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'captacoes'
+        redirectTo: 'propostas'
       },
       {
-        path: 'captacoes',
-        component: SidebarComponent
+        path: 'propostas',
+        loadChildren: () => import('./propostas/propostas.module').then(m => m.PropostasModule)
       }
     ]
   }
