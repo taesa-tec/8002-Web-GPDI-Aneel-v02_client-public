@@ -56,6 +56,7 @@ const routes: Routes = [
           .then(m => m.AlocacaoRecursosMateriaisModule)
       },
       {path: 'envio', component: DevelopmentComponent},
+      {path: '**', redirectTo: 'detalhes', pathMatch: 'full'}
     ],
   }
 ];
