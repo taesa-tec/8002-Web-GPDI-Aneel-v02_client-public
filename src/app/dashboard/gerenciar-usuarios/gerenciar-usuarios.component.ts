@@ -38,7 +38,7 @@ export class GerenciarUsuariosComponent implements OnInit {
   ativos = true;
 
   get users(): Array<User> {
-    return this._users.filter(u => u.status === (this.ativos ? 1 : 0));
+    return this._users.filter(u => u.status === this.ativos);
   }
 
   async ngOnInit() {

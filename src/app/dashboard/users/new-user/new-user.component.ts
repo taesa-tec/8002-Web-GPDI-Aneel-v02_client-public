@@ -30,9 +30,9 @@ export class NewUserComponent implements OnInit {
     nomeCompleto: '',
     email: '',
     cpf: '',
-    status: 1,
+    status: true,
     role: UserRole.User,
-    catalogEmpresaId: '',
+    empresaId: '',
     fotoPerfil: null,
     razaoSocial: ''
   };

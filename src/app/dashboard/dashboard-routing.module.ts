@@ -66,7 +66,7 @@ const routes: Routes = [
       },
       {
         path: 'fornecedor',
-        loadChildren: () => import('@app/user-fornecedor/fornecedor/fornecedor.module').then(m => m.FornecedorModule)
+        loadChildren: () => import('@app/user-fornecedor/fornecedor.module').then(m => m.FornecedorModule)
       },
       //-----------------------------------------------------------------------------------------------------------
       {path: '**', component: NotFoundComponent},

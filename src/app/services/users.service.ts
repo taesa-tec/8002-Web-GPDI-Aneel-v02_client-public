@@ -54,6 +54,12 @@ export class UsersService {
     return response;
   }
 
+  async updateAvatar(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+    await this.http.post<any>(`Users/Avatar`, formData).toPromise();
+  }
+
   async all() {
     return await this.http.get<Array<User>>(`Users`).toPromise();
   }

@@ -33,7 +33,7 @@ export interface CreateProjectRequest {
     tituloDesc: string;
     numero: string;
     catalogStatusId: number;
-    catalogEmpresaId: number;
+    empresaId: number;
 }
 
 export interface ProjetoDataInicio {
@@ -107,7 +107,7 @@ export interface EditEtapaRequest {
 export interface CreateEmpresaRequest {
     projetoId: number;
     classificacao: 'Energia' | 'Executora' | 'Parceira';
-    catalogEmpresaId?: number;
+    empresaId?: number;
     catalogEstadoId?: number;
     cnpj?: string;
     razaoSocial?: string;
@@ -116,7 +116,7 @@ export interface CreateEmpresaRequest {
 export interface EditEmpresaRequest {
     id: number;
     classificacao: 'Energia' | 'Executora' | 'Parceira';
-    catalogEmpresaId: number;
+    empresaId: number;
     catalogEstadoId: number;
     cnpj: string;
     razaoSocial: string;

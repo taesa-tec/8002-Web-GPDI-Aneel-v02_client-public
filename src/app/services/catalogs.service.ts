@@ -31,7 +31,7 @@ export class CatalogsService {
   }
 
   async empresas() {
-    return await this.getData<Array<Empresa>>('empresas', `catalogs/empresas`);
+    return await this.getData<Array<Empresa>>('empresas', `Empresas`);
   }
 
   async empresa(id: number) {

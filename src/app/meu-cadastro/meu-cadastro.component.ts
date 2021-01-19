@@ -34,11 +34,11 @@ export class MeuCadastroComponent implements OnInit {
   }
 
   get previewAvatar() {
-    return `${environment.api_url}/Users/${this.user.id}/avatar`;
+    return `/Avatar/${this.user.id}.jpg`;
   }
 
   get empresaControl(): FormControl {
-    return this.form.get('catalogEmpresaId') as FormControl;
+    return this.form.get('empresaId') as FormControl;
   }
 
   get razaoSocial(): FormControl {
@@ -52,6 +52,7 @@ export class MeuCadastroComponent implements OnInit {
 
   getCurrentUser() {
     const u = this.auth.user;
+    console.log(u);
     if (u === null) {
       return;
     }
@@ -66,16 +67,14 @@ export class MeuCadastroComponent implements OnInit {
       cpf: new FormControl({value: u.cpf, disabled: true}),
       status: new FormControl({value: u.status, disabled: true}),
       role: new FormControl(u.role),
-      catalogEmpresaId: new FormControl({value: u.catalogEmpresaId || (u.razaoSocial ? '0' : ''), disabled: false}),
-      fotoPerfil: this.fotoPerfil,
-
+      empresaId: new FormControl({value: u.empresaId || (u.razaoSocial ? '0' : ''), disabled: false}),
       cargo: new FormControl(u.cargo, Validators.required)
     });
 
     if (u.id) {
       this.form.addControl('id', new FormControl(u.id));
     }
-    if (u.catalogEmpresaId === null) {
+    if (u.empresaId === null) {
       this.form.addControl('razaoSocial', new FormControl(u.razaoSocial, [Validators.required]));
     }
     this.empresaControl.valueChanges.subscribe(r => {
@@ -96,11 +95,15 @@ export class MeuCadastroComponent implements OnInit {
       this.loading.show();
       try {
 
-        if (this.form.value.catalogEmpresaId === '0') {
-          this.form.value.catalogEmpresaId = null;
+        if (this.form.value.empresaId === '0') {
+          this.form.value.empresaId = null;
         }
 
         const resultado = await this.usersService.editMe(this.form.value);
+
+        if (this.fotoPerfil.value.file) {
+          await this.usersService.updateAvatar(this.fotoPerfil.value.file);
+        }
         if (resultado.sucesso) {
           this.app.alert('Suas informações foram atualizadas com sucesso').then();
           this.auth.user.nomeCompleto = this.form.value.nomeCompleto;

@@ -40,7 +40,7 @@ export class MeComponent implements OnInit {
   }
 
   get empresaControl(): FormControl {
-    return this.form.get('catalogEmpresaId') as FormControl;
+    return this.form.get('empresaId') as FormControl;
   }
 
   get razaoSocial(): FormControl {
@@ -68,7 +68,7 @@ export class MeComponent implements OnInit {
       cpf: new FormControl({value: u.cpf, disabled: true}),
       status: new FormControl({value: u.status, disabled: true}),
       role: new FormControl(u.role),
-      catalogEmpresaId: new FormControl({value: u.catalogEmpresaId || (u.razaoSocial ? '0' : ''), disabled: false}),
+      empresaId: new FormControl({value: u.empresaId || (u.razaoSocial ? '0' : ''), disabled: false}),
       fotoPerfil: this.fotoPerfil,
 
       cargo: new FormControl(u.cargo, Validators.required)
@@ -77,7 +77,7 @@ export class MeComponent implements OnInit {
     if (u.id) {
       this.form.addControl('id', new FormControl(u.id));
     }
-    if (u.catalogEmpresaId === null) {
+    if (u.empresaId === null) {
       this.form.addControl('razaoSocial', new FormControl(u.razaoSocial, [Validators.required]));
     }
     this.empresaControl.valueChanges.subscribe(r => {
@@ -98,8 +98,8 @@ export class MeComponent implements OnInit {
       this.loading.show();
       try {
 
-        if (this.form.value.catalogEmpresaId === '0') {
-          this.form.value.catalogEmpresaId = null;
+        if (this.form.value.empresaId === '0') {
+          this.form.value.empresaId = null;
         }
 
         const resultado = await this.usersService.editMe(this.form.value);

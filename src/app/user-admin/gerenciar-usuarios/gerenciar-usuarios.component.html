@@ -28,7 +28,6 @@
   </div>
   <div class="row">
     <div class="col-12">
-
       <ngb-alert *ngIf="dashboardAlert" [type]="dashboardAlert.type" (close)="dashboardAlert=null">{{
         dashboardAlert.message }}</ngb-alert>
       <app-list-users [users]="users"></app-list-users>

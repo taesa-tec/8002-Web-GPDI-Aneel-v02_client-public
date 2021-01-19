@@ -67,7 +67,7 @@ export class NovoProjetoComponent implements OnInit {
         Validators.maxLength(this.maxTituloContent),
         Validators.required
       ]),
-      CatalogEmpresaId: new FormControl('', [Validators.required]),
+      empresaId: new FormControl('', [Validators.required]),
       CatalogStatusId: new FormControl(catalogoStatus.id, [Validators.required])
     });
     console.log(this);

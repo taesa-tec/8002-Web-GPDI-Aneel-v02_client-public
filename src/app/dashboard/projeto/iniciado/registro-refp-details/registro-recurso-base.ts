@@ -77,7 +77,7 @@ export abstract class RegistroRecursoBase implements OnInit {
             this.empresas = empresas.map(e => {
                 return {
                     id: e.id,
-                    nome: e.catalogEmpresaId ? `${e.catalogEmpresa.nome} - ${e.catalogEmpresa.valor}` : e.razaoSocial,
+                    nome: e.empresaId ? `${e.catalogEmpresa.nome} - ${e.catalogEmpresa.valor}` : e.razaoSocial,
                     classificacao: e.classificacaoValor
                 };
             });

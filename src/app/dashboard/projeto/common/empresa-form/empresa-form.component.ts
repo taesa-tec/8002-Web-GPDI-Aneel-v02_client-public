@@ -57,8 +57,8 @@ export class EmpresaFormComponent implements OnInit, AfterViewInit {
     this.setupForm(this.empresa);
 
     this.empresas = this.empresas.filter(empresa => this.projetos_empresas.find(pe => {
-      return pe.catalogEmpresaId === empresa.id;
-    }) === undefined || (this.empresa && this.empresa.catalogEmpresaId === empresa.id));
+      return pe.empresaId === empresa.id;
+    }) === undefined || (this.empresa && this.empresa.empresaId === empresa.id));
   }
 
   ngAfterViewInit() {
@@ -71,10 +71,10 @@ export class EmpresaFormComponent implements OnInit, AfterViewInit {
     const cnpj = new FormControl(empresa.cnpj || '', AppValidators.cnpj);
     const razaoSocial = new FormControl(empresa.razaoSocial || '');
     const catalogEstadoId = new FormControl(empresa.catalogEstadoId || '');
-    const catalogEmpresaId = new FormControl(empresa.catalogEmpresaId || '');
+    const empresaId = new FormControl(empresa.empresaId || '');
 
     this.formCooperada = new FormGroup({
-      projetoId, classificacao: new FormControl('Energia'), catalogEmpresaId
+      projetoId, classificacao: new FormControl('Energia'), empresaId
     });
 
     this.formExecutora = new FormGroup({

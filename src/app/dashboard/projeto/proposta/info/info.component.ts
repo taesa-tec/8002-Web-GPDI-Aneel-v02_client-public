@@ -45,7 +45,7 @@ export class InfoComponent implements OnInit {
             id: new FormControl(p.id, [Validators.required]),
             catalogStatusId: new FormControl(p.catalogStatusId, [Validators.required]),
             numero: new FormControl(p.numero, [Validators.required]),
-            catalogEmpresaId: new FormControl(p.catalogEmpresaId, [Validators.required]),
+            empresaId: new FormControl(p.empresaId, [Validators.required]),
             compartResultados: new FormControl(p.compartResultadosValor || '', [Validators.required]),
             titulo: new FormControl(p.titulo, [Validators.required]),
             tituloDesc: new FormControl(p.tituloDesc, [Validators.required]),

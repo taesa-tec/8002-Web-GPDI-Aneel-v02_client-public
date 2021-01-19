@@ -11,7 +11,7 @@ export class EmpresaProjetoFacade extends GenericFacade<EmpresaProjeto> implemen
     id: number; projetoId: number;
     classificacao: number;
     classificacaoValor: string;
-    catalogEmpresaId: number;
+    empresaId: number;
     catalogEmpresa?: Empresa;
     cnpj?: any;
     catalogEstadoId?: any;

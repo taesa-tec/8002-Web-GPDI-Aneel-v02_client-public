@@ -17,7 +17,6 @@
           <app-upload-image
             formControlName="file"
             name="file"
-            [asBase64]="true"
             [previewImage]="previewAvatar"
           ></app-upload-image>
         </div>
@@ -53,10 +52,10 @@
                 <label for="">Empresa</label>
                 <!-- formControlName="empresa" -->
                 <select
-                  name="catalogEmpresaId"
+                  name="empresaId"
                   id=""
                   class="form-control"
-                  formControlName="catalogEmpresaId"
+                  formControlName="empresaId"
                   readonly
                   #empresa
                 >

@@ -20,7 +20,7 @@ export class ListaProjetosComponent implements OnInit {
   status = this.catalog.status();
   filterForm = new FormGroup({
     catalogStatusId: new FormControl(''),
-    catalogEmpresaId: new FormControl(''),
+    empresaId: new FormControl(''),
     search: new FormControl(''),
   });
 
@@ -77,8 +77,8 @@ export class ListaProjetosComponent implements OnInit {
       projetos = filter(this.projetos, p => p.catalogStatusId === parseInt(value.catalogStatusId, 10));
     }
 
-    if (value.catalogEmpresaId.length > 0) {
-      projetos = filter(this.projetos, p => p.catalogEmpresaId === parseInt(value.catalogEmpresaId, 10));
+    if (value.empresaId.length > 0) {
+      projetos = filter(this.projetos, p => p.empresaId === parseInt(value.empresaId, 10));
     }
 
     if (value.search.trim().length > 0) {

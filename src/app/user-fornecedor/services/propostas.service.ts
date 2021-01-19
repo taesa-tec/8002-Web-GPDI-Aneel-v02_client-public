@@ -6,6 +6,6 @@ import {HttpClient} from '@angular/common/http';
 export class PropostasService extends ServiceBase<any> {
 
   constructor(http: HttpClient) {
-    super(http, 'Captacoes/Fornecedor');
+    super(http, 'Fornecedor/Propostas');
   }
 }

@@ -181,7 +181,7 @@ export class ProjetosService {
   }
 
   editar(projeto: Projeto) {
-    projeto.catalogEmpresaId = parseInt(String(projeto.catalogEmpresaId), 10);
+    projeto.empresaId = parseInt(String(projeto.empresaId), 10);
     return this.http.put<ResultadoResponse>(`Projetos`, projeto);
   }
 

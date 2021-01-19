@@ -5,9 +5,7 @@ import {
   Projeto, Projetos
 } from '@app/commons';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
-import {Observable, Observer, zip, of, concat, throwError, timer, empty} from 'rxjs';
 import {UserProjetosComponent} from '../user-projetos/user-projetos.component';
-import {mergeMap, last} from 'rxjs/operators';
 import {AppService} from '@app/services/app.service';
 import {environment} from '@env/environment';
 import {UsersService} from '@app/services/users.service';
@@ -40,7 +38,7 @@ export class FormComponent implements OnInit {
   }
 
   get empresaControl(): FormControl {
-    return this.form.get('catalogEmpresaId') as FormControl;
+    return this.form.get('empresaId') as FormControl;
   }
 
   get razaoSocial(): FormControl {
@@ -68,14 +66,14 @@ export class FormComponent implements OnInit {
       cpf: new FormControl(u.cpf, [Validators.required, AppValidators.cpf]),
       status: new FormControl(u.status, [Validators.required]),
       role: new FormControl(u.role, [Validators.required]),
-      catalogEmpresaId: new FormControl(u.catalogEmpresaId || (u.razaoSocial ? '0' : ''), [Validators.required]),
+      empresaId: new FormControl(u.empresaId || (u.razaoSocial ? '0' : ''), [Validators.required]),
       fotoPerfil: this.fotoPerfil
     });
 
     if (u.id) {
       this.form.addControl('id', new FormControl(u.id));
     }
-    if (u.catalogEmpresaId === null) {
+    if (u.empresaId === null) {
       this.form.addControl('razaoSocial', new FormControl(u.razaoSocial, [Validators.required]));
     }
 
@@ -98,8 +96,8 @@ export class FormComponent implements OnInit {
       this.loading.show();
 
       try {
-        if (this.form.value.catalogEmpresaId === '0') {
-          this.form.value.catalogEmpresaId = null;
+        if (this.form.value.empresaId === '0') {
+          this.form.value.empresaId = null;
         }
         const response = await this.handler(this.form.value);
         this.submited.emit(response);

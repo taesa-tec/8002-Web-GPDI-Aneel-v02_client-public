@@ -81,8 +81,8 @@ export class UsuariosComponent implements OnInit {
       this.users.forEach(user => this.getAvatar(user));
       this.app.projetos.usersProjeto(this.projeto.id).subscribe(result => {
         const ups = result.map(userProjeto => {
-          if (userProjeto.applicationUser.catalogEmpresaId) {
-            userProjeto.applicationUser.catalogEmpresa = empresas.find(e => e.id === userProjeto.applicationUser.catalogEmpresaId);
+          if (userProjeto.applicationUser.empresaId) {
+            userProjeto.applicationUser.catalogEmpresa = empresas.find(e => e.id === userProjeto.applicationUser.empresaId);
           }
           return userProjeto;
         });

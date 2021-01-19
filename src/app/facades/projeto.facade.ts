@@ -268,7 +268,7 @@ export class ProjetoFacade extends GenericFacade<Projeto> implements Projeto {
     codigo?: any;
     tituloDesc: string;
     numero: string;
-    catalogEmpresaId: number;
+    empresaId: number;
     catalogEmpresa?: Empresa;
     catalogStatusId: number;
     catalogStatus?: ProjetoStatus;

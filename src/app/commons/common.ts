@@ -80,7 +80,7 @@ export interface Projeto {
   codigo?: any;
   tituloDesc: string;
   numero: string;
-  catalogEmpresaId: number;
+  empresaId: number;
   catalogEmpresa?: Empresa;
   catalogStatusId: number;
   catalogStatus?: ProjetoStatus;
@@ -116,13 +116,13 @@ export interface User {
   nomeCompleto: any;
   role: string;
   roles?: Array<UserRole>;
-  status: number;
+  status: boolean;
   razaoSocial?: any;
   fotoPerfil?: string;
   cpf?: any;
   cargo?: string;
   empresa?: string;
-  catalogEmpresaId?: number | '';
+  empresaId?: number | '';
   ultimoLogin?: string;
   dataCadastro?: string;
   dataAtualizacao?: string;
@@ -240,7 +240,7 @@ export interface EmpresaProjeto {
   projetoId: number;
   classificacao: number;
   classificacaoValor: string;
-  catalogEmpresaId: number;
+  empresaId: number;
   catalogEmpresa?: Empresa;
   cnpj?: any;
   catalogEstadoId?: any;
