@@ -28,7 +28,7 @@ import {CaptacoesResolver} from '@app/user-suprimento/resolvers/captacoes.resolv
     }, {
       provide: HEADER_MENU,
       useValue: [
-        {text: 'Meu Cadastro', icon: 'ta-user-o', path: '/meu-cadastro'}
+        {text: 'Meu Cadastro', icon: 'ta-user-o', path: '/suprimento/meu-cadastro'}
       ]
     }, {
       provide: ROOT_URL,

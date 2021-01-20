@@ -15,7 +15,8 @@ export class HeaderComponent implements OnInit {
   menu: Array<MenuItem>;
 
   get avatar() {
-    return `url(${environment.api_url}/Users/${this.currentUser.id}/avatar)`;
+
+    return this.auth.user.fotoPerfil ? `url(${this.auth.user.fotoPerfil})` : '';
   }
 
   get empresa() {

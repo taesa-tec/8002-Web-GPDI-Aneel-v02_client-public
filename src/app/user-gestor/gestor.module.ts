@@ -23,7 +23,7 @@ import {HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
     }, {
       provide: HEADER_MENU,
       useValue: [
-        {text: 'Meu Cadastro', icon: 'ta-user-o', path: '/meu-cadastro'}
+        {text: 'Meu Cadastro', icon: 'ta-user-o', path: 'gestor/meu-cadastro'}
       ]
     }, {
       provide: ROOT_URL,

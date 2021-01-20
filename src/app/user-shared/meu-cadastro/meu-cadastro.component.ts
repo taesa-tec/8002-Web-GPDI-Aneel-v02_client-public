@@ -34,7 +34,7 @@ export class MeuCadastroComponent implements OnInit {
   }
 
   get previewAvatar() {
-    return `/Avatar/${this.user.id}.jpg`;
+    return this.auth.user.fotoPerfil;
   }
 
   get empresaControl(): FormControl {
@@ -52,7 +52,6 @@ export class MeuCadastroComponent implements OnInit {
 
   getCurrentUser() {
     const u = this.auth.user;
-    console.log(u);
     if (u === null) {
       return;
     }

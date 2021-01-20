@@ -28,7 +28,7 @@ import {PropostasService} from '@app/user-fornecedor/services/propostas.service'
     }, {
       provide: HEADER_MENU,
       useValue: [
-        {text: 'Meu Cadastro', icon: 'ta-user-o', path: '/meu-cadastro'}
+        {text: 'Meu Cadastro', icon: 'ta-user-o', path: '/fornecedor/meu-cadastro'}
       ]
     }, {
       provide: ROOT_URL,

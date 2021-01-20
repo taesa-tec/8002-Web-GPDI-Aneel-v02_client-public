@@ -25,7 +25,7 @@ import {HEADER_MENU, ROOT_URL, SIDEBAR_MENU, UserRole} from '@app/commons';
       provide: HEADER_MENU,
       useValue: [
         {text: 'Gerenciar Usuários', icon: 'ta-group', path: '/admin/gerenciar-usuarios'},
-        {text: 'Meu Cadastro', icon: 'ta-user-o', path: '/meu-cadastro'}
+        {text: 'Meu Cadastro', icon: 'ta-user-o', path: '/admin/meu-cadastro'}
       ]
     }, {
       provide: ROOT_URL,
