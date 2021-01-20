@@ -44,6 +44,7 @@ export class GerenciarUsuariosComponent implements OnInit {
   async ngOnInit() {
     this.loading.show();
     this._users = await this.usersService.all();
+    console.log(this._users);
     this.loading.hide();
 
     const query = this.activatedRoute.snapshot.queryParams;

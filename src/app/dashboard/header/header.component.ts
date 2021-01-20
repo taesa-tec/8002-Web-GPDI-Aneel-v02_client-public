@@ -1,8 +1,7 @@
 import {Component, Inject, OnInit, Optional} from '@angular/core';
-import {HEADER_MENU, MenuItem, User} from '@app/commons';
+import {CURRENT_USER, HEADER_MENU, MenuItem, User} from '@app/commons';
 import {AppService} from '@app/services/app.service';
 import {AuthService} from '@app/services/auth.service';
-import {environment} from '@env/environment';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +10,6 @@ import {environment} from '@env/environment';
 })
 export class HeaderComponent implements OnInit {
 
-  currentUser: User;
   menu: Array<MenuItem>;
 
   get avatar() {
@@ -28,6 +26,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     @Optional() @Inject(HEADER_MENU) menu,
+    @Inject(CURRENT_USER) public currentUser: User,
     protected app: AppService,
     protected auth: AuthService
   ) {

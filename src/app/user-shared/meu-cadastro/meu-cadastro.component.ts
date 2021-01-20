@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Empresa, ResultadoResponse, Roles, User} from '@app/commons';
 import {LoadingComponent} from '@app/core/components';
 import {AppService, AuthService, UsersService} from '@app/services';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {environment} from '@env/environment';
 
 @Component({
@@ -29,7 +29,8 @@ export class MeuCadastroComponent implements OnInit {
     protected app: AppService,
     protected auth: AuthService,
     protected usersService: UsersService,
-    protected router: Router
+    protected router: Router,
+    protected route: ActivatedRoute,
   ) {
   }
 
@@ -46,7 +47,10 @@ export class MeuCadastroComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.empresas = await this.app.catalogo.empresas();
+    this.route.data.subscribe(data => {
+      this.empresas = data.empresas;
+    });
+
     this.getCurrentUser();
   }
 

@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {CriarDemanda} from '../../../dashboard/painel-demandas/conf-padrao/services/criar-demanda.service';
 import {AppService} from '@app/services/app.service';
 
 @Component({

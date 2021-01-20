@@ -1,14 +1,14 @@
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {Demanda} from '@app/commons/demandas';
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {AppService} from '@app/services/app.service';
 import {DemandaEtapaStatus} from '@app/user-shared/demandas/commons';
-import {Roles, UserRole} from '@app/commons';
+import {CURRENT_USER, User, UserRole} from '@app/commons';
 import {UsersService} from '@app/services/users.service';
 
 @Injectable()
 export class DemandaResolver implements Resolve<{ demanda: Demanda, menu: Array<any>, defaultPage?: string }> {
-  constructor(protected app: AppService, protected usersService: UsersService) {
+  constructor(protected app: AppService, protected usersService: UsersService, @Inject(CURRENT_USER) protected user: User) {
   }
 
 
@@ -25,9 +25,7 @@ export class DemandaResolver implements Resolve<{ demanda: Demanda, menu: Array<
   }
 
   protected defaultPage(demanda: Demanda, equipe): string {
-    const user = this.usersService.currentUser;
-
-    switch (user.id) {
+    switch (this.user.id) {
       case demanda.criadorId:
         if (demanda.superiorDiretoId) {
           return 'formulario/especificacao-tecnica';
@@ -46,7 +44,7 @@ export class DemandaResolver implements Resolve<{ demanda: Demanda, menu: Array<
   }
 
   protected menu(demanda: Demanda, equipe): Array<any> {
-    const user = this.usersService.currentUser;
+    const user = this.user;
     if (user.role === UserRole.Administrador) {
       return this.menuCriador([
         {text: 'Central Administrativa', icon: 'ta-central-admin', path: 'central-administrativa'},

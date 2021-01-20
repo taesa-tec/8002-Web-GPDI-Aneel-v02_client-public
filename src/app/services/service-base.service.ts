@@ -103,7 +103,7 @@ export class ServiceBase<T extends { id?: any }> extends UploadFilesService {
   }
 
   async salvar(data: BaseEntity, query?: string) {
-    return await ((data.id && data.id > 0) ? this.atualizar(data, query) : this.criar(data, query));
+    return await ((data.id && data.id !== 0) ? this.atualizar(data, query) : this.criar(data, query));
   }
 
   async excluir(id: any) {

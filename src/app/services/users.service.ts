@@ -6,133 +6,39 @@ import {Observable, BehaviorSubject} from 'rxjs';
 import {AuthService} from '@app/services/auth.service';
 import {CatalogsService} from '@app/services/catalogs.service';
 import {SistemaService} from '@app/services/sistema.service';
+import {ServiceBase} from '@app/services/service-base.service';
 
 @Injectable()
-export class UsersService {
-
-  protected currentUserUpdatedSource = new BehaviorSubject<User>(null);
-  protected usersAccesses = new Map<string, Array<UserProjeto>>();
-
-  currentUserUpdated: Observable<any> = this.currentUserUpdatedSource.asObservable();
-
+export class UsersService extends ServiceBase<any> {
 
   niveisUsuarios = NiveisUsuarios;
 
   constructor(protected http: HttpClient,
               protected auth: AuthService, protected catalogo: CatalogsService, protected sistema: SistemaService) {
-    console.log('UsersService Ok');
-  }
-
-  get currentUser() {
-    return this.auth.user;
-  }
-
-  set currentUser(value) {
-    if (value && value !== this.auth.user) {
-      this.currentUserUpdatedSource.next(value);
-    }
-    this.auth.user = value;
-  }
-
-  async setCurrentUser() {
-    try {
-      this.currentUser = await this.me().toPromise();
-    } catch (e) {
-      console.error(e);
-    }
+    super(http, 'Users');
   }
 
   me() {
-    return this.http.get<User>(`Users/me`);
+    return this.http.get<User>(`Me`);
   }
 
   async editMe(user: User) {
-    const response = await this.http.put<ResultadoResponse>(`Users/me`, user).toPromise();
-    if (response.sucesso) {
-      this.currentUser = Object.assign(this.currentUser, user);
-    }
-    return response;
+    return await this.http.put<ResultadoResponse>(`Me`, user).toPromise();
   }
 
-  async updateAvatar(file: File) {
+  async updateAvatar(file: File, userId = 'me') {
     const formData = new FormData();
     formData.append('file', file);
-    await this.http.post<any>(`Users/Avatar`, formData).toPromise();
+    if (userId !== 'me') {
+      await this.http.post<any>(`Users/${userId}/Avatar`, formData).toPromise();
+    } else {
+      await this.http.post<any>(`Me/Avatar`, formData).toPromise();
+
+    }
   }
 
   async all() {
     return await this.http.get<Array<User>>(`Users`).toPromise();
-  }
-
-  byId(id: string) {
-    return this.http.get<User>(`Users/${id}`);
-  }
-
-  async create(user: CreateUserRequest) {
-    return await this.http.post<ResultadoResponse>(`Users`, user).toPromise();
-  }
-
-  async edit(user: User) {
-    return await this.http.put<ResultadoResponse>(`Users`, user).toPromise();
-  }
-
-  remove(user: User | string) {
-    const id = (typeof user === 'string') ? user : user.id;
-    return this.http.delete<ResultadoResponse>(`Users/${id}`);
-  }
-
-  async userProjetos(id: string) {
-    return await this.http.get<Array<UserProjeto>>(`UserProjetos/${id}`).toPromise();
-  }
-
-  criarUserProjeto(userProjetos: Array<UserProjeto>) {
-    return this.http.post<ResultadoResponse>(`UserProjetos`, userProjetos);
-  }
-
-  userAvatar(id: string) {
-    return this.http.get<any>(`Users/${id}/avatar`);
-  }
-
-  async userCanAccess(id: string, projeto: Projeto, permissao: any = null) {
-
-    const permissoes = await this.catalogo.permissoes();
-    const projetos = this.usersAccesses.has(id) ? this.usersAccesses.get(id) : await this.userProjetos(id);
-
-    if (projetos.length === 0 || permissoes.length === 0) {
-      return false;
-    }
-
-    this.usersAccesses.set(id, projetos);
-
-    const projetoAccess = projetos.find(p => p.projetoId === projeto.id);
-
-    if (projetoAccess) {
-
-      if (permissao) {
-        try {
-          const userp = this.niveisUsuarios[projetoAccess.catalogUserPermissao.valor];
-          return (userp & permissao) === permissao;
-        } catch (error) {
-
-          return false;
-        }
-      }
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  async currentUserCanAccess(projeto: Projeto, permissao: any = null) {
-    const user = this.currentUser;
-    if (user) {
-      if (user.role === UserRole.Administrador) {
-        return true;
-      }
-      return await this.userCanAccess(user.id, projeto, permissao);
-    } else {
-      return false;
-    }
   }
 
   async usersInRole(role: string) {

@@ -3,10 +3,8 @@ import {NgbModal, NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
 import {AlertComponent} from '../core/components/alert/alert.component';
 import {ConfirmComponent} from '../core/components/confirm/confirm.component';
 import {CatalogsService} from '@app/services/catalogs.service';
-import {ProjetosService} from '@app/services/projetos.service';
 import {AuthService} from '@app/services/auth.service';
 import {FileService} from '@app/services/file.service';
-import {UsersService} from '@app/services/users.service';
 import {PromptComponent} from '../core/components/prompt/prompt.component';
 import {Router} from '@angular/router';
 import {environment} from '@env/environment';
@@ -72,9 +70,7 @@ export class AppService {
   constructor(
     public modal: NgbModal,
     public catalogo: CatalogsService,
-    public projetos: ProjetosService,
     public demandas: DemandasService,
-    //public users: UsersService,
     public file: FileService,
     public auth: AuthService,
     public sistema: SistemaService,

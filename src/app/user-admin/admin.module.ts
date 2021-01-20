@@ -3,7 +3,8 @@ import {CommonModule} from '@angular/common';
 
 import {AdminRoutingModule} from './admin-routing.module';
 import {DashboardModule} from '@app/dashboard';
-import {HEADER_MENU, ROOT_URL, SIDEBAR_MENU, UserRole} from '@app/commons';
+import {CURRENT_USER, HEADER_MENU, ROOT_URL, SIDEBAR_MENU, UserRole} from '@app/commons';
+import {AuthService} from '@app/services';
 
 
 @NgModule({
@@ -30,6 +31,11 @@ import {HEADER_MENU, ROOT_URL, SIDEBAR_MENU, UserRole} from '@app/commons';
     }, {
       provide: ROOT_URL,
       useValue: '/admin'
+    },
+    {
+      provide: CURRENT_USER,
+      deps: [AuthService],
+      useFactory: (auth: AuthService) => auth.user
     }
   ]
 })

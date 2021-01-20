@@ -5,6 +5,7 @@ import {MeuCadastroRoutingModule} from './meu-cadastro-routing.module';
 import {MeuCadastroComponent} from '@app/user-shared/meu-cadastro/meu-cadastro.component';
 import {UsersService} from '@app/services';
 import {CoreModule} from '@app/core';
+import {EmpresasResolver} from '@app/resolvers/empresas.resolver';
 
 
 @NgModule({
@@ -14,7 +15,7 @@ import {CoreModule} from '@app/core';
     CoreModule,
     MeuCadastroRoutingModule
   ],
-  providers: [UsersService]
+  providers: [UsersService, EmpresasResolver]
 
 })
 export class MeuCadastroModule {

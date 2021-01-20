@@ -1,10 +1,10 @@
 import {AppService} from '@app/services/app.service';
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Demanda} from '@app/commons/demandas';
 import {DemandaEtapa, DemandaEtapaItems, DemandaEtapaStatus} from '@app/user-shared/demandas/commons';
 import {environment} from '@env/environment';
-import {EquipePeD, User} from '@app/commons';
+import {CURRENT_USER, EquipePeD, User} from '@app/commons';
 import {UsersService} from '@app/services/users.service';
 
 
@@ -15,8 +15,6 @@ import {UsersService} from '@app/services/users.service';
 })
 export class AprovacaoComponent implements OnInit {
 
-
-  user: User;
   protected $demanda: Demanda;
   equipe: EquipePeD;
   readonly ETAPAS_VALUES = DemandaEtapa;
@@ -65,11 +63,12 @@ export class AprovacaoComponent implements OnInit {
   constructor(
     protected app: AppService,
     protected usersService: UsersService,
-    protected route: ActivatedRoute) {
+    @Inject(CURRENT_USER) public user: User,
+    protected route: ActivatedRoute
+  ) {
   }
 
   async ngOnInit() {
-    this.user = this.usersService.currentUser;
     this.demanda = this.route.parent.snapshot.data.demanda.demanda;
     this.equipe = await this.app.sistema.getEquipePeD();
     this.anexos = await this.app.demandas.getAnexos(this.demanda.id);

@@ -2,7 +2,7 @@ import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/c
 import {Demanda} from '@app/commons/demandas';
 import {AppService} from '@app/services/app.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {User} from '@app/commons';
+import {CURRENT_USER, User} from '@app/commons';
 import {UsersService} from '@app/services/users.service';
 
 @Component({
@@ -15,16 +15,17 @@ export class AvaliarDemandaComponent implements OnInit {
   @Input() demanda: Demanda;
   @Input('responsavel') responsavelId: string;
   @Output() avaliacao = new EventEmitter<Demanda>();
-  protected user: User;
   formReprovacao: FormGroup = null;
   canUpdate = false;
 
-  constructor(protected  app: AppService, protected usersService: UsersService, protected fb: FormBuilder) {
+  constructor(protected  app: AppService,
+              protected usersService: UsersService,
+              protected fb: FormBuilder,
+              @Inject(CURRENT_USER) protected user: User) {
 
   }
 
   ngOnInit() {
-    this.user = this.usersService.currentUser;
     if (this.demanda === undefined) {
       throw new Error('Demanda não passada para o componete');
     }

@@ -5,7 +5,6 @@ import {
   Projeto, Projetos
 } from '@app/commons';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
-import {UserProjetosComponent} from '../user-projetos/user-projetos.component';
 import {AppService} from '@app/services/app.service';
 import {environment} from '@env/environment';
 import {UsersService} from '@app/services/users.service';
@@ -17,8 +16,6 @@ import {UsersService} from '@app/services/users.service';
 })
 export class FormComponent implements OnInit {
   @ViewChild(LoadingComponent, {static: true}) loading: LoadingComponent;
-
-  @ViewChild(UserProjetosComponent) userProjetos: UserProjetosComponent;
 
   @Output() submited: EventEmitter<ResultadoResponse> = new EventEmitter<ResultadoResponse>();
   @Input() user: User;
@@ -118,22 +115,7 @@ export class FormComponent implements OnInit {
   }
 
   removeUser() {
-    this.app.confirm('Tem certeza que deseja remover este usuário?').then(result => {
-      this.usersService.remove(this.userId).subscribe(r => {
-        if (r.sucesso) {
-          this.app.alert('Usuário removido com sucesso');
-          this.app.router.navigate(['/dashboard', 'gerenciar-usuarios'], {
-            queryParams: {
-              message: 'user-gestor-removed'
-            }
-          });
-        } else {
-          this.app.alert(r.inconsistencias);
-        }
-      }, error => {
-        this.app.alert(error.message);
-      });
-    });
+
   }
 
 }

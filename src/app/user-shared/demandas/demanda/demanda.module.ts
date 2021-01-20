@@ -13,7 +13,6 @@ import {DemandaComentariosComponent} from './demanda-comentarios/demanda-comenta
 import {DemandaGuard} from '@app/user-shared/demandas/demanda/guards/demanda.guard';
 import {DemandaLogsComponent} from '@app/user-shared/demandas/demanda/demanda-logs/demanda-logs.component';
 import {LogComponent} from '@app/user-shared/demandas/demanda/demanda-logs/log.component';
-import {LoggerModule} from '@app/dashboard/logger/logger.module';
 import {FormViewerComponent} from '@app/user-shared/demandas/demanda/form-viewer/form-viewer.component';
 import {HistoricoComponent} from './historico/historico.component';
 import {DemandaResolver} from '@app/user-shared/demandas/demanda/demanda.resolver';
@@ -39,7 +38,7 @@ const components = [
 ];
 
 @NgModule({
-  imports: [CoreModule, LoggerModule, DemandaRoutingModule, SharedModule],
+  imports: [CoreModule, DemandaRoutingModule, SharedModule],
   declarations: [...components],
   exports: [...components],
   providers: [DemandaGuard, DemandaResolver],
