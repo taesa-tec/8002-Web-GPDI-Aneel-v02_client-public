@@ -15,7 +15,8 @@
             <div style="width: 48px;">
               <div
                 *ngIf="currentUser"
-                class="embed-responsive embed-responsive-1by1"
+                class="embed-responsive embed-responsive-1by1 cursor-pointer"
+                (click)="openCadastro()"
               >
                 <div
                   class="embed-responsive-item rounded-circle"
@@ -29,7 +30,8 @@
             </div>
             <div
               *ngIf="currentUser"
-              class="px-3 mr-3 border-right border-white"
+              class="px-3 mr-3 border-right border-white cursor-pointer"
+              (click)="openCadastro()"
             >
               <strong>{{ currentUser.nomeCompleto }} </strong>
               <br/>

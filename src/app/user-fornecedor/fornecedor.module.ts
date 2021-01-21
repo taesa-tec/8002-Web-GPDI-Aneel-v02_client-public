@@ -3,10 +3,11 @@ import {CommonModule} from '@angular/common';
 
 import {FornecedorRoutingModule} from './fornecedor-routing.module';
 import {DashboardModule} from '@app/dashboard';
-import {HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
+import {CURRENT_USER, HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
 import {PropostaResolver} from '@app/user-fornecedor/resolvers/proposta.resolver';
 import {PropostasResolver} from '@app/user-fornecedor/resolvers/propostas.resolver';
 import {PropostasService} from '@app/user-fornecedor/services/propostas.service';
+import {AuthService} from '@app/services';
 
 
 @NgModule({
@@ -33,6 +34,11 @@ import {PropostasService} from '@app/user-fornecedor/services/propostas.service'
     }, {
       provide: ROOT_URL,
       useValue: '/fornecedor'
+    },
+    {
+      provide: CURRENT_USER,
+      deps: [AuthService],
+      useFactory: (auth: AuthService) => auth.user
     }
   ]
 })

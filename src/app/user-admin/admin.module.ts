@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 
 import {AdminRoutingModule} from './admin-routing.module';
 import {DashboardModule} from '@app/dashboard';
-import {CURRENT_USER, HEADER_MENU, ROOT_URL, SIDEBAR_MENU, UserRole} from '@app/commons';
+import {CURRENT_USER, HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
 import {AuthService} from '@app/services';
 
 

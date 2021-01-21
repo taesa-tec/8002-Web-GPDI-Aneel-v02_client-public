@@ -1,6 +1,7 @@
 import {UserRole} from './enums';
 import {InjectionToken} from '@angular/core';
 
+
 export interface BaseEntity {
   id: number;
 
@@ -604,3 +605,4 @@ export const SIDEBAR_MENU = new InjectionToken<Array<MenuItem>>('Sidebar menu');
 export const HEADER_MENU = new InjectionToken<Array<MenuItem>>('Header menu');
 export const ROOT_URL = new InjectionToken<string>('Root Url');
 export const CURRENT_USER = new InjectionToken<User>('Current User');
+

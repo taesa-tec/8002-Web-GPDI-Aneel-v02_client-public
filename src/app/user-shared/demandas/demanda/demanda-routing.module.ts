@@ -13,7 +13,6 @@ const routes: Routes = [
   {
     //path: ':id',
     matcher: (url: UrlSegment[]) => {
-      console.log(url);
       return url.length > 0 && url[0].path.match(/^\d+$/) ? ({consumed: [url[0]], posParams: {id: url[0]}}) : null;
     },
     component: DemandaComponent,

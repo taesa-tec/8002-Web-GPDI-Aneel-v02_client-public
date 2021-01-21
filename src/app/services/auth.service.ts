@@ -13,8 +13,6 @@ const rolePath = new Map<string, string>([
   [UserRole.User, 'gestor'],
   [UserRole.Suprimento, 'suprimento'],
   [UserRole.Fornecedor, 'fornecedor'],
-
-
 ]);
 
 @Injectable({

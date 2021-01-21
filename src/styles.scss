@@ -48,6 +48,9 @@ app-form-edit-template {
   top: var(--header-height);
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
 
 ckeditor {
   display: block;

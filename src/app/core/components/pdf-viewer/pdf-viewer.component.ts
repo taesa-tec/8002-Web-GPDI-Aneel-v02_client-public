@@ -24,6 +24,7 @@ export class PdfViewerComponent implements OnInit {
     if (this.url) {
       this.isLoading = true;
       try {
+        console.log(this.url);
         const response = await this.http.get(this.url, {observe: 'response', responseType: 'blob'}).toPromise();
         const content = response.headers.get('content-disposition');
         if (content) {

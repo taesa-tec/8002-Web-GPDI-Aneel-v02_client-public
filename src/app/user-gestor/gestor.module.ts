@@ -3,7 +3,8 @@ import {CommonModule} from '@angular/common';
 
 import {GestorRoutingModule} from './gestor-routing.module';
 import {DashboardModule} from '@app/dashboard';
-import {HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
+import {CURRENT_USER, HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
+import {AuthService} from '@app/services';
 
 
 @NgModule({
@@ -23,11 +24,16 @@ import {HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
     }, {
       provide: HEADER_MENU,
       useValue: [
-        {text: 'Meu Cadastro', icon: 'ta-user-o', path: 'gestor/meu-cadastro'}
+        {text: 'Meu Cadastro', icon: 'ta-user-o', path: '/gestor/meu-cadastro'}
       ]
     }, {
       provide: ROOT_URL,
       useValue: '/gestor'
+    },
+    {
+      provide: CURRENT_USER,
+      deps: [AuthService],
+      useFactory: (auth: AuthService) => auth.user
     }
   ]
 })
