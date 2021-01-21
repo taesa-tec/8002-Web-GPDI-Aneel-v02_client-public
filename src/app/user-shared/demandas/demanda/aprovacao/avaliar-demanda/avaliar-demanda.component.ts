@@ -2,7 +2,6 @@ import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/c
 import {Demanda} from '@app/commons/demandas';
 import {AppService} from '@app/services/app.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {CURRENT_USER, User} from '@app/commons';
 import {UsersService} from '@app/services/users.service';
 
 @Component({
@@ -20,8 +19,7 @@ export class AvaliarDemandaComponent implements OnInit {
 
   constructor(protected  app: AppService,
               protected usersService: UsersService,
-              protected fb: FormBuilder,
-              @Inject(CURRENT_USER) protected user: User) {
+              protected fb: FormBuilder) {
 
   }
 

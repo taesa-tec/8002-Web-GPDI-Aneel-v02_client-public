@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {NovaDemandaComponent} from '@app/user-shared/demandas/nova-demanda/nova-demanda.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {AppService} from '@app/services/app.service';
+import {User} from '@app/commons';
+import {AuthService} from '@app/services';
 
 
 @Component({
@@ -13,11 +14,13 @@ export class GestaoDeDemandasComponent implements OnInit {
 
   menu: Array<any>;
   showChild = true;
+  protected user: User;
 
-  constructor(private app: AppService, protected modal: NgbModal) {
+  constructor(protected auth: AuthService, protected modal: NgbModal) {
   }
 
   ngOnInit() {
+    this.user = this.auth.user;
     this.menu = [
       {text: 'Em Elaboração', path: 'elaboracao'},
       {text: 'Reprovadas', path: 'reprovadas'},

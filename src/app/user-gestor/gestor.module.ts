@@ -3,8 +3,8 @@ import {CommonModule} from '@angular/common';
 
 import {GestorRoutingModule} from './gestor-routing.module';
 import {DashboardModule} from '@app/dashboard';
-import {CURRENT_USER, HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
-import {AuthService} from '@app/services';
+import {HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
+import {CurrentUseProvider} from '@app/user-shared/providers';
 
 
 @NgModule({
@@ -30,12 +30,9 @@ import {AuthService} from '@app/services';
       provide: ROOT_URL,
       useValue: '/gestor'
     },
-    {
-      provide: CURRENT_USER,
-      deps: [AuthService],
-      useFactory: (auth: AuthService) => auth.user
-    }
-  ]
+    CurrentUseProvider
+  ],
+
 })
 export class GestorModule {
 }

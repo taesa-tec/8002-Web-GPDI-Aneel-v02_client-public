@@ -20,17 +20,23 @@ export class FornecedorFormComponent implements OnInit {
   }
 
   set fornecedor(value: any) {
-    this._fornecedor = value;
-    this.form.patchValue(value);
-    this.form.get('responsavelNome').disable();
-    this.form.get('responsavelEmail').disable();
+    if (value) {
+      this._fornecedor = value;
+      this.form.patchValue(value);
+      const nomeCtrl = this.form.get('responsavelNome');
+      const emailCtrl = this.form.get('responsavelEmail');
+      nomeCtrl.clearValidators();
+      emailCtrl.clearValidators();
+      nomeCtrl.disable();
+      emailCtrl.disable();
+    }
   }
 
   form = this.fb.group({
     id: [0, Validators.required],
     ativo: [true],
     nome: ['', Validators.required],
-    cnpj: ['', Validators.required],
+    cnpj: ['', [Validators.required, AppValidators.cnpj]],
     responsavelNome: [''],
     responsavelEmail: [''],
     trocarResponsavel: [false]
@@ -59,14 +65,13 @@ export class FornecedorFormComponent implements OnInit {
 
   async onSubmit() {
     if (this.form.valid) {
-
       try {
         await this.service.salvar(this.form.value);
-        this.app.alert('Fornecedor salvo com sucesso').then();
+        await this.app.alert('Fornecedor salvo com sucesso').then();
         this.activeModal.close(true);
 
       } catch (e) {
-        this.app.alert('Não foi possível salvar o user-gestor-fornecedor').then();
+        this.app.alert('Não foi possível salvar o Fornecedor').then();
         console.error(e);
       }
     }

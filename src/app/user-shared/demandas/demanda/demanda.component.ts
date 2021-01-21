@@ -1,15 +1,14 @@
-import {AppService} from '@app/services/app.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Demanda} from '@app/commons/demandas';
-import {Subscription} from 'rxjs';
+import {DemandaMenuProvider, DemandaProvider} from '@app/user-shared/demandas/demanda/providers';
 
 @Component({
   selector: 'app-demanda',
   templateUrl: './demanda.component.html',
   styleUrls: ['demanda.component.scss'],
-  providers: []
+  providers: [DemandaProvider, DemandaMenuProvider]
 })
 export class DemandaComponent implements OnInit {
 
@@ -36,7 +35,6 @@ export class DemandaComponent implements OnInit {
     this.DemandaEtapa = this.ETAPAS[this.$demanda.etapaAtual] || '';
   }
 
-  menu: Array<any>;
 
   readonly ETAPAS = {
     0: 'Elaboracao',
@@ -49,19 +47,14 @@ export class DemandaComponent implements OnInit {
     7: 'Captacao'
   };
 
-  constructor(private app: AppService, protected modal: NgbModal, protected route: ActivatedRoute) {
+  constructor(protected modal: NgbModal, protected route: ActivatedRoute) {
 
   }
 
   ngOnInit() {
-    const dataResolved = this.route.snapshot.data['demanda'];
-    this.demanda = dataResolved.demanda;
-    this.menu = dataResolved.menu;
-
-    if (dataResolved.defaultPage && this.route.children.length === 0) {
-      this.app.router.navigate(dataResolved.defaultPage.split('/'), {relativeTo: this.route, skipLocationChange: false});
-    }
-
+    this.route.data.subscribe(data => {
+      this.demanda = data.demanda;
+    });
     // this.Subscriptions.push(fromEvent(window, 'popstate').subscribe((event) => this.historyBack(event)));
   }
 

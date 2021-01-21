@@ -4,8 +4,10 @@ import {ActivatedRoute} from '@angular/router';
 import {Demanda} from '@app/commons/demandas';
 import {DemandaEtapa, DemandaEtapaItems, DemandaEtapaStatus} from '@app/user-shared/demandas/commons';
 import {environment} from '@env/environment';
-import {CURRENT_USER, EquipePeD, User} from '@app/commons';
+import {EquipePeD} from '@app/commons';
 import {UsersService} from '@app/services/users.service';
+import {DEMANDA} from '@app/user-shared/demandas/demanda/providers';
+import {AuthService} from '@app/services';
 
 
 @Component({
@@ -63,13 +65,15 @@ export class AprovacaoComponent implements OnInit {
   constructor(
     protected app: AppService,
     protected usersService: UsersService,
-    @Inject(CURRENT_USER) public user: User,
+    public auth: AuthService,
+    @Inject(DEMANDA) demanda: Demanda,
     protected route: ActivatedRoute
   ) {
+    this.demanda = demanda;
   }
 
   async ngOnInit() {
-    this.demanda = this.route.parent.snapshot.data.demanda.demanda;
+
     this.equipe = await this.app.sistema.getEquipePeD();
     this.anexos = await this.app.demandas.getAnexos(this.demanda.id);
   }

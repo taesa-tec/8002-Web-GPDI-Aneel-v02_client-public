@@ -100,7 +100,12 @@ export class AuthService {
     } else {
       sessionStorage.removeItem('last_login_user');
     }
-    this.loginResponse = loginResponse;
+    if (this.loginResponse) {
+      Object.assign(this.loginResponse.user, loginResponse.user);
+      Object.assign(this.loginResponse, loginResponse);
+    } else {
+      this.loginResponse = loginResponse;
+    }
     storage.setItem(storageKey, JSON.stringify(loginResponse));
 
     if (redirectTo) {

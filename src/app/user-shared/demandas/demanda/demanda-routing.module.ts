@@ -8,6 +8,7 @@ import {FormEditorComponent} from '@app/user-shared/demandas/demanda/form-editor
 import {DemandaResolver} from '@app/user-shared/demandas/demanda/demanda.resolver';
 import {DemandaGuard} from '@app/user-shared/demandas/demanda/guards/demanda.guard';
 import {DemandaLogsComponent} from '@app/user-shared/demandas/demanda/demanda-logs/demanda-logs.component';
+import {IndexComponent} from '@app/user-shared/demandas/demanda/index.component';
 
 const routes: Routes = [
   {
@@ -50,6 +51,10 @@ const routes: Routes = [
       {
         path: 'logs',
         component: DemandaLogsComponent
+      },
+      {
+        path: '**',
+        component: IndexComponent
       }
     ]
   }

@@ -106,13 +106,14 @@ export class FornecedoresComponent implements OnInit {
     if (fornecedor) {
       form.fornecedor = fornecedor;
     }
-    //...
     try {
-      await ref.result;
-      await this.app.router.navigateByUrl('/dashboard/configuracoes/fornecedores');
-      this.data = await this.service.obter();
+      if (await ref.result) {
+        this.data = await this.service.obter();
+      }
     } catch (e) {
-
+      //console.error(e);
+    } finally {
+      await this.app.router.navigateByUrl('/admin/configuracoes/fornecedores', {fragment: ''});
     }
 
   }

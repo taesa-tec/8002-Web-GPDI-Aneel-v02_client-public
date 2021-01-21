@@ -31,13 +31,14 @@
                             [comentario]="comentario"></app-demanda-comentario>
   </div>
 </div>
-<ng-container *ngIf="responsavel === user.id; else notResponsavel">
+<ng-container *ngIf="responsavel === auth.user.id; else notResponsavel">
   <div class="row">
     <div class="col-12">
       <app-definir-revisor *ngIf="demanda.etapaAtual === ETAPAS_VALUES.RevisorPendente"
                            [demanda]="demanda" [users]="equipe.outros"
                            (userSelected)="userSelected($event)"></app-definir-revisor>
-      <app-avaliar-demanda *ngIf="emAprovacao && demanda.etapaAtual !== ETAPAS_VALUES.RevisorPendente" [demanda]="demanda"
+      <app-avaliar-demanda *ngIf="emAprovacao && demanda.etapaAtual !== ETAPAS_VALUES.RevisorPendente"
+                           [demanda]="demanda"
                            (avaliacao)="avaliacao($event)"></app-avaliar-demanda>
     </div>
   </div>

@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 
 import {SuprimentoRoutingModule} from './suprimento-routing.module';
 import {DashboardModule} from '@app/dashboard';
-import {CURRENT_USER,  HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
+import {HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
 import {CaptacoesService} from '@app/user-suprimento/services/captacoes.service';
 import {CaptacaoResolver} from '@app/user-suprimento/resolvers/captacao.resolver';
 import {CaptacoesResolver} from '@app/user-suprimento/resolvers/captacoes.resolver';
@@ -34,11 +34,6 @@ import {AuthService} from '@app/services';
     }, {
       provide: ROOT_URL,
       useValue: '/suprimento'
-    },
-    {
-      provide: CURRENT_USER,
-      deps: [AuthService],
-      useFactory: (auth: AuthService) => auth.user
     }
   ]
 })

@@ -16,6 +16,7 @@ import {CoreModule} from '@app/core';
 import {DemandaGuard} from '@app/user-shared/demandas/demanda/guards/demanda.guard';
 import {DemandaResolver} from '@app/user-shared/demandas/demanda/demanda.resolver';
 import {DemandaModule} from '@app/user-shared/demandas/demanda/demanda.module';
+import {SharedModule} from '@app/dashboard/shared';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import {DemandaModule} from '@app/user-shared/demandas/demanda/demanda.module';
   ],
   imports: [
     CoreModule,
+    SharedModule,
     DemandasRoutingModule,
     DemandaModule,
     ReactiveFormsModule,

@@ -1,7 +1,9 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppService} from '@app/services/app.service';
 import {SafeHtml} from '@angular/platform-browser';
+import {DEMANDA} from '@app/user-shared/demandas/demanda/providers';
+import {Demanda} from '@app/commons/demandas';
 
 @Component({
   selector: 'app-historico',
@@ -12,7 +14,6 @@ import {SafeHtml} from '@angular/platform-browser';
 export class HistoricoComponent implements OnInit {
 
   form: string;
-  demandaId: number;
   historico: Array<{ id: number, createdAt: string, revisao: number }> = [];
   revisaoId = 0;
   html: SafeHtml;
@@ -26,7 +27,9 @@ export class HistoricoComponent implements OnInit {
     this.lastUpdate = value.lastUpdate;
   }
 
-  constructor(public app: AppService, public activeModal: NgbActiveModal) {
+  constructor(
+    @Inject(DEMANDA) protected demanda: Demanda,
+    public app: AppService, public activeModal: NgbActiveModal) {
   }
 
 
@@ -35,12 +38,12 @@ export class HistoricoComponent implements OnInit {
   }
 
   async loadHistoricos() {
-    if (!this.form || !this.demandaId) {
+    if (!this.form || !this.demanda) {
       this.activeModal.dismiss('Form ou demanda não informado');
       return;
     }
     this.loading = true;
-    this.historico = await this.app.demandas.getDemandaFormHistorico(this.demandaId, this.form);
+    this.historico = await this.app.demandas.getDemandaFormHistorico(this.demanda.id, this.form);
     if (this.historico.length > 0) {
       this.revisaoId = this.historico[0].id;
       await this.loadDiff(this.revisaoId);
@@ -50,7 +53,7 @@ export class HistoricoComponent implements OnInit {
 
   async loadDiff(revisaoId) {
     this.compartivo = {revisaoAtual: '', html: '', lastUpdate: ''};
-    this.compartivo = await this.app.demandas.getDemandaFormHistoricoDiff(this.demandaId, this.form, revisaoId);
+    this.compartivo = await this.app.demandas.getDemandaFormHistoricoDiff(this.demanda.id, this.form, revisaoId);
   }
 
 }

@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit, Optional} from '@angular/core';
-import {CURRENT_USER, HEADER_MENU, MenuItem, ROOT_URL, User} from '@app/commons';
+import {HEADER_MENU, MenuItem, ROOT_URL, User} from '@app/commons';
 import {AppService} from '@app/services/app.service';
 import {AuthService} from '@app/services/auth.service';
 
@@ -24,9 +24,10 @@ export class HeaderComponent implements OnInit {
     return '';
   }
 
+  currentUser: User;
+
   constructor(
     @Optional() @Inject(HEADER_MENU) menu,
-    @Inject(CURRENT_USER) public currentUser: User,
     @Inject(ROOT_URL) public home_url: string,
     protected app: AppService,
     protected auth: AuthService

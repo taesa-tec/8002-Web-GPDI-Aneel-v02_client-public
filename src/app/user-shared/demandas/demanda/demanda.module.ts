@@ -19,6 +19,8 @@ import {DemandaResolver} from '@app/user-shared/demandas/demanda/demanda.resolve
 import {CoreModule} from '@app/core';
 import {DemandaRoutingModule} from '@app/user-shared/demandas/demanda/demanda-routing.module';
 import {SharedModule} from '@app/dashboard/shared';
+import {DashboardModule} from '@app/dashboard';
+import {IndexComponent} from '@app/user-shared/demandas/demanda/index.component';
 
 const components = [
   DemandaComponent,
@@ -38,8 +40,8 @@ const components = [
 ];
 
 @NgModule({
-  imports: [CoreModule, DemandaRoutingModule, SharedModule],
-  declarations: [...components],
+  imports: [CoreModule, DemandaRoutingModule, SharedModule, DashboardModule],
+  declarations: [...components, IndexComponent],
   exports: [...components],
   providers: [DemandaGuard, DemandaResolver],
 })
