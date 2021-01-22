@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Demanda} from '@app/commons/demandas';
 import {DemandaEtapa, DemandaEtapaItems, DemandaEtapaStatus} from '@app/user-shared/demandas/commons';
 import {environment} from '@env/environment';
-import {EquipePeD} from '@app/commons';
+import {EquipePeD, ROOT_URL} from '@app/commons';
 import {UsersService} from '@app/services/users.service';
 import {DEMANDA} from '@app/user-shared/demandas/demanda/providers';
 import {AuthService} from '@app/services';
@@ -63,10 +63,11 @@ export class AprovacaoComponent implements OnInit {
   }
 
   constructor(
+    @Inject(DEMANDA) demanda: Demanda,
+    @Inject(ROOT_URL) protected root_url: string,
     protected app: AppService,
     protected usersService: UsersService,
     public auth: AuthService,
-    @Inject(DEMANDA) demanda: Demanda,
     protected route: ActivatedRoute
   ) {
     this.demanda = demanda;
@@ -80,16 +81,15 @@ export class AprovacaoComponent implements OnInit {
 
   async avaliacao(demanda) {
     this.demanda = demanda;
-    this.app.router.navigate(['/dashboard']);
+    this.app.router.navigate([this.root_url]).then();
   }
 
   async userSelected(value) {
-    console.log(value);
     this.app.showLoading();
     try {
       this.demanda = await this.app.demandas.definirRevisor(this.demanda.id, value);
-      this.app.alert('Revisor definido com sucesso!');
-      this.app.router.navigate(['/dashboard']);
+      this.app.alert('Revisor definido com sucesso!').then();
+      this.app.router.navigate([this.root_url]).then();
     } catch (e) {
       console.error(e);
     }

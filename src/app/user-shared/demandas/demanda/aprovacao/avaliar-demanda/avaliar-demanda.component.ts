@@ -14,7 +14,7 @@ export class AvaliarDemandaComponent implements OnInit {
   @Input() demanda: Demanda;
   @Input('responsavel') responsavelId: string;
   @Output() avaliacao = new EventEmitter<Demanda>();
-  formReprovacao: FormGroup = null;
+  form: FormGroup = null;
   canUpdate = false;
 
   constructor(protected  app: AppService,
@@ -35,7 +35,7 @@ export class AvaliarDemandaComponent implements OnInit {
     }
     this.app.showLoading();
     try {
-      const demanda = await this.app.demandas.proximaEtapa(this.demanda.id, {});
+      const demanda = await this.app.demandas.proximaEtapa(this.demanda.id, {comentario: ''});
       this.avaliacao.emit(demanda);
     } catch (e) {
       console.error(e);
@@ -44,26 +44,25 @@ export class AvaliarDemandaComponent implements OnInit {
   }
 
   protected mountForm() {
-    this.formReprovacao = this.fb.group({
+    this.form = this.fb.group({
       motivo: this.fb.control('', [Validators.required]),
       proximaEtapa: 'reiniciar'
     });
   }
 
   async reprovar() {
-    if (this.formReprovacao == null) {
+    if (this.form == null) {
       this.mountForm();
       return;
     }
-    if (this.formReprovacao.valid) {
+    if (this.form.valid) {
       this.app.showLoading();
       try {
         let result;
-        console.log(this.formReprovacao.value);
-        if (this.formReprovacao.value.proximaEtapa === 'reiniciar') {
-          result = await this.app.demandas.reprovarDemanda(this.demanda.id, this.formReprovacao.value.motivo);
+        if (this.form.value.proximaEtapa === 'reiniciar') {
+          result = await this.app.demandas.reprovarDemanda(this.demanda.id, this.form.value.motivo);
         } else {
-          result = await this.app.demandas.reprovarPermanente(this.demanda.id, this.formReprovacao.value.motivo);
+          result = await this.app.demandas.reprovarPermanente(this.demanda.id, this.form.value.motivo);
         }
         this.avaliacao.emit(result);
         this.app.alert('Salvo com sucesso!');
@@ -79,7 +78,7 @@ export class AvaliarDemandaComponent implements OnInit {
 
 
   cancelarReprovacao() {
-    this.formReprovacao = null;
+    this.form = null;
   }
 
 }

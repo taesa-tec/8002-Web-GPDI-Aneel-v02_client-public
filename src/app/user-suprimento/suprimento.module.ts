@@ -8,6 +8,7 @@ import {CaptacoesService} from '@app/user-suprimento/services/captacoes.service'
 import {CaptacaoResolver} from '@app/user-suprimento/resolvers/captacao.resolver';
 import {CaptacoesResolver} from '@app/user-suprimento/resolvers/captacoes.resolver';
 import {AuthService} from '@app/services';
+import {SuprimentoRootUrl} from '@app/routes/routes';
 
 
 @NgModule({
@@ -33,7 +34,7 @@ import {AuthService} from '@app/services';
       ]
     }, {
       provide: ROOT_URL,
-      useValue: '/suprimento'
+      useValue: `/${SuprimentoRootUrl}`
     }
   ]
 })

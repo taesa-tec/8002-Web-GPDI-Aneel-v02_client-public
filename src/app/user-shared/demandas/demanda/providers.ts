@@ -59,7 +59,6 @@ export const DemandaMenuProvider: FactoryProvider = {
   provide: SIDEBAR_MENU,
   deps: [DEMANDA, AuthService],
   useFactory: (demanda: Demanda, auth: AuthService) => {
-    console.log('Called Menu Demanda', auth.user.nomeCompleto);
     return menu(demanda, auth.user);
   }
 };

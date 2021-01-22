@@ -5,6 +5,7 @@ import {GestorRoutingModule} from './gestor-routing.module';
 import {DashboardModule} from '@app/dashboard';
 import {HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
 import {CurrentUseProvider} from '@app/user-shared/providers';
+import {GestorRootUrl} from '@app/routes/routes';
 
 
 @NgModule({
@@ -18,17 +19,17 @@ import {CurrentUseProvider} from '@app/user-shared/providers';
     {
       provide: SIDEBAR_MENU,
       useValue: [
-        {text: 'Gestão de Demandas', icon: 'ta-projeto', path: '/gestor/demandas'},
-        {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: '/gestor/captacoes'},
+        {text: 'Gestão de Demandas', icon: 'ta-projeto', path: `/${GestorRootUrl}/demandas`},
+        {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: `/${GestorRootUrl}/captacoes`},
       ]
     }, {
       provide: HEADER_MENU,
       useValue: [
-        {text: 'Meu Cadastro', icon: 'ta-user-o', path: '/gestor/meu-cadastro'}
+        {text: 'Meu Cadastro', icon: 'ta-user-o', path: `/${GestorRootUrl}/meu-cadastro`}
       ]
     }, {
       provide: ROOT_URL,
-      useValue: '/gestor'
+      useValue: `/${GestorRootUrl}`
     },
     CurrentUseProvider
   ],

@@ -52,8 +52,8 @@ export class FormEditorComponent implements OnInit {
     this.app.loading.show().then();
     try {
       await this.app.demandas.editarDemandaForm(this.demandaId, this.key, data).toPromise();
-      await this.app.alert('Formulário Salvo com sucesso!');
-      await this.app.router.navigate([this.root_url, 'demandas', this.demandaId, 'documento-aprovacoes']);
+      this.app.alert('Formulário Salvo com sucesso!').then();
+      this.app.router.navigate([this.root_url, 'demandas', this.demandaId, 'documento-aprovacoes']).then();
     } catch (e) {
       console.error(e);
     } finally {

@@ -8,6 +8,7 @@ import {PropostaResolver} from '@app/user-fornecedor/resolvers/proposta.resolver
 import {PropostasResolver} from '@app/user-fornecedor/resolvers/propostas.resolver';
 import {PropostasService} from '@app/user-fornecedor/services/propostas.service';
 import {AuthService} from '@app/services';
+import {FornecedorRootUrl} from '@app/routes/routes';
 
 
 @NgModule({
@@ -24,16 +25,16 @@ import {AuthService} from '@app/services';
     {
       provide: SIDEBAR_MENU,
       useValue: [
-        {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: '/fornecedor/propostas'},
+        {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: `/${FornecedorRootUrl}/propostas`},
       ]
     }, {
       provide: HEADER_MENU,
       useValue: [
-        {text: 'Meu Cadastro', icon: 'ta-user-o', path: '/fornecedor/meu-cadastro'}
+        {text: 'Meu Cadastro', icon: 'ta-user-o', path: `/${FornecedorRootUrl}/meu-cadastro`}
       ]
     }, {
       provide: ROOT_URL,
-      useValue: '/fornecedor'
+      useValue: `/${FornecedorRootUrl}`
     }
   ]
 })

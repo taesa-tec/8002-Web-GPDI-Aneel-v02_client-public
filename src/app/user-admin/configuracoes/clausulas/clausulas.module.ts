@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
-import {SharedModule} from '@app/dashboard/shared/shared.module';
 import {ServiceBase} from '@app/services/service-base.service';
 import {HttpClient} from '@angular/common/http';
 import {ClausulasComponent} from './clausulas.component';

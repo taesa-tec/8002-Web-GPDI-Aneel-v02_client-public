@@ -4,6 +4,7 @@ import {CommonModule} from '@angular/common';
 import {AdminRoutingModule} from './admin-routing.module';
 import {DashboardModule} from '@app/dashboard';
 import {HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
+import {AdminRootUrl} from '@app/routes/routes';
 
 
 @NgModule({
@@ -17,19 +18,19 @@ import {HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
     {
       provide: SIDEBAR_MENU,
       useValue: [
-        {text: 'Gestão de Demandas', icon: 'ta-projeto', path: '/admin/demandas'},
-        {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: '/admin/captacoes'},
-        {text: 'Configurações do Sistema', icon: 'ta-gear', path: '/admin/configuracoes'},
+        {text: 'Gestão de Demandas', icon: 'ta-projeto', path: `/${AdminRootUrl}/demandas`},
+        {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: `/${AdminRootUrl}/captacoes`},
+        {text: 'Configurações do Sistema', icon: 'ta-gear', path: `/${AdminRootUrl}/configuracoes`},
       ]
     }, {
       provide: HEADER_MENU,
       useValue: [
-        {text: 'Gerenciar Usuários', icon: 'ta-group', path: '/admin/gerenciar-usuarios'},
-        {text: 'Meu Cadastro', icon: 'ta-user-o', path: '/admin/meu-cadastro'}
+        {text: 'Gerenciar Usuários', icon: 'ta-group', path: `/${AdminRootUrl}/gerenciar-usuarios`},
+        {text: 'Meu Cadastro', icon: 'ta-user-o', path: `/${AdminRootUrl}/meu-cadastro`}
       ]
     }, {
       provide: ROOT_URL,
-      useValue: '/admin'
+      useValue: `/${AdminRootUrl}`
     }
   ]
 })

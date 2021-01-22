@@ -1,7 +1,5 @@
 import {AfterViewInit, Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {AuthService} from '@app/services';
-import {MainComponent} from '@app/dashboard/shared';
-import {DashboardComponent} from '@app/dashboard/dashboard.component';
 import {UserRole} from '@app/commons';
 import {Router} from '@angular/router';
 
