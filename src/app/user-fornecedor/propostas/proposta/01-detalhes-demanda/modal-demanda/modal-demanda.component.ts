@@ -1,5 +1,6 @@
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Component, OnInit } from '@angular/core';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-modal-demanda',
@@ -7,18 +8,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./modal-demanda.component.scss']
 })
 export class ModalDemandaComponent implements OnInit {
+  form = new FormGroup({
+    confirm: new FormControl(false, Validators.requiredTrue)
+  });
+  status = 0;
 
-  isCheck: boolean = false;
-
-  constructor(
-    public activeModal: NgbActiveModal
-  ) { }
-
-  ngOnInit(): void {
+  constructor(public activeModal: NgbActiveModal) {
   }
 
-  toggle(e) {
-    this.isCheck = e.target.checked;
+  confirmarParticipacao() {
+    this.status = 1;
+  }
+
+  confirmarRejeicao() {
+    this.status = 2;
+  }
+
+  ngOnInit(): void {
   }
 
 }

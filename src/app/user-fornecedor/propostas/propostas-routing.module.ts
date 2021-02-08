@@ -23,7 +23,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: ':id',
+    path: ':id', // Id da captação, não da proposta
     resolve: {
       proposta: PropostaResolver
     },

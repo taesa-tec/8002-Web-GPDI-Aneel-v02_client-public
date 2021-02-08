@@ -5,9 +5,6 @@ import {TableComponentActions, TableComponentCols, TableComponentFilter} from '@
 import {ActivatedRoute} from '@angular/router';
 import {AppService} from '@app/services';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {filter} from 'rxjs/operators';
-import {CriarComponent} from '@app/user-shared/captacao/criar/criar.component';
-import {EnviarComponent} from '@app/user-shared/captacao/enviar/enviar.component';
 import {DatePipe} from '@angular/common';
 
 export interface CaptacaoTableConfig {
@@ -39,7 +36,7 @@ export class PropostasComponent implements OnInit, OnDestroy {
   buttons: TableComponentActions = [{
     isLink: true,
     text: 'Ver',
-    action: '${id}',
+    action: '${captacaoId}',
     className: 'btn btn-primary'
   }];
   propostas: Array<any>;

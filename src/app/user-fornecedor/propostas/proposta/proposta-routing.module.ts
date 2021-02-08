@@ -26,7 +26,7 @@ const routes: Routes = [
     component: PropostaComponent,
     children: [
       {path: 'detalhes', loadChildren: () => import('./01-detalhes-demanda/detalhes-demanda.module').then(m => m.DetalhesDemandaModule)},
-      {path: 'condicoes', component: DevelopmentComponent},
+      {path: 'condicoes', loadChildren: () => import('./02-condicoes/condicoes.module').then(m => m.CondicoesModule)},
       {path: 'co-executores', loadChildren: () => import('./03-co-executores/co-executores.module').then(m => m.CoExecutoresModule)},
       {
         path: 'contrato',

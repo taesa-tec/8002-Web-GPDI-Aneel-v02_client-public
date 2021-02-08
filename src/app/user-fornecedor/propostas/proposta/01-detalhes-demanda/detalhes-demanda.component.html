@@ -4,14 +4,22 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row" [ngSwitch]="proposta.participacao">
   <div class="col">
-    <div class="alert border border-success d-flex align-items-center" *ngIf="detalhesDemanda.status">
+    <div class="alert border border-success d-flex align-items-center" *ngSwitchCase="1">
       <div class="mr-3">
-          <i class="ta-ok fs-48 text-success"></i>
+        <i class="ta-ok fs-48 text-success"></i>
       </div>
       <div class="text-success">
         Você confirmou seu interesse em participar deste projeto. Obrigado.
+      </div>
+    </div>
+    <div class="alert border border-success d-flex align-items-center" *ngSwitchCase="2">
+      <div class="mr-3">
+        <i class="ta-ok fs-48 text-success"></i>
+      </div>
+      <div class="text-danger">
+        Você confirmou o <b>não</b> interesse em participar deste projeto. Obrigado.
       </div>
     </div>
   </div>
@@ -27,12 +35,9 @@
 <div class="row">
   <div class="col mb-4">
     <h6 class="text-uppercase text-blue-light">Arquivos complementares</h6>
-    <div *ngFor="let arquivo of detalhesDemanda.arquivos">
+    <div *ngFor="let arquivo of proposta.arquivos">
       <div class="btn btn-link px-0 py-1">
-        <span (click)="deletarArquivo(i)">
-          <i class="ta-attachment"></i>
-        </span>
-        {{ arquivo }}
+        {{ arquivo.fileName }}
       </div>
     </div>
   </div>
@@ -41,7 +46,7 @@
 <div class="row">
   <div class="col-4 mb-4">
     <h6 class="text-uppercase text-blue-light">Data máxima de envio proposta</h6>
-    <input type="date" class="form-control" disabled [value]="detalhesDemanda.dataProposta">
+    <div class="form-control disabled">{{proposta.dataTermino | date:'shortDate'}}</div>
   </div>
 </div>
 
@@ -49,19 +54,19 @@
   <div class="col mb-4">
     <h6 class="text-uppercase text-blue-light">Observações projeto</h6>
     <div class="bg-cinza-claro rounded p-4">
-      {{ detalhesDemanda.observacoes }}
+      {{proposta.consideracoes}}
     </div>
   </div>
 </div>
 
-<div class="row" *ngIf="!detalhesDemanda.status">
+<div class="row" *ngIf="proposta.participacao === 0">
   <div class="col">
     <div class="d-flex justify-content-center">
-      <button type="button" class="btn btn-danger m-3" (click)="statusParticipar(false)">
+      <button type="button" class="btn btn-danger m-3" (click)="rejeitar()">
         <i class="ta-cancel-circle fs-24 align-middle"></i>
         Não Iremos Participar
       </button>
-      <button type="button" class="btn btn-green m-3" (click)="statusParticipar(true)">
+      <button type="button" class="btn btn-green m-3" (click)="participar()">
         <i class="ta-ok fs-24 align-middle"></i>
         Desejo Participar
       </button>

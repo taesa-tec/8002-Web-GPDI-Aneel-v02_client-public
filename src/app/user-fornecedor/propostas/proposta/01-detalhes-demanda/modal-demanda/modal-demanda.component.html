@@ -1,34 +1,53 @@
 <div class="modal-header">
-    <div class="text-uppercase modal-title text-blue-light fs-24">
-        TEM CERTEZA QUE NÃO IRÁ PARTICIPAR?
-    </div>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        <i class="ta-cancel-circle"></i>
-    </button>
+  <div class="text-uppercase modal-title text-blue-light fs-24">
+    TEM CERTEZA QUE <span *ngIf="status === 2">NÃO</span> IRÁ PARTICIPAR?
+  </div>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+    <i class="ta-cancel-circle"></i>
+  </button>
 </div>
 
 <app-loading type="fullscreen"></app-loading>
 
 <div class="modal-body">
-    <div>Esta ação é irreversível. Confirma a não participação nesta demanda?</div>
-    
-    <div class="form-check mt-3 mb-6">
-        <input type="checkbox" id="status" class="form-check-input" (change)="toggle($event)">
-        <label for="status" class="form-check-label">Confirmo que não iremos participar desta demanda</label>
-    </div>
-    
-    <div class="text-right">
-        <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">
-            Cancelar
+  <form [formGroup]="form">
+    <div [ngSwitch]="status">
+
+      <div *ngSwitchCase="1">Esta ação é irreversível. Confirma a participação nesta demanda?</div>
+      <div *ngSwitchCase="2">Esta ação é irreversível. Confirma a não participação nesta demanda?</div>
+      <div class="form-check mt-3 mb-6">
+        <input type="checkbox" formControlName="confirm" id="confirm" [value]="true" class="form-check-input">
+        <label for="confirm" *ngSwitchCase="1" class="form-check-label">Confirmo que iremos participar desta
+          demanda </label>
+        <label for="confirm" *ngSwitchCase="2" class="form-check-label">Confirmo que não iremos participar desta
+          demanda </label>
+      </div>
+
+      <div class="text-right">
+        <div class="button btn btn-link" (click)="activeModal.close(false)">
+          Cancelar
         </div>
-        <button 
-            type="submit" 
-            class="btn btn-danger" 
-            [disabled]="!isCheck"
-            (click)="activeModal.close()"
+        <button
+          *ngSwitchCase="1"
+          type="button"
+          class="btn btn-success"
+          [disabled]="form.invalid"
+          (click)="activeModal.close(true)"
         >
-            <i class="ta-cancel-circle mr-1"></i>
-            Não Iremos Parcicipar
+          <i class="ta-cancel-circle mr-1"></i>
+          Não Iremos Parcicipar
         </button>
+        <button
+          *ngSwitchCase="2"
+          type="button"
+          class="btn btn-danger"
+          [disabled]="form.invalid"
+          (click)="activeModal.close(true)"
+        >
+          <i class="ta-cancel-circle mr-1"></i>
+          Confirmar Participação
+        </button>
+      </div>
     </div>
+  </form>
 </div>

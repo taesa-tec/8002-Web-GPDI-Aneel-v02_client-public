@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {MenuItem, SIDEBAR_MENU} from '@app/commons';
+import {MenuItem, Proposta, SIDEBAR_MENU} from '@app/commons';
 
 
 @Component({
@@ -33,11 +33,14 @@ import {MenuItem, SIDEBAR_MENU} from '@app/commons';
   ]
 })
 export class PropostaComponent implements OnInit {
+  proposta: Proposta;
+
   constructor(private route: ActivatedRoute) {
   }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
+      this.proposta = data.proposta;
     });
   }
 

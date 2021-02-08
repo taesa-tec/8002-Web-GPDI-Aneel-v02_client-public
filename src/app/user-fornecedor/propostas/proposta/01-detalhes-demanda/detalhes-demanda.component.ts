@@ -1,16 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
-import { ModalDemandaComponent } from './modal-demanda/modal-demanda.component';
-import { environment } from '@env/environment';
+import {ModalDemandaComponent} from './modal-demanda/modal-demanda.component';
+import {environment} from '@env/environment';
+import {PropostaComponent} from '@app/user-fornecedor/propostas/proposta/proposta.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {PropostasService} from '@app/user-fornecedor/services/propostas.service';
 
-interface DetalhesDemanda {
-  especificacao: { id: number, pdf: string };
-  arquivos: Array<string>;
-  dataProposta: string;
-  observacoes: string;
-  status: boolean;
-}
 
 @Component({
   selector: 'app-detalhes-demanda',
@@ -20,48 +16,54 @@ interface DetalhesDemanda {
 export class DetalhesDemandaComponent implements OnInit {
 
   pdfUrl = null;
-  detalhesDemanda: DetalhesDemanda;
+  detalhes: any;
 
-  constructor(
-    private modal: NgbModal
-  ) { }
-
-  ngOnInit() {
-    this.detalhesDemanda = this.getDetalhesProjeto();
-
-    const clearCache = Date.now();
-    this.pdfUrl = `${environment.api_url}/Demandas/${this.detalhesDemanda.especificacao.id}/Form/${this.detalhesDemanda.especificacao.pdf}/Pdf?time=${clearCache}`;
+  get proposta() {
+    return this.parent.proposta;
   }
 
-  async statusParticipar(status: boolean) {
-    if(!status) {
-      const modalRef = this.modal.open(ModalDemandaComponent, {size: 'lg'});
+  constructor(private modal: NgbModal, private parent: PropostaComponent, protected route: ActivatedRoute,
+              protected router: Router,
+              protected service: PropostasService) {
+  }
 
-      try {
-        await modalRef.result;
-        console.log('Não Aceito a demanda');
-        this.detalhesDemanda.status = false;
-      } catch(e) {
-        console.log(e);
+  ngOnInit() {
+    this.pdfUrl = `${environment.api_url}/Fornecedor/Propostas/${this.proposta.captacaoId}/Detalhes/Pdf/especificacao-tecnica`;
+    this.route.data.subscribe(data => {
+      this.detalhes = data.detalhes;
+    });
+  }
+
+  async rejeitar() {
+    try {
+      const ref = this.modal.open(ModalDemandaComponent);
+      const cmp = ref.componentInstance as ModalDemandaComponent;
+      cmp.confirmarRejeicao();
+      const result = await ref.result;
+      if (result) {
+        await this.service.rejeitar(this.proposta.captacaoId);
+        this.router.navigate(['/']).then();
+        // request...
       }
+    } catch (e) {
 
-    } else{
-      console.log('Demanda aceita');
-      this.detalhesDemanda.status = true;
     }
   }
 
-  getDetalhesProjeto() {
-    return {
-      especificacao: {
-        id: 2,
-        pdf: 'especificacao-tecnica'
-      },
-      arquivos: ['Relatório.pdf', 'Relatório 2.pdf'],
-      dataProposta: '2019-01-02',
-      observacoes: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent viverra malesuada ante nec ornare. Nam id ante et odio efficitur cursus. Maecenas viverra turpis a eros pretium porta. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi porttitor ligula id lacus maximus, eu rhoncus tortor volutpat. Curabitur auctor nulla sed lacus maximus vulputate. Fusce elementum metus nec urna malesuada, a accumsan eros sodales. Suspendisse dolor nisi, aliquet non luctus ac, sodales quis metus. Nunc a fermentum mauris. Sed a nulla eget purus ultricies semper. Mauris vitae eros nec eros lacinia efficitur. In vitae justo scelerisque, elementum magna eu, placerat magna. Mauris faucibus varius nisl eu vehicula.',
-      status: null
-    };
+  async participar() {
+    try {
+      const ref = this.modal.open(ModalDemandaComponent);
+      const cmp = ref.componentInstance as ModalDemandaComponent;
+      cmp.confirmarParticipacao();
+      const result = await ref.result;
+      if (result) {
+        await this.service.participar(this.proposta.captacaoId);
+        this.proposta.participacao = 1;
+        // request...
+      }
+    } catch (e) {
+
+    }
   }
 
 }
