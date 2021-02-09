@@ -19,6 +19,19 @@ export class PropostasService extends ServiceBase<any> {
 
   async getClausulas() {
     return await this.http.get<Array<any>>(`Fornecedor/Clausulas`).toPromise();
+  }
 
+  async aceitarCondicoes(id: number) {
+    return await this.http.post<any>(`${this.controller}/${id}/Condicoes`, {
+      clausulasAceita: true,
+      clausulaRejeitada: 0,
+    }).toPromise();
+  }
+
+  async rejeitarCondicoes(id: number, condicaoId: number) {
+    return await this.http.post<any>(`${this.controller}/${id}/Condicoes`, {
+      clausulasAceita: false,
+      clausulaRejeitada: condicaoId,
+    }).toPromise();
   }
 }

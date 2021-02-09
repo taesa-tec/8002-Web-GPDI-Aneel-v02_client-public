@@ -13,9 +13,10 @@ interface Arquivo {
 
 export interface Proposta {
   captacao: string;
-  dataCriacao: Date;
-  dataTermino: Date;
-  dataResposta: null;
+  dataCriacao?: Date;
+  dataTermino?: Date;
+  dataResposta?: Date;
+  dataClausulasAceitas?: Date;
   fornecedorId: number;
   fornecedor: string;
   captacaoId: number;
