@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ServiceBase} from '@app/services';
 import {HttpClient} from '@angular/common/http';
+import {BaseEntity} from '@app/commons';
 
 @Injectable()
 export class PropostasService extends ServiceBase<any> {
@@ -33,5 +34,20 @@ export class PropostasService extends ServiceBase<any> {
       clausulasAceita: false,
       clausulaRejeitada: condicaoId,
     }).toPromise();
+  }
+
+  async getCoExecutores(id: number) {
+    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${id}/CoExecutores`, {}).toPromise();
+  }
+
+  async saveCoExecutor(id: number, coExecutor: BaseEntity) {
+    if (coExecutor.id === 0) {
+      return await this.http.post(`${this.controller}/${id}/CoExecutores`, coExecutor).toPromise();
+    }
+    return await this.http.put(`${this.controller}/${id}/CoExecutores`, coExecutor).toPromise();
+  }
+
+  async removerCoExecutor(id: number, coExecutorId: number) {
+    return await this.http.delete(`${this.controller}/${id}/CoExecutores/${coExecutorId}`).toPromise();
   }
 }

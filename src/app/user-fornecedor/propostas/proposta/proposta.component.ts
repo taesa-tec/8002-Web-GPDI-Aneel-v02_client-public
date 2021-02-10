@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, InjectionToken, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {MenuItem, Proposta, SIDEBAR_MENU} from '@app/commons';
-import {Observable} from 'rxjs';
+import {Proposta, SIDEBAR_MENU} from '@app/commons';
 import {map} from 'rxjs/operators';
+import {CAPTACAO_ID} from '@app/user-fornecedor/propostas/proposta/shared';
 
 
 @Component({
@@ -38,6 +38,11 @@ import {map} from 'rxjs/operators';
       },
       deps: [ActivatedRoute]
 
+    },
+    {
+      provide: CAPTACAO_ID,
+      deps: [ActivatedRoute],
+      useFactory: (route: ActivatedRoute) => parseFloat(route.snapshot.params.id)
     }
   ]
 })

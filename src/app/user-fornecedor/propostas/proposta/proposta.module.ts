@@ -12,12 +12,12 @@ import {DashboardModule} from '@app/dashboard';
 
 @NgModule({
   declarations: [DevelopmentComponent, PropostaComponent],
-  providers: [PropostasService, PropostaResolver],
   imports: [
     CoreModule,
     DashboardModule,
     PropostaRoutingModule
-  ]
+  ],
+  providers: [PropostasService, PropostaResolver],
 })
 export class PropostaModule {
 }

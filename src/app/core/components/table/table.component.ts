@@ -24,6 +24,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   protected $listOrder: Array<TableOrder> = [];
   protected $defaultListOrder: Array<TableOrder> = [];
   protected $data: Array<TableComponentRow> = [];
+  protected $inputData: Array<any>[];
   protected $cols: TableComponentCols;
   protected $index: Searchables<TableComponentRow> = new Searchables<TableComponentRow>();
 
@@ -46,7 +47,6 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Input() searchTerm = '';
 
   get cols() {
-
     return this.$cols;
   }
 
@@ -58,6 +58,9 @@ export class TableComponent implements OnInit, AfterViewInit {
       type: c.orderType || 'alpha'
     }));
     this.$defaultListOrder.reverse();
+    if (this.$inputData.length > 0) {
+      this.data = this.$inputData;
+    }
   }
 
   get listOrder(): Array<TableOrder> {
@@ -104,6 +107,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   // Data
   @Input() set data(value: Array<any>) {
     if (value && Array.isArray(value)) {
+      this.$inputData = value;
       this.$data = this.buildData(value.map(data => new TableComponentRow(data)));
       this.$index = new Searchables<TableComponentRow>();
       this.$data.forEach(item => {
@@ -112,7 +116,9 @@ export class TableComponent implements OnInit, AfterViewInit {
           texts: item.valueToArray().map(i => i.toString())
         });
       });
-      this.setCurrentData().then();
+      if (this.$cols && this.$cols.length > 0) {
+        this.setCurrentData().then();
+      }
     }
   }
 
@@ -177,7 +183,7 @@ export class TableComponent implements OnInit, AfterViewInit {
           break;
         case 'alpha':
         default:
-          interator = (item) => get(item, `value.${camelCase(listOrder.field)}`).toString().toLowerCase();
+          interator = (item) => get(item, `value.${camelCase(listOrder.field)}`)?.toString().toLowerCase();
           break;
       }
       $data = orderBy($data, interator, listOrder.direction);
