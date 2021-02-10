@@ -1,8 +1,5 @@
 import {Component, OnInit, ViewChild, AfterViewInit, ElementRef, forwardRef, Input} from '@angular/core';
 import {CatalogsService} from '@app/services/catalogs.service';
-import {AppService} from '@app/services/app.service';
-import {ActivatedRoute} from '@angular/router';
-import {ProjetosService} from '@app/services/projetos.service';
 import {Projeto, Tema, SubTema, SubTemaRequest, TemaProjeto, NoRequest, ResultadoResponse, CatalogTema, NiveisUsuarios} from '@app/commons';
 import {FormGroup, FormControl, Validators, FormArray, FormBuilder, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
@@ -36,7 +33,7 @@ export class TemasComponent implements OnInit, ControlValueAccessor {
     subTemas: this.subTemasForms
   });
 
-  @ViewChild(LoadingComponent, { static: true }) loading;
+  @ViewChild(LoadingComponent, {static: true}) loading;
   @ViewChild('file') file: ElementRef;
   @Input() readonly = false;
 
@@ -74,17 +71,14 @@ export class TemasComponent implements OnInit, ControlValueAccessor {
   }
 
   constructor(
-    private app: AppService,
     protected builder: FormBuilder,
-    private route: ActivatedRoute,
-    private projetoService: ProjetosService,
     protected catalogo: CatalogsService) {
   }
 
   onChange: any = () => {
-  }
+  };
   onTouched: any = () => {
-  }
+  };
 
   subtemasdisponiveis(current?: any) {
     return this.subTemas.filter(tema => {

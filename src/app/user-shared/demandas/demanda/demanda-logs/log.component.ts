@@ -2,9 +2,6 @@ import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {LogProjeto} from '@app/commons';
 import {AppService} from '@app/services/app.service';
 import {SafeUrl} from '@angular/platform-browser';
-import {environment} from '@env/environment';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {FormEditorComponent} from '@app/user-shared/demandas/demanda/form-editor/form-editor.component';
 
 @Component({
   selector: 'app-demanda-log-item',

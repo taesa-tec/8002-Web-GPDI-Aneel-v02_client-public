@@ -38,12 +38,13 @@ export class GerenciarUsuariosComponent implements OnInit {
   ativos = true;
 
   get users(): Array<User> {
-    return this._users.filter(u => u.status === (this.ativos ? 1 : 0));
+    return this._users.filter(u => u.status === this.ativos);
   }
 
   async ngOnInit() {
     this.loading.show();
     this._users = await this.usersService.all();
+    console.log(this._users);
     this.loading.hide();
 
     const query = this.activatedRoute.snapshot.queryParams;

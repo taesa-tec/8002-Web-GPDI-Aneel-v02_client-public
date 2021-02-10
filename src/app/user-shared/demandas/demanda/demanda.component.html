@@ -1,44 +1,21 @@
-<div class="main-layout-side-bar">
-  <div class="side-bar">
-    <div class="sticky-sidebar">
-      <div
-        class="projeto-side-info text-white fs-14 font-weight-light position-relative"
-      >
-        <!-- <app-loading type="fullparent"></app-loading> -->
-        <div>
-          <div class=" p-3 border-bottom border-cinza-claro text-uppercase">
-            {{ DemandaId }} - {{ DemandaTitulo }}
-          </div>
-          <div class="p-3 ">
-            <div class="etapa">Etapa: {{ DemandaEtapa }}</div>
-            <!-- <div class="empresa">
-              {{projeto.catalogEmpresa.nome}}
-            </div> -->
-            <div class="mt-2">
-              <a routerLink="/dashboard/">
-                <i class="ta-sync fs-18"></i>
-                Trocar de projeto
-              </a>
-            </div>
-          </div>
-        </div>
+<app-sidebar>
+  <div
+    class="projeto-side-info text-white fs-14 font-weight-light position-relative"
+  >
+    <div class=" p-3 border-bottom border-cinza-claro text-uppercase">
+      {{ DemandaId }} - {{ DemandaTitulo }}
+    </div>
+    <div class="p-3 ">
+      <div class="etapa">Etapa: {{ DemandaEtapa }}</div>
+      <!-- <div class="empresa">
+        {{projeto.catalogEmpresa.nome}}
+      </div> -->
+      <div class="mt-2">
+        <a routerLink="/">
+          <i class="ta-sync fs-18"></i>
+          Trocar de projeto
+        </a>
       </div>
-      <nav class="side-nav">
-        <!-- <app-loading type="fullparent" background="transparent"></app-loading> -->
-        <ng-container *ngFor="let route of menu">
-          <a
-            [routerLink]="route.path"
-            class="side-nav-item"
-            routerLinkActive="active"
-          >
-            <span class="fs-24 mr-3"><i [class]="route.icon"></i></span>
-            {{ route.text }}
-          </a>
-        </ng-container>
-      </nav>
     </div>
   </div>
-  <div class="py-4 px-5 mb-5">
-    <router-outlet></router-outlet>
-  </div>
-</div>
+</app-sidebar>

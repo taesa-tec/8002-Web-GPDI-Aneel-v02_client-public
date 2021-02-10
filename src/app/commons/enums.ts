@@ -1,6 +1,6 @@
 export enum UserRole {
-  Administrador = 'Admin-APIGestor',
-  User = 'User-APIGestor',
+  Administrador = 'Administrador',
+  User = 'User',
   Suprimento = 'Suprimento',
   Fornecedor = 'Fornecedor'
 }

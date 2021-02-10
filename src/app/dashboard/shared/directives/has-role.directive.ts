@@ -1,10 +1,7 @@
 import {Directive, ElementRef, Input, OnInit, TemplateRef, ViewContainerRef} from '@angular/core';
-import {AppService} from '@app/services/app.service';
-import {NiveisUsuarios, UserRole} from '@app/commons';
-import {ProjetoFacade} from '@app/facades/index';
+import {UserRole} from '@app/commons';
 import {AuthService} from '@app/services';
 
-// @todo mudar para dentro de Dashboard
 @Directive({
   selector: '[appRole], [appRoleAdmin], [appRoleUser], [appRoleSuprimento], [appRoleFornecedor]'
 })

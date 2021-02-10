@@ -48,7 +48,7 @@ export class ContratoPadraoFormComponent implements OnInit {
       try {
         await this.service.salvar(this.form.value);
         this.app.alert('Contrato salvo com sucesso').then();
-        this.app.router.navigateByUrl('/dashboard/configuracoes/contratos-padrao').then();
+        this.app.router.navigateByUrl('/admin/configuracoes/contratos-padrao').then();
 
       } catch (e) {
         this.app.alert('Não foi possível salvar o contrato').then();

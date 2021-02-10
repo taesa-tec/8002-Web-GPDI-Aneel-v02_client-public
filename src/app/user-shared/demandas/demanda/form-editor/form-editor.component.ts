@@ -1,9 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {AppService} from '@app/services/app.service';
 import {ActivatedRoute} from '@angular/router';
 import {merge} from 'lodash-es';
 import {Demanda} from '@app/commons/demandas';
 import {DemandaEtapa, DemandaEtapaStatus} from '@app/user-shared/demandas/commons';
+import {DemandaComponent} from '@app/user-shared/demandas/demanda/demanda.component';
+import {ROOT_URL} from '@app/commons';
+import {DEMANDA} from '@app/user-shared/demandas/demanda/providers';
 
 
 @Component({
@@ -12,7 +15,6 @@ import {DemandaEtapa, DemandaEtapaStatus} from '@app/user-shared/demandas/common
   templateUrl: './form-editor.component.html'
 })
 export class FormEditorComponent implements OnInit {
-  demanda: Demanda;
   key: string;
   formValue: any;
   formValueDefault: any;
@@ -21,13 +23,17 @@ export class FormEditorComponent implements OnInit {
   readonly ETAPAS_VALUES = DemandaEtapa;
   readonly ETAPAS_STATUS = DemandaEtapaStatus;
 
-  constructor(protected app: AppService, protected route: ActivatedRoute) {
+  constructor(
+    @Inject(DEMANDA) protected demanda: Demanda,
+    @Inject(ROOT_URL) protected root_url: string,
+    protected app: AppService,
+    protected route: ActivatedRoute, protected parent: DemandaComponent) {
   }
 
   async ngOnInit() {
     try {
       this.key = this.route.snapshot.paramMap.get('form') || this.key;
-      this.demanda = this.route.parent.snapshot.data.demanda.demanda || this.demanda;
+
       this.demandaId = parseFloat(this.route.snapshot.parent.paramMap.get('id')) || this.demandaId;
     } catch (e) {
 
@@ -43,15 +49,16 @@ export class FormEditorComponent implements OnInit {
   }
 
   async submit(data) {
-    this.app.loading.show();
+    this.app.loading.show().then();
     try {
       await this.app.demandas.editarDemandaForm(this.demandaId, this.key, data).toPromise();
-      this.app.loading.hide();
-      await this.app.alert('Formulário Salvo com sucesso!');
-      this.app.router.navigate(['/dashboard', 'demanda', this.demandaId, 'documento-aprovacoes']);
+      this.app.alert('Formulário Salvo com sucesso!').then();
+      this.app.router.navigate([this.root_url, 'demandas', this.demandaId, 'documento-aprovacoes']).then();
     } catch (e) {
       console.error(e);
+    } finally {
       this.app.loading.hide();
+
     }
   }
 }

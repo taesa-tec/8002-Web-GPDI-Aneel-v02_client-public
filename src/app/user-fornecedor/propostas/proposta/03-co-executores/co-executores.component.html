@@ -1,0 +1,30 @@
+<div class="row justify-content-between">
+  <div class="col mb-4">
+    <h5 class="text-uppercase text-blue font-weight-normal my-4">CADASTRO CO-EXECUTORES</h5>
+  </div>
+  <div class="col-auto">
+    <button type="button" class="btn btn-outline-primary" (click)="modalCoExecutora()">
+      <i class="ta-plus-circle fs-24 align-middle"></i>
+      Nova Co-Executora
+    </button>
+  </div>
+</div>
+<div class="row">
+  <div class="col mb-4">
+    <div class="alert border border-danger d-flex align-items-center">
+      <div class="mr-3">
+        <i class="ta-alert fs-48 text-danger"></i>
+      </div>
+      <div>
+        Empresas Co-Executoras devem estar devidamente cadastradas junto a equipe de Suprimentos da Taesa para poderem
+        participar dos projetos. Por favor confirmar junto a equipe de Suprimentos a viabilidade da participação da
+        Co-Executora.
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <app-table [data]="coExecutores" [cols]="cols" [buttons]="buttons" (action)="tableAction($event)"></app-table>
+  </div>
+</div>

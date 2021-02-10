@@ -1,0 +1,48 @@
+<div class="row justify-content-between">
+  <div class="col">
+    <h5 class="text-uppercase text-blue font-weight-normal my-4">CONDIÇÕES FUNDAMENTAIS PARA FORNECIMENTO</h5>
+    <p>Para a participação em Projetos de P&D existem algumas cláusulas obrigatórias no contrato. Leia as mesmas com
+      atenção para validar sua
+      participação no projeto Seguem abaixo:</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="text-center text-blue-light font-weight-bold">
+      CLÁUSULA {{indiceAtual + 1|pad:'0':2}}/{{clausulas.length | pad:'0':2}}
+    </div>
+    <div class="wrap-clausulas">
+      <i class="ta-arrow-left fs-48 text-secondary align-items-center d-flex cursor-pointer"
+         (click)="clausulaAnterior()"></i>
+      <div class="wrap-clausulas-content">
+        <ng-container *ngFor="let c of clausulas; let i = index">
+          <div class="clausula"
+               [ngClass]="{active:i === indiceAtual, before:i < indiceAtual, after:i > indiceAtual}">
+            <div>
+              {{c.conteudo}}
+            </div>
+          </div>
+        </ng-container>
+
+      </div>
+      <i class="ta-arrow-right fs-48 text-secondary align-items-center d-flex cursor-pointer"
+         (click)="proximaClausula()"></i>
+    </div>
+    <div class="d-flex justify-content-center" *ngIf="proposta.dataClausulasAceitas === null">
+      <button class="btn btn-danger text-white mx-2 d-flex align-items-center" [disabled]="clausulaAceita" type="button"
+              (click)="discordar()">
+        <i class="ta-cancel-circle fs-22 mr-3"></i>
+        Não concordo com esta cláusula
+      </button>
+      <button class="btn btn-success text-white mx-2 d-flex align-items-center" [disabled]="clausulaAceita"
+              type="button"
+              (click)="concordar()">
+        <i class="ta-ok fs-22 mr-3"></i>
+        <span> Concordo com esta cláusula
+        <span class="d-block fs-12">Cláusulas validadas {{clausulasAceitas.size}} de {{clausulas.length}}</span>
+        </span>
+      </button>
+    </div>
+
+  </div>
+</div>

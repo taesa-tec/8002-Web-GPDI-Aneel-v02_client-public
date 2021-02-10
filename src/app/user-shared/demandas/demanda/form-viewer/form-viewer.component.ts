@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {AppService} from '@app/services/app.service';
 import {ActivatedRoute} from '@angular/router';
 import {merge} from 'lodash-es';
 import {Demanda} from '@app/commons/demandas';
 import {DemandaEtapa, DemandaEtapaStatus} from '@app/user-shared/demandas/commons';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {DEMANDA} from '@app/user-shared/demandas/demanda/providers';
 
 
 @Component({
@@ -12,7 +13,6 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './form-viewer.component.html'
 })
 export class FormViewerComponent implements OnInit {
-  demanda: Demanda;
   key: string;
   formValue: any;
   formValueDefault: any;
@@ -21,7 +21,9 @@ export class FormViewerComponent implements OnInit {
   readonly ETAPAS_VALUES = DemandaEtapa;
   readonly ETAPAS_STATUS = DemandaEtapaStatus;
 
-  constructor(protected app: AppService, protected route: ActivatedRoute, public activeModal: NgbActiveModal) {
+  constructor(
+    @Inject(DEMANDA) protected demanda: Demanda,
+    protected app: AppService, protected route: ActivatedRoute, public activeModal: NgbActiveModal) {
   }
 
   async ngOnInit() {

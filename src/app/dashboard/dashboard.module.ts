@@ -4,7 +4,6 @@ import {UsersModule} from '@app/dashboard/users/users.module';
 import {HeaderComponent, SharedModule} from '@app/dashboard/shared';
 
 import {NotFoundComponent} from './not-found/not-found.component';
-import {GerenciarUsuariosComponent} from './gerenciar-usuarios/gerenciar-usuarios.component';
 import {DashboardComponent} from './dashboard.component';
 import {UsersService} from '@app/services/users.service';
 import {IndexComponent} from './index/index.component';
@@ -17,7 +16,6 @@ import {SidebarComponent} from '@app/dashboard/side-bar/sidebar.component';
     SidebarComponent,
     HeaderComponent,
     NotFoundComponent,
-    GerenciarUsuariosComponent,
     IndexComponent,
   ],
   imports: [
@@ -30,7 +28,6 @@ import {SidebarComponent} from '@app/dashboard/side-bar/sidebar.component';
     HeaderComponent,
     SidebarComponent,
     NotFoundComponent,
-    GerenciarUsuariosComponent,
   ],
   providers: [
     UsersService

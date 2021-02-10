@@ -1,0 +1,130 @@
+<div class="bg-light py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h3 class="text-uppercase text-dark">Meu Cadastro</h3>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container my-3 position-relative">
+  <app-loading type="fullscreen"></app-loading>
+  <div class="container my-3 position-relative">
+    <app-loading type="fullscreen"></app-loading>
+    <form [formGroup]="form" *ngIf="form" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-3" [formGroup]="fotoPerfil">
+          <app-upload-image
+            formControlName="file"
+            name="file"
+            [previewImage]="previewAvatar"
+          ></app-upload-image>
+        </div>
+        <div class="col-9">
+          <div class="row">
+            <div class="col-6">
+              <div class="form-group">
+                <label for="nome-completo">Nome Completo</label>
+                <input
+                  type="text"
+                  formControlName="nomeCompleto"
+                  id="nome-completo"
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  autocomplete="off"
+                  formControlName="email"
+                  class="form-control"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <div class="form-group">
+                <label for="">Empresa</label>
+                <!-- formControlName="empresa" -->
+                <select
+                  name="empresaId"
+                  id=""
+                  class="form-control"
+                  formControlName="empresaId"
+                  readonly
+                  #empresa
+                >
+                  <option value="">Selecione</option>
+                  <option *ngFor="let empresa of empresas" [value]="empresa.id">{{
+                    empresa.nome
+                    }}</option>
+                  <option value="0">Outra (Empresa Externa)</option>
+                </select>
+              </div>
+              <div class="form-group" *ngIf="razaoSocial">
+                <label for="">Nome da Empresa</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="razaoSocial"
+                />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="">CPF Usuário</label>
+                <!-- formControlName="cpf" -->
+                <input
+                  type="text"
+                  mask="000.000.000-00"
+                  formControlName="cpf"
+                  placeholder="999.999.999-99"
+                  class="form-control"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <div class="form-group">
+                <label>Cargo</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="cargo"
+                  placeholder="Cargo"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="resultado && !resultado.sucesso">
+            <div class="col-12">
+              <div class="alert border-danger text-danger font-weight-bold">
+                <ul class="m-0">
+                  <li *ngFor="let item of resultado.inconsistencias">
+                    {{ item }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 text-right">
+              <a routerLink="/dashboard/gerenciar-usuarios" class="btn btn-link"
+              >Cancelar</a
+              >
+              <button class="btn btn-primary" [disabled]="form.invalid">
+                <i class="ta-save"></i> Salvar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

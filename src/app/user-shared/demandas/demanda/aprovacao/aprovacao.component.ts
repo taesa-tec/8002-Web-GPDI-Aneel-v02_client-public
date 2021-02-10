@@ -1,11 +1,13 @@
 import {AppService} from '@app/services/app.service';
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Demanda} from '@app/commons/demandas';
 import {DemandaEtapa, DemandaEtapaItems, DemandaEtapaStatus} from '@app/user-shared/demandas/commons';
 import {environment} from '@env/environment';
-import {EquipePeD, User} from '@app/commons';
+import {EquipePeD, ROOT_URL} from '@app/commons';
 import {UsersService} from '@app/services/users.service';
+import {DEMANDA} from '@app/user-shared/demandas/demanda/providers';
+import {AuthService} from '@app/services';
 
 
 @Component({
@@ -15,8 +17,6 @@ import {UsersService} from '@app/services/users.service';
 })
 export class AprovacaoComponent implements OnInit {
 
-
-  user: User;
   protected $demanda: Demanda;
   equipe: EquipePeD;
   readonly ETAPAS_VALUES = DemandaEtapa;
@@ -63,30 +63,33 @@ export class AprovacaoComponent implements OnInit {
   }
 
   constructor(
+    @Inject(DEMANDA) demanda: Demanda,
+    @Inject(ROOT_URL) protected root_url: string,
     protected app: AppService,
     protected usersService: UsersService,
-    protected route: ActivatedRoute) {
+    public auth: AuthService,
+    protected route: ActivatedRoute
+  ) {
+    this.demanda = demanda;
   }
 
   async ngOnInit() {
-    this.user = this.usersService.currentUser;
-    this.demanda = this.route.parent.snapshot.data.demanda.demanda;
+
     this.equipe = await this.app.sistema.getEquipePeD();
     this.anexos = await this.app.demandas.getAnexos(this.demanda.id);
   }
 
   async avaliacao(demanda) {
     this.demanda = demanda;
-    this.app.router.navigate(['/dashboard']);
+    this.app.router.navigate([this.root_url]).then();
   }
 
   async userSelected(value) {
-    console.log(value);
     this.app.showLoading();
     try {
       this.demanda = await this.app.demandas.definirRevisor(this.demanda.id, value);
-      this.app.alert('Revisor definido com sucesso!');
-      this.app.router.navigate(['/dashboard']);
+      this.app.alert('Revisor definido com sucesso!').then();
+      this.app.router.navigate([this.root_url]).then();
     } catch (e) {
       console.error(e);
     }

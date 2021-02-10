@@ -42,10 +42,10 @@
               <label for="">Empresa</label>
               <!-- formControlName="empresa" -->
               <select
-                name="catalogEmpresaId"
+                name="empresaId"
                 id=""
                 class="form-control"
-                formControlName="catalogEmpresaId"
+                formControlName="empresaId"
                 readonly
                 #empresa
               >
@@ -105,7 +105,7 @@
         </div>
         <div class="row">
           <div class="col-12 text-right">
-            <a routerLink="/dashboard/gerenciar-usuarios" class="btn btn-link"
+            <a routerLink="/admin/gerenciar-usuarios" class="btn btn-link"
             >Cancelar</a
             >
             <button class="btn btn-primary" [disabled]="form.invalid">

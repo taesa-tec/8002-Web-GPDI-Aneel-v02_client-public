@@ -1,5 +1,7 @@
 import {UserRole} from './enums';
 import {InjectionToken} from '@angular/core';
+import {Observable} from 'rxjs';
+
 
 export interface BaseEntity {
   id: number;
@@ -80,7 +82,7 @@ export interface Projeto {
   codigo?: any;
   tituloDesc: string;
   numero: string;
-  catalogEmpresaId: number;
+  empresaId: number;
   catalogEmpresa?: Empresa;
   catalogStatusId: number;
   catalogStatus?: ProjetoStatus;
@@ -116,13 +118,13 @@ export interface User {
   nomeCompleto: any;
   role: string;
   roles?: Array<UserRole>;
-  status: number;
+  status: boolean;
   razaoSocial?: any;
   fotoPerfil?: string;
   cpf?: any;
   cargo?: string;
   empresa?: string;
-  catalogEmpresaId?: number | '';
+  empresaId?: number | string | '';
   ultimoLogin?: string;
   dataCadastro?: string;
   dataAtualizacao?: string;
@@ -240,7 +242,7 @@ export interface EmpresaProjeto {
   projetoId: number;
   classificacao: number;
   classificacaoValor: string;
-  catalogEmpresaId: number;
+  empresaId: number;
   catalogEmpresa?: Empresa;
   cnpj?: any;
   catalogEstadoId?: any;
@@ -600,6 +602,11 @@ export interface Pagination<T> {
   filters?: Array<{ name: string; field: string; values: { [key: string]: string } }>;
 }
 
-export const SIDEBAR_MENU = new InjectionToken<Array<MenuItem>>('Sidebar menu');
+export const SIDEBAR_MENU = new InjectionToken<Array<MenuItem> | Observable<Array<MenuItem>>>('Sidebar menu');
 export const HEADER_MENU = new InjectionToken<Array<MenuItem>>('Header menu');
 export const ROOT_URL = new InjectionToken<string>('Root Url');
+/**
+ * @deprecated Não utilizar, não é atualizado em trocas de logins
+ */
+export const CURRENT_USER = new InjectionToken<User>('Current User');
+

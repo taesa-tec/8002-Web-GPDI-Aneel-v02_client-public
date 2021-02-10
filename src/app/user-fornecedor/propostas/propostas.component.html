@@ -1,0 +1,19 @@
+<div class="row justify-content-between">
+  <div class="col">
+    <h5 class="text-uppercase text-blue font-weight-normal my-4">
+      PROJETOS - PROPOSTAS
+    </h5>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <app-table
+      [cols]="cols"
+      [data]="propostas"
+      [buttons]="buttons"
+      (action)="tableAction($event)">
+    </app-table>
+  </div>
+</div>
+

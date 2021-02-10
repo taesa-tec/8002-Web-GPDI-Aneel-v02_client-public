@@ -20,7 +20,7 @@ export class DemandasService {
   }
 
   getDemanda(id: number) {
-    return this.http.get<any>(`Demandas/${id}`);
+    return this.http.get<Demanda>(`Demandas/${id}`);
   }
 
   getDemandaForm(id: number, key: string) {

@@ -7,6 +7,7 @@ import {environment} from '@env/environment';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {HistoricoComponent} from '@app/user-shared/demandas/demanda/historico/historico.component';
+import {DEMANDA} from '@app/user-shared/demandas/demanda/providers';
 
 @Component({
   selector: 'app-documento-aprovacoes',
@@ -21,9 +22,14 @@ export class DocumentoAprovacoesComponent implements OnInit {
   anexos = [];
   formKey = 'especificacao-tecnica';
   pdfUrl = null;
-  form = new FormGroup({});
+  form = new FormGroup({
+    comentario: new FormControl('')
+  });
 
-  constructor(protected app: AppService, protected route: ActivatedRoute, protected modal: NgbModal) {
+  constructor(
+    @Inject(DEMANDA) demanda: Demanda,
+    protected app: AppService, protected route: ActivatedRoute, protected modal: NgbModal) {
+    this.demanda = demanda;
   }
 
   get demanda(): Demanda {
@@ -42,10 +48,10 @@ export class DocumentoAprovacoesComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.demanda = this.route.parent.snapshot.data.demanda.demanda;
+
     this.anexos = await this.app.demandas.getAnexos(this.demanda.id);
     if (this.demanda.status === this.ETAPAS_STATUS.Reprovada) {
-      this.form.addControl('comentario', new FormControl('', Validators.required));
+      this.form.get('comentario').setValidators(Validators.required);
     }
     this.form.updateValueAndValidity();
   }
@@ -59,7 +65,7 @@ export class DocumentoAprovacoesComponent implements OnInit {
     try {
       this.demanda = await this.app.demandas.proximaEtapa(this.demanda.id, this.form.value);
       this.form.reset();
-      await this.app.router.navigate(['/dashboard']);
+      await this.app.router.navigate(['/']);
     } catch (e) {
       console.error(e);
     } finally {
@@ -87,7 +93,6 @@ export class DocumentoAprovacoesComponent implements OnInit {
     try {
       const ref = this.modal.open(HistoricoComponent, {size: 'xl', scrollable: true});
       const comp = ref.componentInstance as HistoricoComponent;
-      comp.demandaId = this.demanda.id;
       comp.form = this.formKey;
 
       await ref.result;

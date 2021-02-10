@@ -1,8 +1,7 @@
 import {Component, Inject, OnInit, Optional} from '@angular/core';
-import {HEADER_MENU, MenuItem, User} from '@app/commons';
+import {HEADER_MENU, MenuItem, ROOT_URL, User} from '@app/commons';
 import {AppService} from '@app/services/app.service';
 import {AuthService} from '@app/services/auth.service';
-import {environment} from '@env/environment';
 
 @Component({
   selector: 'app-header',
@@ -11,11 +10,11 @@ import {environment} from '@env/environment';
 })
 export class HeaderComponent implements OnInit {
 
-  currentUser: User;
   menu: Array<MenuItem>;
 
   get avatar() {
-    return `url(${environment.api_url}/Users/${this.currentUser.id}/avatar)`;
+
+    return this.auth.user.fotoPerfil ? `url(${this.auth.user.fotoPerfil})` : '';
   }
 
   get empresa() {
@@ -25,12 +24,19 @@ export class HeaderComponent implements OnInit {
     return '';
   }
 
+  currentUser: User;
+
   constructor(
     @Optional() @Inject(HEADER_MENU) menu,
+    @Inject(ROOT_URL) public home_url: string,
     protected app: AppService,
     protected auth: AuthService
   ) {
     this.menu = menu;
+  }
+
+  openCadastro() {
+    this.app.router.navigate([this.home_url, 'meu-cadastro']).then();
   }
 
   logout() {

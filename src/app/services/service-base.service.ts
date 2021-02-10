@@ -1,7 +1,38 @@
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpRequest} from '@angular/common/http';
 import {BaseEntity} from '@app/commons';
-import {UploadFilesService} from '@app/dashboard/painel-demandas/conf-padrao/services/upload-files.service';
+import {Injectable} from '@angular/core';
 
+@Injectable({
+  providedIn: 'root'
+})
+export class UploadFilesService {
+
+  constructor(protected http: HttpClient) {
+  }
+
+  upload(files: Array<File>, url: string) {
+
+    const formData = new FormData();
+
+    files.forEach(file =>
+      formData.append('file', file, file.name)
+    );
+
+    const request = new HttpRequest('POST', url, formData);
+
+    return this.http.request<any>(request);
+  }
+
+  download(url: string) {
+    return this.http.get(url, {
+      responseType: 'blob' as 'json'
+    });
+  }
+}
+
+@Injectable({
+  providedIn: 'root'
+})
 export class ServiceBase<T extends { id?: any }> extends UploadFilesService {
 
   get: (url, ...args) => Promise<any> = (url, ...args) => this.http.get(`${this.controller}/${url}`, ...args).toPromise();
@@ -72,7 +103,7 @@ export class ServiceBase<T extends { id?: any }> extends UploadFilesService {
   }
 
   async salvar(data: BaseEntity, query?: string) {
-    return await ((data.id && data.id > 0) ? this.atualizar(data, query) : this.criar(data, query));
+    return await ((data.id && data.id.toString() !== '0') ? this.atualizar(data, query) : this.criar(data, query));
   }
 
   async excluir(id: any) {
@@ -83,4 +114,32 @@ export class ServiceBase<T extends { id?: any }> extends UploadFilesService {
     return super.upload(files, `${this.controller}/${url}`);
   }
 }
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EstadosService extends ServiceBase<{ id: number; nome: string; valor: string; }> {
+  constructor(protected http: HttpClient) {
+    super(http, 'Estados');
+  }
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PaisesService extends ServiceBase<{ id: number; nome: string; valor: string; }> {
+  constructor(protected http: HttpClient) {
+    super(http, 'Paises');
+  }
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EmpresasService extends ServiceBase<{ id: number; nome: string; valor: string; }> {
+  constructor(protected http: HttpClient) {
+    super(http, 'Empresas');
+  }
+}
+
 

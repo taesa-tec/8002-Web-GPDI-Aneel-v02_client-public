@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {AppService} from '@app/services/app.service';
 import {ActivatedRoute} from '@angular/router';
 import {Demanda} from '@app/commons/demandas';
 import {DemandaEtapa, DemandaEtapaStatus} from '@app/user-shared/demandas/commons';
 import {environment} from '@env/environment';
+import {DEMANDA} from '@app/user-shared/demandas/demanda/providers';
 
 @Component({
   selector: 'app-etapa-avaliacao',
@@ -12,7 +13,9 @@ import {environment} from '@env/environment';
 })
 export class EtapaAvaliacaoComponent implements OnInit {
 
-  constructor(protected  app: AppService, protected route: ActivatedRoute) {
+  constructor(
+    @Inject(DEMANDA) demanda: Demanda,
+    protected  app: AppService, protected route: ActivatedRoute) {
   }
 
   protected $demanda: Demanda;

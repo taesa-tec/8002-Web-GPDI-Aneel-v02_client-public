@@ -1,5 +1,5 @@
 <div >
-  <div class="d-flex justify-content-end" *ngIf="formReprovacao === null">
+  <div class="d-flex justify-content-end" *ngIf="form === null">
     <button class="btn btn-danger" (click)="reprovar()">
       <i class="ta-cancel-circle"></i>
       Reprovar Demanda
@@ -9,7 +9,7 @@
       Aprovar Demanda
     </button>
   </div>
-  <div *ngIf="formReprovacao" [formGroup]="formReprovacao">
+  <div *ngIf="form" [formGroup]="form">
     <h6 class="text-blue-light text-uppercase"> Motivo Reprovação (Será Adicionado as observações internas)</h6>
     <div class="form-group">
       <textarea cols="30" rows="5" class="form-control" formControlName="motivo"></textarea>
@@ -28,7 +28,7 @@
         <button class="btn btn-link" (click)="cancelarReprovacao()">
           Cancelar
         </button>
-        <button class="btn btn-danger" (click)="reprovar()" [disabled]="formReprovacao.invalid">
+        <button class="btn btn-danger" (click)="reprovar()" [disabled]="form.invalid">
           <i class="ta-cancel-circle"></i>
           Reprovar Demanda
         </button>

@@ -31,7 +31,7 @@ export class CatalogsService {
   }
 
   async empresas() {
-    return await this.getData<Array<Empresa>>('empresas', `catalogs/empresas`);
+    return await this.getData<Array<Empresa>>('empresas', `Empresas`);
   }
 
   async empresa(id: number) {
@@ -47,11 +47,11 @@ export class CatalogsService {
   }
 
   async temas() {
-    return await this.getData<any>('temas', `catalogs/temas`);
+    return await this.getData<any>('temas', `Temas`);
   }
 
   async estados() {
-    return await this.getData<any>('estados', `catalogs/Estados`);
+    return await this.getData<any>('estados', `Estados`);
   }
 
   async categoriasContabeisGestao() {
