@@ -1,4 +1,5 @@
 import {get, set, defaultsDeep, difference, union} from 'lodash-es';
+import {ActivatedRouteSnapshot} from '@angular/router';
 
 const comparators: { [f: string]: (arg1: any, arg2: any) => boolean } = {
   contain: (text: string, $term: string) => termMatch(text, $term) !== null,
@@ -89,3 +90,8 @@ export function RectIntersect(a: DOMRect, b: DOMRect): boolean {
   return (a.y < b.bottom && b.y < a.bottom) && ((a.x < b.right && b.x < a.right));
 }
 
+export function extractRouteParams(route: ActivatedRouteSnapshot) {
+  return route.pathFromRoot
+    .map(r => r.params)
+    .reduce((p, c) => Object.assign(p, c), {});
+}

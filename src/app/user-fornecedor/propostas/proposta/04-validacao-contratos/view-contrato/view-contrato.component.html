@@ -1,49 +1,78 @@
 <div class="row">
-    <div class="col">
-        <h5 class="text-uppercase text-blue font-weight-normal my-4">CONTRATOS</h5>
-    </div>
+  <div class="col">
+    <h5 class="text-uppercase text-blue font-weight-normal my-4">CONTRATOS</h5>
+  </div>
 </div>
 
-<div class="row mb-5 bg-cinza-claro">
-    <div class="col d-flex justify-content-between align-items-center py-2">
-        <h5 class="font-weight-normal m-0">TÍTULO DO CONTRATO ENTRA AQUI</h5>
-        <a class="button btn btn-link position-relative" routerLink="../">
+<div class="row mb-5 bg-light">
+  <div class="col d-flex justify-content-between align-items-center py-2">
+    <h5 class="font-weight-normal m-0">{{contrato.titulo}}</h5>
+    <a class="button btn btn-link position-relative" routerLink="../">
             <span class="position-absolute fs-32" style="top: 3px; left: -14px">
                 <i class="ta-arrow-left"></i>
             </span>
-            Voltar para contratos
-        </a>
-    </div>
+      Voltar para contratos
+    </a>
+  </div>
 </div>
 
-<div class="row" >
+<form [formGroup]="form" (ngSubmit)="onSubmit($event)">
+
+  <div class="row">
     <div class="col">
-        <form [formGroup]="formContrato" (ngSubmit)="onSubmit()" *ngIf="formContrato">
-
-            <div class="form-group">
-                <ckeditor
-                    [config]="configEditor"
-                    formControlName="texto"
-                ></ckeditor>
-            </div>
-
-            <div class="form-group d-flex mt-4">
-                <div class="button btn btn-link px-0">
-                    <i class="ta-ampulheta"></i>
-                    Histórico de Versões
-                </div>
-                <div class="ml-auto">
-                    <button type="button" class="btn btn-outline-primary mx-2" [disabled]="formContrato.invalid">
-                        <i class="ta-save fs-24 align-middle"></i>
-                        Salvar como Rascunho
-                    </button>
-                    <button type="submit" class="btn btn-success mx-2" [disabled]="formContrato.invalid">
-                        <i class="ta-ok fs-24 align-middle"></i>
-                        Salvar e Marcar como Finalizado
-                    </button>
-                </div>
-            </div>
-
-        </form>
+      <h5 class="text-blue-light">PARTE INICIAL (NÃO EDITÁVEL - VARÍAVEIS PREENCHIDAS AUTOMATICAMENTE):</h5>
+      <div class="bg-cinza-claro p-3 rounded my-3">
+        <div [innerHTML]="contrato.parent.header" class="bg-white p-3"></div>
+      </div>
     </div>
-</div>
+  </div>
+
+
+  <div class="row">
+    <div class="col">
+
+
+      <div class="form-group">
+        <div class="bg-cinza-claro p-3 rounded my-3">
+          <ckeditor
+            [config]="configEditor"
+            formControlName="conteudo"
+          ></ckeditor>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h5 class="text-blue-light">PARTE FINAL (NÃO EDITÁVEL - VARÍAVEIS PREENCHIDAS AUTOMATICAMENTE):</h5>
+      <div class="bg-cinza-claro p-3 rounded my-3">
+        <div [innerHTML]="contrato.parent.footer" class="bg-white p-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+
+      <div class="form-group d-flex mt-4">
+        <div class="button btn btn-link px-0">
+          <i class="ta-ampulheta"></i>
+          Histórico de Versões
+        </div>
+        <div class="ml-auto">
+          <button type="submit" class="btn btn-outline-primary mx-2" value="draft" [disabled]="form.invalid">
+            <i class="ta-save fs-24 align-middle"></i>
+            Salvar como Rascunho
+          </button>
+          <button type="submit" class="btn btn-success mx-2" value="publish" [disabled]="form.invalid">
+            <i class="ta-ok fs-24 align-middle"></i>
+            Salvar e Marcar como Finalizado
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</form>
