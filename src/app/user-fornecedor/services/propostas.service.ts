@@ -36,8 +36,19 @@ export class PropostasService extends ServiceBase<any> {
     }).toPromise();
   }
 
+  async saveCoExecutor(id: number, coExecutor: BaseEntity) {
+    if (coExecutor.id === 0) {
+      return await this.http.post(`${this.controller}/${id}/CoExecutores`, coExecutor).toPromise();
+    }
+    return await this.http.put(`${this.controller}/${id}/CoExecutores`, coExecutor).toPromise();
+  }
+
   async getCoExecutores(id: number) {
     return await this.http.get<Array<BaseEntity>>(`${this.controller}/${id}/CoExecutores`, {}).toPromise();
+  }
+
+  async removerCoExecutor(id: number, coExecutorId: number) {
+    return await this.http.delete(`${this.controller}/${id}/CoExecutores/${coExecutorId}`).toPromise();
   }
 
   async getContratos(id: number) {
@@ -48,18 +59,14 @@ export class PropostasService extends ServiceBase<any> {
     return await this.http.get<Array<BaseEntity>>(`${this.controller}/${id}/Contratos/${contratoId}`, {}).toPromise();
   }
 
-  async saveCoExecutor(id: number, coExecutor: BaseEntity) {
-    if (coExecutor.id === 0) {
-      return await this.http.post(`${this.controller}/${id}/CoExecutores`, coExecutor).toPromise();
-    }
-    return await this.http.put(`${this.controller}/${id}/CoExecutores`, coExecutor).toPromise();
+  async getContratoRevisoes(id: number, contratoId: number) {
+    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${id}/Contratos/${contratoId}/Revisoes`, {}).toPromise();
   }
+
 
   async saveContrato(id: number, contratoId: number, contrato: any) {
     return await this.http.post(`${this.controller}/${id}/Contratos/${contratoId}`, contrato).toPromise();
   }
 
-  async removerCoExecutor(id: number, coExecutorId: number) {
-    return await this.http.delete(`${this.controller}/${id}/CoExecutores/${coExecutorId}`).toPromise();
-  }
+
 }

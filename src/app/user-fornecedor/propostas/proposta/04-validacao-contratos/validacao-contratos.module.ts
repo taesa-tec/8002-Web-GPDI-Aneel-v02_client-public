@@ -5,12 +5,14 @@ import {ValidacaoContratosRoutingModule} from './validacao-contratos-routing.mod
 import {ValidacaoContratosComponent} from './validacao-contratos.component';
 import {ViewContratoComponent} from './view-contrato/view-contrato.component';
 import {ContratoResolver, ContratosResolver} from '@app/user-fornecedor/resolvers/contratos.resolver';
+import {HistoricoComponent} from './historico/historico.component';
 
 
 @NgModule({
   declarations: [
     ValidacaoContratosComponent,
-    ViewContratoComponent
+    ViewContratoComponent,
+    HistoricoComponent
   ],
   imports: [
     SharedModule,

@@ -57,10 +57,10 @@
     <div class="col">
 
       <div class="form-group d-flex mt-4">
-        <div class="button btn btn-link px-0">
+        <button type="button" class="button btn btn-link px-0" (click)="historico()">
           <i class="ta-ampulheta"></i>
           Histórico de Versões
-        </div>
+        </button>
         <div class="ml-auto">
           <button type="submit" class="btn btn-outline-primary mx-2" value="draft" [disabled]="form.invalid">
             <i class="ta-save fs-24 align-middle"></i>

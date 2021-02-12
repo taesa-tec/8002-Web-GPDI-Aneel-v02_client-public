@@ -5,6 +5,8 @@ import {AppService} from '@app/services/app.service';
 import _configEditor from '@app/core/config-editor';
 import {PropostasService} from '@app/user-fornecedor/services/propostas.service';
 import {PropostaComponent} from '@app/user-fornecedor/propostas/proposta/proposta.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {HistoricoComponent} from '@app/user-fornecedor/propostas/proposta/04-validacao-contratos/historico/historico.component';
 
 interface Parent {
   titulo: string;
@@ -44,6 +46,7 @@ export class ViewContratoComponent implements OnInit {
     private parent: PropostaComponent,
     private service: PropostasService,
     private route: ActivatedRoute,
+    private modal: NgbModal,
     private fb: FormBuilder
   ) {
   }
@@ -69,6 +72,12 @@ export class ViewContratoComponent implements OnInit {
     } finally {
       this.app.loading.hide();
     }
+  }
+
+  async historico() {
+    const ref = this.modal.open(HistoricoComponent, {size: 'xl'});
+    const component = ref.componentInstance as HistoricoComponent;
+    await ref.result;
   }
 
 }

@@ -1,0 +1,64 @@
+<div class="modal-header">
+  <div class="d-block w-100 p-3 ">
+    <div class="row border-bottom">
+      <div class="col  pb-3">
+        <div class="text-uppercase modal-title text-blue-light fs-18">Comparativo de versões</div>
+      </div>
+      <div class="col">
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.close('close')">
+          <i class="ta-cancel-circle"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group py-3">
+          <!--
+          <select class="form-control" [(ngModel)]="revisaoId" (change)="loadDiff(revisaoId)"
+                  [disabled]="historico.length === 0">
+            <option value="0" disabled>Selecione</option>
+            <option *ngFor="let version of historico" [ngValue]="version.id">
+              Revisão: {{version.revisao}} - {{version.createdAt| date}}</option>
+          </select>
+           -->
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group py-3">
+          <div class="input form-control" readonly>Revisão Atual:</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col legenda">
+        Legenda:
+        <span class="diff-text inserted">Texto inserido</span>
+        &nbsp;
+        <span class="diff-text deleted">Texto removido</span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<div class="modal-body">
+  <div class="wrap">
+
+    <div class="row" *ngIf="!loading; else htmlloading">
+      <!--
+      <div class="col" style="overflow: auto" *ngIf="html; else nohistory">
+        <div [innerHTML]="html" class="inner-html"></div>
+      </div>
+       -->
+    </div>
+  </div>
+</div>
+<ng-template #htmlloading>
+  <div class="row">
+    <div class="col  text-center">Carregando Histórico</div>
+  </div>
+</ng-template>
+<ng-template #nohistory>
+  <div class="col text-center">Sem histórico de alterações</div>
+</ng-template>
