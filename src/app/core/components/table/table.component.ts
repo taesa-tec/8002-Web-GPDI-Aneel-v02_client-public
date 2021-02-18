@@ -24,7 +24,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   protected $listOrder: Array<TableOrder> = [];
   protected $defaultListOrder: Array<TableOrder> = [];
   protected $data: Array<TableComponentRow> = [];
-  protected $inputData: Array<any>[];
+  protected $inputData: Array<any> = [];
   protected $cols: TableComponentCols;
   protected $index: Searchables<TableComponentRow> = new Searchables<TableComponentRow>();
 
@@ -425,7 +425,6 @@ export class TableComponent implements OnInit, AfterViewInit {
         case 'ng-pipe':
           return this.toPipe(cellData);
         case 'template':
-          console.log(cellData);
           const text = typeof cellData.col.template === 'function' ? cellData.col.template(cellData.value) : cellData.col.template;
           return template(text)(typeof cellData.value === 'object' ? cellData.value : cellData);
         default:

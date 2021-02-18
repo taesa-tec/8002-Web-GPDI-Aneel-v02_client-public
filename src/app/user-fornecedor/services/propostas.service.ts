@@ -36,10 +36,6 @@ export class PropostasService extends ServiceBase<any> {
     }).toPromise();
   }
 
-  async getCoExecutores(id: number) {
-    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${id}/CoExecutores`, {}).toPromise();
-  }
-
   async saveCoExecutor(id: number, coExecutor: BaseEntity) {
     if (coExecutor.id === 0) {
       return await this.http.post(`${this.controller}/${id}/CoExecutores`, coExecutor).toPromise();
@@ -47,7 +43,40 @@ export class PropostasService extends ServiceBase<any> {
     return await this.http.put(`${this.controller}/${id}/CoExecutores`, coExecutor).toPromise();
   }
 
+  async getCoExecutores(id: number) {
+    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${id}/CoExecutores`, {}).toPromise();
+  }
+
   async removerCoExecutor(id: number, coExecutorId: number) {
     return await this.http.delete(`${this.controller}/${id}/CoExecutores/${coExecutorId}`).toPromise();
   }
+
+  async getContratos(id: number) {
+    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${id}/Contratos`, {}).toPromise();
+  }
+
+  async getContrato(id: number, contratoId: number) {
+    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${id}/Contratos/${contratoId}`, {}).toPromise();
+  }
+
+  async getContratoRevisoes(id: number, contratoId: number) {
+    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${id}/Contratos/${contratoId}/Revisoes`, {}).toPromise();
+  }
+
+  async getContratoRevisao(propostaId: number, contratoId: number, id: number) {
+    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${propostaId}/Contratos/${contratoId}/Revisoes/${id}`, {})
+      .toPromise();
+  }
+
+  async getContratoRevisaoDiff(propostaId: number, contratoId: number, id: number) {
+    return await this.http.get(`${this.controller}/${propostaId}/Contratos/${contratoId}/Revisoes/${id}/Diff`, {responseType: 'text'})
+      .toPromise();
+  }
+
+
+  async saveContrato(id: number, contratoId: number, contrato: any) {
+    return await this.http.post(`${this.controller}/${id}/Contratos/${contratoId}`, contrato).toPromise();
+  }
+
+
 }
