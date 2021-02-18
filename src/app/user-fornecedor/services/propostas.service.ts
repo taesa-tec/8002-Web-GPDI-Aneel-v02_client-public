@@ -63,6 +63,16 @@ export class PropostasService extends ServiceBase<any> {
     return await this.http.get<Array<BaseEntity>>(`${this.controller}/${id}/Contratos/${contratoId}/Revisoes`, {}).toPromise();
   }
 
+  async getContratoRevisao(propostaId: number, contratoId: number, id: number) {
+    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${propostaId}/Contratos/${contratoId}/Revisoes/${id}`, {})
+      .toPromise();
+  }
+
+  async getContratoRevisaoDiff(propostaId: number, contratoId: number, id: number) {
+    return await this.http.get(`${this.controller}/${propostaId}/Contratos/${contratoId}/Revisoes/${id}/Diff`, {responseType: 'text'})
+      .toPromise();
+  }
+
 
   async saveContrato(id: number, contratoId: number, contrato: any) {
     return await this.http.post(`${this.controller}/${id}/Contratos/${contratoId}`, contrato).toPromise();

@@ -7,25 +7,9 @@ import {PropostasService} from '@app/user-fornecedor/services/propostas.service'
 import {PropostaComponent} from '@app/user-fornecedor/propostas/proposta/proposta.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {HistoricoComponent} from '@app/user-fornecedor/propostas/proposta/04-validacao-contratos/historico/historico.component';
+import {Contrato} from '@app/user-fornecedor/propostas/proposta/04-validacao-contratos/shared';
 
-interface Parent {
-  titulo: string;
-  header: string;
-  conteudo: string;
-  footer: string;
-  id: number;
-}
 
-interface Contrato {
-  parentId: number;
-  parent: Parent;
-  titulo: string;
-  conteudo: null;
-  revisoes: any[];
-  finalizado: boolean;
-  propostaId: number;
-  id: number;
-}
 
 
 @Component({
@@ -77,6 +61,9 @@ export class ViewContratoComponent implements OnInit {
   async historico() {
     const ref = this.modal.open(HistoricoComponent, {size: 'xl'});
     const component = ref.componentInstance as HistoricoComponent;
+    component.captacaoId = this.parent.proposta.captacaoId;
+    component.contratoId = this.contrato.parentId;
+    component.contrato = this.contrato;
     await ref.result;
   }
 

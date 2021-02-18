@@ -14,28 +14,25 @@
     <div class="row">
       <div class="col-6">
         <div class="form-group py-3">
-          <!--
-          <select class="form-control" [(ngModel)]="revisaoId" (change)="loadDiff(revisaoId)"
-                  [disabled]="historico.length === 0">
-            <option value="0" disabled>Selecione</option>
-            <option *ngFor="let version of historico" [ngValue]="version.id">
-              Revisão: {{version.revisao}} - {{version.createdAt| date}}</option>
+          <select class="form-control" [ngModel]="revisaoId" (ngModelChange)="carregarRevisao($event)">
+            <option *ngFor="let version of revisoes" [value]="version.id">
+              {{version.id}} Revisão: {{version.name}} - {{version.createdAt| date: 'short'}}</option>
           </select>
-           -->
         </div>
       </div>
       <div class="col-6">
         <div class="form-group py-3">
-          <div class="input form-control" readonly>Revisão Atual:</div>
+          <div class="input form-control" readonly>Revisão Atual</div>
         </div>
       </div>
     </div>
     <div class="row">
-      <div class="col legenda">
-        Legenda:
-        <span class="diff-text inserted">Texto inserido</span>
-        &nbsp;
-        <span class="diff-text deleted">Texto removido</span>
+      <div class="col-12 legenda text-center">
+        <div>
+          <span class="diff-text inserted p-2">Texto inserido</span>
+          &nbsp;
+          <span class="diff-text deleted p-2">Texto removido</span>
+        </div>
       </div>
     </div>
 
@@ -46,11 +43,12 @@
   <div class="wrap">
 
     <div class="row" *ngIf="!loading; else htmlloading">
-      <!--
-      <div class="col" style="overflow: auto" *ngIf="html; else nohistory">
-        <div [innerHTML]="html" class="inner-html"></div>
+      <div class="col" style="overflow: auto">
+        <div [innerHTML]="revisao" class="inner-html"></div>
       </div>
-       -->
+      <div class="col" style="overflow: auto" *ngIf="contrato; else nohistory">
+        <div [innerHTML]="contrato.conteudo" class="inner-html"></div>
+      </div>
     </div>
   </div>
 </div>
