@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormGroup, FormBuilder, Validators, FormArray} from '@angular/forms';
 
-import { AppService } from '@app/services/app.service';
+import {AppService} from '@app/services/app.service';
+import {ActivatedRoute} from '@angular/router';
+import {PropostasService} from '@app/user-fornecedor/services/propostas.service';
+import {PropostaComponent} from '@app/user-fornecedor/propostas/proposta/proposta.component';
 
 @Component({
   selector: 'app-plano-trabalho',
@@ -9,72 +12,64 @@ import { AppService } from '@app/services/app.service';
   styleUrls: ['./plano-trabalho.component.scss']
 })
 export class PlanoTrabalhoComponent implements OnInit {
+  form = this.fb.group({
+    motivacao: ['', [Validators.required]],
+    originalidade: ['', [Validators.required]],
+    aplicabilidade: ['', [Validators.required]],
+    relevancia: ['', [Validators.required]],
+    razoabilidadeCustos: ['', [Validators.required]],
+    pesquisasCorrelatas: ['', [Validators.required]],
+    metodologiaTrabalho: ['', [Validators.required]],
+    buscaAnterioridade: ['', [Validators.required]],
+    bibliografia: ['', [Validators.required]],
 
-  formPlanoTrabalho: FormGroup;
+  });
+  files: Array<any> = [];
 
-  constructor(
-    private app: AppService,
-    private fb: FormBuilder
-  ) { }
-
-  ngOnInit(): void {
-    this.configForm();
+  constructor(private app: AppService, private fb: FormBuilder, private route: ActivatedRoute,
+              private parent: PropostaComponent,
+              private service: PropostasService
+  ) {
   }
 
-  configForm() {
-    this.formPlanoTrabalho = this.fb.group({
-      id: ['', [Validators.required]],
-      motivacao: ['', [Validators.required]],
-      originalidade: ['', [Validators.required]],
-      aplicabilidade: ['', [Validators.required]],
-      relevancia: ['', [Validators.required]],
-      razoabilidadeCustos: ['', [Validators.required]],
-      pesquisasCorrelatas: ['', [Validators.required]],
-      metodologiaTrabalho: ['', [Validators.required]],
-      buscaAnterioridade: ['', [Validators.required]],
-      bibliografia: ['', [Validators.required]]
+  ngOnInit(): void {
+    this.route.data.subscribe(data => {
+      if (data.plano && typeof data.plano === 'object') {
+        const {arquivos, ...values} = data.plano;
+        this.form.patchValue(values);
+        this.updateFormFiles(arquivos);
+      }
     });
+  }
 
-    const planoTrabalho = this._getPlanoTrabalho();
-    
-    if(planoTrabalho) {
-      this.formPlanoTrabalho.patchValue(planoTrabalho);
+  updateFormFiles(files) {
+    this.files = files;
+  }
+
+  async anexarArquivos() {
+    try {
+      const files = await this.app.uploadForm(this.files.map(f => f.id),
+        `Fornecedor/Propostas/${this.parent.proposta.captacaoId}/Arquivos`);
+      this.updateFormFiles(files);
+    } catch (e) {
+      console.log(e);
     }
   }
 
-  changeFile(e) {
-    //this.uploads.push(e.target.files.item(0));
+  async download(file) {
+    await this.service.downloadArquivo(this.parent.proposta.captacaoId, file);
   }
 
-  onSubmit() {
-    if(this.formPlanoTrabalho.valid) {
-      const data = this.formPlanoTrabalho.value;
-      
-      try {
-        console.log(data);
-        this.app.alert('Plano de trabalho salvo com sucesso');
+  async onSubmit() {
+    if (this.form.valid) {
 
+      try {
+        await this.service.savePlanoTrabalho(this.parent.proposta.captacaoId, this.form.value);
+        this.app.alert('Plano de trabalho salvo com sucesso').then();
       } catch (e) {
-        this.app.alert('Não foi possível salvar o plano de trabalho');
+        this.app.alert('Não foi possível salvar o plano de trabalho').then();
         console.error(e);
       }
     }
   }
-
-  _getPlanoTrabalho() {
-    return {
-      id: 1,
-      motivacao: '',
-      originalidade: '',
-      aplicabilidade: '',
-      relevancia: '',
-      razoabilidadeCustos: '',
-      pesquisasCorrelatas: '',
-      metodologiaTrabalho: '',
-      buscaAnterioridade: '',
-      bibliografia: '',
-      arquivos: ''
-    };
-  }
-
 }

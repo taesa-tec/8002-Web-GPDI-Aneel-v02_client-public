@@ -16,7 +16,7 @@ export class SidebarComponent implements OnDestroy {
 
   @ViewChild(LoadingComponent, {static: true})
   private loading: LoadingComponent;
-  private subscription: Subscription;
+  private readonly subscription: Subscription;
   projetos: any;
   menu: Array<MenuItem>;
 
