@@ -29,7 +29,7 @@
     <div class="row" *ngIf="filesSent">
       <div class="col-12">
         <h5 class="mt-3 mb-2">Seus arquivos complementares</h5>
-        <div class="mb-2">Arquivos destacados em azul serão anexados ao projeto</div>
+        <div class="mb-2">Arquivos destacados em azul serão anexados</div>
         <ng-container>
           <div class="list-group">
             <label
@@ -46,7 +46,7 @@
               <span class="flex-grow-1">{{ file.name }}</span>
               <span class="badge badge-primary badge-pill flex-grow-0">{{
                 file.size | filesize
-              }}</span>
+                }}</span>
               <span
                 class="ta-cancel-circle px-1"
                 (click)="deleteFile($event, file)"

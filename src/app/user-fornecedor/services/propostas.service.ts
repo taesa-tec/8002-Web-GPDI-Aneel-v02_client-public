@@ -78,5 +78,27 @@ export class PropostasService extends ServiceBase<any> {
     return await this.http.post(`${this.controller}/${id}/Contratos/${contratoId}`, contrato).toPromise();
   }
 
+  async getPlanoTrabalho(id: number) {
+    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${id}/PlanoTrabalho`, {}).toPromise();
+  }
+
+  async savePlanoTrabalho(id: number, plano) {
+    return await this.http.post<Array<BaseEntity>>(`${this.controller}/${id}/PlanoTrabalho`, plano).toPromise();
+  }
+
+  async downloadArquivo(captacaoId: number, file) {
+    const blob = await this.http.get(`${this.controller}/Arquivos/${file.id}`, {
+      responseType: 'blob'
+    }).toPromise();
+
+    const a = document.createElement('a');
+    const blobUrl = URL.createObjectURL(blob);
+    // PQP que gambiarra
+    a.href = blobUrl;
+    a.setAttribute('download', file.name);
+    a.click();
+    URL.revokeObjectURL(blobUrl);
+  }
+
 
 }
