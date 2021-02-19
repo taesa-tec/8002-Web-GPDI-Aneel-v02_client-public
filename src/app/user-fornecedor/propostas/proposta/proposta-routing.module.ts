@@ -33,9 +33,9 @@ const routes: Routes = [
         loadChildren: () => import('./04-validacao-contratos/validacao-contratos.module').then(m => m.ValidacaoContratosModule)
       },
       {path: 'plano-de-trabalho', loadChildren: () => import('./05-plano-trabalho/plano-trabalho.module').then(m => m.PlanoTrabalhoModule)},
-      {path: 'escopo', loadChildren: () => import('./06-escopo/escopo.module').then(m => m.EscopoModule)},
-      {path: 'produtos', loadChildren: () => import('./07-produtos/produtos.module').then(m => m.ProdutosModule)},
-      {path: 'etapas', loadChildren: () => import('./08-etapas/etapas.module').then(m => m.EtapasModule)},
+      {path: 'escopo', loadChildren: () => import('./08-escopo/escopo.module').then(m => m.EscopoModule)},
+      {path: 'produtos', loadChildren: () => import('./06-produtos/produtos.module').then(m => m.ProdutosModule)},
+      {path: 'etapas', loadChildren: () => import('./07-etapas/etapas.module').then(m => m.EtapasModule)},
       {path: 'riscos', loadChildren: () => import('./09-riscos/riscos.module').then(m => m.RiscosModule)},
       {
         path: 'recursos-humanos',
