@@ -3,12 +3,17 @@ import {ActivatedRoute} from '@angular/router';
 import {Proposta, SIDEBAR_MENU} from '@app/commons';
 import {map} from 'rxjs/operators';
 import {CAPTACAO_ID} from '@app/user-fornecedor/propostas/proposta/shared';
+import {ProdutosService} from '@app/user-fornecedor/services/produtos.service';
+import {HttpClient} from '@angular/common/http';
+import {ProdutosResolver} from '@app/user-fornecedor/resolvers/produtos.resolver';
 
 
 @Component({
   selector: 'app-suprimentos',
   templateUrl: './proposta.component.html',
+  viewProviders: [],
   providers: [
+
     {
       provide: SIDEBAR_MENU,
       useFactory: (route: ActivatedRoute) => {
@@ -21,9 +26,9 @@ import {CAPTACAO_ID} from '@app/user-fornecedor/propostas/proposta/shared';
               {path: 'co-executores', text: 'Cadastro Co-Executores', icon: 'ta-empresas'},
               {path: 'contrato', text: 'Validação Contrato', icon: 'ta-gavel'},
               {path: 'plano-de-trabalho', text: 'Plano de Trabalho', icon: 'ta-work-plan'},
-              {path: 'escopo', text: 'Escopo', icon: 'ta-projeto'},
               {path: 'produtos', text: 'Produtos', icon: 'ta-box'},
               {path: 'etapas', text: 'Etapas', icon: 'ta-etapas'},
+              {path: 'escopo', text: 'Escopo', icon: 'ta-projeto'},
               {path: 'riscos', text: 'Tabela de Riscos', icon: 'ta-alert'},
               {path: 'recursos-humanos', text: 'Recursos Humanos', icon: 'ta-group'},
               {path: 'alocacao-recursos-humanos', text: 'Alocação de Recursos Humanos', icon: 'ta-alocacao-rh'},
@@ -44,7 +49,8 @@ import {CAPTACAO_ID} from '@app/user-fornecedor/propostas/proposta/shared';
       deps: [ActivatedRoute],
       useFactory: (route: ActivatedRoute) => parseFloat(route.snapshot.params.id)
     }
-  ]
+  ],
+
 })
 export class PropostaComponent implements OnInit {
   proposta: Proposta;

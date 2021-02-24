@@ -93,12 +93,13 @@ export class PropostasService extends ServiceBase<any> {
 
     const a = document.createElement('a');
     const blobUrl = URL.createObjectURL(blob);
-    // PQP que gambiarra
     a.href = blobUrl;
     a.setAttribute('download', file.name);
     a.click();
     URL.revokeObjectURL(blobUrl);
   }
+
+
 
 
 }

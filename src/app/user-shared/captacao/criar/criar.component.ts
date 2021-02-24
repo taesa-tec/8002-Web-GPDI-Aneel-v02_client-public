@@ -56,7 +56,7 @@ export class CriarComponent implements OnInit {
 
   async ngOnInit() {
     const [fornecedores, contratos, equipe] = await Promise.all([this.fornecedorService.obter(), this.contratosService.obter(),
-      this.usersService.usersInRole(UserRole.User)]);
+      this.usersService.usersInRole(UserRole.Suprimento)]);
     this.fornecedores = fornecedores; // await this.fornecedorService.obter();
     this.contratos = contratos; // await this.contratosService.obter();
     this.equipe = equipe; // await this.usersService.usersInRole(UserRole.User);

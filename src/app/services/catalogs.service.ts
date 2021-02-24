@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Empresa, ProjetoStatus, Segmento, TiposCompartilhamento, TextValue, Permissao} from '@app/commons';
-import {of, Observable} from 'rxjs';
-import {map, share, first} from 'rxjs/operators';
+import {Empresa, ProjetoStatus, Segmento, TiposCompartilhamento, Permissao} from '@app/commons';
 
 @Injectable({
   providedIn: 'root'
@@ -16,18 +14,12 @@ export class CatalogsService {
 
   protected async getData<T>(key: string, url: string) {
 
-    const cached = this.cache.get(key);
-
-    if (cached) {
-      return cached;
+    if (this.cache.has(key)) {
+      return this.cache.get(key);
     }
     const result = await this.http.get<T>(url).toPromise();
     this.cache.set(key, result);
     return result;
-  }
-
-  async permissoes() {
-    return await this.getData<Array<Permissao>>('permissoes', `catalogs/permissoes`);
   }
 
   async empresas() {
@@ -35,38 +27,53 @@ export class CatalogsService {
   }
 
   async empresa(id: number) {
+    console.warn('atualizar metodo de busca de empresa');
     return (await this.empresas()).find(e => e.id === id);
   }
 
   async status() {
-    return await this.getData<Array<ProjetoStatus>>('status', `catalogs/status`);
+    console.warn('Status de projeto usado');
+    return await this.getData<Array<ProjetoStatus>>('status', `Catalogo/status`);
   }
 
   async segmentos() {
-    return await this.getData<Array<Segmento>>('segmentos', `catalogs/segmentos`);
+    return await this.getData<Array<Segmento>>('segmentos', `Catalogo/segmentos`);
   }
 
   async temas() {
-    return await this.getData<any>('temas', `Temas`);
+    return await this.getData<any>('temas', `Catalogo/Temas`);
   }
 
   async estados() {
-    return await this.getData<any>('estados', `Estados`);
+    return await this.getData<any>('estados', `Catalogo/Estados`);
   }
 
   async categoriasContabeisGestao() {
-    return await this.getData<Array<any>>('categoriasContabeisGestao', `catalogs/categoriascontabeisgestao`);
+    return await this.getData<Array<any>>('categoriasContabeisGestao', `Catalogo/categoriascontabeisgestao`);
+  }
+
+  async categoriasContabeis() {
+    return await this.getData<Array<any>>('categoriasContabeisGestao', `Catalogo/CategoriaContabil`);
+  }
+
+  async produtoTipos() {
+    return await this.getData<Array<any>>('produtoTipos', `Catalogo/ProdutoTipo`);
+  }
+
+  async categoriasContabeisAtividade() {
+    return await this.getData<Array<any>>('categoriasContabeisGestao', `Catalogo/CategoriaContabilAtividade`);
   }
 
   async paises() {
-    return await this.getData<Array<{ id: number; nome: string; }>>('paises', `catalogs/Paises`);
+    return await this.getData<Array<{ id: number; nome: string; }>>('paises', `Catalogo/Paises`);
   }
+
 
   tipoCompartilhamento() {
     return TiposCompartilhamento;
   }
 
   async produtoFasesCadeia() {
-    return await this.getData<Array<{ id: number; nome: string; }>>('produtoFasesCadeia', `catalogs/ProdutoFasesCadeia`);
+    return await this.getData<Array<{ id: number; nome: string; }>>('produtoFasesCadeia', `Catalogo/ProdutoFaseCadeia`);
   }
 }

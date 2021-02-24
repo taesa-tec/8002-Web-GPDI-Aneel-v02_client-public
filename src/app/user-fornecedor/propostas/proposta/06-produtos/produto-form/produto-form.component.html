@@ -1,0 +1,91 @@
+<div class="modal-header">
+  <div class="text-uppercase modal-title text-blue-light fs-24">
+    {{form.value.id === 0 ? "NOVO" : "EDITAR"}} PRODUTO
+  </div>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <i class="ta-cancel-circle"></i>
+  </button>
+</div>
+
+<app-loading type="fullscreen"></app-loading>
+
+<div class="modal-body">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div class="mb-3">
+      <div class="form-group m-0">
+        <label>Classificação</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" formControlName="classificacao" type="radio" id="input-r-produto-intermediario"
+               value="Intermediario">
+        <label class="form-check-label" for="input-r-produto-intermediario">Produto Intermediário</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" formControlName="classificacao" type="radio" id="input-r-produto-final"
+               value="Final">
+        <label class="form-check-label" for="input-r-produto-final">Produto Final</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="tipo-produto">Tipo de produto</label>
+      <select class="form-control" id="tipo-produto" formControlName="tipoId">
+        <option value="" hidden>Selecione o tipo de produto</option>
+        <option [value]="tipo.id" *ngFor="let tipo of tipos">
+          {{ tipo.nome }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="cadeia-inovacao">Fase da cadeia de inovação do produto</label>
+      <select class="form-control" id="cadeia-inovacao" formControlName="faseCadeiaId">
+        <option value="" hidden>Selecione a fase da cadeia de inivação</option>
+        <option [value]="fase.id" *ngFor="let fase of fases">
+          {{ fase.nome }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="tipo-produto-detalhado">Tipo de produto detalhado</label>
+      <select class="form-control" id="tipo-produto-detalhado" formControlName="tipoDetalhadoId">
+        <option value="" hidden>Selecione o tipo de produto detalhado</option>
+        <ng-container *ngFor="let t of tiposProdutoDetalhados">
+          <option [value]="t.id">{{t.nome}}</option>
+        </ng-container>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="titulo-produto">Título produto</label>
+      <input type="text" class="form-control" id="titulo-produto" formControlName="titulo"
+             placeholder="Digite o título do produto">
+    </div>
+
+    <div class="form-group">
+      <label>Descrição detalhada do produto</label>
+      <app-textarea class="form-control" rows="4" maxlength="1000" formControlName="descricao"></app-textarea>
+    </div>
+
+    <div class="form-group d-flex justify-content-between">
+      <div>
+        <button type="button" class="button btn btn-danger" (click)="remover()" *ngIf="form.value.id !== 0">
+          <i class="ta-trash mr-1"></i>
+          Excluir Produto
+        </button>
+      </div>
+      <div class="text-right">
+        <button type="button" class="button btn btn-link" (click)="activeModal.dismiss('cancel')">
+          Cancelar
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          <i class="ta-save mr-1"></i>
+          Salvar Produto
+        </button>
+      </div>
+    </div>
+
+  </form>
+</div>
