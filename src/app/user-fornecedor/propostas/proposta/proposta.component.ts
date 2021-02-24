@@ -3,12 +3,17 @@ import {ActivatedRoute} from '@angular/router';
 import {Proposta, SIDEBAR_MENU} from '@app/commons';
 import {map} from 'rxjs/operators';
 import {CAPTACAO_ID} from '@app/user-fornecedor/propostas/proposta/shared';
+import {ProdutosService} from '@app/user-fornecedor/services/produtos.service';
+import {HttpClient} from '@angular/common/http';
+import {ProdutosResolver} from '@app/user-fornecedor/resolvers/produtos.resolver';
 
 
 @Component({
   selector: 'app-suprimentos',
   templateUrl: './proposta.component.html',
+  viewProviders: [],
   providers: [
+
     {
       provide: SIDEBAR_MENU,
       useFactory: (route: ActivatedRoute) => {
@@ -44,7 +49,8 @@ import {CAPTACAO_ID} from '@app/user-fornecedor/propostas/proposta/shared';
       deps: [ActivatedRoute],
       useFactory: (route: ActivatedRoute) => parseFloat(route.snapshot.params.id)
     }
-  ]
+  ],
+
 })
 export class PropostaComponent implements OnInit {
   proposta: Proposta;

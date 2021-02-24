@@ -1,7 +1,11 @@
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AppService } from '@app/services/app.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {AppService} from '@app/services/app.service';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {BaseEntity, FasesCadeiaInovacao, TiposProdutos} from '@app/commons';
+import {ActivatedRoute, Router} from '@angular/router';
+import {LoadingComponent} from '@app/core/components';
+import {ProdutosService} from '@app/user-fornecedor/services/produtos.service';
 
 @Component({
   selector: 'app-produto-form',
@@ -11,85 +15,65 @@ import { Component, OnInit } from '@angular/core';
 export class ProdutoFormComponent implements OnInit {
 
   produto: any;
-  status: boolean = false;
+  tipos: Array<any> = [];
+  fases: Array<any> = [];
+  tiposProdutoDetalhados: Array<any> = [];
+  faseCadeiaCtrl = this.fb.control('', Validators.required);
+  tipoDetalhadoCtrl = this.fb.control('', Validators.required);
 
-  formProduto: FormGroup;
-  arrayProduto = this.fb.array([]);
+  form: FormGroup = this.fb.group({
+    id: [0],
+    classificacao: ['', Validators.required],
+    titulo: ['', Validators.required],
+    descricao: ['', Validators.required],
+    tipoId: ['', Validators.required],
+    faseCadeiaId: this.faseCadeiaCtrl,
+    tipoDetalhadoId: this.tipoDetalhadoCtrl
+  });
+  route: ActivatedRoute;
 
-  // DADOS DE TESTE
-  tipoProdutos = [
-    {nome: 'Produto 1'},
-    {nome: 'Produto 2'},
-    {nome: 'Produto 3'}
-  ]; 
-
-  cadeiaInovacoes = [
-    {nome: 'Fase 1'},
-    {nome: 'Fase 2'},
-    {nome: 'Fase 3'}
-  ];
-
-  tipoProdutosDetalhados = [
-    {nome: 'Produto Detalhado 1'},
-    {nome: 'Produto Detalhado 2'},
-    {nome: 'Produto Detalhado 3'}
-  ];
-  
-  especificacoes = [
-    {id: 1, tipo: 'Tipo'},
-    {id: 2, tipo: 'Tipo 2'},
-    {id: 3, tipo: 'Tipo 3'},
-    {id: 4, tipo: 'Tipo 4'},
-  ];
-
-  //------------------------
+  @ViewChild(LoadingComponent) loading: LoadingComponent;
 
   constructor(
     private app: AppService,
     private fb: FormBuilder,
-    public activeModal: NgbActiveModal
-  ) { }
-
-  ngOnInit(): void {
-    this.configForm();
+    protected service: ProdutosService,
+    public activeModal: NgbActiveModal,
+    public router: Router
+  ) {
   }
 
-  configForm() {
-    this.formProduto = this.fb.group({
-      // classificacao: ['', [Validators.required]],
-      tipoProduto: ['', [Validators.required]],
-      cadeiaInovacao: ['', [Validators.required]],
-      tipoProdutoDetalhado: ['', [Validators.required]],
-      titulo: ['', [Validators.required]],
-      descricao: ['', [Validators.required]],
-      especificacoes: this.arrayProduto
+  ngOnInit(): void {
+    this.faseCadeiaCtrl.valueChanges.subscribe(value => {
+      const fase = this.fases.find(f => f.id === value);
+      this.tiposProdutoDetalhados = fase ? fase.tiposDetalhados : [];
+      this.tipoDetalhadoCtrl.setValue('');
+
     });
-
-    if(this.produto){
-      this.formProduto.patchValue(this.produto);
-      this.status = true;
+    if (this.route.snapshot.data.produto) {
+      this.form.patchValue(this.route.snapshot.data.produto);
     }
-
   }
 
   async onSubmit() {
-    if (this.formProduto.valid) {
-      const produto = this.formProduto.value;
-      
+    if (this.form.valid) {
+      this.loading.show();
       try {
-        if (this.produto) {
-          console.log(produto, 'Editar');
-          this.app.alert('Produto editado com sucesso');
-        } else {
-          console.log(produto, 'Criar');
-          this.app.alert('Produto adicionado com sucesso');
-        }
+        await this.service.salvar(this.form.value);
         this.activeModal.close();
-
       } catch (e) {
-        this.app.alert('Não foi possível salvar o produto');
         console.error(e);
+        this.app.alert('Erro ao salvar o produto, tente novamente mais tarde', 'Erro').then();
       }
+      this.loading.hide();
+    }
+  }
+
+  async remover() {
+    if (this.form.value.id !== 0 && await this.app.confirm('Tem certeza que deseja remover? Itens relacionados serão apagados',
+      'Confirme a exclusão?')) {
+      await this.service.excluir(this.form.value.id);
+      this.activeModal.close(true);
     }
   }
 

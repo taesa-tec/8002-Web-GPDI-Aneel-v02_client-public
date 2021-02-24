@@ -1,6 +1,4 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-
 import {PropostaRoutingModule} from './proposta-routing.module';
 import {DevelopmentComponent} from '@app/user-fornecedor/propostas/proposta/development/development.component';
 import {PropostaResolver} from '@app/user-fornecedor/resolvers/proposta.resolver';
@@ -17,7 +15,10 @@ import {DashboardModule} from '@app/dashboard';
     DashboardModule,
     PropostaRoutingModule
   ],
-  providers: [PropostasService, PropostaResolver],
+  providers: [
+    PropostasService,
+    PropostaResolver
+  ],
 })
 export class PropostaModule {
 }
