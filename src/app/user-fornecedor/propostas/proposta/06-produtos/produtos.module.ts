@@ -4,7 +4,7 @@ import {SharedModule} from '@app/dashboard/shared/shared.module';
 import {ProdutosRoutingModule} from './produtos-routing.module';
 import {ProdutosComponent} from './produtos.component';
 import {ProdutoFormComponent} from './produto-form/produto-form.component';
-import {ProdutosService} from '@app/user-fornecedor/services/produtos.service';
+import {ProdutosService} from '@app/user-fornecedor/services/propostas.service';
 import {ProdutoResolver, ProdutosResolver} from '@app/user-fornecedor/resolvers/produtos.resolver';
 import {ProdutoTipoResolver} from '@app/resolvers/produto-tipo.resolver';
 import {FaseCadeiaProdutoResolver} from '@app/resolvers/fase-cadeia-produto.resolver';

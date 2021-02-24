@@ -1,9 +1,12 @@
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TableComponentCols, TableComponentActions, TableComponentFilter } from '@app/core/components/table/table';
-import { Component, OnInit } from '@angular/core';
-import { EtapaFormComponent } from './etapa-form/etapa-form.component';
-import { Pagination } from '@app/commons/common';
-import { at, chunk, uniqBy } from 'lodash-es';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {TableComponentCols, TableComponentActions, TableComponentFilter} from '@app/core/components/table/table';
+import {Component, OnInit} from '@angular/core';
+import {AppService} from '@app/services';
+import {EtapasService, PropostasService} from '@app/user-fornecedor/services/propostas.service';
+import {PropostaComponent} from '@app/user-fornecedor/propostas/proposta/proposta.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ProdutoFormComponent} from '@app/user-fornecedor/propostas/proposta/06-produtos/produto-form/produto-form.component';
+import {EtapaFormComponent} from '@app/user-fornecedor/propostas/proposta/07-etapas/etapa-form/etapa-form.component';
 
 @Component({
   selector: 'app-etapas',
@@ -13,162 +16,87 @@ import { at, chunk, uniqBy } from 'lodash-es';
 export class EtapasComponent implements OnInit {
 
   loading = false;
-  hidePagination = false;
+  duracao = 1;
 
   cols: TableComponentCols = [
     {
-      field: 'etapa',
+      field: 'ordem',
       title: 'Etapas',
       order: true,
+      value: i => `Etapa ${i.ordem.toString().padStart(2, '0')}`
     },
     {
-      field: 'mesInicial',
-      title: 'Mês Inicial',
-      order: true,
+      field: 'meses',
+      title: 'Meses da Etapa',
+      value: i => i.meses.map(m => m.toString().padStart(2, '0')).join(', ')
     },
     {
-      field: 'mesFinal',
-      title: 'Mês Final',
+      field: 'produto',
+      title: 'Produto',
       order: true,
     }
   ];
 
   buttons: TableComponentActions = [
     {
-      action: 'excluir',
-      text: 'EXCLUIR',
+      action: './#${id}',
+      isLink: true,
+      text: 'Editar',
       icon: 'ta-edit',
       className: 'btn btn-primary'
     }
   ];
-
-  filters: Array<TableComponentFilter> = [];
-
-  etapas: Pagination<any> = {
-    perPage: 0,
-    page: 0,
-    totalItems: 0,
-    data: [],
-    totalPages: 0
-  };
-
-  // REMOVER
-  data: any;
-  //========
+  etapas = [];
 
   constructor(
-    private modal: NgbModal
-  ) { }
+    private route: ActivatedRoute,
+    private router: Router,
+    private modal: NgbModal,
+    private app: AppService,
+    private service: EtapasService,
+    private propostaService: PropostasService,
+    private proposta: PropostaComponent) {
+  }
 
   async ngOnInit() {
-    // REMOVER
-    await this.getData(20);
-    //=====================
-    this.gotoPage().then();
-
-    // Etapa
-    this.filters.push({
-      field: "etapa",
-      options: [
-        {text: " Todas as Etapas", value: ""},
-        ...uniqBy(this.data.etapasAll, 'etapa').map((v: any) => ({text: v.etapa, value: v.etapa}))
-      ],
-      value: ""
+    this.duracao = this.proposta.proposta.duracao;
+    this.route.data.subscribe(data => {
+      this.etapas = data.etapas;
     });
-  }
-
-  tableAction({ action, data }) {
-    if (action === 'excluir') {
-      console.log(data, 'excluir');
-    }
-  }
-
-  setCurrentData() {
-    let filtered_data = this.data.etapasAll;
-    this.filters.forEach(f => {
-      if (f.value || f.value !== '') {
-        filtered_data = filtered_data.filter(item => String(at<any>(item, `${f.field}`)) === f.value);
+    this.route.fragment.subscribe(f => {
+      if (f === 'novo' || !isNaN(parseFloat(f))) {
+        this.formEtapa();
       }
     });
+  }
 
-    if(filtered_data.length < this.data.etapasAll.length) {
-      this.etapas.data = filtered_data;
-      this.hidePagination = true;
-    } else {
-      this.gotoPage().then();
-      this.hidePagination = false;
+  async tableAction({action, data}) {
+    if (action === 'editar') {
     }
   }
 
-  async gotoPage(page = 1) {
+  async formEtapa(etapa?: any) {
+    const ref = this.modal.open(EtapaFormComponent, {size: 'lg'});
+    const cmp = ref.componentInstance as EtapaFormComponent;
+    cmp.proposta = this.proposta.proposta;
+    cmp.route = this.route;
+    try {
+      await ref.result;
+    } catch (e) {
+
+    }
+    this.router.navigate([]).then();
+  }
+
+  async salvarDuracao() {
     this.loading = true;
     try {
-      this.etapas = await this.getEtapas(page);
+      await this.propostaService.atualizarDuracao(this.proposta.proposta.captacaoId, this.duracao);
+      this.proposta.proposta.duracao = this.duracao;
     } catch (e) {
-      //this.app.alert(e.message).then();
-    } finally {
-      this.loading = false;
+
     }
+    this.loading = false;
+
   }
-
-  async salvarEtapa(etapa?: any) {
-    const modalRef = this.modal.open(EtapaFormComponent, {size: 'lg'});
-
-    try {
-      await modalRef.result;
-      //this.getEtapas();
-    } catch(e) {
-      console.log(e);
-    }
-  }
-
-  //REMOVER
-  async getData(perPage: number) {
-    const etapas = await this._getEtapas();
-
-    this.data = {
-      etapasAll: etapas,
-      etapas: chunk(etapas, perPage),
-      perPage: perPage
-    };
-  }
-
-  getEtapas(page) {
-    return {
-      data: this.data.etapas[page - 1],
-      page: page,
-      perPage: this.data.perPage,
-      totalItems: this.data.etapasAll.length,
-      totalPages: this.data.etapas.length
-    };
-  }
-  //==================================================
-
-  _getEtapas() {
-    return [
-      {
-        id: 1,
-        etapa: 'Etapa 1',
-        mesInicial: '01',
-        mesFinal: '06',
-        produtosAssociados: [
-          { nome: 'Produto 1' },
-          { nome: 'Produto 2' }
-        ],
-        descricao: 'Descricao'
-      },
-      {
-        id: 2,
-        etapa: 'Etapa 2',
-        mesInicial: '07',
-        mesFinal: '12',
-        produtosAssociados: [
-          { nome: 'Produto 3' },
-          { nome: 'Produto 4' }
-        ],
-        descricao: 'Descricao 1'
-      }
-    ]
-  }
-
 }

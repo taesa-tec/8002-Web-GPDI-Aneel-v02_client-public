@@ -1,59 +1,41 @@
 <div class="row justify-content-between">
-    <div class="col mb-4">
-        <h5 class="text-uppercase text-blue font-weight-normal my-4">ETAPAS</h5>
-    </div>
-    <div class="col-auto">
-        <button type="button" class="btn btn-outline-primary" (click)="salvarEtapa()">
-            <i class="ta-plus-circle fs-24 align-middle"></i>
-            Nova Etapa
-        </button>
-    </div>
-</div>
-
-<div class="row pb-4" *ngIf="filters && filters.length > 0">
-    <div class="form-group col-3" *ngFor="let filter of filters">
-        <select
-        class="form-control"
-        [(ngModel)]="filter.value"
-        (change)="setCurrentData()"
-        >
-        <option
-            *ngFor="let f of filter.options | orderBy: 'text'"
-            [value]="f.value"
-            >{{ f.text }}</option
-        >
-        </select>
-    </div>
+  <div class="col mb-4">
+    <h5 class="text-uppercase text-blue font-weight-normal my-4">ETAPAS</h5>
+  </div>
+  <div class="col-auto">
+    <a type="button" class="btn btn-outline-primary" routerLink="./" fragment="novo">
+      <i class="ta-plus-circle fs-24 align-middle"></i>
+      Nova Etapa
+    </a>
+  </div>
 </div>
 
 <div class="row">
-    <div class="col">
-        <ng-container *ngIf="!loading; else loadingTpl">
-            <app-table 
-                [cols]="cols" 
-                [data]="etapas.data" 
-                [buttons]="buttons" 
-                (action)="tableAction($event)">
-            </app-table>
-        </ng-container>
-        <ng-container *ngTemplateOutlet="paginacao"></ng-container>
-    </div>
+  <div class="col-3">
+    <form (ngSubmit)="salvarDuracao()">
+      <div class="form-group">
+        <label class="d-block">Duração do Projeto (Em Meses)</label>
+      </div>
+      <div class="input-group">
+        <input type="number" class="form-control" name="duracao" [(ngModel)]="duracao" value="1" min="1" max="60"
+               size="3">
+        <div class="input-group-append">
+          <span class="input-group-text">Meses</span>
+          <button class="btn btn-primary" [disabled]="loading"><i
+            class="ta-save"></i> {{loading ? 'Salvando' : 'Salvar'}}</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
 
-<ng-template #loadingTpl>
-    <h6 class="text-center py-3">
-        Carregando etapas...
-    </h6>
-</ng-template>
-<ng-template #paginacao>
-    <div class="d-flex justify-content-center" *ngIf="etapas && !hidePagination">
-        <ngb-pagination [(page)]="etapas.page" 
-                        [pageSize]="etapas.perPage"
-                        [collectionSize]="etapas.totalItems" 
-                        (pageChange)="gotoPage($event)"
-                        [ellipses]="true" 
-                        [rotate]="true" 
-                        [maxSize]="5">
-        </ngb-pagination>
-    </div>
-</ng-template>
+<div class="row">
+  <div class="col">
+    <app-table
+      [cols]="cols"
+      [data]="etapas"
+      [buttons]="buttons"
+    >
+    </app-table>
+  </div>
+</div>

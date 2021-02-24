@@ -18,6 +18,10 @@ export class PropostasService extends ServiceBase<any> {
     return await this.http.put<any>(`${this.controller}/${id}/Participar`, {}).toPromise();
   }
 
+  async atualizarDuracao(id: number, duracao: number) {
+    return await this.http.put<any>(`${this.controller}/${id}/Duracao`, duracao).toPromise();
+  }
+
   async getClausulas() {
     return await this.http.get<Array<any>>(`Fornecedor/Clausulas`).toPromise();
   }
@@ -100,6 +104,28 @@ export class PropostasService extends ServiceBase<any> {
   }
 
 
+}
 
+@Injectable()
+export class ProdutosService extends ServiceBase<any> {
 
+  set captacaoId(value) {
+    this.controller = `Fornecedor/Propostas/${value}/Produtos`;
+  }
+
+  constructor(http: HttpClient) {
+    super(http, 'Fornecedor/Propostas/{id}/Produtos');
+  }
+}
+
+@Injectable()
+export class EtapasService extends ServiceBase<any> {
+
+  set captacaoId(value) {
+    this.controller = `Fornecedor/Propostas/${value}/Etapas`;
+  }
+
+  constructor(http: HttpClient) {
+    super(http, 'Fornecedor/Propostas/{id}/Etapas');
+  }
 }

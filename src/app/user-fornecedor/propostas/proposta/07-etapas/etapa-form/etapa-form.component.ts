@@ -1,7 +1,11 @@
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
-import { AppService } from '@app/services/app.service';
-import { Component, OnInit } from '@angular/core';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {FormBuilder, Validators, FormGroup, FormArray} from '@angular/forms';
+import {AppService} from '@app/services/app.service';
+import {Component, OnInit} from '@angular/core';
+import {EtapasService, ProdutosService} from '@app/user-fornecedor/services/propostas.service';
+import {Proposta} from '@app/commons';
+import {mesesSelectorRequered} from '@app/user-fornecedor/propostas/proposta/07-etapas/etapa-form/meses-selector.component';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-etapa-form',
@@ -9,77 +13,58 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./etapa-form.component.scss']
 })
 export class EtapaFormComponent implements OnInit {
-
+  route: ActivatedRoute;
+  proposta: Proposta;
   produtos: Array<any>;
-
-  formEtapa: FormGroup;
-  arrayProdutos = this.fb.array([]);
+  mesesCtrl = this.fb.control([], mesesSelectorRequered);
+  form = this.fb.group({
+    id: [0],
+    descricaoAtividades: ['', Validators.required],
+    produtoId: ['', Validators.required],
+    meses: this.mesesCtrl
+  });
 
   constructor(
+    public produtoService: ProdutosService,
+    protected service: EtapasService,
     private app: AppService,
     private fb: FormBuilder,
     public activeModal: NgbActiveModal
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
-    this.configForm();
+    this.produtoService.captacaoId = this.proposta.captacaoId;
+    this.produtoService.obter().then(p => this.produtos = p);
+    if (this.route.snapshot.data.etapa) {
+      console.log(this.route.snapshot.data);
+      this.form.patchValue(this.route.snapshot.data.etapa);
+    }
   }
 
-  configForm() {
-    this.produtos = this._getProdutos();
-
-    this.formEtapa = this.fb.group({
-      descricao: ['', [Validators.required]],
-      produtos: this.arrayProdutos
-    });
-
-    this.addProduto();
-  }
-
-  getProdutos(current: string) {
-    const selecteds = this.arrayProdutos.value.map(i => parseInt(i));
-    return this.produtos.filter(item => selecteds.indexOf(item.id) === -1 || item.id === parseInt(current));
-  }
-
-  addProduto(id?:number) {
-    this.arrayProdutos.push(this.fb.control(id, Validators.required));
-  }
-
-  removeProduto(index:number) {
-    this.arrayProdutos.removeAt(index);
-  }
 
   async onSubmit() {
-    if (this.formEtapa.valid) {
-      const etapa = this.formEtapa.value;
-      
+    if (this.form.valid) {
       try {
-        console.log(etapa, 'Criar');
-        this.app.alert('Etapa adicionada com sucesso');
+
+        await this.service.salvar(this.form.value);
+        this.app.alert('Etapa salva com sucesso').then();
         this.activeModal.close();
 
       } catch (e) {
-        this.app.alert('Não foi possível salvar a etapa');
+        this.app.alert('Não foi possível salvar a etapa').then();
         console.error(e);
       }
     }
   }
 
-  _getProdutos() {
-    return [
-      {
-        id: 1,
-        nome: 'Produto 1'
-      },
-      {
-        id: 2,
-        nome: 'Produto 2'
-      },
-      {
-        id: 3,
-        nome: 'Produto 3'
-      }
-    ]
+  async remover() {
+    if (this.form.value.id !== 0 && await this.app.confirm('Tem certeza que deseja remover? Itens relacionados serão apagados',
+      'Confirme a exclusão?')) {
+      await this.service.excluir(this.form.value.id);
+      this.activeModal.close(true);
+    }
   }
+
 
 }

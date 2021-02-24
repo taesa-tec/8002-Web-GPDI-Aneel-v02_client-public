@@ -17,6 +17,7 @@ export interface Proposta {
   dataTermino?: Date;
   dataResposta?: Date;
   dataClausulasAceitas?: Date;
+  duracao: number;
   fornecedorId: number;
   fornecedor: string;
   captacaoId: number;
