@@ -1,7 +1,13 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {ServiceBase} from '@app/services';
 import {HttpClient} from '@angular/common/http';
 import {BaseEntity} from '@app/commons';
+import {CAPTACAO_ID} from '@app/user-fornecedor/propostas/proposta/shared';
+import {NavigationEnd, Router} from '@angular/router';
+import {filter} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {PropostaModule} from '@app/user-fornecedor/propostas/proposta/proposta.module';
+import {PropostasModule} from '@app/user-fornecedor/propostas/propostas.module';
 
 @Injectable()
 export class PropostasService extends ServiceBase<any> {
@@ -103,6 +109,13 @@ export class PropostasService extends ServiceBase<any> {
     URL.revokeObjectURL(blobUrl);
   }
 
+  async getEscopo(id: number) {
+    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${id}/Escopo`, {}).toPromise();
+  }
+
+  async saveEscopo(id: number, escopo: any) {
+    return await this.http.post<Array<BaseEntity>>(`${this.controller}/${id}/Escopo`, escopo).toPromise();
+  }
 
 }
 

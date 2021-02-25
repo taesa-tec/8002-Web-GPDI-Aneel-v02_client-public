@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
-import { AppService } from '@app/services/app.service';
+import {AppService} from '@app/services/app.service';
+import {PropostaComponent} from '@app/user-fornecedor/propostas/proposta/proposta.component';
+import {ActivatedRoute} from '@angular/router';
+import {PropostasService} from '@app/user-fornecedor/services/propostas.service';
 
 @Component({
   selector: 'app-escopo',
@@ -10,100 +13,63 @@ import { AppService } from '@app/services/app.service';
 })
 export class EscopoComponent implements OnInit {
 
-  formEscopo: FormGroup;
-  arrayMetas = this.fb.array([]);
+  metasArray = this.fb.array([]);
+  form = this.fb.group({
+    beneficioIndustria: ['', Validators.required],
+    beneficioInstitucional: ['', Validators.required],
+    beneficioSetorEletrico: ['', Validators.required],
+    beneficioSociedade: ['', Validators.required],
+    beneficioTaesa: ['', Validators.required],
+    contrapartidas: ['', Validators.required],
+    experienciaPrevia: ['', Validators.required],
+    objetivo: ['', Validators.required],
+    metas: this.metasArray
+  });
 
-  numMeses = [
-    {id: 1, numMeses: 'Valor 1'},
-    {id: 2, numMeses: 'Valor 2'},
-    {id: 3, numMeses: 'Valor 3'},
-    {id: 4, numMeses: 'Valor 4'},
-  ];
+  get maxNumMeses() {
+    return this.parent?.proposta.duracao || 0;
+  }
 
-  constructor(
-    private app: AppService,
-    private fb: FormBuilder
-  ) { }
+  constructor(private app: AppService, private fb: FormBuilder, protected parent: PropostaComponent, protected route: ActivatedRoute, protected service: PropostasService) {
+  }
 
   ngOnInit(): void {
-    this.configForm();
-  }
-
-  configForm() {
-    this.formEscopo = this.fb.group({
-      id: ['', [Validators.required]],
-      objetivo: ['', [Validators.required]],
-      metas: this.arrayMetas,
-      descTaesa: ['', [Validators.required]],
-      descInstituicao: ['', [Validators.required]],
-      descIndustria: ['', [Validators.required]],
-      descSetorEletrico: ['', [Validators.required]],
-      descSociedade: ['', [Validators.required]],
-      descEmpresasParceiras: ['', [Validators.required]],
-      descContrapartidas: ['', [Validators.required]]
-    });
-
-    const escopoProjeto = this._getEscopoProjeto();
-
-    if(escopoProjeto) {
-      this.formEscopo.patchValue(escopoProjeto);
-      escopoProjeto.metas.map(i => this.addMeta(i));
-    } else {
-      this.addMeta();
-    }
-  }
-
-  getNumMeses(numMeses: FormGroup) {
-    const id = parseInt(numMeses.value.numMeses);
-    const selecteds = this.arrayMetas.controls.map(i => parseInt(i.value.numMeses));
-
-    return this.numMeses.filter(item => selecteds.indexOf(item.id) === -1 || item.id === id);
-  }
-
-  addMeta(meta?: any) {
-    const formGroup = this.fb.group({
-      objetivo: [meta && meta.objetivo || '', Validators.required],
-      numMeses: [meta && meta.numMeses || '', Validators.required]
-    })
-
-    this.arrayMetas.push(formGroup);
-  }
-
-  removeMeta(index) {
-    this.arrayMetas.removeAt(index);
-  }
-
-  onSubmit() {
-    if(this.formEscopo.valid) {
-      const data = this.formEscopo.value;
-      
-      try {
-        console.log(data);
-        this.app.alert('Escopo salvo com sucesso');
-
-      } catch (e) {
-        this.app.alert('Não foi possível salvar o escopo');
-        console.error(e);
+    if (this.route.snapshot.data.escopo) {
+      this.form.patchValue(this.route.snapshot.data.escopo);
+      const metas = this.route.snapshot.data.escopo.metas as Array<any>;
+      if (metas.length > 0) {
+        metas.forEach(meta => this.addMeta(meta));
+      } else {
+        this.addMeta();
       }
     }
   }
 
-  _getEscopoProjeto() {
-    return {
-      id: 1,
-      objetivo: 'Objetivo',
-      metas: [
-        {objetivo: 'Objetivo', numMeses: 1},
-        {objetivo: 'Objetivo 1', numMeses: 2}
-      ],
-      descTaesa: 'Desc Taesa',
-      descInstituicao: 'Desc Instituição',
-      descIndustria: 'Desc Indústria',
-      descSetorEletrico: 'Desc Setor Elétrico',
-      descSociedade: 'Desc Sociedade',
-      descEmpresasParceiras: 'Desc Empresas Parceiras',
-      descContrapartidas: 'Desc Contrapartidas'
-    };
+  addMeta(meta?: { objetivo: string, meses: number, id: number }) {
+    const formGroup = this.fb.group({
+      id: [meta?.id || 0],
+      objetivo: [meta?.objetivo || '', Validators.required],
+      meses: [meta?.meses || 1, Validators.required]
+    });
+
+    this.metasArray.push(formGroup);
+  }
+
+  removeMeta(index) {
+    this.metasArray.removeAt(index);
+  }
+
+  async onSubmit() {
+    if (this.form.valid) {
+      try {
+        console.log(this.form.value);
+        await this.service.saveEscopo(this.parent.proposta.captacaoId, this.form.value);
+        this.app.alert('Escopo salvo com sucesso!').then();
+      } catch (e) {
+        this.app.alert('Não foi possível salvo o escopo').then();
+        console.error(e);
+      }
+    }
   }
 
 }
