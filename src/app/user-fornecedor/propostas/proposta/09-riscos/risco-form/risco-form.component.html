@@ -1,63 +1,66 @@
 <div class="modal-header">
-    <div class="text-uppercase modal-title text-blue-light fs-24">
-        {{ status ? 'EDITAR RISCO' : 'REGISTRAR RISCO' }}
-    </div>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        <i class="ta-cancel-circle"></i>
-    </button>
+  <div class="text-uppercase modal-title text-blue-light fs-24">
+    {{ form.value.id > 0 ? 'EDITAR RISCO' : 'REGISTRAR RISCO' }}
+  </div>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <i class="ta-cancel-circle"></i>
+  </button>
 </div>
 
 <app-loading type="fullscreen"></app-loading>
 
 <div class="modal-body">
-    <form [formGroup]="formRisco" (ngSubmit)="onSubmit()">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-        <div class="form-group">
-            <label for="item">Item</label>
-            <input type="text" class="form-control" id="item" placeholder="Digite o nome do item" formControlName="item">
+    <div class="form-group">
+      <label for="item">Item</label>
+      <input type="text" class="form-control" id="item" placeholder="Digite o nome do item" formControlName="item">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col">
+        <label for="classificacao">Classificação</label>
+        <select class="form-control" id="classificacao" formControlName="classificacao">
+          <option value="" hidden>Escolha um item</option>
+          <option [value]="classificacao.nome" *ngFor="let classificacao of classificacoes">
+            {{ classificacao.nome }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col">
+        <label for="probabilidade">Probabilidade</label>
+        <select class="form-control" id="probabilidade" formControlName="probabilidade">
+          <option value="" hidden>Escolha um item</option>
+          <option [value]="probabilidade.nome" *ngFor="let probabilidade of probabilidades">
+            {{ probabilidade.nome }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Justificativa</label>
+      <app-textarea class="form-control" formControlName="justificativa" rows="4" maxlength="1000"></app-textarea>
+    </div>
+
+    <div class="form-group d-flex justify-content-between">
+      <div>
+        <button type="button" class="button btn btn-danger" (click)="remover()" *ngIf="form.value.id !== 0">
+          <i class="ta-trash mr-1"></i>
+          Excluir Etapa
+        </button>
+      </div>
+
+      <div class="text-right">
+        <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">
+          Cancelar
         </div>
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          <i class="ta-save mr-1"></i>
+          Salvar Risco
+        </button>
+      </div>
+    </div>
 
-        <div class="form-row">
-            <div class="form-group col">
-                <label for="classificacao">Classificação</label>
-                <select class="form-control" id="classificacao" formControlName="classificacao">
-                    <option value="" hidden>Escolha um item</option>
-                    <option [value]="classificacao.nome" *ngFor="let classificacao of classificacoes">
-                        {{ classificacao.nome }}
-                    </option>
-                </select>
-            </div>
-            <div class="form-group col">
-                <label for="probabilidade">Probabilidade</label>
-                <select class="form-control" id="probabilidade" formControlName="probabilidade">
-                    <option value="" hidden>Escolha um item</option>
-                    <option [value]="probabilidade.nome" *ngFor="let probabilidade of probabilidades">
-                        {{ probabilidade.nome }}
-                    </option>
-                </select>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Justificativa</label>
-            <app-textarea class="form-control" formControlName="justificativa" rows="4" maxlength="1000"></app-textarea>
-        </div>
-
-        <div class="form-group">
-            <div class="text-right">
-                <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">
-                    Cancelar
-                </div>
-                <button type="submit" class="btn btn-primary" [disabled]="formRisco.invalid" *ngIf="status">
-                    <i class="ta-save mr-1"></i>
-                    Salvar Risco
-                </button>
-                <button type="submit" class="btn btn-primary" [disabled]="formRisco.invalid" *ngIf="!status">
-                    <i class="ta-plus-circle mr-1"></i>
-                    Adicionar Risco
-                </button>
-            </div>
-        </div>
-
-    </form>
-</div>            
+  </form>
+</div>

@@ -142,3 +142,15 @@ export class EtapasService extends ServiceBase<any> {
     super(http, 'Fornecedor/Propostas/{id}/Etapas');
   }
 }
+
+@Injectable()
+export class RiscosService extends ServiceBase<any> {
+
+  set captacaoId(value) {
+    this.controller = `Fornecedor/Propostas/${value}/Riscos`;
+  }
+
+  constructor(http: HttpClient) {
+    super(http, 'Fornecedor/Propostas/{id}/Riscos');
+  }
+}
