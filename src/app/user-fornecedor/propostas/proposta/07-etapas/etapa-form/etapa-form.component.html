@@ -1,62 +1,52 @@
 <div class="modal-header">
-    <div class="text-uppercase modal-title text-blue-light fs-24">
-        NOVA ETAPA
-    </div>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        <i class="ta-cancel-circle"></i>
-    </button>
+  <div class="text-uppercase modal-title text-blue-light fs-24">
+    {{form.value.id === 0 ? 'NOVA' : 'EDITAR'}} ETAPA
+  </div>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <i class="ta-cancel-circle"></i>
+  </button>
 </div>
 
 <app-loading type="fullscreen"></app-loading>
 
 <div class="modal-body">
-    <form [formGroup]="formEtapa" (ngSubmit)="onSubmit()">
-       
-        <div class="form-group">
-            <label>Descrição das atividades</label>
-            <app-textarea class="form-control" rows="4" maxlength="1000" formControlName="descricao"></app-textarea>
-        </div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>Descrição das atividades</label>
+      <app-textarea class="form-control" rows="4" maxlength="1000" formControlName="descricaoAtividades"></app-textarea>
+    </div>
+    <div class="form-group">
+      <label>Produtos associados a esta etapa</label>
+      <select class="form-control" formControlName="produtoId">
+        <option value="" hidden>Selecione</option>
+        <option [value]="produto.id" *ngFor="let produto of produtos">
+          {{ produto.titulo }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Meses dessa Etapa</label>
+      <app-proposta-meses-selector [duracao]="proposta.duracao" formControlName="meses"></app-proposta-meses-selector>
+    </div>
 
-        <div class="form-group">
-            <label>Produtos associados a esta etapa</label>
-            <div class="d-flex mb-2" *ngFor="let control of arrayProdutos.controls; let i = index">
-                <select class="form-control" [formControl]="control">
-                    <option value="" hidden>Selecione</option>
-                    <option [value]="produto.id" *ngFor="let produto of getProdutos(control.value)">
-                        {{ produto.nome }}
-                    </option>
-                </select>
-                <button 
-                    type="button" 
-                    class="btn btn-link text-decoration-none p-2"
-                    *ngIf="i === 0"
-                    [disabled]="produtos.length <= arrayProdutos.controls.length"
-                    (click)="addProduto()"
-                >
-                    <i class="ta-plus-circle"></i>
-                </button>
-                <button 
-                    type="button" 
-                    class="btn btn-link text-decoration-none p-2"
-                    *ngIf="i > 0"
-                    (click)="removeProduto(i)"
-                >
-                    <i class="ta-remove-circle"></i>
-                </button>
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="text-right">
-                <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">
-                    Cancelar
-                </div>
-                <button type="submit" class="btn btn-primary" [disabled]="formEtapa.invalid">
-                    <i class="ta-plus-circle mr-1"></i>
-                    Adicionar Etapa
-                </button>
-            </div>
+    <div class="form-group d-flex justify-content-between">
+      <div>
+        <button type="button" class="button btn btn-danger" (click)="remover()" *ngIf="form.value.id !== 0">
+          <i class="ta-trash mr-1"></i>
+          Excluir Etapa
+        </button>
+      </div>
+      <div class="text-right">
+        <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">
+          Cancelar
         </div>
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          <i class="ta-plus-circle mr-1"></i>
+          Salvar Etapa
+        </button>
+      </div>
+    </div>
 
-    </form>
+  </form>
 </div>

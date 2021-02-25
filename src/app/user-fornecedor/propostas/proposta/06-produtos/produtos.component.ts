@@ -6,7 +6,7 @@ import {ProdutoFormComponent} from './produto-form/produto-form.component';
 import {Pagination} from '@app/commons/common';
 import {at, chunk, uniqBy} from 'lodash-es';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ProdutosService} from '@app/user-fornecedor/services/produtos.service';
+import {ProdutosService} from '@app/user-fornecedor/services/propostas.service';
 
 @Component({
   selector: 'app-produtos',
@@ -71,7 +71,7 @@ export class ProdutosComponent implements OnInit {
     }
   }
 
-  async formProduto(produto?: any) {
+  async formProduto() {
     const ref = this.modal.open(ProdutoFormComponent, {size: 'lg'});
     const cmp = ref.componentInstance as ProdutoFormComponent;
     cmp.route = this.route;

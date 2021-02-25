@@ -5,7 +5,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {BaseEntity, FasesCadeiaInovacao, TiposProdutos} from '@app/commons';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LoadingComponent} from '@app/core/components';
-import {ProdutosService} from '@app/user-fornecedor/services/produtos.service';
+import {ProdutosService} from '@app/user-fornecedor/services/propostas.service';
 
 @Component({
   selector: 'app-produto-form',

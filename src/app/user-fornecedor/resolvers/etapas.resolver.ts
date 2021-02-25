@@ -1,13 +1,13 @@
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 
-import {ProdutosService} from '@app/user-fornecedor/services/propostas.service';
+import {EtapasService} from '@app/user-fornecedor/services/propostas.service';
 import {extractRouteParams} from '@app/core';
 
 @Injectable()
-export class ProdutosResolver implements Resolve<any> {
+export class EtapasResolver implements Resolve<any> {
 
-  constructor(protected service: ProdutosService, protected router: Router) {
+  constructor(protected service: EtapasService, protected router: Router) {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -29,9 +29,9 @@ export class ProdutosResolver implements Resolve<any> {
 }
 
 @Injectable()
-export class ProdutoResolver implements Resolve<any> {
+export class EtapaResolver implements Resolve<any> {
 
-  constructor(protected service: ProdutosService, protected router: Router) {
+  constructor(protected service: EtapasService, protected router: Router) {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {

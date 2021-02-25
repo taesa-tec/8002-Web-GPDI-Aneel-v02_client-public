@@ -3,9 +3,6 @@ import {ActivatedRoute} from '@angular/router';
 import {Proposta, SIDEBAR_MENU} from '@app/commons';
 import {map} from 'rxjs/operators';
 import {CAPTACAO_ID} from '@app/user-fornecedor/propostas/proposta/shared';
-import {ProdutosService} from '@app/user-fornecedor/services/produtos.service';
-import {HttpClient} from '@angular/common/http';
-import {ProdutosResolver} from '@app/user-fornecedor/resolvers/produtos.resolver';
 
 
 @Component({
