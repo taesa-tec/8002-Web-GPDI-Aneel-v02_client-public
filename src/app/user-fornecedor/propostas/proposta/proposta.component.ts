@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Proposta, SIDEBAR_MENU} from '@app/commons';
 import {map} from 'rxjs/operators';
 import {CAPTACAO_ID} from '@app/user-fornecedor/propostas/proposta/shared';
+import {EtapasService} from '@app/user-fornecedor/services/propostas.service';
 
 
 @Component({
@@ -39,13 +40,13 @@ import {CAPTACAO_ID} from '@app/user-fornecedor/propostas/proposta/shared';
 
       },
       deps: [ActivatedRoute]
-
     },
     {
       provide: CAPTACAO_ID,
       deps: [ActivatedRoute],
       useFactory: (route: ActivatedRoute) => parseFloat(route.snapshot.params.id)
-    }
+    },
+    EtapasService
   ],
 
 })

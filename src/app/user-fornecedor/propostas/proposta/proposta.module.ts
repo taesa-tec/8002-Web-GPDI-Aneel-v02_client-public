@@ -17,7 +17,7 @@ import {DashboardModule} from '@app/dashboard';
   ],
   providers: [
     PropostasService,
-    PropostaResolver
+    PropostaResolver,
   ],
 })
 export class PropostaModule {

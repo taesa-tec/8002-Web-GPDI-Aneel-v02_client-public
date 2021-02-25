@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
-import { SharedModule } from '@app/dashboard/shared/shared.module';
+import {NgModule} from '@angular/core';
+import {SharedModule} from '@app/dashboard/shared/shared.module';
 
-import { EscopoRoutingModule } from './escopo-routing.module';
-import { EscopoComponent } from './escopo.component';
+import {EscopoRoutingModule} from './escopo-routing.module';
+import {EscopoComponent} from './escopo.component';
+import {EscopoResolver} from '@app/user-fornecedor/resolvers/proposta.resolver';
 
 
 @NgModule({
@@ -10,6 +11,10 @@ import { EscopoComponent } from './escopo.component';
   imports: [
     SharedModule,
     EscopoRoutingModule
+  ],
+  providers: [
+    EscopoResolver
   ]
 })
-export class EscopoModule { }
+export class EscopoModule {
+}
