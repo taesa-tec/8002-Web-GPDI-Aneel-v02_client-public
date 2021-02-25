@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
-import { AppService } from '@app/services/app.service';
+import {AppService} from '@app/services/app.service';
+import {ActivatedRoute} from '@angular/router';
+import {Proposta} from '@app/commons';
+import {RiscosService} from '@app/user-fornecedor/services/propostas.service';
 
 @Component({
   selector: 'app-risco-form',
@@ -11,67 +14,62 @@ import { AppService } from '@app/services/app.service';
 })
 export class RiscoFormComponent implements OnInit {
 
-  risco: object;
-  status: boolean = false;
+  route: ActivatedRoute;
+  proposta: Proposta;
+  risco: any;
 
-  formRisco: FormGroup;
+  form = this.fb.group({
+    id: 0,
+    item: ['', Validators.required],
+    classificacao: ['', Validators.required],
+    justificativa: ['', Validators.required],
+    probabilidade: ['', Validators.required],
 
-  // DADOS DE TESTE
+  });
+
   classificacoes = [
     {nome: 'Técnico/Científico'},
     {nome: 'Financeiro'},
     {nome: 'Atraso no Cronograma'}
-  ]; 
+  ];
 
   probabilidades = [
     {nome: 'Alto'},
     {nome: 'Médio'},
     {nome: 'Baixo'}
-  ]; 
-  //----------------------
+  ];
 
-  constructor(
-    private app: AppService,
-    private fb: FormBuilder,
-    public activeModal: NgbActiveModal
-  ) { }
-
-  ngOnInit(): void {
-    this.configForm();
+  constructor(private app: AppService, private fb: FormBuilder, public activeModal: NgbActiveModal, protected service: RiscosService) {
   }
 
-  configForm() {
-    this.formRisco = this.fb.group({
-      item: ['', [Validators.required]],
-      classificacao: ['', [Validators.required]],
-      probabilidade: ['', [Validators.required]],
-      justificativa: ['', [Validators.required]],
-    });
-
-    if(this.risco){
-      this.formRisco.patchValue(this.risco);
-      this.status = true;
+  ngOnInit(): void {
+    this.service.captacaoId = this.proposta.captacaoId;
+    if (this.route.snapshot.data.risco) {
+      this.form.patchValue(this.route.snapshot.data.risco);
     }
   }
 
+
   async onSubmit() {
-    if (this.formRisco.valid) {
-      const risco = this.formRisco.value;
-      
+    if (this.form.valid) {
       try {
-        if (this.risco) {
-          console.log(risco, 'Editar');
-          this.app.alert('Risco editado com sucesso');
-        } else {
-          console.log(risco, 'Criar');
-          this.app.alert('Risco adicionado com sucesso');
-        }
+        await this.service.salvar(this.form.value);
+        this.app.alert('Salvo com sucesso!').then();
         this.activeModal.close();
 
       } catch (e) {
-        this.app.alert('Não foi possível salvar o risco');
+        this.app.alert('Não foi possível salvar o risco').then();
         console.error(e);
       }
+    }
+  }
+
+
+  async remover() {
+    if (this.form.value.id !== 0 && await this.app.confirm('Tem certeza que deseja remover?',
+      'Confirme a exclusão?')) {
+      await this.service.excluir(this.form.value.id);
+      this.activeModal.close(true);
     }
   }
 

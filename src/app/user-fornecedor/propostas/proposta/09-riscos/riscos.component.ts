@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
-import { AppService } from '@app/services/app.service';
-import { TableComponentCols, TableComponentActions, TableComponentFilter } from '@app/core/components/table/table';
-import { RiscoFormComponent } from './risco-form/risco-form.component';
-import { Pagination } from '@app/commons/common';
-import { at, chunk, uniqBy } from 'lodash-es';
+import {AppService} from '@app/services/app.service';
+import {TableComponentCols, TableComponentActions, TableComponentFilter} from '@app/core/components/table/table';
+import {RiscoFormComponent} from './risco-form/risco-form.component';
+import {Pagination} from '@app/commons/common';
+import {at, chunk, uniqBy} from 'lodash-es';
+import {EtapaFormComponent} from '@app/user-fornecedor/propostas/proposta/07-etapas/etapa-form/etapa-form.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {PropostaComponent} from '@app/user-fornecedor/propostas/proposta/proposta.component';
 
 @Component({
   selector: 'app-riscos',
@@ -37,7 +40,8 @@ export class RiscosComponent implements OnInit {
 
   buttons: TableComponentActions = [
     {
-      action: 'editar',
+      isLink: true,
+      action: './#${id}',
       text: 'EDITAR',
       icon: 'ta-edit',
       className: 'btn btn-primary'
@@ -46,83 +50,45 @@ export class RiscosComponent implements OnInit {
 
   filters: Array<TableComponentFilter> = [];
 
-  riscos: Pagination<any> = {
-    perPage: 0,
-    page: 0,
-    totalItems: 0,
-    data: [],
-    totalPages: 0
-  };
+  riscos: Array<any> = [];
 
-  // REMOVER
-  data: any;
-  //========
-
-  constructor(
-    private app: AppService,
-    private modal: NgbModal
-  ) { }
+  constructor(private app: AppService,
+              private modal: NgbModal,
+              protected router: Router,
+              protected route: ActivatedRoute,
+              protected parent: PropostaComponent) {
+  }
 
   async ngOnInit() {
-    // REMOVER
-    await this.getData(20);
-    //=====================
-    this.gotoPage().then();
-
-    // Classificação
-    this.filters.push({
-      field: "classificacao",
-      options: [
-        {text: " Todas as Classificações", value: ""},
-        ...uniqBy(this.data.riscosAll, 'classificacao').map((v: any) => ({text: v.classificacao, value: v.classificacao}))
-      ],
-      value: ""
+    this.route.data.subscribe(data => {
+      this.riscos = data.riscos;
     });
-
-    // Probabilidade
-    this.filters.push({
-      field: "probabilidade",
-      options: [
-        {text: " Todas as Probabilidades", value: ""},
-        ...uniqBy(this.data.riscosAll, 'probabilidade').map((v: any) => ({text: v.probabilidade, value: v.probabilidade}))
-      ],
-      value: ""
+    this.route.fragment.subscribe(f => {
+      if (f === 'novo' || !isNaN(parseFloat(f))) {
+        this.openForm();
+      }
     });
   }
 
-  async tableAction({ action, data }) {
+  async tableAction({action, data}) {
     if (action === 'editar') {
       await this.salvarRisco(data);
     }
   }
 
-  setCurrentData() {
-    let filtered_data = this.data.riscosAll;
-    this.filters.forEach(f => {
-      if (f.value || f.value !== '') {
-        filtered_data = filtered_data.filter(item => String(at<any>(item, `${f.field}`)) === f.value);
-      }
-    });
-
-    if(filtered_data.length < this.data.riscosAll.length) {
-      this.riscos.data = filtered_data;
-      this.hidePagination = true;
-    } else {
-      this.gotoPage().then();
-      this.hidePagination = false;
-    }
-  }
-
-  async gotoPage(page = 1) {
-    this.loading = true;
+  async openForm() {
+    const ref = this.modal.open(RiscoFormComponent, {size: 'lg'});
+    const cmp = ref.componentInstance as RiscoFormComponent;
+    cmp.proposta = this.parent.proposta;
+    cmp.route = this.route;
     try {
-      this.riscos = await this.getRiscos(page);
+      await ref.result;
     } catch (e) {
-      //this.app.alert(e.message).then();
-    } finally {
-      this.loading = false;
+
     }
+    this.router.navigate([]).then();
   }
+
 
   async salvarRisco(risco?: any) {
     const modalRef = this.modal.open(RiscoFormComponent, {size: 'lg'});
@@ -131,57 +97,9 @@ export class RiscosComponent implements OnInit {
     try {
       await modalRef.result;
       //this.getRiscos();
-    } catch(e) {
+    } catch (e) {
       console.log(e);
     }
-  }
-
-  //REMOVER
-  async getData(perPage: number) {
-    const riscos = await this._getRiscos();
-
-    this.data = {
-      riscosAll: riscos,
-      riscos: chunk(riscos, perPage),
-      perPage: perPage
-    };
-  }
-
-  getRiscos(page) {
-    return {
-      data: this.data.riscos[page - 1],
-      page: page,
-      perPage: this.data.perPage,
-      totalItems: this.data.riscosAll.length,
-      totalPages: this.data.riscos.length
-    };
-  }
-  //==================================================
-
-  _getRiscos() {
-    return [
-      {
-        id: 1,
-        item: 'Título do Risco',
-        classificacao: 'Técnico/Científico',
-        probabilidade: 'Alto',
-        justificativa: 'Justificative'
-      },
-      {
-        id: 2,
-        item: 'Título do Risco 2',
-        classificacao: 'Financeiro',
-        probabilidade: 'Médio',
-        justificativa: 'Justificative 2'
-      },
-      {
-        id: 3,
-        item: 'Título do Risco  3',
-        classificacao: 'Atraso no Cronograma',
-        probabilidade: 'Baixo',
-        justificativa: 'Justificative 3'
-      },
-    ]
   }
 
 }
