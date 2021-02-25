@@ -94,7 +94,12 @@ export class EtapasComponent implements OnInit {
       await this.propostaService.atualizarDuracao(this.proposta.proposta.captacaoId, this.duracao);
       this.proposta.proposta.duracao = this.duracao;
     } catch (e) {
-
+      this.duracao = this.proposta.proposta.duracao;
+      if (e.error && e.error.title && e.error.detail) {
+        this.app.alert(e.error.detail, e.error.title).then();
+      } else {
+        console.error(e);
+      }
     }
     this.loading = false;
 
