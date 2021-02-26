@@ -1,93 +1,61 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AppValidators } from '@app/commons';
-import { AppService } from '@app/services/app.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators, FormGroup} from '@angular/forms';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {AppValidators, Funcoes, Graduacoes, TextValue} from '@app/commons';
+import {AppService} from '@app/services/app.service';
+import {PropostaNodeFormComponent} from '@app/user-fornecedor/propostas/proposta/shared';
+import {PropostaServiceBase} from '@app/user-fornecedor/services/propostas.service';
 
 @Component({
   selector: 'app-recurso-humano-form',
   templateUrl: './recurso-humano-form.component.html',
   styleUrls: ['./recurso-humano-form.component.scss']
 })
-export class RecursoHumanoFormComponent implements OnInit {
+export class RecursoHumanoFormComponent extends PropostaNodeFormComponent implements OnInit {
 
-  recursoHumano: object;
-  status: boolean = false;
+  empresaCtrl = this.fb.control('', Validators.required);
+  form = this.fb.group({
+    id: [0],
+    empresa: this.empresaCtrl,
+    empresaId: [''],
+    coExecutorId: [''],
+    nomeCompleto: ['', [Validators.required]],
+    titulacao: ['', [Validators.required]],
+    funcao: ['', [Validators.required]],
+    nacionalidade: ['', [Validators.required]],
+    documento: ['', [Validators.required]],
+    valorHora: ['', [Validators.required]],
+    urlCurriculo: ['', [Validators.required]],
+  });
+  empresas: Array<TextValue> = [];
+  titulacoes = Graduacoes;
+  funcoes = Funcoes;
 
-  formRecursoHumano: FormGroup;
-
-  // DADOS DE TESTE
-  empresas = [
-    {nome: 'Ivision Sistemas de Imagem e Visão S.A'},
-    {nome: 'TAESA (7527)'},
-  ];
-
-  titulacoes = [
-    {nome: 'Doutor'},
-    {nome: 'Mestre'},
-  ];
-
-  funcoes = [
-    {nome: 'Coodernador'},
-    {nome: 'Gerente'},
-  ]
-  //-------------------------------------------------
-
-  get cnpjCpfMask(): string {
-    const currentValue = this.formRecursoHumano.get('cpf').value;
-    if (currentValue) {
-        return currentValue.replace(/\D/, '').length < 12 ? '000.000.000-009' : '00.000.000/0000-00';
-    }
-    return '0';
+  constructor(app: AppService, fb: FormBuilder, activeModal: NgbActiveModal, service: PropostaServiceBase) {
+    super(app, fb, activeModal, service);
   }
-
-  constructor(
-    private app: AppService,
-    private fb: FormBuilder,
-    public activeModal: NgbActiveModal
-  ) { }
 
   ngOnInit(): void {
-    this.configForm();
-  }
+    super.ngOnInit();
+    const empresas = (this.route.snapshot.data.empresas || []).map(e => ({value: `e-${e.id}`, text: e.nome}));
+    const coexecutores = (this.route.snapshot.data.coexecutores || []).map(e => ({value: `c-${e.id}`, text: e.razaoSocial}));
+    this.empresas = [...empresas, ...coexecutores];
+    if (this.form.value.empresaId) {
+      this.form.get('empresa').setValue(`e-${this.form.value.empresaId}`);
+    } else if (this.form.value.coExecutorId) {
+      this.form.get('empresa').setValue(`c-${this.form.value.coExecutorId}`);
+    }
+    this.empresaCtrl.valueChanges.subscribe(e => {
+      this.form.get('empresaId').setValue('');
+      this.form.get('coExecutorId').setValue('');
+      const ee = e.split('-');
+      const id = parseFloat(ee[1]);
 
-  configForm() {
-    this.formRecursoHumano = this.fb.group({
-      empresa: ['', [Validators.required]],
-      valorHora: ['', [Validators.required]],
-      nome: ['', [Validators.required]],
-      titulacao: ['', [Validators.required]],
-      funcao: ['', [Validators.required]],
-      brasileiro: ['', [Validators.required]],
-      cpf: ['', [Validators.required, AppValidators.cnpjOrCpf]],
-      curriculoLattes: ['', [Validators.required]],
+      const ctrl = this.form.get(ee[0] === 'e' ? 'empresaId' : 'coExecutorId');
+      ctrl.setValue(id);
     });
 
-    if(this.recursoHumano){
-      this.formRecursoHumano.patchValue(this.recursoHumano);
-      this.status = true;
-    }
-  }
 
-  async onSubmit() {
-    if (this.formRecursoHumano.valid) {
-      const recursoHumano = this.formRecursoHumano.value;
-
-      try {
-        if (this.recursoHumano) {
-          console.log(recursoHumano, 'Editar');
-          this.app.alert('Recurso humano editado com sucesso');
-        } else {
-          console.log(recursoHumano, 'Criar');
-          this.app.alert('Recurso humano adicionado com sucesso');
-        }
-        this.activeModal.close();
-
-      } catch (e) {
-        this.app.alert('Não foi possível salvar o recurso humano');
-        console.error(e);
-      }
-    }
   }
 
 }

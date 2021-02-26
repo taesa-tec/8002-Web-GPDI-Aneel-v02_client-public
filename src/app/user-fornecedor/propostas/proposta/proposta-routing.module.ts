@@ -1,25 +1,8 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {DevelopmentComponent} from '@app/user-fornecedor/propostas/proposta/development/development.component';
-import {SidebarComponent} from '@app/dashboard/side-bar/sidebar.component';
 import {PropostaComponent} from '@app/user-fornecedor/propostas/proposta/proposta.component';
 
-/*
-Detalhes
-Condições fundamentais
-Cadastro Co-Executores
-Validação contrato
-Plano de trabalho
-Escopo
-Produtos
-Etapas
-Tabela de Riscos
-Recursos Humanos
-Alocação de Recursos Humanos
-Recursos Materiais
-Alocação de Recursos Materiais
-Envio Proposta para aprovação
- */
 const routes: Routes = [
   {
     path: '',

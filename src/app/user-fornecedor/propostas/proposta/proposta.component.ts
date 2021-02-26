@@ -4,6 +4,7 @@ import {Proposta, SIDEBAR_MENU} from '@app/commons';
 import {map} from 'rxjs/operators';
 import {CAPTACAO_ID} from '@app/user-fornecedor/propostas/proposta/shared';
 import {EtapasService} from '@app/user-fornecedor/services/propostas.service';
+import {extractRouteParams} from '@app/core';
 
 
 @Component({
@@ -44,7 +45,10 @@ import {EtapasService} from '@app/user-fornecedor/services/propostas.service';
     {
       provide: CAPTACAO_ID,
       deps: [ActivatedRoute],
-      useFactory: (route: ActivatedRoute) => parseFloat(route.snapshot.params.id)
+      useFactory: (route: ActivatedRoute) => {
+        const params = extractRouteParams(route.snapshot);
+        return parseFloat(params.id);
+      }
     },
     EtapasService
   ],

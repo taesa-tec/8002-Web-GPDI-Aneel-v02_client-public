@@ -30,9 +30,7 @@ export class UploadFilesService {
   }
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ServiceBase<T extends { id?: any }> extends UploadFilesService {
 
   get: (url, ...args) => Promise<any> = (url, ...args) => this.http.get(`${this.controller}/${url}`, ...args).toPromise();

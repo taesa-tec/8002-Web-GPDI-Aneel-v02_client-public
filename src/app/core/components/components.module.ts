@@ -17,8 +17,10 @@ import {ErrorComponent} from '@app/core/components/screens/error.component';
 import {SharedModule} from '@app/core/shared';
 import {FormsModule} from '@app/core/components/forms';
 import {PdfViewerComponent} from '@app/core/components/pdf-viewer/pdf-viewer.component';
+import {CrudComponent} from './crud/crud.component';
 
 const components = [
+  CrudComponent,
   AccordionComponent,
   AlertComponent,
   ConfirmComponent,
@@ -37,7 +39,7 @@ const components = [
 
 @NgModule({
   declarations: [
-    ...components
+    ...components,
   ],
   imports: [
     FormsModule,

@@ -1,4 +1,4 @@
-import {PipeTransform} from '@angular/core';
+import {InjectionToken, PipeTransform} from '@angular/core';
 import {SafeHtml} from '@angular/platform-browser';
 import {Pagination} from '@app/commons';
 
@@ -92,5 +92,9 @@ export interface TableOrder {
   type?: 'date' | 'number' | 'alpha';
 }
 
-export type TableDataRequester<T> = (page?: number, filter?: Array<TableComponentFilter>, order?: Array<TableOrder>, search?: string)
+export type TableDataRequester<T = any> = (page?: number, filter?: Array<TableComponentFilter>, order?: Array<TableOrder>, search?: string)
   => Promise<Pagination<T>>;
+
+export const TABLE_COLS = new InjectionToken<TableComponentCols>('Colunas da tabela');
+export const TABLE_ACTIONS = new InjectionToken<TableComponentActions>('Botões da tabela');
+export const TABLE_DATA_REQUEST = new InjectionToken<TableDataRequester>('Metodo de requisição de dados da tabela');
