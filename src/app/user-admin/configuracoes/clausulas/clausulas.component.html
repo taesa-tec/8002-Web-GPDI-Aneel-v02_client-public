@@ -4,6 +4,7 @@
 
       <app-order-content *ngFor="let control of clausulas.controls; index as i" [indice]="i" [showRemove]="true"
                          (move)="move($event.index, $event.offset)"
+                         (remove)="removeClausula($event)"
                          [total]="clausulas.controls.length">
         <div class="flex-grow-1" [formGroup]="control">
           <label>Cláusula</label>

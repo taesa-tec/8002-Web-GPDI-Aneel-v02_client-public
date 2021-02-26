@@ -142,8 +142,8 @@ export class AuthService {
     return this.http.post<ResultadoResponse>('Login/recuperar-senha', recoverRequest);
   }
 
-  novaSenha(recoverRequest: NewpassRequest): Observable<ResultadoResponse> {
-    return this.http.post<ResultadoResponse>('Login/nova-senha', recoverRequest);
+  async novaSenha(recoverRequest: NewpassRequest) {
+    return await this.http.post<ResultadoResponse>('Login/nova-senha', recoverRequest).toPromise();
   }
 
 

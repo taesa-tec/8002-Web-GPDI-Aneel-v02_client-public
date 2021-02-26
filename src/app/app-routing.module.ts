@@ -6,7 +6,7 @@ import {AdminRootUrl, FornecedorRootUrl, GestorRootUrl, SuprimentoRootUrl} from 
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
-  {path: 'login', pathMatch: 'full', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
+  {path: 'login', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
   {
     path: AdminRootUrl,
     canActivate: [AuthGuard],

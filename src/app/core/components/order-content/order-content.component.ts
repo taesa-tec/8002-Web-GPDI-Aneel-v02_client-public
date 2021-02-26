@@ -25,7 +25,7 @@ export class OrderContentComponent implements OnInit {
   private defaultOptions: OrderOptions = {
     background: 'bg-cinza-claro',
     deleteButton: {
-      iconClassName: 'ta-times-circle',
+      iconClassName: 'ta-cancel-circle',
       tooltip: 'Excluir',
       className: 'btn-sm align-self-center'
     },
