@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Inject, Injectable, Provider} from '@angular/core';
 import {ServiceBase} from '@app/services';
 import {HttpClient} from '@angular/common/http';
 import {BaseEntity} from '@app/commons';
@@ -8,6 +8,33 @@ import {filter} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {PropostaModule} from '@app/user-fornecedor/propostas/proposta/proposta.module';
 import {PropostasModule} from '@app/user-fornecedor/propostas/propostas.module';
+
+@Injectable()
+export class PropostaServiceBase extends ServiceBase<any> {
+
+  static useExisting(t): Provider {
+    return {
+      provide: PropostaServiceBase,
+      useExisting: t
+    };
+  }
+
+  static fromAppend(append): Provider {
+    return {
+      provide: PropostaServiceBase,
+      deps: [HttpClient],
+      useFactory: (http: HttpClient) => new PropostaServiceBase(http, append)
+    };
+  }
+
+  set captacaoId(value) {
+    this.controller = `Fornecedor/Propostas/${value}/${this.append}`;
+  }
+
+  constructor(http: HttpClient, protected append: string) {
+    super(http, 'Fornecedor/Propostas/');
+  }
+}
 
 @Injectable()
 export class PropostasService extends ServiceBase<any> {
@@ -120,37 +147,17 @@ export class PropostasService extends ServiceBase<any> {
 }
 
 @Injectable()
-export class ProdutosService extends ServiceBase<any> {
-
-  set captacaoId(value) {
-    this.controller = `Fornecedor/Propostas/${value}/Produtos`;
-  }
+export class ProdutosService extends PropostaServiceBase {
 
   constructor(http: HttpClient) {
-    super(http, 'Fornecedor/Propostas/{id}/Produtos');
+    super(http, 'Produtos');
   }
 }
 
 @Injectable()
-export class EtapasService extends ServiceBase<any> {
-
-  set captacaoId(value) {
-    this.controller = `Fornecedor/Propostas/${value}/Etapas`;
-  }
+export class EtapasService extends PropostaServiceBase {
 
   constructor(http: HttpClient) {
-    super(http, 'Fornecedor/Propostas/{id}/Etapas');
-  }
-}
-
-@Injectable()
-export class RiscosService extends ServiceBase<any> {
-
-  set captacaoId(value) {
-    this.controller = `Fornecedor/Propostas/${value}/Riscos`;
-  }
-
-  constructor(http: HttpClient) {
-    super(http, 'Fornecedor/Propostas/{id}/Riscos');
+    super(http, 'Etapas');
   }
 }

@@ -4,8 +4,8 @@ import {SharedModule} from '@app/dashboard/shared/shared.module';
 import {RiscosRoutingModule} from './riscos-routing.module';
 import {RiscosComponent} from './riscos.component';
 import {RiscoFormComponent} from './risco-form/risco-form.component';
-import {RiscosService} from '@app/user-fornecedor/services/propostas.service';
-import {RiscoResolver, RiscosResolver} from '@app/user-fornecedor/resolvers/riscos.resolver';
+import {PropostaServiceBase} from '@app/user-fornecedor/services/propostas.service';
+import {CrudDataResolver, CrudItemResolver} from '@app/user-fornecedor/resolvers/crud.resolver';
 
 
 @NgModule({
@@ -18,9 +18,9 @@ import {RiscoResolver, RiscosResolver} from '@app/user-fornecedor/resolvers/risc
     RiscosRoutingModule
   ],
   providers: [
-    RiscosService,
-    RiscosResolver,
-    RiscoResolver
+    CrudItemResolver,
+    CrudDataResolver,
+    PropostaServiceBase.fromAppend('Riscos')
   ]
 })
 export class RiscosModule {

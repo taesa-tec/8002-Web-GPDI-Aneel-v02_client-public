@@ -1,18 +1,19 @@
 import {Component, OnInit} from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 import {AppService} from '@app/services/app.service';
 import {ActivatedRoute} from '@angular/router';
 import {Proposta} from '@app/commons';
-import {RiscosService} from '@app/user-fornecedor/services/propostas.service';
+import {PropostaServiceBase} from '@app/user-fornecedor/services/propostas.service';
+import {PropostaNodeFormComponent} from '@app/user-fornecedor/propostas/proposta/shared';
 
 @Component({
   selector: 'app-risco-form',
   templateUrl: './risco-form.component.html',
   styleUrls: ['./risco-form.component.scss']
 })
-export class RiscoFormComponent implements OnInit {
+export class RiscoFormComponent extends PropostaNodeFormComponent implements OnInit {
 
   route: ActivatedRoute;
   proposta: Proposta;
@@ -39,38 +40,11 @@ export class RiscoFormComponent implements OnInit {
     {nome: 'Baixo'}
   ];
 
-  constructor(private app: AppService, private fb: FormBuilder, public activeModal: NgbActiveModal, protected service: RiscosService) {
+  constructor(app: AppService, fb: FormBuilder, activeModal: NgbActiveModal, service: PropostaServiceBase) {
+    super(app, fb, activeModal, service);
   }
 
   ngOnInit(): void {
-    this.service.captacaoId = this.proposta.captacaoId;
-    if (this.route.snapshot.data.risco) {
-      this.form.patchValue(this.route.snapshot.data.risco);
-    }
+    super.ngOnInit();
   }
-
-
-  async onSubmit() {
-    if (this.form.valid) {
-      try {
-        await this.service.salvar(this.form.value);
-        this.app.alert('Salvo com sucesso!').then();
-        this.activeModal.close();
-
-      } catch (e) {
-        this.app.alert('Não foi possível salvar o risco').then();
-        console.error(e);
-      }
-    }
-  }
-
-
-  async remover() {
-    if (this.form.value.id !== 0 && await this.app.confirm('Tem certeza que deseja remover?',
-      'Confirme a exclusão?')) {
-      await this.service.excluir(this.form.value.id);
-      this.activeModal.close(true);
-    }
-  }
-
 }
