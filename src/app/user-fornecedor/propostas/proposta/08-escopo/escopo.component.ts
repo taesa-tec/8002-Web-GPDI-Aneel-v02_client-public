@@ -62,7 +62,6 @@ export class EscopoComponent implements OnInit {
   async onSubmit() {
     if (this.form.valid) {
       try {
-        console.log(this.form.value);
         await this.service.saveEscopo(this.parent.proposta.captacaoId, this.form.value);
         this.app.alert('Escopo salvo com sucesso!').then();
       } catch (e) {

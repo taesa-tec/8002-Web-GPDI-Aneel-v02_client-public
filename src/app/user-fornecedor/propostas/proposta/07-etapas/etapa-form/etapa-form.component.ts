@@ -37,7 +37,6 @@ export class EtapaFormComponent implements OnInit {
     this.produtoService.captacaoId = this.proposta.captacaoId;
     this.produtoService.obter().then(p => this.produtos = p);
     if (this.route.snapshot.data.etapa) {
-      console.log(this.route.snapshot.data);
       this.form.patchValue(this.route.snapshot.data.etapa);
     }
   }

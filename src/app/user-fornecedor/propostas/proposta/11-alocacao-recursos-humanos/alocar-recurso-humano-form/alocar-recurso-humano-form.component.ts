@@ -1,102 +1,108 @@
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AppService } from '@app/services/app.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
-import * as moment from 'moment';
+import {Component, Input, OnInit} from '@angular/core';
+import {PropostaNodeFormComponent} from '@app/user-fornecedor/propostas/proposta/shared';
+import {AppService} from '@app/services';
+import {FormBuilder, Validators} from '@angular/forms';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {PropostaServiceBase} from '@app/user-fornecedor/services/propostas.service';
 
 @Component({
   selector: 'app-alocar-recurso-humano-form',
   templateUrl: './alocar-recurso-humano-form.component.html',
   styleUrls: ['./alocar-recurso-humano-form.component.scss']
 })
-export class AlocarRecursoHumanoFormComponent implements OnInit {
+export class AlocarRecursoHumanoFormComponent extends PropostaNodeFormComponent implements OnInit {
 
-  alocarRecurso: object;
-  status: boolean = false;
-  mesInicial: moment.Moment = moment();
-  totalMeses: number = 6;
+  empresas = [];
+  etapas = [];
+  recursos = [];
 
-  formAlocarRecurso: FormGroup;
+  etapaCtrl = this.fb.control('', Validators.required);
+  recursoCtrl = this.fb.control('', Validators.required);
+  empresaFinanciadora = this.fb.control('', Validators.required);
+  formMeses = this.fb.group({});
 
-  // DADOS DE TESTE
-  empresasFinanciadoras = [
-    {nome: 'Empresa Financiadora 1'},
-    {nome: 'Empresa Financiadora 2'}
-  ] ;
+  form = this.fb.group({
+    id: 0,
+    recursoId: this.recursoCtrl,
+    etapaId: this.etapaCtrl,
+    empresaFinanciadora: this.empresaFinanciadora,
+    empresaFinanciadoraId: [''],
+    coExecutorFinanciadorId: [''],
+    justificativa: ['', Validators.required],
+    horaMeses: this.formMeses,
+  });
 
-  etapas = [
-    {nome: 'Etapa 1'},
-    {nome: 'Etapa 2'}
-  ]; 
 
-  recursosHumanos = [
-    {nome: 'Frederico Souto dos Santos'},
-    {nome: 'Carlos das Silva'}
-  ];
-  //-------------------------------------
+  private _meses: Array<number> = [];
+  private _mesesPrev: Array<number> = [];
 
-  constructor(
-    private app: AppService,
-    private fb: FormBuilder,
-    public activeModal: NgbActiveModal
-  ) { }
+  get meses() {
+    return this._meses;
+  }
+
+  set meses(value) {
+    this._mesesPrev = this._meses;
+    this._meses = value.filter(n => !isNaN(n));
+    this._mesesPrev.forEach(m => this.formMeses.removeControl(m.toString()));
+    this._meses.forEach(m => {
+      this.formMeses.addControl(m.toString(), this.fb.control('', [Validators.required, Validators.min(0), Validators.max(this.max)]));
+    });
+  }
+
+  @Input() max = 172;
+
+  constructor(app: AppService, fb: FormBuilder, activeModal: NgbActiveModal, service: PropostaServiceBase) {
+    super(app, fb, activeModal, service);
+  }
 
   ngOnInit(): void {
-    this.mesInicial = moment('2019-05-01T00:00:00');
-    this.configForm();
-  }
+    super.ngOnInit();
+    this.empresas = this.route.snapshot.data.empresas;
+    this.etapas = this.route.snapshot.data.etapas;
+    this.recursos = this.route.snapshot.data.recursos;
 
-  configForm() {
-    this.formAlocarRecurso = this.fb.group({
-      recursoHumano: ['', [Validators.required]],
-      empresaFinanciadora: ['', [Validators.required]],
-      etapa: ['', [Validators.required]],
-      horasAlocadas: this.getHorasAlocadas(),
-      justificativa: ['', [Validators.required]],
-    });
-
-    if(this.alocarRecurso){
-      this.formAlocarRecurso.patchValue(this.alocarRecurso);
-      this.status = true;
-    }
-  }
-
-  getHorasAlocadas() {
-    let formGroup = this.fb.group([]);
-
-    for(let x = 1; x <= this.totalMeses; x++) {
-      formGroup.addControl(`mes-${x}`, this.fb.control('', Validators.required));
-    }
-
-    return formGroup;
-  }
-
-  getMesAnoAt(i) {
-    if (this.mesInicial) {
-      return this.mesInicial.clone().add(i - 1, 'months').format('MMM YYYY');
-    }
-    return `Mês ${i}`;
-  }
-
-  async onSubmit() {
-    if (this.formAlocarRecurso.valid) {
-      const alocarRecurso = this.formAlocarRecurso.value;
-      
-      try {
-        if (this.alocarRecurso) {
-          console.log(alocarRecurso, 'Editar');
-          this.app.alert('Recurso editado com sucesso');
-        } else {
-          console.log(alocarRecurso, 'Criar');
-          this.app.alert('Recurso adicionado com sucesso');
+    const mesesMount = (v, d = null) => {
+      const etapa = this.etapas.find(e => e.id === parseFloat(v));
+      if (etapa) {
+        this._mesesPrev = this.meses;
+        this.meses = etapa.meses;
+        if (d) {
+          this.formMeses.patchValue(d);
         }
-        this.activeModal.close();
+      }
+    };
+    const maxMeses = recursoId => {
+      const r = this.recursos.find(_r => _r.id === parseFloat(recursoId));
+      this.max = r?.empresaId === 1 ? 160 : 172;
+    };
 
-      } catch (e) {
-        this.app.alert('Não foi possível salvar o recurso');
-        console.error(e);
+    if (this.route.snapshot.data.item) {
+      const item = this.route.snapshot.data.item;
+
+      mesesMount(item.etapaId, item.horaMeses);
+      maxMeses(item.recursoId);
+      if (item.coExecutorFinanciadorId) {
+        this.empresaFinanciadora.setValue(`c-${item.coExecutorFinanciadorId}`);
+      } else {
+        this.empresaFinanciadora.setValue(`e-${item.empresaFinanciadoraId}`);
       }
     }
-  }
 
+    this.etapaCtrl.valueChanges.subscribe(v => {
+      mesesMount(v);
+    });
+    this.recursoCtrl.valueChanges.subscribe(id => {
+      maxMeses(id);
+    });
+    this.empresaFinanciadora.valueChanges.subscribe(e => {
+      this.form.get('empresaFinanciadoraId').setValue('');
+      this.form.get('coExecutorFinanciadorId').setValue('');
+      const ee = e.split('-');
+      const id = parseFloat(ee[1]);
+
+      const ctrl = this.form.get(ee[0] === 'e' ? 'empresaFinanciadoraId' : 'coExecutorFinanciadorId');
+      ctrl.setValue(id);
+    });
+
+  }
 }

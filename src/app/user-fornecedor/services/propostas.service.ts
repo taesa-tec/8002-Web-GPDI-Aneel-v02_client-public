@@ -84,6 +84,10 @@ export class PropostasService extends ServiceBase<any> {
     return await this.http.get<Array<BaseEntity>>(`${this.controller}/${id}/CoExecutores`, {}).toPromise();
   }
 
+  async getEmpresas(id: number) {
+    return await this.http.get<any>(`${this.controller}/${id}/Empresas`, {}).toPromise();
+  }
+
   async removerCoExecutor(id: number, coExecutorId: number) {
     return await this.http.delete(`${this.controller}/${id}/CoExecutores/${coExecutorId}`).toPromise();
   }
@@ -159,5 +163,21 @@ export class EtapasService extends PropostaServiceBase {
 
   constructor(http: HttpClient) {
     super(http, 'Etapas');
+  }
+}
+
+@Injectable()
+export class RecursosHumanosService extends PropostaServiceBase {
+
+  constructor(http: HttpClient) {
+    super(http, 'RecursosHumano');
+  }
+}
+
+@Injectable()
+export class RecursosMateriaisService extends PropostaServiceBase {
+
+  constructor(http: HttpClient) {
+    super(http, 'RecursosMateriais');
   }
 }

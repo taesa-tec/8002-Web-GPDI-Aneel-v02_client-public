@@ -2,26 +2,35 @@ import {Component, OnInit} from '@angular/core';
 
 import {TableComponentCols, TableComponentActions, TableComponentFilter, TABLE_COLS, TABLE_ACTIONS} from '@app/core/components/table/table';
 import {CRUD_EDITOR} from '@app/core/components/crud/crud.component';
-import {RecursoHumanoFormComponent} from
-    '@app/user-fornecedor/propostas/proposta/10-recursos-humanos/recurso-humano-form/recurso-humano-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PropostaComponent} from '@app/user-fornecedor/propostas/proposta/proposta.component';
-import {AlocarRecursoMaterialFormComponent} from '@app/user-fornecedor/propostas/proposta/13-alocacao-recursos-materiais/alocar-recurso-material-form/alocar-recurso-material-form.component';
+import {
+  AlocarRecursoMaterialFormComponent
+} from '@app/user-fornecedor/propostas/proposta/13-alocacao-recursos-materiais/alocar-recurso-material-form/alocar-recurso-material-form.component';
+import {
+  AlocarRecursoHumanoFormComponent
+} from '@app/user-fornecedor/propostas/proposta/11-alocacao-recursos-humanos/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
 
-const tableCols = [
+const tableCols: TableComponentCols = [
   {
-    field: 'recursoMaterial',
+    field: 'recurso',
     title: 'Nome Recurso',
     order: true,
   },
   {
-    field: 'categoriaContabil',
+    field: 'recursoCategoria',
     title: 'Cat. Contábil',
     order: true,
   },
   {
-    field: 'valorTotal',
+    field: 'quantidade',
+    title: 'Quantidade',
+    order: true,
+  },
+  {
+    field: 'valor',
     title: 'Valor Total',
+    type: 'currency',
     order: true,
   }
 ];
@@ -55,5 +64,18 @@ export class AlocacaoRecursosMateriaisComponent implements OnInit {
   async ngOnInit() {
 
   }
+
+  async openForm(ref) {
+    const cmp = ref.componentInstance as AlocarRecursoHumanoFormComponent;
+    cmp.proposta = this.parent.proposta;
+    cmp.route = this.route;
+    try {
+      await ref.result;
+    } catch (e) {
+
+    }
+    this.router.navigate([]).then();
+  }
+
 
 }

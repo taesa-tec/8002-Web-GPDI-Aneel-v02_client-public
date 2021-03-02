@@ -5,7 +5,10 @@ import {AlocacaoRecursosMateriaisRoutingModule} from './alocacao-recursos-materi
 import {AlocacaoRecursosMateriaisComponent} from './alocacao-recursos-materiais.component';
 import {AlocarRecursoMaterialFormComponent} from './alocar-recurso-material-form/alocar-recurso-material-form.component';
 import {CrudDataResolver, CrudItemResolver} from '@app/user-fornecedor/resolvers/crud.resolver';
-import {PropostaServiceBase} from '@app/user-fornecedor/services/propostas.service';
+import {EtapasService, PropostaServiceBase, RecursosMateriaisService} from '@app/user-fornecedor/services/propostas.service';
+import {EmpresasResolver} from '@app/user-fornecedor/resolvers/empresas.resolver';
+import {EtapasResolver} from '@app/user-fornecedor/resolvers/etapas.resolver';
+import {RecursosMateriaisResolver} from '@app/user-fornecedor/resolvers/recursos-materiais.resolver';
 
 
 @NgModule({
@@ -19,7 +22,12 @@ import {PropostaServiceBase} from '@app/user-fornecedor/services/propostas.servi
   ], providers: [
     CrudItemResolver,
     CrudDataResolver,
-    PropostaServiceBase.fromAppend('RecursosMateriais')
+    PropostaServiceBase.fromAppend('RecursosMateriais/Alocacao'),
+    EmpresasResolver,
+    EtapasResolver,
+    EtapasService,
+    RecursosMateriaisService,
+    RecursosMateriaisResolver
   ]
 })
 export class AlocacaoRecursosMateriaisModule {

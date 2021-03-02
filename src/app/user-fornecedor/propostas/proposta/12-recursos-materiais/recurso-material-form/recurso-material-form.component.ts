@@ -1,71 +1,33 @@
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
 
-import { AppService } from '@app/services/app.service';
+import {AppService} from '@app/services/app.service';
+import {PropostaNodeFormComponent} from '@app/user-fornecedor/propostas/proposta/shared';
+import {PropostaServiceBase} from '@app/user-fornecedor/services/propostas.service';
 
 @Component({
   selector: 'app-recurso-material-form',
   templateUrl: './recurso-material-form.component.html',
   styleUrls: ['./recurso-material-form.component.scss']
 })
-export class RecursoMaterialFormComponent implements OnInit {
+export class RecursoMaterialFormComponent extends PropostaNodeFormComponent implements OnInit {
 
-  recursoMaterial: object;
-  status: boolean = false;
+  form = this.fb.group({
+    id: 0,
+    nome: ['', Validators.required],
+    categoriaContabilId: ['', Validators.required],
+    valorUnitario: [0, Validators.required],
+    especificacaoTecnica: ['', Validators.required]
+  });
+  categorias = [];
 
-  formRecursoMaterial: FormGroup;
-
-  // DADOS DE TESTE
-  categoriasContabil = [
-    {nome: 'Categoria 1'},
-    {nome: 'Categoria 2'}
-  ]; 
-  //----------------------
-
-  constructor(
-    private app: AppService,
-    private fb: FormBuilder,
-    public activeModal: NgbActiveModal
-  ) { }
-
-  ngOnInit(): void {
-    this.configForm();
+  constructor(app: AppService, fb: FormBuilder, activeModal: NgbActiveModal, service: PropostaServiceBase) {
+    super(app, fb, activeModal, service);
   }
 
-  configForm() {
-    this.formRecursoMaterial = this.fb.group({
-      nome: ['', [Validators.required]],
-      categoriaContabil: ['', [Validators.required]],
-      valorUnitario: ['', [Validators.required]],
-      especificacao: ['', [Validators.required]],
-    });
-
-    if(this.recursoMaterial){
-      this.formRecursoMaterial.patchValue(this.recursoMaterial);
-      this.status = true;
-    }
+  ngOnInit() {
+    super.ngOnInit();
+    this.categorias = this.route.snapshot.data.categorias;
   }
-
-  async onSubmit() {
-    if (this.formRecursoMaterial.valid) {
-      const recursoMaterial = this.formRecursoMaterial.value;
-      
-      try {
-        if (this.recursoMaterial) {
-          console.log(recursoMaterial, 'Editar');
-          this.app.alert('Recurso material editado com sucesso');
-        } else {
-          console.log(recursoMaterial, 'Criar');
-          this.app.alert('Recurso material adicionado com sucesso');
-        }
-        this.activeModal.close();
-
-      } catch (e) {
-        this.app.alert('Não foi possível salvar o recurso material');
-        console.error(e);
-      }
-    }
-  }
-
 }
