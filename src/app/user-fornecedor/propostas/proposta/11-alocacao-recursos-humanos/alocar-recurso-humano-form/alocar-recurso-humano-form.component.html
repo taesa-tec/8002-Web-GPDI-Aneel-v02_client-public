@@ -1,82 +1,92 @@
 <div class="modal-header">
-    <div class="text-uppercase modal-title text-blue-light fs-24">
-        {{ status ? 'EDITAR ALOCAÇÃO DE RECURSO HUMANO' : 'ALOCAR RECURSO HUMANO' }}
-    </div>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        <i class="ta-cancel-circle"></i>
-    </button>
+  <div class="text-uppercase modal-title text-blue-light fs-24">
+    {{ form.value.id != 0 ? 'EDITAR ALOCAÇÃO DE RECURSO HUMANO' : 'ALOCAR RECURSO HUMANO' }}
+  </div>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <i class="ta-cancel-circle"></i>
+  </button>
 </div>
 
 <app-loading type="fullscreen"></app-loading>
 
 <div class="modal-body">
-    <form [formGroup]="formAlocarRecurso" (ngSubmit)="onSubmit()">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <pre class="debug">{{form.value | json}}</pre>
+    <div class="form-group">
+      <label for="recurso-humano">Recurso humano</label>
+      <select class="form-control" id="recurso-humano" formControlName="recursoId">
+        <option value="" hidden>Selecione a pessoa que irá executar a tarefa</option>
+        <option [value]="recurso.id" *ngFor="let recurso of recursos">
+          {{ recurso.nomeCompleto }}
+        </option>
+      </select>
+    </div>
 
-        <div class="form-group">
-            <label for="recurso-humano">Recurso humano</label>
-            <select class="form-control" id="recurso-humano" formControlName="recursoHumano">
-                <option value="" hidden>Selecione a pessoa que irá executar a tarefa</option>
-                <option [value]="recurso.nome" *ngFor="let recurso of recursosHumanos">
-                    {{ recurso.nome }}
-                </option>
-            </select>
+    <div class="form-row">
+      <div class="form-group col">
+        <label for="empresa-financiadora">Empresa Financiadora</label>
+        <select class="form-control" id="empresa-financiadora" formControlName="empresaFinanciadora">
+          <option value="" hidden>Selecione uma empresa financiadora</option>
+          <option [value]="empresa.value" *ngFor="let empresa of empresas">
+            {{ empresa.text }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col">
+        <label for="etapa">Etapa relacionada</label>
+        <select class="form-control" id="etapa" formControlName="etapaId">
+          <option value="" hidden>Selecione uma etapa</option>
+          <option [value]="etapa.id" *ngFor="let etapa of etapas">
+            Etapa {{ etapa.ordem | pad:'0':2 }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="form-group mb-0">
+          <label>Horas alocadas por mês</label>
         </div>
-
-        <div class="form-row">
-            <div class="form-group col">
-                <label for="empresa-financiadora">Empresa Financiadora</label>
-                <select class="form-control" id="empresa-financiadora" formControlName="empresaFinanciadora">
-                    <option value="" hidden>Selecione uma empresa financiadora</option>
-                    <option [value]="empresaFinanciadora.nome" *ngFor="let empresaFinanciadora of empresasFinanciadoras">
-                        {{ empresaFinanciadora.nome }}
-                    </option>
-                </select>
-            </div>
-            <div class="form-group col">
-                <label for="etapa">Etapa relacionada</label>
-                <select class="form-control" id="etapa" formControlName="etapa">
-                    <option value="" hidden>Selecione uma etapa</option>
-                    <option [value]="etapa.nome" *ngFor="let etapa of etapas">
-                        {{ etapa.nome }}
-                    </option>
-                </select>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <div class="form-group mb-0">
-                    <label for="">Horas alocadas por mês</label>
+        <div class="p-3 bg-cinza-claro rounded mb-4">
+          <div class="wrap-controls" [formGroup]="formMeses">
+            <ng-container *ngFor="let m of meses">
+              <div class="wrap-input-control rounded">
+                <div class="form-group">
+                  <div class="font-weight-bold fs-14 text-blue-light text-uppercase">Mês {{m| pad:'0':2}}</div>
+                  <input type="number" class="form-control" [formControlName]="m" min="0" [max]="max"
+                         [placeholder]="'Max '.concat(max.toString(),'h')">
                 </div>
-                <div class="row mx-0 p-3 bg-cinza-claro rounded mb-4">
-                    <div class="col-2 mb-2" *ngFor="let i of totalMeses | n2array: 1" formGroupName="horasAlocadas">
-                        <label for="">{{ getMesAnoAt(i) }}</label>
-                        <input placeholder="Max 160h" mask="999" sufix="h" type="text" class="form-control" [formControlName]="'mes-' + i" />
-                    </div>
-                </div>
-            </div>
+              </div>
+            </ng-container>
+          </div>
         </div>
+      </div>
+    </div>
 
-        <div class="form-group">
-            <label>Justificativa do recurso</label>
-            <app-textarea class="form-control" formControlName="justificativa" rows="4" maxlength="1000"></app-textarea>
+    <div class="form-group">
+      <label>Justificativa do recurso</label>
+      <app-textarea class="form-control" formControlName="justificativa" rows="4" maxlength="1000"></app-textarea>
+    </div>
+
+    <div class="form-group d-flex justify-content-between">
+      <div>
+        <button type="button" class="button btn btn-danger" (click)="remover()" *ngIf="form.value.id !== 0">
+          <i class="ta-trash mr-1"></i>
+          Excluir Alocação
+        </button>
+      </div>
+      <div class="text-right">
+        <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">
+          Cancelar
         </div>
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          <i class="ta-save mr-1"></i>
+          Salvar Alocação
+        </button>
 
-        <div class="form-group">
-            <div class="text-right">
-                <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">
-                    Cancelar
-                </div>
-                <button type="submit" class="btn btn-primary" [disabled]="formAlocarRecurso.invalid" *ngIf="status">
-                    <i class="ta-save mr-1"></i>
-                    Salvar Alocação
-                </button>
-                <button type="submit" class="btn btn-primary" [disabled]="formAlocarRecurso.invalid" *ngIf="!status">
-                    <i class="ta-plus-circle mr-1"></i>
-                    Alocar Recurso
-                </button>
-            </div>
-        </div>
+      </div>
+    </div>
 
-    </form>
+  </form>
 </div>

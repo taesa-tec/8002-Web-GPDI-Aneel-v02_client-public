@@ -6,8 +6,8 @@ import {RecursosHumanosComponent} from './recursos-humanos.component';
 import {RecursoHumanoFormComponent} from './recurso-humano-form/recurso-humano-form.component';
 import {CrudDataResolver, CrudItemResolver} from '@app/user-fornecedor/resolvers/crud.resolver';
 import {PropostaServiceBase} from '@app/user-fornecedor/services/propostas.service';
-import {EmpresasResolver} from '@app/resolvers/empresas.resolver';
 import {CoExecutoresResolver} from '@app/user-fornecedor/resolvers/co-executores.resolver';
+import {EmpresasResolver} from '@app/user-fornecedor/resolvers/empresas.resolver';
 
 
 @NgModule({

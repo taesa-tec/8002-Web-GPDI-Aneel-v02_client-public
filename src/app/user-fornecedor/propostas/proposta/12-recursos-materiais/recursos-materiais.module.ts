@@ -6,6 +6,7 @@ import {RecursosMateriaisComponent} from './recursos-materiais.component';
 import {RecursoMaterialFormComponent} from './recurso-material-form/recurso-material-form.component';
 import {CrudDataResolver, CrudItemResolver} from '@app/user-fornecedor/resolvers/crud.resolver';
 import {PropostaServiceBase} from '@app/user-fornecedor/services/propostas.service';
+import {CategoriasContabeisResolver} from '@app/resolvers/categorias-contabeis.resolver';
 
 @NgModule({
   declarations: [

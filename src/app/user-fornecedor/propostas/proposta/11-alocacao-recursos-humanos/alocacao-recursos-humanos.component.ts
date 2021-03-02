@@ -3,16 +3,13 @@ import {Component, OnInit} from '@angular/core';
 
 import {TableComponentCols, TableComponentActions, TableComponentFilter, TABLE_COLS, TABLE_ACTIONS} from '@app/core/components/table/table';
 import {AlocarRecursoHumanoFormComponent} from './alocar-recurso-humano-form/alocar-recurso-humano-form.component';
-import {Pagination} from '@app/commons/common';
-import {at, chunk, uniqBy} from 'lodash-es';
 import {CRUD_EDITOR} from '@app/core/components/crud/crud.component';
-import {RecursoHumanoFormComponent} from '@app/user-fornecedor/propostas/proposta/10-recursos-humanos/recurso-humano-form/recurso-humano-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PropostaComponent} from '@app/user-fornecedor/propostas/proposta/proposta.component';
 
-const tableCols = [
+const tableCols: TableComponentCols = [
   {
-    field: 'recursoHumano',
+    field: 'recurso',
     title: 'Nome',
     order: true,
   },
@@ -29,6 +26,7 @@ const tableCols = [
   {
     field: 'valor',
     title: 'Valor',
+    type: 'currency',
     order: true,
   }
 ];
@@ -62,6 +60,18 @@ export class AlocacaoRecursosHumanosComponent implements OnInit {
 
   async ngOnInit() {
 
+  }
+
+  async openForm(ref) {
+    const cmp = ref.componentInstance as AlocarRecursoHumanoFormComponent;
+    cmp.proposta = this.parent.proposta;
+    cmp.route = this.route;
+    try {
+      await ref.result;
+    } catch (e) {
+
+    }
+    this.router.navigate([]).then();
   }
 
 }

@@ -1,10 +1,11 @@
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
-import {ServiceBase} from '@app/services/service-base.service';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {CatalogsService} from '@app/services';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CategoriasContabeisResolver implements Resolve<Array<any>> {
 
   constructor(protected service: CatalogsService) {

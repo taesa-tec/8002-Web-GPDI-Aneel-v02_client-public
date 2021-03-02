@@ -53,7 +53,7 @@ export class CatalogsService {
   }
 
   async categoriasContabeis() {
-    return await this.getData<Array<any>>('categoriasContabeisGestao', `Catalogo/CategoriaContabil`);
+    return await this.getData<Array<any>>('categoriasContabeis', `Catalogo/CategoriaContabil`);
   }
 
   async produtoTipos() {
@@ -61,7 +61,7 @@ export class CatalogsService {
   }
 
   async categoriasContabeisAtividade() {
-    return await this.getData<Array<any>>('categoriasContabeisGestao', `Catalogo/CategoriaContabilAtividade`);
+    return await this.getData<Array<any>>('categoriasContabeisAtividade', `Catalogo/CategoriaContabilAtividade`);
   }
 
   async paises() {

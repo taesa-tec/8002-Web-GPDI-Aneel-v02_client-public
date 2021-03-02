@@ -37,9 +37,8 @@ export class RecursoHumanoFormComponent extends PropostaNodeFormComponent implem
 
   ngOnInit(): void {
     super.ngOnInit();
-    const empresas = (this.route.snapshot.data.empresas || []).map(e => ({value: `e-${e.id}`, text: e.nome}));
-    const coexecutores = (this.route.snapshot.data.coexecutores || []).map(e => ({value: `c-${e.id}`, text: e.razaoSocial}));
-    this.empresas = [...empresas, ...coexecutores];
+    this.empresas = this.route.snapshot.data.empresas;
+
     if (this.form.value.empresaId) {
       this.form.get('empresa').setValue(`e-${this.form.value.empresaId}`);
     } else if (this.form.value.coExecutorId) {
