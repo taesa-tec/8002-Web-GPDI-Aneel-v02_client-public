@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AppService} from '@app/services';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ViewContratoComponent} from '@app/user-shared/components';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CaptacaoDetalhes} from '@app/user-shared/captacao';
+import {CaptacaoArquivo, CaptacaoDetalhes} from '@app/user-shared/captacao';
 import {CaptacaoComponent} from '@app/user-suprimento/captacoes/captacao/captacao.component';
 import {CaptacoesService} from '@app/user-suprimento/services/captacoes.service';
+import {FileUploaded} from '@app/commons';
 
 @Component({
   selector: 'app-configuracao',
@@ -17,27 +18,23 @@ export class ConfiguracaoComponent implements OnInit {
 
   contratos: Array<any>;
   fornecedores: Array<any>;
-  uploads: Array<File> = [];
+  uploads: Array<CaptacaoArquivo> = [];
 
 
   form: FormGroup = this.fb.group({
     contratos: this.fb.array([]),
-    arquivos: this.fb.array([]),
+    arquivos: this.fb.control([]),
     fornecedores: this.fb.array([]),
     consideracoes: this.fb.control(''),
     termino: this.fb.control('', [Validators.required, Validators.pattern(/\d{4}-\d{2}-\d{2}/)]),
   });
 
-  arquivosControls = this.form.get('arquivos') as FormArray;
+  arquivosControls = this.form.get('arquivos') as FormControl;
   contratosControls = this.form.get('contratos') as FormArray;
   fornecedoresControls = this.form.get('fornecedores') as FormArray;
 
   get captacao(): CaptacaoDetalhes {
     return this.parent?.captacao;
-  }
-
-  get arquivos() {
-    return (this.arquivosControls.value as Array<any>).map(a => this.captacao.arquivos.find(ar => ar.id === a));
   }
 
   constructor(
@@ -61,10 +58,10 @@ export class ConfiguracaoComponent implements OnInit {
     this.addContrato();
     this.addFornecedor();
     if (this.captacao?.arquivos) {
-      this.captacao.arquivos.forEach(arquivo => {
-        this.arquivosControls.push(this.fb.control(arquivo.id));
-      });
-
+      console.log(this.captacao);
+      this.uploads = this.captacao.arquivos;
+      const files = this.uploads.map(f => f.id);
+      this.arquivosControls.setValue(files);
     }
 
   }
@@ -103,12 +100,15 @@ export class ConfiguracaoComponent implements OnInit {
     this.fornecedoresControls.removeAt(index);
   }
 
-  changeFile(e) {
-    this.uploads.push(e.target.files.item(0));
-  }
-
-  deletarArquivo(idx) {
-    this.arquivosControls.removeAt(idx);
+  async anexarArquivos() {
+    try {
+      this.uploads = await this.app.uploadForm(this.uploads.map(f => f.id), `Captacoes/${this.captacao.id}/Arquivos`);
+      const files = this.uploads.map(f => f.id);
+      this.arquivosControls.setValue(files);
+      //this.updateFormFiles(files);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async onSubmit() {

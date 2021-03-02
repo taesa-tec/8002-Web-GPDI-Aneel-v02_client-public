@@ -101,6 +101,7 @@ export class AuthService {
       sessionStorage.removeItem('last_login_user');
     }
     if (this.loginResponse) {
+      this.loginResponse.user = {email: '', nomeCompleto: '', role: '', status: false};
       Object.assign(this.loginResponse.user, loginResponse.user);
       Object.assign(this.loginResponse, loginResponse);
     } else {

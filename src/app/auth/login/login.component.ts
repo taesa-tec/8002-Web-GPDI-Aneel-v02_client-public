@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
       await this.authService.login(this.loginRequest, this.remember);
     } catch (e) {
       this.errorMessage = e.message;
+      console.error(e);
     } finally {
       this.loading.hide();
     }

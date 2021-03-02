@@ -106,7 +106,7 @@ export interface FornecedoresSugerido {
   id: number;
 }
 
-interface CaptacaoArquivo {
+export interface CaptacaoArquivo {
   id: number;
   userId: string;
   user: null;
