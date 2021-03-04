@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {path: 'detalhes', loadChildren: () => import('./01-detalhes-demanda/detalhes-demanda.module').then(m => m.DetalhesDemandaModule)},
       {path: 'condicoes', loadChildren: () => import('./02-condicoes/condicoes.module').then(m => m.CondicoesModule)},
-      {path: 'co-executores', loadChildren: () => import('./03-co-executores/co-executores.module').then(m => m.CoExecutoresModule)},
+      {path: 'entidades', loadChildren: () => import('./03-co-executores/co-executores.module').then(m => m.CoExecutoresModule)},
       {
         path: 'contrato',
         loadChildren: () => import('./04-validacao-contratos/validacao-contratos.module').then(m => m.ValidacaoContratosModule)

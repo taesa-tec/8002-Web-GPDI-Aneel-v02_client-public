@@ -33,13 +33,6 @@
     <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="razoabilidadeCustos"
                   placeholder="Descrição do estudo de viabilidade econômica do projeto."></app-textarea>
   </div>
-
-  <div class="form-group">
-    <label>Pesquisas correlatas</label>
-    <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="pesquisasCorrelatas"
-                  placeholder="Listagem de pesquisas correlatas a este Projeto de P&D."></app-textarea>
-  </div>
-
   <div class="form-group">
     <label>Metodologia de trabalho</label>
     <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="metodologiaTrabalho"
@@ -56,6 +49,41 @@
     <label>Bibliografia</label>
     <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="bibliografia"
                   placeholder="Descrever a Bibliografia principal utilizada para elaboração da proposta e que pretende-se utilizar na execução do projeto."></app-textarea>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h4>
+        PESQUISAS CORRELATAS
+      </h4>
+      <hr>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="form-group">
+        <label>PESQUISAS CORRELATAS DESENVOLVIDAS NO PROGRAMA P&D ANEEL</label>
+        <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="pesquisasCorrelatasPeDAneel"
+                      placeholder="Listagem de pesquisas correlatas a este Projeto de P&D da Aneel."></app-textarea>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="form-group">
+        <label>PESQUISAS CORRELATAS DESENVOLVIDAS NO PROGRAMA P&D</label>
+        <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="pesquisasCorrelatasPeD"
+                      placeholder="Listagem de pesquisas correlatas fora do programa de P&D"></app-textarea>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="form-group">
+        <label>PESQUISAS CORRELATAS DESENVOLVIDAS PELA EMPRESA EXECUTORA</label>
+        <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="pesquisasCorrelatasExecutora"
+                      placeholder="Listagem de pesquisas correlatas desenvolvidas pela empresa executora"></app-textarea>
+      </div>
+    </div>
   </div>
 
   <div class="row">

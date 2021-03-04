@@ -1,6 +1,6 @@
 <div class="modal-header">
   <div class="text-uppercase modal-title text-blue-light fs-24">
-    {{ form.value.id !== 0 ? 'EDITAR EMPRESA CO-EXECUTORA' : 'REGISTRAR EMPRESA CO-EXECUTORA' }}
+    {{ form.value.id !== 0 ? 'EDITAR ENTIDADE' : 'REGISTRAR ENTIDADE' }}
   </div>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
     <i class="ta-cancel-circle"></i>
@@ -59,10 +59,22 @@
       </div>
     </div>
 
+
     <div class="form-group">
       <label for="razao-social">Razão social</label>
       <input type="text" class="form-control" id="razao-social" formControlName="razaoSocial"
              placeholder="Razão Social">
+    </div>
+
+    <div class="form-group">
+      <label for="funcao">FUNÇÃO</label>
+      <select class="form-control" formControlName="funcao" id="funcao" name="funcao">
+        <option value="">Selecione</option>
+        <option value="Executora">Executora</option>
+        <option value="Proponente">Proponente</option>
+        <option value="Cooperada">Cooperada</option>
+        <option value="Interveniente">Interveniente</option>
+      </select>
     </div>
 
     <div class="form-group">

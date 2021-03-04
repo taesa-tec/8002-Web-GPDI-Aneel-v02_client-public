@@ -3,8 +3,6 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import {TableComponentCols, TableComponentActions, TableComponentFilter, TableActionEvent} from '@app/core/components/table/table';
 import {CoExecutorFormComponent} from './co-executor-form/co-executor-form.component';
-import {Pagination} from '@app/commons/common';
-import {at, chunk, uniqBy} from 'lodash-es';
 import {CAPTACAO_ID} from '@app/user-fornecedor/propostas/proposta/shared';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -33,6 +31,7 @@ export class CoExecutoresComponent implements OnInit {
       field: 'cnpj',
       title: 'CNPJ',
       order: true,
+      value: i => i.cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5')
     }
   ];
 
@@ -51,7 +50,8 @@ export class CoExecutoresComponent implements OnInit {
     @Inject(CAPTACAO_ID) private captacaoId: number,
     private router: Router,
     private route: ActivatedRoute,
-    private modal: NgbModal) {
+    private modal: NgbModal,
+  ) {
   }
 
   async ngOnInit() {

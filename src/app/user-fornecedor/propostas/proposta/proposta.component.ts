@@ -22,7 +22,7 @@ import {extractRouteParams} from '@app/core';
             {path: 'condicoes', text: 'Condições Fundamentais para Fornecimento', icon: 'ta-ficha'}];
           if (data.proposta.dataClausulasAceitas !== null) {
             menu_itens = menu_itens.concat([
-              {path: 'co-executores', text: 'Cadastro Co-Executores', icon: 'ta-empresas'},
+              {path: 'entidades', text: 'Cadastro Outras Entidades', icon: 'ta-empresas'},
               {path: 'contrato', text: 'Validação Contrato', icon: 'ta-gavel'},
               {path: 'plano-de-trabalho', text: 'Plano de Trabalho', icon: 'ta-work-plan'},
               {path: 'produtos', text: 'Produtos', icon: 'ta-box'},

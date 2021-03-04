@@ -19,7 +19,8 @@ export class CoExecutorFormComponent implements OnInit {
     id: [0],
     cnpj: ['', [Validators.required, AppValidators.cnpj]],
     uf: ['', Validators.required],
-    razaoSocial: ['', Validators.required]
+    razaoSocial: ['', Validators.required],
+    funcao: ['', Validators.required]
   });
 
 

@@ -36,7 +36,7 @@
           <select class="form-control" formControlName="catalogSubTemaId">
             <option value="">Selecione</option>
             <option
-              [value]="subTema.subTemaId"
+              [value]="subTema.id"
               *ngFor="
                 let subTema of subtemasdisponiveis(
                   formSubtema.get('catalogSubTemaId').value

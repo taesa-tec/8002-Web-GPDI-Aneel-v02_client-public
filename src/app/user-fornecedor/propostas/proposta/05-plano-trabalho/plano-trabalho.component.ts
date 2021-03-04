@@ -17,11 +17,13 @@ export class PlanoTrabalhoComponent implements OnInit {
     originalidade: ['', [Validators.required]],
     aplicabilidade: ['', [Validators.required]],
     relevancia: ['', [Validators.required]],
-    razoabilidadeCustos: ['', [Validators.required]],
-    pesquisasCorrelatas: ['', [Validators.required]],
-    metodologiaTrabalho: ['', [Validators.required]],
     buscaAnterioridade: ['', [Validators.required]],
+    razoabilidadeCustos: ['', [Validators.required]],
+    metodologiaTrabalho: ['', [Validators.required]],
     bibliografia: ['', [Validators.required]],
+    pesquisasCorrelatasPeDAneel: ['', [Validators.required]],
+    pesquisasCorrelatasPeD: ['', [Validators.required]],
+    pesquisasCorrelatasExecutora: ['', [Validators.required]],
 
   });
   files: Array<any> = [];
