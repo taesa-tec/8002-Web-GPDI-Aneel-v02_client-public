@@ -23,6 +23,7 @@ export class EscopoComponent implements OnInit {
     contrapartidas: ['', Validators.required],
     experienciaPrevia: ['', Validators.required],
     objetivo: ['', Validators.required],
+    resultadoEsperado: ['', Validators.required],
     metas: this.metasArray
   });
 

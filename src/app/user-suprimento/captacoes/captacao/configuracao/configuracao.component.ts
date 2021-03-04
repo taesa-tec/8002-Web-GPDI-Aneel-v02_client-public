@@ -58,7 +58,6 @@ export class ConfiguracaoComponent implements OnInit {
     this.addContrato();
     this.addFornecedor();
     if (this.captacao?.arquivos) {
-      console.log(this.captacao);
       this.uploads = this.captacao.arquivos;
       const files = this.uploads.map(f => f.id);
       this.arquivosControls.setValue(files);

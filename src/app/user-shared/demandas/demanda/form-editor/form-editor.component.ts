@@ -33,7 +33,6 @@ export class FormEditorComponent implements OnInit {
   async ngOnInit() {
     try {
       this.key = this.route.snapshot.paramMap.get('form') || this.key;
-
       this.demandaId = parseFloat(this.route.snapshot.parent.paramMap.get('id')) || this.demandaId;
     } catch (e) {
 
@@ -45,7 +44,7 @@ export class FormEditorComponent implements OnInit {
     const formValue = await this.app.demandas.getDemandaForm(this.demandaId, this.key).toPromise();
     this.anexos = formValue && formValue.files.map(file => file.file) || [];
     this.formValueDefault = await this.app.demandas.getFormValue(this.key).toPromise() || {};
-    this.formValue = merge(this.formValueDefault, formValue && formValue.object || {});
+    this.formValue = merge(this.formValueDefault, formValue && formValue.data || {});
   }
 
   async submit(data) {
