@@ -1,7 +1,7 @@
 import {Inject, Injectable, Provider} from '@angular/core';
 import {ServiceBase} from '@app/services';
 import {HttpClient} from '@angular/common/http';
-import {BaseEntity} from '@app/commons';
+import {BaseEntity, Validations} from '@app/commons';
 import {CAPTACAO_ID} from '@app/user-fornecedor/propostas/proposta/shared';
 import {NavigationEnd, Router} from '@angular/router';
 import {filter} from 'rxjs/operators';
@@ -59,6 +59,10 @@ export class PropostasService extends ServiceBase<any> {
     return await this.http.get<Array<any>>(`Fornecedor/Clausulas`).toPromise();
   }
 
+  async getErros(id: number) {
+    return await this.http.get<Validations>(`${this.controller}/${id}/Erros`, {}).toPromise();
+  }
+
   async aceitarCondicoes(id: number) {
     return await this.http.post<any>(`${this.controller}/${id}/Condicoes`, {
       clausulasAceita: true,
@@ -71,6 +75,10 @@ export class PropostasService extends ServiceBase<any> {
       clausulasAceita: false,
       clausulaRejeitada: condicaoId,
     }).toPromise();
+  }
+
+  async marcarComoFinalizado(id: number) {
+    return await this.http.put<any>(`${this.controller}/${id}/Finalizar`, {}).toPromise();
   }
 
   async saveCoExecutor(id: number, coExecutor: BaseEntity) {

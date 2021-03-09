@@ -38,7 +38,11 @@ const routes: Routes = [
         loadChildren: () => import('./13-alocacao-recursos-materiais/alocacao-recursos-materiais.module')
           .then(m => m.AlocacaoRecursosMateriaisModule)
       },
-      {path: 'envio', component: DevelopmentComponent},
+      {
+        path: 'envio',
+        loadChildren: () => import('./99-envio-proposta/envio-proposta.module')
+          .then(m => m.EnvioPropostaModule)
+      },
       {path: '**', redirectTo: 'detalhes', pathMatch: 'full'}
     ],
   }

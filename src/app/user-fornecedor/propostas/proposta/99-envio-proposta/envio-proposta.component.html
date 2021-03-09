@@ -1,0 +1,114 @@
+<app-loading type="fullscreen"></app-loading>
+<div class="row justify-content-between">
+  <div class="col">
+    <h5 class="text-uppercase text-blue font-weight-normal my-4">ENVIO PROPOSTA APROVAÇÃO</h5>
+  </div>
+</div>
+
+<div class="row mb-3" *ngIf="!validations.isValid">
+  <div class="col">
+    <div class="rounded border border-danger d-flex p-3 align-items-center">
+      <i class="ta-alert text-danger fs-48"></i>
+      <div class="ml-3 text-danger">
+        <div *ngFor="let error of validations.errors">
+          - {{error.errorMessage}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col">
+    <div class="wrap-relatorio d-grid border border-cinza-claro rounded"
+         style="grid-template-columns: 300px auto; border-width: 8px !important; width: 100%">
+      <div class="summary">
+        <div class="list-group">
+          <a [href]="urlSection('#secao-1')" target="relatorio" class="list-group-item list-group-item-action">Titulo do
+            Projeto</a>
+          <a [href]="urlSection('#secao-2')" target="relatorio"
+             class="list-group-item list-group-item-action">Duração</a>
+          <a [href]="urlSection('#secao-3')" target="relatorio" class="list-group-item list-group-item-action">Fase da
+            cadeia de
+            inovação</a>
+          <a [href]="urlSection('#secao-4')" target="relatorio" class="list-group-item list-group-item-action">Tema
+            ANEEL</a>
+          <a [href]="urlSection('#secao-5')" target="relatorio" class="list-group-item list-group-item-action">Demanda
+            ANEEL</a>
+          <a [href]="urlSection('#secao-6')" target="relatorio"
+             class="list-group-item list-group-item-action">Entidades</a>
+          <a [href]="urlSection('#secao-7')" target="relatorio" class="list-group-item list-group-item-action">Justificativa
+            e
+            Motivação</a>
+          <a [href]="urlSection('#secao-8')" target="relatorio" class="list-group-item list-group-item-action">Busca de
+            Anterioridade
+            Detalhada</a>
+          <a [href]="urlSection('#secao-9')" target="relatorio" class="list-group-item list-group-item-action">Bibliografia</a>
+          <a [href]="urlSection('#secao-10')" target="relatorio" class="list-group-item list-group-item-action">Metodologia
+            de Trabalho</a>
+          <a [href]="urlSection('#secao-11')" target="relatorio"
+             class="list-group-item list-group-item-action">Escopo</a>
+          <a [href]="urlSection('#secao-12')" target="relatorio" class="list-group-item list-group-item-action">Especificação
+            do Produtos
+            do
+            Projeto</a>
+          <a [href]="urlSection('#secao-13')" target="relatorio" class="list-group-item list-group-item-action">Originalidade</a>
+          <a [href]="urlSection('#secao-14')" target="relatorio" class="list-group-item list-group-item-action">Aplicabilidade</a>
+          <a [href]="urlSection('#secao-15')" target="relatorio" class="list-group-item list-group-item-action">Relevância</a>
+          <a [href]="urlSection('#secao-16')" target="relatorio" class="list-group-item list-group-item-action">Estudo
+            de Viabilidade
+            Econômica do Projeto (EVE) e Razoabilidade dos Custos</a>
+          <a [href]="urlSection('#secao-17')" target="relatorio" class="list-group-item list-group-item-action">Pesquisas
+            Correlatas</a>
+          <a [href]="urlSection('#secao-18')" target="relatorio"
+             class="list-group-item list-group-item-action">Riscos</a>
+          <a [href]="urlSection('#secao-19')" target="relatorio" class="list-group-item list-group-item-action">Experiência
+            Prévia das
+            Empresas Parceiras no Tema</a>
+          <a [href]="urlSection('#secao-20')" target="relatorio" class="list-group-item list-group-item-action">Contrapartidas</a>
+          <a [href]="urlSection('#secao-21')" target="relatorio" class="list-group-item list-group-item-action">Direitos
+            Sobre a
+            Propriedade
+            Intelectual/Industrial(a)</a>
+          <a [href]="urlSection('#secao-22')" target="relatorio" class="list-group-item list-group-item-action">Recursos
+            Financeiros</a>
+        </div>
+      </div>
+      <iframe [src]="url" frameborder="0" class="h-100" name="relatorio"
+              style="min-height: calc(100vh - 100px); width: 100%; scroll-behavior: smooth"></iframe>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-6 mb-4">
+    <h6 class="text-uppercase text-blue-light">Arquivos complementares</h6>
+    <div *ngFor="let arquivo of proposta.arquivos">
+      <div class="btn btn-link px-0 py-1" (click)="downloadFile(arquivo)">
+        <i class="ta-attachment"></i> {{ arquivo.fileName }}
+      </div>
+    </div>
+  </div>
+  <div class="col-6 d-flex justify-content-end">
+    <div class="text-right">
+      <div class="mb-2">
+        <button type="button" class="btn btn-link" (click)="downloadPdf()">
+          <i class="ta-download"></i>
+          Download PDF
+        </button>
+      </div>
+      <button type="button" [disabled]="!validations.isValid" class="btn btn-success" (click)="marcarComoFinalizado()">
+        <i class="ta-ok"></i>
+        Marcar como Finalizado
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-4 mb-4">
+
+  </div>
+</div>
+
+

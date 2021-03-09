@@ -582,6 +582,24 @@ export interface ProjetoGestaoAtividades {
 }
 
 
+export interface Validations {
+  isValid: boolean;
+  errors: ValidationError[];
+  ruleSetsExecuted: string[];
+}
+
+export interface ValidationError {
+  propertyName: string;
+  errorMessage: string;
+  attemptedValue: null;
+  customState: null;
+  severity: number;
+  errorCode: null;
+  formattedMessageArguments: null;
+  formattedMessagePlaceholderValues: null;
+}
+
+
 export interface MenuItem {
   text: string;
   path: string;

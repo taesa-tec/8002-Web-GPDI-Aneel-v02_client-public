@@ -6,7 +6,6 @@ import {PropostasService} from '@app/user-fornecedor/services/propostas.service'
 import {CoreModule} from '@app/core';
 import {PropostaComponent} from '@app/user-fornecedor/propostas/proposta/proposta.component';
 import {DashboardModule} from '@app/dashboard';
-import {CrudDataResolver, CrudItemResolver} from '@app/user-fornecedor/resolvers/crud.resolver';
 
 
 @NgModule({
