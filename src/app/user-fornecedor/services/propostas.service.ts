@@ -113,13 +113,13 @@ export class PropostasService extends ServiceBase<any> {
     return await this.http.get<Array<BaseEntity>>(`${this.controller}/${id}/Contrato/Revisoes`, {}).toPromise();
   }
 
-  async getContratoRevisao(propostaId: number, id: number) {
-    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${propostaId}/Contrato/Revisoes/${id}`, {})
+  async getContratoRevisao(captacaoId: number, id: number) {
+    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${captacaoId}/Contrato/Revisoes/${id}`, {})
       .toPromise();
   }
 
-  async getContratoRevisaoDiff(propostaId: number, id: number) {
-    return await this.http.get(`${this.controller}/${propostaId}/Contrato/Revisoes/${id}/Diff`, {responseType: 'text'})
+  async getContratoRevisaoDiff(captacaoId: number, id: number) {
+    return await this.http.get(`${this.controller}/${captacaoId}/Contrato/Revisoes/${id}/Diff`, {responseType: 'text'})
       .toPromise();
   }
 

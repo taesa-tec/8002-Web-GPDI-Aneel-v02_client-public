@@ -25,7 +25,7 @@ export class HistoricoComponent implements OnInit {
   async ngOnInit() {
     try {
       this.loading = true;
-      this.revisoes = await this.service.getContratoRevisoes(this.captacaoId, this.contratoId);
+      this.revisoes = await this.service.getContratoRevisoes(this.captacaoId);
       if (this.revisoes.length > 0) {
         this.revisaoId = this.revisoes[0].id;
         await this.carregarRevisao(this.revisaoId);
@@ -38,7 +38,7 @@ export class HistoricoComponent implements OnInit {
   }
 
   async carregarRevisao(id) {
-    const html = await this.service.getContratoRevisaoDiff(this.captacaoId, this.contratoId, id) as string;
+    const html = await this.service.getContratoRevisaoDiff(this.captacaoId, id) as string;
     this.revisao = this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
