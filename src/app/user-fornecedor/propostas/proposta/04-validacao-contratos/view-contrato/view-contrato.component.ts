@@ -10,8 +10,6 @@ import {HistoricoComponent} from '@app/user-fornecedor/propostas/proposta/04-val
 import {Contrato} from '@app/user-fornecedor/propostas/proposta/04-validacao-contratos/shared';
 
 
-
-
 @Component({
   selector: 'app-view-contrato',
   templateUrl: './view-contrato.component.html',
@@ -45,14 +43,14 @@ export class ViewContratoComponent implements OnInit {
   async onSubmit(evt: any) {
     try {
       this.app.loading.show().then();
-      const saveAsDraft = evt.submitter.value === 'draft';
-      this.form.get('draft').setValue(saveAsDraft);
       if (this.form.valid) {
-        await this.service.saveContrato(this.parent.proposta.captacaoId, this.contrato.parentId, this.form.value);
+        const saveAsDraft = evt.submitter.value === 'draft';
+        this.form.get('draft').setValue(saveAsDraft);
+        await this.service.saveContrato(this.parent.proposta.captacaoId, this.form.value);
         this.app.alert('Contrato Salvo com sucesso!').then();
       }
     } catch (e) {
-
+      console.error(e);
     } finally {
       this.app.loading.hide();
     }

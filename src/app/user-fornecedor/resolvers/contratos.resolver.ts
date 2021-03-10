@@ -33,9 +33,9 @@ export class ContratoResolver implements Resolve<any> {
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const params = extractRouteParams(route);
-    if (params.id && params.contratoId) {
+    if (params.id) {
       try {
-        const result = await this.service.getContrato(params.id, params.contratoId);
+        const result = await this.service.getContrato(params.id);
         if (result !== null) {
           return result;
         }

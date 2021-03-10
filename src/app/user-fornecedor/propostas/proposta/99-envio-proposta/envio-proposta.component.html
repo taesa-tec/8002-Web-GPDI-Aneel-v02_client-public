@@ -10,9 +10,11 @@
     <div class="rounded border border-danger d-flex p-3 align-items-center">
       <i class="ta-alert text-danger fs-48"></i>
       <div class="ml-3 text-danger">
-        <div *ngFor="let error of validations.errors">
-          - {{error.errorMessage}}
-        </div>
+        <ul>
+          <li *ngFor="let error of validations.errors">
+            {{error.errorMessage}}
+          </li>
+        </ul>
       </div>
     </div>
   </div>

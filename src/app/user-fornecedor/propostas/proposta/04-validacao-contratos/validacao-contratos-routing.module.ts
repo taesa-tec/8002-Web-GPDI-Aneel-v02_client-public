@@ -8,13 +8,6 @@ import {ContratoResolver, ContratosResolver} from '@app/user-fornecedor/resolver
 const routes: Routes = [
   {
     path: '',
-    component: ValidacaoContratosComponent,
-    resolve: {
-      contratos: ContratosResolver
-    }
-  },
-  {
-    path: ':contratoId',
     component: ViewContratoComponent,
     resolve: {
       contrato: ContratoResolver

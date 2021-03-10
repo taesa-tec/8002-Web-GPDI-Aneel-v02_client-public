@@ -22,7 +22,7 @@ export class ConfiguracaoComponent implements OnInit {
 
 
   form: FormGroup = this.fb.group({
-    contratos: this.fb.array([]),
+    contratoId: this.fb.control(''),
     arquivos: this.fb.control([]),
     fornecedores: this.fb.array([]),
     consideracoes: this.fb.control(''),
@@ -55,7 +55,6 @@ export class ConfiguracaoComponent implements OnInit {
       this.contratos = data.contratos;
     });
 
-    this.addContrato();
     this.addFornecedor();
     if (this.captacao?.arquivos) {
       this.uploads = this.captacao.arquivos;
@@ -63,13 +62,6 @@ export class ConfiguracaoComponent implements OnInit {
       this.arquivosControls.setValue(files);
     }
 
-  }
-
-  async configForm() {
-    //this.contratos = await this.app.fornecedores.getContratos();
-    //this.fornecedores = await this.app.fornecedores.getFornecedores();
-    this.addContrato();
-    this.addFornecedor();
   }
 
   getContratos(current: string) {
@@ -81,14 +73,6 @@ export class ConfiguracaoComponent implements OnInit {
 
     const modalRef = this.modal.open(ViewContratoComponent, {size: 'lg'});
     modalRef.componentInstance.contratoId = id;
-  }
-
-  addContrato(id = '') {
-    this.contratosControls.push(this.fb.control(id, [Validators.required]));
-  }
-
-  removeContrato(index: number) {
-    this.contratosControls.removeAt(index);
   }
 
   addFornecedor(id = '') {

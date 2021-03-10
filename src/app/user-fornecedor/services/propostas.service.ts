@@ -101,30 +101,31 @@ export class PropostasService extends ServiceBase<any> {
   }
 
   async getContratos(id: number) {
+    console.warn('Remover essa chamada!');
     return await this.http.get<Array<BaseEntity>>(`${this.controller}/${id}/Contratos`, {}).toPromise();
   }
 
-  async getContrato(id: number, contratoId: number) {
-    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${id}/Contratos/${contratoId}`, {}).toPromise();
+  async getContrato(id: number) {
+    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${id}/Contrato`, {}).toPromise();
   }
 
-  async getContratoRevisoes(id: number, contratoId: number) {
-    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${id}/Contratos/${contratoId}/Revisoes`, {}).toPromise();
+  async getContratoRevisoes(id: number) {
+    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${id}/Contrato/Revisoes`, {}).toPromise();
   }
 
-  async getContratoRevisao(propostaId: number, contratoId: number, id: number) {
-    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${propostaId}/Contratos/${contratoId}/Revisoes/${id}`, {})
+  async getContratoRevisao(propostaId: number, id: number) {
+    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${propostaId}/Contrato/Revisoes/${id}`, {})
       .toPromise();
   }
 
-  async getContratoRevisaoDiff(propostaId: number, contratoId: number, id: number) {
-    return await this.http.get(`${this.controller}/${propostaId}/Contratos/${contratoId}/Revisoes/${id}/Diff`, {responseType: 'text'})
+  async getContratoRevisaoDiff(propostaId: number, id: number) {
+    return await this.http.get(`${this.controller}/${propostaId}/Contrato/Revisoes/${id}/Diff`, {responseType: 'text'})
       .toPromise();
   }
 
 
-  async saveContrato(id: number, contratoId: number, contrato: any) {
-    return await this.http.post(`${this.controller}/${id}/Contratos/${contratoId}`, contrato).toPromise();
+  async saveContrato(id: number, contrato: any) {
+    return await this.http.post(`${this.controller}/${id}/Contrato`, contrato).toPromise();
   }
 
   async getPlanoTrabalho(id: number) {

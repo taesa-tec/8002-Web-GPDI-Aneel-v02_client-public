@@ -13,39 +13,21 @@
         <div class="col-6">
           <div class="form-group">
             <label>Modelos Contratos</label>
-            <div class="d-flex mb-2" *ngFor="let control of contratosControls.controls; let i = index">
-              <select class="form-control" [formControl]="control">
+            <div class="d-flex mb-2">
+              <select class="form-control" formControlName="contratoId">
                 <option value="" hidden>Escolha um contrato</option>
                 <option [value]="contrato.id" *ngFor="let contrato of contratos">
                   {{ contrato.titulo }}
                 </option>
               </select>
-              <button
-                type="button"
-                class="btn btn-link text-decoration-none p-2"
-                *ngIf="i > 0"
-                (click)="removeContrato(i)"
-              >
-                <i class="ta-remove-circle"></i>
-              </button>
               <div class="border-right" style="height: 22px; margin-top: 10px;"></div>
               <button
                 type="button"
-                [disabled]="!control.value"
+                [disabled]="!form.value.contratoId"
                 class="btn btn-link text-decoration-none p-2"
-                (click)="abrirContrato(control.value)"
+                (click)="abrirContrato(form.value.contratoId)"
               >
                 <i class="ta-eye fs-22"></i>
-              </button>
-            </div>
-            <div>
-              <button
-                type="button"
-                class="btn btn-link text-decoration-none p-2"
-                [disabled]="contratos.length === contratosControls.controls.length"
-                (click)="addContrato()"
-              >
-                <i class="ta-plus-circle"></i> Adicionar mais contratos
               </button>
             </div>
           </div>
