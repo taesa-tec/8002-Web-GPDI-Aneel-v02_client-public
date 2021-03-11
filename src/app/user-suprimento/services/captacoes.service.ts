@@ -12,4 +12,12 @@ export class CaptacoesService extends ServiceBase<any> {
   getPropostas(id: number, status: '' | 'pendente' | 'aceito' | 'rejeitado' = '') {
     return this.obter<Array<any>>(`${id}/Propostas/${status}`);
   }
+
+  estenderCaptacao(id: number, data: any) {
+    return this.put(`${id}/Estender`, {termino: data});
+  }
+
+  cancelarCaptacao(id: number) {
+    return this.delete(`${id}/Cancelar`);
+  }
 }

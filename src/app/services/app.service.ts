@@ -102,8 +102,8 @@ export class AppService {
             [
               {text: 'Cancelar', value: false, cssClass: 'btn btn-link'},
               {text: 'Ok', value: true, cssClass: 'btn-primary'}
-            ]) {
-    const ref = this.modal.open(ConfirmComponent, {backdrop: 'static'});
+            ], size: 'sm' | 'lg' | 'xl' | string = 'lg') {
+    const ref = this.modal.open(ConfirmComponent, {backdrop: 'static', size});
     ref.componentInstance.setMessage(message);
     ref.componentInstance.title = title;
     ref.componentInstance.options = options;
