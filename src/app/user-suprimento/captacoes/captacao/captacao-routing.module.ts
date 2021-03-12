@@ -8,6 +8,7 @@ import {ContratosPadroesResolver} from '@app/resolvers/contratos-padroes.resolve
 import {FornecedoresResolver} from '@app/resolvers/fornecedores.resolver';
 import {PropostasResolver} from '@app/user-suprimento/resolvers/propostas.resolver';
 import {ListComponent} from '@app/user-suprimento/captacoes/captacao/propostas/list.component';
+import {PropostaDetalhesResolver} from '@app/user-suprimento/captacoes/captacao/proposta-detalhes.resolver';
 
 
 const routes: Routes = [
@@ -36,13 +37,18 @@ const routes: Routes = [
         path: 'propostas',
         component: PropostasComponent,
         children: [
-          {path: '', pathMatch: 'full', redirectTo: 'pendente'},
+          {path: '', pathMatch: 'full', redirectTo: 'em-aberto'},
           {
             path: ':status',
             component: ListComponent,
             resolve: {
-              propostas: PropostasResolver
+              propostas: PropostasResolver,
+              proposta: PropostaDetalhesResolver
+            },
+            runGuardsAndResolvers: (from, to) => {
+              return !to.fragment || !isNaN(parseFloat(to.fragment));
             }
+
           }
         ]
       }

@@ -12,10 +12,12 @@ import {ContratoPadraoResolver, ContratosPadroesResolver} from '@app/resolvers';
 import {ComponentsModule} from '@app/user-shared/components';
 import {PropostasResolver} from '@app/user-suprimento/resolvers/propostas.resolver';
 import {ListComponent} from './propostas/list.component';
+import {PropostaDetalhesComponent} from './propostas/proposta-detalhes/proposta-detalhes.component';
+import {PropostaDetalhesResolver} from '@app/user-suprimento/captacoes/captacao/proposta-detalhes.resolver';
 
 
 @NgModule({
-  declarations: [CaptacaoComponent, DetalhesComponent, ConfiguracaoComponent, PropostasComponent, ListComponent],
+  declarations: [CaptacaoComponent, DetalhesComponent, ConfiguracaoComponent, PropostasComponent, ListComponent, PropostaDetalhesComponent],
   imports: [
     SharedModule,
     ComponentsModule,
@@ -23,6 +25,7 @@ import {ListComponent} from './propostas/list.component';
     CaptacaoRoutingModule
   ],
   providers: [
+    PropostaDetalhesResolver,
     ContratoPadraoResolver,
     PropostasResolver,
     ContratosPadroesResolver,

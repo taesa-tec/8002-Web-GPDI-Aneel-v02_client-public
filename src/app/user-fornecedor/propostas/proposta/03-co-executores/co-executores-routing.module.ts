@@ -11,7 +11,9 @@ const routes: Routes = [
     resolve: {
       coExecutores: CoExecutoresResolver
     },
-    runGuardsAndResolvers: 'pathParamsOrQueryParamsChange'
+    runGuardsAndResolvers: (from, to) => {
+      return !to.fragment;
+    }
   }
 ];
 

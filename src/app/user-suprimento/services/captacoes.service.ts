@@ -9,8 +9,12 @@ export class CaptacoesService extends ServiceBase<any> {
     super(http, 'Captacoes/Suprimento');
   }
 
-  getPropostas(id: number, status: '' | 'pendente' | 'aceito' | 'rejeitado' = '') {
+  getPropostas(id: number, status: string = '') {
     return this.obter<Array<any>>(`${id}/Propostas/${status}`);
+  }
+
+  getProposta(id: number, propostaId) {
+    return this.obter<Array<any>>(`${id}/Propostas/${propostaId}/Detalhes`);
   }
 
   estenderCaptacao(id: number, data: any) {

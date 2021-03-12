@@ -58,6 +58,11 @@ export class CoExecutoresComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.coExecutores = data.coExecutores;
     });
+    this.route.fragment.subscribe(f => {
+      if (f === 'novo') {
+        this.modalCoExecutora();
+      }
+    });
   }
 
   async modalCoExecutora(coExecutor?) {
@@ -65,13 +70,14 @@ export class CoExecutoresComponent implements OnInit {
     const cmp = ref.componentInstance as CoExecutorFormComponent;
     cmp.captacaoId = this.captacaoId;
     cmp.coExecutor = coExecutor;
-    const result = await ref.result;
+    await ref.result;
+    await this.router.navigate(['./'], {relativeTo: this.route});
     // @todo
   }
 
   async tableAction(evt: TableActionEvent) {
+    await this.router.navigate(['./'], {relativeTo: this.route, fragment: evt.data.id.toString()});
     await this.modalCoExecutora(evt.data);
-    await this.router.navigate(['./'], {relativeTo: this.route, queryParams: {update: Date.now()}});
   }
 
 }

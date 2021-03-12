@@ -89,6 +89,7 @@ export interface CaptacaoDetalhes {
   id: number;
   titulo: string;
   status: string;
+  finalizada: boolean;
   especificacaoTecnicaUrl: string;
   arquivos: CaptacaoArquivo[];
   fornecedoresSugeridos: FornecedorCaptacao[];
