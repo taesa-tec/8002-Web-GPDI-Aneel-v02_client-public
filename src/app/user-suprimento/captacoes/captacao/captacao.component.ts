@@ -14,7 +14,6 @@ import {CaptacoesService} from '@app/user-suprimento/services/captacoes.service'
       useFactory: (route: ActivatedRoute) => {
         const {captacao} = route.snapshot.data as { captacao: CaptacaoDetalhes };
         const menuConfigurar = {text: 'Configuração Propostas', icon: 'ta-gear', path: 'configuracao'};
-        // @todo mudar o path "configuracao"
         const menuAlterar = {text: 'Alterações Recebimento Propostas', icon: 'ta-gear', path: 'configuracao'};
         return [
           {text: 'Detalhes do Projeto', icon: 'ta-file-check', path: 'detalhes'},

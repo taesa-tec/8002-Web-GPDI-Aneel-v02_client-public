@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AppService} from '@app/services';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -7,7 +7,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {CaptacaoArquivo, CaptacaoDetalhes} from '@app/user-shared/captacao';
 import {CaptacaoComponent} from '@app/user-suprimento/captacoes/captacao/captacao.component';
 import {CaptacoesService} from '@app/user-suprimento/services/captacoes.service';
-import {FileUploaded} from '@app/commons';
+import {LoadingComponent} from '@app/core/components';
+import {ROOT_URL} from '@app/commons';
 
 @Component({
   selector: 'app-configuracao',
@@ -16,6 +17,13 @@ import {FileUploaded} from '@app/commons';
 })
 export class ConfiguracaoComponent implements OnInit {
 
+  set isLoading(value) {
+    value ? this.loading.show() : this.loading.hide();
+  }
+
+  @ViewChild(LoadingComponent) loading: LoadingComponent;
+  dataMaximaExt: any = '';
+  dataMinimaExt: any = '';
   contratos: Array<any>;
   fornecedores: Array<any>;
   uploads: Array<CaptacaoArquivo> = [];
@@ -39,6 +47,7 @@ export class ConfiguracaoComponent implements OnInit {
 
   constructor(
     protected app: AppService,
+    @Inject(ROOT_URL) protected root_url: string,
     protected service: CaptacoesService,
     public parent: CaptacaoComponent,
     protected route: ActivatedRoute,
@@ -55,11 +64,25 @@ export class ConfiguracaoComponent implements OnInit {
       this.contratos = data.contratos;
     });
 
-    this.addFornecedor();
+
+    this.dataMaximaExt = this.captacao.termino.replace(/T.+$/, '');
+    this.dataMinimaExt = this.captacao.termino = this.dataMaximaExt;
+    this.form.patchValue(this.captacao);
     if (this.captacao?.arquivos) {
       this.uploads = this.captacao.arquivos;
       const files = this.uploads.map(f => f.id);
       this.arquivosControls.setValue(files);
+    }
+    if (this.captacao?.fornecedoresConvidados) {
+      this.captacao.fornecedoresConvidados.forEach(f => {
+        this.addFornecedor(f.id.toString());
+      });
+    }
+    if (this.fornecedoresControls.length === 0) {
+      this.addFornecedor();
+    }
+    if (this.captacao.status === 'Fornecedor') {
+      this.form.disable();
     }
 
   }
@@ -80,7 +103,9 @@ export class ConfiguracaoComponent implements OnInit {
   }
 
   removeFornecedor(index: number) {
-    this.fornecedoresControls.removeAt(index);
+    if (this.form.enabled) {
+      this.fornecedoresControls.removeAt(index);
+    }
   }
 
   async anexarArquivos() {
@@ -96,6 +121,7 @@ export class ConfiguracaoComponent implements OnInit {
 
   async onSubmit() {
     if (this.form.valid) {
+      this.isLoading = true;
       try {
         await this.service.put(this.captacao.id, this.form.value);
         this.router.navigate(['../../']).then();
@@ -103,6 +129,40 @@ export class ConfiguracaoComponent implements OnInit {
       } catch (e) {
         console.error(e);
       }
+      this.isLoading = false;
+    }
+  }
+
+  async estenderData() {
+    this.isLoading = true;
+    try {
+      await this.service.estenderCaptacao(this.captacao.id, this.dataMaximaExt);
+      this.form.get('termino').setValue(this.dataMaximaExt);
+      this.dataMinimaExt = this.dataMaximaExt;
+      this.app.alert('Data alterada com sucesso!').then();
+    } catch (e) {
+      console.error(e);
+    }
+    this.isLoading = false;
+  }
+
+  async cancelarCaptacao() {
+    const btnOptions = [
+      {text: 'Cancelar', value: false, cssClass: 'btn btn-link'},
+      {text: 'Confirmar Encerramento', value: true, cssClass: 'btn-danger', checkMessage: 'Confirmo que estaremos encerrando esta captação'}
+    ];
+
+    if (await this.app.confirm('Esta ação é irreversível. Todos os fornecedores convidados irão receber um email ' +
+      'avisando deste encerramento. Confirmar encerramento?', 'TEM CERTEZA QUE DESEJA ENCERRAR ESTA CAPTAÇÃO?', btnOptions)) {
+      this.isLoading = true;
+      try {
+        await this.service.cancelarCaptacao(this.captacao.id);
+        this.router.navigate([this.root_url]).then();
+      } catch (e) {
+        this.app.alert('Erro ao cancelar!').then();
+        console.error(e);
+      }
+      this.isLoading = false;
     }
   }
 

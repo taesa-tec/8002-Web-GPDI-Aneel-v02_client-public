@@ -86,16 +86,24 @@ export const CaptacaoButtons: { [prop: string]: TableComponentActions } = {
 };
 
 export interface CaptacaoDetalhes {
+  id: number;
   titulo: string;
   status: string;
+  finalizada: boolean;
   especificacaoTecnicaUrl: string;
   arquivos: CaptacaoArquivo[];
-  fornecedoresSugeridos: FornecedoresSugerido[];
+  fornecedoresSugeridos: FornecedorCaptacao[];
+  fornecedoresConvidados: FornecedorCaptacao[];
   observacoes: string;
-  id: number;
+  consideracoes: string;
+  termino: string;
+  contratoSugeridoId: number;
+  contratoSugerido: null;
+  contratoId: number;
+  contrato: null;
 }
 
-export interface FornecedoresSugerido {
+export interface FornecedorCaptacao {
   nome: string;
   cnpj: string;
   responsavelId: string;
