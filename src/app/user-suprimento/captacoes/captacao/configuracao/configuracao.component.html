@@ -126,33 +126,36 @@
         </div>
       </div>
     </form>
-    <hr>
-    <div class="row">
-      <div class="col-12">
-        <h5 class="text-uppercase text-blue font-weight-normal my-4">
-          ALTERAR PROJETO
-        </h5>
+    <ng-container *ngIf="captacao.status === 'Fornecedor'">
+      <hr>
+      <div class="row">
+        <div class="col-12">
+          <h5 class="text-uppercase text-blue font-weight-normal my-4">
+            ALTERAR PROJETO
+          </h5>
 
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-4 pb-3">
-        <div class="form-group">
-          <label for="dataMaximaExt">Data máxima de envio proposta</label>
-          <input type="date" class="form-control" id="dataMaximaExt" [min]="dataMinimaExt" [(ngModel)]="dataMaximaExt"/>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-12 d-flex">
-        <button class="btn btn-primary" type="button" (click)="estenderData()"><i class="ta-plus-circle"></i> Alterar
-          Projeto
-        </button>
-        <button class="btn btn-link" type="button" (click)="cancelarCaptacao()"><i class="ta-cancel-circle"></i>
-          Cancelar
-          Processo de Captação
-        </button>
+      <div class="row">
+        <div class="col-4 pb-3">
+          <div class="form-group">
+            <label for="dataMaximaExt">Data máxima de envio proposta</label>
+            <input type="date" class="form-control" id="dataMaximaExt" [min]="dataMinimaExt"
+                   [(ngModel)]="dataMaximaExt"/>
+          </div>
+        </div>
       </div>
-    </div>
+      <div class="row">
+        <div class="col-12 d-flex">
+          <button class="btn btn-primary" type="button" (click)="estenderData()"><i class="ta-plus-circle"></i> Alterar
+            Projeto
+          </button>
+          <button class="btn btn-link" type="button" (click)="cancelarCaptacao()"><i class="ta-cancel-circle"></i>
+            Cancelar
+            Processo de Captação
+          </button>
+        </div>
+      </div>
+    </ng-container>
   </div>
 </div>

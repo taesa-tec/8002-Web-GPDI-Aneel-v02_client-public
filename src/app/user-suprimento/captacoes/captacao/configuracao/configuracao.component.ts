@@ -32,7 +32,7 @@ export class ConfiguracaoComponent implements OnInit {
   form: FormGroup = this.fb.group({
     contratoId: this.fb.control(''),
     arquivos: this.fb.control([]),
-    fornecedores: this.fb.array([]),
+    fornecedores: this.fb.array([], [Validators.required]),
     consideracoes: this.fb.control(''),
     termino: this.fb.control('', [Validators.required, Validators.pattern(/\d{4}-\d{2}-\d{2}/)]),
   });
