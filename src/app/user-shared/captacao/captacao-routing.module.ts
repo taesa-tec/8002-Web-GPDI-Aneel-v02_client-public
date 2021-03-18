@@ -33,6 +33,7 @@ const routes: Routes = [
         resolve: {
           captacoes: CaptacoesResolver
         },
+        runGuardsAndResolvers: 'paramsOrQueryParamsChange',
         data: {
           captacaoTable: {
             cols: CaptacaoCols.Pendente,

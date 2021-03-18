@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppService} from '@app/services/app.service';
@@ -45,6 +45,7 @@ export class ListComponent implements OnInit, OnDestroy {
 
   constructor(
     protected route: ActivatedRoute,
+    protected router: Router,
     protected app: AppService,
     protected modal: NgbModal
   ) {
@@ -59,15 +60,13 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    this.subscriptions.push(this.route.data.subscribe(({
-                                                         captacaoTable,
-                                                         captacoes
-                                                       }: { captacaoTable: CaptacaoTableConfig, captacoes: Array<any> }) => {
-      this.captacoes = captacoes;
-      this.captacaoEtapa = captacaoTable.captacaoEtapaStatus;
-      this.cols = captacaoTable.cols;
-      this.buttons = captacaoTable.buttons;
-    }));
+    this.subscriptions.push(
+      this.route.data.subscribe(({captacaoTable, captacoes}: { captacaoTable: CaptacaoTableConfig, captacoes: Array<any> }) => {
+        this.captacoes = captacoes;
+        this.captacaoEtapa = captacaoTable.captacaoEtapaStatus;
+        this.cols = captacaoTable.cols;
+        this.buttons = captacaoTable.buttons;
+      }));
     this.addListeners();
   }
 
@@ -80,11 +79,16 @@ export class ListComponent implements OnInit, OnDestroy {
     this.events.next(evt);
   }
 
-  criarCaptacao(data) {
-    console.log(data);
+  async criarCaptacao(data) {
     const modalRef = this.modal.open(CriarComponent, {size: 'lg'});
     const criar = modalRef.componentInstance as CriarComponent;
     criar.id = data.id;
+    await modalRef.result;
+    this.router.navigate(['./'], {
+      relativeTo: this.route, queryParams: {
+        update: Date.now()
+      }
+    }).then();
   }
 
   actionAberta({action, data}) {

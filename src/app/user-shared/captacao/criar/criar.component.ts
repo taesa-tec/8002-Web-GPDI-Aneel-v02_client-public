@@ -26,9 +26,9 @@ export class CriarComponent implements OnInit {
   fornecedoresFormArray: FormArray = new FormArray([]);
   form: FormGroup = this.fb.group({
     id: ['', [Validators.required]],
-    usuarioSuprimentoId: [''],
+    usuarioSuprimentoId: ['', Validators.required],
     fornecedores: this.fornecedoresFormArray,
-    contratoId: [''],
+    contratoId: ['', Validators.required],
     observacoes: [''],
     files: ['']
   });

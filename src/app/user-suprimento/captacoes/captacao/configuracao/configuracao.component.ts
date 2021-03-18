@@ -127,6 +127,7 @@ export class ConfiguracaoComponent implements OnInit {
         this.router.navigate(['../../']).then();
         this.app.alert('Configuração da proposta salva com sucesso').then();
       } catch (e) {
+        this.app.alert('Não foi possível configurar', 'Erro!').then();
         console.error(e);
       }
       this.isLoading = false;
