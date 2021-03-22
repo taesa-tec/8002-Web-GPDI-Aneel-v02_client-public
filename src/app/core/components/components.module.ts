@@ -18,6 +18,7 @@ import {SharedModule} from '@app/core/shared';
 import {FormsModule} from '@app/core/components/forms';
 import {PdfViewerComponent} from '@app/core/components/pdf-viewer/pdf-viewer.component';
 import {CrudComponent} from './crud/crud.component';
+import {HelpComponent} from '@app/core/components/help/help.component';
 
 const components = [
   CrudComponent,
@@ -27,6 +28,7 @@ const components = [
   DebugComponent,
   ErrorComponent,
   FileUploaderComponent,
+  HelpComponent,
   LoadingComponent,
   ModalPageComponent,
   OrderContentComponent,

@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {SafeHtml} from '@angular/platform-browser';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {HttpClient} from '@angular/common/http';
 
 @Component({
@@ -11,8 +11,8 @@ import {HttpClient} from '@angular/common/http';
 })
 export class ModalPageComponent implements OnInit {
 
-  parser = new DOMParser();
   htmlContent: SafeHtml;
+  loading = false;
 
   protected _title = 'Detalhamento';
   get title() {
@@ -23,28 +23,32 @@ export class ModalPageComponent implements OnInit {
     this._title = title.length > 0 ? title : 'Detalhamento';
   }
 
-  constructor(public activeModal: NgbActiveModal, protected http: HttpClient) {
+  constructor(public activeModal: NgbActiveModal, protected http: HttpClient, protected sanitize: DomSanitizer) {
   }
 
-  async setPage(page: string) {
+  setPage(pageContent: string) {
     try {
-      this.htmlContent = await this.loadPage(page);
-      const parsed = this.parser.parseFromString(this.htmlContent.toString(), 'text/html');
-      this.title = parsed.head.innerText.trim();
+      this.htmlContent = this.sanitize.bypassSecurityTrustHtml(pageContent);
     } catch (e) {
       console.error(e);
-      throw new Error('Página não encontrada');
     }
-
   }
 
-  async loadPage(page: string): Promise<string> {
-    const content = await this.http.get(`${location.origin}/assets/pages/${page}.html`, {
-      responseType: 'text'
-    }).toPromise();
-    return content;
+  async loadUrl(url: string, title = '') {
+    try {
+      this.loading = true;
+      const html = await this.http.get(url, {
+        responseType: 'text'
+      }).toPromise();
+      this.setPage(html);
+      this.title = title;
+    } catch (e) {
+      console.error(e);
+      this.activeModal.close();
+    } finally {
+      this.loading = false;
+    }
   }
-
 
   ngOnInit() {
   }

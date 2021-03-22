@@ -1,0 +1,16 @@
+<span [ngbTooltip]="tipContent" triggers="manual" #tooltip="ngbTooltip" [ngClass]="{'cursor-pointer':item?.hasContent}"
+      [closeDelay]="1000" [placement]="placement">
+  <i class="ta-question-o text-dark"></i>
+</span>
+<ng-template #tipContent>
+  <div>
+    <p>
+      {{item?.descricao}}
+    </p>
+    <div *ngIf="item?.hasContent">
+      (Clique sobre o ícone para mais detalhes)
+    </div>
+    <p *ngIf="ctrl" class="text-warning">ID: {{item?.codigo}}</p>
+    <fa-icon *ngIf="loading" [icon]="['fas', 'spinner']" [spin]="true" size="2x"></fa-icon>
+  </div>
+</ng-template>

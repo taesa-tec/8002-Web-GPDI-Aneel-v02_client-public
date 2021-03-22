@@ -1,6 +1,6 @@
 import {HttpClient, HttpRequest} from '@angular/common/http';
 import {BaseEntity} from '@app/commons';
-import {Injectable} from '@angular/core';
+import {Injectable, Provider} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +32,21 @@ export class UploadFilesService {
 
 @Injectable()
 export class ServiceBase<T extends { id?: any }> extends UploadFilesService {
+
+  static useExisting(t): Provider {
+    return {
+      provide: ServiceBase,
+      useExisting: t
+    };
+  }
+
+  static fromAppend(append): Provider {
+    return {
+      provide: ServiceBase,
+      deps: [HttpClient],
+      useFactory: (http: HttpClient) => new ServiceBase(http, append)
+    };
+  }
 
   get: (url, ...args) => Promise<any> = (url, ...args) => this.http.get(`${this.controller}/${url}`, ...args).toPromise();
   delete: (url, ...args) => Promise<any> = (url, ...args) => this.http.delete(`${this.controller}/${url}`, ...args).toPromise();
