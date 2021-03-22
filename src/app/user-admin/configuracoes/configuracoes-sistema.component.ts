@@ -22,6 +22,7 @@ export class ConfiguracoesSistemaComponent implements OnInit {
       {text: 'Contratos Padrão', path: 'contratos-padrao'},
       {text: 'Condições Fundamentais para Fornecimento', path: 'clausulas'},
       {text: 'Fornecedores', path: 'fornecedores'},
+      {text: 'Banco de Ajuda', path: 'ajuda'},
     ];
   }
 

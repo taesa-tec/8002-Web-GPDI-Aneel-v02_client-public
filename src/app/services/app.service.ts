@@ -134,18 +134,5 @@ export class AppService {
   hideLoading() {
     this.loading.hide();
   }
-
-  async openPage(pageName) {
-    const ref = this.modal.open(ModalPageComponent, {backdrop: 'static', size: 'lg'});
-    const component = <ModalPageComponent>ref.componentInstance;
-    try {
-      await component.setPage(pageName);
-    } catch (e) {
-      ref.dismiss(e);
-      this.alert(e.message);
-    }
-
-    return ref.result;
-  }
 }
 
