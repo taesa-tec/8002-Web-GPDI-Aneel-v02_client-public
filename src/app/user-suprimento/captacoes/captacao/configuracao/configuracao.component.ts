@@ -81,7 +81,7 @@ export class ConfiguracaoComponent implements OnInit {
     if (this.fornecedoresControls.length === 0) {
       this.addFornecedor();
     }
-    if (this.captacao.status === 'Fornecedor') {
+    if (this.captacao.status !== 'Elaboracao') {
       this.form.disable();
     }
 

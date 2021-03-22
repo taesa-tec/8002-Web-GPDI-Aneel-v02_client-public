@@ -63,17 +63,29 @@ export const CaptacaoCols: { [prop: string]: TableComponentCols } = {
 
   Encerrada: [
     {field: 'titulo', title: 'Título Resumido Projeto', order: true},
-    {field: 'equipeSuprimento', title: 'Equipe de Suprimentos Usuário Designado', order: true},
+    {field: 'usuarioSuprimento', title: 'Equipe de Suprimentos Usuário Designado', order: true},
     {field: 'convidadosTotal', title: 'Fornecedores', order: true},
-    {field: 'dataTerminoCaptacao', title: 'Data Término Captação', order: true},
+    {
+      field: 'termino', title: 'Data Término Captação', order: true,
+      type: 'ng-pipe',
+      pipe: new DatePipe('pt-BR'),
+      value: item => [item.termino, 'shortDate']
+    },
   ],
 
   Cancelada: [
     {field: 'titulo', title: 'Título Resumido Projeto', order: true},
-    {field: 'equipeSuprimento', title: 'Equipe de Suprimentos Usuário Designado', order: true},
-    {field: 'fornecedores', title: 'Fornecedores', order: true},
-    {field: 'dataTerminoCaptacao', title: 'Data Término Captação', order: true},
-    {field: 'dataCancelamentoCaptacao', title: 'Data de Cancelamento', order: true},
+    {field: 'usuarioSuprimento', title: 'Equipe de Suprimentos Usuário Designado', order: true},
+    {
+      field: 'termino', title: 'Data Término Captação', order: true, type: 'ng-pipe',
+      pipe: new DatePipe('pt-BR'),
+      value: item => [item.termino, 'shortDate']
+    },
+    {
+      field: 'cancelamento', title: 'Data de Cancelamento', order: true, type: 'ng-pipe',
+      pipe: new DatePipe('pt-BR'),
+      value: item => [item.cancelamento, 'shortDate']
+    },
   ]
 };
 

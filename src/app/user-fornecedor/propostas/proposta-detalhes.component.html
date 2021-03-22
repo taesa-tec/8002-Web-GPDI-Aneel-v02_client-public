@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <div class="text-uppercase modal-title text-blue-light fs-24">Proposta {{proposta.fornecedor}}</div>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('close')">
+    <i class="ta-cancel-circle"></i>
+  </button>
+</div>
+<div class="modal-body position-relative">
+  <app-loading type="fullparent" [isLoading]="progress !== null" background="rgba(255,255,255,0.75)" color="#444"></app-loading>
+  <div>
+    <button class="btn btn-link" type="button" [disabled]="!proposta.planoFinalizado"
+            (click)="download('PlanoTrabalho')">
+      <i class="ta-attachment"></i>
+      Plano de Trabalho.pdf
+    </button>
+  </div>
+  <div>
+    <button class="btn btn-link" type="button" [disabled]="!proposta.contratoFinalizado" (click)="download('Contrato')">
+      <i class="ta-attachment"></i>
+      Contrato.pdf
+    </button>
+  </div>
+</div>

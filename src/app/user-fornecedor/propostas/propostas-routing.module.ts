@@ -1,35 +1,62 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {SidebarComponent} from '@app/dashboard/side-bar/sidebar.component';
-import {PropostasComponent} from '@app/user-fornecedor/propostas/propostas.component';
+import {PropostasListComponent} from '@app/user-fornecedor/propostas/propostas-list.component';
 import {PropostasResolver} from '@app/user-fornecedor/resolvers/propostas.resolver';
 import {PropostaResolver} from '@app/user-fornecedor/resolvers/proposta.resolver';
+import {PropostasComponent} from '@app/user-fornecedor/propostas/propostas.component';
 
 
 const routes: Routes = [
   {
+    matcher: (segments => {
+      if (segments.length > 0) {
+        const id = parseFloat(segments[0].path); // Id da captação, não da proposta
+        if (!isNaN(id)) {
+          return {
+            consumed: [segments[0]], posParams: {id: segments[0]}
+          };
+        }
+      }
+      return null;
+    }),
+    resolve: {
+      proposta: PropostaResolver
+    },
+    loadChildren: () => import('./proposta/proposta.module').then(m => m.PropostaModule)
+  },
+  {
     path: '',
-    pathMatch: 'full',
     component: SidebarComponent,
     children: [
       {
         path: '',
         component: PropostasComponent,
-        pathMatch: 'full',
-        resolve: {
-          propostas: PropostasResolver
-        },
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'em-aberto'
+          },
+          {
+            path: 'em-aberto',
+            component: PropostasListComponent,
+            resolve: {
+              propostas: PropostasResolver
+            },
+          },
+          {
+            path: 'encerradas',
+            component: PropostasListComponent,
+            resolve: {
+              propostas: PropostasResolver
+            },
+          }
+        ],
+
       }
     ]
   },
-  {
-    path: ':id', // Id da captação, não da proposta
-    resolve: {
-      proposta: PropostaResolver
-    },
-    loadChildren: () => import('./proposta/proposta.module').then(m => m.PropostaModule)
-  }
-
 ];
 
 @NgModule({

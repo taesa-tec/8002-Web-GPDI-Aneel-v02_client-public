@@ -3,15 +3,15 @@ import {CommonModule} from '@angular/common';
 
 import {PropostasRoutingModule} from './propostas-routing.module';
 import {SharedModule} from '@app/dashboard/shared';
-import {PropostasComponent} from '@app/user-fornecedor/propostas/propostas.component';
+import {PropostasListComponent} from '@app/user-fornecedor/propostas/propostas-list.component';
 import {PropostaResolver} from '@app/user-fornecedor/resolvers/proposta.resolver';
 import {PropostasService} from '@app/user-fornecedor/services/propostas.service';
-import {CAPTACAO_ID} from '@app/user-fornecedor/propostas/proposta/shared';
-import {ActivatedRoute} from '@angular/router';
+import {PropostasComponent} from '@app/user-fornecedor/propostas/propostas.component';
+import {PropostaDetalhesComponent} from '@app/user-fornecedor/propostas/proposta-detalhes.component';
 
 
 @NgModule({
-  declarations: [PropostasComponent],
+  declarations: [PropostasListComponent, PropostasComponent, PropostaDetalhesComponent],
   imports: [
     CommonModule,
     SharedModule,

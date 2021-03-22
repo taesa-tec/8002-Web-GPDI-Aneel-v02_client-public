@@ -57,7 +57,8 @@ export class EnvioPropostaComponent implements OnInit {
   async marcarComoFinalizado() {
     this.loading.show();
     try {
-      await this.service.marcarComoFinalizado(this.proposta.captacaoId);
+      const result = await this.service.marcarComoFinalizado(this.proposta.captacaoId);
+      console.log(result);
       this.app.alert('Proposta marcada como finalizada').then();
     } catch (e) {
       console.error(e);
