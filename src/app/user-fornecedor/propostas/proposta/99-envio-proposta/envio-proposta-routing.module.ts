@@ -10,7 +10,6 @@ const routes: Routes = [
     component: EnvioPropostaComponent,
     resolve: {
       documento: PropostaDocumentoResolver,
-      erros: PropostaErrosResolver
     }
 
   }

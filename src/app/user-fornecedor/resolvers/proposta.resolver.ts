@@ -42,14 +42,10 @@ export class PropostaDocumentoResolver implements Resolve<any> {
 
   constructor(protected service: PropostasService, protected http: HttpClient, protected router: Router) {
   }
-
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const params = extractRouteParams(route);
     if (params.id) {
-      const blob = await this.http.get(`Fornecedor/Propostas/${params.id}/Documento`, {
-        responseType: 'blob'
-      }).toPromise();
-      return URL.createObjectURL(blob);
+      return await this.http.get<any>(`Fornecedor/Propostas/${params.id}/Documento`).toPromise();
     }
     await this.router.navigate(['/fornecedor', 'propostas']);
   }

@@ -16,9 +16,10 @@ import {LoadingComponent} from '@app/core/components';
 export class EnvioPropostaComponent implements OnInit {
 
   protected _url: string;
+  documento: any;
   @ViewChild(LoadingComponent) loading: LoadingComponent;
   url: SafeResourceUrl;
-  validations: Validations;
+  validations: Validations = {isValid: false, ruleSetsExecuted: [], errors: []};
 
   get proposta() {
     return this.parent?.proposta;
@@ -46,7 +47,7 @@ export class EnvioPropostaComponent implements OnInit {
     this.loading.show();
     try {
 
-      const url = await this.fileService.download(`Fornecedor/Propostas/${this.proposta.captacaoId}/Documento/Download`);
+      const url = await this.fileService.download(`Fornecedor/Propostas/${this.proposta.captacaoId}/Download/PlanoTrabalho`);
       this.fileService.downloadBlob(url, 'plano-de-trabalho.pdf');
     } catch (e) {
       console.error(e);
@@ -72,9 +73,10 @@ export class EnvioPropostaComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.data.subscribe(data => {
-      this._url = data.documento;
+      const blob = new Blob([data.documento.content], {type: 'text/html'});
+      this._url = URL.createObjectURL(blob);
+      this.validations = data.documento.validacao;
       this.url = this.sanitize.bypassSecurityTrustResourceUrl(this._url);
-      this.validations = data.erros;
     });
   }
 

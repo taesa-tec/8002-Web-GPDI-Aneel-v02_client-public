@@ -57,6 +57,10 @@
           Histórico de Versões
         </button>
         <div class="ml-auto">
+          <button type="button" class="btn btn-link" (click)="downloadPdf()">
+            <i class="ta-download"></i>
+            Download PDF
+          </button>
           <button type="submit" class="btn btn-outline-primary mx-2" value="draft" [disabled]="form.invalid">
             <i class="ta-save fs-24 align-middle"></i>
             Salvar como Rascunho

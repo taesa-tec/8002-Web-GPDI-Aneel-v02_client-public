@@ -8,6 +8,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {HistoricoComponent} from '@app/user-fornecedor/propostas/proposta/04-validacao-contratos/historico/historico.component';
 import {Contrato} from '@app/user-fornecedor/propostas/proposta/04-validacao-contratos/shared';
 import {ClassicEditor, ConfigEditor} from '@app/core/shared';
+import {FileService} from '@app/services/file.service';
 
 
 @Component({
@@ -30,7 +31,8 @@ export class ViewContratoComponent implements OnInit {
     private service: PropostasService,
     private route: ActivatedRoute,
     private modal: NgbModal,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    protected fileService: FileService,
   ) {
   }
 
@@ -54,6 +56,16 @@ export class ViewContratoComponent implements OnInit {
       console.error(e);
     } finally {
       this.app.loading.hide();
+    }
+  }
+
+  async downloadPdf() {
+    try {
+
+      const url = await this.fileService.download(`Fornecedor/Propostas/${this.parent.proposta.captacaoId}/Download/Contrato`);
+      this.fileService.downloadBlob(url, 'contrato.pdf');
+    } catch (e) {
+      console.error(e);
     }
   }
 
