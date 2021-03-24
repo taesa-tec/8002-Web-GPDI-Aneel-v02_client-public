@@ -30,6 +30,7 @@
     <div class="form-group">
       <label for="nome">Conteúdo Lightbox (opcional)</label>
       <ckeditor
+        [editor]="editor"
         [config]="configEditor"
         formControlName="conteudo"
       ></ckeditor>

@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {AppService} from '@app/services/app.service';
-import _configEditor from '@app/core/config-editor';
 import {PropostasService} from '@app/user-fornecedor/services/propostas.service';
 import {PropostaComponent} from '@app/user-fornecedor/propostas/proposta/proposta.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {HistoricoComponent} from '@app/user-fornecedor/propostas/proposta/04-validacao-contratos/historico/historico.component';
 import {Contrato} from '@app/user-fornecedor/propostas/proposta/04-validacao-contratos/shared';
+import {ClassicEditor, ConfigEditor} from '@app/core/shared';
 
 
 @Component({
@@ -16,7 +16,8 @@ import {Contrato} from '@app/user-fornecedor/propostas/proposta/04-validacao-con
   styleUrls: ['./view-contrato.component.scss']
 })
 export class ViewContratoComponent implements OnInit {
-  configEditor = _configEditor;
+  editor = ClassicEditor;
+  configEditor = ConfigEditor;
   contrato: Contrato;
   form = this.fb.group({
     draft: [true],

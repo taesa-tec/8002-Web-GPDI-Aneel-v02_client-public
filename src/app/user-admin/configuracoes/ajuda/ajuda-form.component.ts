@@ -3,7 +3,7 @@ import {AppService, ServiceBase} from '@app/services';
 import {FormBuilder, Validators} from '@angular/forms';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {ActivatedRoute} from '@angular/router';
-import _configEditor from '@app/core/config-editor';
+import {ClassicEditor, ConfigEditor} from '@app/core/shared';
 
 @Component({
   selector: 'app-ajuda-form',
@@ -12,7 +12,8 @@ import _configEditor from '@app/core/config-editor';
 })
 export class AjudaFormComponent implements OnInit {
 
-  configEditor = _configEditor;
+  configEditor = ConfigEditor;
+  editor = ClassicEditor;
   route: ActivatedRoute;
   form = this.fb.group({
     id: 0,
@@ -29,6 +30,7 @@ export class AjudaFormComponent implements OnInit {
     if (this.route.snapshot.data.item) {
       this.form.patchValue(this.route.snapshot.data.item);
     }
+    console.log(ClassicEditor);
   }
 
   async onSubmit() {
