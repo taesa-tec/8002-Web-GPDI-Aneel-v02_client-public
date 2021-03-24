@@ -10,7 +10,9 @@ export interface Contrato {
   parentId: number;
   parent: Parent;
   titulo: string;
-  conteudo: null;
+  header: string;
+  conteudo?: string;
+  footer: string;
   revisoes: any[];
   finalizado: boolean;
   propostaId: number;

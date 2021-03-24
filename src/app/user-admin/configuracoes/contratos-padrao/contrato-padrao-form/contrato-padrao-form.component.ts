@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {AppService} from '@app/services/app.service';
-import _configEditor from '@app/core/config-editor';
 import {ServiceBase} from '@app/services/service-base.service';
+import {ClassicEditor, ConfigEditor} from '@app/core/shared';
 
 @Component({
   selector: 'app-contrato-padrao-form',
@@ -12,10 +11,11 @@ import {ServiceBase} from '@app/services/service-base.service';
   styleUrls: ['./contrato-padrao-form.component.scss']
 })
 export class ContratoPadraoFormComponent implements OnInit {
-
+  editor = ClassicEditor;
+  configEditor = {...ConfigEditor, toolbar: [...ConfigEditor.toolbar, 'placeholder']};
+  configEditorFornecedor = {...ConfigEditor};
   form: FormGroup;
   categorias: Array<string>;
-  configEditor = _configEditor;
 
   constructor(
     protected app: AppService,
@@ -26,6 +26,7 @@ export class ContratoPadraoFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(ClassicEditor);
     this.buildForm();
   }
 

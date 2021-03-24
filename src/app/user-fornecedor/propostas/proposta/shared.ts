@@ -8,6 +8,7 @@ import {PropostaServiceBase} from '@app/user-fornecedor/services/propostas.servi
 
 export const CAPTACAO_ID = new InjectionToken<number>('Captação Id');
 
+@Directive()
 export class PropostaNodeFormComponent implements OnInit {
 
   route: ActivatedRoute;

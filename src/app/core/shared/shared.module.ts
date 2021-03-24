@@ -2,14 +2,14 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
-import {CKEditorModule} from 'ckeditor4-angular';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import {NgxMaskModule} from 'ngx-mask';
+import {NgxCurrencyModule} from 'ngx-currency';
 import {FontAwesomeModule, FaIconLibrary} from '@fortawesome/angular-fontawesome';
 import {fas} from '@fortawesome/free-solid-svg-icons';
 import {far} from '@fortawesome/free-regular-svg-icons';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {customCurrencyMaskConfig} from '@app/app.config';
-import {NgxCurrencyModule} from 'ngx-currency';
 import {httpInterceptorProviders} from '@app/core/http-interceptors';
 
 

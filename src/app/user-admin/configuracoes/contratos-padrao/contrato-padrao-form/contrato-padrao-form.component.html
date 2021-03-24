@@ -10,20 +10,25 @@
       <div class="form-group">
         <label>PARTE INICIAL (NÃO EDITÁVEL PELO FORNECEDOR)</label>
         <ckeditor
+          [editor]="editor"
           [config]="configEditor"
           formControlName="header"
         ></ckeditor>
       </div>
+      <hr class="my-3">
       <div class="form-group">
         <label>PARTE CENTRAL (EDITÁVEL PELO FORNECEDOR)</label>
         <ckeditor
-          [config]="configEditor"
+          [editor]="editor"
+          [config]="configEditorFornecedor"
           formControlName="conteudo"
         ></ckeditor>
       </div>
+      <hr class="my-3">
       <div class="form-group">
         <label>PARTE FINAL (NÃO EDITÁVEL PELO FORNECEDOR)</label>
         <ckeditor
+          [editor]="editor"
           [config]="configEditor"
           formControlName="footer"
         ></ckeditor>

@@ -16,7 +16,7 @@
     <div class="col">
       <h5 class="text-blue-light">PARTE INICIAL (NÃO EDITÁVEL - VARÍAVEIS PREENCHIDAS AUTOMATICAMENTE):</h5>
       <div class="bg-cinza-claro p-3 rounded my-3">
-        <div [innerHTML]="contrato.parent.header" class="bg-white p-3" style="cursor: not-allowed"></div>
+        <div [innerHTML]="contrato.header" class="bg-white p-3" style="cursor: not-allowed"></div>
       </div>
     </div>
   </div>
@@ -29,6 +29,7 @@
       <div class="form-group">
         <div class="bg-cinza-claro p-3 rounded my-3">
           <ckeditor
+            [editor]="editor"
             [config]="configEditor"
             formControlName="conteudo"
           ></ckeditor>
