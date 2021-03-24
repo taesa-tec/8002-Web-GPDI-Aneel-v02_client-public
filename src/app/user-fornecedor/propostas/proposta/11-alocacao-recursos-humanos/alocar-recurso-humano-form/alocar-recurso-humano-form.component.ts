@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {PropostaNodeFormComponent} from '@app/user-fornecedor/propostas/proposta/shared';
+import {PropostaNodeFormDirective} from '@app/user-fornecedor/propostas/proposta/shared';
 import {AppService} from '@app/services';
 import {FormBuilder, Validators} from '@angular/forms';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
@@ -10,7 +10,7 @@ import {PropostaServiceBase} from '@app/user-fornecedor/services/propostas.servi
   templateUrl: './alocar-recurso-humano-form.component.html',
   styleUrls: ['./alocar-recurso-humano-form.component.scss']
 })
-export class AlocarRecursoHumanoFormComponent extends PropostaNodeFormComponent implements OnInit {
+export class AlocarRecursoHumanoFormComponent extends PropostaNodeFormDirective implements OnInit {
 
   empresas = [];
   etapas = [];

@@ -3,7 +3,7 @@ import {FormBuilder, Validators, FormGroup} from '@angular/forms';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppValidators, Funcoes, Graduacoes, TextValue} from '@app/commons';
 import {AppService} from '@app/services/app.service';
-import {PropostaNodeFormComponent} from '@app/user-fornecedor/propostas/proposta/shared';
+import {PropostaNodeFormDirective} from '@app/user-fornecedor/propostas/proposta/shared';
 import {PropostaServiceBase} from '@app/user-fornecedor/services/propostas.service';
 
 @Component({
@@ -11,7 +11,7 @@ import {PropostaServiceBase} from '@app/user-fornecedor/services/propostas.servi
   templateUrl: './recurso-humano-form.component.html',
   styleUrls: ['./recurso-humano-form.component.scss']
 })
-export class RecursoHumanoFormComponent extends PropostaNodeFormComponent implements OnInit {
+export class RecursoHumanoFormComponent extends PropostaNodeFormDirective implements OnInit {
 
   empresaCtrl = this.fb.control('', Validators.required);
   form = this.fb.group({

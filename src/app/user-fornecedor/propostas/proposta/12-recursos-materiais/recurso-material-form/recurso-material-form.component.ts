@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Component, OnInit} from '@angular/core';
 
 import {AppService} from '@app/services/app.service';
-import {PropostaNodeFormComponent} from '@app/user-fornecedor/propostas/proposta/shared';
+import {PropostaNodeFormDirective} from '@app/user-fornecedor/propostas/proposta/shared';
 import {PropostaServiceBase} from '@app/user-fornecedor/services/propostas.service';
 
 @Component({
@@ -11,7 +11,7 @@ import {PropostaServiceBase} from '@app/user-fornecedor/services/propostas.servi
   templateUrl: './recurso-material-form.component.html',
   styleUrls: ['./recurso-material-form.component.scss']
 })
-export class RecursoMaterialFormComponent extends PropostaNodeFormComponent implements OnInit {
+export class RecursoMaterialFormComponent extends PropostaNodeFormDirective implements OnInit {
 
   form = this.fb.group({
     id: 0,

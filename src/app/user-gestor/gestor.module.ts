@@ -4,7 +4,6 @@ import {CommonModule} from '@angular/common';
 import {GestorRoutingModule} from './gestor-routing.module';
 import {DashboardModule} from '@app/dashboard';
 import {HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
-import {CurrentUseProvider} from '@app/user-shared/providers';
 import {GestorRootUrl} from '@app/routes/routes';
 
 
@@ -30,8 +29,7 @@ import {GestorRootUrl} from '@app/routes/routes';
     }, {
       provide: ROOT_URL,
       useValue: `/${GestorRootUrl}`
-    },
-    CurrentUseProvider
+    }
   ],
 
 })

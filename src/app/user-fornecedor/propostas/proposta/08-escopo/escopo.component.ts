@@ -31,7 +31,10 @@ export class EscopoComponent implements OnInit {
     return this.parent?.proposta.duracao || 0;
   }
 
-  constructor(private app: AppService, private fb: FormBuilder, protected parent: PropostaComponent, protected route: ActivatedRoute, protected service: PropostasService) {
+  constructor(private app: AppService,
+              private fb: FormBuilder,
+              protected parent: PropostaComponent,
+              protected route: ActivatedRoute, protected service: PropostasService) {
   }
 
   ngOnInit(): void {

@@ -6,14 +6,14 @@ import {AppService} from '@app/services/app.service';
 import {ActivatedRoute} from '@angular/router';
 import {Proposta} from '@app/commons';
 import {PropostaServiceBase} from '@app/user-fornecedor/services/propostas.service';
-import {PropostaNodeFormComponent} from '@app/user-fornecedor/propostas/proposta/shared';
+import {PropostaNodeFormDirective} from '@app/user-fornecedor/propostas/proposta/shared';
 
 @Component({
   selector: 'app-risco-form',
   templateUrl: './risco-form.component.html',
   styleUrls: ['./risco-form.component.scss']
 })
-export class RiscoFormComponent extends PropostaNodeFormComponent implements OnInit {
+export class RiscoFormComponent extends PropostaNodeFormDirective implements OnInit {
 
   route: ActivatedRoute;
   proposta: Proposta;

@@ -3,7 +3,7 @@ import {FormBuilder, Validators, FormGroup} from '@angular/forms';
 
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppService} from '@app/services/app.service';
-import {PropostaNodeFormComponent} from '@app/user-fornecedor/propostas/proposta/shared';
+import {PropostaNodeFormDirective} from '@app/user-fornecedor/propostas/proposta/shared';
 import {PropostaServiceBase} from '@app/user-fornecedor/services/propostas.service';
 
 @Component({
@@ -11,7 +11,7 @@ import {PropostaServiceBase} from '@app/user-fornecedor/services/propostas.servi
   templateUrl: './alocar-recurso-material-form.component.html',
   styleUrls: ['./alocar-recurso-material-form.component.scss']
 })
-export class AlocarRecursoMaterialFormComponent extends PropostaNodeFormComponent implements OnInit {
+export class AlocarRecursoMaterialFormComponent extends PropostaNodeFormDirective implements OnInit {
 
   empresas = [];
   etapas = [];
