@@ -3,12 +3,13 @@
   "version": "2.2.alpha",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "npm run buildeditor; ng serve",
+    "build": "npm run buildeditor; ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ngcc"
+    "postinstall": "ngcc",
+    "buildeditor": "npm run build --prefix ./projects/ckeditor/"
   },
   "private": true,
   "dependencies": {

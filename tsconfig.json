@@ -27,8 +27,8 @@
       "@env/*": [
         "src/environments/*"
       ],
-      "@htmlpages/*": [
-        "src/statics-pages/*"
+      "@projects/*": [
+        "projects/*"
       ]
     }
   }

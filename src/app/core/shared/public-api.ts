@@ -1,6 +1,6 @@
 export * from './shared.module';
 //import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import * as ClassicEditor from '../../../../../ckeditor5/packages/ckeditor5-build-classic/build/ckeditor.js';
+import * as ClassicEditor from '@projects/ckeditor/build/ckeditor';
 
 export {ClassicEditor};
 export const ConfigEditor = {
