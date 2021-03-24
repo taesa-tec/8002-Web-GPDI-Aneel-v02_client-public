@@ -46,7 +46,7 @@
     "lodash-es": "^4.17.11",
     "materialize-css": "^1.0.0-rc.2",
     "moment": "^2.24.0",
-    "ngx-currency": "^1.5.1",
+    "ngx-currency": "^2.5.2",
     "ngx-mask": "^7.3.5",
     "popper.js": "^1.14.6",
     "rxjs": "~6.5.4",
