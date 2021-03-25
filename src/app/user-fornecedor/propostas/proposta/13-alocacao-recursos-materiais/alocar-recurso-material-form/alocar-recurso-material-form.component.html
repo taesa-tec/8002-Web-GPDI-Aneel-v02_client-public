@@ -12,7 +12,7 @@
 <div class="modal-body">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <label for="recurso-material">Selecione um recurso material</label>
+      <label for="recurso-material">Selecione um recurso material <app-help codigo="alocacao-recurso-material"></app-help></label>
       <select class="form-control" id="recurso-material" formControlName="recursoId">
         <option value="" hidden>Selecione aqui</option>
         <option [value]="recurso.id" *ngFor="let recurso of recursos">
@@ -23,7 +23,7 @@
 
     <div class="form-row">
       <div class="form-group col">
-        <label for="empresa-financiadora">Empresa financiadora</label>
+        <label for="empresa-financiadora">Empresa financiadora <app-help codigo="alocacao-recurso-material-empresa-financiadora"></app-help></label>
         <select class="form-control" id="empresa-financiadora" formControlName="empresaFinanciadora">
           <option value="" hidden>Selecione</option>
           <option [value]="empresa.value" *ngFor="let empresa of empresas">
@@ -32,7 +32,7 @@
         </select>
       </div>
       <div class="form-group col">
-        <label for="empresa-recebedora">Empresa recebedora</label>
+        <label for="empresa-recebedora">Empresa recebedora <app-help codigo="alocacao-recurso-material-empresa-recebedora"></app-help></label>
         <select class="form-control" id="empresa-recebedora" formControlName="empresaRecebedora">
           <option value="" hidden>Selecione</option>
           <option [value]="empresa.value" *ngFor="let empresa of empresas">
@@ -44,7 +44,7 @@
 
     <div class="form-row">
       <div class="form-group col">
-        <label for="etapa">Etapa</label>
+        <label for="etapa">Etapa <app-help codigo="alocacao-recurso-material-etapa"></app-help></label>
         <select class="form-control" id="etapa" formControlName="etapaId">
           <option value="" hidden>Selecione</option>
           <option [value]="etapa.id" *ngFor="let etapa of etapas">
@@ -53,7 +53,7 @@
         </select>
       </div>
       <div class="form-group col">
-        <label for="quantidade">Quantidade</label>
+        <label for="quantidade">Quantidade <app-help codigo="alocacao-recurso-material-quantidade"></app-help></label>
         <input type="number" class="form-control" id="quantidade" formControlName="quantidade" min="0"
                placeholder="Digite">
       </div>

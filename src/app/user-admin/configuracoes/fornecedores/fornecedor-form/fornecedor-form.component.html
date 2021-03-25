@@ -16,12 +16,12 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
     <div class="form-group">
-      <label for="nome-fornecedor">Nome fornecedor</label>
+      <label for="nome-fornecedor">Nome fornecedor <app-help codigo="cadastro-fornecedor-nome"></app-help></label>
       <input type="text" class="form-control" id="nome-fornecedor" formControlName="nome">
     </div>
 
     <div class="form-group">
-      <label for="cnpj">Cnpj fornecedor</label>
+      <label for="cnpj">Cnpj fornecedor <app-help codigo="cadastro-fornecedor-cnpj"></app-help></label>
       <input
         type="text"
         class="form-control"
@@ -33,12 +33,12 @@
     </div>
     <hr class="my-4">
     <div class="form-group">
-      <label for="nome-responsavel">Nome responsável</label>
+      <label for="nome-responsavel">Nome responsável <app-help codigo="cadastro-fornecedor-nome-responsavel"></app-help></label>
       <input type="text" class="form-control" id="nome-responsavel" formControlName="responsavelNome">
     </div>
 
     <div class="form-group">
-      <label for="email-responsavel">Email responsável</label>
+      <label for="email-responsavel">Email responsável <app-help codigo="cadastro-fornecedor-email-responsavel"></app-help></label>
       <input type="email" class="form-control" id="email-responsavel" formControlName="responsavelEmail">
     </div>
 
@@ -54,7 +54,7 @@
       </div>
       <hr class="my-3">
       <div class="form-group">
-        <label for="fornecedor-ativo">Status</label>
+        <label for="fornecedor-ativo">Status <app-help codigo="cadastro-fornecedor-ativo"></app-help></label>
         <div>
 
           <div class="form-check form-check-inline">

@@ -13,14 +13,14 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
     <div class="form-group">
-      <label for="nome">Nome do recurso material</label>
+      <label for="nome">Nome do recurso material <app-help codigo="recurso-material-nome"></app-help></label>
       <input type="text" class="form-control" id="nome" formControlName="nome" autocomplete="off"
              placeholder="Digite aqui o nome do Recurso (ID63)">
     </div>
 
     <div class="form-row">
       <div class="form-group col">
-        <label for="categoria-contabil">Categoria contábil</label>
+        <label for="categoria-contabil">Categoria contábil <app-help codigo="recurso-material-categoria-contabil"></app-help></label>
         <select type="text" class="form-control" id="categoria-contabil" formControlName="categoriaContabilId">
           <option value="" hidden>Selecione</option>
           <option [value]="categoria.id" *ngFor="let categoria of categorias">
@@ -29,7 +29,7 @@
         </select>
       </div>
       <div class="form-group col">
-        <label for="valor-unitario">Valor unitário</label>
+        <label for="valor-unitario">Valor unitário <app-help codigo="recurso-material-valor-unitario"></app-help></label>
         <input
           type="text"
           class="form-control"

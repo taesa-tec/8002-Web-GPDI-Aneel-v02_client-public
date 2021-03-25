@@ -67,7 +67,7 @@
       <div class="row">
         <div class="col-12">
           <div class="form-group">
-            <label for="consideracoes">Considerações estras para os fornecedores</label>
+            <label for="consideracoes">Considerações estras para os fornecedores <app-help codigo="captacao-consideracoes"></app-help></label>
             <textarea class="form-control" id="consideracoes" rows="5"
                       formControlName="consideracoes"></textarea>
           </div>
@@ -77,7 +77,7 @@
       <div class="row">
         <div class="col-4">
           <div class="form-group">
-            <label for="dataMaxima">Data máxima de envio proposta</label>
+            <label for="dataMaxima">Data máxima de envio proposta <app-help codigo="captacao-data-maxima"></app-help></label>
             <input type="date" class="form-control" id="dataMaxima" formControlName="termino"/>
           </div>
         </div>
@@ -139,7 +139,7 @@
       <div class="row">
         <div class="col-4 pb-3">
           <div class="form-group">
-            <label for="dataMaximaExt">Data máxima de envio proposta</label>
+            <label for="dataMaximaExt">Data máxima de envio proposta <app-help codigo="captacao-data-maxima-ext"></app-help></label>
             <input type="date" class="form-control" id="dataMaximaExt" [min]="dataMinimaExt"
                    [(ngModel)]="dataMaximaExt"/>
           </div>

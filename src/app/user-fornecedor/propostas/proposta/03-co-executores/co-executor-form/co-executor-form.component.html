@@ -14,7 +14,7 @@
 
     <div class="form-row">
       <div class="form-group col">
-        <label for="cnpj">CNPJ</label>
+        <label for="cnpj">CNPJ <app-help codigo="cadastro-co-executor-cnpj"></app-help></label>
         <input
           type="text"
           class="form-control"
@@ -25,7 +25,7 @@
         >
       </div>
       <div class="form-group col">
-        <label for="uf">UF de cadastro na fazenda</label>
+        <label for="uf">UF de cadastro na fazenda <app-help codigo="cadastro-co-executor-uf"></app-help></label>
         <select class="form-control" id="uf" formControlName="uf">
           <option value="">Selecione</option>
           <option value="AC">Acre</option>
@@ -61,13 +61,13 @@
 
 
     <div class="form-group">
-      <label for="razao-social">Razão social</label>
+      <label for="razao-social">Razão social <app-help codigo="cadastro-co-executor-razao-social"></app-help></label>
       <input type="text" class="form-control" id="razao-social" formControlName="razaoSocial"
              placeholder="Razão Social">
     </div>
 
     <div class="form-group">
-      <label for="funcao">FUNÇÃO</label>
+      <label for="funcao">FUNÇÃO <app-help codigo="cadastro-co-executor-funcao"></app-help></label>
       <select class="form-control" formControlName="funcao" id="funcao" name="funcao">
         <option value="">Selecione</option>
         <option value="Executora">Executora</option>

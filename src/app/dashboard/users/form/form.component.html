@@ -22,7 +22,9 @@
       <div class="row">
         <div class="col-6">
           <div class="form-group">
-            <label for="tipo">Tipo de usuário</label>
+            <label for="tipo">Tipo de usuário
+              <app-help codigo="cadastro-usuario-tipo"></app-help>
+            </label>
             <select
               name="tipo"
               formControlName="role"
@@ -37,7 +39,9 @@
         </div>
         <div class="col-6">
           <div class="form-group">
-            <label for="nome-completo">Nome Completo</label>
+            <label for="nome-completo">Nome Completo
+              <app-help codigo="cadastro-usuario-nome-completo"></app-help>
+            </label>
             <input
               type="text"
               formControlName="nomeCompleto"
@@ -50,7 +54,9 @@
       <div class="row">
         <div class="col-6">
           <div class="form-group">
-            <label for="email">Email</label>
+            <label for="email">Email
+              <app-help codigo="cadastro-usuario-email"></app-help>
+            </label>
             <input
               type="email"
               id="email"

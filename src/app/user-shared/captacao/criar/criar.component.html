@@ -17,8 +17,8 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
     <div class="form-group">
-      <label for="contrato">Equipe de Suprimentos - Usuário Designado</label>
-      <select id="usuarioSuprimentoId" class="form-control" formControlName="usuarioSuprimentoId">
+      <label for="equipe">Equipe de Suprimentos - Usuário Designado <app-help codigo="captacao-equipe"></app-help></label>
+      <select id="equipe" class="form-control" formControlName="usuarioSuprimentoId">
         <option value="" hidden>Escolha um usuário</option>
         <option [value]="usuario.id" *ngFor="let usuario of equipe">
           {{ usuario.nomeCompleto }}
@@ -59,7 +59,7 @@
     </div>
 
     <div class="form-group">
-      <label for="contrato">Contrato Base Sugerido</label>
+      <label for="contrato">Contrato Base Sugerido <app-help codigo="captacao-contrato"></app-help></label>
       <select id="contrato" class="form-control" formControlName="contratoId">
         <option value="" hidden>Escolha um contrato</option>
         <option [value]="contrato.id" *ngFor="let contrato of contratos">
@@ -71,7 +71,7 @@
 
 
     <div class="form-group">
-      <label for="observacoes">Observações para equipe suprimentos (Opcional)</label>
+      <label for="observacoes">Observações para equipe suprimentos (Opcional) <app-help codigo="captacao-observacoes"></app-help></label>
       <textarea class="form-control mt-2" id="observacoes" rows="5" formControlName="observacoes"></textarea>
     </div>
 

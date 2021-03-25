@@ -12,7 +12,7 @@
 <div class="modal-body">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <label for="recurso-humano">Recurso humano</label>
+      <label for="recurso-humano">Recurso humano <app-help codigo="alocacao-recurso-humano"></app-help></label>
       <select class="form-control" id="recurso-humano" formControlName="recursoId">
         <option value="" hidden>Selecione a pessoa que irá executar a tarefa</option>
         <option [value]="recurso.id" *ngFor="let recurso of recursos">
@@ -23,7 +23,7 @@
 
     <div class="form-row">
       <div class="form-group col">
-        <label for="empresa-financiadora">Empresa Financiadora</label>
+        <label for="empresa-financiadora">Empresa Financiadora <app-help codigo="alocacao-recurso-humano-financiadora"></app-help></label>
         <select class="form-control" id="empresa-financiadora" formControlName="empresaFinanciadora">
           <option value="" hidden>Selecione uma empresa financiadora</option>
           <option [value]="empresa.value" *ngFor="let empresa of empresas">
@@ -32,7 +32,7 @@
         </select>
       </div>
       <div class="form-group col">
-        <label for="etapa">Etapa relacionada</label>
+        <label for="etapa">Etapa relacionada <app-help codigo="alocacao-recurso-humano-etapa"></app-help></label>
         <select class="form-control" id="etapa" formControlName="etapaId">
           <option value="" hidden>Selecione uma etapa</option>
           <option [value]="etapa.id" *ngFor="let etapa of etapas">

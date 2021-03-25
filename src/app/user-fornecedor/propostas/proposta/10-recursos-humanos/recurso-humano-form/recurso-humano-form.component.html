@@ -13,7 +13,7 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="form-row">
       <div class="form-group col">
-        <label for="empresa">Empresa</label>
+        <label for="empresa">Empresa <app-help codigo="recurso-humano-empresa"></app-help></label>
         <select class="form-control" id="empresa" formControlName="empresa">
           <option value="" hidden>Selecione um Empresa</option>
           <option [value]="empresa.value" *ngFor="let empresa of empresas">
@@ -22,7 +22,7 @@
         </select>
       </div>
       <div class="form-group col">
-        <label for="valor-hora">Valor hora</label>
+        <label for="valor-hora">Valor hora <app-help codigo="recurso-humano-valor-hora"></app-help></label>
         <input
           type="text"
           class="form-control"
@@ -33,21 +33,21 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="nome-completo">Nome Completo</label>
+      <label for="nome-completo">Nome Completo <app-help codigo="recurso-humano-nome-completo"></app-help></label>
       <input type="text" class="form-control" id="nome-completo" formControlName="nomeCompleto"
              placeholder="Digite o seu nome completo">
     </div>
 
     <div class="form-row">
       <div class="form-group col">
-        <label for="titulacao">Titulação</label>
+        <label for="titulacao">Titulação <app-help codigo="recurso-humano-titulacao"></app-help></label>
         <select class="form-control" id="titulacao" formControlName="titulacao">
           <option value="" hidden>Selecione uma Titulação</option>
           <option *ngFor="let titulo of titulacoes" [value]="titulo.value">{{titulo.text}}</option>
         </select>
       </div>
       <div class="form-group col">
-        <label for="funcao">Função</label>
+        <label for="funcao">Função <app-help codigo="recurso-humano-funcao"></app-help></label>
         <select class="form-control" id="funcao" formControlName="funcao">
           <option value="" hidden>Selecione uma Função</option>
           <option *ngFor="let funcao of funcoes" [value]="funcao.value">{{funcao.text}}</option>
@@ -57,7 +57,7 @@
 
     <div class="form-row">
       <div class="form-group col">
-        <label for="brasileiro">Brasileiro?</label>
+        <label for="brasileiro">Brasileiro? <app-help codigo="recurso-humano-brasileiro"></app-help></label>
         <select class="form-control" id="brasileiro" formControlName="nacionalidade">
           <option value="" hidden>Selecione</option>
           <option value="Brasileiro">Sim</option>
@@ -65,7 +65,7 @@
         </select>
       </div>
       <div class="form-group col">
-        <label for="cpf">Cpf ou passaporte</label>
+        <label for="cpf">Cpf ou passaporte <app-help codigo="recurso-humano-cpf"></app-help></label>
         <input
           type="text"
           class="form-control"
@@ -77,7 +77,7 @@
     </div>
 
     <div class="form-group">
-      <label for="curriculo-lattes">Endereço currículo lattes</label>
+      <label for="curriculo-lattes">Endereço currículo lattes <app-help codigo="recurso-humano-curriculo-lattes"></app-help></label>
       <input type="text" class="form-control" id="curriculo-lattes" formControlName="urlCurriculo"
              placeholder="Insira aqui o URL do currículo">
     </div>

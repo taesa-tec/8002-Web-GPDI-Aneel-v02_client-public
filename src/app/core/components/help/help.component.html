@@ -10,7 +10,7 @@
     <div *ngIf="item?.hasContent">
       (Clique sobre o ícone para mais detalhes)
     </div>
-    <p *ngIf="ctrl" class="text-warning">ID: {{item?.codigo}}</p>
+    <p *ngIf="ctrl" class="text-warning">ID: {{codigo}}</p>
     <fa-icon *ngIf="loading" [icon]="['fas', 'spinner']" [spin]="true" size="2x"></fa-icon>
   </div>
 </ng-template>

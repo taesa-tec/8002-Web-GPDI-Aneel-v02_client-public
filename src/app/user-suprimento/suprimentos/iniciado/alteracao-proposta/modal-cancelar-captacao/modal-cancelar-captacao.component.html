@@ -11,19 +11,19 @@
 
 <div class="modal-body">
     <div>Esta ação é irreversível. Todos os fornecedores convidados irão receber um email avisando deste encerramento. Confirmar encerramento?</div>
-    
+
     <div class="form-check mt-3 mb-6">
         <input type="checkbox" id="status" class="form-check-input" (change)="toggle($event)">
         <label for="status" class="form-check-label">Confirmo que estaremos encerrando esta captação</label>
     </div>
-    
+
     <div class="text-right">
         <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">
             Cancelar
         </div>
-        <button 
-            type="submit" 
-            class="btn btn-danger" 
+        <button
+            type="submit"
+            class="btn btn-danger"
             [disabled]="!isCheck"
             (click)="activeModal.close()"
         >

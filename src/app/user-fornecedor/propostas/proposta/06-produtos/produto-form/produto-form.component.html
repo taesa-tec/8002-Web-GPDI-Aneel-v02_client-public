@@ -29,7 +29,9 @@
     </div>
 
     <div class="form-group">
-      <label for="tipo-produto">Tipo de produto</label>
+      <label for="tipo-produto">Tipo de produto
+        <app-help codigo="cadastro-produto-tipo-produto"></app-help>
+      </label>
       <select class="form-control" id="tipo-produto" formControlName="tipoId">
         <option value="" hidden>Selecione o tipo de produto</option>
         <option [value]="tipo.id" *ngFor="let tipo of tipos">
@@ -39,7 +41,9 @@
     </div>
 
     <div class="form-group">
-      <label for="cadeia-inovacao">Fase da cadeia de inovação do produto</label>
+      <label for="cadeia-inovacao">Fase da cadeia de inovação do produto
+        <app-help codigo="cadastro-produto-cadeia-inovacao"></app-help>
+      </label>
       <select class="form-control" id="cadeia-inovacao" formControlName="faseCadeiaId">
         <option value="" hidden>Selecione a fase da cadeia de inivação</option>
         <option [value]="fase.id" *ngFor="let fase of fases">
@@ -49,7 +53,9 @@
     </div>
 
     <div class="form-group">
-      <label for="tipo-produto-detalhado">Tipo de produto detalhado</label>
+      <label for="tipo-produto-detalhado">Tipo de produto detalhado
+        <app-help codigo="cadastro-produto-tipo-detalhado"></app-help>
+      </label>
       <select class="form-control" id="tipo-produto-detalhado" formControlName="tipoDetalhadoId">
         <option value="" hidden>Selecione o tipo de produto detalhado</option>
         <ng-container *ngFor="let t of tiposProdutoDetalhados">
@@ -59,7 +65,9 @@
     </div>
 
     <div class="form-group">
-      <label for="titulo-produto">Título produto</label>
+      <label for="titulo-produto">Título produto
+        <app-help codigo="cadastro-produto-titulo"></app-help>
+      </label>
       <input type="text" class="form-control" id="titulo-produto" formControlName="titulo"
              placeholder="Digite o título do produto">
     </div>
