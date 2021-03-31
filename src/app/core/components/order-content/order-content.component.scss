@@ -12,11 +12,10 @@
     position: absolute;
     font-weight: bold;
     padding: 4px;
-    color: blue;
-    width: 35px;
+    color: var(--primary);
     z-index: 2;
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
   }
 }
 

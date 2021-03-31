@@ -24,7 +24,7 @@ export class UserFormComponent implements OnInit {
     email: ['', [Validators.required, Validators.email]],
     nomeCompleto: ['', Validators.required],
     cargo: [''],
-    cpf: ['', [Validators.required, AppValidators.cpf]],
+    cpf: ['', [AppValidators.cpf]],
     status: [true, Validators.required],
     role: ['', Validators.required],
     empresaId: this.empresaIdControl,
