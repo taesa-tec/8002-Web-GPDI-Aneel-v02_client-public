@@ -65,8 +65,17 @@ export class ConfiguracaoComponent implements OnInit {
     });
 
 
-    this.dataMaximaExt = this.captacao.termino.replace(/T.+$/, '');
-    this.dataMinimaExt = this.captacao.termino = this.dataMaximaExt;
+    if (this.captacao.termino != null) {
+      const capData = new Date(this.captacao.termino);
+      this.dataMaximaExt = this.captacao.termino.replace(/T.+$/, '');
+      this.captacao.termino = this.dataMaximaExt;
+      const timeMinExt = Math.max(capData.getTime(), Date.now());
+      this.dataMinimaExt = (new Date(timeMinExt)).toJSON().replace(/T.+$/, '');
+    } else {
+      this.dataMinimaExt = (new Date()).toJSON().replace(/T.+$/, '');
+
+    }
+    console.log(this.dataMinimaExt);
     this.form.patchValue(this.captacao);
     if (this.captacao?.arquivos) {
       this.uploads = this.captacao.arquivos;

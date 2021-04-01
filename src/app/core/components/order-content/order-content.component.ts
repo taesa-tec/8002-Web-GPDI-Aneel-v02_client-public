@@ -38,7 +38,9 @@ export class OrderContentComponent implements OnInit {
       tooltip: 'Subir',
     },
   };
-
+  @Input() beforeNumber = '';
+  @Input() afterNumber = '';
+  @Input() widthNumber = '35px';
   @Input() indice;
   @Input() min = 0;
   @Input() total = Number.MAX_VALUE;

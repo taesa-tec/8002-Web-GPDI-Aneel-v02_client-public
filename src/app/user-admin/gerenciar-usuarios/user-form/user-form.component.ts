@@ -24,7 +24,7 @@ export class UserFormComponent implements OnInit {
     email: ['', [Validators.required, Validators.email]],
     nomeCompleto: ['', Validators.required],
     cargo: [''],
-    cpf: ['', [Validators.required, AppValidators.cpf]],
+    cpf: ['', [AppValidators.cpf]],
     status: [true, Validators.required],
     role: ['', Validators.required],
     empresaId: this.empresaIdControl,
@@ -63,7 +63,7 @@ export class UserFormComponent implements OnInit {
       try {
         await this.usersService.salvar(this.form.value);
         if (this.fotoPerfil.value.file) {
-          await this.usersService.updateAvatar(this.fotoPerfil.value.file);
+          await this.usersService.updateAvatar(this.fotoPerfil.value.file, this.user.id);
         }
         await this.app.alert('Usuário salvo com sucesso');
         await this.app.router.navigate(['/admin/gerenciar-usuarios/']);

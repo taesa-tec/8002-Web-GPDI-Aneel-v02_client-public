@@ -37,8 +37,8 @@ export class FornecedorFormComponent implements OnInit {
     ativo: [true],
     nome: ['', Validators.required],
     cnpj: ['', [Validators.required, AppValidators.cnpj]],
-    responsavelNome: [''],
-    responsavelEmail: [''],
+    responsavelNome: ['', [Validators.required]],
+    responsavelEmail: ['', [Validators.required]],
     trocarResponsavel: [false]
   });
 
@@ -66,7 +66,8 @@ export class FornecedorFormComponent implements OnInit {
   async onSubmit() {
     if (this.form.valid) {
       try {
-        await this.service.salvar(this.form.value);
+        const result = await this.service.salvar(this.form.value);
+        console.log(result);
         await this.app.alert('Fornecedor salvo com sucesso').then();
         this.activeModal.close(true);
 

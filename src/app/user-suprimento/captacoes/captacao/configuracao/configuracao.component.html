@@ -67,7 +67,7 @@
       <div class="row">
         <div class="col-12">
           <div class="form-group">
-            <label for="consideracoes">Considerações estras para os fornecedores <app-help codigo="captacao-consideracoes"></app-help></label>
+            <label for="consideracoes">Considerações extras para os fornecedores <app-help codigo="captacao-consideracoes"></app-help></label>
             <textarea class="form-control" id="consideracoes" rows="5"
                       formControlName="consideracoes"></textarea>
           </div>
@@ -78,7 +78,7 @@
         <div class="col-4">
           <div class="form-group">
             <label for="dataMaxima">Data máxima de envio proposta <app-help codigo="captacao-data-maxima"></app-help></label>
-            <input type="date" class="form-control" id="dataMaxima" formControlName="termino"/>
+            <input type="date" class="form-control" id="dataMaxima" formControlName="termino" [min]="dataMinimaExt"/>
           </div>
         </div>
       </div>

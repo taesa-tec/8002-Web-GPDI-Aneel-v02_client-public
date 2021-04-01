@@ -92,7 +92,7 @@ export const CaptacaoCols: { [prop: string]: TableComponentCols } = {
 export const CaptacaoButtons: { [prop: string]: TableComponentActions } = {
   Pendente: [{action: 'criar', text: 'CRIAR CAPTAÇÃO', icon: 'ta-edit', className: 'btn btn-primary'}],
   EmElaboracao: [{action: '${id}', text: 'Configurar', isLink: true, icon: 'ta-edit', className: 'btn btn-primary'}],
-  Aberta: [{action: 'ver', text: 'VER DETALHES', icon: 'ta-edit', className: 'btn btn-primary'}],
+  Aberta: [],
   Encerrada: [{action: 'enviar', text: 'ENVIAR PARA SELEÇÃO', icon: 'ta-edit', className: 'btn btn-primary'}],
   Cancelada: []
 };

@@ -1,6 +1,6 @@
 import { Component, forwardRef, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import FilesizeFunc from 'filesize';
+import * as Filesize from 'filesize';
 
 @Component({
   selector: 'app-upload-file',
@@ -47,7 +47,7 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
       size += f.size;
     }
     if (size > this.maxsize) {
-      const ms = FilesizeFunc(this.maxsize);
+      const ms = Filesize(this.maxsize);
       this.error.emit(`Total do upload é grande demais para ser enviado, o upload máximo é de ${ms}`);
       return false;
     }

@@ -20,6 +20,7 @@ export class HistoricoComponent implements OnInit {
   revisaoAtual: string;
   lastUpdate: string;
   loading = false;
+  demanda: Demanda;
 
   set compartivo(value: { revisaoAtual: string, html: string, lastUpdate: string }) {
     this.html = value.html;
@@ -28,7 +29,6 @@ export class HistoricoComponent implements OnInit {
   }
 
   constructor(
-    @Inject(DEMANDA) protected demanda: Demanda,
     public app: AppService, public activeModal: NgbActiveModal) {
   }
 

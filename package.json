@@ -1,6 +1,6 @@
 {
   "name": "sistema-ped",
-  "version": "2.2.alpha",
+  "version": "2.2.0",
   "scripts": {
     "ng": "ng",
     "start": "npm run buildeditor; ng serve",
@@ -42,7 +42,7 @@
     "@types/lodash-es": "^4.17.1",
     "bootstrap": "^4.4.1",
     "core-js": "^2.5.4",
-    "filesize": "^6.0.0",
+    "filesize": "^6.1.0",
     "jquery": "^3.5.1",
     "lodash-es": "^4.17.11",
     "materialize-css": "^1.0.0-rc.2",
