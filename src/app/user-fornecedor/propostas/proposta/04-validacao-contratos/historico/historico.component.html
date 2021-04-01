@@ -11,31 +11,41 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-6">
-        <div class="form-group py-3">
-          <select class="form-control" [ngModel]="revisaoId" (ngModelChange)="carregarRevisao($event)">
-            <option *ngFor="let version of revisoes" [value]="version.id">
-              {{version.id}} Revisão: {{version.name}} - {{version.createdAt| date: 'short'}}</option>
-          </select>
+    <ng-container *ngIf="revisoes.length > 1">
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group py-3">
+            <select class="form-control" [ngModel]="revisaoId" (ngModelChange)="carregarRevisao($event)">
+              <option *ngFor="let version of revisoes" [value]="version.id">
+                {{version.id}} Revisão: {{version.name}} - {{version.createdAt| date: 'short'}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group py-3">
+            <div class="input form-control" readonly>Revisão Atual</div>
+          </div>
         </div>
       </div>
-      <div class="col-6">
-        <div class="form-group py-3">
-          <div class="input form-control" readonly>Revisão Atual</div>
+      <div class="row">
+        <div class="col-12 legenda text-center">
+          <div>
+            <span class="diff-text inserted p-2">Texto inserido</span>
+            &nbsp;
+            <span class="diff-text deleted p-2">Texto removido</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-12 legenda text-center">
-        <div>
-          <span class="diff-text inserted p-2">Texto inserido</span>
-          &nbsp;
-          <span class="diff-text deleted p-2">Texto removido</span>
+    </ng-container>
+    <ng-container *ngIf="revisoes.length <= 1">
+      <div class="row">
+        <div class="col py-2">
+          <div class="alert border border-info text-info text-center">
+            Não há revisões para serem comparadas
+          </div>
         </div>
       </div>
-    </div>
-
+    </ng-container>
   </div>
 
 </div>

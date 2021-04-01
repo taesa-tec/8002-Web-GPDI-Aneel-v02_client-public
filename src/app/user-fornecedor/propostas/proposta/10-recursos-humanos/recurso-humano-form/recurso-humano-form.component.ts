@@ -25,7 +25,7 @@ export class RecursoHumanoFormComponent extends PropostaNodeFormDirective implem
     nacionalidade: ['', [Validators.required]],
     documento: ['', [Validators.required]],
     valorHora: ['', [Validators.required]],
-    urlCurriculo: ['', [Validators.required]],
+    urlCurriculo: ['', [AppValidators.isUrl]],
   });
   empresas: Array<TextValue> = [];
   titulacoes = Graduacoes;

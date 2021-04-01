@@ -49,7 +49,8 @@ export class ViewContratoComponent implements OnInit {
       if (this.form.valid) {
         const saveAsDraft = evt.submitter.value === 'draft';
         this.form.get('draft').setValue(saveAsDraft);
-        await this.service.saveContrato(this.parent.proposta.captacaoId, this.form.value);
+        this.contrato.id = parseFloat(await this.service.saveContrato(this.parent.proposta.captacaoId, this.form.value));
+
         this.app.alert('Contrato Salvo com sucesso!').then();
         this.contrato.finalizado = !saveAsDraft;
 
