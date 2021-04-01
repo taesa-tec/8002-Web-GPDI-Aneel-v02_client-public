@@ -37,7 +37,11 @@ export class LoginComponent implements OnInit {
     try {
       await this.authService.login(this.loginRequest, this.remember);
     } catch (e) {
-      this.errorMessage = e.message;
+      if (e.error) {
+        this.errorMessage = e.error.detail;
+      } else {
+        this.errorMessage = e.message;
+      }
       console.error(e);
     } finally {
       this.loading.hide();

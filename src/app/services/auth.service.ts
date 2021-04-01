@@ -15,6 +15,19 @@ const rolePath = new Map<string, string>([
   [UserRole.Fornecedor, 'fornecedor'],
 ]);
 
+interface Session {
+  aud: string;
+  iss: string;
+  jti: string;
+  ext: number;
+  nbf: number;
+  iat: number;
+  role: Array<string>;
+  unique_name: Array<string>;
+
+  [prop: string]: any;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,15 +35,13 @@ export class AuthService {
 
   protected loginResponse: LoginResponse;
   protected authEventsSource: BehaviorSubject<{ type: string, data?: any }>;
+  protected session: Session;
 
   redirectTo = '/dashboard';
   authEvent: Observable<{ type: string, data?: any }>;
 
   get expiration() {
-    if (this.loginResponse && this.loginResponse.expiration) {
-      return new Date(this.loginResponse.expiration);
-    }
-    return null;
+    return (this.session?.exp || 0) * 1e3;
   }
 
   get token() {
@@ -41,8 +52,7 @@ export class AuthService {
   }
 
   get isLoggedIn() {
-    return (this.token && this.expiration !== null && this.expiration.getTime() > Date.now());
-
+    return (this.token && this.expiration > Date.now());
   }
 
   get user() {
@@ -60,6 +70,7 @@ export class AuthService {
   set user(value) {
     if (this.loginResponse) {
       this.loginResponse.user = value;
+      this.setSession(this.loginResponse);
     }
   }
 
@@ -74,6 +85,7 @@ export class AuthService {
     if (loggedUser) {
       try {
         this.loginResponse = JSON.parse(loggedUser);
+        this.setSession(this.loginResponse);
         this.authEventsSource = new BehaviorSubject<{ type: string, data?: any }>({type: 'login', data: this.loginResponse});
       } catch (e) {
         console.error(e.message);
@@ -85,29 +97,37 @@ export class AuthService {
     this.authEvent = this.authEventsSource.asObservable();
   }
 
-  userHasRoles(...roles: string[]) {
-    return roles
-      .reduce((p, c) => [...p, ...(Array.isArray(c) ? c : [c])], [])
-      .some(role => this.user.roles.indexOf(role as UserRole) >= 0);
+
+  protected extractInfoToken(token: string) {
+    return JSON.parse(atob(token.split('.')[1]));
+  }
+
+  setSession(response: LoginResponse) {
+    this.session = this.extractInfoToken(response.accessToken);
+    if (this.loginResponse) {
+      Object.assign(this.loginResponse.user, response.user);
+      Object.assign(this.loginResponse, response);
+    } else {
+      this.loginResponse = response;
+    }
+
   }
 
   async login(loginRequest: LoginRequest, remember: boolean = false, redirectTo: string | null = null) {
 
-    const loginResponse = await this.http.post<LoginResponse>(`Login`, loginRequest).toPromise();
+    const response = await this.http.post<LoginResponse>(`Login`, loginRequest).toPromise();
+
     const storage = remember ? localStorage : sessionStorage;
+    storage.setItem(storageKey, JSON.stringify(response));
+
+    this.setSession(response);
+
     if (remember) {
       sessionStorage.setItem('last_login_user', loginRequest.email);
     } else {
       sessionStorage.removeItem('last_login_user');
     }
-    if (this.loginResponse) {
-      this.loginResponse.user = {email: '', nomeCompleto: '', role: '', status: false};
-      Object.assign(this.loginResponse.user, loginResponse.user);
-      Object.assign(this.loginResponse, loginResponse);
-    } else {
-      this.loginResponse = loginResponse;
-    }
-    storage.setItem(storageKey, JSON.stringify(loginResponse));
+
 
     if (redirectTo) {
       this.redirectTo = redirectTo;
@@ -124,7 +144,6 @@ export class AuthService {
   getHomeUrl() {
     const path = rolePath.has(this.role) ? rolePath.get(this.role) : 'error';
     return `/${path}`;
-
   }
 
   logout(): void {
@@ -147,5 +166,11 @@ export class AuthService {
     return await this.http.post<ResultadoResponse>('Login/nova-senha', recoverRequest).toPromise();
   }
 
+
+  userHasRoles(...roles: string[]) {
+    return roles
+      .reduce((p, c) => [...p, ...(Array.isArray(c) ? c : [c])], [])
+      .some(role => this.user.roles.indexOf(role as UserRole) >= 0);
+  }
 
 }

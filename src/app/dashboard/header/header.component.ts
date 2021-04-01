@@ -44,6 +44,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.auth.user);
     this.currentUser = this.auth.user;
   }
 

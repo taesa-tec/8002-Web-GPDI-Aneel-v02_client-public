@@ -10,6 +10,16 @@
   </div>
 </div>
 
+<div class="row mb-3" *ngIf="contrato.finalizado">
+  <div class="col">
+    <div class="border border-success rounded d-flex text-success align-items-center p-3">
+      <i class="ta-ok fs-48 mr-3"></i>
+      <div>
+        Você marcou o contrato como finalizado. Se quiser é possível editar o mesmo até a data máxima de captação.
+      </div>
+    </div>
+  </div>
+</div>
 <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
 
   <div class="row">

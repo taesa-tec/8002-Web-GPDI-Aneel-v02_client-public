@@ -51,8 +51,11 @@ export class ViewContratoComponent implements OnInit {
         this.form.get('draft').setValue(saveAsDraft);
         await this.service.saveContrato(this.parent.proposta.captacaoId, this.form.value);
         this.app.alert('Contrato Salvo com sucesso!').then();
+        this.contrato.finalizado = !saveAsDraft;
+
       }
     } catch (e) {
+      this.app.alert('Ocorreu um erro ao salvar o contrato!').then();
       console.error(e);
     } finally {
       this.app.loading.hide();
