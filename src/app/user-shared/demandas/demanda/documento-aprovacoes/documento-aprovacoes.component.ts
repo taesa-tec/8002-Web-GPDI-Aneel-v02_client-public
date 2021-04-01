@@ -94,6 +94,7 @@ export class DocumentoAprovacoesComponent implements OnInit {
       const ref = this.modal.open(HistoricoComponent, {size: 'xl', scrollable: true});
       const comp = ref.componentInstance as HistoricoComponent;
       comp.form = this.formKey;
+      comp.demanda = this.demanda;
 
       await ref.result;
     } catch (e) {

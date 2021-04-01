@@ -44,6 +44,18 @@ export class ContratoPadraoFormComponent implements OnInit {
     this.form.updateValueAndValidity();
   }
 
+  async remover() {
+    if (await this.app.confirm('Tem certeza que deseja apagar este contrato? Essa ação não pode ser desfeita')) {
+      try {
+
+        await this.service.excluir(this.form.value.id);
+        this.app.router.navigateByUrl('/admin/configuracoes/contratos-padrao').then();
+      } catch (e) {
+        this.app.alert('Não foi possível excluir este contrato').then();
+      }
+    }
+  }
+
   async onSubmit() {
     if (this.form.valid) {
       try {

@@ -20,6 +20,7 @@ export const CRUD_EDITOR = new InjectionToken<any>('Crud Editor');
 export class CrudComponent implements OnInit {
 
   @Input() newItemLabel = 'Novo';
+  @Input() showNewItemButton = true;
   data: Array<any> = [];
 
   @Output() editorOpen: EventEmitter<any> = new EventEmitter<any>();

@@ -67,7 +67,7 @@
           Histórico de Versões
         </button>
         <div class="ml-auto">
-          <button type="button" class="btn btn-link" (click)="downloadPdf()">
+          <button type="button" class="btn btn-link" [disabled]="contrato.id === 0" (click)="downloadPdf()">
             <i class="ta-download"></i>
             Download PDF
           </button>

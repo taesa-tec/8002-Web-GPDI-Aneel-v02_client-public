@@ -40,7 +40,7 @@ export class CoExecutorFormComponent implements OnInit {
 
 
   async excluirEmpresa() {
-    if (this.coExecutor && await this.app.confirm('Tem certeza que deseja excluir este Co-Executor?')) {
+    if (this.coExecutor && await this.app.confirm('Tem certeza que deseja excluir esta entidade?')) {
       await this.service.removerCoExecutor(this.captacaoId, this.coExecutor.id);
       this.activeModal.close(true);
     }
