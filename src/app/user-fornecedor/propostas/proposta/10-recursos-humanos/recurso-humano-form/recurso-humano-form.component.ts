@@ -13,6 +13,7 @@ import {PropostaServiceBase} from '@app/user-fornecedor/services/propostas.servi
 })
 export class RecursoHumanoFormComponent extends PropostaNodeFormDirective implements OnInit {
 
+  documentoMask = '';
   empresaCtrl = this.fb.control('', Validators.required);
   form = this.fb.group({
     id: [0],
@@ -52,6 +53,19 @@ export class RecursoHumanoFormComponent extends PropostaNodeFormDirective implem
 
       const ctrl = this.form.get(ee[0] === 'e' ? 'empresaId' : 'coExecutorId');
       ctrl.setValue(id);
+    });
+    this.form.get('nacionalidade').valueChanges.subscribe(v => {
+      const brasileiro = v === 'Brasileiro';
+      const control = this.form.get('documento');
+      control.clearValidators();
+
+      this.documentoMask = brasileiro ? '000.000.000-00' : 'A*';
+      if (brasileiro) {
+        control.setValidators([Validators.required, AppValidators.cpf]);
+      } else {
+        control.setValidators([Validators.required]);
+      }
+
     });
 
 

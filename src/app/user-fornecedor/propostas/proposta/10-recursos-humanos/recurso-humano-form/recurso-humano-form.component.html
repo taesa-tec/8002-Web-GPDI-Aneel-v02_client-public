@@ -27,6 +27,7 @@
           type="text"
           class="form-control"
           id="valor-hora"
+          autocomplete="off"
           formControlName="valorHora"
           currencyMask
         />
@@ -34,7 +35,7 @@
     </div>
     <div class="form-group">
       <label for="nome-completo">Nome Completo <app-help codigo="recurso-humano-nome-completo"></app-help></label>
-      <input type="text" class="form-control" id="nome-completo" formControlName="nomeCompleto"
+      <input type="text" class="form-control" autocomplete="off" id="nome-completo" formControlName="nomeCompleto"
              placeholder="Digite o seu nome completo">
     </div>
 
@@ -70,6 +71,7 @@
           type="text"
           class="form-control"
           id="cpf"
+          [mask]="documentoMask"
           formControlName="documento"
           placeholder="00.000.000/0000-00"
         />
