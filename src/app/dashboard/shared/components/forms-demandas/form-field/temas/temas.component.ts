@@ -67,7 +67,7 @@ export class TemasComponent implements OnInit, ControlValueAccessor {
 
 
   get selectedsThemes() {
-    return (this.subTemasForms.value as Array<any>).map(i => parseInt(i.catalogSubTemaId, 10));
+    return (this.subTemasForms.value as Array<any>).map(i => parseFloat(i.catalogSubTemaId));
   }
 
   constructor(
@@ -82,12 +82,12 @@ export class TemasComponent implements OnInit, ControlValueAccessor {
 
   subtemasdisponiveis(current?: any) {
     return this.subTemas.filter(tema => {
-      return this.selectedsThemes.indexOf(tema.subTemaId) === -1 || (current && parseFloat(current) === tema.subTemaId);
+      return this.selectedsThemes.indexOf(tema.id) === -1 || (current && parseFloat(current) === tema.id);
     });
   }
 
   isOther(subTemaId) {
-    const subtema = this.subTemas ? this.subTemas.find(st => st.subTemaId === parseInt(subTemaId, 10)) : null;
+    const subtema = this.subTemas ? this.subTemas.find(st => st.id === parseFloat(subTemaId)) : null;
     return subtema && subtema.nome.match(/^Outros?\.?$/g) !== null;
   }
 

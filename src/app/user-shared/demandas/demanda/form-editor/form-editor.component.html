@@ -1,5 +1,6 @@
 <app-form-editor *ngIf="formValue; else loading" [key]="key" [formValue]="formValue" [anexos]="anexos"
                  [demandaId]="demandaId"
+                 [readonly]="demanda.etapaAtual !== ETAPAS_STATUS.EmElaboracao"
                  [disabled]="demanda.etapaAtual !== ETAPAS_STATUS.EmElaboracao"
                  (save)="submit($event)" [canAppendFile]="true"></app-form-editor>
 <ng-template #loading>Carregando Formulário</ng-template>

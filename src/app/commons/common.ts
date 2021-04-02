@@ -168,8 +168,10 @@ export interface CatalogTema {
   id: number;
   nome: string;
   valor: string;
-
-  subTemas: CatalogSubTema[];
+  order: number;
+  parent: string;
+  parentId: number;
+  subTemas: CatalogTema[];
 }
 
 export interface CatalogSubTema {

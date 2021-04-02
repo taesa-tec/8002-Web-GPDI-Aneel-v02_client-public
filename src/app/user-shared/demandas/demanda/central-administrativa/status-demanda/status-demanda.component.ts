@@ -13,6 +13,7 @@ import {DEMANDA} from '@app/user-shared/demandas/demanda/providers';
   styleUrls: ['./status-demanda.component.scss']
 })
 export class StatusDemandaComponent implements OnInit {
+  prevStatus = 0;
   form = new FormGroup({
     status: new FormControl('', Validators.required)
   });
@@ -35,14 +36,21 @@ export class StatusDemandaComponent implements OnInit {
 
   ngOnInit() {
     this.form.get('status').setValue(this.demanda.etapaAtual);
+    this.prevStatus = this.demanda.etapaAtual;
   }
 
   async saveStatus() {
     this.app.showLoading();
     try {
       await this.app.demandas.setEtapa(this.demanda.id, this.form.value);
+      this.prevStatus = parseFloat(this.form.value.status);
+      this.app.alert("Status da demanda alterado com sucesso!").then();
     } catch (e) {
+      this.form.get('status').setValue(this.prevStatus);
       console.error(e);
+      if (e.error && e.error.detail) {
+        this.app.alert(e.error.detail).then();
+      }
     }
     this.app.hideLoading();
   }

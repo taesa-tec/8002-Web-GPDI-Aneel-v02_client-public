@@ -1,21 +1,21 @@
 <div class="modal-header">
-    <div class="text-uppercase modal-title text-blue-light fs-24">
-        PROPOSTA {{ proposta.nomeFornecedor }}
-    </div> 
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-        <i class="ta-cancel-circle"></i>
-    </button>
+  <div class="text-uppercase modal-title text-blue-light fs-24">
+    PROPOSTA {{ proposta.nomeFornecedor }}
+  </div>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <i class="ta-cancel-circle"></i>
+  </button>
 </div>
 
 <app-loading type="fullscreen"></app-loading>
 
 <div class="modal-body">
-    <div *ngFor="let arquivo of proposta.arquivos">
-        <div class="btn btn-link px-0 py-1">
-            <span (click)="deletarArquivo(i)">
+  <div *ngFor="let arquivo of proposta.arquivos">
+    <div class="btn btn-link px-0 py-1">
+            <span>
                 <i class="ta-attachment"></i>
             </span>
-            {{ arquivo }}
-        </div>
+      {{ arquivo }}
     </div>
+  </div>
 </div>
