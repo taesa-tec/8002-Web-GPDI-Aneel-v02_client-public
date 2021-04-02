@@ -6,6 +6,7 @@ import {
 import {ContratosPadraoComponent} from '@app/user-admin/configuracoes/contratos-padrao/contratos-padrao.component';
 import {ContratosPadroesResolver} from '@app/resolvers/contratos-padroes.resolver';
 import {ContratoPadraoResolver} from '@app/resolvers/contrato-padrao.resolver';
+import {ContratoShortcodesResolver} from '@app/user-admin/resolvers/contrato-shortcodes.resolver';
 
 
 const routes: Routes = [
@@ -18,12 +19,16 @@ const routes: Routes = [
   },
   {
     path: 'novo',
-    component: ContratoPadraoFormComponent
+    component: ContratoPadraoFormComponent,
+    resolve: {
+      shortcodes: ContratoShortcodesResolver
+    },
   },
   {
     path: 'editar/:id',
     resolve: {
-      contrato: ContratoPadraoResolver
+      contrato: ContratoPadraoResolver,
+      shortcodes: ContratoShortcodesResolver
     },
     component: ContratoPadraoFormComponent
   },

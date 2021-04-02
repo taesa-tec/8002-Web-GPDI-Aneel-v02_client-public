@@ -3,7 +3,9 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="row mb-3">
         <div class="form-group col">
-          <label for="titulo-contrato">Título Contrato <app-help codigo="contrato-titulo"></app-help></label>
+          <label for="titulo-contrato">Título Contrato
+            <app-help codigo="contrato-titulo"></app-help>
+          </label>
           <input type="text" class="form-control" id="titulo-contrato" formControlName="titulo">
         </div>
       </div>

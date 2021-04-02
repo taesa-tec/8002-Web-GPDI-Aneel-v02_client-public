@@ -12,7 +12,7 @@ import {ClassicEditor, ConfigEditor} from '@app/core/shared';
 })
 export class ContratoPadraoFormComponent implements OnInit {
   editor = ClassicEditor;
-  configEditor = {...ConfigEditor, toolbar: [...ConfigEditor.toolbar, 'placeholder']};
+  configEditor = {...ConfigEditor, height: 500, toolbar: [...ConfigEditor.toolbar, 'placeholder'], shortcodes: new Map()};
   configEditorFornecedor = {...ConfigEditor};
   form: FormGroup;
   categorias: Array<string>;
@@ -26,8 +26,10 @@ export class ContratoPadraoFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(ClassicEditor);
+    this.configEditor.shortcodes = new Map(this.route.snapshot.data.shortcodes || []);
     this.buildForm();
+    console.log(this.configEditor);
+
   }
 
   buildForm() {

@@ -66,6 +66,7 @@ ckeditor {
       display: inline-block;
     }
   }
+
   .placeholder {
     background: #ffff00;
     padding: 4px 2px;
@@ -76,5 +77,10 @@ ckeditor {
 
   .placeholder::selection {
     display: none;
+  }
+
+  .ck-editor__editable_inline {
+    min-height: var(--ck-editor-height, 200px);
+    max-height: var(--ck-editor-max-height, 100vh);
   }
 }

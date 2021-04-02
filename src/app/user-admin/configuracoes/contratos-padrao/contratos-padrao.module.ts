@@ -11,6 +11,7 @@ import {HttpClient} from '@angular/common/http';
 import {ContratosPadroesResolver} from '@app/resolvers/contratos-padroes.resolver';
 import {ContratoPadraoResolver} from '@app/resolvers/contrato-padrao.resolver';
 import {CoreModule} from '@app/core';
+import {ContratoShortcodesResolver} from '@app/user-admin/resolvers/contrato-shortcodes.resolver';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import {CoreModule} from '@app/core';
   providers: [
     ContratosPadroesResolver,
     ContratoPadraoResolver,
+    ContratoShortcodesResolver,
     {provide: ServiceBase, deps: [HttpClient], useFactory: (httpClient) => new ServiceBase(httpClient, 'Sistema/Contratos')}
   ]
 })
