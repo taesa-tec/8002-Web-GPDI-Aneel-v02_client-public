@@ -63,7 +63,11 @@ export class ProdutoFormComponent implements OnInit {
         this.activeModal.close();
       } catch (e) {
         console.error(e);
-        this.app.alert('Erro ao salvar o produto, tente novamente mais tarde', 'Erro').then();
+        if (e.error && e.error.detail) {
+          this.app.alert(e.error.detail, 'Erro').then();
+        } else {
+          this.app.alert('Erro ao salvar o produto, tente novamente mais tarde', 'Erro').then();
+        }
       }
       this.loading.hide();
     }
