@@ -45,10 +45,20 @@ export class PropostaNodeFormDirective implements OnInit {
 
 
   async remover() {
-    if (this.form.value.id !== 0 && await this.app.confirm('Tem certeza que deseja remover?',
-      'Confirme a exclusão?')) {
-      await this.service.excluir(this.form.value.id);
-      this.activeModal.close(true);
+    try {
+
+      if (this.form.value.id !== 0 && await this.app.confirm('Tem certeza que deseja remover?',
+        'Confirme a exclusão')) {
+        await this.service.excluir(this.form.value.id);
+        this.activeModal.close(true);
+      }
+    } catch (e) {
+      console.log(e);
+      if (e.error && e.error.detail) {
+        this.app.alert(e.error.detail, 'Erro').then();
+      } else {
+        this.app.alert('Erro ao remover, tente novamente mais tarde', 'Erro').then();
+      }
     }
   }
 

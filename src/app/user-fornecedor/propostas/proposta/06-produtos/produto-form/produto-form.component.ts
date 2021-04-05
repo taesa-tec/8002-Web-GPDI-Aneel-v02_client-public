@@ -62,7 +62,7 @@ export class ProdutoFormComponent implements OnInit {
         await this.service.salvar(this.form.value);
         this.activeModal.close();
       } catch (e) {
-        console.error(e);
+        console.log(e);
         if (e.error && e.error.detail) {
           this.app.alert(e.error.detail, 'Erro').then();
         } else {
@@ -74,10 +74,20 @@ export class ProdutoFormComponent implements OnInit {
   }
 
   async remover() {
-    if (this.form.value.id !== 0 && await this.app.confirm('Tem certeza que deseja remover? Itens relacionados serão apagados',
-      'Confirme a exclusão?')) {
-      await this.service.excluir(this.form.value.id);
-      this.activeModal.close(true);
+    try {
+
+      if (this.form.value.id !== 0 && await this.app.confirm('Tem certeza que deseja remover este produto?',
+        'Confirme a exclusão?')) {
+        await this.service.excluir(this.form.value.id);
+        this.activeModal.close(true);
+      }
+    } catch (e) {
+      console.log(e);
+      if (e.error && e.error.detail) {
+        this.app.alert(e.error.detail, 'Erro').then();
+      } else {
+        this.app.alert('Erro ao remover o produto, tente novamente mais tarde', 'Erro').then();
+      }
     }
   }
 

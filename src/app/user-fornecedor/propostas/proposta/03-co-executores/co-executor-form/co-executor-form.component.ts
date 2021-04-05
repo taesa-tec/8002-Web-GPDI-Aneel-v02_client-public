@@ -41,8 +41,18 @@ export class CoExecutorFormComponent implements OnInit {
 
   async excluirEmpresa() {
     if (this.coExecutor && await this.app.confirm('Tem certeza que deseja excluir esta entidade?')) {
-      await this.service.removerCoExecutor(this.captacaoId, this.coExecutor.id);
-      this.activeModal.close(true);
+      try {
+
+        await this.service.removerCoExecutor(this.captacaoId, this.coExecutor.id);
+        this.activeModal.close(true);
+      } catch (e) {
+        console.log(e);
+        if (e.error && e.error.detail) {
+          this.app.alert(e.error.detail, 'Erro').then();
+        } else {
+          this.app.alert('Erro ao remover entidade, tente novamente mais tarde', 'Erro').then();
+        }
+      }
     }
   }
 
