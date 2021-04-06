@@ -23,7 +23,6 @@ import {extractRouteParams} from '@app/core';
           if (data.proposta.dataClausulasAceitas !== null) {
             menu_itens = menu_itens.concat([
               {path: 'entidades', text: 'Cadastro Outras Entidades', icon: 'ta-empresas'},
-              {path: 'contrato', text: 'Validação Contrato', icon: 'ta-gavel'},
               {path: 'plano-de-trabalho', text: 'Plano de Trabalho', icon: 'ta-work-plan'},
               {path: 'produtos', text: 'Produtos', icon: 'ta-box'},
               {path: 'etapas', text: 'Etapas', icon: 'ta-etapas'},
@@ -33,6 +32,7 @@ import {extractRouteParams} from '@app/core';
               {path: 'alocacao-recursos-humanos', text: 'Alocação de Recursos Humanos', icon: 'ta-alocacao-rh'},
               {path: 'recursos-materiais', text: 'Recursos Materiais', icon: 'ta-recurso-material'},
               {path: 'alocacao-recursos-materiais', text: 'Alocação de Recursos Materiais', icon: 'ta-alocacao-material'},
+              {path: 'contrato', text: 'Validação Contrato', icon: 'ta-gavel'},
               {path: 'envio', text: 'Envio Proposta para aprovação', icon: 'ta-ok'},
             ]);
           }
