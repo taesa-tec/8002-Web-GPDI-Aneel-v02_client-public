@@ -20,6 +20,7 @@ import {AdminRootUrl} from '@app/routes/routes';
       useValue: [
         {text: 'Gestão de Demandas', icon: 'ta-projeto', path: `/${AdminRootUrl}/demandas`},
         {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: `/${AdminRootUrl}/captacoes`},
+        {text: 'Projetos - Priorização e Seleção', icon: 'ta-file-check', path: `/${AdminRootUrl}/propostas`},
         {text: 'Configurações do Sistema', icon: 'ta-gear', path: `/${AdminRootUrl}/configuracoes`},
       ]
     }, {
