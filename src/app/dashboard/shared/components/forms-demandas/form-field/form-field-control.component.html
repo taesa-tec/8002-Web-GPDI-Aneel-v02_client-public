@@ -40,6 +40,7 @@
       <ng-container *ngIf="!readonly">
         <ckeditor
           [editor]="editor"
+          [config]="configEditor"
           style="max-width: max-content;"
           formControlName="value"
         ></ckeditor>

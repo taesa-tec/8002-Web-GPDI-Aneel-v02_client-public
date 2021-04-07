@@ -3,6 +3,8 @@ import {AbstractControl} from '@angular/forms';
 import {FormField} from '@app/commons/demandas';
 import {ClassicEditor, ConfigEditor} from '@app/core/shared';
 
+// import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter';
+
 
 @Component({
   selector: 'app-form-field-control',
@@ -18,7 +20,8 @@ export class FormFieldControlComponent implements OnInit {
   @Input() field: FormField;
   @Input() readonly = false;
   @Input() canRemove = false;
-  configEditor = ConfigEditor;
+  configEditor = {...ConfigEditor, toolbar: [...ConfigEditor.toolbar, '|', 'uploadImage']};
+
 
   @Output() remove = new EventEmitter<any>();
 
