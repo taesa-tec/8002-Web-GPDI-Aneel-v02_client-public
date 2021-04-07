@@ -75,7 +75,6 @@ export class ConfiguracaoComponent implements OnInit {
       this.dataMinimaExt = (new Date()).toJSON().replace(/T.+$/, '');
 
     }
-    console.log(this.dataMinimaExt);
     this.form.patchValue(this.captacao);
     if (this.captacao?.arquivos) {
       this.uploads = this.captacao.arquivos;

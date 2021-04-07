@@ -75,7 +75,6 @@ export class AuthService {
   }
 
   constructor(private http: HttpClient, protected router: Router, public modal: NgbModal) {
-    console.log("Ctor");
     let loggedUser;
     if (localStorage.getItem(storageKey) != null) {
       loggedUser = localStorage.getItem(storageKey);
