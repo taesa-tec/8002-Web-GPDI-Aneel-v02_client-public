@@ -15,7 +15,7 @@ import {EmpresasResolver} from '@app/resolvers/empresas.resolver';
     CoreModule,
     MeuCadastroRoutingModule
   ],
-  providers: [UsersService, EmpresasResolver]
+  providers: [EmpresasResolver]
 
 })
 export class MeuCadastroModule {

@@ -106,7 +106,7 @@
             <button
               type="button"
               class="btn btn-link text-decoration-none p-2"
-              *ngIf="fornecedores.length > fornecedoresControls.controls.length"
+              *ngIf="captacao.status === 'Elaboracao' && fornecedores.length > fornecedoresControls.controls.length"
               (click)="addFornecedor()"
             >
               <i class="ta-plus-circle"></i> Adicionar Fornecedor

@@ -22,6 +22,7 @@ export interface Proposta {
   fornecedor: string;
   captacaoId: number;
   participacao: 0 | 1 | 2;
+  planoFinalizado: boolean;
   consideracoes: string;
   arquivos: Arquivo[];
   id: number;

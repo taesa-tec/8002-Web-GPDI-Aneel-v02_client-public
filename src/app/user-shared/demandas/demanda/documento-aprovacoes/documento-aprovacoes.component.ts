@@ -8,6 +8,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {HistoricoComponent} from '@app/user-shared/demandas/demanda/historico/historico.component';
 import {DEMANDA} from '@app/user-shared/demandas/demanda/providers';
+import {FileService} from '@app/services/file.service';
 
 @Component({
   selector: 'app-documento-aprovacoes',
@@ -28,6 +29,7 @@ export class DocumentoAprovacoesComponent implements OnInit {
 
   constructor(
     @Inject(DEMANDA) demanda: Demanda,
+    protected file: FileService,
     protected app: AppService, protected route: ActivatedRoute, protected modal: NgbModal) {
     this.demanda = demanda;
   }
@@ -38,7 +40,11 @@ export class DocumentoAprovacoesComponent implements OnInit {
 
   set demanda(value: Demanda) {
     const clearCache = Date.now();
-    this.pdfUrl = `${environment.api_url}/Demandas/${value.id}/Form/${this.formKey}/Pdf?time=${clearCache}`;
+    this.file.download(`${environment.api_url}/Demandas/${value.id}/Form/${this.formKey}/Pdf?time=${clearCache}`).then(url => {
+      this.pdfUrl = url;
+    }).catch(err => {
+      console.log(err);
+    });
     this.$demanda = value;
   }
 

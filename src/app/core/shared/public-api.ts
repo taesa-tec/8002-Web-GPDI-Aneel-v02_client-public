@@ -26,6 +26,8 @@ export const ConfigEditor = {
     '|',
     'blockQuote',
     'insertTable',
+    //'|',
+    //'uploadImage',
     //'placeholder'
   ],
   //*/

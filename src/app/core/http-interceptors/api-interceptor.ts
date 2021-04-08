@@ -14,7 +14,8 @@ export class APIInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.url.match(/^(?:(?:\w+:\/\/)|\/)/) === null) {
+
+    if (!req.url.startsWith('blob:') && req.url.match(/^(?:(?:\w+:\/\/)|\/)/) === null) {
       const apiReq = req.clone({url: `${environment.api_url.replace(/\/$/, '')}/${req.url}`});
       return next.handle(apiReq);
     }
