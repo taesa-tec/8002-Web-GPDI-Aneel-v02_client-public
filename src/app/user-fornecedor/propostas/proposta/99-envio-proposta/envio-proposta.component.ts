@@ -59,10 +59,13 @@ export class EnvioPropostaComponent implements OnInit {
     this.loading.show();
     try {
       const result = await this.service.marcarComoFinalizado(this.proposta.captacaoId);
-      console.log(result);
       this.app.alert('Proposta marcada como finalizada').then();
+      this.proposta.planoFinalizado = true;
     } catch (e) {
       console.error(e);
+      if (e.error?.detail) {
+        this.app.alert(e.error?.detail, 'Erro!').then();
+      }
     }
     this.loading.hide();
   }

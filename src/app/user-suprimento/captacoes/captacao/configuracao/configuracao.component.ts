@@ -144,6 +144,7 @@ export class ConfiguracaoComponent implements OnInit {
 
   async estenderData() {
     this.isLoading = true;
+    const prev = this.form.get('termino').value;
     try {
       await this.service.estenderCaptacao(this.captacao.id, this.dataMaximaExt);
       this.form.get('termino').setValue(this.dataMaximaExt);
@@ -151,6 +152,12 @@ export class ConfiguracaoComponent implements OnInit {
       this.app.alert('Data alterada com sucesso!').then();
     } catch (e) {
       console.error(e);
+      this.form.get('termino').setValue(prev);
+      this.dataMaximaExt = prev;
+      this.form.updateValueAndValidity();
+      if (e.error?.detail) {
+        this.app.alert(e.error.detail).then();
+      }
     }
     this.isLoading = false;
   }

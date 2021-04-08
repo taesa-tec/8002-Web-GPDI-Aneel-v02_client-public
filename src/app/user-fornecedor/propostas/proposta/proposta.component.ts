@@ -20,7 +20,7 @@ import {extractRouteParams} from '@app/core';
           let menu_itens = [
             {path: 'detalhes', text: 'Detalhes da Demanda', icon: 'ta-search'},
             {path: 'condicoes', text: 'Condições Fundamentais para Fornecimento', icon: 'ta-ficha'}];
-          if (data.proposta.dataClausulasAceitas !== null) {
+          if (data.proposta.dataClausulasAceitas !== null && (data.proposta.participacao === 1 || data.proposta.participacao === 3)) {
             menu_itens = menu_itens.concat([
               {path: 'entidades', text: 'Cadastro Outras Entidades', icon: 'ta-empresas'},
               {path: 'plano-de-trabalho', text: 'Plano de Trabalho', icon: 'ta-work-plan'},
