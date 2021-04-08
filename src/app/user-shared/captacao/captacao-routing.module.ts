@@ -6,7 +6,6 @@ import {ListComponent} from '@app/user-shared/captacao/list/list.component';
 import {CaptacaoButtons, CaptacaoCols} from '@app/user-shared/captacao/commons';
 import {RedirectByRoleComponent, RolePaths} from '@app/dashboard/shared/components';
 import {UserRole} from '@app/commons';
-import {FormArray, FormControl, FormGroup} from '@angular/forms';
 
 const rolePaths: RolePaths = [
   {path: 'pendente', priority: 10, role: [UserRole.Administrador, UserRole.User]},
@@ -122,45 +121,3 @@ const routes: Routes = [
 })
 export class CaptacaoRoutingModule {
 }
-
-const v = {
-  dom: {
-    ctrl1: '',
-    ctrl2: '',
-    ctrl3: '',
-    ctrl4: '',
-    ctrl5: '',
-    ctrl6: '',
-  },
-  seg: {
-    ctrl1: '',
-    ctrl2: '',
-    ctrl3: '',
-    ctrl4: '',
-    ctrl5: '',
-    ctrl6: '',
-  },
-  ter: {
-    ctrl1: '',
-    ctrl2: '',
-    ctrl3: '',
-    ctrl4: '',
-    ctrl5: '',
-    ctrl6: '',
-  },
-
-};
-const a = new FormArray([
-  new FormGroup({
-    dia: new FormControl('Dom'),
-    //outros controles
-  }),
-  new FormGroup({
-    dia: new FormControl('Seg'),
-    //outros controles
-  }),
-  new FormGroup({
-    dia: new FormControl('Ter'),
-    //outros controles
-  })
-]);

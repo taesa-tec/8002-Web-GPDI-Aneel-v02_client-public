@@ -27,7 +27,7 @@ const routes: Routes = [
         loadChildren: () => import('@app/user-shared/captacao/captacao.module').then(m => m.CaptacaoModule)
       },
       {
-        path: 'propostas',
+        path: 'propostas-selecao',
         component: SidebarComponent,
         loadChildren: () => import('@app/user-shared/propostas-selecao/propostas-selecao.module').then(m => m.PropostasSelecaoModule)
       },

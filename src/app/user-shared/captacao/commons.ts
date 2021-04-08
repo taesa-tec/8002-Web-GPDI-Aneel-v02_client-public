@@ -86,6 +86,10 @@ export const CaptacaoCols: { [prop: string]: TableComponentCols } = {
       pipe: new DatePipe('pt-BR'),
       value: item => [item.cancelamento, 'shortDate']
     },
+  ],
+  SelecaoPendente: [
+    {field: 'titulo', title: 'Título', order: true},
+    {field: 'propostasRecebidas', title: 'Propostas Recebidas', order: true},
   ]
 };
 
@@ -94,7 +98,8 @@ export const CaptacaoButtons: { [prop: string]: TableComponentActions } = {
   EmElaboracao: [{action: '${id}', text: 'Configurar', isLink: true, icon: 'ta-edit', className: 'btn btn-primary'}],
   Aberta: [],
   Encerrada: [{action: 'enviar', text: 'ENVIAR PARA SELEÇÃO', icon: 'ta-edit', className: 'btn btn-primary'}],
-  Cancelada: []
+  Cancelada: [],
+  SelecaoPendente: [{action: 'selecao', text: 'Confirmar seleção', icon: 'ta-edit', className: 'btn btn-primary'}],
 };
 
 export interface CaptacaoDetalhes {
