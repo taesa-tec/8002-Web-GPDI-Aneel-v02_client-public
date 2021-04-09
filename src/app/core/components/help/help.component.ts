@@ -26,11 +26,11 @@ export class HelpComponent implements OnInit {
   @Input('codigo') codigo: string;
 
   item: {
-    id: number,
-    codigo: string,
-    descricao: string,
-    hasContent: boolean,
-    nome: string
+    id: number;
+    codigo: string;
+    descricao: string;
+    hasContent: boolean;
+    nome: string;
   };
   @Input() placement: any = 'top';
 

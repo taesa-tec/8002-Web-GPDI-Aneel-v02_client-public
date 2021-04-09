@@ -23,7 +23,7 @@ export interface CaptacaoTableConfig {
 export class PropostasListComponent implements OnInit, OnDestroy {
 
   protected subscriptions: Array<Subscription> = [];
-  protected events = new Subject<{ action: string; data: any; }>();
+  protected events = new Subject<{ action: string; data: any }>();
   loading = false;
   cols: TableComponentCols = [
     {field: 'captacao', title: 'Título Resumido Projeto', order: true},
@@ -70,7 +70,7 @@ export class PropostasListComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
-  async openPropostaDetalhes(evt: { action: string; data: any; }) {
+  async openPropostaDetalhes(evt: { action: string; data: any }) {
     const ref = this.modal.open(PropostaDetalhesComponent, {size: 'lg'});
     ref.componentInstance.proposta = evt.data;
     await ref.result;

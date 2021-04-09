@@ -21,7 +21,7 @@ export class ConfirmComponent {
   }
 
 
-  private _options: { text: string, value: any, cssClass: string, checked?: boolean, checkMessage?: string }[];
+  private _options: { text: string; value: any; cssClass: string; checked?: boolean; checkMessage?: string }[];
   title: string;
   message: string;
 

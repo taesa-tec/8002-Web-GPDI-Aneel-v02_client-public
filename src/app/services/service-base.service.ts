@@ -131,7 +131,7 @@ export class ServiceBase<T extends { id?: any }> extends UploadFilesService {
 @Injectable({
   providedIn: 'root'
 })
-export class EstadosService extends ServiceBase<{ id: number; nome: string; valor: string; }> {
+export class EstadosService extends ServiceBase<{ id: number; nome: string; valor: string }> {
   constructor(protected http: HttpClient) {
     super(http, 'Estados');
   }
@@ -140,7 +140,7 @@ export class EstadosService extends ServiceBase<{ id: number; nome: string; valo
 @Injectable({
   providedIn: 'root'
 })
-export class PaisesService extends ServiceBase<{ id: number; nome: string; valor: string; }> {
+export class PaisesService extends ServiceBase<{ id: number; nome: string; valor: string }> {
   constructor(protected http: HttpClient) {
     super(http, 'Paises');
   }
@@ -149,7 +149,7 @@ export class PaisesService extends ServiceBase<{ id: number; nome: string; valor
 @Injectable({
   providedIn: 'root'
 })
-export class EmpresasService extends ServiceBase<{ id: number; nome: string; valor: string; }> {
+export class EmpresasService extends ServiceBase<{ id: number; nome: string; valor: string }> {
   constructor(protected http: HttpClient) {
     super(http, 'Empresas');
   }

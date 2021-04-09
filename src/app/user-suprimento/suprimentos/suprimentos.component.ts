@@ -17,7 +17,7 @@ export class SuprimentosComponent implements OnInit {
   };
 
   menu = [];
-  
+
   constructor(
     private route: ActivatedRoute
   ) { }
@@ -26,28 +26,28 @@ export class SuprimentosComponent implements OnInit {
     const id = this.route.snapshot.params['id'];
 
     switch(id) {
-      case "1":
+      case '1':
         this.menu = [
           {text: 'Detalhes do Projeto', icon: 'ta-file-check', path: 'proposta/detalhes-projeto'},
           {text: 'Configuração Propostas', icon: 'ta-gear', path: 'proposta/configuracao-proposta'},
           {text: 'Gerenciamento Propostas', icon: 'ta-extrato', path: 'proposta/gerenciamento-propostas'},
         ];
-        break; 
-      case "2": 
+        break;
+      case '2':
         this.menu = [
           {text: 'Detalhes do Projeto', icon: 'ta-file-check', path: 'iniciado/detalhes-projeto'},
           {text: 'Alterações Recebimento Propostas', icon: 'ta-gear', path: 'iniciado/alteracao-proposta'},
           {text: 'Gerenciamento Propostas', icon: 'ta-extrato', path: 'iniciado/gerenciamento-propostas'},
         ];
-        break; 
-      case "3": 
+        break;
+      case '3':
         this.menu = [
           {text: 'Detalhes do Projeto', icon: 'ta-file-check', path: 'encerrado/detalhes-projeto'},
           {text: 'Detalhamento Processo Captação', icon: 'ta-gear', path: 'encerrado/detalhe-proposta'},
           {text: 'Gerenciamento Propostas', icon: 'ta-extrato', path: 'encerrado/gerenciamento-propostas'},
         ];
     }
-    
+
   }
 
 }

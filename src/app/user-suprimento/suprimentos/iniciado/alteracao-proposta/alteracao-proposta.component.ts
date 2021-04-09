@@ -16,7 +16,7 @@ export class AlteracaoPropostaComponent implements OnInit {
   formProposta: FormGroup;
 
   constructor(
-    protected app: AppService, 
+    protected app: AppService,
     private fb: FormBuilder,
     private modal: NgbModal
   ) { }

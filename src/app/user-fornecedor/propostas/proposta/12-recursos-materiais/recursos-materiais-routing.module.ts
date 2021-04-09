@@ -13,9 +13,7 @@ const routes: Routes = [{
     data: CrudDataResolver,
     categorias: CategoriasContabeisResolver
   },
-  runGuardsAndResolvers: (from, to) => {
-    return to.fragment !== 'novo';
-  }
+  runGuardsAndResolvers: (from, to) => to.fragment !== 'novo'
 }];
 
 @NgModule({

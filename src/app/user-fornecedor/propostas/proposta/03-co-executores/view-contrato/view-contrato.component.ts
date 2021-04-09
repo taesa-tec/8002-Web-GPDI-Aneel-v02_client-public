@@ -9,7 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class ViewContratoComponent implements OnInit {
 
   contrato: any;
-  
+
   constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {

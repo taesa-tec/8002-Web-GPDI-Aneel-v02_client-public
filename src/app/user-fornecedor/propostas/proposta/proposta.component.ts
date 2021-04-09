@@ -15,8 +15,7 @@ import {extractRouteParams} from '@app/core';
 
     {
       provide: SIDEBAR_MENU,
-      useFactory: (route: ActivatedRoute) => {
-        return route.data.pipe(map(data => {
+      useFactory: (route: ActivatedRoute) => route.data.pipe(map(data => {
           let menu_itens = [
             {path: 'detalhes', text: 'Detalhes da Demanda', icon: 'ta-search'},
             {path: 'condicoes', text: 'Condições Fundamentais para Fornecimento', icon: 'ta-ficha'}];
@@ -37,9 +36,7 @@ import {extractRouteParams} from '@app/core';
             ]);
           }
           return menu_itens;
-        }));
-
-      },
+        })),
       deps: [ActivatedRoute]
     },
     {

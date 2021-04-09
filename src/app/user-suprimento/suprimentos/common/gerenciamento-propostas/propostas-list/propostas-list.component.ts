@@ -62,22 +62,22 @@ export class PropostasListComponent implements OnInit {
 
     // Fornecedor
     this.filters.push({
-      field: "nomeFornecedor",
+      field: 'nomeFornecedor',
       options: [
-        {text: " Todos os Fornecedores", value: ""},
+        {text: ' Todos os Fornecedores', value: ''},
         ...uniqBy(this.data.propostasAll, 'nomeFornecedor').map((v: any) => ({text: v.nomeFornecedor, value: v.nomeFornecedor}))
       ],
-      value: ""
+      value: ''
     });
 
     // Status
     this.filters.push({
-      field: "status",
+      field: 'status',
       options: [
-        {text: " Todos os Status", value: ""},
+        {text: ' Todos os Status', value: ''},
         //...uniqBy(this.data.propostasAll, 'status').map((v: any) => ({text: v.status, value: v.status}))
       ],
-      value: ""
+      value: ''
     });
   }
 
@@ -116,14 +116,14 @@ export class PropostasListComponent implements OnInit {
     this.data = {
       propostasAll: propostas,
       propostas: chunk(propostas, perPage),
-      perPage: perPage
+      perPage
     };
   }
 
   getPropostas(page) {
     return {
       data: this.data.propostas[page - 1],
-      page: page,
+      page,
       perPage: this.data.perPage,
       totalItems: this.data.propostasAll.length,
       totalPages: this.data.propostas.length

@@ -230,7 +230,7 @@ export interface Etapa {
   dataFim: string;
   atividadesRealizadas?: any;
   etapaProdutos: EtapaProduto[];
-  etapaMeses: Array<{ id?: number; etapaId?: number; mes: string; }>;
+  etapaMeses: Array<{ id?: number; etapaId?: number; mes: string }>;
 }
 
 export interface EtapaProduto {
@@ -394,7 +394,7 @@ export interface REFPObsInterna {
 
 export interface RegistroREFP {
   id: number;
-  atividade?: { id: number; nome: string; valor: string; };
+  atividade?: { id: number; nome: string; valor: string };
   projetoId: number;
   tipo: 'RH' | 'RM';
   tipoValor: 'RH' | 'RM';

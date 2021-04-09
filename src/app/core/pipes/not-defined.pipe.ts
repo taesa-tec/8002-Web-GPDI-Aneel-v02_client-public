@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class NotDefinedPipe implements PipeTransform {
 
-    transform(value: any, text: string = "Não definido"): any {
+    transform(value: any, text: string = 'Não definido'): any {
         if (value) {
             if (typeof value === 'string' && value.length === 0) {
                 return text;

@@ -49,7 +49,7 @@ export class EscopoComponent implements OnInit {
     }
   }
 
-  addMeta(meta?: { objetivo: string, meses: number, id: number }) {
+  addMeta(meta?: { objetivo: string; meses: number; id: number }) {
     const formGroup = this.fb.group({
       id: [meta?.id || 0],
       objetivo: [meta?.objetivo || '', Validators.required],

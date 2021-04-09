@@ -19,7 +19,7 @@ import {CaptacaoTableConfig} from '@app/user-suprimento/captacoes/captacoes.comp
 export class ListComponent implements OnInit, OnDestroy {
 
   protected subscriptions: Array<Subscription> = [];
-  protected events = new Subject<{ action: string; data: any; }>();
+  protected events = new Subject<{ action: string; data: any }>();
   captacaoEtapa: CaptacaoEtapa;
   loading = false;
   hidePagination = false;
@@ -54,7 +54,7 @@ export class ListComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.subscriptions.push(this.route.data.subscribe(
-      ({captacaoTable, captacoes}: { captacaoTable: CaptacaoTableConfig, captacoes: Array<any> }) => {
+      ({captacaoTable, captacoes}: { captacaoTable: CaptacaoTableConfig; captacoes: Array<any> }) => {
         this.captacoes = captacoes;
         this.captacaoEtapa = captacaoTable.captacaoEtapaStatus;
         this.cols = captacaoTable.cols;
@@ -68,7 +68,7 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
 
-  tableAction(evt: { action: string; data: any; }) {
+  tableAction(evt: { action: string; data: any }) {
     this.events.next(evt);
   }
 

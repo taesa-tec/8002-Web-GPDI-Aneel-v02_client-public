@@ -48,9 +48,9 @@ export class OrderContentComponent implements OnInit {
   @Input() showOrder = true;
   @Input() showRemove = true;
 
-  @Output() beforeMove: EventEmitter<{ index: number, offset: number }> = new EventEmitter<{ index: number, offset: number }>();
-  @Output() move: EventEmitter<{ index: number, offset: number }> = new EventEmitter<{ index: number, offset: number }>();
-  @Output() afterMove: EventEmitter<{ index: number, offset: number }> = new EventEmitter<{ index: number, offset: number }>();
+  @Output() beforeMove: EventEmitter<{ index: number; offset: number }> = new EventEmitter<{ index: number; offset: number }>();
+  @Output() move: EventEmitter<{ index: number; offset: number }> = new EventEmitter<{ index: number; offset: number }>();
+  @Output() afterMove: EventEmitter<{ index: number; offset: number }> = new EventEmitter<{ index: number; offset: number }>();
   @Output() remove: EventEmitter<number> = new EventEmitter<number>();
 
   ngOnInit() {

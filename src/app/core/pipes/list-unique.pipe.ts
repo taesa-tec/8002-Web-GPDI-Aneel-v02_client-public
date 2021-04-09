@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {listUnique} from "@app/core/functions";
+import {listUnique} from '@app/core/functions';
 
 @Pipe({
   name: 'listUnique'

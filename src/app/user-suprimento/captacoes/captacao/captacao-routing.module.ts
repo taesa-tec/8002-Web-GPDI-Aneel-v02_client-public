@@ -45,9 +45,7 @@ const routes: Routes = [
               propostas: PropostasResolver,
               proposta: PropostaDetalhesResolver
             },
-            runGuardsAndResolvers: (from, to) => {
-              return !to.fragment || !isNaN(parseFloat(to.fragment));
-            }
+            runGuardsAndResolvers: (from, to) => !to.fragment || !isNaN(parseFloat(to.fragment))
 
           }
         ]

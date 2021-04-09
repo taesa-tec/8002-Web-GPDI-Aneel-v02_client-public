@@ -75,15 +75,13 @@ export class TemasComponent implements OnInit, ControlValueAccessor {
     protected catalogo: CatalogsService) {
   }
 
-  onChange: any = function () {
+  onChange: any = function() {
   };
-  onTouched: any = function () {
+  onTouched: any = function() {
   };
 
   subtemasdisponiveis(current?: any) {
-    return this.subTemas.filter(tema => {
-      return this.selectedsThemes.indexOf(tema.id) === -1 || (current && parseFloat(current) === tema.id);
-    });
+    return this.subTemas.filter(tema => this.selectedsThemes.indexOf(tema.id) === -1 || (current && parseFloat(current) === tema.id));
   }
 
   isOther(subTemaId) {

@@ -1,11 +1,11 @@
 export const customCurrencyMaskConfig = {
-    align: "right",
+    align: 'right',
     allowNegative: true,
     allowZero: true,
-    decimal: ",",
+    decimal: ',',
     precision: 2,
-    prefix: "R$ ",
-    suffix: "",
-    thousands: ".",
+    prefix: 'R$ ',
+    suffix: '',
+    thousands: '.',
     nullable: true
 };

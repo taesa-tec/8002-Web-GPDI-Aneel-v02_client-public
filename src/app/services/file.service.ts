@@ -46,9 +46,7 @@ export class FileService {
   toBlob(url: string, name: string = 'blob') {
     return this.http.get(url, {
       responseType: 'blob'
-    }).pipe(map(value => {
-      return this.sanatizer.bypassSecurityTrustUrl(URL.createObjectURL(new File([value], name)));
-    }));
+    }).pipe(map(value => this.sanatizer.bypassSecurityTrustUrl(URL.createObjectURL(new File([value], name)))));
   }
 
 

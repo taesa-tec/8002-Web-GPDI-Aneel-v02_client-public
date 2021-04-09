@@ -28,11 +28,11 @@ export class DemandasService {
   }
 
   getDemandaFormHistorico(id: number, key: string) {
-    return this.http.get<Array<{ id: number, createdAt: string, revisao: number }>>(`Demandas/${id}/Form/${key}/History`).toPromise();
+    return this.http.get<Array<{ id: number; createdAt: string; revisao: number }>>(`Demandas/${id}/Form/${key}/History`).toPromise();
   }
 
   getDemandaFormHistoricoDiff(id: number, key: string, revisao: number) {
-    return this.http.get<{ revisaoAtual: string, html: string, lastUpdate: string }>(`Demandas/${id}/Form/${key}/Diff/${revisao}`)
+    return this.http.get<{ revisaoAtual: string; html: string; lastUpdate: string }>(`Demandas/${id}/Form/${key}/Diff/${revisao}`)
       .toPromise();
   }
 

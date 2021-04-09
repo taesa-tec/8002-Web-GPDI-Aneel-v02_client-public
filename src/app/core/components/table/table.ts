@@ -30,7 +30,7 @@ export class TableComponentRow {
   originalValue: { [key: string]: any } = {};
   protected propToArray = prop => Object.keys(prop)
     .filter(key => key in prop && prop[key])
-    .map(key => prop[key])
+    .map(key => prop[key]);
 
 
   valueToArray = () => this.propToArray(this.value);

@@ -14,7 +14,7 @@ import {Demanda} from '@app/commons/demandas';
 export class HistoricoComponent implements OnInit {
 
   form: string;
-  historico: Array<{ id: number, createdAt: string, revisao: number }> = [];
+  historico: Array<{ id: number; createdAt: string; revisao: number }> = [];
   revisaoId = 0;
   html: SafeHtml;
   revisaoAtual: string;
@@ -22,7 +22,7 @@ export class HistoricoComponent implements OnInit {
   loading = false;
   demanda: Demanda;
 
-  set compartivo(value: { revisaoAtual: string, html: string, lastUpdate: string }) {
+  set compartivo(value: { revisaoAtual: string; html: string; lastUpdate: string }) {
     this.html = value.html;
     this.revisaoAtual = value.revisaoAtual;
     this.lastUpdate = value.lastUpdate;

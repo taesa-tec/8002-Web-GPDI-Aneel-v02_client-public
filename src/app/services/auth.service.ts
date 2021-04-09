@@ -34,11 +34,11 @@ interface Session {
 export class AuthService {
 
   protected loginResponse: LoginResponse;
-  protected authEventsSource: BehaviorSubject<{ type: string, data?: any }>;
+  protected authEventsSource: BehaviorSubject<{ type: string; data?: any }>;
   protected session: Session;
 
   redirectTo = '/dashboard';
-  authEvent: Observable<{ type: string, data?: any }>;
+  authEvent: Observable<{ type: string; data?: any }>;
 
   get expiration() {
     return (this.session?.exp || 0) * 1e3;
@@ -86,13 +86,13 @@ export class AuthService {
       try {
         this.loginResponse = JSON.parse(loggedUser);
         this.setSession(this.loginResponse);
-        this.authEventsSource = new BehaviorSubject<{ type: string, data?: any }>({type: 'login', data: this.loginResponse});
+        this.authEventsSource = new BehaviorSubject<{ type: string; data?: any }>({type: 'login', data: this.loginResponse});
       } catch (e) {
         console.error(e.message);
-        this.authEventsSource = new BehaviorSubject<{ type: string, data?: any }>(null);
+        this.authEventsSource = new BehaviorSubject<{ type: string; data?: any }>(null);
       }
     } else {
-      this.authEventsSource = new BehaviorSubject<{ type: string, data?: any }>(null);
+      this.authEventsSource = new BehaviorSubject<{ type: string; data?: any }>(null);
     }
     this.authEvent = this.authEventsSource.asObservable();
   }

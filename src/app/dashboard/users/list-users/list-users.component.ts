@@ -13,7 +13,7 @@ export class ListUsersComponent implements OnInit {
 
   @Input() users: Array<User>;
 
-  listOrder: { field: string; direction: 'asc' | 'desc'; } = {
+  listOrder: { field: string; direction: 'asc' | 'desc' } = {
     field: 'nomeCompleto',
     direction: 'asc'
   };
@@ -21,7 +21,7 @@ export class ListUsersComponent implements OnInit {
   constructor(protected usersService: UsersService, protected catalog: CatalogsService) {
   }
 
-  order(data: { field: string; direction: 'asc' | 'desc'; }) {
+  order(data: { field: string; direction: 'asc' | 'desc' }) {
     this.listOrder = data;
   }
 

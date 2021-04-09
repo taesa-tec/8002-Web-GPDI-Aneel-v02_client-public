@@ -16,9 +16,9 @@ export class OrdersComponent implements OnInit {
 
   @Input() field: string;
   @Input() type: string;
-  @Input() current: { field: string; direction: 'asc' | 'desc'; };
-  @Input() currents: Array<{ field: string; direction: 'asc' | 'desc'; }>;
-  @Output() order: EventEmitter<{ field: string; type: string; direction: 'asc' | 'desc'; }> = new EventEmitter();
+  @Input() current: { field: string; direction: 'asc' | 'desc' };
+  @Input() currents: Array<{ field: string; direction: 'asc' | 'desc' }>;
+  @Output() order: EventEmitter<{ field: string; type: string; direction: 'asc' | 'desc' }> = new EventEmitter();
   protected isLastOrder = false;
 
   ngOnInit() {

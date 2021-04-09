@@ -115,11 +115,11 @@ export class FileUploaderComponent implements OnInit {
   }
   async deleteFile(event: MouseEvent, file) {
     event.preventDefault();
-    if (await this.app.confirm("Tem certeza que deseja excluir esse arquivo? Essa ação não pode ser desfeita", "Tem certeza?")) {
+    if (await this.app.confirm('Tem certeza que deseja excluir esse arquivo? Essa ação não pode ser desfeita', 'Tem certeza?')) {
       await this.http.delete(`${this.pathUpload}/${file.id}`).toPromise();
       this.filesSent.splice(this.filesSent.indexOf(file), 1);
 
-      this.app.alert("Arquivo excluido");
+      this.app.alert('Arquivo excluido');
     }
   }
 }

@@ -83,7 +83,7 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.hasSelect = value.hasSelect !== undefined ? value.hasSelect : this.hasSelect;
   }
 
-  @Input() pagination: false | { page: number, perPage: number, totalItems: number } = false;
+  @Input() pagination: false | { page: number; perPage: number; totalItems: number } = false;
 
   @Input() set buttons(value: TableComponentActions) {
     if (value) {
@@ -239,7 +239,7 @@ export class TableComponent implements OnInit, AfterViewInit {
     if (!col.order) {
       return [];
     }
-    let menus: Array<{ action?: CallableFunction, label: string }> = [];
+    let menus: Array<{ action?: CallableFunction; label: string }> = [];
     col.priority = col.priority || 0;
     menus.push({
       label: 'Aumentar Prioridade',
