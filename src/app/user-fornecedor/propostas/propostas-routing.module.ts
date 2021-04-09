@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {SidebarComponent} from '@app/dashboard/side-bar/sidebar.component';
+import {SidebarComponent} from '@app/dashboard/sidebar/sidebar.component';
 import {PropostasListComponent} from '@app/user-fornecedor/propostas/propostas-list.component';
 import {PropostasResolver} from '@app/user-fornecedor/resolvers/propostas.resolver';
 import {PropostaResolver} from '@app/user-fornecedor/resolvers/proposta.resolver';

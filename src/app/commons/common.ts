@@ -624,6 +624,7 @@ export interface Pagination<T> {
 
 export const SIDEBAR_MENU = new InjectionToken<Array<MenuItem> | Observable<Array<MenuItem>>>('Sidebar menu');
 export const HEADER_MENU = new InjectionToken<Array<MenuItem>>('Header menu');
+export const TOPNAV_MENU = new InjectionToken<Array<MenuItem>>('Topnav menu');
 export const ROOT_URL = new InjectionToken<string>('Root Url');
 /**
  * @deprecated Não utilizar, não é atualizado em trocas de logins

@@ -3,7 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {GestaoDeDemandasComponent} from './demandas.component';
 import {DemandasListComponent} from './demandas-list/demandas-list.component';
 import {DemandaEtapaStatus} from './commons';
-import {SidebarComponent} from '@app/dashboard/side-bar/sidebar.component';
+import {SidebarComponent} from '@app/dashboard/sidebar/sidebar.component';
 
 const routes: Routes = [
   {

@@ -1,5 +1,5 @@
 import {get, set, defaultsDeep, difference, union} from 'lodash-es';
-import {ActivatedRouteSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, UrlSegment} from '@angular/router';
 
 const comparators: { [f: string]: (arg1: any, arg2: any) => boolean } = {
   contain: (text: string, $term: string) => termMatch(text, $term) !== null,
@@ -94,4 +94,8 @@ export function extractRouteParams(route: ActivatedRouteSnapshot) {
   return route.pathFromRoot
     .map(r => r.params)
     .reduce((p, c) => Object.assign(p, c), {});
+}
+
+export function RouterMacherId(url: UrlSegment[]) {
+  return url.length > 0 && url[0].path.match(/^\d+$/) ? ({consumed: [url[0]], posParams: {id: url[0]}}) : null;
 }

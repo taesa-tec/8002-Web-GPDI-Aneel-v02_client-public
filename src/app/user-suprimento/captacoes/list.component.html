@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-12">
+    <app-table
+      [cols]="cols"
+      [data]="captacoes"
+      [buttons]="buttons"
+      (action)="tableAction($event)">
+    </app-table>
+  </div>
+</div>

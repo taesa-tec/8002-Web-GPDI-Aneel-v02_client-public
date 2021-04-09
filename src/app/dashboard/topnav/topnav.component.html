@@ -1,0 +1,27 @@
+<div class="layout-topnav">
+
+  <div class="layout-topnav-before">
+    <ng-content></ng-content>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <ul class="nav nav-bar-row nav-justified pt-3">
+        <ng-container *ngFor="let route of menu">
+          <li class="nav-item">
+            <a
+              routerLinkActive="active"
+              class="nav-link"
+              [routerLink]="route.path"
+            >{{ route.text }}</a
+            >
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+
+  <div class="wrap-outlet-projeto">
+    <router-outlet></router-outlet>
+  </div>
+</div>
