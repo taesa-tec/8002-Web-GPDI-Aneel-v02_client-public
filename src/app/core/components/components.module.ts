@@ -11,7 +11,6 @@ import {OrderContentComponent} from '@app/core/components/order-content/order-co
 import {OrdersComponent} from '@app/core/components/orders/orders.component';
 import {PromptComponent} from '@app/core/components/prompt/prompt.component';
 import {TableComponent} from '@app/core/components/table/table.component';
-import {TipComponent} from '@app/core/components/tip/tip.component';
 import {DebugComponent} from '@app/core/components/screens/debug.component';
 import {ErrorComponent} from '@app/core/components/screens/error.component';
 import {SharedModule} from '@app/core/shared';
@@ -36,7 +35,6 @@ const components = [
   PdfViewerComponent,
   PromptComponent,
   TableComponent,
-  TipComponent
 ];
 
 @NgModule({
