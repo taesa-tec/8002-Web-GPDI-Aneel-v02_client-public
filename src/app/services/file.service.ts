@@ -43,6 +43,11 @@ export class FileService {
     return URL.createObjectURL(blob);
   }
 
+  async urlToBlobDownload(url: string, filename: string, progressCb?: (progress: { type: number; loaded: number; total: number }) => void) {
+    const blobUrl = await this.download(url, progressCb);
+    this.downloadBlob(blobUrl, filename);
+  }
+
   toBlob(url: string, name: string = 'blob') {
     return this.http.get(url, {
       responseType: 'blob'

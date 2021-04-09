@@ -82,6 +82,24 @@ const routes: Routes = [
                 }],
               }
             }
+          }, {
+            path: 'canceladas',
+            component: ListComponent,
+            resolve: {
+              captacoes: CaptacoesResolver
+            },
+            data: {
+              captacaoTable: {
+                cols: CaptacaoCols.EmElaboracao,
+                buttons: [{
+                  action: '/suprimento/captacoes/${id}',
+                  text: 'Visualizar',
+                  isLink: true,
+                  icon: 'ta-edit',
+                  className: 'btn btn-primary'
+                }],
+              }
+            }
           }
         ]
       }

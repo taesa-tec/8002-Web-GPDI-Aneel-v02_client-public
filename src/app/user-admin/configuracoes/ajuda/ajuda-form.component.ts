@@ -3,7 +3,8 @@ import {AppService, ServiceBase} from '@app/services';
 import {FormBuilder, Validators} from '@angular/forms';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {ActivatedRoute} from '@angular/router';
-import {ClassicEditor, ConfigEditor} from '@app/core/shared';
+import {ConfigEditor} from '@app/core/shared';
+import * as ClassicEditor from '@projects/ckeditor/build/ckeditor';
 
 @Component({
   selector: 'app-ajuda-form',

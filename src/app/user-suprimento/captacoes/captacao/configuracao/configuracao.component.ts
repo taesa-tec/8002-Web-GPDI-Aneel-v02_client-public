@@ -9,6 +9,7 @@ import {CaptacaoComponent} from '@app/user-suprimento/captacoes/captacao/captaca
 import {CaptacoesService} from '@app/user-suprimento/services/captacoes.service';
 import {LoadingComponent} from '@app/core/components';
 import {ROOT_URL} from '@app/commons';
+import {FileService} from '@app/services/file.service';
 
 @Component({
   selector: 'app-configuracao',
@@ -49,6 +50,7 @@ export class ConfiguracaoComponent implements OnInit {
     protected app: AppService,
     @Inject(ROOT_URL) protected root_url: string,
     protected service: CaptacoesService,
+    protected fileService: FileService,
     public parent: CaptacaoComponent,
     protected route: ActivatedRoute,
     protected router: Router,
@@ -86,11 +88,17 @@ export class ConfiguracaoComponent implements OnInit {
         this.addFornecedor(f.id.toString());
       });
     }
-    if (this.fornecedoresControls.length === 0) {
-      this.addFornecedor();
-    }
+
     if (this.captacao.status !== 'Elaboracao') {
       this.form.disable();
+    }
+    if (this.parent.captacao.fornecedoresConvidados.length === 0) {
+      this.parent.captacao.fornecedoresSugeridos.forEach(f => this.addFornecedor(f.id));
+    } else if (this.fornecedoresControls.length === 0) {
+      this.addFornecedor();
+    }
+    if (this.parent.captacao.contratoId === null) {
+      this.form.get('contratoId').setValue(this.parent.captacao.contratoSugeridoId);
     }
 
   }
@@ -106,7 +114,7 @@ export class ConfiguracaoComponent implements OnInit {
     modalRef.componentInstance.contratoId = id;
   }
 
-  addFornecedor(id = '') {
+  addFornecedor(id: any = '') {
     this.fornecedoresControls.push(this.fb.control(id, [Validators.required]));
   }
 
@@ -127,6 +135,10 @@ export class ConfiguracaoComponent implements OnInit {
     }
   }
 
+  async download(arquivo: CaptacaoArquivo) {
+    await this.fileService.urlToBlobDownload(arquivo.uri, arquivo.fileName);
+  }
+
   async onSubmit() {
     if (this.form.valid) {
       this.isLoading = true;
@@ -135,8 +147,8 @@ export class ConfiguracaoComponent implements OnInit {
         this.router.navigate(['../../']).then();
         this.app.alert('Configuração da proposta salva com sucesso').then();
       } catch (e) {
-        this.app.alert('Não foi possível configurar', 'Erro!').then();
-        console.error(e);
+        this.alertError(e, 'Não foi possível configurar');
+
       }
       this.isLoading = false;
     }
@@ -151,13 +163,11 @@ export class ConfiguracaoComponent implements OnInit {
       this.dataMinimaExt = this.dataMaximaExt;
       this.app.alert('Data alterada com sucesso!').then();
     } catch (e) {
-      console.error(e);
+
       this.form.get('termino').setValue(prev);
       this.dataMaximaExt = prev;
       this.form.updateValueAndValidity();
-      if (e.error?.detail) {
-        this.app.alert(e.error.detail).then();
-      }
+
     }
     this.isLoading = false;
   }
@@ -175,10 +185,19 @@ export class ConfiguracaoComponent implements OnInit {
         await this.service.cancelarCaptacao(this.captacao.id);
         this.router.navigate([this.root_url]).then();
       } catch (e) {
-        this.app.alert('Erro ao cancelar!').then();
-        console.error(e);
+        this.alertError(e, 'Erro ao cancelar!');
       }
       this.isLoading = false;
+    }
+  }
+
+  protected alertError(e, msgDefault = 'Ocorreu um erro, tente novamente mais tarde') {
+    console.error(e);
+    if (e.error?.detail) {
+      this.app.alertError(e.error.detail).then();
+    } else {
+      this.app.alertError(msgDefault).then();
+
     }
   }
 

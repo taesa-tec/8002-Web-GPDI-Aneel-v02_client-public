@@ -3,7 +3,8 @@ import {ActivatedRoute} from '@angular/router';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {AppService} from '@app/services/app.service';
 import {ServiceBase} from '@app/services/service-base.service';
-import {ClassicEditor, ConfigEditor} from '@app/core/shared';
+import {ConfigEditor} from '@app/core/shared';
+import * as ClassicEditor from '@projects/ckeditor/build/ckeditor';
 
 @Component({
   selector: 'app-contrato-padrao-form',

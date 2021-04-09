@@ -16,9 +16,9 @@
     <div class="col mb-4">
       <h6 class="text-uppercase text-blue-light">Arquivos complementares</h6>
       <div *ngFor="let arquivo of captacao.arquivos">
-        <a class="btn btn-link px-0 py-1" [href]="arquivo.uri" target="_blank">
+        <span class="btn btn-link px-0 py-1" (click)="download(arquivo)">
           {{ arquivo.name }}
-        </a>
+        </span>
       </div>
     </div>
   </div>
