@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EtapasList, TodasDemandas } from "@app/user-shared/demandas/demandas-teste";
+import { EtapasList, TodasDemandas } from '@app/user-shared/demandas/demandas-teste';
 
 @Component({
   selector: 'app-elaboracao',

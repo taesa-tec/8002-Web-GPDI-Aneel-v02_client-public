@@ -31,9 +31,9 @@ export class MesesSelectorComponent implements OnInit, ControlValueAccessor {
     return [...this.map].filter(i => i[1] && i[0] <= this.duracao).map(i => i[0]);
   }
 
-  protected onChange: any = function () {  };
+  protected onChange: any = function() {  };
 
-  protected onTouch: any = function () {  };
+  protected onTouch: any = function() {  };
 
   constructor() {
   }

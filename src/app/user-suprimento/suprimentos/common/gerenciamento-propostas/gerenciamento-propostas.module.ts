@@ -8,7 +8,7 @@ import { PropostasListComponent } from './propostas-list/propostas-list.componen
 
 @NgModule({
   declarations: [
-    GerenciamentoPropostasComponent, 
+    GerenciamentoPropostasComponent,
     PropostasListComponent
   ],
   imports: [

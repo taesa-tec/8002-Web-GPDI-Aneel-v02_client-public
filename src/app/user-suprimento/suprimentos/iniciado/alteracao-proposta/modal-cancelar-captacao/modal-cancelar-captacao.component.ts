@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModalCancelarCaptacaoComponent implements OnInit {
 
-  isCheck: boolean = false;
+  isCheck = false;
 
   constructor(
     public activeModal: NgbActiveModal

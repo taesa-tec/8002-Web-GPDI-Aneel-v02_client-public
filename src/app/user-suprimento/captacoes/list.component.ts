@@ -1,30 +1,23 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {AppService} from '@app/services/app.service';
-import {CaptacaoEtapa} from '../commons';
-import {TableComponentCols, TableComponentActions, TableComponentFilter} from '@app/core/components/table/table';
 import {Subject, Subscription} from 'rxjs';
+import {CaptacaoEtapa} from '@app/user-suprimento/captacoes/commons';
+import {TableComponentActions, TableComponentCols, TableComponentFilter} from '@app/core/components';
+import {ActivatedRoute} from '@angular/router';
+import {AppService} from '@app/services';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {filter} from 'rxjs/operators';
 import {CriarComponent} from '@app/user-shared/captacao/criar/criar.component';
 import {EnviarComponent} from '@app/user-shared/captacao/enviar/enviar.component';
-import {filter} from 'rxjs/operators';
-
-export interface CaptacaoTableConfig {
-  captacoes: Array<any>;
-  cols: TableComponentCols;
-  buttons: TableComponentActions;
-  captacaoEtapaStatus: CaptacaoEtapa;
-
-  [prop: string]: any;
-}
+import {CaptacaoTableConfig} from '@app/user-suprimento/captacoes/captacoes.component';
 
 @Component({
-  selector: 'app-projetos-captacao-list',
+  selector: 'app-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  styles: [
+  ]
 })
 export class ListComponent implements OnInit, OnDestroy {
+
   protected subscriptions: Array<Subscription> = [];
   protected events = new Subject<{ action: string; data: any }>();
   captacaoEtapa: CaptacaoEtapa;
@@ -45,7 +38,6 @@ export class ListComponent implements OnInit, OnDestroy {
 
   constructor(
     protected route: ActivatedRoute,
-    protected router: Router,
     protected app: AppService,
     protected modal: NgbModal
   ) {
@@ -59,9 +51,10 @@ export class ListComponent implements OnInit, OnDestroy {
     this.addListener('criar', ({data}) => this.criarCaptacao(data));
   }
 
-  async ngOnInit() {
-    this.subscriptions.push(
-      this.route.data.subscribe(({captacaoTable, captacoes}: { captacaoTable: CaptacaoTableConfig; captacoes: Array<any> }) => {
+  ngOnInit() {
+
+    this.subscriptions.push(this.route.data.subscribe(
+      ({captacaoTable, captacoes}: { captacaoTable: CaptacaoTableConfig; captacoes: Array<any> }) => {
         this.captacoes = captacoes;
         this.captacaoEtapa = captacaoTable.captacaoEtapaStatus;
         this.cols = captacaoTable.cols;
@@ -79,16 +72,11 @@ export class ListComponent implements OnInit, OnDestroy {
     this.events.next(evt);
   }
 
-  async criarCaptacao(data) {
+  criarCaptacao(data) {
+    console.log(data);
     const modalRef = this.modal.open(CriarComponent, {size: 'lg'});
     const criar = modalRef.componentInstance as CriarComponent;
     criar.id = data.id;
-    await modalRef.result;
-    this.router.navigate(['./'], {
-      relativeTo: this.route, queryParams: {
-        update: Date.now()
-      }
-    }).then();
   }
 
   actionAberta({action, data}) {
@@ -102,4 +90,5 @@ export class ListComponent implements OnInit, OnDestroy {
       modalRef.componentInstance.projeto = data;
     }
   }
+
 }

@@ -7,7 +7,7 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class DemandaComentarioComponent implements OnInit {
 
-  @Input() comentario: { id: number, user: any, content: string, createdAt: string };
+  @Input() comentario: { id: number; user: any; content: string; createdAt: string };
 
   constructor() {
   }

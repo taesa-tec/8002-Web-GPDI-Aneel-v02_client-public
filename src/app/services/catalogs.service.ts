@@ -65,7 +65,7 @@ export class CatalogsService {
   }
 
   async paises() {
-    return await this.getData<Array<{ id: number; nome: string; }>>('paises', `Catalogo/Paises`);
+    return await this.getData<Array<{ id: number; nome: string }>>('paises', `Catalogo/Paises`);
   }
 
 
@@ -74,6 +74,6 @@ export class CatalogsService {
   }
 
   async produtoFasesCadeia() {
-    return await this.getData<Array<{ id: number; nome: string; }>>('produtoFasesCadeia', `Catalogo/ProdutoFaseCadeia`);
+    return await this.getData<Array<{ id: number; nome: string }>>('produtoFasesCadeia', `Catalogo/ProdutoFaseCadeia`);
   }
 }

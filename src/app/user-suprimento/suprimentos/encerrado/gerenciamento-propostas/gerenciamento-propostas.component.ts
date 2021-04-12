@@ -15,7 +15,7 @@ export class GerenciamentoPropostasComponent implements OnInit {
     this.menu = [
       {text: 'Propostas Recebidas', path: 'recebidas'},
       {text: 'Propostas Negadas', path: 'negadas'},
-    ]
+    ];
   }
 
 }

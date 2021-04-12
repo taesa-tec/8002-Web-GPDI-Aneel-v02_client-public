@@ -13,9 +13,7 @@ const routes: Routes = [
       item: CrudItemResolver,
       data: CrudDataResolver
     },
-    runGuardsAndResolvers: (from, to) => {
-      return to.fragment !== 'novo';
-    }
+    runGuardsAndResolvers: (from, to) => to.fragment !== 'novo'
   }
 ];
 

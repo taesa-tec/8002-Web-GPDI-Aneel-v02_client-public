@@ -12,8 +12,8 @@ import { ClausulaFormComponent } from './clausula-form/clausula-form.component';
 export class ValidacaoContratoBaseComponent implements OnInit {
 
   clausulas: Array<any>;
-  active: number = 1;
-  
+  active = 1;
+
   constructor(
     private app: AppService,
     private modal: NgbModal
@@ -24,16 +24,16 @@ export class ValidacaoContratoBaseComponent implements OnInit {
   }
 
   getTitle() {
-    let total = ('0' + this.clausulas.length).slice(-2);
-    let item = ('0' + this.active).slice(-2);
-    
+    const total = ('0' + this.clausulas.length).slice(-2);
+    const item = ('0' + this.active).slice(-2);
+
     return `CLÁUSULA ${item}/${total}`;
   }
-  
+
   prev() {
     this.active --;
   }
-  
+
   next() {
     this.active ++;
   }
@@ -53,7 +53,7 @@ export class ValidacaoContratoBaseComponent implements OnInit {
       try {
         await modalRef.result;
         clausula.status = true;
-        
+
       } catch(e) {
         console.log(e);
       }
@@ -63,7 +63,7 @@ export class ValidacaoContratoBaseComponent implements OnInit {
   getStatus() {
     return this.clausulas.find(item => item.order == this.active).status;
   }
-  
+
   _getClausulas() {
     return [
       {
@@ -96,7 +96,7 @@ export class ValidacaoContratoBaseComponent implements OnInit {
         text: 'If you are going to use a passage of Lorem Ipsum, you need to be sure there isnt anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.',
         status: null,
       }
-    ]
+    ];
   }
 
 }

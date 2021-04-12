@@ -230,7 +230,7 @@ export interface Etapa {
   dataFim: string;
   atividadesRealizadas?: any;
   etapaProdutos: EtapaProduto[];
-  etapaMeses: Array<{ id?: number; etapaId?: number; mes: string; }>;
+  etapaMeses: Array<{ id?: number; etapaId?: number; mes: string }>;
 }
 
 export interface EtapaProduto {
@@ -394,7 +394,7 @@ export interface REFPObsInterna {
 
 export interface RegistroREFP {
   id: number;
-  atividade?: { id: number; nome: string; valor: string; };
+  atividade?: { id: number; nome: string; valor: string };
   projetoId: number;
   tipo: 'RH' | 'RM';
   tipoValor: 'RH' | 'RM';
@@ -624,6 +624,7 @@ export interface Pagination<T> {
 
 export const SIDEBAR_MENU = new InjectionToken<Array<MenuItem> | Observable<Array<MenuItem>>>('Sidebar menu');
 export const HEADER_MENU = new InjectionToken<Array<MenuItem>>('Header menu');
+export const TOPNAV_MENU = new InjectionToken<Array<MenuItem>>('Topnav menu');
 export const ROOT_URL = new InjectionToken<string>('Root Url');
 /**
  * @deprecated Não utilizar, não é atualizado em trocas de logins

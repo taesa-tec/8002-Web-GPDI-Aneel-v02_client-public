@@ -19,14 +19,14 @@ const routes: Routes = [
         component: PropostasListComponent,
         data: {
           propostaEtapaStatus: 'recebidas'
-        } 
+        }
       },
       {
         path: 'negadas',
         component: PropostasListComponent,
         data: {
           propostaEtapaStatus: 'negadas'
-        } 
+        }
       }
     ]
   },

@@ -11,5 +11,4 @@ export * from './order-content/order-content.component';
 export * from './prompt/prompt.component';
 export * from './table/table';
 export * from './table/table.component';
-export * from './tip/tip.component';
 

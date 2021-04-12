@@ -20,7 +20,7 @@ export class FormEditorComponent implements OnInit {
   anexosFormArray: FormArray;
   @Input() key: string;
   @Input() demandaId: number;
-  @Input() formValue: { value: any, children?: any };
+  @Input() formValue: { value: any; children?: any };
   @Input() anexos: Array<any> = [];
   @Input() canAppendFile = false;
   @Input() disabled = false;
@@ -130,7 +130,7 @@ export class FormEditorComponent implements OnInit {
 
   }
 
-  buildForm(field: FormField, formValue: { value: any, children?: any }) {
+  buildForm(field: FormField, formValue: { value: any; children?: any }) {
 
     const formControl = this.builder.group({});
 

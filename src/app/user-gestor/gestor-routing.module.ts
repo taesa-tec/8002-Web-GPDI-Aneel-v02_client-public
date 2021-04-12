@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {DashboardComponent} from '@app/dashboard';
-import {SidebarComponent} from '@app/dashboard/side-bar/sidebar.component';
+import {SidebarComponent} from '@app/dashboard/sidebar/sidebar.component';
 import {MeuCadastroRoute} from '@app/user-shared';
 
 

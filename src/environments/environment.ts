@@ -8,7 +8,7 @@ import {version} from './version';
 export const environment = {
   production: false,
   api_url: '/api',
-  version: version,
+  version,
   autologin: {
     user: '',
     pass: ''

@@ -13,9 +13,7 @@ import {IndexComponent} from '@app/user-shared/demandas/demanda/index.component'
 const routes: Routes = [
   {
     //path: ':id',
-    matcher: (url: UrlSegment[]) => {
-      return url.length > 0 && url[0].path.match(/^\d+$/) ? ({consumed: [url[0]], posParams: {id: url[0]}}) : null;
-    },
+    matcher: (url: UrlSegment[]) => url.length > 0 && url[0].path.match(/^\d+$/) ? ({consumed: [url[0]], posParams: {id: url[0]}}) : null,
     component: DemandaComponent,
     canActivate: [DemandaGuard],
     resolve: {

@@ -16,7 +16,7 @@ export class GerenciamentoPropostasComponent implements OnInit {
       {text: 'Propostas em Aberto', path: 'aberto'},
       {text: 'Propostas Recebidas', path: 'recebidas'},
       {text: 'Propostas Negadas', path: 'negadas'},
-    ]
+    ];
   }
 
 }

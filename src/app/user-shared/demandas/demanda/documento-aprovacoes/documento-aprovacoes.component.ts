@@ -23,6 +23,7 @@ export class DocumentoAprovacoesComponent implements OnInit {
   anexos = [];
   formKey = 'especificacao-tecnica';
   pdfUrl = null;
+  pdfProgress = null;
   form = new FormGroup({
     comentario: new FormControl('')
   });
@@ -40,9 +41,13 @@ export class DocumentoAprovacoesComponent implements OnInit {
 
   set demanda(value: Demanda) {
     const clearCache = Date.now();
-    this.file.download(`${environment.api_url}/Demandas/${value.id}/Form/${this.formKey}/Pdf?time=${clearCache}`).then(url => {
+    this.file.download(`${environment.api_url}/Demandas/${value.id}/Form/${this.formKey}/Pdf?time=${clearCache}`, p => {
+      this.pdfProgress = (p.loaded / p.total) * 100;
+    }).then(url => {
+      this.pdfProgress = null;
       this.pdfUrl = url;
     }).catch(err => {
+      this.pdfProgress = null;
       console.log(err);
     });
     this.$demanda = value;

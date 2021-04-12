@@ -1,8 +1,8 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 import {FormField} from '@app/commons/demandas';
-import {ClassicEditor, ConfigEditor} from '@app/core/shared';
-
+import {ConfigEditor} from '@app/core/shared';
+import * as ClassicEditor from '@projects/ckeditor/build/ckeditor';
 // import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter';
 
 

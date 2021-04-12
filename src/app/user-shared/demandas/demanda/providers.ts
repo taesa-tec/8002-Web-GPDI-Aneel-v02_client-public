@@ -51,14 +51,10 @@ export const DEMANDA = new InjectionToken<Demanda>('Demanda');
 export const DemandaProvider: FactoryProvider = {
   provide: DEMANDA,
   deps: [ActivatedRoute],
-  useFactory: (route: ActivatedRoute) => {
-    return route.snapshot.data.demanda;
-  }
+  useFactory: (route: ActivatedRoute) => route.snapshot.data.demanda
 };
 export const DemandaMenuProvider: FactoryProvider = {
   provide: SIDEBAR_MENU,
   deps: [DEMANDA, AuthService],
-  useFactory: (demanda: Demanda, auth: AuthService) => {
-    return menu(demanda, auth.user);
-  }
+  useFactory: (demanda: Demanda, auth: AuthService) => menu(demanda, auth.user)
 };

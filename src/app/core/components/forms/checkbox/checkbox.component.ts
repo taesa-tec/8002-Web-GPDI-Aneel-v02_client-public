@@ -60,9 +60,9 @@ export class CheckboxComponent implements ControlValueAccessor {
     }
   }
 
-  onChange: any = function () {
+  onChange: any = function() {
   };
-  onTouched: any = function () {
+  onTouched: any = function() {
 
   };
 

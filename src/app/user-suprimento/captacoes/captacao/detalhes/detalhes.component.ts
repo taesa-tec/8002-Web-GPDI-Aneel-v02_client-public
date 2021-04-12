@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {CaptacaoDetalhes} from '@app/user-shared/captacao';
+import {CaptacaoArquivo, CaptacaoDetalhes} from '@app/user-shared/captacao';
 import {CaptacaoComponent} from '@app/user-suprimento/captacoes/captacao/captacao.component';
+import {FileService} from '@app/services/file.service';
 
 @Component({
   selector: 'app-detalhes',
@@ -13,10 +14,14 @@ export class DetalhesComponent implements OnInit {
     return this.parent?.captacao;
   }
 
-  constructor(public parent: CaptacaoComponent) {
+  constructor(public parent: CaptacaoComponent, protected fileService: FileService) {
   }
 
   ngOnInit(): void {
+  }
+
+  async download(arquivo: CaptacaoArquivo) {
+    await this.fileService.urlToBlobDownload(arquivo.uri, arquivo.fileName);
   }
 
 }

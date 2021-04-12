@@ -12,9 +12,7 @@ const routes: Routes = [
       etapas: EtapasResolver,
       etapa: EtapaResolver
     },
-    runGuardsAndResolvers: (from, to) => {
-      return to.fragment !== 'novo';
-    }
+    runGuardsAndResolvers: (from, to) => to.fragment !== 'novo'
   }
 ];
 

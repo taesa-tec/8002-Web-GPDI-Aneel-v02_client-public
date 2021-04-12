@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from '@env/environment.local';
 
 interface DetalhesProjeto {
-  especificacao: {id: number, pdf: string};
+  especificacao: {id: number; pdf: string};
   arquivos: Array<string>;
   fornecedores: Array<string>;
   observacoes: string;
@@ -16,7 +16,7 @@ interface DetalhesProjeto {
 export class DetalhesProjetoComponent implements OnInit {
 
   detalhesProjeto: DetalhesProjeto;
-  pdfUrl = null; 
+  pdfUrl = null;
 
   constructor() { }
 

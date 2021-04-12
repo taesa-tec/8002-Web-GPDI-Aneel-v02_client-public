@@ -9,7 +9,7 @@ import { FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms'
 })
 export class PromptComponent implements OnInit {
 
-    options: { text: string, value: any, cssClass: string }[];
+    options: { text: string; value: any; cssClass: string }[];
     title: string;
     message: string;
     form: FormGroup;

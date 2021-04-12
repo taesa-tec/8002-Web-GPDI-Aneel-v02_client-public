@@ -98,7 +98,7 @@ export class AppService {
   }
 
   confirm(message: string, title: string = 'Confirme',
-          options: { text: string, value: any, cssClass: string }[] =
+          options: { text: string; value: any; cssClass: string }[] =
             [
               {text: 'Cancelar', value: false, cssClass: 'btn btn-link'},
               {text: 'Ok', value: true, cssClass: 'btn-primary'}

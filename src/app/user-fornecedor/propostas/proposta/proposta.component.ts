@@ -15,12 +15,11 @@ import {extractRouteParams} from '@app/core';
 
     {
       provide: SIDEBAR_MENU,
-      useFactory: (route: ActivatedRoute) => {
-        return route.data.pipe(map(data => {
+      useFactory: (route: ActivatedRoute) => route.data.pipe(map(data => {
           let menu_itens = [
             {path: 'detalhes', text: 'Detalhes da Demanda', icon: 'ta-search'},
             {path: 'condicoes', text: 'Condições Fundamentais para Fornecimento', icon: 'ta-ficha'}];
-          if (data.proposta.dataClausulasAceitas !== null) {
+          if (data.proposta.dataClausulasAceitas !== null && (data.proposta.participacao === 1 || data.proposta.participacao === 3)) {
             menu_itens = menu_itens.concat([
               {path: 'entidades', text: 'Cadastro Outras Entidades', icon: 'ta-empresas'},
               {path: 'plano-de-trabalho', text: 'Plano de Trabalho', icon: 'ta-work-plan'},
@@ -37,9 +36,7 @@ import {extractRouteParams} from '@app/core';
             ]);
           }
           return menu_itens;
-        }));
-
-      },
+        })),
       deps: [ActivatedRoute]
     },
     {

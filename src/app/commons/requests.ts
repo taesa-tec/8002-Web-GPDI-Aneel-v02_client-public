@@ -247,6 +247,6 @@ export interface ProrrogarProjetoRequest {
     dataFim: string;
     etapa: {
         desc: string;
-        etapaProdutos: Array<{ produtoId: number; }>;
+        etapaProdutos: Array<{ produtoId: number }>;
     };
 }

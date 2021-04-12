@@ -21,7 +21,7 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
   @Input() maxsize = 100 * 1024 * 1024; // 100mb
   @Output() error = new EventEmitter<any>();
 
-  fileinfo: Array<{ name: string, size: number }> = [];
+  fileinfo: Array<{ name: string; size: number }> = [];
 
   get value() {
     return this.val;
@@ -29,7 +29,9 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
 
   set value(val) {
 
-    if (!this.checkFiles(val)) { return; }
+    if (!this.checkFiles(val)) {
+ return;
+}
 
     this.val = val;
     this.onChange(val);
@@ -65,9 +67,9 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
   }
 
   onChange: any = () => {
-  }
+  };
   onTouched: any = () => {
-  }
+  };
 
   writeValue(value: FileList) {
     if (value) {

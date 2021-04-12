@@ -11,9 +11,7 @@ const routes: Routes = [
     resolve: {
       coExecutores: CoExecutoresResolver
     },
-    runGuardsAndResolvers: (from, to) => {
-      return !to.fragment;
-    }
+    runGuardsAndResolvers: (from, to) => !to.fragment
   }
 ];
 

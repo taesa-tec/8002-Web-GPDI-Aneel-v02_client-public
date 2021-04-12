@@ -18,9 +18,7 @@ const routes: Routes = [{
     etapas: EtapasResolver,
     recursos: RecursosMateriaisResolver
   },
-  runGuardsAndResolvers: (from, to) => {
-    return to.fragment !== 'novo';
-  }
+  runGuardsAndResolvers: (from, to) => to.fragment !== 'novo'
 
 }];
 

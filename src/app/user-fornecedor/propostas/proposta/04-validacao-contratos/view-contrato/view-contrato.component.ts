@@ -7,8 +7,9 @@ import {PropostaComponent} from '@app/user-fornecedor/propostas/proposta/propost
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {HistoricoComponent} from '@app/user-fornecedor/propostas/proposta/04-validacao-contratos/historico/historico.component';
 import {Contrato} from '@app/user-fornecedor/propostas/proposta/04-validacao-contratos/shared';
-import {ClassicEditor, ConfigEditor} from '@app/core/shared';
 import {FileService} from '@app/services/file.service';
+import {ConfigEditor} from '@app/core/shared';
+import * as ClassicEditor from '@projects/ckeditor/build/ckeditor';
 
 
 @Component({

@@ -10,7 +10,8 @@ export class CaptacoesResolver implements Resolve<Array<any>> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Array<any>> | Promise<Array<any>> | Array<any> {
-    return this.service.obter();
+    console.log(route);
+    return this.service.obter(route.url[0].path);
   }
 
 }

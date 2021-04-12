@@ -44,7 +44,7 @@ export class StatusDemandaComponent implements OnInit {
     try {
       await this.app.demandas.setEtapa(this.demanda.id, this.form.value);
       this.prevStatus = parseFloat(this.form.value.status);
-      this.app.alert("Status da demanda alterado com sucesso!").then();
+      this.app.alert('Status da demanda alterado com sucesso!').then();
     } catch (e) {
       this.form.get('status').setValue(this.prevStatus);
       console.error(e);

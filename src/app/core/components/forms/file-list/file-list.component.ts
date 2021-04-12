@@ -21,7 +21,7 @@ export class FileListComponent implements OnInit, ControlValueAccessor {
   @Output() error = new EventEmitter<any>();
   protected files: Array<File> = [];
 
-  fileinfo: Array<{ name: string, size: number }> = [];
+  fileinfo: Array<{ name: string; size: number }> = [];
 
   get value() {
     return this.val;
@@ -46,9 +46,9 @@ export class FileListComponent implements OnInit, ControlValueAccessor {
   }
 
   onChange: any = () => {
-  }
+  };
   onTouched: any = () => {
-  }
+  };
 
   writeValue(value: FileList) {
     if (value) {

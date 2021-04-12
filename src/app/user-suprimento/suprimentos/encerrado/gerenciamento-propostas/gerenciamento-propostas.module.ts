@@ -9,8 +9,8 @@ import { PropostaDetalhesComponent } from './proposta-detalhes/proposta-detalhes
 
 @NgModule({
   declarations: [
-    GerenciamentoPropostasComponent, 
-    PropostasListComponent, 
+    GerenciamentoPropostasComponent,
+    PropostasListComponent,
     PropostaDetalhesComponent
   ],
   imports: [
