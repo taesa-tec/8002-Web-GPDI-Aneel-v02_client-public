@@ -12,25 +12,30 @@
 </div>
 
 <div class="modal-body">
-  <form action="">
+  <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="form-group">
       <label>SELECIONE A PROPOSTA VENCEDORA</label>
     </div>
 
-    <ng-container *ngFor="let i of [0,1,2]">
-      <div class="d-grid border border-cinza rounded w-100 mb-3 cursor-pointer align-items-center"
+    <ng-container *ngFor="let proposta of propostas">
+      <div class="d-grid border border-cinza rounded w-100 mb-3  align-items-center"
            style="grid-template-rows: 1fr 1fr"
-           (click)="selecionar(i)">
-        <div class="px-1 py-2">
-          <div class="d-flex px-3 align-items-center">
-            <div class="rounded-circle border border-cinza p-2 d-inline-block mr-3"></div>
-            <span>Nome do Fornecedor</span>
+      >
+        <div class="px-3 py-2">
+          <div class="d-flex align-items-center cursor-pointer" (click)="selecionar(proposta.id)">
+            <div class="rounded-circle border border-cinza p-2 d-inline-block mr-3"
+                 [ngClass]="{'bg-primary':propostaCtrl.value === proposta.id}"></div>
+            <span>{{proposta.fornecedor}}</span>
           </div>
         </div>
         <div class="px-3 py-2 border-top border-cinza">
           <div class="d-flex">
-            <button class="btn btn-link" type="button"><i class="ta-attachment"></i> Plano de Trabalho</button>
-            <button class="btn btn-link" type="button"><i class="ta-attachment"></i> Contrato Base</button>
+            <button class="btn btn-link" type="button" (click)="download(proposta, 'PlanoTrabalho')"><i
+              class="ta-attachment"></i> Plano de Trabalho
+            </button>
+            <button class="btn btn-link" type="button" (click)="download(proposta, 'Contrato')"><i
+              class="ta-attachment"></i> Contrato Base
+            </button>
           </div>
         </div>
       </div>
@@ -38,27 +43,41 @@
 
     <div class="form-group">
       <label>SELECIONE O DOCUMENTO COMPROBATÓRIO DA SELEÇÃO</label>
+
       <div>
-        <button class="btn btn-link" type="button" (click)="anexarArquivos()">
-          <i class="ta-attachment fs-22"></i> Anexar arquivo
-        </button>
+        <label class="btn btn-link">
+          <ng-container *ngIf="!file">
+            <i class="ta-plus-circle"></i>
+            <span> Anexar arquivo</span>
+          </ng-container>
+          <ng-container *ngIf="file">
+            <i class="ta-attachment text-primary"></i>
+            <span class="text-primary" style="text-transform: none">{{file.name}}</span>
+          </ng-container>
+          <input type="file" class="form-control d-none" (change)="anexarArquivos($event)">
+        </label>
+
       </div>
     </div>
 
     <div class="form-group"><label for="responsavel-refinamento">Responsável Refinamento</label>
-      <select name="" id="responsavel-refinamento" class="form-control">
-        <option value="">Selecione</option>
+      <select id="responsavel-refinamento" class="form-control" formControlName="responsavelId">
+        <option value="" hidden>Selecione</option>
+        <option *ngFor="let user of equipe.outros" [value]="user.id">{{user.nomeCompleto}}</option>
       </select>
     </div>
 
     <div class="form-group">
       <label for="data-alvo">Data alvo refinamento</label>
-      <input type="date" name="" id="data-alvo" class="form-control">
+      <input type="date" formControlName="dataAlvo" id="data-alvo" class="form-control" [min]="minDateAlvo">
     </div>
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-link" type="button" (click)="activeModal.close('cancel')">Cancelar</button>
-      <button class="btn btn-primary" type="submit"><i class="ta-plus-circle"></i> Confirmar seleção proposta</button>
+      <button class="btn btn-primary" type="submit" [disabled]="form.invalid || !file"><i class="ta-plus-circle"></i>
+        Confirmar
+        seleção proposta
+      </button>
     </div>
 
   </form>

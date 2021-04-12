@@ -56,6 +56,11 @@ export class ListComponent implements OnInit, OnDestroy {
         this.cols = captacaoTable.cols;
         this.buttons = captacaoTable.buttons;
       }));
+    this.route.fragment.subscribe(f => {
+      if (!isNaN(parseFloat(f))) {
+        this._openModalSelecao();
+      }
+    });
     this.addListeners();
   }
 
@@ -68,8 +73,16 @@ export class ListComponent implements OnInit, OnDestroy {
     this.events.next(evt);
   }
 
-  private _openModalSelecao() {
+  private async _openModalSelecao() {
     const ref = this.modal.open(SelecaoComponent, {size: 'lg'});
+    const cmp = ref.componentInstance as SelecaoComponent;
+    cmp.route = this.route;
+    try {
+      await ref.result;
+    } catch (e) {
+      console.error(e);
+    }
+    this.router.navigate([]).then();
   }
 
 }

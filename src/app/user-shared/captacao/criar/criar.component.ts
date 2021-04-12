@@ -78,7 +78,7 @@ export class CriarComponent implements OnInit {
           files.forEach(file => {
             fd.append('file', file);
           });
-          await this.service.upload(files, `${this.id}/Arquivos`).toPromise();
+          await this.service.upload(files, `${this.id}/Arquivos`);
         }
 
         this.app.alert('Captação criada com sucesso!', 'Sucesso').then();

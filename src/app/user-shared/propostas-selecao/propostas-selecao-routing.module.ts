@@ -6,6 +6,8 @@ import {FinalizadaComponent} from '@app/user-shared/propostas-selecao/finalizada
 import {CaptacoesResolver} from '@app/resolvers';
 import {CaptacaoButtons, CaptacaoCols} from '@app/user-shared/captacao';
 import {ListComponent} from '@app/user-shared/propostas-selecao/list/list.component';
+import {PropostaSelecaoResolver} from '@app/user-shared/propostas-selecao/proposta-selecao.resolver';
+import {EquipePedResolver} from '@app/resolvers/equipe-ped.resolver';
 
 const routes: Routes = [
   {
@@ -21,7 +23,9 @@ const routes: Routes = [
         path: 'pendente',
         component: ListComponent,
         resolve: {
-          captacoes: CaptacoesResolver
+          captacoes: CaptacoesResolver,
+          propostas: PropostaSelecaoResolver,
+          equipe: EquipePedResolver,
         },
         data: {
           captacaoTable: {
@@ -29,7 +33,8 @@ const routes: Routes = [
             buttons: CaptacaoButtons.SelecaoPendente,
             status: 'SelecaoPendente'
           }
-        }
+        },
+        runGuardsAndResolvers: 'always'
       },
       {
         path: 'finalizada',

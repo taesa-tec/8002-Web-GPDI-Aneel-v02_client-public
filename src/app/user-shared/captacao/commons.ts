@@ -99,7 +99,7 @@ export const CaptacaoButtons: { [prop: string]: TableComponentActions } = {
   Aberta: [],
   Encerrada: [{action: 'enviar', text: 'ENVIAR PARA SELEÇÃO', icon: 'ta-edit', className: 'btn btn-primary'}],
   Cancelada: [],
-  SelecaoPendente: [{action: 'selecao', text: 'Confirmar seleção', icon: 'ta-edit', className: 'btn btn-primary'}],
+  SelecaoPendente: [{action: './#${id}', isLink: true, text: 'Confirmar seleção', icon: 'ta-edit', className: 'btn btn-primary'}],
 };
 
 export interface CaptacaoDetalhes {

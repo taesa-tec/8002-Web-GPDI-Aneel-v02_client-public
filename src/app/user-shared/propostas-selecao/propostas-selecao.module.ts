@@ -13,6 +13,8 @@ import {CaptacoesResolver} from '@app/resolvers';
 import {ServiceBase} from '@app/services';
 import {HttpClient} from '@angular/common/http';
 import {ListComponent} from '@app/user-shared/propostas-selecao/list/list.component';
+import {PropostaSelecaoResolver} from '@app/user-shared/propostas-selecao/proposta-selecao.resolver';
+import {EquipePedResolver} from '@app/resolvers/equipe-ped.resolver';
 
 
 @NgModule({
@@ -24,6 +26,8 @@ import {ListComponent} from '@app/user-shared/propostas-selecao/list/list.compon
     CoreModule
   ],
   providers: [
+    PropostaSelecaoResolver,
+    EquipePedResolver,
     CaptacoesResolver,
     {provide: ServiceBase, deps: [HttpClient], useFactory: (httpClient) => new ServiceBase(httpClient, 'Captacoes')}
   ]
