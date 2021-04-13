@@ -20,7 +20,7 @@ export class UploadFilesService {
 
     const request = new HttpRequest('POST', url, formData);
 
-    return this.http.request<any>(request);
+    return this.http.request<any>(request).toPromise();
   }
 
   download(url: string) {

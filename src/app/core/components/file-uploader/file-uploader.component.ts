@@ -16,6 +16,7 @@ export class FileUploaderComponent implements OnInit {
 
   files: FileList;
   isSending = false;
+  isMulti = true;
   progress: number;
   pathUpload = 'File';
   selecteds = {};
