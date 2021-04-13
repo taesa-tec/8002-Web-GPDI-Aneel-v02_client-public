@@ -3,6 +3,14 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {ActivatedRoute} from '@angular/router';
 import {FileService} from '@app/services/file.service';
 
+export interface CaptacaoSelecao {
+  titulo: string;
+  proposta: string;
+  responsavel: string;
+  dataAlvo: Date;
+  id: number;
+}
+
 @Component({
   selector: 'app-proposta-detalhes',
   templateUrl: './proposta-detalhes.component.html',
@@ -11,14 +19,14 @@ import {FileService} from '@app/services/file.service';
 export class PropostaDetalhesComponent implements OnInit {
 
   route: ActivatedRoute;
-  proposta: any;
+  captacao: CaptacaoSelecao;
   progress: { type: number; loaded: number; total: number } = null;
 
   constructor(public activeModal: NgbActiveModal, protected file: FileService, protected cdr: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
-    this.proposta = this.route.snapshot.data.proposta;
+
   }
 
   protected resetProgress() {
@@ -27,13 +35,12 @@ export class PropostaDetalhesComponent implements OnInit {
 
   async download(file) {
     this.resetProgress();
-    //@todo Mudar o link do download
-    const url = await this.file.download(`Captacoes/Suprimento/${this.proposta.captacaoId}/Propostas/${this.proposta.id}/${file}`,
+    const url = await this.file.download(`Captacoes/${this.captacao.id}/PropostaSelecionada/${file}`,
       progress => {
         this.progress = progress;
         this.cdr.detectChanges();
       });
-    this.file.downloadBlob(url, `${file}.pdf`);
+    this.file.downloadBlob(url, `${file}-${this.captacao.titulo}(${this.captacao.proposta}).pdf`);
     this.progress = null;
   }
 }

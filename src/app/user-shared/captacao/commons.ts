@@ -90,6 +90,17 @@ export const CaptacaoCols: { [prop: string]: TableComponentCols } = {
   SelecaoPendente: [
     {field: 'titulo', title: 'Título', order: true},
     {field: 'propostasRecebidas', title: 'Propostas Recebidas', order: true},
+  ],
+  Finalizada: [
+    {field: 'titulo', title: 'Título Resumido Projeto', order: true},
+    {field: 'proposta', title: 'Proposta Selecionada', order: true},
+    {field: 'responsavel', title: 'Responsavel Refinamento', order: true},
+    {
+      field: 'dataAlvo', title: 'Data Alvo', order: true, type: 'ng-pipe',
+      pipe: new DatePipe('pt-BR'),
+      value: item => [item.dataAlvo, 'shortDate']
+    }
+
   ]
 };
 
@@ -100,6 +111,7 @@ export const CaptacaoButtons: { [prop: string]: TableComponentActions } = {
   Encerrada: [{action: 'enviar', text: 'ENVIAR PARA SELEÇÃO', icon: 'ta-edit', className: 'btn btn-primary'}],
   Cancelada: [],
   SelecaoPendente: [{action: './#${id}', isLink: true, text: 'Confirmar seleção', icon: 'ta-edit', className: 'btn btn-primary'}],
+  Finalizada: [{action: './#${id}', isLink: true, text: 'Ver detalhes', icon: 'ta-eye', className: 'btn btn-primary'}],
 };
 
 export interface CaptacaoDetalhes {

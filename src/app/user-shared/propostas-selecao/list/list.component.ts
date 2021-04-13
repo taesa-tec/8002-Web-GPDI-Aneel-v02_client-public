@@ -7,6 +7,7 @@ import {TableComponentCols, TableComponentActions, TableComponentFilter} from '@
 import {Subject, Subscription} from 'rxjs';
 import {filter} from 'rxjs/operators';
 import {SelecaoComponent} from '@app/user-shared/propostas-selecao/selecao/selecao.component';
+import {PropostaDetalhesComponent} from '@app/user-shared/propostas-selecao/proposta-detalhes/proposta-detalhes.component';
 
 export interface CaptacaoTableConfig {
   captacoes: Array<any>;
@@ -57,8 +58,14 @@ export class ListComponent implements OnInit, OnDestroy {
         this.buttons = captacaoTable.buttons;
       }));
     this.route.fragment.subscribe(f => {
-      if (!isNaN(parseFloat(f))) {
-        this._openModalSelecao();
+      const id = parseFloat(f);
+      if (!isNaN(id)) {
+        if (this.route.snapshot.url[0].path === 'pendente') {
+          this._openModalSelecao();
+        } else {
+          this._openModalDetalhes(id);
+
+        }
       }
     });
     this.addListeners();
@@ -77,6 +84,20 @@ export class ListComponent implements OnInit, OnDestroy {
     const ref = this.modal.open(SelecaoComponent, {size: 'lg'});
     const cmp = ref.componentInstance as SelecaoComponent;
     cmp.route = this.route;
+    try {
+      await ref.result;
+    } catch (e) {
+      console.error(e);
+    }
+    this.router.navigate([]).then();
+  }
+
+  private async _openModalDetalhes(id) {
+    const captacao = this.captacoes.find(c => c.id === id);
+    const ref = this.modal.open(PropostaDetalhesComponent, {size: 'lg'});
+    const cmp = ref.componentInstance as PropostaDetalhesComponent;
+    cmp.captacao = captacao;
+
     try {
       await ref.result;
     } catch (e) {

@@ -44,8 +44,8 @@ const routes: Routes = [
         },
         data: {
           captacaoTable: {
-            cols: CaptacaoCols.Pendente,
-            buttons: CaptacaoButtons.Pendente,
+            cols: CaptacaoCols.Finalizada,
+            buttons: CaptacaoButtons.Finalizada,
             status: 'Finalizada'
           }
         }
