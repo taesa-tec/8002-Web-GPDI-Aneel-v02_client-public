@@ -16,7 +16,7 @@ export class PropostasComponent implements OnInit {
   ];
 
 
-  constructor(protected route: ActivatedRoute, protected parent: CaptacaoComponent) {
+  constructor(protected route: ActivatedRoute, public parent: CaptacaoComponent) {
   }
 
   ngOnInit(): void {

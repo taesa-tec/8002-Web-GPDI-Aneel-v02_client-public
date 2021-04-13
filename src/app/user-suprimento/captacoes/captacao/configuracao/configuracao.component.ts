@@ -163,7 +163,7 @@ export class ConfiguracaoComponent implements OnInit {
       this.dataMinimaExt = this.dataMaximaExt;
       this.app.alert('Data alterada com sucesso!').then();
     } catch (e) {
-
+      this.alertError(e, 'Não foi possível configurar');
       this.form.get('termino').setValue(prev);
       this.dataMaximaExt = prev;
       this.form.updateValueAndValidity();
