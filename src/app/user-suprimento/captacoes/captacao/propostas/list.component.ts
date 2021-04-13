@@ -9,6 +9,9 @@ import {PropostaDetalhesComponent} from '@app/user-suprimento/captacoes/captacao
 const getPropostaStatus = b => b ? ['Submetido', 'text-success'] : ['Pendente', 'text-danger'];
 
 const getPropostaTemplate = item => {
+  if (item.captacaoStatus === 'Cancelada') {
+    return '<span class="text-danger">Participação cancelada</span>';
+  }
   if (item.participacao === 0) {
     return '<span class="text-danger">Participação pendente</span>';
   }

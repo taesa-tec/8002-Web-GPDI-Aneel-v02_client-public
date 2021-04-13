@@ -1,3 +1,11 @@
+<div class="row" *ngIf="parent.captacao.status === 'Cancelada'">
+  <div class="col">
+    <div class="alert alert-danger d-flex align-items-center">
+      <i class="ta-alert fs-22 mr-3"></i>
+      <span class="fs-18">Esta captação foi cancelada</span>
+    </div>
+  </div>
+</div>
 <div class="row justify-content-between">
   <div class="col">
     <h5 class="text-uppercase text-blue font-weight-normal my-4">
