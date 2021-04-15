@@ -32,6 +32,11 @@ const routes: Routes = [
         loadChildren: () => import('@app/user-shared/propostas-selecao/propostas-selecao.module').then(m => m.PropostasSelecaoModule)
       },
       {
+        path: 'propostas',
+        //component: SidebarComponent,
+        loadChildren: () => import('@app/proposta/proposta.module').then(m => m.PropostaModule)
+      },
+      {
         path: 'configuracoes',
         component: SidebarComponent,
         loadChildren: () => import('./configuracoes/configuracoes-sistema.module').then(m => m.ConfiguracoesSistemaModule)

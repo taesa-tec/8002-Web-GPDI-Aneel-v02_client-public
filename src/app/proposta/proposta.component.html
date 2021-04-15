@@ -1,0 +1,23 @@
+<app-sidebar>
+  <div class="bg-blue-light text-white">
+    <div class=" p-3 border-bottom border-cinza-claro text-uppercase">
+      <!--
+      ID: {{proposta.captacaoId | pad:'0':3 }} - {{proposta.captacao}} <br>
+       -->
+    </div>
+    <div class="p-3 ">
+      <div class="etapa">
+        DETALHES PROPOSTA
+        <!--
+        Fornecedor: {{proposta.fornecedor}}
+         -->
+      </div>
+      <div class="mt-2">
+        <a routerLink="/fornecedor/propostas" class="d-inline-flex align-items-center">
+          <i class="ta-sync fs-22 mr-2"></i>
+          <span>          Voltar para meu painel de projetos          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</app-sidebar>
