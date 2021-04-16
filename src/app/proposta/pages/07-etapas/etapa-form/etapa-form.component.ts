@@ -6,6 +6,7 @@ import {EtapasService, ProdutosService} from '@app/proposta/services/proposta-se
 import {Proposta} from '@app/commons';
 import {mesesSelectorRequered} from '@app/proposta/pages/07-etapas/etapa-form/meses-selector.component';
 import {ActivatedRoute} from '@angular/router';
+import {PropostasService} from '@app/proposta/services/propostas.service';
 
 @Component({
   selector: 'app-etapa-form',
@@ -26,6 +27,7 @@ export class EtapaFormComponent implements OnInit {
 
   constructor(
     public produtoService: ProdutosService,
+    protected propostasService: PropostasService,
     protected service: EtapasService,
     private app: AppService,
     private fb: FormBuilder,
@@ -34,7 +36,7 @@ export class EtapaFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.produtoService.captacaoId = this.proposta.captacaoId;
+    this.propostasService.proposta.subscribe(p => this.proposta = p);
     this.produtoService.obter().then(p => this.produtos = p);
     if (this.route.snapshot.data.etapa) {
       this.form.patchValue(this.route.snapshot.data.etapa);

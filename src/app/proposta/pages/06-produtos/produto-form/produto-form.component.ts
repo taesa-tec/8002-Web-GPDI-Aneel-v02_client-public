@@ -2,7 +2,6 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppService} from '@app/services/app.service';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {BaseEntity, FasesCadeiaInovacao, TiposProdutos} from '@app/commons';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LoadingComponent} from '@app/core/components';
 import {ProdutosService} from '@app/proposta/services/proposta-service-base.service';

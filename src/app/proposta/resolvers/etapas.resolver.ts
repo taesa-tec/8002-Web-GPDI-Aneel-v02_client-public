@@ -13,7 +13,6 @@ export class EtapasResolver implements Resolve<any> {
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const params = extractRouteParams(route);
     if (params.id) {
-      this.service.captacaoId = params.id;
       try {
         const result = await this.service.obter();
         if (result !== null) {

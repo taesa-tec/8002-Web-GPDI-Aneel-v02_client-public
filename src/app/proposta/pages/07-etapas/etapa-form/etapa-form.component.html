@@ -10,7 +10,7 @@
 <app-loading type="fullscreen"></app-loading>
 
 <div class="modal-body">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="proposta">
     <div class="form-group">
       <label>Descrição das atividades</label>
       <app-textarea class="form-control" rows="4" maxlength="1000" formControlName="descricaoAtividades"></app-textarea>

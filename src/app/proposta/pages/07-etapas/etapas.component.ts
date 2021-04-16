@@ -7,6 +7,7 @@ import {PropostaComponent} from '@app/proposta/proposta.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EtapaFormComponent} from '@app/proposta/pages/07-etapas/etapa-form/etapa-form.component';
 import {EtapasService} from '@app/proposta/services/proposta-service-base.service';
+import {Proposta} from '@app/commons';
 
 @Component({
   selector: 'app-etapas',
@@ -15,6 +16,7 @@ import {EtapasService} from '@app/proposta/services/proposta-service-base.servic
 })
 export class EtapasComponent implements OnInit {
 
+  proposta: Proposta;
   loading = false;
   duracao = 1;
 
@@ -55,11 +57,10 @@ export class EtapasComponent implements OnInit {
     private app: AppService,
     private service: EtapasService,
     private propostaService: PropostasService,
-    private proposta: PropostaComponent) {
+  ) {
   }
 
   async ngOnInit() {
-    this.duracao = this.proposta.proposta.duracao;
     this.route.data.subscribe(data => {
       this.etapas = data.etapas;
     });
@@ -67,6 +68,10 @@ export class EtapasComponent implements OnInit {
       if (f === 'novo' || !isNaN(parseFloat(f))) {
         this.formEtapa();
       }
+    });
+    this.propostaService.proposta.subscribe(p => {
+      this.proposta = p;
+      this.duracao = this.proposta.duracao;
     });
   }
 
@@ -78,7 +83,7 @@ export class EtapasComponent implements OnInit {
   async formEtapa(etapa?: any) {
     const ref = this.modal.open(EtapaFormComponent, {size: 'lg'});
     const cmp = ref.componentInstance as EtapaFormComponent;
-    cmp.proposta = this.proposta.proposta;
+    cmp.proposta = this.proposta;
     cmp.route = this.route;
     try {
       await ref.result;
@@ -91,10 +96,10 @@ export class EtapasComponent implements OnInit {
   async salvarDuracao() {
     this.loading = true;
     try {
-      await this.propostaService.atualizarDuracao(this.proposta.proposta.captacaoId, this.duracao);
-      this.proposta.proposta.duracao = this.duracao;
+      await this.propostaService.atualizarDuracao(this.proposta.guid, this.duracao);
+      this.proposta.duracao = this.duracao;
     } catch (e) {
-      this.duracao = this.proposta.proposta.duracao;
+      this.duracao = this.proposta.duracao;
       if (e.error && e.error.title && e.error.detail) {
         this.app.alert(e.error.detail, e.error.title).then();
       } else {

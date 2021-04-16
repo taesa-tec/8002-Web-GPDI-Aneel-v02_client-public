@@ -1,10 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppService} from '@app/services/app.service';
-import {TableComponentCols, TableComponentActions, TableComponentFilter} from '@app/core/components/table/table';
+import {TableComponentCols, TableComponentActions} from '@app/core/components/table/table';
 import {ProdutoFormComponent} from './produto-form/produto-form.component';
-import {Pagination} from '@app/commons/common';
-import {at, chunk, uniqBy} from 'lodash-es';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProdutosService} from '@app/proposta/services/proposta-service-base.service';
 

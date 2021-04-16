@@ -26,6 +26,7 @@ export class PropostaServiceBase extends ServiceBase<any> {
 
   set captacaoId(value) {
     console.warn('Remover chamada');
+    console.trace(value);
     this.controller = `Propostas/${value}/${this.append}`;
   }
 
