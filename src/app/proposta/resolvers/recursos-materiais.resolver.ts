@@ -29,7 +29,7 @@ export class RecursosMateriaisResolver implements Resolve<any> {
 }
 
 @Injectable()
-export class RecursoHumanoResolver implements Resolve<any> {
+export class RecursoMaterialResolver implements Resolve<any> {
 
   constructor(protected service: RecursosMateriaisService, protected router: Router) {
   }

@@ -1,13 +1,14 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, Optional} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import {ModalDemandaComponent} from './modal-demanda/modal-demanda.component';
 import {environment} from '@env/environment';
-import {PropostaComponent} from '@app/proposta/proposta.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PropostasService} from '@app/proposta/services/propostas.service';
-import {CAPTACAO_ID} from '@app/proposta/shared';
+import {PROPOSTA, PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 import {BehaviorSubject} from 'rxjs';
+import {Proposta} from '@app/commons';
+import {AppService} from '@app/services';
 
 
 @Component({
@@ -17,30 +18,35 @@ import {BehaviorSubject} from 'rxjs';
 })
 export class DetalhesDemandaComponent implements OnInit {
 
-  pdfUrl = null;
-  detalhes: any;
-  captacaoId: number;
-
-  get proposta() {
-    return this.parent.proposta;
+  get pdfUrl() {
+    if (this.proposta) {
+      return `${environment.api_url}/Propostas/${this.proposta.guid}/Detalhes/Pdf/especificacao-tecnica`;
+    }
+    return null;
   }
 
+  detalhes: any;
+
+  proposta: Proposta;
+
   constructor(private modal: NgbModal,
-              private parent: PropostaComponent,
+              private app: AppService,
               protected route: ActivatedRoute,
               protected router: Router,
               protected service: PropostasService,
-              @Inject(CAPTACAO_ID) public captacaoIdObservable: BehaviorSubject<number>
+              @Inject(PROPOSTA) public propostaObservable: BehaviorSubject<Proposta>,
+              @Optional() @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean
   ) {
   }
 
   ngOnInit() {
-    // this.pdfUrl = `${environment.api_url}/Fornecedor/Propostas/${this.proposta.captacaoId}/Detalhes/Pdf/especificacao-tecnica`;
-    console.log(this.service);
+    //this.pdfUrl = `${environment.api_url}/Propostas/${this.proposta.guid}/Detalhes/Pdf/especificacao-tecnica`;
     this.route.data.subscribe(data => {
       this.detalhes = data.detalhes;
     });
-    this.captacaoIdObservable.subscribe(id => this.captacaoId = id);
+    this.propostaObservable.subscribe(proposta => {
+      this.proposta = proposta;
+    });
   }
 
   async rejeitar() {
@@ -50,12 +56,13 @@ export class DetalhesDemandaComponent implements OnInit {
       cmp.confirmarRejeicao();
       const result = await ref.result;
       if (result) {
-        await this.service.rejeitar(this.proposta.captacaoId);
+        await this.service.rejeitar(this.proposta.guid);
         this.router.navigate(['/']).then();
         // request...
       }
     } catch (e) {
-
+      this.app.alertError('Ocorreu um erro, tente novamente mais tarde!').then();
+      console.error(e);
     }
   }
 
@@ -66,12 +73,13 @@ export class DetalhesDemandaComponent implements OnInit {
       cmp.confirmarParticipacao();
       const result = await ref.result;
       if (result) {
-        await this.service.participar(this.proposta.captacaoId);
+        await this.service.participar(this.proposta.guid);
         this.proposta.participacao = 1;
         // request...
       }
     } catch (e) {
-
+      this.app.alertError('Ocorreu um erro, tente novamente mais tarde!').then();
+      console.error(e);
     }
   }
 

@@ -5,6 +5,7 @@ import {PropostaResolver} from '@app/proposta/resolvers/proposta.resolver';
 import {SidebarComponent} from '@app/dashboard/sidebar/sidebar.component';
 import {PropostasResolver} from '@app/proposta/resolvers/propostas.resolver';
 
+const GUIDREG = /[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/;
 const routes: Routes = [
   {
     path: '',
@@ -17,8 +18,8 @@ const routes: Routes = [
   {
     matcher: (segments => {
       if (segments.length > 0) {
-        const id = parseFloat(segments[0].path); // Id da captação, não da proposta
-        if (!isNaN(id)) {
+        const guid = segments[0].path; // guid da proposta
+        if (GUIDREG.test(guid)) {
           return {
             consumed: [segments[0]], posParams: {id: segments[0]}
           };
@@ -32,9 +33,12 @@ const routes: Routes = [
     },
     component: PropostaComponent,
     children: [
-      {path: 'detalhes', loadChildren: () => import('./01-detalhes-demanda/detalhes-demanda.module').then(m => m.DetalhesDemandaModule)},
+      {
+        path: 'detalhes',
+        loadChildren: () => import('./pages/01-detalhes-demanda/detalhes-demanda.module').then(m => m.DetalhesDemandaModule)
+      },
+      {path: 'condicoes', loadChildren: () => import('./pages/02-condicoes/condicoes.module').then(m => m.CondicoesModule)},
       /*
-      {path: 'condicoes', loadChildren: () => import('./02-condicoes/condicoes.module').then(m => m.CondicoesModule)},
       {path: 'entidades', loadChildren: () => import('./03-co-executores/co-executores.module').then(m => m.CoExecutoresModule)},
       {
         path: 'contrato',

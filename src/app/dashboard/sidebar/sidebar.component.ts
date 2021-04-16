@@ -4,7 +4,7 @@ import {AppService} from '@app/services/app.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {UsersService} from '@app/services/users.service';
 import {MenuItem, SIDEBAR_MENU} from '@app/commons';
-import {Observable, Subscription} from 'rxjs';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 
 
 @Component({
@@ -21,14 +21,17 @@ export class SidebarComponent implements OnDestroy {
   menu: Array<MenuItem>;
 
   constructor(
-    @Optional() @Inject(SIDEBAR_MENU) menu: Array<MenuItem> | Observable<Array<MenuItem>>,
+    @Optional() @Inject(SIDEBAR_MENU) menu: Array<MenuItem> | BehaviorSubject<Array<MenuItem>>,
     protected app: AppService, protected usersService: UsersService, protected modal: NgbModal) {
     if (menu instanceof Observable) {
       this.subscription = menu.subscribe(_menu => {
         this.menu = _menu;
       });
-    } else {
+    } else if (Array.isArray(menu)) {
       this.menu = menu;
+    } else {
+      console.error('SIDEBAR: Menu não configurado corretamente', menu);
+      this.menu = [];
     }
   }
 

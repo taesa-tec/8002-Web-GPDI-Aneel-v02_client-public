@@ -1,0 +1,39 @@
+.wrap-clausulas {
+  display: grid;
+  grid-template-columns: min-content auto min-content;
+  grid-gap: 16px;
+  margin-bottom: 1rem;
+  user-select: none;
+}
+
+.wrap-clausulas-content {
+  position: relative;
+  padding-top: 15%;
+  overflow: hidden;
+
+  .clausula {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+    transition: all 300ms ease-in-out;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    user-select: text;
+    visibility: visible;
+
+    &.before {
+      visibility: hidden;
+      left: -100%;
+    }
+
+    &.after {
+      visibility: hidden;
+      left: 100%;
+    }
+  }
+
+}

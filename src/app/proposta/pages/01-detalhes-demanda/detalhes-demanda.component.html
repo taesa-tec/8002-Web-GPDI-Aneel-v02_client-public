@@ -1,6 +1,6 @@
 <div class="row justify-content-between">
   <div class="col">
-    <h5 class="text-uppercase text-blue font-weight-normal my-4">DETALHES DA DEMANDA {{captacaoId}}</h5>
+    <h5 class="text-uppercase text-blue font-weight-normal my-4">DETALHES DA DEMANDA</h5>
   </div>
 </div>
 
@@ -11,7 +11,7 @@
         <i class="ta-ok fs-48 text-success"></i>
       </div>
       <div class="text-success">
-        Você confirmou seu interesse em participar deste projeto. Obrigado.
+        {{'Você confirmou seu interesse em participar deste projeto. Obrigado.' | label}}
       </div>
     </div>
     <div class="alert border border-success d-flex align-items-center" *ngSwitchCase="2">
@@ -19,7 +19,7 @@
         <i class="ta-ok fs-48 text-success"></i>
       </div>
       <div class="text-danger">
-        Você confirmou o <b>não</b> interesse em participar deste projeto. Obrigado.
+        {{'Você confirmou o <b>não</b> interesse em participar deste projeto. Obrigado.' | label}}
       </div>
     </div>
   </div>
@@ -59,7 +59,7 @@
   </div>
 </div>
 
-<div class="row" *ngIf="proposta?.participacao === 0">
+<div class="row" *ngIf="proposta?.participacao === 0 && canEdit">
   <div class="col">
     <div class="d-flex justify-content-center">
       <button type="button" class="btn btn-danger m-3" (click)="rejeitar()">
@@ -68,7 +68,7 @@
       </button>
       <button type="button" class="btn btn-green m-3" (click)="participar()">
         <i class="ta-ok fs-24 align-middle"></i>
-        Desejo Participar
+        Desejamos Participar
       </button>
     </div>
   </div>

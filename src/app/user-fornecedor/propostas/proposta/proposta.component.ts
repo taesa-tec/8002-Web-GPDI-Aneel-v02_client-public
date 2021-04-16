@@ -5,6 +5,7 @@ import {map} from 'rxjs/operators';
 import {CAPTACAO_ID} from '@app/user-fornecedor/propostas/proposta/shared';
 import {EtapasService} from '@app/user-fornecedor/services/propostas.service';
 import {extractRouteParams} from '@app/core';
+import {BehaviorSubject} from 'rxjs';
 
 
 @Component({
@@ -15,10 +16,19 @@ import {extractRouteParams} from '@app/core';
 
     {
       provide: SIDEBAR_MENU,
-      useFactory: (route: ActivatedRoute) => route.data.pipe(map(data => {
+      useFactory: (route: ActivatedRoute) => {
+        const behavior = new BehaviorSubject([
+          {path: 'detalhes', text: 'Detalhes da Demanda', icon: 'ta-search'},
+          {path: 'condicoes', text: 'Condições Fundamentais para Fornecimento', icon: 'ta-ficha'}
+        ]);
+
+        route.data.pipe(map(data => {
           let menu_itens = [
             {path: 'detalhes', text: 'Detalhes da Demanda', icon: 'ta-search'},
             {path: 'condicoes', text: 'Condições Fundamentais para Fornecimento', icon: 'ta-ficha'}];
+
+          menu_itens = [...menu_itens]; // só pra ide parar de encher o saco
+          //*
           if (data.proposta.dataClausulasAceitas !== null && (data.proposta.participacao === 1 || data.proposta.participacao === 3)) {
             menu_itens = menu_itens.concat([
               {path: 'entidades', text: 'Cadastro Outras Entidades', icon: 'ta-empresas'},
@@ -34,9 +44,13 @@ import {extractRouteParams} from '@app/core';
               {path: 'contrato', text: 'Validação Contrato', icon: 'ta-gavel'},
               {path: 'envio', text: 'Envio Proposta para aprovação', icon: 'ta-ok'},
             ]);
+
           }
+          //*/
           return menu_itens;
-        })),
+        }));
+        return behavior;
+      },
       deps: [ActivatedRoute]
     },
     {
