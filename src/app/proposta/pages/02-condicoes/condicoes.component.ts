@@ -5,9 +5,8 @@ import {AppService} from '@app/services';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ModalComponent} from './modal/modal.component';
 import {PropostasService} from '@app/proposta/services/propostas.service';
-import {PropostaComponent} from '@app/proposta/proposta.component';
-import {PROPOSTA, PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 import {BehaviorSubject} from 'rxjs';
+import {PROPOSTA, PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 
 @Component({
   templateUrl: './condicoes.component.html',
@@ -26,12 +25,11 @@ export class CondicoesComponent implements OnInit {
   }
 
   constructor(
-    @Inject(ROOT_URL) protected root_url: string,
     protected router: Router,
     protected route: ActivatedRoute,
     protected app: AppService, protected modal: NgbModal,
     protected propostasService: PropostasService,
-    @Inject(PROPOSTA) public propostaObservable: BehaviorSubject<Proposta>,
+    @Inject(ROOT_URL) protected root_url: string,
     @Optional() @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean
   ) {
   }
@@ -40,7 +38,7 @@ export class CondicoesComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.clausulas = (data.clausulas as Array<BaseEntity>).sort((a, b) => Math.sign(a.ordem - b.ordem));
     });
-    this.propostaObservable.subscribe(proposta => {
+    this.propostasService.proposta.subscribe(proposta => {
       this.proposta = proposta;
     });
   }
@@ -93,7 +91,7 @@ export class CondicoesComponent implements OnInit {
       const proposta = await this.propostasService.aceitarCondicoes(this.proposta.guid);
       this.proposta.dataClausulasAceitas = proposta.dataClausulasAceitas;
       this.app.alert('Proposta atualizada com sucesso!').then();
-      this.propostaObservable.next(this.proposta);
+      this.propostasService.setProposta(this.proposta);
     } else {
       throw new Error('Finalizar foi chamado sem ter todas as clausulas aceitas');
     }

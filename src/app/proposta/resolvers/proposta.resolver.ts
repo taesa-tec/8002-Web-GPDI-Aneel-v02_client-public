@@ -3,7 +3,7 @@ import {Inject, Injectable} from '@angular/core';
 import {PropostasService} from '@app/proposta/services/propostas.service';
 import {extractRouteParams} from '@app/core';
 import {HttpClient} from '@angular/common/http';
-import {ROOT_URL} from '@app/commons';
+import {Proposta, ROOT_URL} from '@app/commons';
 
 @Injectable()
 export class PropostaResolver implements Resolve<any> {
@@ -12,8 +12,9 @@ export class PropostaResolver implements Resolve<any> {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const result = await this.service.obter(route.params.id);
+    const result = await this.service.obter(route.params.id) as Proposta;
     if (result !== null) {
+      this.service.setProposta(result);
       return result;
     }
     await this.router.navigate([this.root_url, 'propostas']);

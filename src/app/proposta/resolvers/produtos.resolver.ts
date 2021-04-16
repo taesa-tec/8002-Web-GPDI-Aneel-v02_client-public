@@ -1,7 +1,7 @@
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 
-import {ProdutosService} from '@app/proposta/services/propostas.service';
+import {ProdutosService} from '@app/proposta/services/proposta-service-base.service';
 import {extractRouteParams} from '@app/core';
 
 @Injectable()

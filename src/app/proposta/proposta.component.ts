@@ -1,19 +1,18 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Proposta} from '@app/commons';
-import {EtapasService, PropostasService} from '@app/proposta/services/propostas.service';
 import {CaptacaoIdProvider, PROPOSTA, PropostaProvider, PropostaSidebar} from './shared';
 import {BehaviorSubject} from 'rxjs';
+import {EtapasService} from '@app/user-fornecedor/services/propostas.service';
 
 
 @Component({
   selector: 'app-suprimentos',
   templateUrl: './proposta.component.html',
-  viewProviders: [],
+  viewProviders: [PropostaProvider],
   providers: [
-    PropostasService.forUser(),
+    PropostaProvider,
     EtapasService,
     CaptacaoIdProvider,
-    PropostaProvider,
     PropostaSidebar,
   ],
 

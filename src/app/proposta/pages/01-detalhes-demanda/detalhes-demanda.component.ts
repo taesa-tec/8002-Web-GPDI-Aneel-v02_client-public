@@ -1,12 +1,10 @@
 import {Component, Inject, OnInit, Optional} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-
 import {ModalDemandaComponent} from './modal-demanda/modal-demanda.component';
 import {environment} from '@env/environment';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PropostasService} from '@app/proposta/services/propostas.service';
-import {PROPOSTA, PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
-import {BehaviorSubject} from 'rxjs';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 import {Proposta} from '@app/commons';
 import {AppService} from '@app/services';
 
@@ -34,17 +32,15 @@ export class DetalhesDemandaComponent implements OnInit {
               protected route: ActivatedRoute,
               protected router: Router,
               protected service: PropostasService,
-              @Inject(PROPOSTA) public propostaObservable: BehaviorSubject<Proposta>,
               @Optional() @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean
   ) {
   }
 
   ngOnInit() {
-    //this.pdfUrl = `${environment.api_url}/Propostas/${this.proposta.guid}/Detalhes/Pdf/especificacao-tecnica`;
     this.route.data.subscribe(data => {
       this.detalhes = data.detalhes;
     });
-    this.propostaObservable.subscribe(proposta => {
+    this.service.proposta.subscribe(proposta => {
       this.proposta = proposta;
     });
   }

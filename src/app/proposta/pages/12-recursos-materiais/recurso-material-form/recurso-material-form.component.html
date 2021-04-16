@@ -1,0 +1,68 @@
+<div class="modal-header">
+  <div class="text-uppercase modal-title text-blue-light fs-24">
+    {{ form.value.id > 0 ? 'EDITAR RECURSO MATERIAL' : 'ADICIONAR RECURSO MATERIAL' }}
+  </div>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <i class="ta-cancel-circle"></i>
+  </button>
+</div>
+
+<app-loading type="fullscreen"></app-loading>
+
+<div class="modal-body">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="nome">Nome do recurso material <app-help codigo="recurso-material-nome"></app-help></label>
+      <input type="text" class="form-control" id="nome" formControlName="nome" autocomplete="off"
+             placeholder="Digite aqui o nome do Recurso (ID63)">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col">
+        <label for="categoria-contabil">Categoria contábil <app-help codigo="recurso-material-categoria-contabil"></app-help></label>
+        <select type="text" class="form-control" id="categoria-contabil" formControlName="categoriaContabilId">
+          <option value="" hidden>Selecione</option>
+          <option [value]="categoria.id" *ngFor="let categoria of categorias">
+            {{ categoria.nome }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col">
+        <label for="valor-unitario">Valor unitário <app-help codigo="recurso-material-valor-unitario"></app-help></label>
+        <input
+          type="text"
+          class="form-control"
+          id="valor-unitario"
+          formControlName="valorUnitario"
+          currencyMask
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Especificação técnica detalhada do recurso</label>
+      <app-textarea class="form-control" formControlName="especificacaoTecnica" rows="4"
+                    maxlength="1000"></app-textarea>
+    </div>
+
+    <div class="form-group d-flex justify-content-between">
+      <div>
+        <button type="button" class="button btn btn-danger" (click)="remover()" *ngIf="form.value.id !== 0">
+          <i class="ta-trash mr-1"></i>
+          Excluir Recurso Material
+        </button>
+      </div>
+      <div class="text-right">
+        <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">
+          Cancelar
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          <i class="ta-save mr-1"></i>
+          Salvar Recurso
+        </button>
+      </div>
+    </div>
+
+  </form>
+</div>

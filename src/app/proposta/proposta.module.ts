@@ -6,6 +6,7 @@ import {CoreModule} from '@app/core';
 import {PropostaComponent} from './proposta.component';
 import {DashboardModule} from '@app/dashboard';
 import {PropostasResolver} from '@app/proposta/resolvers/propostas.resolver';
+import {PropostaProvider} from '@app/proposta/shared';
 
 
 @NgModule({
@@ -17,8 +18,9 @@ import {PropostasResolver} from '@app/proposta/resolvers/propostas.resolver';
   ],
   providers: [
     PropostasService,
+    PropostaProvider,
+    PropostasResolver,
     PropostaResolver,
-    PropostasResolver
   ],
 })
 export class PropostaModule {

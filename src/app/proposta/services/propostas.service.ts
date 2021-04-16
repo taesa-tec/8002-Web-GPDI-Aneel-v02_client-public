@@ -1,63 +1,25 @@
-import {Inject, Injectable, Provider} from '@angular/core';
+import {Injectable, Provider} from '@angular/core';
 import {ServiceBase} from '@app/services';
 import {HttpClient} from '@angular/common/http';
 import {BaseEntity, Proposta, Validations} from '@app/commons';
-import {PROPOSTA, PROPOSTA_API_URL} from '@app/proposta/shared';
 import {BehaviorSubject} from 'rxjs';
-
-@Injectable()
-export class PropostaServiceBase extends ServiceBase<any> {
-
-  static useExisting(t): Provider {
-    return {
-      provide: PropostaServiceBase,
-      useExisting: t
-    };
-  }
-
-  static fromAppend(append): Provider {
-    return {
-      provide: PropostaServiceBase,
-      deps: [HttpClient, PROPOSTA_API_URL, PROPOSTA],
-      useFactory: (http: HttpClient, prefix, proposta) => new PropostaServiceBase(http, proposta, prefix, append)
-    };
-  }
-
-  set captacaoId(value) {
-    console.warn('Remover chamada');
-    this.controller = `${this.prefix}/${value}/${this.append}`;
-  }
-
-  constructor(http: HttpClient, protected proposta: BehaviorSubject<Proposta>, protected prefix, protected append: string) {
-    super(http, prefix);
-    proposta.subscribe(p => {
-      this.controller = `${this.prefix}/${p.guid}/${this.append}`;
-    });
-  }
-}
 
 @Injectable()
 export class PropostasService extends ServiceBase<any> {
 
-  static useExisting(t): Provider {
-    return {
-      provide: PropostaServiceBase,
-      useExisting: t
-    };
-  }
-
-  static forUser(): Provider {
-    return {
-      provide: PropostasService,
-      deps: [HttpClient],
-      useFactory: (http: HttpClient) => {
-        return new PropostasService(http);
-      }
-    };
-  }
+  protected $currentProposta: BehaviorSubject<Proposta> = new BehaviorSubject<Proposta>(null);
+  proposta = this.$currentProposta.asObservable();
 
   constructor(http: HttpClient) {
     super(http, 'Propostas');
+  }
+
+  setProposta(proposta: Proposta) {
+    if (proposta) {
+      this.$currentProposta.next(proposta);
+    } else {
+      throw new Error('Proposta inválida!');
+    }
   }
 
   async rejeitar(guid: string) {
@@ -161,43 +123,17 @@ export class PropostasService extends ServiceBase<any> {
     return await this.http.post<Array<BaseEntity>>(`${this.controller}/${guid}/Escopo`, escopo).toPromise();
   }
 
-}
+  async downloadArquivo(guid: string, file) {
+    const blob = await this.http.get(`${this.controller}/${guid}/Arquivos/${file.id}`, {
+      responseType: 'blob'
+    }).toPromise();
 
-@Injectable()
-export class PropostaService extends PropostaServiceBase {
-  constructor(http: HttpClient, proposta: BehaviorSubject<Proposta>, prefix: string) {
-    super(http, proposta, prefix, '');
+    const a = document.createElement('a');
+    const blobUrl = URL.createObjectURL(blob);
+    a.href = blobUrl;
+    a.setAttribute('download', file.name);
+    a.click();
+    URL.revokeObjectURL(blobUrl);
   }
 }
 
-@Injectable()
-export class ProdutosService extends PropostaServiceBase {
-
-  constructor(http: HttpClient, proposta: BehaviorSubject<Proposta>, prefix: string) {
-    super(http, proposta, prefix, 'Produtos');
-  }
-}
-
-@Injectable()
-export class EtapasService extends PropostaServiceBase {
-
-  constructor(http: HttpClient, proposta: BehaviorSubject<Proposta>, prefix: string) {
-    super(http, proposta, prefix, 'Etapas');
-  }
-}
-
-@Injectable()
-export class RecursosHumanosService extends PropostaServiceBase {
-
-  constructor(http: HttpClient, proposta: BehaviorSubject<Proposta>, prefix: string) {
-    super(http, proposta, prefix, 'RecursosHumano');
-  }
-}
-
-@Injectable()
-export class RecursosMateriaisService extends PropostaServiceBase {
-
-  constructor(http: HttpClient, proposta: BehaviorSubject<Proposta>, prefix: string) {
-    super(http, proposta, prefix, 'RecursosMateriais');
-  }
-}

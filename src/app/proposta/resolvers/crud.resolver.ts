@@ -1,8 +1,8 @@
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 
-import {PropostaServiceBase} from '@app/proposta/services/propostas.service';
 import {extractRouteParams} from '@app/core';
+import {PropostaServiceBase} from '@app/proposta/services/proposta-service-base.service';
 
 @Injectable()
 export class CrudDataResolver implements Resolve<any> {

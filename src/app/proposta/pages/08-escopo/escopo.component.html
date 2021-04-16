@@ -1,0 +1,119 @@
+<div class="row justify-content-between">
+  <div class="col">
+    <h5 class="text-uppercase text-blue font-weight-normal my-4">ESCOPO</h5>
+  </div>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  <div class="form-group">
+    <label>Objetivo do projeto</label>
+    <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="objetivo"
+                  placeholder="Descrever objetivamente o que se pretende desenvolver com a pesquisa."></app-textarea>
+  </div>
+  <div class="form-group">
+    <label>RESULTADOS ESPERADOS</label>
+    <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="resultadoEsperado"
+                  placeholder="Descrever o que se pretende alcançar com o(s) produto(s) desenvolvido(s)"></app-textarea>
+  </div>
+
+  <div class="mb-3">
+    <div class="form-group m-0">
+      <label>Metas do projeto</label>
+    </div>
+    <div formArrayName="metas">
+      <div class="bg-cinza-claro rounded px-3 py-4 mb-3" *ngFor="let meta of metasArray.controls; let i = index"
+           [formGroupName]="i">
+        <div class="form-group">
+          <label>Objetivo do que será desenvolvido</label>
+          <textarea class="form-control" rows="3" maxlength="1000" formControlName="objetivo"></textarea>
+        </div>
+        <div class="form-group row">
+          <div class="col-4">
+            <label>Nº de meses (A contar do início do projeto)</label>
+            <input type="number" class="form-control" formControlName="meses" min="1" [max]="maxNumMeses">
+          </div>
+          <div class="col-8 d-flex justify-content-end align-items-end">
+            <button
+              type="button"
+              class="btn btn-link text-cinza px-0"
+              *ngIf="metasArray.controls.length > 1"
+              (click)="removeMeta(i)"
+            >
+              <i class="ta-cancel-circle"></i>
+              Excluir
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-right">
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+
+        (click)="addMeta()"
+      >
+        <i class="ta-plus-circle fs-22 align-middle"></i>
+        Adicionar Metas
+      </button>
+    </div>
+  </div>
+
+  <div class="form-group my-4">
+    <h5 class="">BENEFÍCIOS</h5>
+    <hr/>
+  </div>
+
+  <div class="form-group">
+    <label>A taesa</label>
+    <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="beneficioTaesa"
+                  placeholder="Descrever o que se pretende alcançar com o(s) produto(s) desenvolvido(s)."></app-textarea>
+  </div>
+
+  <div class="form-group">
+    <label>A instituição de ensino/pesquisa ou empresa parceira</label>
+    <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="beneficioInstitucional"
+                  placeholder="Descrever o que se pretende alcançar com o(s) produto(s) desenvolvido(s)."></app-textarea>
+  </div>
+
+  <div class="form-group">
+    <label>A indústria</label>
+    <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="beneficioIndustria"
+                  placeholder="Descrever o que se pretende alcançar com o(s) produto(s) desenvolvido(s)."></app-textarea>
+  </div>
+
+  <div class="form-group">
+    <label>Ao setor elétrico</label>
+    <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="beneficioSetorEletrico"
+                  placeholder="Descrever o que se pretende alcançar com o(s) produto(s) desenvolvido(s)."></app-textarea>
+  </div>
+
+  <div class="form-group">
+    <label>Sociedade</label>
+    <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="beneficioSociedade"
+                  placeholder="Descrever o que se pretende alcançar com o(s) produto(s) desenvolvido(s)."></app-textarea>
+  </div>
+
+  <div class="form-group">
+    <label>Experiência prévia das empresas parceiras no tema</label>
+    <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="experienciaPrevia"
+                  placeholder="Descrever o que se pretende alcançar com o(s) produto(s) desenvolvido(s)."></app-textarea>
+  </div>
+
+  <div class="form-group">
+    <label>Contrapartidas</label>
+    <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="contrapartidas"
+                  placeholder="Descrever o que se pretende alcançar com o(s) produto(s) desenvolvido(s)."></app-textarea>
+  </div>
+
+  <div class="form-group">
+    <div class="text-right">
+      <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+        <i class="ta-save"></i>
+        Salvar Dados
+      </button>
+    </div>
+  </div>
+
+</form>

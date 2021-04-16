@@ -1,0 +1,8 @@
+<div class="wrap-controls">
+  <ng-container *ngFor="let m of map | keyvalue">
+    <div class="wrap-input-control rounded text-center" (click)="change(m.key, !m.value)"
+         [ngClass]="{'bg-primary text-white':m.value}">
+      <span>{{label.replace('#', m.key.toString().padStart(2, '0'))}}</span>
+    </div>
+  </ng-container>
+</div>

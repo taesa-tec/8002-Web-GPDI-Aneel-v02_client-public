@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {BehaviorSubject} from 'rxjs';
 import {CAPTACAO_ID, PROPOSTA} from './tokens';
 import {Proposta, SIDEBAR_MENU} from '@app/commons';
-import {map} from 'rxjs/operators';
+import {PropostasService} from '@app/proposta/services/propostas.service';
 
 export const CaptacaoIdProvider: Provider = {
   provide: CAPTACAO_ID,
@@ -19,12 +19,14 @@ export const CaptacaoIdProvider: Provider = {
 
 export const PropostaProvider: Provider = {
   provide: PROPOSTA,
-  deps: [ActivatedRoute],
-  useFactory: (route: ActivatedRoute) => {
+  deps: [PropostasService],
+  useFactory: (service: PropostasService) => {
     const behavior = new BehaviorSubject(null);
-    route.data.subscribe(data => {
-      behavior.next(data.proposta);
+    service.proposta.subscribe(proposta => {
+      behavior.next(proposta);
+
     });
+
     return behavior;
   }
 };

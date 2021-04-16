@@ -1,0 +1,83 @@
+import {Component, Inject, OnInit} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+
+import {TableComponentCols, TableComponentActions, TableComponentFilter, TableActionEvent} from '@app/core/components/table/table';
+import {CoExecutorFormComponent} from './co-executor-form/co-executor-form.component';
+import {CAPTACAO_ID} from '@app/proposta/shared';
+import {ActivatedRoute, Router} from '@angular/router';
+
+@Component({
+  selector: 'app-co-executores',
+  templateUrl: './co-executores.component.html',
+  styleUrls: ['./co-executores.component.scss']
+})
+export class CoExecutoresComponent implements OnInit {
+
+  coExecutores: Array<any>;
+  loading = false;
+  hidePagination = false;
+
+  cols: TableComponentCols = [
+    {
+      field: 'id',
+      title: 'ID',
+      order: true,
+    }, {
+      field: 'razaoSocial',
+      title: 'Nome ou Razão Social',
+      order: true,
+    },
+    {
+      field: 'cnpj',
+      title: 'CNPJ',
+      order: true,
+      value: i => i.cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5')
+    }
+  ];
+
+  buttons: TableComponentActions = [
+    {
+      action: 'editar',
+      text: 'EDITAR',
+      icon: 'ta-edit',
+      className: 'btn btn-primary'
+    }
+  ];
+
+  filters: Array<TableComponentFilter> = [];
+
+  constructor(
+    @Inject(CAPTACAO_ID) private captacaoId: number,
+    private router: Router,
+    private route: ActivatedRoute,
+    private modal: NgbModal,
+  ) {
+  }
+
+  async ngOnInit() {
+    this.route.data.subscribe(data => {
+      this.coExecutores = data.coExecutores;
+    });
+    this.route.fragment.subscribe(f => {
+      if (f === 'novo') {
+        this.modalCoExecutora();
+      }
+    });
+  }
+
+  async modalCoExecutora(coExecutor?) {
+    const ref = this.modal.open(CoExecutorFormComponent, {size: 'lg'});
+    const cmp = ref.componentInstance as CoExecutorFormComponent;
+    cmp.captacaoId = this.captacaoId;
+    cmp.coExecutor = coExecutor;
+    await ref.result;
+    await this.router.navigate(['./'], {relativeTo: this.route});
+    // @todo
+  }
+
+  async tableAction(evt: TableActionEvent) {
+    await this.router.navigate(['./'], {relativeTo: this.route, fragment: evt.data.id.toString()});
+    await this.modalCoExecutora(evt.data);
+  }
+
+}
