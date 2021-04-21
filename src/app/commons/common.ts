@@ -1,6 +1,6 @@
 import {UserRole} from './enums';
 import {InjectionToken} from '@angular/core';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 
 export interface BaseEntity {
@@ -622,7 +622,7 @@ export interface Pagination<T> {
   filters?: Array<{ name: string; field: string; values: { [key: string]: string } }>;
 }
 
-export const SIDEBAR_MENU = new InjectionToken<Array<MenuItem> | Observable<Array<MenuItem>>>('Sidebar menu');
+export const SIDEBAR_MENU = new InjectionToken<Array<MenuItem> | BehaviorSubject<Array<MenuItem>>>('Sidebar menu');
 export const HEADER_MENU = new InjectionToken<Array<MenuItem>>('Header menu');
 export const TOPNAV_MENU = new InjectionToken<Array<MenuItem>>('Topnav menu');
 export const ROOT_URL = new InjectionToken<string>('Root Url');

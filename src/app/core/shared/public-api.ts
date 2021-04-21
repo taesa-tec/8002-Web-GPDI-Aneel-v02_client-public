@@ -1,3 +1,5 @@
+import {InjectionToken} from '@angular/core';
+
 export * from './shared.module';
 //import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 //import * as ClassicEditor from '@projects/ckeditor/build/ckeditor';
@@ -32,3 +34,5 @@ export const ConfigEditor = {
   ],
   //*/
 };
+
+export const COMPONENT_LABELS = new InjectionToken<Map<string, string>>('Textos usados no componente');

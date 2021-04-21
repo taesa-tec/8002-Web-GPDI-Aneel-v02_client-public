@@ -18,7 +18,12 @@ const routes: Routes = [
       {
         path: 'propostas',
         loadChildren: () => import('./propostas/propostas.module').then(m => m.PropostasModule)
-      }
+      },
+      {
+        path: 'proposta',
+        //component: SidebarComponent,
+        loadChildren: () => import('@app/proposta/proposta.module').then(m => m.PropostaModule)
+      },
     ]
   }
 ];

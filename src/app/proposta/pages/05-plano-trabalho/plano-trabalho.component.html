@@ -1,0 +1,117 @@
+<div class="row justify-content-between">
+  <div class="col">
+    <h5 class="text-uppercase text-blue font-weight-normal my-4">PLANO DE TRABALHO</h5>
+  </div>
+</div>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label>Motivação</label>
+    <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="motivacao"
+                  placeholder="Descrição, sucinta, das justificativas para proposição do projeto."></app-textarea>
+  </div>
+
+  <div class="form-group">
+    <label>Originalidade</label>
+    <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="originalidade"
+                  placeholder="Descrição da originalidade do produto principal do projeto, em relação ao estadodaarte, com foco no setor elétrico brasileiro."></app-textarea>
+  </div>
+
+  <div class="form-group">
+    <label>Aplicabilidade</label>
+    <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="aplicabilidade"
+                  placeholder="Descrição do âmbito e abrangência de aplicação do produto principal do projeto."></app-textarea>
+  </div>
+
+  <div class="form-group">
+    <label>Relevância</label>
+    <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="relevancia"
+                  placeholder="Descrição da relevância do produto para as entidades participantes do projeto e o setor elétrico brasileiro."></app-textarea>
+  </div>
+
+  <div class="form-group">
+    <label>Razoabilidade dos custos</label>
+    <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="razoabilidadeCustos"
+                  placeholder="Descrição do estudo de viabilidade econômica do projeto."></app-textarea>
+  </div>
+  <div class="form-group">
+    <label>Metodologia de trabalho</label>
+    <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="metodologiaTrabalho"
+                  placeholder="Descrever detalhadamente a metodologia que será empregada para o desenvolvimento do Projeto. Este tópico não diz respeito a metodologia que será desenvolvida."></app-textarea>
+  </div>
+
+  <div class="form-group">
+    <label>Busca de anterioridade detalhada</label>
+    <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="buscaAnterioridade"
+                  placeholder="Demonstrar uma busca de anterioridade detalhada e sem omissões."></app-textarea>
+  </div>
+
+  <div class="form-group">
+    <label>Bibliografia</label>
+    <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="bibliografia"
+                  placeholder="Descrever a Bibliografia principal utilizada para elaboração da proposta e que pretende-se utilizar na execução do projeto."></app-textarea>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h4>
+        PESQUISAS CORRELATAS
+      </h4>
+      <hr>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="form-group">
+        <label>PESQUISAS CORRELATAS DESENVOLVIDAS NO PROGRAMA P&D ANEEL</label>
+        <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="pesquisasCorrelatasPeDAneel"
+                      placeholder="Listagem de pesquisas correlatas a este Projeto de P&D da Aneel."></app-textarea>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="form-group">
+        <label>PESQUISAS CORRELATAS DESENVOLVIDAS NO PROGRAMA P&D</label>
+        <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="pesquisasCorrelatasPeD"
+                      placeholder="Listagem de pesquisas correlatas fora do programa de P&D"></app-textarea>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="form-group">
+        <label>PESQUISAS CORRELATAS DESENVOLVIDAS PELA EMPRESA EXECUTORA</label>
+        <app-textarea class="form-control" rows="5" maxlength="1000" formControlName="pesquisasCorrelatasExecutora"
+                      placeholder="Listagem de pesquisas correlatas desenvolvidas pela empresa executora"></app-textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group mb-0">
+        <label>Arquivos complementares (opcional)</label>
+      </div>
+      <button class="btn btn-link" type="button" (click)="anexarArquivos()"
+              [disabled]="form.disabled">
+        <i class="ta-attachment fs-22"></i> Adicionar e Gerenciar Arquivos Complementares
+      </button>
+      <div class="pr-3 mb-3">
+        <span *ngFor="let anexo of files;" style="cursor: pointer" class="text-blue d-block my-1"
+              (click)="download(anexo)">
+          <i class="ta-projeto"></i> -
+          <span>{{anexo.fileName}}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="text-right">
+      <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+        <i class="ta-save"></i>
+        Salvar Dados
+      </button>
+    </div>
+  </div>
+
+</form>

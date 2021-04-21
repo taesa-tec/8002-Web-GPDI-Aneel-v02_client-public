@@ -5,6 +5,7 @@ import {AdminRoutingModule} from './admin-routing.module';
 import {DashboardModule} from '@app/dashboard';
 import {HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
 import {AdminRootUrl} from '@app/routes/routes';
+import {PROPOSTA_API_URL} from '@app/proposta/shared';
 
 
 @NgModule({
@@ -22,6 +23,10 @@ import {AdminRootUrl} from '@app/routes/routes';
         {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: `/${AdminRootUrl}/captacoes`},
         {text: 'Projetos - Priorização e Seleção', icon: 'ta-file-check', path: `/${AdminRootUrl}/propostas-selecao`},
         {text: 'Configurações do Sistema', icon: 'ta-gear', path: `/${AdminRootUrl}/configuracoes`},
+        //Teste
+        {text: 'Proposta 1', icon: 'ta-projeto', path: `/${AdminRootUrl}/propostas/`},
+        {text: 'Proposta 2', icon: 'ta-projeto', path: `/${AdminRootUrl}/propostas/2`},
+        {text: 'Proposta 3', icon: 'ta-projeto', path: `/${AdminRootUrl}/propostas/3`},
       ]
     }, {
       provide: HEADER_MENU,
@@ -32,6 +37,9 @@ import {AdminRootUrl} from '@app/routes/routes';
     }, {
       provide: ROOT_URL,
       useValue: `/${AdminRootUrl}`
+    }, {
+      provide: PROPOSTA_API_URL,
+      useValue: 'Fornecedor'
     }
   ]
 })

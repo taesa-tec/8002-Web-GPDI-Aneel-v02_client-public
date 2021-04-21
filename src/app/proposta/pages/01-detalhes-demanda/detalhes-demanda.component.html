@@ -1,0 +1,75 @@
+<div class="row justify-content-between">
+  <div class="col">
+    <h5 class="text-uppercase text-blue font-weight-normal my-4">DETALHES DA DEMANDA</h5>
+  </div>
+</div>
+
+<div class="row" [ngSwitch]="proposta?.participacao">
+  <div class="col">
+    <div class="alert border border-success d-flex align-items-center" *ngSwitchCase="1">
+      <div class="mr-3">
+        <i class="ta-ok fs-48 text-success"></i>
+      </div>
+      <div class="text-success">
+        {{'Você confirmou seu interesse em participar deste projeto. Obrigado.' | label}}
+      </div>
+    </div>
+    <div class="alert border border-success d-flex align-items-center" *ngSwitchCase="2">
+      <div class="mr-3">
+        <i class="ta-ok fs-48 text-success"></i>
+      </div>
+      <div class="text-danger">
+        {{'Você confirmou o <b>não</b> interesse em participar deste projeto. Obrigado.' | label}}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <h6 class="text-uppercase text-blue-light">Específicação técnica</h6>
+    <app-pdf-viewer [url]="pdfUrl"></app-pdf-viewer>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col mb-4">
+    <h6 class="text-uppercase text-blue-light">Arquivos complementares</h6>
+    <div *ngFor="let arquivo of proposta?.arquivos">
+      <div class="btn btn-link px-0 py-1">
+        {{ arquivo.fileName }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-4 mb-4">
+    <h6 class="text-uppercase text-blue-light">Data máxima de envio proposta</h6>
+    <div class="form-control disabled bg-cinza-claro">{{proposta?.dataTermino | date:'shortDate'}}</div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col mb-4">
+    <h6 class="text-uppercase text-blue-light">Observações projeto</h6>
+    <div class="bg-cinza-claro rounded p-4">
+      {{proposta?.consideracoes}}
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="proposta?.participacao === 0 && canEdit">
+  <div class="col">
+    <div class="d-flex justify-content-center">
+      <button type="button" class="btn btn-danger m-3" (click)="rejeitar()">
+        <i class="ta-cancel-circle fs-24 align-middle"></i>
+        Não Iremos Participar
+      </button>
+      <button type="button" class="btn btn-green m-3" (click)="participar()">
+        <i class="ta-ok fs-24 align-middle"></i>
+        Desejamos Participar
+      </button>
+    </div>
+  </div>
+</div>

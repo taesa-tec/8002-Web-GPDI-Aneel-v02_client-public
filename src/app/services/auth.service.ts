@@ -167,6 +167,10 @@ export class AuthService {
   }
 
 
+  hasRoles(...roles: string[]) {
+    this.userHasRoles(...roles);
+  }
+
   userHasRoles(...roles: string[]) {
     return roles
       .reduce((p, c) => [...p, ...(Array.isArray(c) ? c : [c])], [])

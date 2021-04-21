@@ -55,7 +55,7 @@ export class PropostasListComponent implements OnInit, OnDestroy {
       this.buttons = [{
         isLink: true,
         text: 'Ver',
-        action: '/fornecedor/propostas/${captacaoId}',
+        action: '/fornecedor/proposta/${guid}',
         className: 'btn btn-primary'
       }];
     }

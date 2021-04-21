@@ -33,6 +33,11 @@ export class UploadFilesService {
 @Injectable()
 export class ServiceBase<T extends { id?: any }> extends UploadFilesService {
 
+  /**
+   * @description Controller da api utilizado por este serviço, é adicionada como prefixo a todas as requisições internas
+   */
+  controller: string;
+
   static useExisting(t): Provider {
     return {
       provide: ServiceBase,
@@ -54,8 +59,14 @@ export class ServiceBase<T extends { id?: any }> extends UploadFilesService {
   put: (url, ...args) => Promise<any> = (url, data, ...args) => this.http.put(`${this.controller}/${url}`, data, ...args).toPromise();
   post: (url, ...args) => Promise<any> = (url, data, ...args) => this.http.post(`${this.controller}/${url}`, data, ...args).toPromise();
 
-  constructor(protected http: HttpClient, protected controller: string) {
+  /**
+   *
+   * @param http Cliente Http
+   * @param controller Controller da api utlizado
+   */
+  constructor(protected http: HttpClient, controller: string) {
     super(http);
+    this.controller = controller.replace(/^\/|\/$/g, '');
   }
 
   sanitizeQuery(query: any) {

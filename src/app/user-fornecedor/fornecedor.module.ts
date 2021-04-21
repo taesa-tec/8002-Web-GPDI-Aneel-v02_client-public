@@ -9,6 +9,7 @@ import {PropostasResolver} from '@app/user-fornecedor/resolvers/propostas.resolv
 import {PropostasService} from '@app/user-fornecedor/services/propostas.service';
 import {AuthService} from '@app/services';
 import {FornecedorRootUrl} from '@app/routes/routes';
+import {PROPOSTA_API_URL, PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 
 
 @NgModule({
@@ -35,6 +36,13 @@ import {FornecedorRootUrl} from '@app/routes/routes';
     }, {
       provide: ROOT_URL,
       useValue: `/${FornecedorRootUrl}`
+    },
+    {
+      provide: PROPOSTA_API_URL,
+      useValue: ''
+    }, {
+      provide: PROPOSTA_CAN_EDIT,
+      useValue: true
     }
   ]
 })

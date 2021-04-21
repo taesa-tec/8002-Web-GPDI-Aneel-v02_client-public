@@ -12,6 +12,7 @@ interface Arquivo {
 }
 
 export interface Proposta {
+  guid: string;
   captacao: string;
   dataCriacao?: Date;
   dataTermino?: Date;
@@ -21,7 +22,8 @@ export interface Proposta {
   fornecedorId: number;
   fornecedor: string;
   captacaoId: number;
-  participacao: 0 | 1 | 2;
+  // 0
+  participacao: 0 | 1 | 2 | 3;
   planoFinalizado: boolean;
   consideracoes: string;
   arquivos: Arquivo[];
