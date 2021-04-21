@@ -1,8 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {ViewContratoComponent} from './view-contrato/view-contrato.component';
-import {ValidacaoContratosComponent} from './validacao-contratos.component';
-import {ContratoResolver, ContratosResolver} from '@app/proposta/resolvers';
+import {ContratoResolver} from '@app/proposta/resolvers';
 
 
 const routes: Routes = [

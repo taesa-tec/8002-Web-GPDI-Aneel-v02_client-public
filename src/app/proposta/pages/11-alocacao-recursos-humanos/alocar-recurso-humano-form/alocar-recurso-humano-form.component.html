@@ -12,7 +12,9 @@
 <div class="modal-body">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <label for="recurso-humano">Recurso humano <app-help codigo="alocacao-recurso-humano"></app-help></label>
+      <label for="recurso-humano">Recurso humano
+        <app-help codigo="alocacao-recurso-humano"></app-help>
+      </label>
       <select class="form-control" id="recurso-humano" formControlName="recursoId">
         <option value="" hidden>Selecione a pessoa que irá executar a tarefa</option>
         <option [value]="recurso.id" *ngFor="let recurso of recursos">
@@ -23,7 +25,9 @@
 
     <div class="form-row">
       <div class="form-group col">
-        <label for="empresa-financiadora">Empresa Financiadora <app-help codigo="alocacao-recurso-humano-financiadora"></app-help></label>
+        <label for="empresa-financiadora">Empresa Financiadora
+          <app-help codigo="alocacao-recurso-humano-financiadora"></app-help>
+        </label>
         <select class="form-control" id="empresa-financiadora" formControlName="empresaFinanciadora">
           <option value="" hidden>Selecione uma empresa financiadora</option>
           <option [value]="empresa.value" *ngFor="let empresa of empresas">
@@ -32,7 +36,9 @@
         </select>
       </div>
       <div class="form-group col">
-        <label for="etapa">Etapa relacionada <app-help codigo="alocacao-recurso-humano-etapa"></app-help></label>
+        <label for="etapa">Etapa relacionada
+          <app-help codigo="alocacao-recurso-humano-etapa"></app-help>
+        </label>
         <select class="form-control" id="etapa" formControlName="etapaId">
           <option value="" hidden>Selecione uma etapa</option>
           <option [value]="etapa.id" *ngFor="let etapa of etapas">
@@ -68,7 +74,7 @@
       <app-textarea class="form-control" formControlName="justificativa" rows="4" maxlength="1000"></app-textarea>
     </div>
 
-    <div class="form-group d-flex justify-content-between">
+    <div class="form-group d-flex justify-content-between" *ngIf="canEdit">
       <div>
         <button type="button" class="button btn btn-danger" (click)="remover()" *ngIf="form.value.id !== 0">
           <i class="ta-trash mr-1"></i>

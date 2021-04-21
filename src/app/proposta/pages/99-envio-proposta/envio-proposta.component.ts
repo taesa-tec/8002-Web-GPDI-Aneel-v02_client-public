@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
 import {Proposta, Validations} from '@app/commons';
@@ -7,6 +7,7 @@ import {PropostasService} from '@app/proposta/services/propostas.service';
 import {FileService} from '@app/services/file.service';
 import {AppService} from '@app/services';
 import {LoadingComponent} from '@app/core/components';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 
 @Component({
   selector: 'app-envio-proposta',
@@ -23,11 +24,13 @@ export class EnvioPropostaComponent implements OnInit {
 
   proposta: Proposta;
 
-  constructor(protected route: ActivatedRoute,
-              protected app: AppService,
-              protected sanitize: DomSanitizer,
-              protected fileService: FileService,
-              protected service: PropostasService) {
+  constructor(
+    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
+    protected route: ActivatedRoute,
+    protected app: AppService,
+    protected sanitize: DomSanitizer,
+    protected fileService: FileService,
+    protected service: PropostasService) {
   }
 
   async downloadFile(file) {

@@ -1,10 +1,11 @@
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 
 import {AppService} from '@app/services/app.service';
 import {PropostaNodeFormDirective} from '@app/proposta/directives';
 import {PropostaServiceBase} from '@app/proposta/services/proposta-service-base.service';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 
 @Component({
   selector: 'app-recurso-material-form',
@@ -22,8 +23,8 @@ export class RecursoMaterialFormComponent extends PropostaNodeFormDirective impl
   });
   categorias = [];
 
-  constructor(app: AppService, fb: FormBuilder, activeModal: NgbActiveModal, service: PropostaServiceBase) {
-    super(app, fb, activeModal, service);
+  constructor(@Inject(PROPOSTA_CAN_EDIT) canEdit: boolean, app: AppService, fb: FormBuilder, activeModal: NgbActiveModal, service: PropostaServiceBase) {
+    super(canEdit, app, fb, activeModal, service);
   }
 
   ngOnInit() {

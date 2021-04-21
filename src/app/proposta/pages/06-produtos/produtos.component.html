@@ -3,7 +3,7 @@
     <h5 class="text-uppercase text-blue font-weight-normal my-4">PRODUTOS</h5>
   </div>
   <div class="col-auto">
-    <a class="btn btn-outline-primary" [routerLink]="['./']" fragment="novo">
+    <a class="btn btn-outline-primary" [routerLink]="['./']" fragment="novo" *ngIf="canEdit">
       <i class="ta-plus-circle fs-24 align-middle"></i>
       Novo Produto
     </a>

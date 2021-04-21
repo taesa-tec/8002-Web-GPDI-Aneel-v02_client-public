@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators, FormArray} from '@angular/forms';
 
 import {AppService} from '@app/services/app.service';
@@ -6,6 +6,7 @@ import {ActivatedRoute} from '@angular/router';
 import {PropostasService} from '@app/proposta/services/propostas.service';
 import {PropostaComponent} from '@app/proposta/proposta.component';
 import {Proposta} from '@app/commons';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 
 @Component({
   selector: 'app-plano-trabalho',
@@ -30,9 +31,11 @@ export class PlanoTrabalhoComponent implements OnInit {
   });
   files: Array<any> = [];
 
-  constructor(private app: AppService, private fb: FormBuilder, private route: ActivatedRoute,
-              private parent: PropostaComponent,
-              private service: PropostasService
+  constructor(
+    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
+    private app: AppService, private fb: FormBuilder, private route: ActivatedRoute,
+    private parent: PropostaComponent,
+    private service: PropostasService
   ) {
   }
 
@@ -44,6 +47,9 @@ export class PlanoTrabalhoComponent implements OnInit {
         this.updateFormFiles(arquivos);
       }
     });
+    if (!this.canEdit) {
+      this.form.disable();
+    }
     this.service.proposta.subscribe(proposta => this.proposta = proposta);
   }
 

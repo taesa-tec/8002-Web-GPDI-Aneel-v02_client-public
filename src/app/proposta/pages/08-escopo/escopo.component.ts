@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import {AppService} from '@app/services/app.service';
@@ -6,6 +6,7 @@ import {PropostaComponent} from '@app/proposta/proposta.component';
 import {ActivatedRoute} from '@angular/router';
 import {PropostasService} from '@app/proposta/services/propostas.service';
 import {Proposta} from '@app/commons';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 
 @Component({
   selector: 'app-escopo',
@@ -33,9 +34,11 @@ export class EscopoComponent implements OnInit {
     return this.proposta.duracao || 0;
   }
 
-  constructor(private app: AppService,
-              private fb: FormBuilder,
-              protected route: ActivatedRoute, protected service: PropostasService) {
+  constructor(
+    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
+    private app: AppService,
+    private fb: FormBuilder,
+    protected route: ActivatedRoute, protected service: PropostasService) {
   }
 
   ngOnInit(): void {
@@ -49,6 +52,9 @@ export class EscopoComponent implements OnInit {
       }
     }
     this.service.proposta.subscribe(p => this.proposta = p);
+    if (!this.canEdit) {
+      this.form.disable();
+    }
   }
 
   addMeta(meta?: { objetivo: string; meses: number; id: number }) {

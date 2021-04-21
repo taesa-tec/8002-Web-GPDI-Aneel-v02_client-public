@@ -2,21 +2,18 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppService} from '@app/services/app.service';
-import {AppValidators, Proposta} from '@app/commons';
-import {PropostasService} from '@app/proposta/services/propostas.service';
+import {AppValidators} from '@app/commons';
 import {PropostaNodeFormDirective} from '@app/proposta/directives';
 import {PropostaServiceBase} from '@app/proposta/services/proposta-service-base.service';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 
 @Component({
   selector: 'app-co-executor-form',
   templateUrl: './co-executor-form.component.html',
   styleUrls: ['./co-executor-form.component.scss'],
-  providers: [
-
-  ]
+  providers: []
 })
 export class CoExecutorFormComponent extends PropostaNodeFormDirective implements OnInit {
-  captacaoId: number;
   coExecutor: any;
   form = this.fb.group({
     id: [0],
@@ -27,14 +24,20 @@ export class CoExecutorFormComponent extends PropostaNodeFormDirective implement
   });
 
 
-  constructor(app: AppService, fb: FormBuilder, activeModal: NgbActiveModal, service: PropostaServiceBase) {
-    super(app, fb, activeModal, service);
+  constructor(
+    @Inject(PROPOSTA_CAN_EDIT) canEdit: boolean,
+    app: AppService, fb: FormBuilder, activeModal: NgbActiveModal, service: PropostaServiceBase) {
+    super(canEdit, app, fb, activeModal, service);
   }
 
   ngOnInit(): void {
     if (this.coExecutor) {
       this.form.patchValue(this.coExecutor);
     }
+    if (!this.canEdit) {
+      this.form.disable();
+    }
+
   }
 
 
@@ -56,7 +59,7 @@ export class CoExecutorFormComponent extends PropostaNodeFormDirective implement
   }
 
   async onSubmit() {
-    if (this.form.valid && this.captacaoId) {
+    if (this.form.valid) {
       try {
         await this.service.salvar(this.form.value);
         this.activeModal.close(true);

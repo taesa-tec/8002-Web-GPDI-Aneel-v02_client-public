@@ -13,7 +13,7 @@ export class PropostasResolver implements Resolve<Array<any>> {
     if (route.url.length > 0 && route.url[0].path === 'encerradas') {
       return this.service.obter('Encerradas');
     }
-    return this.service.obter();
+    return this.service.obter('EmAberto');
   }
 
 }

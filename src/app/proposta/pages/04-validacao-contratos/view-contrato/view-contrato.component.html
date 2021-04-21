@@ -15,7 +15,7 @@
     <div class="border border-success rounded d-flex text-success align-items-center p-3">
       <i class="ta-ok fs-48 mr-3"></i>
       <div>
-        Você marcou o contrato como finalizado. Se quiser é possível editar o mesmo até a data máxima de captação.
+        {{'contrato-finalizado' | label}}
       </div>
     </div>
   </div>
@@ -71,11 +71,12 @@
             <i class="ta-download"></i>
             Download PDF
           </button>
-          <button type="submit" class="btn btn-outline-primary mx-2" value="draft" [disabled]="form.invalid">
+          <button type="submit" class="btn btn-outline-primary mx-2" value="draft" [disabled]="form.invalid"
+                  *ngIf="canEdit">
             <i class="ta-save fs-24 align-middle"></i>
             Salvar como Rascunho
           </button>
-          <button type="submit" class="btn btn-success mx-2" value="publish" [disabled]="form.invalid">
+          <button type="submit" class="btn btn-success mx-2" value="publish" [disabled]="form.invalid" *ngIf="canEdit">
             <i class="ta-ok fs-24 align-middle"></i>
             Salvar e Marcar como Finalizado
           </button>

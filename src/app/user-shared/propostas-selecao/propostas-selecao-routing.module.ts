@@ -1,8 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {HomeComponent} from '@app/user-shared/propostas-selecao/home/home.component';
-import {PendenteComponent} from '@app/user-shared/propostas-selecao/pendente/pendente.component';
-import {FinalizadaComponent} from '@app/user-shared/propostas-selecao/finalizada/finalizada.component';
 import {CaptacoesResolver} from '@app/resolvers';
 import {CaptacaoButtons, CaptacaoCols} from '@app/user-shared/captacao';
 import {ListComponent} from '@app/user-shared/propostas-selecao/list/list.component';

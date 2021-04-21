@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, Validators, FormGroup} from '@angular/forms';
 
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppService} from '@app/services/app.service';
 import {PropostaNodeFormDirective} from '@app/proposta/directives';
 import {PropostaServiceBase} from '@app/proposta/services/proposta-service-base.service';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 
 @Component({
   selector: 'app-alocar-recurso-material-form',
@@ -32,8 +33,8 @@ export class AlocarRecursoMaterialFormComponent extends PropostaNodeFormDirectiv
     quantidade: ['', [Validators.required, Validators.min(1)]],
   });
 
-  constructor(app: AppService, fb: FormBuilder, activeModal: NgbActiveModal, service: PropostaServiceBase) {
-    super(app, fb, activeModal, service);
+  constructor(@Inject(PROPOSTA_CAN_EDIT) canEdit: boolean, app: AppService, fb: FormBuilder, activeModal: NgbActiveModal, service: PropostaServiceBase) {
+    super(canEdit, app, fb, activeModal, service);
   }
 
   ngOnInit() {

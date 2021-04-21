@@ -21,12 +21,9 @@ import {PROPOSTA_API_URL} from '@app/proposta/shared';
       useValue: [
         {text: 'Gestão de Demandas', icon: 'ta-projeto', path: `/${AdminRootUrl}/demandas`},
         {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: `/${AdminRootUrl}/captacoes`},
-        {text: 'Projetos - Priorização e Seleção', icon: 'ta-file-check', path: `/${AdminRootUrl}/propostas-selecao`},
+        {text: 'Projetos - Priorização e Seleção', icon: 'ta-file-check', path: `/${AdminRootUrl}/selecao`},
+        {text: 'Projetos - Refinamento', icon: 'ta-file-check', path: `/${AdminRootUrl}/refinamento`},
         {text: 'Configurações do Sistema', icon: 'ta-gear', path: `/${AdminRootUrl}/configuracoes`},
-        //Teste
-        {text: 'Proposta 1', icon: 'ta-projeto', path: `/${AdminRootUrl}/propostas/`},
-        {text: 'Proposta 2', icon: 'ta-projeto', path: `/${AdminRootUrl}/propostas/2`},
-        {text: 'Proposta 3', icon: 'ta-projeto', path: `/${AdminRootUrl}/propostas/3`},
       ]
     }, {
       provide: HEADER_MENU,

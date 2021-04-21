@@ -3,23 +3,28 @@
     <h5 class="text-uppercase text-blue font-weight-normal my-4">DETALHES DA DEMANDA</h5>
   </div>
 </div>
+<ng-template #confirmacao>
+  <div class="alert border border-success d-flex align-items-center">
+    <div class="mr-3">
+      <i class="ta-ok fs-48 text-success"></i>
+    </div>
+    <div class="text-success">
+      {{'alert-participacao-confirmado' | label}}
+    </div>
+  </div>
+</ng-template>
 
 <div class="row" [ngSwitch]="proposta?.participacao">
   <div class="col">
-    <div class="alert border border-success d-flex align-items-center" *ngSwitchCase="1">
-      <div class="mr-3">
-        <i class="ta-ok fs-48 text-success"></i>
-      </div>
-      <div class="text-success">
-        {{'Você confirmou seu interesse em participar deste projeto. Obrigado.' | label}}
-      </div>
-    </div>
+
+    <ng-container *ngSwitchCase="1" [ngTemplateOutlet]="confirmacao"></ng-container>
+    <ng-container *ngSwitchCase="3" [ngTemplateOutlet]="confirmacao"></ng-container>
     <div class="alert border border-success d-flex align-items-center" *ngSwitchCase="2">
       <div class="mr-3">
-        <i class="ta-ok fs-48 text-success"></i>
+        <i class="ta-ok fs-48 text-danger"></i>
       </div>
       <div class="text-danger">
-        {{'Você confirmou o <b>não</b> interesse em participar deste projeto. Obrigado.' | label}}
+        {{'Você confirmou o não interesse em participar deste projeto. Obrigado.' | label}}
       </div>
     </div>
   </div>

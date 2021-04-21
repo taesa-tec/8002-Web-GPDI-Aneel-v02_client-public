@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppService} from '@app/services/app.service';
 import {TableComponentCols, TableComponentActions} from '@app/core/components/table/table';
 import {ProdutoFormComponent} from './produto-form/produto-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProdutosService} from '@app/proposta/services/proposta-service-base.service';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 
 @Component({
   selector: 'app-produtos',
@@ -31,24 +32,26 @@ export class ProdutosComponent implements OnInit {
     }
   ];
 
-  buttons: TableComponentActions = [
-    {
-      isLink: true,
-      action: './#${id}',
-      text: 'EDITAR',
-      icon: 'ta-edit',
-      className: 'btn btn-primary'
-    }
-  ];
+  buttons: TableComponentActions;
   produtos: Array<any> = [];
 
   constructor(
+    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
     private app: AppService,
     private modal: NgbModal,
     protected service: ProdutosService,
     private route: ActivatedRoute,
     private router: Router
   ) {
+    this.buttons = [
+      {
+        isLink: true,
+        action: './#${id}',
+        text: this.canEdit ? 'EDITAR' : 'VISUALIZAR',
+        icon: this.canEdit ? 'ta-edit' : 'ta-eye',
+        className: 'btn btn-primary'
+      }
+    ];
   }
 
   async ngOnInit() {

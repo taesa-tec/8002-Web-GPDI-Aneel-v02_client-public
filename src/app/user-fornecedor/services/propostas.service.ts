@@ -1,13 +1,7 @@
-import {Inject, Injectable, Provider} from '@angular/core';
+import {Injectable, Provider} from '@angular/core';
 import {ServiceBase} from '@app/services';
 import {HttpClient} from '@angular/common/http';
 import {BaseEntity, Validations} from '@app/commons';
-import {CAPTACAO_ID} from '@app/user-fornecedor/propostas/proposta/shared';
-import {NavigationEnd, Router} from '@angular/router';
-import {filter} from 'rxjs/operators';
-import {Observable} from 'rxjs';
-import {PropostaModule} from '@app/user-fornecedor/propostas/proposta/proposta.module';
-import {PropostasModule} from '@app/user-fornecedor/propostas/propostas.module';
 
 @Injectable()
 export class PropostaServiceBase extends ServiceBase<any> {
@@ -28,11 +22,11 @@ export class PropostaServiceBase extends ServiceBase<any> {
   }
 
   set captacaoId(value) {
-    this.controller = `Fornecedor/Propostas/${value}/${this.append}`;
+    this.controller = `Propostas/${value}/${this.append}`;
   }
 
   constructor(http: HttpClient, protected append: string) {
-    super(http, 'Fornecedor/Propostas/');
+    super(http, 'Propostas/');
   }
 }
 
@@ -40,7 +34,7 @@ export class PropostaServiceBase extends ServiceBase<any> {
 export class PropostasService extends ServiceBase<any> {
 
   constructor(http: HttpClient) {
-    super(http, 'Fornecedor/Propostas');
+    super(http, 'Propostas');
   }
 
   async rejeitar(id: number) {

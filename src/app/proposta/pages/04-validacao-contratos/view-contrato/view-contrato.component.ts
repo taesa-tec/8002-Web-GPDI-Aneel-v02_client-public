@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {FormBuilder, Validators} from '@angular/forms';
 import {AppService} from '@app/services/app.service';
@@ -11,6 +11,7 @@ import {FileService} from '@app/services/file.service';
 import {ConfigEditor} from '@app/core/shared';
 import * as ClassicEditor from '@projects/ckeditor/build/ckeditor';
 import {Proposta} from '@app/commons';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 
 
 @Component({
@@ -29,6 +30,7 @@ export class ViewContratoComponent implements OnInit {
   });
 
   constructor(
+    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
     private app: AppService,
     private parent: PropostaComponent,
     private service: PropostasService,
@@ -45,6 +47,9 @@ export class ViewContratoComponent implements OnInit {
       this.form.get('conteudo').patchValue(this.contrato.conteudo || this.contrato.parent.conteudo);
     });
     this.service.proposta.subscribe(p => this.proposta = p);
+    if (!this.canEdit) {
+      this.form.disable();
+    }
   }
 
   async onSubmit(evt: any) {

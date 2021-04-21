@@ -24,8 +24,7 @@
     <div class="border border-success rounded d-flex text-success align-items-center p-3">
       <i class="ta-ok fs-48 mr-3"></i>
       <div>
-        Você marcou o Plano de Trabalho como finalizado. Se quiser é possível editar o mesmo até a data máxima de
-        captação.
+        {{'plano-finalizado'|label}}
       </div>
     </div>
   </div>
@@ -114,7 +113,8 @@
           Download PDF
         </button>
       </div>
-      <button type="button" [disabled]="!validations.isValid" class="btn btn-success" (click)="marcarComoFinalizado()">
+      <button type="button" [disabled]="!validations.isValid" class="btn btn-success" (click)="marcarComoFinalizado()"
+              *ngIf="canEdit">
         <i class="ta-ok"></i>
         Marcar como Finalizado
       </button>

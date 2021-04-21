@@ -1,10 +1,11 @@
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppService} from '@app/services/app.service';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LoadingComponent} from '@app/core/components';
 import {ProdutosService} from '@app/proposta/services/proposta-service-base.service';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 
 @Component({
   selector: 'app-produto-form',
@@ -34,6 +35,7 @@ export class ProdutoFormComponent implements OnInit {
   @ViewChild(LoadingComponent) loading: LoadingComponent;
 
   constructor(
+    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
     private app: AppService,
     private fb: FormBuilder,
     protected service: ProdutosService,
@@ -51,6 +53,9 @@ export class ProdutoFormComponent implements OnInit {
     });
     if (this.route.snapshot.data.produto) {
       this.form.patchValue(this.route.snapshot.data.produto);
+    }
+    if (!this.canEdit) {
+      this.form.disable();
     }
   }
 

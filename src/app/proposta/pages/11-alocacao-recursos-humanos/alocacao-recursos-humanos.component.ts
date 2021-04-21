@@ -1,11 +1,12 @@
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 
 import {TableComponentCols, TableComponentActions, TableComponentFilter, TABLE_COLS, TABLE_ACTIONS} from '@app/core/components/table/table';
 import {AlocarRecursoHumanoFormComponent} from './alocar-recurso-humano-form/alocar-recurso-humano-form.component';
 import {CRUD_EDITOR} from '@app/core/components/crud/crud.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PropostaComponent} from '@app/proposta/proposta.component';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 
 const tableCols: TableComponentCols = [
   {
@@ -53,6 +54,7 @@ const buttons = [
 export class AlocacaoRecursosHumanosComponent implements OnInit {
 
   constructor(
+    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
     protected router: Router,
     protected route: ActivatedRoute,
     protected parent: PropostaComponent) {

@@ -3,7 +3,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import {TableComponentCols, TableComponentActions, TableComponentFilter, TableActionEvent} from '@app/core/components/table/table';
 import {CoExecutorFormComponent} from './co-executor-form/co-executor-form.component';
-import {CAPTACAO_ID} from '@app/proposta/shared';
+import {CAPTACAO_ID, PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
@@ -35,23 +35,24 @@ export class CoExecutoresComponent implements OnInit {
     }
   ];
 
-  buttons: TableComponentActions = [
-    {
-      action: 'editar',
-      text: 'EDITAR',
-      icon: 'ta-edit',
-      className: 'btn btn-primary'
-    }
-  ];
+  buttons: TableComponentActions;
 
   filters: Array<TableComponentFilter> = [];
 
   constructor(
-    @Inject(CAPTACAO_ID) private captacaoId: number,
+    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
     private router: Router,
     private route: ActivatedRoute,
     private modal: NgbModal,
   ) {
+    this.buttons = [
+      {
+        action: 'editar',
+        text: this.canEdit ? 'EDITAR' : 'VISUALIZAR',
+        icon: this.canEdit ? 'ta-edit' : 'ta-eye',
+        className: 'btn btn-primary'
+      }
+    ];
   }
 
   async ngOnInit() {
@@ -68,11 +69,9 @@ export class CoExecutoresComponent implements OnInit {
   async modalCoExecutora(coExecutor?) {
     const ref = this.modal.open(CoExecutorFormComponent, {size: 'lg'});
     const cmp = ref.componentInstance as CoExecutorFormComponent;
-    cmp.captacaoId = this.captacaoId;
     cmp.coExecutor = coExecutor;
     await ref.result;
     await this.router.navigate(['./'], {relativeTo: this.route});
-    // @todo
   }
 
   async tableAction(evt: TableActionEvent) {

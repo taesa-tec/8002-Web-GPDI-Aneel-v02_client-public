@@ -1,3 +1,4 @@
+@import "components-base";
 
 .wrap-controls {
   margin-left: -.25rem;
@@ -5,13 +6,30 @@
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-gap: .25rem;
+
+  &.disabled {
+    .wrap-input-control {
+      background-color: $cinzaClaro;
+      cursor: default;
+
+      &.active {
+        background-color: $cinza;
+
+      }
+    }
+  }
 }
 
 .wrap-input-control {
   padding: .25rem;
   cursor: pointer;
-  background: inherit;
+  background: $cinzaClaro;
   transition: background-color 250ms ease-in-out;
+
+  &.active {
+    color: white;
+    background-color: $blue;
+  }
 
   &:hover {
     background-color: #DDDDDD88;

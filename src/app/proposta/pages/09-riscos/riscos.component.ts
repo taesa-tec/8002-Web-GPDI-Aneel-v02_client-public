@@ -4,6 +4,7 @@ import {RiscoFormComponent} from './risco-form/risco-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PropostaComponent} from '@app/proposta/proposta.component';
 import {CRUD_EDITOR} from '@app/core/components/crud/crud.component';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 
 const tableCols = [
   {
@@ -48,6 +49,7 @@ export class RiscosComponent implements OnInit {
 
 
   constructor(
+    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
     protected router: Router,
     protected route: ActivatedRoute,
     protected parent: PropostaComponent) {

@@ -3,7 +3,7 @@
     <h5 class="text-uppercase text-blue font-weight-normal my-4">ETAPAS</h5>
   </div>
   <div class="col-auto">
-    <a type="button" class="btn btn-outline-primary" routerLink="./" fragment="novo">
+    <a type="button" class="btn btn-outline-primary" routerLink="./" fragment="novo" *ngIf="canEdit">
       <i class="ta-plus-circle fs-24 align-middle"></i>
       Nova Etapa
     </a>
@@ -17,11 +17,11 @@
         <label class="d-block">Duração do Projeto (Em Meses)</label>
       </div>
       <div class="input-group">
-        <input type="number" class="form-control" name="duracao" [(ngModel)]="duracao" value="1" min="1" max="60"
+        <input type="number" class="form-control" [disabled]="!canEdit" name="duracao" [(ngModel)]="duracao" value="1" min="1" max="60"
                size="3">
         <div class="input-group-append">
           <span class="input-group-text">Meses</span>
-          <button class="btn btn-primary" [disabled]="loading"><i
+          <button class="btn btn-primary" [disabled]="loading || !canEdit"><i
             class="ta-save"></i> {{loading ? 'Salvando' : 'Salvar'}}</button>
         </div>
       </div>

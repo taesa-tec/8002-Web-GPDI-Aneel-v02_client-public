@@ -1,6 +1,6 @@
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {TableComponentCols, TableComponentActions, TableComponentFilter} from '@app/core/components/table/table';
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {AppService} from '@app/services';
 import {PropostasService} from '@app/proposta/services/propostas.service';
 import {PropostaComponent} from '@app/proposta/proposta.component';
@@ -8,6 +8,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {EtapaFormComponent} from '@app/proposta/pages/07-etapas/etapa-form/etapa-form.component';
 import {EtapasService} from '@app/proposta/services/proposta-service-base.service';
 import {Proposta} from '@app/commons';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 
 @Component({
   selector: 'app-etapas',
@@ -39,18 +40,11 @@ export class EtapasComponent implements OnInit {
     }
   ];
 
-  buttons: TableComponentActions = [
-    {
-      action: './#${id}',
-      isLink: true,
-      text: 'Editar',
-      icon: 'ta-edit',
-      className: 'btn btn-primary'
-    }
-  ];
+  buttons: TableComponentActions;
   etapas = [];
 
   constructor(
+    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
     private route: ActivatedRoute,
     private router: Router,
     private modal: NgbModal,
@@ -58,6 +52,15 @@ export class EtapasComponent implements OnInit {
     private service: EtapasService,
     private propostaService: PropostasService,
   ) {
+    this.buttons = [
+      {
+        action: './#${id}',
+        isLink: true,
+        text: canEdit ? 'Editar' : 'Visualizar',
+        icon: canEdit ? 'ta-edit' : 'ta-eye',
+        className: 'btn btn-primary'
+      }
+    ];
   }
 
   async ngOnInit() {
@@ -73,6 +76,7 @@ export class EtapasComponent implements OnInit {
       this.proposta = p;
       this.duracao = this.proposta.duracao;
     });
+
   }
 
   async tableAction({action, data}) {
@@ -94,6 +98,7 @@ export class EtapasComponent implements OnInit {
   }
 
   async salvarDuracao() {
+
     this.loading = true;
     try {
       await this.propostaService.atualizarDuracao(this.proposta.guid, this.duracao);

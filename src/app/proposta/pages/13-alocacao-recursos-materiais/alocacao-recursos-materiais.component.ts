@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 
 import {TableComponentCols, TableComponentActions, TableComponentFilter, TABLE_COLS, TABLE_ACTIONS} from '@app/core/components/table/table';
 import {CRUD_EDITOR} from '@app/core/components/crud/crud.component';
@@ -10,6 +10,7 @@ import {
 import {
   AlocarRecursoHumanoFormComponent
 } from '@app/proposta/pages/11-alocacao-recursos-humanos/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 
 const tableCols: TableComponentCols = [
   {
@@ -56,6 +57,7 @@ const buttons = [
 })
 export class AlocacaoRecursosMateriaisComponent implements OnInit {
   constructor(
+    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
     protected router: Router,
     protected route: ActivatedRoute,
     protected parent: PropostaComponent) {

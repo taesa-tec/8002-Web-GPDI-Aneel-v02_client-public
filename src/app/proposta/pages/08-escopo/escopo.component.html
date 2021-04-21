@@ -107,7 +107,7 @@
                   placeholder="Descrever o que se pretende alcançar com o(s) produto(s) desenvolvido(s)."></app-textarea>
   </div>
 
-  <div class="form-group">
+  <div class="form-group" *ngIf="canEdit">
     <div class="text-right">
       <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
         <i class="ta-save"></i>

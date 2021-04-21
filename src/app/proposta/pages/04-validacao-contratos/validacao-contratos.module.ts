@@ -2,15 +2,13 @@ import {NgModule} from '@angular/core';
 import {SharedModule} from '@app/dashboard/shared/shared.module';
 
 import {ValidacaoContratosRoutingModule} from './validacao-contratos-routing.module';
-import {ValidacaoContratosComponent} from './validacao-contratos.component';
 import {ViewContratoComponent} from './view-contrato/view-contrato.component';
-import {ContratoResolver, ContratosResolver} from '@app/proposta/resolvers';
+import {ContratoResolver} from '@app/proposta/resolvers';
 import {HistoricoComponent} from './historico/historico.component';
 
 
 @NgModule({
   declarations: [
-    ValidacaoContratosComponent,
     ViewContratoComponent,
     HistoricoComponent
   ],
@@ -18,7 +16,7 @@ import {HistoricoComponent} from './historico/historico.component';
     SharedModule,
     ValidacaoContratosRoutingModule
   ],
-  providers: [ContratosResolver, ContratoResolver]
+  providers: [ContratoResolver]
 })
 export class ValidacaoContratosModule {
 }

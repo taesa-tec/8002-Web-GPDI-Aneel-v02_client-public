@@ -4,8 +4,6 @@ import {CommonModule} from '@angular/common';
 import {PropostasSelecaoRoutingModule} from './propostas-selecao-routing.module';
 import {HomeComponent} from './home/home.component';
 import {DirectivesModule} from '@app/dashboard/shared/directives';
-import {PendenteComponent} from './pendente/pendente.component';
-import {FinalizadaComponent} from './finalizada/finalizada.component';
 import {CoreModule} from '@app/core';
 import {SelecaoComponent} from './selecao/selecao.component';
 import {PropostaDetalhesComponent} from './proposta-detalhes/proposta-detalhes.component';
@@ -18,7 +16,7 @@ import {EquipePedResolver} from '@app/resolvers/equipe-ped.resolver';
 
 
 @NgModule({
-  declarations: [HomeComponent, PendenteComponent, FinalizadaComponent, SelecaoComponent, PropostaDetalhesComponent, ListComponent],
+  declarations: [HomeComponent, SelecaoComponent, PropostaDetalhesComponent, ListComponent],
   imports: [
     CommonModule,
     PropostasSelecaoRoutingModule,

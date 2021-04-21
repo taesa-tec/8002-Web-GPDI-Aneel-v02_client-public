@@ -1,12 +1,13 @@
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, Validators, FormGroup, FormArray} from '@angular/forms';
 import {AppService} from '@app/services/app.service';
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {EtapasService, ProdutosService} from '@app/proposta/services/proposta-service-base.service';
 import {Proposta} from '@app/commons';
 import {mesesSelectorRequered} from '@app/proposta/pages/07-etapas/etapa-form/meses-selector.component';
 import {ActivatedRoute} from '@angular/router';
 import {PropostasService} from '@app/proposta/services/propostas.service';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 
 @Component({
   selector: 'app-etapa-form',
@@ -26,6 +27,7 @@ export class EtapaFormComponent implements OnInit {
   });
 
   constructor(
+    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
     public produtoService: ProdutosService,
     protected propostasService: PropostasService,
     protected service: EtapasService,
@@ -40,6 +42,9 @@ export class EtapaFormComponent implements OnInit {
     this.produtoService.obter().then(p => this.produtos = p);
     if (this.route.snapshot.data.etapa) {
       this.form.patchValue(this.route.snapshot.data.etapa);
+    }
+    if (!this.canEdit) {
+      this.form.disable();
     }
   }
 

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
@@ -7,6 +7,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Proposta} from '@app/commons';
 import {PropostaNodeFormDirective} from '@app/proposta/directives';
 import {PropostaServiceBase} from '@app/proposta/services/proposta-service-base.service';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 
 @Component({
   selector: 'app-risco-form',
@@ -40,8 +41,10 @@ export class RiscoFormComponent extends PropostaNodeFormDirective implements OnI
     {nome: 'Baixo'}
   ];
 
-  constructor(app: AppService, fb: FormBuilder, activeModal: NgbActiveModal, service: PropostaServiceBase) {
-    super(app, fb, activeModal, service);
+  constructor(
+    @Inject(PROPOSTA_CAN_EDIT) canEdit: boolean,
+    app: AppService, fb: FormBuilder, activeModal: NgbActiveModal, service: PropostaServiceBase) {
+    super(canEdit, app, fb, activeModal, service);
   }
 
   ngOnInit(): void {

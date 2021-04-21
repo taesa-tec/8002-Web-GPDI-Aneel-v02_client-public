@@ -14,6 +14,7 @@ import {AbstractControl, ControlValueAccessor, FormGroup, NG_VALUE_ACCESSOR, Val
   ]
 })
 export class MesesSelectorComponent implements OnInit, ControlValueAccessor {
+  isDisabled = false;
   private _duracao: number;
   get duracao(): number {
     return this._duracao;
@@ -31,9 +32,11 @@ export class MesesSelectorComponent implements OnInit, ControlValueAccessor {
     return [...this.map].filter(i => i[1] && i[0] <= this.duracao).map(i => i[0]);
   }
 
-  protected onChange: any = function() {  };
+  protected onChange: any = function () {
+  };
 
-  protected onTouch: any = function() {  };
+  protected onTouch: any = function () {
+  };
 
   constructor() {
   }
@@ -51,9 +54,17 @@ export class MesesSelectorComponent implements OnInit, ControlValueAccessor {
   }
 
   change(mes, active) {
+    if (this.isDisabled) {
+      return;
+    }
     this.map.set(mes, active);
     this.onChange(this.meses);
   }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.isDisabled = isDisabled;
+  }
+
 
   ngOnInit(): void {
     this.setup();

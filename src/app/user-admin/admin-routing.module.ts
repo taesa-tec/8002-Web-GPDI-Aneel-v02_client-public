@@ -27,15 +27,16 @@ const routes: Routes = [
         loadChildren: () => import('@app/user-shared/captacao/captacao.module').then(m => m.CaptacaoModule)
       },
       {
-        path: 'propostas-selecao',
+        path: 'selecao',
         component: SidebarComponent,
         loadChildren: () => import('@app/user-shared/propostas-selecao/propostas-selecao.module').then(m => m.PropostasSelecaoModule)
       },
       {
-        path: 'propostas',
-        //component: SidebarComponent,
-        loadChildren: () => import('@app/proposta/proposta.module').then(m => m.PropostaModule)
+        path: 'refinamento',
+        loadChildren: () => import('@app/user-shared/propostas-refinamento/propostas-refinamento.module')
+          .then(m => m.PropostasRefinamentoModule)
       },
+
       {
         path: 'configuracoes',
         component: SidebarComponent,

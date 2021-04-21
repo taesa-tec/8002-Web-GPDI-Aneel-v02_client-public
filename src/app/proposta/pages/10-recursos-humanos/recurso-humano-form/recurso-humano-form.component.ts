@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, Validators, FormGroup} from '@angular/forms';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppValidators, Funcoes, Graduacoes, TextValue} from '@app/commons';
 import {AppService} from '@app/services/app.service';
 import {PropostaNodeFormDirective} from '@app/proposta/directives';
 import {PropostaServiceBase} from '@app/proposta/services/proposta-service-base.service';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 
 @Component({
   selector: 'app-recurso-humano-form',
@@ -32,8 +33,10 @@ export class RecursoHumanoFormComponent extends PropostaNodeFormDirective implem
   titulacoes = Graduacoes;
   funcoes = Funcoes;
 
-  constructor(app: AppService, fb: FormBuilder, activeModal: NgbActiveModal, service: PropostaServiceBase) {
-    super(app, fb, activeModal, service);
+  constructor(
+    @Inject(PROPOSTA_CAN_EDIT) canEdit: boolean,
+    app: AppService, fb: FormBuilder, activeModal: NgbActiveModal, service: PropostaServiceBase) {
+    super(canEdit, app, fb, activeModal, service);
   }
 
   ngOnInit(): void {

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import {TableComponentCols, TableComponentActions, TableComponentFilter, TABLE_COLS, TABLE_ACTIONS} from '@app/core/components/table/table';
@@ -11,6 +11,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {PropostaComponent} from '@app/proposta/proposta.component';
 import {RiscoFormComponent} from '@app/proposta/pages/09-riscos/risco-form/risco-form.component';
 import {Funcoes, Graduacoes} from '@app/commons';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 
 const tableCols: TableComponentCols = [
   {
@@ -59,6 +60,7 @@ const buttons = [
 export class RecursosHumanosComponent implements OnInit {
 
   constructor(
+    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
     protected router: Router,
     protected route: ActivatedRoute,
     protected parent: PropostaComponent) {

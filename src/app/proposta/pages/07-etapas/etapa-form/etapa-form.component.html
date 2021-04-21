@@ -30,7 +30,7 @@
     </div>
 
 
-    <div class="form-group d-flex justify-content-between">
+    <div class="form-group d-flex justify-content-between" *ngIf="canEdit">
       <div>
         <button type="button" class="button btn btn-danger" (click)="remover()" *ngIf="form.value.id !== 0">
           <i class="ta-trash mr-1"></i>
