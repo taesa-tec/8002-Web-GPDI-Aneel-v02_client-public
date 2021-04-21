@@ -48,9 +48,9 @@ export class PropostaDocumentoResolver implements Resolve<any> {
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const params = extractRouteParams(route);
     if (params.id) {
-      return await this.http.get<any>(`Fornecedor/Propostas/${params.id}/Documento`).toPromise();
+      return await this.http.get<any>(`Propostas/${params.id}/Documento`).toPromise();
     }
-    await this.router.navigate(['/fornecedor', 'propostas']);
+    await this.router.navigate(['/']);
   }
 }
 

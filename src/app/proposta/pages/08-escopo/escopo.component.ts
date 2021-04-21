@@ -5,6 +5,7 @@ import {AppService} from '@app/services/app.service';
 import {PropostaComponent} from '@app/proposta/proposta.component';
 import {ActivatedRoute} from '@angular/router';
 import {PropostasService} from '@app/proposta/services/propostas.service';
+import {Proposta} from '@app/commons';
 
 @Component({
   selector: 'app-escopo',
@@ -13,6 +14,7 @@ import {PropostasService} from '@app/proposta/services/propostas.service';
 })
 export class EscopoComponent implements OnInit {
 
+  proposta: Proposta;
   metasArray = this.fb.array([]);
   form = this.fb.group({
     beneficioIndustria: ['', Validators.required],
@@ -28,12 +30,11 @@ export class EscopoComponent implements OnInit {
   });
 
   get maxNumMeses() {
-    return this.parent?.proposta.duracao || 0;
+    return this.proposta.duracao || 0;
   }
 
   constructor(private app: AppService,
               private fb: FormBuilder,
-              protected parent: PropostaComponent,
               protected route: ActivatedRoute, protected service: PropostasService) {
   }
 
@@ -47,6 +48,7 @@ export class EscopoComponent implements OnInit {
         this.addMeta();
       }
     }
+    this.service.proposta.subscribe(p => this.proposta = p);
   }
 
   addMeta(meta?: { objetivo: string; meses: number; id: number }) {
@@ -66,7 +68,7 @@ export class EscopoComponent implements OnInit {
   async onSubmit() {
     if (this.form.valid) {
       try {
-        await this.service.saveEscopo(this.parent.proposta.captacaoId, this.form.value);
+        await this.service.saveEscopo(this.proposta.guid, this.form.value);
         this.app.alert('Escopo salvo com sucesso!').then();
       } catch (e) {
         this.app.alert('Não foi possível salvo o escopo').then();
