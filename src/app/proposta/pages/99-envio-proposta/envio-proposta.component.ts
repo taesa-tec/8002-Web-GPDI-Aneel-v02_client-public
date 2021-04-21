@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
-import {Validations} from '@app/commons';
+import {Proposta, Validations} from '@app/commons';
 import {PropostaComponent} from '@app/proposta/proposta.component';
 import {PropostasService} from '@app/proposta/services/propostas.service';
 import {FileService} from '@app/services/file.service';
@@ -21,14 +21,11 @@ export class EnvioPropostaComponent implements OnInit {
   url: SafeResourceUrl;
   validations: Validations = {isValid: false, ruleSetsExecuted: [], errors: []};
 
-  get proposta() {
-    return this.parent?.proposta;
-  }
+  proposta: Proposta;
 
   constructor(protected route: ActivatedRoute,
               protected app: AppService,
               protected sanitize: DomSanitizer,
-              protected parent: PropostaComponent,
               protected fileService: FileService,
               protected service: PropostasService) {
   }
@@ -36,7 +33,7 @@ export class EnvioPropostaComponent implements OnInit {
   async downloadFile(file) {
     this.loading.show();
     try {
-      await this.service.downloadArquivo(this.proposta.captacaoId, file);
+      await this.service.downloadArquivo(this.proposta.guid, file);
     } catch (e) {
       console.error(e);
     }
@@ -58,7 +55,7 @@ export class EnvioPropostaComponent implements OnInit {
   async marcarComoFinalizado() {
     this.loading.show();
     try {
-      const result = await this.service.marcarComoFinalizado(this.proposta.captacaoId);
+      const result = await this.service.marcarComoFinalizado(this.proposta.guid);
       this.app.alert('Proposta marcada como finalizada').then();
       this.proposta.planoFinalizado = true;
     } catch (e) {
@@ -75,6 +72,8 @@ export class EnvioPropostaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.service.proposta.subscribe(p => this.proposta = p);
+
     this.route.data.subscribe(data => {
       const blob = new Blob([data.documento.content], {type: 'text/html'});
       this._url = URL.createObjectURL(blob);
