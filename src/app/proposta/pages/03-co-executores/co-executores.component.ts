@@ -3,7 +3,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import {TableComponentCols, TableComponentActions, TableComponentFilter, TableActionEvent} from '@app/core/components/table/table';
 import {CoExecutorFormComponent} from './co-executor-form/co-executor-form.component';
-import {CAPTACAO_ID, PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({

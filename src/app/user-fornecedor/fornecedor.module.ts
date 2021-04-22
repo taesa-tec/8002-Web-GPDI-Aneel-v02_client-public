@@ -7,9 +7,8 @@ import {HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
 import {PropostaResolver} from '@app/user-fornecedor/resolvers/proposta.resolver';
 import {PropostasResolver} from '@app/user-fornecedor/resolvers/propostas.resolver';
 import {PropostasService} from '@app/user-fornecedor/services/propostas.service';
-import {AuthService} from '@app/services';
 import {FornecedorRootUrl} from '@app/routes/routes';
-import {PROPOSTA_API_URL, PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 import {COMPONENT_LABELS} from '@app/core/shared';
 import {Texts} from '@app/user-fornecedor/texts';
 
@@ -40,9 +39,6 @@ import {Texts} from '@app/user-fornecedor/texts';
       useValue: `/${FornecedorRootUrl}`
     },
     {
-      provide: PROPOSTA_API_URL,
-      useValue: ''
-    }, {
       provide: PROPOSTA_CAN_EDIT,
       useValue: true
     },
