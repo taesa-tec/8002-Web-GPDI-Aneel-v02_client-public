@@ -1,6 +1,14 @@
 import {AfterViewInit, Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
+export interface ConfirmComponentOption {
+  text: string;
+  value: any;
+  cssClass: string;
+  checked?: boolean;
+  checkMessage?: string;
+}
+
 @Component({
   selector: 'app-confirm',
   templateUrl: './confirm.component.html',
@@ -9,11 +17,11 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 export class ConfirmComponent {
   checkboxList: Array<any>;
 
-  get options(): { text: string; value: any; cssClass: string; checked?: boolean; checkMessage?: string }[] {
+  get options(): Array<ConfirmComponentOption> {
     return this._options;
   }
 
-  set options(value: { text: string; value: any; cssClass: string; checked?: boolean; checkMessage?: string }[]) {
+  set options(value: Array<ConfirmComponentOption>) {
     this._options = value;
     this.checkboxList = this._options
       .filter(o => o.checkMessage && o.checkMessage.trim().length > 0)

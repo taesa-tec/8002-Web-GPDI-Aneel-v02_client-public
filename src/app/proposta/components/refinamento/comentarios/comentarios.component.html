@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col">
+    <h6 class="text-blue-light">HISTÓRICO DE COMENTÁRIOS</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 comments">
+    <ng-container *ngFor="let comment of 1 | n2array">
+
+      <div class="bg-light comment mb-3">
+        <div class="comment-header border-bottom border-blue-light p-3 d-flex justify-content-between text-blue-light">
+          <div class="comment-author font-weight-bold d-flex align-items-center">
+            <div class="avatar rounded-circle p-3 bg-cinza-claro d-inline-block mr-2"></div>
+            <span>Nome do Author</span>
+          </div>
+          <div class="comment-date d-flex align-items-center">
+            {{ 1619101823083 | date:'short'}}
+          </div>
+        </div>
+        <div class="comment-content p-3">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent viverra malesuada ante nec ornare. Nam id
+            ante et odio efficitur cursus.
+            Maecenas viverra turpis a eros pretium porta. Class aptent taciti sociosqu ad litora torquent per conubia
+            nostra, per inceptos himenaeos.
+            Morbi porttitor ligula id lacus maximus, eu rhoncus tortor volutpat. Curabitur auctor nulla sed lacus
+            maximus vulputate. Fusce elementum
+            metus nec urna malesuada, a accumsan eros sodales. Suspendisse dolor nisi, aliquet non luctus ac, sodales
+            quis metus. Nunc a fermentum
+            mauris. Sed a nulla eget purus ultricies semper.</p>
+        </div>
+      </div>
+
+    </ng-container>
+  </div>
+</div>

@@ -1,9 +1,6 @@
 import {Injectable, Provider} from '@angular/core';
 import {ServiceBase} from '@app/services';
 import {HttpClient} from '@angular/common/http';
-import {PROPOSTA, PROPOSTA_API_URL} from '@app/proposta/shared';
-import {BehaviorSubject} from 'rxjs';
-import {Proposta} from '@app/commons';
 import {PropostasService} from '@app/proposta/services/propostas.service';
 
 @Injectable()

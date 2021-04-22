@@ -1,0 +1,6 @@
+<div>
+  <app-comentarios></app-comentarios>
+  <hr>
+  <app-aprovador *ngIf="!canEdit"></app-aprovador>
+  <app-alteracoes *ngIf="canEdit"></app-alteracoes>
+</div>

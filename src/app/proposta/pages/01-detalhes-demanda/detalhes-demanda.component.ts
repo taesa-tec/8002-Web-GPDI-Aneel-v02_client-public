@@ -71,6 +71,7 @@ export class DetalhesDemandaComponent implements OnInit {
       if (result) {
         await this.service.participar(this.proposta.guid);
         this.proposta.participacao = 1;
+        this.service.setProposta(this.proposta);
         // request...
       }
     } catch (e) {

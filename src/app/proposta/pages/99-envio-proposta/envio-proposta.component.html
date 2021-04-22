@@ -1,7 +1,13 @@
 <app-loading type="fullscreen"></app-loading>
+
 <div class="row justify-content-between">
   <div class="col">
     <h5 class="text-uppercase text-blue font-weight-normal my-4">ENVIO PROPOSTA APROVAÇÃO</h5>
+  </div>
+</div>
+<div class="row">
+  <div class="col mb-4">
+    <app-refinamento></app-refinamento>
   </div>
 </div>
 
@@ -114,7 +120,7 @@
         </button>
       </div>
       <button type="button" [disabled]="!validations.isValid" class="btn btn-success" (click)="marcarComoFinalizado()"
-              *ngIf="canEdit">
+              *ngIf="canEdit && proposta.captacaoStatus === 'Fornecedor'">
         <i class="ta-ok"></i>
         Marcar como Finalizado
       </button>
@@ -122,10 +128,6 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-4 mb-4">
 
-  </div>
-</div>
 
 

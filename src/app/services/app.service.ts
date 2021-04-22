@@ -1,7 +1,7 @@
 import {Injectable, Inject} from '@angular/core';
 import {NgbModal, NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
 import {AlertComponent} from '../core/components/alert/alert.component';
-import {ConfirmComponent} from '../core/components/confirm/confirm.component';
+import {ConfirmComponent, ConfirmComponentOption} from '../core/components/confirm/confirm.component';
 import {CatalogsService} from '@app/services/catalogs.service';
 import {AuthService} from '@app/services/auth.service';
 import {FileService} from '@app/services/file.service';
@@ -98,7 +98,7 @@ export class AppService {
   }
 
   confirm(message: string, title: string = 'Confirme',
-          options: { text: string; value: any; cssClass: string }[] =
+          options: Array<ConfirmComponentOption> =
             [
               {text: 'Cancelar', value: false, cssClass: 'btn btn-link'},
               {text: 'Ok', value: true, cssClass: 'btn-primary'}
