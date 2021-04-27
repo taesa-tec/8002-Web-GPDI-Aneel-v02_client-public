@@ -17,7 +17,7 @@ export class AvaliarDemandaComponent implements OnInit {
   form: FormGroup = null;
   canUpdate = false;
 
-  constructor(protected  app: AppService,
+  constructor(protected app: AppService,
               protected usersService: UsersService,
               protected fb: FormBuilder) {
 
@@ -65,11 +65,10 @@ export class AvaliarDemandaComponent implements OnInit {
           result = await this.app.demandas.reprovarPermanente(this.demanda.id, this.form.value.motivo);
         }
         this.avaliacao.emit(result);
-        this.app.alert('Salvo com sucesso!');
-        console.log(result);
+        this.app.alert('Salvo com sucesso!').then();
       } catch (e) {
         if (e.error && e.error.Message) {
-          this.app.alert(e.error.Message, 'Erro!');
+          this.app.alert(e.error.Message, 'Erro!').then();
         }
       }
       this.app.hideLoading();

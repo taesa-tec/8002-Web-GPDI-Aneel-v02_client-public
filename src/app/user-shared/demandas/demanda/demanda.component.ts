@@ -3,12 +3,21 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Demanda} from '@app/commons/demandas';
 import {DemandaMenuProvider, DemandaProvider} from '@app/user-shared/demandas/demanda/providers';
+import {EQUIPE_PED} from '@app/commons';
 
 @Component({
   selector: 'app-demanda',
   templateUrl: './demanda.component.html',
   styleUrls: ['demanda.component.scss'],
-  providers: [DemandaProvider, DemandaMenuProvider]
+  providers: [{
+    provide: EQUIPE_PED,
+    deps: [ActivatedRoute],
+    useFactory: (route: ActivatedRoute) => {
+      return route.snapshot.data.equipe;
+    }
+  },
+    DemandaProvider, DemandaMenuProvider,
+  ]
 })
 export class DemandaComponent implements OnInit {
 

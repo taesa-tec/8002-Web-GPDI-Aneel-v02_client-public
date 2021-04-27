@@ -9,6 +9,7 @@ import {DemandaResolver} from '@app/user-shared/demandas/demanda/demanda.resolve
 import {DemandaGuard} from '@app/user-shared/demandas/demanda/guards/demanda.guard';
 import {DemandaLogsComponent} from '@app/user-shared/demandas/demanda/demanda-logs/demanda-logs.component';
 import {IndexComponent} from '@app/user-shared/demandas/demanda/index.component';
+import {EquipePedResolver} from '@app/resolvers/equipe-ped.resolver';
 
 const routes: Routes = [
   {
@@ -17,7 +18,8 @@ const routes: Routes = [
     component: DemandaComponent,
     canActivate: [DemandaGuard],
     resolve: {
-      demanda: DemandaResolver
+      demanda: DemandaResolver,
+      equipe: EquipePedResolver
     },
     runGuardsAndResolvers: 'always',
     children: [
@@ -31,7 +33,8 @@ const routes: Routes = [
       },
       {
         path: 'documento-aprovacoes',
-        component: DocumentoAprovacoesComponent
+        redirectTo: 'aprovacao'
+        //component: DocumentoAprovacoesComponent
       },
       {
         path: 'aprovacao',

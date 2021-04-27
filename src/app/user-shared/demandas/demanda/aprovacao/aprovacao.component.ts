@@ -4,10 +4,12 @@ import {ActivatedRoute} from '@angular/router';
 import {Demanda} from '@app/commons/demandas';
 import {DemandaEtapa, DemandaEtapaItems, DemandaEtapaStatus} from '@app/user-shared/demandas/commons';
 import {environment} from '@env/environment';
-import {EquipePeD, ROOT_URL} from '@app/commons';
+import {EQUIPE_PED, EquipePeD, ROOT_URL} from '@app/commons';
 import {UsersService} from '@app/services/users.service';
 import {DEMANDA} from '@app/user-shared/demandas/demanda/providers';
 import {AuthService} from '@app/services';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FileService} from '@app/services/file.service';
 
 
 @Component({
@@ -17,21 +19,47 @@ import {AuthService} from '@app/services';
 })
 export class AprovacaoComponent implements OnInit {
 
-  protected $demanda: Demanda;
-  equipe: EquipePeD;
   readonly ETAPAS_VALUES = DemandaEtapa;
   readonly ETAPAS_STATUS = DemandaEtapaStatus;
   anexos = [];
   formKey = 'especificacao-tecnica';
   pdfUrl = null;
-  etapa_atual = '';
+  pdfProgress = null;
   emAprovacao = false;
+  comentarioCtrl = new FormControl('');
+  form = new FormGroup({
+    comentario: this.comentarioCtrl
+  });
+
+  protected $demanda: Demanda;
 
   get demanda(): Demanda {
     return this.$demanda;
   }
 
-  get responsavel() {
+  set demanda(value: Demanda) {
+
+    //this.pdfUrl = `${environment.api_url}/Demandas/${value.id}/Form/${this.formKey}/Pdf`;
+    this.$demanda = value;
+    this.emAprovacao = value.status === DemandaEtapaStatus.Pendente || value.status === DemandaEtapaStatus.EmElaboracao;
+
+    const clearCache = Date.now();
+    this.file.download(`${environment.api_url}/Demandas/${value.id}/Form/${this.formKey}/Pdf?time=${clearCache}`, p => {
+      this.pdfProgress = (p.loaded / p.total) * 100;
+    }).then(url => {
+      this.pdfProgress = null;
+      this.pdfUrl = url;
+    }).catch(err => {
+      this.pdfProgress = null;
+      console.log(err);
+    });
+  }
+
+  get isResponsavel() {
+    return this.responsavelAprovacao === this.auth.user.id;
+  }
+
+  get responsavelAprovacao() {
     if (this.demanda.status !== DemandaEtapaStatus.ReprovadaPermanente) {
       switch (this.demanda.etapaAtual) {
         case DemandaEtapa.Elaboracao:
@@ -53,19 +81,17 @@ export class AprovacaoComponent implements OnInit {
     return null;
   }
 
-  set demanda(value: Demanda) {
-    const etapaAtual = value.etapaAtual;
-    const etapaAtualText = DemandaEtapaItems.find(i => i.etapa === value.etapaAtual);
-    this.pdfUrl = `${environment.api_url}/Demandas/${value.id}/Form/${this.formKey}/Pdf`;
-    this.etapa_atual = etapaAtualText && etapaAtualText.titulo || '';
-    this.$demanda = value;
-    this.emAprovacao = value.status === DemandaEtapaStatus.Pendente || value.status === DemandaEtapaStatus.EmElaboracao;
+  get etapa_atual() {
+    const etapa_atual = DemandaEtapaItems.find(i => i.etapa === this.demanda.etapaAtual);
+    return etapa_atual && etapa_atual.titulo || '';
   }
 
   constructor(
+    @Inject(EQUIPE_PED) public equipe: EquipePeD,
     @Inject(DEMANDA) demanda: Demanda,
     @Inject(ROOT_URL) protected root_url: string,
     protected app: AppService,
+    protected file: FileService,
     protected usersService: UsersService,
     public auth: AuthService,
     protected route: ActivatedRoute
@@ -73,10 +99,15 @@ export class AprovacaoComponent implements OnInit {
     this.demanda = demanda;
   }
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.app.demandas.getAnexos(this.demanda.id).then(anexos => {
+      this.anexos = anexos;
+    });
 
-    this.equipe = await this.app.sistema.getEquipePeD();
-    this.anexos = await this.app.demandas.getAnexos(this.demanda.id);
+    if (this.demanda.status === this.ETAPAS_STATUS.Reprovada) {
+      this.comentarioCtrl.setValidators(Validators.required);
+    }
+    this.form.updateValueAndValidity();
   }
 
   async avaliacao(demanda) {
@@ -97,6 +128,24 @@ export class AprovacaoComponent implements OnInit {
 
   }
 
+  async proximaEtapa() {
+
+    if (!await this.app.confirm('Confirme o envio para a próxima etapa')) {
+      return;
+    }
+    this.app.showLoading();
+    try {
+      this.demanda = await this.app.demandas.proximaEtapa(this.demanda.id, this.form.value);
+      this.form.reset();
+      await this.app.router.navigate(['/']);
+    } catch (e) {
+      console.error(e);
+    } finally {
+
+      this.app.hideLoading();
+    }
+  }
+
   async download(anexo) {
     if (this.demanda.id) {
       this.app.showLoading();
@@ -110,4 +159,5 @@ export class AprovacaoComponent implements OnInit {
       console.error('Sem demanda!');
     }
   }
+
 }
