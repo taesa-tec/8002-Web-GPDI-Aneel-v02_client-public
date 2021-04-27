@@ -24,7 +24,7 @@ export class AprovacaoComponent implements OnInit {
   anexos = [];
   formKey = 'especificacao-tecnica';
   pdfUrl = null;
-  pdfProgress = null;
+  pdfProgress: any = 0;
   emAprovacao = false;
   comentarioCtrl = new FormControl('');
   form = new FormGroup({

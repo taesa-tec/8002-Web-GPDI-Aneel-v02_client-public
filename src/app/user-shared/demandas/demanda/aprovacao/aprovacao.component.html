@@ -9,10 +9,11 @@
   <div class="col">
     <app-pdf-viewer *ngIf="pdfUrl; else nopdf" [url]="pdfUrl"></app-pdf-viewer>
     <ng-template #nopdf>
-      <ngb-progressbar *ngIf="pdfProgress" type="info" class="mb-3" [value]="pdfProgress" [striped]="true" [animated]="true">
+      <ngb-progressbar *ngIf="pdfProgress !== null" type="info" class="mb-3" [value]="pdfProgress" [striped]="true"
+                       [animated]="true">
         <i>{{pdfProgress.toFixed(2)}}%</i>
       </ngb-progressbar>
-      <div *ngIf="pdfProgress == null" class="alert alert-danger d-flex align-items-center">
+      <div *ngIf="pdfProgress === null" class="alert alert-danger d-flex align-items-center">
         <i class="ta-alert fs-22 mr-3"></i>
         O arquivo ainda não foi gerado.
       </div>
