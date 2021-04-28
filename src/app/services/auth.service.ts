@@ -8,12 +8,6 @@ import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 const storageKey = 'loggedUser';
 
-const rolePath = new Map<string, string>([
-  [UserRole.Administrador, 'admin'],
-  [UserRole.User, 'gestor'],
-  [UserRole.Suprimento, 'suprimento'],
-  [UserRole.Fornecedor, 'fornecedor'],
-]);
 
 interface Session {
   aud: string;
@@ -116,7 +110,7 @@ export class AuthService {
 
   }
 
-  async login(loginRequest: LoginRequest, remember: boolean = false, redirectTo: string | null = null) {
+  async login(loginRequest: LoginRequest, remember: boolean = false) {
 
     const response = await this.http.post<LoginResponse>(`Login`, loginRequest).toPromise();
 
@@ -131,34 +125,20 @@ export class AuthService {
       sessionStorage.removeItem('last_login_user');
     }
 
-
-    if (redirectTo) {
-      this.redirectTo = redirectTo;
-    } else {
-      this.redirectTo = this.getHomeUrl();
-    }
-    try {
-      await this.router.navigateByUrl(this.redirectTo);
-    } catch (e) {
-      console.log(e);
-    }
+    return response;
   }
 
-  getHomeUrl() {
-    const path = rolePath.has(this.role) ? rolePath.get(this.role) : 'error';
-    return `/${path}`;
-  }
 
-  logout(): void {
+  async logout(redirect?: string) {
     this.loginResponse = null;
     localStorage.removeItem(storageKey);
     sessionStorage.removeItem(storageKey);
     this.redirectTo = '/dashboard';
-    this.router.navigate(['/login']).then();
     if (this.modal.hasOpenModals()) {
       this.modal.dismissAll('logout');
     }
     this.authEventsSource.next({type: 'logout'});
+    return await this.router.navigate(['/login'], {queryParams: {redirect}});
   }
 
   recuperarSenha(recoverRequest: RecoverRequest): Observable<ResultadoResponse> {
