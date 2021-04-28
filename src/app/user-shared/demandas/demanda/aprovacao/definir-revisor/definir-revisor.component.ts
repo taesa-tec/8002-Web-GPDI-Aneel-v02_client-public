@@ -6,7 +6,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 @Component({
   selector: 'app-definir-revisor',
   templateUrl: './definir-revisor.component.html',
-  styleUrls: []
+  styles: []
 })
 export class DefinirRevisorComponent implements OnInit {
   @Input() demanda: Demanda;

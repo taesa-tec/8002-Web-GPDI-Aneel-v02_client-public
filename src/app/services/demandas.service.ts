@@ -80,7 +80,6 @@ export class DemandasService {
   }
 
   proximaEtapa(id: number, data) {
-
     return this.http.put<any>(`Demandas/${id}/ProximaEtapa`, data).toPromise();
   }
 

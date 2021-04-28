@@ -7,11 +7,21 @@
 
 <div class="row">
   <div class="col">
-    <app-pdf-viewer [url]="pdfUrl"></app-pdf-viewer>
+    <app-pdf-viewer *ngIf="pdfUrl; else nopdf" [url]="pdfUrl"></app-pdf-viewer>
+    <ng-template #nopdf>
+      <ngb-progressbar *ngIf="pdfProgress !== null" type="info" class="mb-3" [value]="pdfProgress" [striped]="true"
+                       [animated]="true">
+        <i>{{pdfProgress.toFixed(2)}}%</i>
+      </ngb-progressbar>
+      <div *ngIf="pdfProgress === null" class="alert alert-danger d-flex align-items-center">
+        <i class="ta-alert fs-22 mr-3"></i>
+        O arquivo ainda não foi gerado.
+      </div>
+    </ng-template>
   </div>
 </div>
 
-<div class="row my-3">
+<div class="row my-3" *ngIf="anexos && anexos.length > 0">
   <div class="col-12">
     <h6 class="text-uppercase text-blue-light">Arquivos Complementares</h6>
     <div class="pr-3 mb-3">
@@ -31,18 +41,59 @@
                             [comentario]="comentario"></app-demanda-comentario>
   </div>
 </div>
-<ng-container *ngIf="responsavel === auth.user.id; else notResponsavel">
+
+<ng-container *ngIf="isResponsavel; else notResponsavel">
   <div class="row">
-    <div class="col-12">
-      <app-definir-revisor *ngIf="demanda.etapaAtual === ETAPAS_VALUES.RevisorPendente"
-                           [demanda]="demanda" [users]="equipe.outros"
-                           (userSelected)="userSelected($event)"></app-definir-revisor>
-      <app-avaliar-demanda *ngIf="emAprovacao && demanda.etapaAtual !== ETAPAS_VALUES.RevisorPendente"
-                           [demanda]="demanda"
-                           (avaliacao)="avaliacao($event)"></app-avaliar-demanda>
+    <div class="col-12" [ngSwitch]="demanda.etapaAtual">
+      <ng-container *ngSwitchCase="ETAPAS_VALUES.RevisorPendente">
+        <app-definir-revisor [demanda]="demanda" [users]="equipe.outros"
+                             (userSelected)="userSelected($event)"></app-definir-revisor>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="ETAPAS_VALUES.Elaboracao">
+        <div [formGroup]="form">
+          <div class="row" *ngIf="demanda.status === ETAPAS_STATUS.Reprovada && form.get('comentario')">
+            <div class="col-12">
+              <h6 class="text-uppercase text-blue-light">Responder Comentários</h6>
+              <div class="form-group">
+              <textarea cols="30" rows="5" class="form-control"
+                        formControlName="comentario"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 d-flex justify-content-end">
+              <button class="btn btn-primary" [disabled]="form.invalid" (click)="proximaEtapa()">
+                <i class="ta-save"></i>
+                Enviar para Próxima Etapa
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+
+      <ng-container *ngSwitchDefault>
+        <app-avaliar-demanda *ngIf="emAprovacao" [demanda]="demanda"
+                             (avaliacao)="avaliacao($event)"></app-avaliar-demanda>
+      </ng-container>
     </div>
   </div>
 </ng-container>
+
+
 <ng-template #notResponsavel>
-  <div class="d-flex justify-content-center">Você não é o responsável por avaliar/editar essa demanda no momento</div>
+  <ng-container *ngIf="demanda.etapaAtual === ETAPAS_VALUES.Captacao">
+    <div class="d-flex justify-content-center">
+      Essa demanda já foi enviada para o processo de captação.
+    </div>
+  </ng-container>
+  <ng-container *ngIf="demanda.etapaAtual !== ETAPAS_VALUES.Captacao" [ngSwitch]="auth.user.id">
+    <div class="d-flex justify-content-center" *ngSwitchCase="demanda.criadorId">
+      <span>Essa Demanda está na etapa <strong>{{etapa_atual}}</strong></span>
+    </div>
+    <div class="d-flex justify-content-center" *ngSwitchDefault>
+      Você não é o responsável por avaliar/editar essa demanda no momento
+    </div>
+  </ng-container>
 </ng-template>

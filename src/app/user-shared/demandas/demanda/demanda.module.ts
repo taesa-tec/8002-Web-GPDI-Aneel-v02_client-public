@@ -22,6 +22,7 @@ import {SharedModule} from '@app/dashboard/shared';
 import {DashboardModule} from '@app/dashboard';
 import {IndexComponent} from '@app/user-shared/demandas/demanda/index.component';
 import {PipesModule} from '@app/user-shared/pipes';
+import {EquipePedResolver} from '@app/resolvers/equipe-ped.resolver';
 
 const components = [
   DemandaComponent,
@@ -44,7 +45,7 @@ const components = [
   imports: [CoreModule, DemandaRoutingModule, SharedModule, DashboardModule, PipesModule],
   declarations: [...components, IndexComponent],
   exports: [...components],
-  providers: [DemandaGuard, DemandaResolver],
+  providers: [DemandaGuard, DemandaResolver, EquipePedResolver],
 })
 export class DemandaModule {
 }

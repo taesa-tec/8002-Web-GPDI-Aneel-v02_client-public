@@ -53,10 +53,6 @@ export class DocumentoAprovacoesComponent implements OnInit {
     this.$demanda = value;
   }
 
-  get etapa_atual() {
-    const etapa_atual = DemandaEtapaItems.find(i => i.etapa === this.demanda.etapaAtual);
-    return etapa_atual && etapa_atual.titulo || '';
-  }
 
   async ngOnInit() {
 

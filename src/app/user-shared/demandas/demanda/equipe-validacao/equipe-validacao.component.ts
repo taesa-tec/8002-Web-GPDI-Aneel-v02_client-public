@@ -3,9 +3,10 @@ import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {AppService} from '@app/services/app.service';
 import {ActivatedRoute} from '@angular/router';
 import {UsersService} from '@app/services/users.service';
-import {UserRole} from '@app/commons';
+import {EQUIPE_PED, EquipePeD, UserRole} from '@app/commons';
 import {DEMANDA} from '@app/user-shared/demandas/demanda/providers';
 import {Demanda} from '@app/commons/demandas';
+import {AuthService} from '@app/services';
 
 @Component({
   selector: 'app-definicao-pessoas-processo-validacao',
@@ -16,12 +17,13 @@ export class EquipeValidacaoComponent implements OnInit {
 
   form: FormGroup;
   pessoas: Array<any> = [];
-  equipe: any;
 
   constructor(
     @Inject(DEMANDA) protected demanda: Demanda,
+    @Inject(EQUIPE_PED) public equipe: EquipePeD,
     protected app: AppService,
     protected usersService: UsersService,
+    public auth: AuthService,
     protected route: ActivatedRoute) {
   }
 
@@ -32,26 +34,13 @@ export class EquipeValidacaoComponent implements OnInit {
   async configForm() {
     let superiorDireto;
 
-    [this.equipe, this.pessoas, {superiorDireto}] = await Promise.all([
-      this.app.sistema.getEquipePeD(),
+    [this.pessoas, {superiorDireto}] = await Promise.all([
       this.usersService.usersInRole(UserRole.User),
       this.app.demandas.getSuperiorDireto(this.demanda.id)]);
 
     this.form = new FormGroup({
       superiorDireto: new FormControl(superiorDireto || '', [Validators.required]),
     });
-  }
-
-  getMembroEquipe(id: string) {
-    return this.pessoas.find(p => p.id === id);
-  }
-
-  getMembroNome(id: string) {
-    const membro = this.getMembroEquipe(id);
-    if (membro) {
-      return membro.nomeCompleto || membro.userName;
-    }
-    return 'Não encontrado';
   }
 
   async salvar() {
