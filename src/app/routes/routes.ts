@@ -13,4 +13,3 @@ export const RootsUrl = new Map<string, string>(
     [UserRole.Fornecedor, `/${FornecedorRootUrl}`],
   ]
 );
-
