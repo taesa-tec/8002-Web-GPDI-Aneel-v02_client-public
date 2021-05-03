@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree, CanActivateChild} from '@angular/router';
 import {Observable} from 'rxjs';
 import {AuthService} from '@app/services/auth.service';
+import {RootsUrl} from '@app/routes/routes';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ export class GuestGuard implements CanActivate, CanActivateChild {
     if (!this.authService.isLoggedIn) {
       return true;
     }
-    const path = this.authService.getHomeUrl();
-    return this.router.parseUrl(`${path}`);
+    const root = RootsUrl.get(this.authService.user.role);
+    return this.router.parseUrl(`${root}`);
 
   }
 
