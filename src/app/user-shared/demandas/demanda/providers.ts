@@ -1,12 +1,12 @@
 import {Demanda} from '@app/commons/demandas';
-import {MenuItem, SIDEBAR_MENU, UserRole} from '@app/commons';
+import {EQUIPE_PED, EquipePeD, MenuItem, SIDEBAR_MENU, UserRole} from '@app/commons';
 import {DemandaEtapaStatus} from '@app/user-shared/demandas/commons';
 import {FactoryProvider, InjectionToken, Provider} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {AuthService} from '@app/services';
 
 
-function menu(demanda: Demanda, user): Array<MenuItem> {
+function menu(demanda: Demanda, user, equipe: EquipePeD): Array<MenuItem> {
 
   if (user.role === UserRole.Administrador) {
     return menuCriador([
@@ -17,10 +17,17 @@ function menu(demanda: Demanda, user): Array<MenuItem> {
 
 
   switch (user.id) {
+    case equipe.diretor.id:
+    case equipe.coordenador.id:
+    case equipe.gerente.id:
+      const _menu = user.id === demanda.criadorId ? menuCriador([], demanda) : [];
+      return menuAprovadores(_menu, demanda);
     case demanda.criadorId:
-      return menuCriador([], demanda);
+      return menuCriador([
+        {text: 'Documento e Aprovações', icon: 'ta-projeto', path: 'aprovacao'},
+      ], demanda);
     default:
-      return menuAprovadores([], demanda);
+      return [];
   }
 }
 
@@ -28,7 +35,7 @@ function menuCriador(_menu: Array<any>, demanda: Demanda) {
   return [
     {text: 'Definição Pessoas Processo Validação', icon: 'ta-user-id', path: 'equipe-validacao'},
     {text: 'Especificação Técnica', icon: 'ta-capacete', path: 'formulario/especificacao-tecnica'},
-    {text: 'Documento e Aprovações', icon: 'ta-projeto', path: 'documento-aprovacoes'},
+
     ..._menu
   ];
 }
@@ -36,8 +43,8 @@ function menuCriador(_menu: Array<any>, demanda: Demanda) {
 function menuAprovadores(_menu: Array<any>, demanda: Demanda) {
   if (demanda.status !== DemandaEtapaStatus.ReprovadaPermanente) {
     return [
+      ..._menu,
       {text: 'Processo Aprovação Demanda', icon: 'ta-projeto', path: 'aprovacao'},
-      ..._menu
     ];
   }
   return [
@@ -55,6 +62,6 @@ export const DemandaProvider: FactoryProvider = {
 };
 export const DemandaMenuProvider: FactoryProvider = {
   provide: SIDEBAR_MENU,
-  deps: [DEMANDA, AuthService],
-  useFactory: (demanda: Demanda, auth: AuthService) => menu(demanda, auth.user)
+  deps: [DEMANDA, AuthService, EQUIPE_PED],
+  useFactory: (demanda: Demanda, auth: AuthService, equipe: EquipePeD) => menu(demanda, auth.user, equipe)
 };

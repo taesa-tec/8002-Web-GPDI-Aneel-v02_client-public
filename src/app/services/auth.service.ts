@@ -99,7 +99,10 @@ export class AuthService {
 
 
   protected extractInfoToken(token: string) {
-    return JSON.parse(atob(token.split('.')[1]));
+    if (token) {
+      return JSON.parse(atob(token.split('.')[1]));
+    }
+    return null;
   }
 
   setSession(response: LoginResponse) {
