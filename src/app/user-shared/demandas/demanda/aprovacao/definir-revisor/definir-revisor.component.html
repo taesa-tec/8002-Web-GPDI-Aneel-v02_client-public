@@ -5,7 +5,8 @@
       <div class="form-group mb-0 mr-3" [formGroup]="form">
         <select class="form-control" formControlName="revisorId">
           <option value="">Selecione um responsável</option>
-          <option *ngFor="let user of users" [value]="user.id">{{user.nomeCompleto || user.userName}}</option>
+          <option *ngFor="let user of users | listUnique:[]:[demanda.criadorId]:'id'"
+                  [value]="user.id">{{user.nomeCompleto || user.userName}}</option>
         </select>
       </div>
       <button class="btn btn-success" [disabled]="form.invalid" (click)="userSelected.emit(form.value)">
