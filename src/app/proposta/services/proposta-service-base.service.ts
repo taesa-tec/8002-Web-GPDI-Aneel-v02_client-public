@@ -74,3 +74,19 @@ export class RecursosMateriaisService extends PropostaServiceBase {
     super(http, service, 'RecursosMateriais');
   }
 }
+
+@Injectable()
+export class ContratoService extends PropostaServiceBase {
+
+  constructor(http: HttpClient, service: PropostasService) {
+    super(http, service, 'Contrato');
+  }
+
+  async aprovar() {
+    return await this.post('Aprovar', {});
+  }
+
+  async solicitarAlteracao(mensagem: string) {
+    return await this.post('SolicitarAlteracao', {mensagem});
+  }
+}

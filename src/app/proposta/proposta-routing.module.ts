@@ -29,10 +29,6 @@ const routes: Routes = [
       },
       {path: 'condicoes', loadChildren: () => import('./pages/02-condicoes/condicoes.module').then(m => m.CondicoesModule)},
       {path: 'entidades', loadChildren: () => import('./pages/03-co-executores/co-executores.module').then(m => m.CoExecutoresModule)},
-      {
-        path: 'contrato',
-        loadChildren: () => import('./pages/04-validacao-contratos/validacao-contratos.module').then(m => m.ValidacaoContratosModule)
-      },
       //*
       {
         path: 'plano-de-trabalho', loadChildren: () => import('./pages/05-plano-trabalho/plano-trabalho.module')
@@ -61,11 +57,14 @@ const routes: Routes = [
           .then(m => m.AlocacaoRecursosMateriaisModule)
       },
       {
+        path: 'contrato',
+        loadChildren: () => import('./pages/04-validacao-contratos/validacao-contratos.module').then(m => m.ValidacaoContratosModule)
+      },
+      {
         path: 'envio',
         loadChildren: () => import('./pages/99-envio-proposta/envio-proposta.module')
           .then(m => m.EnvioPropostaModule)
       },
-      // */
       {path: '**', redirectTo: 'detalhes', pathMatch: 'full'}
     ],
   }

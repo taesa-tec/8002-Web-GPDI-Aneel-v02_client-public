@@ -56,8 +56,10 @@ export class ServiceBase<T extends { id?: any }> extends UploadFilesService {
   get: (url, ...args) => Promise<any> = (url, ...args) => this.http.get(`${this.controller}/${url}`, ...args).toPromise();
   delete: (url, ...args) => Promise<any> = (url, ...args) => this.http.delete(`${this.controller}/${url}`, ...args).toPromise();
   head: (url, ...args) => Promise<any> = (url, ...args) => this.http.head(`${this.controller}/${url}`, ...args).toPromise();
-  put: (url, ...args) => Promise<any> = (url, data, ...args) => this.http.put(`${this.controller}/${url}`, data, ...args).toPromise();
-  post: (url, ...args) => Promise<any> = (url, data, ...args) => this.http.post(`${this.controller}/${url}`, data, ...args).toPromise();
+  put: (url, data, ...args) => Promise<any> = (url, data, ...args) => this.http.put(`${this.controller}/${url}`, data, ...args)
+    .toPromise();
+  post: (url, data, ...args) => Promise<any> = (url, data, ...args) => this.http.post(`${this.controller}/${url}`, data, ...args)
+    .toPromise();
 
   /**
    *

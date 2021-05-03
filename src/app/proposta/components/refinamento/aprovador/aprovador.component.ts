@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Proposta} from '@app/commons';
 import {PropostasService} from '@app/proposta/services/propostas.service';
 import {AppService} from '@app/services';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ContratoService} from '@app/proposta/services/proposta-service-base.service';
 
 @Component({
   selector: 'app-aprovador',
@@ -10,11 +12,16 @@ import {AppService} from '@app/services';
 })
 export class AprovadorComponent implements OnInit {
 
+  @Input() type: 'Contrato' | 'Plano';
   proposta: Proposta;
   arquivos: Array<any> = [];
   alteracaoRequerida = false;
+  form = this.fb.group({
+    mensagem: ['', Validators.required]
+  });
 
-  constructor(protected service: PropostasService, protected app: AppService) {
+  constructor(protected service: PropostasService,
+              protected contratoService: ContratoService, protected app: AppService, protected fb: FormBuilder) {
   }
 
   ngOnInit(): void {
@@ -50,7 +57,16 @@ export class AprovadorComponent implements OnInit {
 
 
   async aprovar() {
-    console.log('%cAprovado!', 'color:green;');
+    this.app.showLoading();
+    switch (this.type) {
+      case 'Contrato':
+        await this.contratoService.aprovar();
+        break;
+      case 'Plano':
+        break;
+
+    }
+    this.app.hideLoading();
   }
 
   cancelarSolicitacao() {
@@ -62,6 +78,24 @@ export class AprovadorComponent implements OnInit {
   }
 
   async enviarSolicitacaoAlteracao() {
+    if (this.form.invalid) {
+      return;
+    }
+    this.app.showLoading();
+    try {
+
+      switch (this.type) {
+        case 'Contrato':
+          await this.contratoService.solicitarAlteracao(this.form.value.mensagem);
+          break;
+        case 'Plano':
+          break;
+
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    this.app.hideLoading();
 
   }
 }

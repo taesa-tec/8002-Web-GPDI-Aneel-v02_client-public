@@ -6,17 +6,19 @@ import {AprovadorComponent} from './refinamento/aprovador/aprovador.component';
 import {PipesModule} from '@app/core/pipes';
 import {FormsModule} from '@app/core/components/forms';
 import {AlteracoesComponent} from '@app/proposta/components/refinamento/alteracoes/alteracoes.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [RefinamentoComponent, ComentariosComponent, AprovadorComponent, AlteracoesComponent],
   exports: [
     RefinamentoComponent
   ],
-  imports: [
-    CommonModule,
-    PipesModule,
-    FormsModule
-  ]
+    imports: [
+        CommonModule,
+        PipesModule,
+        FormsModule,
+        ReactiveFormsModule
+    ]
 })
 export class ComponentsModule {
 }
