@@ -28,6 +28,7 @@ import {Texts} from '@app/user-fornecedor/texts';
       provide: SIDEBAR_MENU,
       useValue: [
         {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: `/${FornecedorRootUrl}/propostas`},
+        {text: 'Projetos - Refinamento', icon: 'ta-file-check', path: `/${FornecedorRootUrl}/refinamento`},
       ]
     }, {
       provide: HEADER_MENU,

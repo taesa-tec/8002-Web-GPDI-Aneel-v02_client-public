@@ -31,7 +31,7 @@ export interface Proposta {
   participacao: 0 | 1 | 2 | 3;
   consideracoes: string;
   planoTrabalhoAprovacao: string;
-  contratoAprovacao: string;
+  contratoAprovacao: 'Pendente' | 'Alteracao' | 'Aprovado';
   arquivos: Arquivo[];
   id: number;
 }

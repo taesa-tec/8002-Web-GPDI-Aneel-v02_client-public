@@ -20,6 +20,8 @@ import {GestorRootUrl} from '@app/routes/routes';
       useValue: [
         {text: 'Gestão de Demandas', icon: 'ta-projeto', path: `/${GestorRootUrl}/demandas`},
         {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: `/${GestorRootUrl}/captacoes`},
+        {text: 'Projetos - Priorização e Seleção', icon: 'ta-file-check', path: `/${GestorRootUrl}/selecao`},
+        {text: 'Projetos - Refinamento', icon: 'ta-file-check', path: `/${GestorRootUrl}/refinamento`},
       ]
     }, {
       provide: HEADER_MENU,

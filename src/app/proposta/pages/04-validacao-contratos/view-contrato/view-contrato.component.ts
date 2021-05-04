@@ -26,7 +26,8 @@ export class ViewContratoComponent implements OnInit {
   contrato: Contrato;
   form = this.fb.group({
     draft: [true],
-    conteudo: ['', Validators.required]
+    conteudo: ['', Validators.required],
+    alteracao: ['']
   });
 
   constructor(
@@ -46,7 +47,14 @@ export class ViewContratoComponent implements OnInit {
       this.contrato = data.contrato;
       this.form.get('conteudo').patchValue(this.contrato.conteudo || this.contrato.parent.conteudo);
     });
-    this.service.proposta.subscribe(p => this.proposta = p);
+    this.service.proposta.subscribe(p => {
+      this.proposta = p;
+      if (this.proposta.captacaoStatus === 'Refinamento') {
+        this.form.get('alteracao').setValidators(Validators.required);
+        this.form.updateValueAndValidity();
+      }
+    });
+
     if (!this.canEdit) {
       this.form.disable();
     }

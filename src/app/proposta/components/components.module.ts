@@ -11,7 +11,9 @@ import {ReactiveFormsModule} from '@angular/forms';
 @NgModule({
   declarations: [RefinamentoComponent, ComentariosComponent, AprovadorComponent, AlteracoesComponent],
   exports: [
-    RefinamentoComponent
+    RefinamentoComponent,
+    ComentariosComponent,
+    AlteracoesComponent
   ],
     imports: [
         CommonModule,

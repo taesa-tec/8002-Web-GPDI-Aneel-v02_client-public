@@ -1,5 +1,4 @@
 <div>
-  <app-comentarios [type]="type"></app-comentarios>
   <hr>
   <ng-container *ngIf="!canEdit">
     <ng-container [ngSwitch]="status">
@@ -14,7 +13,7 @@
 
   <ng-container *ngIf="canEdit">
     <ng-container [ngSwitch]="status">
-      <app-alteracoes *ngSwitchCase="'Alteracao'"></app-alteracoes>
+
       <div class="alert border border-warning text-warning d-flex align-items-center" *ngSwitchCase="'Pendente'">
         <i class="ta-ampulheta fs-22 mr-2"></i>
         <span>Aguardando retorno do revisor. Versão enviada.</span>
