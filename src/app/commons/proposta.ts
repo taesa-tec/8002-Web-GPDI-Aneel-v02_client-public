@@ -30,7 +30,7 @@ export interface Proposta {
   dataClausulasAceitas?: Date;
   participacao: 0 | 1 | 2 | 3;
   consideracoes: string;
-  planoTrabalhoAprovacao: string;
+  planoTrabalhoAprovacao: 'Pendente' | 'Alteracao' | 'Aprovado';
   contratoAprovacao: 'Pendente' | 'Alteracao' | 'Aprovado';
   arquivos: Arquivo[];
   id: number;

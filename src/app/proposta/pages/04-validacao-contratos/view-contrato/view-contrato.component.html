@@ -86,10 +86,10 @@
             Download PDF
           </button>
           <button type="submit" class="btn btn-outline-primary mx-2" value="draft" [disabled]="form.invalid"
-                  *ngIf="canEdit">
+                  *ngIf="fornecedorCanEdit">
             <i class="ta-save fs-24 align-middle"></i> Salvar como Rascunho
           </button>
-          <button type="submit" class="btn btn-success mx-2" value="publish" [disabled]="form.invalid" *ngIf="canEdit">
+          <button type="submit" class="btn btn-success mx-2" value="publish" [disabled]="form.invalid" *ngIf="fornecedorCanEdit">
             <i class="ta-ok fs-24 align-middle"></i> Salvar e Marcar como Finalizado
           </button>
         </div>

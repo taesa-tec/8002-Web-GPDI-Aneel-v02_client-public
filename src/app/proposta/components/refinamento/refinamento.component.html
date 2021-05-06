@@ -7,7 +7,9 @@
         <i class="ta-ampulheta fs-22 mr-2"></i>
         <span>Aguardando retorno do fornecedor. Validação enviada.</span>
       </div>
-      <div class="alert alert-success" *ngSwitchCase="'Aprovado'">{{description}} Aprovado!</div>
+      <div class="alert alert-success" *ngSwitchCase="'Aprovado'">
+        <i class="ta-ok"></i>
+        {{description}} Aprovado!</div>
     </ng-container>
   </ng-container>
 

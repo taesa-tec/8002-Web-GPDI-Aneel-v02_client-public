@@ -135,5 +135,25 @@ export class PropostasService extends ServiceBase<any> {
     a.click();
     URL.revokeObjectURL(blobUrl);
   }
+
+  async comentarios(guid: string) {
+    return await this.obter<Array<any>>(`${guid}/Comentarios`, {});
+  }
+
+  /**
+   * @description Aprovar plano de trabalho (Usuário Taesa)
+   */
+  async aprovarPlano(guid: string) {
+    return await this.post(`${guid}/Aprovar`, {});
+  }
+
+  /**
+   * @description Solicitar alteração no plano de trabalho
+   * @param guid identificador da  proposta
+   * @param mensagem descrição do que deve ser alterado no plano
+   */
+  async solicitarAlteracao(guid: string, mensagem: string) {
+    return await this.post(`${guid}/SolicitarAlteracao`, {mensagem});
+  }
 }
 

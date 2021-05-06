@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, Validators} from '@angular/forms';
 import {AppService} from '@app/services/app.service';
 import {PropostasService} from '@app/proposta/services/propostas.service';
@@ -30,12 +30,20 @@ export class ViewContratoComponent implements OnInit {
     alteracao: ['']
   });
 
+  get fornecedorCanEdit() {
+    return this.canEdit && (
+      this.proposta.captacaoStatus === 'Fornecedor' ||
+      (this.proposta.captacaoStatus === 'Refinamento' && this.proposta.contratoAprovacao === 'Alteracao')
+    );
+  }
+
   constructor(
     @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
     private app: AppService,
     private parent: PropostaComponent,
     private service: PropostasService,
     private route: ActivatedRoute,
+    private router: Router,
     private modal: NgbModal,
     private fb: FormBuilder,
     protected fileService: FileService,
@@ -67,9 +75,12 @@ export class ViewContratoComponent implements OnInit {
         const saveAsDraft = evt.submitter.value === 'draft';
         this.form.get('draft').setValue(saveAsDraft);
         this.contrato.id = parseFloat(await this.service.saveContrato(this.proposta.guid, this.form.value));
-
-        this.app.alert('Contrato Salvo com sucesso!').then();
         this.contrato.finalizado = !saveAsDraft;
+        this.app.alert('Contrato Salvo com sucesso!').then();
+        if (this.proposta.captacaoStatus === 'Refinamento') {
+          this.proposta.contratoAprovacao = 'Pendente';
+          this.service.setProposta(this.proposta);
+        }
 
       }
     } catch (e) {

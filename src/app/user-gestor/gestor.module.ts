@@ -5,6 +5,7 @@ import {GestorRoutingModule} from './gestor-routing.module';
 import {DashboardModule} from '@app/dashboard';
 import {HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
 import {GestorRootUrl} from '@app/routes/routes';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 
 
 @NgModule({
@@ -31,7 +32,11 @@ import {GestorRootUrl} from '@app/routes/routes';
     }, {
       provide: ROOT_URL,
       useValue: `/${GestorRootUrl}`
-    }
+    },
+    {
+      provide: PROPOSTA_CAN_EDIT,
+      useValue: false
+    },
   ],
 
 })

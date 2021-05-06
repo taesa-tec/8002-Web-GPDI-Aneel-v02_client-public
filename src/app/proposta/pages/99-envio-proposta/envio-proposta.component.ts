@@ -8,6 +8,7 @@ import {FileService} from '@app/services/file.service';
 import {AppService} from '@app/services';
 import {LoadingComponent} from '@app/core/components';
 import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
+import {FormBuilder, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-envio-proposta',
@@ -23,6 +24,16 @@ export class EnvioPropostaComponent implements OnInit {
   validations: Validations = {isValid: false, ruleSetsExecuted: [], errors: []};
 
   proposta: Proposta;
+  form = this.fb.group({
+    alteracao: ['']
+  });
+
+  get fornecedorCanEdit() {
+    return this.canEdit && (
+      this.proposta.captacaoStatus === 'Fornecedor' ||
+      (this.proposta.captacaoStatus === 'Refinamento' && this.proposta.planoTrabalhoAprovacao === 'Alteracao')
+    );
+  }
 
   constructor(
     @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
@@ -30,7 +41,8 @@ export class EnvioPropostaComponent implements OnInit {
     protected app: AppService,
     protected sanitize: DomSanitizer,
     protected fileService: FileService,
-    protected service: PropostasService) {
+    protected service: PropostasService,
+    protected fb: FormBuilder) {
   }
 
   async downloadFile(file) {

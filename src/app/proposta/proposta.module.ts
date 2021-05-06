@@ -22,8 +22,9 @@ import {ContratoService} from '@app/proposta/services/proposta-service-base.serv
     PropostaProvider,
     PropostasResolver,
     PropostaResolver,
-    ContratoService
+    ContratoService,
   ],
+
 })
 export class PropostaModule {
 }

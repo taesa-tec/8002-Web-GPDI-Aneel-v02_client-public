@@ -61,6 +61,8 @@ export class AprovadorComponent implements OnInit {
     switch (this.type) {
       case 'Contrato':
         await this.contratoService.aprovar();
+        this.proposta.contratoAprovacao = 'Aprovado';
+        this.service.setProposta(this.proposta);
         break;
       case 'Plano':
         break;
@@ -87,8 +89,13 @@ export class AprovadorComponent implements OnInit {
       switch (this.type) {
         case 'Contrato':
           await this.contratoService.solicitarAlteracao(this.form.value.mensagem);
+          this.proposta.contratoAprovacao = 'Alteracao';
+          this.service.setProposta(this.proposta);
           break;
         case 'Plano':
+          await this.service.solicitarAlteracao(this.proposta.guid, this.form.value.mensagem);
+          this.proposta.planoTrabalhoAprovacao = 'Alteracao';
+          this.service.setProposta(this.proposta);
           break;
 
       }

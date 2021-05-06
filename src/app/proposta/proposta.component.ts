@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Proposta} from '@app/commons';
-import {CaptacaoIdProvider, PROPOSTA, PropostaProvider, PropostaSidebar} from './shared';
+import {CaptacaoIdProvider, PROPOSTA, PROPOSTA_CAN_EDIT, PropostaProvider, PropostaSidebar} from './shared';
 import {BehaviorSubject} from 'rxjs';
 import {EtapasService} from '@app/user-fornecedor/services/propostas.service';
 

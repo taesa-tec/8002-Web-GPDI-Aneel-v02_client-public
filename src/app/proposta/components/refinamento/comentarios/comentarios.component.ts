@@ -29,6 +29,7 @@ export class ComentariosComponent implements OnInit {
         this.comentarios = await this.contratoService.obter('Comentarios');
         break;
       case 'Plano':
+        this.comentarios = await this.service.comentarios(this.proposta.guid);
         break;
 
     }
