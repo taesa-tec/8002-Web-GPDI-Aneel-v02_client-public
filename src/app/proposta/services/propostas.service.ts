@@ -56,8 +56,8 @@ export class PropostasService extends ServiceBase<any> {
     }).toPromise();
   }
 
-  async marcarComoFinalizado(guid: string) {
-    return await this.http.put<any>(`${this.controller}/${guid}/Finalizar`, {}).toPromise();
+  async marcarComoFinalizado(guid: string, mensagem?: string) {
+    return await this.http.put<any>(`${this.controller}/${guid}/Finalizar`, {mensagem}).toPromise();
   }
 
   async saveCoExecutor(guid: string, coExecutor: BaseEntity) {
