@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {PropostasService} from '@app/proposta/services/propostas.service';
 import {Proposta} from '@app/commons';
 import {ContratoService} from '@app/proposta/services/proposta-service-base.service';
+import {FileService} from '@app/services/file.service';
 
 @Component({
   selector: 'app-comentarios',
@@ -13,7 +14,7 @@ export class ComentariosComponent implements OnInit {
   proposta: Proposta;
   comentarios: Array<any>;
 
-  constructor(protected service: PropostasService, protected contratoService: ContratoService) {
+  constructor(protected service: PropostasService, protected contratoService: ContratoService, protected fileService: FileService) {
   }
 
   ngOnInit(): void {
@@ -30,6 +31,22 @@ export class ComentariosComponent implements OnInit {
         break;
       case 'Plano':
         this.comentarios = await this.service.comentarios(this.proposta.guid);
+        break;
+
+    }
+  }
+
+  async downloadFile(file, comentario) {
+    switch (this.type) {
+      case 'Contrato':
+        await this.fileService
+          .urlToBlobDownload(
+            `Propostas/${this.proposta.guid}/Contrato/Comentario/${comentario.id}/Arquivo/${file.id}`, file.name);
+        break;
+      case 'Plano':
+        await this.fileService
+          .urlToBlobDownload(
+            `Propostas/Comentario/${comentario.id}/Arquivo/${file.id}`, file.name);
         break;
 
     }

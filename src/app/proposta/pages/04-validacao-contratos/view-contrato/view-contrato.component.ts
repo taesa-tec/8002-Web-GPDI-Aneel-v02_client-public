@@ -24,6 +24,7 @@ export class ViewContratoComponent implements OnInit {
   editor = ClassicEditor;
   configEditor = ConfigEditor;
   contrato: Contrato;
+  files: File[] = [];
   form = this.fb.group({
     draft: [true],
     conteudo: ['', Validators.required],
@@ -70,15 +71,20 @@ export class ViewContratoComponent implements OnInit {
 
   async onSubmit(evt: any) {
     try {
+      const saveAsDraft = evt.submitter.value === 'draft';
+      if (saveAsDraft && (this.files.length > 0 || this.proposta.captacaoStatus === 'Refinamento')) {
+        await this.app.alert('Arquivos selecionados não serão enviados e o descritivo das alterações não será salvo', 'Atenção');
+      }
       this.app.loading.show().then();
       if (this.form.valid) {
-        const saveAsDraft = evt.submitter.value === 'draft';
         this.form.get('draft').setValue(saveAsDraft);
-        this.contrato.id = parseFloat(await this.service.saveContrato(this.proposta.guid, this.form.value));
+        const response: any = await this.service.saveContrato(this.proposta.guid, this.form.value);
+        this.contrato.id = response.id;
         this.contrato.finalizado = !saveAsDraft;
         this.app.alert('Contrato Salvo com sucesso!').then();
-        if (this.proposta.captacaoStatus === 'Refinamento') {
+        if (this.proposta.captacaoStatus === 'Refinamento' && !saveAsDraft) {
           this.proposta.contratoAprovacao = 'Pendente';
+          await this.uploadFiles(response.comentario.id);
           this.service.setProposta(this.proposta);
         }
 
@@ -107,6 +113,25 @@ export class ViewContratoComponent implements OnInit {
     component.contratoId = this.contrato.parentId;
     component.contrato = this.contrato;
     await ref.result;
+  }
+
+  fileChange(evt: Event) {
+    const files = (evt.target as HTMLInputElement).files;
+    // this.files = [];
+    for (let i = 0; i < files.length; i++) {
+      this.files.push(files.item(i));
+    }
+  }
+
+  removeFile(i) {
+    this.files.splice(i, 1);
+  }
+
+  async uploadFiles(id) {
+    if (this.files.length === 0 || parseFloat(id) === 0) {
+      return;
+    }
+    await this.service.upload(this.files, `${this.proposta.guid}/Contrato/Comentario/${id}/Arquivo`);
   }
 
 }

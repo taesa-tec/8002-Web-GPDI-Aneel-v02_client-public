@@ -104,7 +104,7 @@ export class PropostasService extends ServiceBase<any> {
 
 
   async saveContrato(guid: string, contrato: any) {
-    return await this.http.post(`${this.controller}/${guid}/Contrato`, contrato, {responseType: 'text'}).toPromise();
+    return await this.http.post(`${this.controller}/${guid}/Contrato`, contrato).toPromise();
   }
 
   async getPlanoTrabalho(guid: string) {

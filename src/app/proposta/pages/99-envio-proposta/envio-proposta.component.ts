@@ -18,6 +18,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 export class EnvioPropostaComponent implements OnInit {
 
   protected _url: string;
+  files: File[] = [];
   documento: any;
   @ViewChild(LoadingComponent) loading: LoadingComponent;
   url: SafeResourceUrl;
@@ -43,6 +44,22 @@ export class EnvioPropostaComponent implements OnInit {
     protected fileService: FileService,
     protected service: PropostasService,
     protected fb: FormBuilder) {
+  }
+
+  ngOnInit(): void {
+    this.service.proposta.subscribe(p => {
+      this.proposta = p;
+      if (this.proposta.captacaoStatus === 'Refinamento') {
+        this.form.get('alteracao').setValidators(Validators.required);
+      }
+    });
+
+    this.route.data.subscribe(data => {
+      const blob = new Blob([data.documento.content], {type: 'text/html'});
+      this._url = URL.createObjectURL(blob);
+      this.validations = data.documento.validacao;
+      this.url = this.sanitize.bypassSecurityTrustResourceUrl(this._url);
+    });
   }
 
   async downloadFile(file) {
@@ -71,8 +88,12 @@ export class EnvioPropostaComponent implements OnInit {
     this.loading.show();
     try {
       const result = await this.service.marcarComoFinalizado(this.proposta.guid, this.form.value.alteracao);
+      if (this.proposta.captacaoStatus === 'Refinamento') {
+        await this.uploadFiles(result.id);
+      }
       this.app.alert('Proposta marcada como finalizada').then();
       this.proposta.planoFinalizado = true;
+      this.proposta.planoTrabalhoAprovacao = 'Pendente';
       this.service.setProposta(this.proposta);
       this.form.reset();
       this.form.updateValueAndValidity();
@@ -89,15 +110,24 @@ export class EnvioPropostaComponent implements OnInit {
     return this.sanitize.bypassSecurityTrustResourceUrl(this._url.concat(section));
   }
 
-  ngOnInit(): void {
-    this.service.proposta.subscribe(p => this.proposta = p);
 
-    this.route.data.subscribe(data => {
-      const blob = new Blob([data.documento.content], {type: 'text/html'});
-      this._url = URL.createObjectURL(blob);
-      this.validations = data.documento.validacao;
-      this.url = this.sanitize.bypassSecurityTrustResourceUrl(this._url);
-    });
+  fileChange(evt: Event) {
+    const files = (evt.target as HTMLInputElement).files;
+    // this.files = [];
+    for (let i = 0; i < files.length; i++) {
+      this.files.push(files.item(i));
+    }
+  }
+
+  removeFile(i) {
+    this.files.splice(i, 1);
+  }
+
+  async uploadFiles(id) {
+    if (this.files.length === 0 || parseFloat(id) === 0) {
+      return;
+    }
+    await this.service.upload(this.files, `Comentario/${id}/Arquivo`);
   }
 
 }

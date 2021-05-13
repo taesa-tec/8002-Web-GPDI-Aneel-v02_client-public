@@ -13,6 +13,7 @@ import {ContratoService} from '@app/proposta/services/proposta-service-base.serv
 export class AprovadorComponent implements OnInit {
 
   @Input() type: 'Contrato' | 'Plano';
+  files: File[] = [];
   proposta: Proposta;
   arquivos: Array<any> = [];
   alteracaoRequerida = false;
@@ -36,6 +37,18 @@ export class AprovadorComponent implements OnInit {
     } catch (e) {
       //
     }
+  }
+
+  fileChange(evt: Event) {
+    const files = (evt.target as HTMLInputElement).files;
+    // this.files = [];
+    for (let i = 0; i < files.length; i++) {
+      this.files.push(files.item(i));
+    }
+  }
+
+  removeFile(i) {
+    this.files.splice(i, 1);
   }
 
   async cancelarProcesso() {
@@ -74,6 +87,7 @@ export class AprovadorComponent implements OnInit {
     this.app.hideLoading();
   }
 
+
   cancelarSolicitacao() {
     this.alteracaoRequerida = false;
   }
@@ -88,15 +102,17 @@ export class AprovadorComponent implements OnInit {
     }
     this.app.showLoading();
     try {
-
+      let solicitacao: any;
       switch (this.type) {
         case 'Contrato':
-          await this.contratoService.solicitarAlteracao(this.form.value.mensagem);
+          solicitacao = await this.contratoService.solicitarAlteracao(this.form.value.mensagem);
+          await this.uploadFiles(solicitacao.id);
           this.proposta.contratoAprovacao = 'Alteracao';
           this.service.setProposta(this.proposta);
           break;
         case 'Plano':
-          await this.service.solicitarAlteracao(this.proposta.guid, this.form.value.mensagem);
+          solicitacao = await this.service.solicitarAlteracao(this.proposta.guid, this.form.value.mensagem);
+          await this.uploadFiles(solicitacao.id);
           this.proposta.planoTrabalhoAprovacao = 'Alteracao';
           this.service.setProposta(this.proposta);
           break;
@@ -107,5 +123,19 @@ export class AprovadorComponent implements OnInit {
     }
     this.app.hideLoading();
 
+  }
+
+  async uploadFiles(id) {
+    if (this.files.length === 0 || parseFloat(id) === 0) {
+      return;
+    }
+    switch (this.type) {
+      case 'Contrato':
+        await this.contratoService.upload(this.files, `Comentario/${id}/Arquivo`);
+        break;
+      case 'Plano':
+        await this.service.upload(this.files, `Comentario/${id}/Arquivo`);
+        break;
+    }
   }
 }

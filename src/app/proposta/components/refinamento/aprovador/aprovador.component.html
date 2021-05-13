@@ -25,14 +25,17 @@
     </div>
     <div class="d-flex justify-content-between align-items-center">
       <div>
-        <div class="files p-2">
-          <div *ngFor="let file of arquivos" class="border-bottom border-light">
-            <i class="ta-attachment fs-12"></i> {{file.name}}
+        <div class="files text-primary p-2">
+          <div *ngFor="let file of files; let i = index" class="border-bottom border-light">
+            <i class="ta-attachment fs-14"></i> {{file.name}}
+            <button class="btn btn-link btn-sm" type="button" (click)="removeFile(i)"><i class="ta-cancel-circle"></i>
+            </button>
           </div>
         </div>
-        <button class="btn btn-link" type="button" (click)="anexarArquivos()"><i class="ta-attachment"></i> Selecionar
-          Arquivos
-        </button>
+        <label class="cursor-pointer text-primary">
+          <i class="ta-plus-circle"></i> Selecionar arquivos
+          <input type="file" hidden multiple (change)="fileChange($event)">
+        </label>
       </div>
       <div>
         <button class="btn btn-link" type="button" (click)="cancelarSolicitacao()">
