@@ -65,6 +65,9 @@ export class AprovadorComponent implements OnInit {
         this.service.setProposta(this.proposta);
         break;
       case 'Plano':
+        await this.service.aprovarPlano(this.proposta.guid);
+        this.proposta.planoTrabalhoAprovacao = 'Aprovado';
+        this.service.setProposta(this.proposta);
         break;
 
     }
