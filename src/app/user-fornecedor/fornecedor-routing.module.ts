@@ -24,6 +24,11 @@ const routes: Routes = [
         //component: SidebarComponent,
         loadChildren: () => import('@app/proposta/proposta.module').then(m => m.PropostaModule)
       },
+      {
+        path: 'refinamento',
+        loadChildren: () => import('@app/user-shared/propostas-refinamento/propostas-refinamento.module')
+          .then(m => m.PropostasRefinamentoModule)
+      },
     ]
   }
 ];

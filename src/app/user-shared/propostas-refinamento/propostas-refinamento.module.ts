@@ -23,10 +23,6 @@ import {Texts} from './text';
     PropostasRefinamentoResolver,
     {provide: ServiceBase, deps: [HttpClient], useFactory: (httpClient) => new ServiceBase(httpClient, 'Captacoes')},
     {
-      provide: PROPOSTA_CAN_EDIT,
-      useValue: false
-    },
-    {
       provide: COMPONENT_LABELS,
       useValue: Texts
     }

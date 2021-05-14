@@ -5,6 +5,7 @@ import {EnvioPropostaRoutingModule} from './envio-proposta-routing.module';
 import {EnvioPropostaComponent} from './envio-proposta.component';
 import {PropostaDocumentoResolver, PropostaErrosResolver} from '@app/proposta/resolvers';
 import {CoreModule} from '@app/core';
+import {ComponentsModule} from '@app/proposta/components/components.module';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import {CoreModule} from '@app/core';
   imports: [
     CommonModule,
     EnvioPropostaRoutingModule,
-    CoreModule
+    CoreModule,
+    ComponentsModule
   ],
   providers: [PropostaDocumentoResolver, PropostaErrosResolver]
 })

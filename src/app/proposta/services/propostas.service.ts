@@ -56,8 +56,8 @@ export class PropostasService extends ServiceBase<any> {
     }).toPromise();
   }
 
-  async marcarComoFinalizado(guid: string) {
-    return await this.http.put<any>(`${this.controller}/${guid}/Finalizar`, {}).toPromise();
+  async marcarComoFinalizado(guid: string, mensagem?: string) {
+    return await this.http.put<any>(`${this.controller}/${guid}/Finalizar`, {mensagem}).toPromise();
   }
 
   async saveCoExecutor(guid: string, coExecutor: BaseEntity) {
@@ -104,7 +104,7 @@ export class PropostasService extends ServiceBase<any> {
 
 
   async saveContrato(guid: string, contrato: any) {
-    return await this.http.post(`${this.controller}/${guid}/Contrato`, contrato, {responseType: 'text'}).toPromise();
+    return await this.http.post(`${this.controller}/${guid}/Contrato`, contrato).toPromise();
   }
 
   async getPlanoTrabalho(guid: string) {
@@ -134,6 +134,26 @@ export class PropostasService extends ServiceBase<any> {
     a.setAttribute('download', file.name);
     a.click();
     URL.revokeObjectURL(blobUrl);
+  }
+
+  async comentarios(guid: string) {
+    return await this.obter<Array<any>>(`${guid}/Comentarios`, {});
+  }
+
+  /**
+   * @description Aprovar plano de trabalho (Usuário Taesa)
+   */
+  async aprovarPlano(guid: string) {
+    return await this.post(`${guid}/Aprovar`, {});
+  }
+
+  /**
+   * @description Solicitar alteração no plano de trabalho
+   * @param guid identificador da  proposta
+   * @param mensagem descrição do que deve ser alterado no plano
+   */
+  async solicitarAlteracao(guid: string, mensagem: string) {
+    return await this.post(`${guid}/SolicitarAlteracao`, {mensagem});
   }
 }
 

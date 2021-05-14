@@ -1,4 +1,5 @@
 <app-loading type="fullscreen"></app-loading>
+
 <div class="row justify-content-between">
   <div class="col">
     <h5 class="text-uppercase text-blue font-weight-normal my-4">ENVIO PROPOSTA APROVAÇÃO</h5>
@@ -90,7 +91,33 @@
     </div>
   </div>
 </div>
-
+<div class="row">
+  <div class="col-12">
+    <app-comentarios type="Plano"></app-comentarios>
+  </div>
+</div>
+<div class="row"
+     *ngIf="canEdit && proposta.captacaoStatus === 'Refinamento' && proposta.planoTrabalhoAprovacao === 'Alteracao'">
+  <div class="col-12" [formGroup]="form">
+    <h6 class="text-blue-light">DESCRITIVO ALTERAÇÕES</h6>
+    <div class="form-group">
+      <app-textarea formControlName="alteracao" class="form-control" rows="5"></app-textarea>
+    </div>
+    <div class="mb-3">
+      <div class="files text-primary p-2">
+        <div *ngFor="let file of files; let i = index" class="border-bottom border-light">
+          <i class="ta-attachment fs-14"></i> {{file.name}}
+          <button class="btn btn-link btn-sm" type="button" (click)="removeFile(i)"><i class="ta-cancel-circle"></i>
+          </button>
+        </div>
+      </div>
+      <label class="cursor-pointer text-primary">
+        <i class="ta-plus-circle"></i> Selecionar arquivos
+        <input type="file" hidden multiple (change)="fileChange($event)">
+      </label>
+    </div>
+  </div>
+</div>
 <div class="row">
   <div class="col-6 mb-4">
     <h6 class="text-uppercase text-blue-light">Arquivos complementares</h6>
@@ -113,8 +140,8 @@
           Download PDF
         </button>
       </div>
-      <button type="button" [disabled]="!validations.isValid" class="btn btn-success" (click)="marcarComoFinalizado()"
-              *ngIf="canEdit">
+      <button type="button" [disabled]="!validations.isValid || form.invalid" class="btn btn-success" (click)="marcarComoFinalizado()"
+              *ngIf="fornecedorCanEdit">
         <i class="ta-ok"></i>
         Marcar como Finalizado
       </button>
@@ -122,10 +149,16 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-4 mb-4">
 
+<div class="row">
+  <div class="col-12">
+    <div id="refinamento" *ngIf="proposta.captacaoStatus === 'Refinamento'">
+      <app-refinamento type="Plano"></app-refinamento>
+    </div>
   </div>
 </div>
+
+
+
 
 

@@ -57,10 +57,37 @@
       </div>
     </div>
   </div>
-
   <div class="row">
-    <div class="col">
+    <div class="col-12">
+      <app-comentarios type="Contrato"></app-comentarios>
+    </div>
+  </div>
 
+  <div class="row"
+       *ngIf="canEdit && proposta.captacaoStatus === 'Refinamento' && proposta.contratoAprovacao === 'Alteracao'">
+    <div class="col-12">
+      <h6 class="text-blue-light">DESCRITIVO ALTERAÇÕES</h6>
+      <div class="form-group">
+        <app-textarea formControlName="alteracao" class="form-control" rows="5"></app-textarea>
+      </div>
+      <div>
+        <div class="files text-primary p-2">
+          <div *ngFor="let file of files; let i = index" class="border-bottom border-light">
+            <i class="ta-attachment fs-14"></i> {{file.name}}
+            <button class="btn btn-link btn-sm" type="button" (click)="removeFile(i)"><i class="ta-cancel-circle"></i>
+            </button>
+          </div>
+        </div>
+        <label class="cursor-pointer text-primary">
+          <i class="ta-plus-circle"></i> Selecionar arquivos
+          <input type="file" hidden multiple (change)="fileChange($event)">
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-6">
+    <div class="col">
       <div class="form-group d-flex mt-4">
         <button type="button" class="button btn btn-link px-0" (click)="historico()">
           <i class="ta-ampulheta"></i>
@@ -72,13 +99,11 @@
             Download PDF
           </button>
           <button type="submit" class="btn btn-outline-primary mx-2" value="draft" [disabled]="form.invalid"
-                  *ngIf="canEdit">
-            <i class="ta-save fs-24 align-middle"></i>
-            Salvar como Rascunho
+                  *ngIf="fornecedorCanEdit">
+            <i class="ta-save fs-24 align-middle"></i> Salvar como Rascunho
           </button>
-          <button type="submit" class="btn btn-success mx-2" value="publish" [disabled]="form.invalid" *ngIf="canEdit">
-            <i class="ta-ok fs-24 align-middle"></i>
-            Salvar e Marcar como Finalizado
+          <button type="submit" class="btn btn-success mx-2" value="publish" [disabled]="form.invalid" *ngIf="fornecedorCanEdit">
+            <i class="ta-ok fs-24 align-middle"></i> Salvar e Marcar como Finalizado
           </button>
         </div>
       </div>
@@ -86,3 +111,7 @@
     </div>
   </div>
 </form>
+
+<div id="refinamento" *ngIf="proposta.captacaoStatus === 'Refinamento'">
+  <app-refinamento type="Contrato"></app-refinamento>
+</div>

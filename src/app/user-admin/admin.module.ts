@@ -5,7 +5,7 @@ import {AdminRoutingModule} from './admin-routing.module';
 import {DashboardModule} from '@app/dashboard';
 import {HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
 import {AdminRootUrl} from '@app/routes/routes';
-import {PROPOSTA_API_URL} from '@app/proposta/shared';
+import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
 
 
 @NgModule({
@@ -34,10 +34,11 @@ import {PROPOSTA_API_URL} from '@app/proposta/shared';
     }, {
       provide: ROOT_URL,
       useValue: `/${AdminRootUrl}`
-    }, {
-      provide: PROPOSTA_API_URL,
-      useValue: 'Fornecedor'
-    }
+    },
+    {
+      provide: PROPOSTA_CAN_EDIT,
+      useValue: false
+    },
   ]
 })
 export class AdminModule {

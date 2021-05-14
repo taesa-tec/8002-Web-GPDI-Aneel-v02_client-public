@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
     });
 
     if (this.app.auth.isLoggedIn) {
-      // await this.app.users.setCurrentUser();
+
     }
     this.loading.hide();
   }

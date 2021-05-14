@@ -11,22 +11,29 @@ interface Arquivo {
   captacaoId: number;
 }
 
+type CaptacaoStatus = 'Cancelada' | 'Pendente' | 'Elaboracao' | 'Fornecedor' | 'Encerrada' | 'Refinamento' | 'AnaliseRisco';
+
 export interface Proposta {
   guid: string;
   captacao: string;
-  dataCriacao?: Date;
-  dataTermino?: Date;
-  dataResposta?: Date;
-  dataClausulasAceitas?: Date;
-  duracao: number;
+  captacaoStatus: CaptacaoStatus;
   fornecedorId: number;
   fornecedor: string;
   captacaoId: number;
-  // 0
-  participacao: 0 | 1 | 2 | 3;
+  duracao: number;
+  contratoFinalizado: boolean;
   planoFinalizado: boolean;
+  dataCriacao?: Date;
+  dataTermino?: Date;
+  dataResposta?: Date;
+  dataParticipacao?: Date;
+  dataClausulasAceitas?: Date;
+  participacao: 0 | 1 | 2 | 3;
   consideracoes: string;
+  planoTrabalhoAprovacao: 'Pendente' | 'Alteracao' | 'Aprovado';
+  contratoAprovacao: 'Pendente' | 'Alteracao' | 'Aprovado';
   arquivos: Arquivo[];
   id: number;
 }
+
 

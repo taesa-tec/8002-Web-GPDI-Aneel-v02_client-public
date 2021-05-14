@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {TableComponentCols, TableComponentActions, TableComponentFilter, TABLE_COLS, TABLE_ACTIONS} from '@app/core/components/table/table';
+import {TABLE_COLS, TABLE_ACTIONS} from '@app/core/components/table/table';
 import {RiscoFormComponent} from './risco-form/risco-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PropostaComponent} from '@app/proposta/proposta.component';

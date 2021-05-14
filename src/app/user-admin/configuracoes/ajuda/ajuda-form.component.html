@@ -18,17 +18,25 @@
              formControlName="codigo">
     </div>
     <div class="form-group">
-      <label for="nome">Nome</label>
+      <label for="nome">Nome
+        <i class="ta-question-o"
+           ngbTooltip="Campo reservado para identificar o texto de ajuda. O nome não é exibido na interface final"></i>
+      </label>
       <input type="text" class="form-control" id="nome" placeholder="Digite o nome do item" formControlName="nome">
 
     </div>
     <div class="form-group">
-      <label for="descricao">Texto tooltip</label>
+      <label for="descricao">Texto tooltip
+        <i class="ta-question-o" ngbTooltip="Texto que aparece no tooltip ao passar o mouse sobre o ícone de ajuda"></i>
+      </label>
       <input type="text" class="form-control" id="descricao" placeholder="Descrição breve do item"
              formControlName="descricao">
     </div>
     <div class="form-group">
-      <label for="nome">Conteúdo Lightbox (opcional)</label>
+      <label for="nome">Conteúdo Lightbox (opcional)
+        <i class="ta-question-o"
+           ngbTooltip="Texto que irá abrir num lightbox ao clicar sobre o ícone de ajuda. Ele é destinado a uma explicação mais detalhada do campo. Seu preenchimento é opcional"></i>
+      </label>
       <ckeditor
         [editor]="editor"
         [config]="configEditor"
@@ -37,7 +45,7 @@
     </div>
     <div class="form-group d-flex justify-content-between">
       <div>
-        <button type="button" class="button btn btn-danger" (click)="remover()" *ngIf="form.value.id !== 0">
+        <button type="button" class="button btn btn-danger d-none" (click)="remover()" *ngIf="form.value.id !== 0">
           <i class="ta-trash mr-1"></i>
           Excluir Item
         </button>

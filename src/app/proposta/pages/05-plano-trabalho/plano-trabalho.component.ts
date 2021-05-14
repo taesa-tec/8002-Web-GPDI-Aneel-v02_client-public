@@ -68,8 +68,6 @@ export class PlanoTrabalhoComponent implements OnInit {
   }
 
   async download(file) {
-    // @todo dowload file
-    console.log(file);
     await this.service.downloadArquivo(this.proposta.guid, file);
   }
 

@@ -1,9 +1,6 @@
 import {Injectable, Provider} from '@angular/core';
 import {ServiceBase} from '@app/services';
 import {HttpClient} from '@angular/common/http';
-import {PROPOSTA, PROPOSTA_API_URL} from '@app/proposta/shared';
-import {BehaviorSubject} from 'rxjs';
-import {Proposta} from '@app/commons';
 import {PropostasService} from '@app/proposta/services/propostas.service';
 
 @Injectable()
@@ -75,5 +72,21 @@ export class RecursosMateriaisService extends PropostaServiceBase {
 
   constructor(http: HttpClient, service: PropostasService) {
     super(http, service, 'RecursosMateriais');
+  }
+}
+
+@Injectable()
+export class ContratoService extends PropostaServiceBase {
+
+  constructor(http: HttpClient, service: PropostasService) {
+    super(http, service, 'Contrato');
+  }
+
+  async aprovar() {
+    return await this.post('Aprovar', {});
+  }
+
+  async solicitarAlteracao(mensagem: string) {
+    return await this.post('SolicitarAlteracao', {mensagem});
   }
 }

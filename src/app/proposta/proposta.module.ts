@@ -7,6 +7,7 @@ import {PropostaComponent} from './proposta.component';
 import {DashboardModule} from '@app/dashboard';
 import {PropostasResolver} from '@app/proposta/resolvers/propostas.resolver';
 import {PropostaProvider} from '@app/proposta/shared';
+import {ContratoService} from '@app/proposta/services/proposta-service-base.service';
 
 
 @NgModule({
@@ -21,7 +22,9 @@ import {PropostaProvider} from '@app/proposta/shared';
     PropostaProvider,
     PropostasResolver,
     PropostaResolver,
+    ContratoService,
   ],
+
 })
 export class PropostaModule {
 }

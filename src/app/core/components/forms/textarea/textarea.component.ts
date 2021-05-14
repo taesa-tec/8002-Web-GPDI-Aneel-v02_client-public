@@ -5,7 +5,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 @Component({
   selector: 'app-textarea',
   template: `
-      <div>
+    <div>
         <textarea [class]="className"
                   [maxlength]="maxlength"
                   [name]="name"
@@ -15,8 +15,8 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
                   [rows]="rows"
                   [disabled]="disabled"
                   [(ngModel)]="value"></textarea>
-          <div *ngIf="maxlength > 0" class="text-right fs-12 font-italic p-1">{{charsLeft}} caracteres sobrando</div>
-      </div>
+      <div *ngIf="maxlength > 0" class="text-right fs-12 font-italic p-1">{{charsLeft}} caracteres sobrando</div>
+    </div>
   `,
   styles: [],
   providers: [
@@ -66,9 +66,7 @@ export class TextareaComponent implements ControlValueAccessor {
   };
 
   writeValue(value: any) {
-    if (value) {
-      this.value = value;
-    }
+    this.val = value;
   }
 
   registerOnChange(fn: any) {
