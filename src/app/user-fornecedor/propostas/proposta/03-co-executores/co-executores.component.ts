@@ -72,7 +72,6 @@ export class CoExecutoresComponent implements OnInit {
     cmp.coExecutor = coExecutor;
     await ref.result;
     await this.router.navigate(['./'], {relativeTo: this.route});
-    // @todo
   }
 
   async tableAction(evt: TableActionEvent) {

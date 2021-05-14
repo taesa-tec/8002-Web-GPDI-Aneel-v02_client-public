@@ -4,6 +4,7 @@ import {PropostasService} from '@app/proposta/services/propostas.service';
 import {AppService} from '@app/services';
 import {FormBuilder, Validators} from '@angular/forms';
 import {ContratoService} from '@app/proposta/services/proposta-service-base.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-aprovador',
@@ -22,6 +23,7 @@ export class AprovadorComponent implements OnInit {
   });
 
   constructor(protected service: PropostasService,
+              protected router: Router,
               protected contratoService: ContratoService, protected app: AppService, protected fb: FormBuilder) {
   }
 
@@ -54,7 +56,7 @@ export class AprovadorComponent implements OnInit {
   async cancelarProcesso() {
 
     if (await this.app.confirm('Esta ação é irreversível. Ao cancelar o processo de refinamento o fornecedor será notificado por e-mail',
-      'TEM CERTEZA QUE DESEJA CANCELAR O PREOCESSO DE REFINAMENTO?', [
+      'TEM CERTEZA QUE DESEJA CANCELAR O PROCESSO DE REFINAMENTO?', [
         {text: 'Cancelar', value: false, cssClass: 'btn btn-link'},
         {
           text: 'Ok',
@@ -64,7 +66,10 @@ export class AprovadorComponent implements OnInit {
           checkMessage: 'Confirmo o cancelamento do processo de refinamento'
         }
       ])) {
-      // @TODO Chamada a api para cancelamento
+      await this.service.post(`${this.proposta.guid}/CancelarRefinamento`, {});
+      await this.app.alert('Processo de refinamento cancelado');
+      await this.router.navigate(['/']);
+
     }
   }
 
