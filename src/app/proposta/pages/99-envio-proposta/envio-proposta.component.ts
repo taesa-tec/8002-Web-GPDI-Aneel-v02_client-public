@@ -75,8 +75,7 @@ export class EnvioPropostaComponent implements OnInit {
   async downloadPdf() {
     this.loading.show();
     try {
-
-      const url = await this.fileService.download(`Fornecedor/Propostas/${this.proposta.captacaoId}/Download/PlanoTrabalho`);
+      const url = await this.fileService.download(`Propostas/${this.proposta.guid}/Download/PlanoTrabalho`);
       this.fileService.downloadBlob(url, 'plano-de-trabalho.pdf');
     } catch (e) {
       console.error(e);
