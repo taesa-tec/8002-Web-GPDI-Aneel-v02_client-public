@@ -30,9 +30,7 @@ export class AjudaFormComponent implements OnInit {
   ngOnInit(): void {
     if (this.route.snapshot.data.item) {
       this.form.patchValue(this.route.snapshot.data.item);
-      this.form.get('codigo').disable();
     }
-    console.log(ClassicEditor);
   }
 
   async onSubmit() {
