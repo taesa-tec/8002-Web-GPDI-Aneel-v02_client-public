@@ -14,7 +14,7 @@
 
     <div class="form-group">
       <label for="codigo">Código</label>
-      <input type="text" class="form-control" readonly id="codigo" placeholder="Digite o codigo do item"
+      <input type="text" class="form-control" [readOnly]="!isCheating" id="codigo" placeholder="Digite o codigo do item"
              formControlName="codigo">
     </div>
     <div class="form-group">
@@ -45,7 +45,7 @@
     </div>
     <div class="form-group d-flex justify-content-between">
       <div>
-        <button type="button" class="button btn btn-danger d-none" (click)="remover()" *ngIf="form.value.id !== 0">
+        <button type="button" class="button btn btn-danger" (click)="remover()" *ngIf="form.value.id !== 0 && isCheating">
           <i class="ta-trash mr-1"></i>
           Excluir Item
         </button>

@@ -16,6 +16,7 @@
         </ng-container>
       </nav>
     </div>
+    <div class="handle-width" app-dragger (moving)="resize($event.x)"></div>
   </div>
   <div class="py-4 px-5 mb-5">
     <router-outlet></router-outlet>

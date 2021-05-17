@@ -1,9 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {TABLE_ACTIONS, TABLE_COLS} from '@app/core/components';
 import {CRUD_EDITOR} from '@app/core/components/crud/crud.component';
 import {AjudaFormComponent} from '@app/user-admin/configuracoes/ajuda/ajuda-form.component';
 import {RiscoFormComponent} from '@app/user-fornecedor/propostas/proposta/09-riscos/risco-form/risco-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
+import {KONAMI_CODE} from '@app/commons';
+import {BehaviorSubject} from 'rxjs';
 
 
 const tableCols = [
@@ -44,12 +46,15 @@ const buttons = [
   ]
 })
 export class AjudaComponent implements OnInit {
+  isCheating = false;
 
-  constructor(protected route: ActivatedRoute, protected router: Router) {
+  constructor(protected route: ActivatedRoute, protected router: Router, @Inject(KONAMI_CODE) protected kc: BehaviorSubject<boolean>) {
   }
 
   ngOnInit(): void {
-
+    this.kc.subscribe(ischeating => {
+      this.isCheating = ischeating;
+    });
   }
 
   async openForm(ref) {

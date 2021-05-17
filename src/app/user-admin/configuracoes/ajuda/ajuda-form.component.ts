@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {AppService, ServiceBase} from '@app/services';
 import {FormBuilder, Validators} from '@angular/forms';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {ActivatedRoute} from '@angular/router';
 import {ConfigEditor} from '@app/core/shared';
 import * as ClassicEditor from '@projects/ckeditor/build/ckeditor';
+import {KONAMI_CODE} from '@app/commons';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-ajuda-form',
@@ -12,7 +14,7 @@ import * as ClassicEditor from '@projects/ckeditor/build/ckeditor';
   styles: []
 })
 export class AjudaFormComponent implements OnInit {
-
+  isCheating = false;
   configEditor = ConfigEditor;
   editor = ClassicEditor;
   route: ActivatedRoute;
@@ -24,13 +26,18 @@ export class AjudaFormComponent implements OnInit {
     conteudo: [''],
   });
 
-  constructor(private app: AppService, private fb: FormBuilder, public activeModal: NgbActiveModal, protected service: ServiceBase<any>) {
+  constructor(private app: AppService, private fb: FormBuilder, public activeModal: NgbActiveModal,
+              protected service: ServiceBase<any>,
+              @Inject(KONAMI_CODE) protected kc: BehaviorSubject<boolean>) {
   }
 
   ngOnInit(): void {
     if (this.route.snapshot.data.item) {
       this.form.patchValue(this.route.snapshot.data.item);
     }
+    this.kc.subscribe(ischeating => {
+      this.isCheating = ischeating;
+    });
   }
 
   async onSubmit() {

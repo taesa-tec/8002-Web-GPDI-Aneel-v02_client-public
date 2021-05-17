@@ -1,16 +1,17 @@
-import {Component, Inject, OnDestroy, OnInit, Optional, ViewChild} from '@angular/core';
+import {Component, HostBinding, Inject, OnDestroy, OnInit, Optional, ViewChild} from '@angular/core';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {AppService} from '@app/services/app.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {UsersService} from '@app/services/users.service';
 import {MenuItem, SIDEBAR_MENU} from '@app/commons';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
+import {clamp} from 'lodash-es';
 
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: []
+  styleUrls: ['sidebar.component.scss']
 })
 export class SidebarComponent implements OnDestroy {
 
@@ -19,6 +20,15 @@ export class SidebarComponent implements OnDestroy {
   private readonly subscription: Subscription;
   projetos: any;
   menu: Array<MenuItem>;
+  width = 256;
+
+  @HostBinding('style')
+  get widthstyle() {
+
+    return {
+      '--side-bar-width': `${this.width}px`
+    };
+  }
 
   constructor(
     @Optional() @Inject(SIDEBAR_MENU) menu: Array<MenuItem> | BehaviorSubject<Array<MenuItem>>,
@@ -41,5 +51,7 @@ export class SidebarComponent implements OnDestroy {
     }
   }
 
-
+  resize(x) {
+    this.width = clamp(this.width + x, 200, 400);
+  }
 }
