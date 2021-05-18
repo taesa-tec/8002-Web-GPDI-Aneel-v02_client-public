@@ -30,20 +30,24 @@
            (click)="proximaClausula()"></i>
       </div>
       <div class="d-flex justify-content-center" *ngIf="proposta.dataClausulasAceitas === null">
-        <button class="btn btn-danger text-white mx-2 d-flex align-items-center" [disabled]="clausulaAceita"
-                type="button"
-                (click)="discordar()">
-          <i class="ta-cancel-circle fs-22 mr-3"></i>
-          Não concordo com esta cláusula
-        </button>
-        <button class="btn btn-success text-white mx-2 d-flex align-items-center" [disabled]="clausulaAceita"
-                type="button"
-                (click)="concordar()">
-          <i class="ta-ok fs-22 mr-3"></i>
-          <span> Concordo com esta cláusula
-        <span class="d-block fs-12">Cláusulas validadas {{clausulasAceitas.size}} de {{clausulas.length}}</span>
-        </span>
-        </button>
+        <ng-container *ngIf="!clausulaAceita; else clausulaAceitaTpl">
+          <button class="btn btn-danger text-white mx-2 d-flex align-items-center" type="button" (click)="discordar()">
+            <i class="ta-cancel-circle fs-22 mr-3"></i>
+            Não concordo com esta cláusula
+          </button>
+          <button class="btn btn-success text-white mx-2 d-flex align-items-center" type="button" (click)="concordar()">
+            <i class="ta-ok fs-22 mr-3"></i>
+            <span> Concordo com esta cláusula
+          <span class="d-block fs-12">Cláusulas validadas {{clausulasAceitas.size}}
+            de {{clausulas.length}}</span></span>
+          </button>
+        </ng-container>
+        <ng-template #clausulaAceitaTpl>
+          <div class="alert alert-success d-flex justify-content-between align-items-center">
+            <i class="ta-ok fs-22 mr-2"></i>
+            <span>Você concordou com esta cláusula</span>
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>
@@ -56,7 +60,7 @@
           <i class="ta-ok fs-48 text-success"></i>
         </div>
         <div class="text-success">
-          {{'alert-clausulas-aceitas'| label}}
+          Você concordou com todas as cláusulas acima para participar deste projeto. Obrigado.
         </div>
       </div>
     </div>

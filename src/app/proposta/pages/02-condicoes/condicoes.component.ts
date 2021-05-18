@@ -1,12 +1,12 @@
-import {Component, Inject, OnInit, Optional} from '@angular/core';
+import {Component, HostListener, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {BaseEntity, Proposta, ROOT_URL} from '@app/commons';
+import {BaseEntity, ROOT_URL} from '@app/commons';
 import {AppService} from '@app/services';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ModalComponent} from './modal/modal.component';
+import {StorageService} from '@app/services/storage.service';
 import {PropostasService} from '@app/proposta/services/propostas.service';
-import {BehaviorSubject} from 'rxjs';
-import {PROPOSTA, PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
+import {PropostaComponent} from '@app/proposta/proposta.component';
 
 @Component({
   templateUrl: './condicoes.component.html',
@@ -18,29 +18,52 @@ export class CondicoesComponent implements OnInit {
   clausulasAceitas: Map<number, boolean> = new Map<number, boolean>();
   indiceAtual = 0;
 
-  proposta: Proposta;
+  get proposta() {
+    return this.parent.proposta;
+  }
 
   get clausulaAceita() {
     return this.clausulasAceitas.has(this.indiceAtual) && this.clausulasAceitas.get(this.indiceAtual);
   }
 
   constructor(
+    @Inject(ROOT_URL) protected root_url: string,
     protected router: Router,
     protected route: ActivatedRoute,
     protected app: AppService, protected modal: NgbModal,
     protected propostasService: PropostasService,
-    @Inject(ROOT_URL) protected root_url: string,
-    @Optional() @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean
+    protected parent: PropostaComponent,
+    protected storage: StorageService
   ) {
+    const clausulasAceitas = this.storage.get('clausulasAceitas');
+    if (clausulasAceitas) {
+      try {
+        const map = JSON.parse(clausulasAceitas);
+        this.clausulasAceitas = new Map<number, boolean>(map);
+      } catch (e) {
+
+      }
+    }
   }
 
   ngOnInit(): void {
     this.route.data.subscribe(data => {
       this.clausulas = (data.clausulas as Array<BaseEntity>).sort((a, b) => Math.sign(a.ordem - b.ordem));
+      this.proximaClausulaPendente();
     });
-    this.propostasService.proposta.subscribe(proposta => {
-      this.proposta = proposta;
-    });
+
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  keydown(evt: KeyboardEvent) {
+    switch (evt.key) {
+      case 'ArrowRight':
+        this.proximaClausula();
+        break;
+      case 'ArrowLeft':
+        this.clausulaAnterior();
+        break;
+    }
   }
 
   clausulaAnterior() {
@@ -67,6 +90,7 @@ export class CondicoesComponent implements OnInit {
 
   concordar() {
     this.clausulasAceitas.set(this.indiceAtual, true);
+    this.storage.set('clausulasAceitas', JSON.stringify([...this.clausulasAceitas]));
     if (this.clausulasAceitas.size === this.clausulas.length) {
       this.finalizar().then();
     }
@@ -80,7 +104,7 @@ export class CondicoesComponent implements OnInit {
       const clausula = this.clausulas[this.indiceAtual];
       if (clausula) {
         const proposta = await this.propostasService.rejeitarCondicoes(this.proposta.guid, clausula.id);
-        this.proposta.participacao = proposta.participacao;
+        this.parent.proposta.participacao = proposta.participacao;
         this.router.navigate([this.root_url]).then();
       }
     }
@@ -89,9 +113,10 @@ export class CondicoesComponent implements OnInit {
   async finalizar() {
     if (this.clausulas.length === this.clausulasAceitas.size) {
       const proposta = await this.propostasService.aceitarCondicoes(this.proposta.guid);
-      this.proposta.dataClausulasAceitas = proposta.dataClausulasAceitas;
-      this.app.alert('Proposta atualizada com sucesso!').then();
-      this.propostasService.setProposta(this.proposta);
+      this.parent.proposta.dataClausulasAceitas = proposta.dataClausulasAceitas;
+      await this.app.alert('Proposta atualizada com sucesso!');
+      await this.router.navigate([this.root_url]);
+      await this.router.navigate([this.root_url, 'propostas', this.proposta.captacaoId]);
     } else {
       throw new Error('Finalizar foi chamado sem ter todas as clausulas aceitas');
     }
