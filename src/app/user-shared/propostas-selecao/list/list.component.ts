@@ -47,7 +47,7 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   protected addListeners() {
-    this.addListener('selecao', () => this._openModalSelecao());
+    this.addListener('riscos', () => this._openModalSelecao());
   }
 
   async ngOnInit() {

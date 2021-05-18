@@ -85,7 +85,7 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   actionEncerrada({action, data}) {
-    if (action === 'enviar-para-selecao') {
+    if (action === 'enviar-para-riscos') {
       const modalRef = this.modal.open(EnviarComponent, {size: 'lg'});
       modalRef.componentInstance.projeto = data;
     }

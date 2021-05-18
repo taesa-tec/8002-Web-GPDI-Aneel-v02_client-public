@@ -27,7 +27,7 @@ const routes: Routes = [
         loadChildren: () => import('@app/user-shared/captacao/captacao.module').then(m => m.CaptacaoModule)
       },
       {
-        path: 'selecao',
+        path: 'riscos',
         component: SidebarComponent,
         loadChildren: () => import('@app/user-shared/propostas-selecao/propostas-selecao.module').then(m => m.PropostasSelecaoModule)
       },
@@ -35,6 +35,12 @@ const routes: Routes = [
         path: 'refinamento',
         loadChildren: () => import('@app/user-shared/propostas-refinamento/propostas-refinamento.module')
           .then(m => m.PropostasRefinamentoModule)
+      },
+      {
+        path: 'identificacao-riscos',
+        component: SidebarComponent,
+        loadChildren: () => import('@app/user-shared/propostas-identificacao-riscos/propostas-identificacao-riscos.module')
+          .then(m => m.PropostasIdentificacaoRiscosModule)
       },
 
       {

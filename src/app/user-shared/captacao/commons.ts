@@ -112,7 +112,7 @@ export const CaptacaoCols: { [prop: string]: TableComponentCols } = {
     {field: 'titulo', title: 'Título', order: true},
     {field: 'propostasRecebidas', title: 'Propostas Recebidas', order: true},
   ],
-  Finalizada: [
+  SelecaoFinalizada: [
     {field: 'titulo', title: 'Título Resumido Projeto', order: true},
     {field: 'proposta', title: 'Proposta Selecionada', order: true},
     {field: 'responsavel', title: 'Responsavel Refinamento', order: true},
@@ -122,6 +122,16 @@ export const CaptacaoCols: { [prop: string]: TableComponentCols } = {
       value: item => [item.dataAlvo, 'shortDate']
     }
 
+  ],
+  IdentificaoPendente: [
+    {field: 'titulo', title: 'Título Resumido Projeto', order: true},
+    {field: 'fornecedor', title: 'Fornecedor', order: true},
+    {field: 'identificacaoRiscoResponsavel', title: 'Responsavel Identificação Riscos', order: true},
+  ],
+  IdentificaoFinalizada: [
+    {field: 'titulo', title: 'Título Resumido Projeto', order: true},
+    {field: 'fornecedor', title: 'Fornecedor', order: true},
+    {field: 'aprovacaoResponsavel', title: 'Responsavel Aprovação e Formalização', order: true},
   ]
 };
 
@@ -132,7 +142,9 @@ export const CaptacaoButtons: { [prop: string]: TableComponentActions } = {
   Encerrada: [],
   Cancelada: [],
   SelecaoPendente: [{action: './#${id}', isLink: true, text: 'Confirmar seleção', icon: 'ta-edit', className: 'btn btn-primary'}],
-  Finalizada: [{action: './#${id}', isLink: true, text: 'Ver detalhes', icon: 'ta-eye', className: 'btn btn-primary'}],
+  SelecaoFinalizada: [{action: './#${id}', isLink: true, text: 'Ver detalhes', icon: 'ta-eye', className: 'btn btn-primary'}],
+  IdentificaoPendente: [{action: './#${id}', isLink: true, text: 'Confirmar Riscos', icon: 'ta-edit', className: 'btn btn-primary'}],
+  IdentificaoFinalizada: [{action: './#${id}', isLink: true, text: 'Ver detalhes', icon: 'ta-edit', className: 'btn btn-primary'}],
 };
 
 export interface CaptacaoDetalhes {

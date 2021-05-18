@@ -1,11 +1,10 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {HomeComponent} from '@app/user-shared/propostas-selecao/home/home.component';
 import {CaptacoesResolver} from '@app/resolvers';
 import {CaptacaoButtons, CaptacaoCols} from '@app/user-shared/captacao';
-import {ListComponent} from '@app/user-shared/propostas-selecao/list/list.component';
-import {PropostaSelecaoResolver} from '@app/user-shared/propostas-selecao/proposta-selecao.resolver';
 import {EquipePedResolver} from '@app/resolvers/equipe-ped.resolver';
+import {ListComponent} from '@app/user-shared/propostas-identificacao-riscos/list/list.component';
+import {HomeComponent} from '@app/user-shared/propostas-identificacao-riscos/home/home.component';
 
 const routes: Routes = [
   {
@@ -22,14 +21,13 @@ const routes: Routes = [
         component: ListComponent,
         resolve: {
           captacoes: CaptacoesResolver,
-          propostas: PropostaSelecaoResolver,
           equipe: EquipePedResolver,
         },
         data: {
           captacaoTable: {
-            cols: CaptacaoCols.SelecaoPendente,
-            buttons: CaptacaoButtons.SelecaoPendente,
-            status: 'SelecaoPendente'
+            cols: CaptacaoCols.IdentificaoPendente,
+            buttons: CaptacaoButtons.IdentificaoPendente,
+            status: 'IdentificaoRiscoPendente'
           }
         },
         runGuardsAndResolvers: 'always'
@@ -42,9 +40,9 @@ const routes: Routes = [
         },
         data: {
           captacaoTable: {
-            cols: CaptacaoCols.SelecaoFinalizada,
-            buttons: CaptacaoButtons.SelecaoFinalizada,
-            status: 'SelecaoFinalizada'
+            cols: CaptacaoCols.IdentificaoFinalizada,
+            buttons: CaptacaoButtons.IdentificaoFinalizada,
+            status: 'IdentificaoRiscoFinalizada'
           }
         }
       }
@@ -56,5 +54,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PropostasSelecaoRoutingModule {
+export class PropostasIdentificacaoRiscosRoutingModule {
 }

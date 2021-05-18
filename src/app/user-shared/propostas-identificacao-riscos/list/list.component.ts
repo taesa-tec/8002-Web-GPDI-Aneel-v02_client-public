@@ -3,31 +3,27 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppService} from '@app/services/app.service';
-import {CaptacaoEtapa} from '../commons';
 import {TableComponentCols, TableComponentActions, TableComponentFilter} from '@app/core/components/table/table';
 import {Subject, Subscription} from 'rxjs';
-import {CriarComponent} from '@app/user-shared/captacao/criar/criar.component';
-import {EnviarComponent} from '@app/user-shared/captacao/enviar/enviar.component';
 import {filter} from 'rxjs/operators';
+import {RiscosComponent} from '@app/user-shared/propostas-identificacao-riscos/riscos/riscos.component';
+import {DetalhesComponent} from '@app/user-shared/propostas-identificacao-riscos/proposta-detalhes/detalhes.component';
 
 export interface CaptacaoTableConfig {
   captacoes: Array<any>;
   cols: TableComponentCols;
   buttons: TableComponentActions;
-  captacaoEtapaStatus: CaptacaoEtapa;
 
   [prop: string]: any;
 }
 
 @Component({
-  selector: 'app-projetos-captacao-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit, OnDestroy {
   protected subscriptions: Array<Subscription> = [];
-  protected events = new Subject<{ action: string; data: any }>();
-  captacaoEtapa: CaptacaoEtapa;
+  protected events = new Subject<{ action: string; data: any; }>();
   loading = false;
   hidePagination = false;
 
@@ -37,11 +33,6 @@ export class ListComponent implements OnInit, OnDestroy {
   filters: Array<TableComponentFilter> = [];
 
   captacoes: Array<any>;
-
-  // REMOVER
-  data: any;
-
-  //========
 
   constructor(
     protected route: ActivatedRoute,
@@ -56,17 +47,27 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   protected addListeners() {
-    this.addListener('criar', ({data}) => this.criarCaptacao(data));
+    this.addListener('riscos', () => this._openModalRiscos());
   }
 
   async ngOnInit() {
     this.subscriptions.push(
-      this.route.data.subscribe(({captacaoTable, captacoes}: { captacaoTable: CaptacaoTableConfig; captacoes: Array<any> }) => {
+      this.route.data.subscribe(({captacaoTable, captacoes}: { captacaoTable: CaptacaoTableConfig, captacoes: Array<any> }) => {
         this.captacoes = captacoes;
-        this.captacaoEtapa = captacaoTable.captacaoEtapaStatus;
         this.cols = captacaoTable.cols;
         this.buttons = captacaoTable.buttons;
       }));
+    this.route.fragment.subscribe(f => {
+      const id = parseFloat(f);
+      if (!isNaN(id)) {
+        if (this.route.snapshot.url[0].path === 'pendente') {
+          this._openModalRiscos();
+        } else {
+          this._openModalDetalhes(id);
+
+        }
+      }
+    });
     this.addListeners();
   }
 
@@ -75,31 +76,34 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
 
-  tableAction(evt: { action: string; data: any }) {
+  tableAction(evt: { action: string; data: any; }) {
     this.events.next(evt);
   }
 
-  async criarCaptacao(data) {
-    const modalRef = this.modal.open(CriarComponent, {size: 'lg'});
-    const criar = modalRef.componentInstance as CriarComponent;
-    criar.id = data.id;
-    await modalRef.result;
-    this.router.navigate(['./'], {
-      relativeTo: this.route, queryParams: {
-        update: Date.now()
-      }
-    }).then();
-  }
-
-  actionAberta({action, data}) {
-    // Redirecionar para outra tela
-    console.log(data);
-  }
-
-  actionEncerrada({action, data}) {
-    if (action === 'enviar-para-riscos') {
-      const modalRef = this.modal.open(EnviarComponent, {size: 'lg'});
-      modalRef.componentInstance.projeto = data;
+  private async _openModalRiscos() {
+    const ref = this.modal.open(RiscosComponent, {size: 'lg'});
+    const cmp = ref.componentInstance as RiscosComponent;
+    cmp.route = this.route;
+    try {
+      await ref.result;
+    } catch (e) {
+      console.error(e);
     }
+    this.router.navigate([]).then();
   }
+
+  private async _openModalDetalhes(id) {
+    const captacao = this.captacoes.find(c => c.id === id);
+    const ref = this.modal.open(DetalhesComponent, {size: 'lg'});
+    const cmp = ref.componentInstance as DetalhesComponent;
+    cmp.captacao = captacao;
+
+    try {
+      await ref.result;
+    } catch (e) {
+      console.error(e);
+    }
+    this.router.navigate([]).then();
+  }
+
 }

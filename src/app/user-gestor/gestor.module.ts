@@ -23,6 +23,7 @@ import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
         {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: `/${GestorRootUrl}/captacoes`},
         {text: 'Projetos - Priorização e Seleção', icon: 'ta-file-check', path: `/${GestorRootUrl}/selecao`},
         {text: 'Projetos - Refinamento', icon: 'ta-file-check', path: `/${GestorRootUrl}/refinamento`},
+        {text: 'Projetos - Identificação e medição de riscos ', icon: 'ta-file-check', path: `/${GestorRootUrl}/identificacao-riscos`},
       ]
     }, {
       provide: HEADER_MENU,
