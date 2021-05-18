@@ -40,7 +40,7 @@ export class TextareaComponent implements ControlValueAccessor {
   @Input('value') val = '';
 
   get value() {
-    return this.val;
+    return this.val || '';
   }
 
   set value(val) {

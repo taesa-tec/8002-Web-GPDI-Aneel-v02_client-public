@@ -1,6 +1,6 @@
 import {Component, HostListener, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {BaseEntity, ROOT_URL} from '@app/commons';
+import {BaseEntity, Proposta, ROOT_URL} from '@app/commons';
 import {AppService} from '@app/services';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ModalComponent} from './modal/modal.component';
@@ -18,9 +18,7 @@ export class CondicoesComponent implements OnInit {
   clausulasAceitas: Map<number, boolean> = new Map<number, boolean>();
   indiceAtual = 0;
 
-  get proposta() {
-    return this.parent.proposta;
-  }
+  proposta: Proposta;
 
   get clausulaAceita() {
     return this.clausulasAceitas.has(this.indiceAtual) && this.clausulasAceitas.get(this.indiceAtual);
@@ -50,6 +48,9 @@ export class CondicoesComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.clausulas = (data.clausulas as Array<BaseEntity>).sort((a, b) => Math.sign(a.ordem - b.ordem));
       this.proximaClausulaPendente();
+    });
+    this.propostasService.proposta.subscribe(p => {
+      this.proposta = p;
     });
 
   }
@@ -113,10 +114,13 @@ export class CondicoesComponent implements OnInit {
   async finalizar() {
     if (this.clausulas.length === this.clausulasAceitas.size) {
       const proposta = await this.propostasService.aceitarCondicoes(this.proposta.guid);
-      this.parent.proposta.dataClausulasAceitas = proposta.dataClausulasAceitas;
+      //this.parent.proposta.dataClausulasAceitas = proposta.dataClausulasAceitas;
+      this.propostasService.setProposta(proposta);
+      this.storage.remove('clausulasAceitas');
       await this.app.alert('Proposta atualizada com sucesso!');
-      await this.router.navigate([this.root_url]);
-      await this.router.navigate([this.root_url, 'propostas', this.proposta.captacaoId]);
+
+      // await this.router.navigate([this.root_url]);
+      // await this.router.navigate([this.root_url, 'propostas', this.proposta.captacaoId]);
     } else {
       throw new Error('Finalizar foi chamado sem ter todas as clausulas aceitas');
     }

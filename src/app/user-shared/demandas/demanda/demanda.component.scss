@@ -1,6 +1,11 @@
+@import "components-base";
 :host {
   display: block;
   min-height: 100%;
 }
 
-
+.projeto-side-info {
+  background: $blueLight;
+  color: white;
+  min-height: 150px;
+}
