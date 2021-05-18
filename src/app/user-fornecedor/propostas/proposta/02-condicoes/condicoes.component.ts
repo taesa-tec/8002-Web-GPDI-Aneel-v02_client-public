@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, HostListener, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BaseEntity, ROOT_URL} from '@app/commons';
 import {AppService} from '@app/services';
@@ -6,6 +6,8 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ModalComponent} from '@app/user-fornecedor/propostas/proposta/02-condicoes/modal/modal.component';
 import {PropostasService} from '@app/user-fornecedor/services/propostas.service';
 import {PropostaComponent} from '@app/user-fornecedor/propostas/proposta/proposta.component';
+import {StorageService} from '@app/services/storage.service';
+import {JSON} from 'tinymce';
 
 @Component({
   templateUrl: './condicoes.component.html',
@@ -31,14 +33,38 @@ export class CondicoesComponent implements OnInit {
     protected route: ActivatedRoute,
     protected app: AppService, protected modal: NgbModal,
     protected propostasService: PropostasService,
-    protected parent: PropostaComponent
+    protected parent: PropostaComponent,
+    protected storage: StorageService
   ) {
+    const clausulasAceitas = this.storage.get('clausulasAceitas');
+    if (clausulasAceitas) {
+      try {
+        const map = JSON.parse(clausulasAceitas);
+        this.clausulasAceitas = new Map<number, boolean>(map);
+      } catch (e) {
+
+      }
+    }
   }
 
   ngOnInit(): void {
     this.route.data.subscribe(data => {
       this.clausulas = (data.clausulas as Array<BaseEntity>).sort((a, b) => Math.sign(a.ordem - b.ordem));
+      this.proximaClausulaPendente();
     });
+
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  keydown(evt: KeyboardEvent) {
+    switch (evt.key) {
+      case 'ArrowRight':
+        this.proximaClausula();
+        break;
+      case 'ArrowLeft':
+        this.clausulaAnterior();
+        break;
+    }
   }
 
   clausulaAnterior() {
@@ -65,6 +91,7 @@ export class CondicoesComponent implements OnInit {
 
   concordar() {
     this.clausulasAceitas.set(this.indiceAtual, true);
+    this.storage.set('clausulasAceitas', JSON.stringify([...this.clausulasAceitas]));
     if (this.clausulasAceitas.size === this.clausulas.length) {
       this.finalizar().then();
     }
