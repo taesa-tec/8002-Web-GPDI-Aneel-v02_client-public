@@ -16,8 +16,8 @@
         <div class="col-6">
           <div class="form-group py-3">
             <select class="form-control" [ngModel]="revisaoId" (ngModelChange)="carregarRevisao($event)">
-              <option *ngFor="let version of revisoes" [value]="version.id">
-                {{version.id}} Revisão: {{version.name}} - {{version.createdAt| date: 'short'}}</option>
+              <option *ngFor="let version of revisoes | orderBy: 'createdAt'" [value]="version.id">
+                Revisão: {{version.name}} - {{version.createdAt | date: 'short'}}</option>
             </select>
           </div>
         </div>
