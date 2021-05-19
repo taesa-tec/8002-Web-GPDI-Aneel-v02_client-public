@@ -42,6 +42,12 @@ const routes: Routes = [
         loadChildren: () => import('@app/user-shared/propostas-identificacao-riscos/propostas-identificacao-riscos.module')
           .then(m => m.PropostasIdentificacaoRiscosModule)
       },
+      {
+        path: 'formalizacao',
+        component: SidebarComponent,
+        loadChildren: () => import('@app/user-shared/propostas-formalizacao/propostas-formalizacao.module')
+          .then(m => m.PropostasFormalizacaoModule)
+      },
 
       {
         path: 'configuracoes',

@@ -123,6 +123,7 @@ export const CaptacaoCols: { [prop: string]: TableComponentCols } = {
     }
 
   ],
+
   IdentificaoPendente: [
     {field: 'titulo', title: 'Título Resumido Projeto', order: true},
     {field: 'fornecedor', title: 'Fornecedor', order: true},
@@ -132,6 +133,20 @@ export const CaptacaoCols: { [prop: string]: TableComponentCols } = {
     {field: 'titulo', title: 'Título Resumido Projeto', order: true},
     {field: 'fornecedor', title: 'Fornecedor', order: true},
     {field: 'aprovacaoResponsavel', title: 'Responsavel Aprovação e Formalização', order: true},
+  ],
+  FormalizacaoPendente: [
+    {field: 'titulo', title: 'Título Resumido Projeto', order: true},
+    {field: 'fornecedor', title: 'Fornecedor', order: true},
+    {field: 'aprovacaoResponsavel', title: 'Responsavel Identificação Riscos', order: true},
+  ],
+  Formalizados: [
+    {field: 'titulo', title: 'Título Resumido Projeto', order: true},
+    {field: 'fornecedor', title: 'Fornecedor', order: true},
+    {field: 'execucaoResponsavel', title: 'Responsavel Aprovação e Formalização', order: true},
+  ],
+  NoDeal: [
+    {field: 'titulo', title: 'Título Resumido Projeto', order: true},
+    {field: 'fornecedor', title: 'Fornecedor', order: true},
   ]
 };
 
@@ -145,6 +160,9 @@ export const CaptacaoButtons: { [prop: string]: TableComponentActions } = {
   SelecaoFinalizada: [{action: './#${id}', isLink: true, text: 'Ver detalhes', icon: 'ta-eye', className: 'btn btn-primary'}],
   IdentificaoPendente: [{action: './#${id}', isLink: true, text: 'Confirmar Riscos', icon: 'ta-edit', className: 'btn btn-primary'}],
   IdentificaoFinalizada: [{action: './#${id}', isLink: true, text: 'Ver detalhes', icon: 'ta-edit', className: 'btn btn-primary'}],
+  FormalizacaoPendente: [{action: './#${id}', isLink: true, text: 'Confirmar Formalização', icon: 'ta-edit', className: 'btn btn-primary'}],
+  Formalizados: [{action: './#${id}', isLink: true, text: 'Ver detalhes', icon: 'ta-edit', className: 'btn btn-primary'}],
+  NoDeal: [{action: './#${id}', isLink: true, text: 'Ver detalhes', icon: 'ta-edit', className: 'btn btn-primary'}],
 };
 
 export interface CaptacaoDetalhes {

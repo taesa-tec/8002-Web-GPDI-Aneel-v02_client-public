@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <div class="text-uppercase modal-title text-blue-light fs-24">Proposta {{captacao.proposta}}</div>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('close')">
+    <i class="ta-cancel-circle"></i>
+  </button>
+</div>
+<div class="modal-body position-relative">
+  <app-loading type="fullparent" [isLoading]="progress !== null" background="rgba(255,255,255,0.75)"
+               color="#444"></app-loading>
+  <div>
+    <button class="btn btn-link" type="button"
+            (click)="download()">
+      <i class="ta-attachment"></i>
+      {{aprovado ? 'Formalização.pdf' : 'NoDeal.pdf'}}
+    </button>
+  </div>
+</div>
