@@ -33,15 +33,7 @@ export class CondicoesComponent implements OnInit {
     protected parent: PropostaComponent,
     protected storage: StorageService
   ) {
-    const clausulasAceitas = this.storage.get('clausulasAceitas');
-    if (clausulasAceitas) {
-      try {
-        const map = JSON.parse(clausulasAceitas);
-        this.clausulasAceitas = new Map<number, boolean>(map);
-      } catch (e) {
 
-      }
-    }
   }
 
   ngOnInit(): void {
@@ -51,6 +43,15 @@ export class CondicoesComponent implements OnInit {
     });
     this.propostasService.proposta.subscribe(p => {
       this.proposta = p;
+      const clausulasAceitas = this.storage.get(`[${this.proposta.guid}]clausulasAceitas`);
+      if (clausulasAceitas) {
+        try {
+          const map = JSON.parse(clausulasAceitas);
+          this.clausulasAceitas = new Map<number, boolean>(map);
+        } catch (e) {
+
+        }
+      }
     });
 
   }
@@ -91,7 +92,7 @@ export class CondicoesComponent implements OnInit {
 
   concordar() {
     this.clausulasAceitas.set(this.indiceAtual, true);
-    this.storage.set('clausulasAceitas', JSON.stringify([...this.clausulasAceitas]));
+    this.storage.set(`[${this.proposta.guid}]clausulasAceitas`, JSON.stringify([...this.clausulasAceitas]));
     if (this.clausulasAceitas.size === this.clausulas.length) {
       this.finalizar().then();
     }
@@ -114,13 +115,9 @@ export class CondicoesComponent implements OnInit {
   async finalizar() {
     if (this.clausulas.length === this.clausulasAceitas.size) {
       const proposta = await this.propostasService.aceitarCondicoes(this.proposta.guid);
-      //this.parent.proposta.dataClausulasAceitas = proposta.dataClausulasAceitas;
       this.propostasService.setProposta(proposta);
-      this.storage.remove('clausulasAceitas');
+      this.storage.remove(`[${this.proposta.guid}]clausulasAceitas`);
       await this.app.alert('Proposta atualizada com sucesso!');
-
-      // await this.router.navigate([this.root_url]);
-      // await this.router.navigate([this.root_url, 'propostas', this.proposta.captacaoId]);
     } else {
       throw new Error('Finalizar foi chamado sem ter todas as clausulas aceitas');
     }
