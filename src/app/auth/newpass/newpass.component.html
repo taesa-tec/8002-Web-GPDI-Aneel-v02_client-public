@@ -1,8 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <p class="text-center">
-    Insira abaixo seu e-mail de cadastro
-    que enviaremos um link para a geração
-    de uma nova senha.
+    Digite sua nova senha e confirme
   </p>
   <div class="form-group position-relative" *ngIf="!(resultadoResponse && resultadoResponse.sucesso)">
     <input type="password" formControlName="newPassword" class="form-control form-control-lg" placeholder="Nova Senha">

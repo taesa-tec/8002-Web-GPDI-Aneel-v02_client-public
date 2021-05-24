@@ -52,6 +52,7 @@ export class NewpassComponent implements OnInit {
         this.router.navigateByUrl('/').then();
       }
     } catch (e) {
+      await this.app.alert('Não foi possível atualizar sua senha, verifique se o o token e tente novamente');
       console.error(e);
     }
     this.loading.hide();

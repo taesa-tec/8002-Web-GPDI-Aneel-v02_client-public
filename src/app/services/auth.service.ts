@@ -141,8 +141,8 @@ export class AuthService {
     return await this.router.navigate(['/login'], {queryParams: {redirect}});
   }
 
-  recuperarSenha(recoverRequest: RecoverRequest): Observable<ResultadoResponse> {
-    return this.http.post<ResultadoResponse>('Login/recuperar-senha', recoverRequest);
+  recuperarSenha(recoverRequest: RecoverRequest) {
+    return this.http.post<ResultadoResponse>('Login/recuperar-senha', recoverRequest).toPromise();
   }
 
   async novaSenha(recoverRequest: NewpassRequest) {
