@@ -133,7 +133,7 @@ export class ServiceBase<T extends { id?: any }> extends UploadFilesService {
   }
 
   async excluir(id: any) {
-    return await this.http.delete(`${this.controller}/?id=${id}`).toPromise();
+    return await this.http.delete(`${this.controller}/${id}`).toPromise();
   }
 
   upload(files: Array<File>, url: string) {

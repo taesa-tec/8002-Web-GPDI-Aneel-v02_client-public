@@ -77,6 +77,7 @@ export class UserFormComponent implements OnInit {
     if (this.user && await this.app.confirm('Tem certeza que deseja remover este usuário?')) {
       try {
         await this.usersService.excluir(this.user.id);
+        await this.app.router.navigate(['/admin/gerenciar-usuarios/']);
       } catch (e) {
         console.error(e);
       }
