@@ -11,8 +11,8 @@ export enum CaptacaoEtapa {
 
 const templatePropostas = item => {
   try {
-    const className = item.totalPropostasFinalizadas > 0 ? 'text-success' : 'text-danger';
-    return `<div>\${totalConvidados} Convidados</div><div class="${className}">\${totalPropostasFinalizadas} propostas recebidas</div>`;
+    const className = item.totalPropostas > 0 ? 'text-success' : 'text-danger';
+    return `<div>\${totalConvidados} Convidados</div><div class="${className}">\${totalPropostas} propostas recebidas</div>`;
   } catch (e) {
     console.error(e);
     return '';
