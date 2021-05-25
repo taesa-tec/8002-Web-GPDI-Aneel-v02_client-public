@@ -11,14 +11,30 @@ export enum CaptacaoEtapa {
 
 const templatePropostas = item => {
   try {
-    const className = item.totalPropostas > 0 ? 'text-success' : 'text-danger';
-    return `<div>\${totalConvidados} Convidados</div><div class="${className}">\${totalPropostas} propostas recebidas</div>`;
+    const className = item.totalPropostasFinalizadas > 0 ? 'text-success' : 'text-danger';
+    return `<div>\${totalConvidados} Convidados</div><div class="${className}">\${totalPropostasFinalizadas} propostas recebidas</div>`;
   } catch (e) {
     console.error(e);
     return '';
   }
 };
-
+const templateCaptacao = item => {
+  try {
+    return `<div>\${convidadosTotal} Convidado(s)</div><div class="text-success">\${propostaTotal} proposta(s) recebida(s)</div>`;
+  } catch (e) {
+    console.error(e);
+    return '';
+  }
+};
+const statusMap = new Map([
+  ['Cancelada', 'Cancelada'],
+  ['Pendente', 'Pendente'],
+  ['Elaboracao', 'Elaboração'],
+  ['Fornecedor', 'Fornecedor'],
+  ['Encerrada', 'Encerrada'],
+  ['Refinamento', 'Refinamento'],
+  ['AnaliseRisco', 'Analise de Risco'],
+]);
 export const CaptacaoCols: { [prop: string]: TableComponentCols } = {
   Pendente: [
     {field: 'titulo', title: 'Título Resumido Projeto', order: true},
@@ -55,7 +71,7 @@ export const CaptacaoCols: { [prop: string]: TableComponentCols } = {
       template: templatePropostas,
     },
     {
-      field: 'termino', title: 'Data Término Captação', order: true,
+      field: 'termino', title: 'Término Captação', order: true,
       pipe: new DatePipe('pt-BR'),
       value: item => [item.termino, 'shortDate']
     },
@@ -64,13 +80,18 @@ export const CaptacaoCols: { [prop: string]: TableComponentCols } = {
   Encerrada: [
     {field: 'titulo', title: 'Título Resumido Projeto', order: true},
     {field: 'usuarioSuprimento', title: 'Equipe de Suprimentos Usuário Designado', order: true},
-    {field: 'convidadosTotal', title: 'Fornecedores', order: true},
     {
-      field: 'termino', title: 'Data Término Captação', order: true,
+      field: 'fornecedores', title: 'Fornecedores', order: true, type: 'template',
+      value: item => item,
+      template: templateCaptacao,
+    },
+    {
+      field: 'termino', title: 'Término Captação', order: true,
       type: 'ng-pipe',
       pipe: new DatePipe('pt-BR'),
       value: item => [item.termino, 'shortDate']
     },
+    {field: 'status', title: 'Status', order: true, value: i => statusMap.get(i.status) || 'Não definido!'},
   ],
 
   Cancelada: [
@@ -84,7 +105,7 @@ export const CaptacaoCols: { [prop: string]: TableComponentCols } = {
     {
       field: 'cancelamento', title: 'Data de Cancelamento', order: true, type: 'ng-pipe',
       pipe: new DatePipe('pt-BR'),
-      value: item => [item.cancelamento, 'shortDate']
+      value: item => [item.cancelamento || item.termino, 'shortDate']
     },
   ],
   SelecaoPendente: [
@@ -108,7 +129,7 @@ export const CaptacaoButtons: { [prop: string]: TableComponentActions } = {
   Pendente: [{action: 'criar', text: 'CRIAR CAPTAÇÃO', icon: 'ta-edit', className: 'btn btn-primary'}],
   EmElaboracao: [{action: '${id}', text: 'Configurar', isLink: true, icon: 'ta-edit', className: 'btn btn-primary'}],
   Aberta: [],
-  Encerrada: [{action: 'enviar', text: 'ENVIAR PARA SELEÇÃO', icon: 'ta-edit', className: 'btn btn-primary'}],
+  Encerrada: [],
   Cancelada: [],
   SelecaoPendente: [{action: './#${id}', isLink: true, text: 'Confirmar seleção', icon: 'ta-edit', className: 'btn btn-primary'}],
   Finalizada: [{action: './#${id}', isLink: true, text: 'Ver detalhes', icon: 'ta-eye', className: 'btn btn-primary'}],
