@@ -28,6 +28,30 @@
       </div>
     </div>
 
+    <ng-container *ngIf="aprovadoCtrl.value">
+      <div class="form-group">
+        <label>TITULO COMPLETO</label>
+        <input type="text" class="form-control" formControlName="tituloCompleto">
+      </div>
+      <div class="form-group">
+        <label>NÚMERO DO PROJETO</label>
+        <input type="text" class="form-control" formControlName="numeroProjeto">
+      </div>
+      <div class="form-group">
+        <label>DATA DE INÍCIO DO PROJETO</label>
+        <input type="date" class="form-control" formControlName="inicioProjeto">
+      </div>
+      <div class="form-group">
+        <label>EMPRESA PROPONENTE</label>
+        <select class="form-control" formControlName="empresaProponenteId">
+          <option value="" hidden>Selecione a empresa</option>
+          <option *ngFor="let empresa of empresas | orderBy:'nome'" [value]="empresa.id">{{empresa.nome}}
+            ({{empresa.valor}})
+          </option>
+        </select>
+      </div>
+    </ng-container>
+
     <div class="form-group">
       <label>SELECIONE O DOCUMENTO COMPROBATÓRIO DE APROVAÇÃO</label>
 

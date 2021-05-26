@@ -12,6 +12,7 @@ import {FormalizacaoComponent} from './formalizacao/formalizacao.component';
 import {FormalizacaoDetalhesComponent} from './formalizacao-detalhes/formalizacao-detalhes.component';
 import {ListComponent} from './list/list.component';
 import {PropostasFormalizacaoRoutingModule} from './propostas-formalizacao-routing.module';
+import {EmpresasResolver} from '@app/resolvers/empresas.resolver';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import {PropostasFormalizacaoRoutingModule} from './propostas-formalizacao-routi
   providers: [
     EquipePedResolver,
     CaptacoesResolver,
+    EmpresasResolver,
     {provide: ServiceBase, deps: [HttpClient], useFactory: (httpClient) => new ServiceBase(httpClient, 'Captacoes')}
   ]
 })

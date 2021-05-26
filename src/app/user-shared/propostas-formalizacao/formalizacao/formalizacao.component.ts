@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppService, ServiceBase} from '@app/services';
 import {ActivatedRoute} from '@angular/router';
@@ -17,26 +17,49 @@ export class FormalizacaoComponent implements OnInit, OnDestroy {
   protected subscription: Subscription;
   route: ActivatedRoute;
   equipe: EquipePeD;
+  empresas: Array<any>;
   file: File;
   captacaoId = 0;
-
+  aprovadoCtrl = this.fb.control('', Validators.required);
+  numeroProjetoCtrl = this.fb.control('');
+  tituloCompletoCtrl = this.fb.control('');
+  empresaProponenteCtrl = this.fb.control('');
+  inicioProjetoCtrl = this.fb.control('');
   form = this.fb.group({
+    aprovado: this.aprovadoCtrl,
     responsavelId: ['', Validators.required],
-    aprovado: ['', Validators.required],
+    numeroProjeto: this.numeroProjetoCtrl,
+    tituloCompleto: this.tituloCompletoCtrl,
+    empresaProponenteId: this.empresaProponenteCtrl,
+    inicioProjeto: this.inicioProjetoCtrl,
   });
 
   constructor(public activeModal: NgbActiveModal,
               protected app: AppService,
               protected fb: FormBuilder,
               protected service: ServiceBase<any>,
-              protected fileService: FileService) {
+              protected fileService: FileService,
+              protected cdr: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
     this.subscription = this.route.data.subscribe(data => {
       this.equipe = data.equipe;
       this.captacaoId = parseFloat(this.route.snapshot.fragment);
-      console.log(data);
+      this.empresas = data.empresas.filter(e => e.categoria === 1);
+      console.log(this.empresas);
+    });
+    this.aprovadoCtrl.valueChanges.subscribe(value => {
+      [this.tituloCompletoCtrl, this.empresaProponenteCtrl, this.numeroProjetoCtrl, this.inicioProjetoCtrl].forEach(ctrl => {
+        ctrl.clearValidators();
+        ctrl.setValue('');
+        if (value) {
+          ctrl.setValidators(Validators.required);
+        }
+        console.log(this.form.value);
+      });
+      this.form.updateValueAndValidity();
+      this.cdr.detectChanges();
     });
   }
 

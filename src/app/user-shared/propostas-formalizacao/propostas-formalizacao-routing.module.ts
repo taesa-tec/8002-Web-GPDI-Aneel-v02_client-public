@@ -5,6 +5,7 @@ import {CaptacoesResolver} from '@app/resolvers';
 import {CaptacaoButtons, CaptacaoCols} from '@app/user-shared/captacao';
 import {ListComponent} from './list/list.component';
 import {EquipePedResolver} from '@app/resolvers/equipe-ped.resolver';
+import {EmpresasResolver} from '@app/resolvers/empresas.resolver';
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
         resolve: {
           captacoes: CaptacoesResolver,
           equipe: EquipePedResolver,
+          empresas: EmpresasResolver
         },
         data: {
           captacaoTable: {
