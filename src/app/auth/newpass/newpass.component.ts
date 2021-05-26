@@ -32,12 +32,13 @@ export class NewpassComponent implements OnInit {
 
   ngOnInit() {
     const query = this.route.snapshot.queryParams;
+    const token = query.token;
     this.passconfirm = new FormControl('', [Validators.required]);
     this.form = new FormGroup({
       email: new FormControl(query.email, [Validators.required]),
       newPassword: new FormControl('', [Validators.required]),
       passconfirm: this.passconfirm,
-      ResetToken: new FormControl(query.token.replace(/\s/g, '+'), [Validators.required])
+      ResetToken: new FormControl(token, [Validators.required])
     });
 
 
