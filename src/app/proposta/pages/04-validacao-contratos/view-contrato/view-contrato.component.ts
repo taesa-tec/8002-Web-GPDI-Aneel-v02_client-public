@@ -64,7 +64,7 @@ export class ViewContratoComponent implements OnInit {
       }
     });
 
-    if (!this.canEdit) {
+    if (!this.canEdit || !this.fornecedorCanEdit) {
       this.form.disable();
     }
   }

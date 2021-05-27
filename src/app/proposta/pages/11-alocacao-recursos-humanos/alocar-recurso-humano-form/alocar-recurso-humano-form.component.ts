@@ -48,6 +48,7 @@ export class AlocarRecursoHumanoFormComponent extends PropostaNodeFormDirective 
     this._meses.forEach(m => {
       this.formMeses.addControl(m.toString(), this.fb.control('', [Validators.required, Validators.min(0), Validators.max(this.max)]));
     });
+
   }
 
   @Input() max = 172;
@@ -104,6 +105,9 @@ export class AlocarRecursoHumanoFormComponent extends PropostaNodeFormDirective 
       const ctrl = this.form.get(ee[0] === 'e' ? 'empresaFinanciadoraId' : 'coExecutorFinanciadorId');
       ctrl.setValue(id);
     });
+    if (!this.canEdit) {
+      this.formMeses.disable();
+    }
 
   }
 }
