@@ -56,7 +56,6 @@ export class FormalizacaoComponent implements OnInit, OnDestroy {
         if (value) {
           ctrl.setValidators(Validators.required);
         }
-        console.log(this.form.value);
       });
       this.form.updateValueAndValidity();
       this.cdr.detectChanges();
