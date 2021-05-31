@@ -3,6 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {NovoComponent} from './novo/novo.component';
 import {RecursoHumanoComponent} from './novo/recurso-humano.component';
 import {RecursoMaterialComponent} from './novo/recurso-material.component';
+import {NovoRegistroResolver} from '@app/projetos/projeto/resolvers/novo-registro.resolver';
 
 const routes: Routes = [
   {
@@ -21,7 +22,10 @@ const routes: Routes = [
       },
       {
         path: 'recurso-humano',
-        component: RecursoHumanoComponent
+        component: RecursoHumanoComponent,
+        resolve: {
+          items: NovoRegistroResolver
+        }
       },
       {
         path: 'recurso-material',

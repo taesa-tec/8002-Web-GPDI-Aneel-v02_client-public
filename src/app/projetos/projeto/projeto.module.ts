@@ -7,6 +7,7 @@ import {TesteComponent} from './components/teste/teste.component';
 import {ProjetoService} from '@app/projetos/projeto/services/projeto.service';
 import {ProjetoResolver} from '@app/projetos/projeto/resolvers/projeto.resolver';
 import {PipesModule} from '@app/core/pipes';
+import {NovoRegistroResolver} from '@app/projetos/projeto/resolvers/novo-registro.resolver';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {PipesModule} from '@app/core/pipes';
   ],
   providers: [
     ProjetoService,
-    ProjetoResolver
+    ProjetoResolver,
+    NovoRegistroResolver
   ]
 })
 export class ProjetoModule {
