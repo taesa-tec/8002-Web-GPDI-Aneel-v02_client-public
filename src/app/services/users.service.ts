@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {CreateUserRequest, ResultadoResponse, User, UserProjeto, NiveisUsuarios, Permissao, Projeto, Roles, UserRole} from '@app/commons';
-import {Observable, BehaviorSubject, Subject} from 'rxjs';
+import {ResultadoResponse, User} from '@app/commons';
+import {Subject} from 'rxjs';
 
 import {AuthService} from '@app/services/auth.service';
-import {CatalogsService} from '@app/services/catalogs.service';
 import {SistemaService} from '@app/services/sistema.service';
 import {ServiceBase} from '@app/services/service-base.service';
 
@@ -17,7 +16,7 @@ export class UsersService extends ServiceBase<any> {
   avatarUpdated = this.$avatarUpdated.asObservable();
 
   constructor(protected http: HttpClient,
-              protected auth: AuthService, protected catalogo: CatalogsService, protected sistema: SistemaService) {
+              protected auth: AuthService, protected sistema: SistemaService) {
     super(http, 'Users');
   }
 

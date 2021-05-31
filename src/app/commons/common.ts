@@ -72,44 +72,6 @@ export interface ProjetoStatus {
   status: string;
 }
 
-export interface Projeto {
-  created: string;
-  id: number;
-  titulo: string;
-  tipo: number;
-  tipoValor?: string;
-  dataInicio?: any;
-  codigo?: any;
-  tituloDesc: string;
-  numero: string;
-  empresaId: number;
-  catalogEmpresa?: Empresa;
-  catalogStatusId: number;
-  catalogStatus?: ProjetoStatus;
-  catalogSegmentoId?: any;
-  catalogSegmento?: any;
-  avaliacaoInicial?: any;
-  compartResultados?: any;
-  compartResultadosValor?: any;
-  motivacao?: any;
-  originalidade?: any;
-  aplicabilidade?: any;
-  relevancia?: any;
-  razoabilidade?: any;
-  pesquisas?: any;
-  produtos?: any;
-  recursosHumanos?: any;
-  alocacoesRh?: any;
-  recursosMateriais?: any;
-  alocacoesRm?: any;
-  etapas?: any;
-  tema?: any;
-  usersProjeto?: any;
-  empresas?: any;
-}
-
-export type Projetos = Array<Projeto>;
-
 export interface User {
   id?: string;
   userName?: string;
@@ -141,21 +103,7 @@ export interface User {
   accessFailedCount?: number;
 }
 
-export interface CatalogUserPermissao {
-  id: number;
-  valor: string;
-  nome: string;
-}
 
-export interface UserProjeto {
-  id: number;
-  userId: string;
-  applicationUser?: User;
-  projetoId: number;
-  projeto?: Projeto;
-  catalogUserPermissaoId: any;
-  catalogUserPermissao?: CatalogUserPermissao;
-}
 
 export interface Tema {
   id: number;
@@ -622,7 +570,9 @@ export interface Pagination<T> {
   filters?: Array<{ name: string; field: string; values: { [key: string]: string } }>;
 }
 
-export const SIDEBAR_MENU = new InjectionToken<Array<MenuItem> | BehaviorSubject<Array<MenuItem>>>('Sidebar menu');
+export const SIDEBAR_MENU = new InjectionToken<Array<MenuItem> | BehaviorSubject<Array<MenuItem>>>('Sidebar menu', {
+  providedIn: 'root', factory: () => new BehaviorSubject([])
+});
 export const HEADER_MENU = new InjectionToken<Array<MenuItem>>('Header menu');
 export const TOPNAV_MENU = new InjectionToken<Array<MenuItem>>('Topnav menu');
 export const ROOT_URL = new InjectionToken<string>('Root Url');

@@ -7,12 +7,14 @@ import {EmFinalizacaoComponent} from './em-finalizacao/em-finalizacao.component'
 import {ServiceBase} from '@app/services';
 import {ProjetosResolver} from '@app/projetos/projetos.resolver';
 import {CoreModule} from '@app/core';
+import {ProjetoModule} from '@app/projetos/projeto/projeto.module';
 
 
 @NgModule({
   declarations: [EmExecucaoComponent, EmFinalizacaoComponent],
   imports: [
     CommonModule,
+    ProjetoModule,
     ProjetosRoutingModule,
     CoreModule
   ],

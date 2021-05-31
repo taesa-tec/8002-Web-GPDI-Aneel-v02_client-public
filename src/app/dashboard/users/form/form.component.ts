@@ -2,7 +2,6 @@ import {Component, OnInit, ViewChild, Input, Output, EventEmitter} from '@angula
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {
   Empresa, ResultadoResponse, UserRole, Roles, AppValidators, User, CreateUserRequest,
-  Projeto, Projetos
 } from '@app/commons';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {AppService} from '@app/services/app.service';
@@ -25,7 +24,6 @@ export class FormComponent implements OnInit {
   fotoPerfil: FormGroup;
   roles = Roles;
   empresas: Array<Empresa>;
-  projetos: Projetos;
   resultado: ResultadoResponse;
   userId: string;
   projetoAcessosEnabled = true;

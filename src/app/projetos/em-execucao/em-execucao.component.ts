@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {TableComponentCols} from '@app/core/components';
+import {TableComponentActions, TableComponentCols} from '@app/core/components';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
@@ -13,6 +13,9 @@ export class EmExecucaoComponent implements OnInit {
     {title: 'Titulo Resumido Projeto', field: 'titulo'},
     {title: 'Data Aprovação', field: 'dataCriacao'},
   ];
+  buttons: TableComponentActions = [
+    {isLink: true, text: 'Detalhes do projeto', action: '../${id}', className: 'btn btn-primary', icon: 'ta-edit'}
+  ];
 
   projetos: Array<any> = [];
 
@@ -21,7 +24,6 @@ export class EmExecucaoComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.data.subscribe(data => {
-      console.log(data);
       this.projetos = data.projetos;
     });
   }

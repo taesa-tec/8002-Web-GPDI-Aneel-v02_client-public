@@ -11,7 +11,7 @@
             routerLinkActive="active"
           >
             <span class="fs-24 mr-3"><i [class]="route.icon"></i></span>
-            {{ route.text }}
+            <span [innerHTML]="route.text"></span>
           </a>
         </ng-container>
       </nav>

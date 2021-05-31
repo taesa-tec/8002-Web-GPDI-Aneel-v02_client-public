@@ -50,7 +50,6 @@ const routes: Routes = [
       },
       {
         path: 'projetos',
-        component: SidebarComponent,
         loadChildren: () => import('@app/projetos/projetos.module')
           .then(m => m.ProjetosModule)
       },
