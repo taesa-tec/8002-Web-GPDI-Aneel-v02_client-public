@@ -2,37 +2,29 @@
   <div class="row">
     <div class="col-12">
       <div class="form-group">
-        <label for="">Nome do Item</label>
-        <input type="text" class="form-control">
+        <label>Nome do Item</label>
+        <input formControlName="nomeItem" type="text" class="form-control" placeholder="Digite o nome do item">
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-12">
+    <div class="col-8">
       <div class="form-group">
-        <label for="">Recurso Material Associado</label>
-        <select name="" id="" class="form-control"></select>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-4">
-      <div class="form-group">
-        <label for="">Empresa Financiadora</label>
-        <select name="" id="" class="form-control"></select>
+        <label>Recurso Material Associado</label>
+        <select formControlName="recursoMaterialId" class="form-control">
+          <option value="" hidden>Selecione</option>
+          <option *ngFor="let recurso of data.recursos | orderBy:'nome'"
+                  [value]="recurso.id">{{recurso.nome}}</option>
+        </select>
       </div>
     </div>
     <div class="col-4">
       <div class="form-group">
-        <label for="">Empresa Recebedora</label>
-        <select name="" id="" class="form-control"></select>
-      </div>
-    </div>
-    <div class="col-4">
-      <div class="form-group">
-        <label for="">Beneficiado</label>
-        <input type="text" class="form-control">
+        <label>Etapa Relacionada</label>
+        <select class="form-control" formControlName="etapaId">
+          <option value="" hidden>Selecione</option>
+          <option *ngFor="let etapa of data.etapas" [value]="etapa.id">Etapa {{etapa.ordem | pad:'0': 2}}</option>
+        </select>
       </div>
     </div>
   </div>
@@ -40,42 +32,73 @@
   <div class="row">
     <div class="col-4">
       <div class="form-group">
-        <label for="">Irá equipar laboratório Existente</label>
-        <select name="" id="" class="form-control"></select>
+        <label>Empresa Financiadora</label>
+        <select class="form-control" #financiador (change)="updateFinanciador(financiador.value)">
+          <option value="" hidden>Selecione</option>
+          <optgroup label="Empresas">
+            <option *ngFor="let empresa of data.empresas | orderBy:['categoria', 'nome']"
+                    [value]="'e-' + empresa.id">{{empresa.nome}}</option>
+          </optgroup>
+          <optgroup label="OUTRAS ENTIDADES">
+            <option *ngFor="let empresa of data.coexecutores | orderBy:'nome'"
+                    [value]="'c-' + empresa.id">{{empresa.nome}}</option>
+          </optgroup>
+        </select>
       </div>
     </div>
     <div class="col-4">
       <div class="form-group">
-        <label for="">Irá equipar laboratório Novo</label>
-        <select name="" id="" class="form-control"></select>
+        <label>Empresa Recebedora</label>
+        <select class="form-control" #recebedor (change)="updateRecebedor(recebedor.value)">
+          <option value="" hidden>Selecione</option>
+          <optgroup label="Empresas">
+            <option *ngFor="let empresa of data.empresas | orderBy:['categoria', 'nome']"
+                    [value]="'e-' + empresa.id">{{empresa.nome}}</option>
+          </optgroup>
+          <optgroup label="OUTRAS ENTIDADES">
+            <option *ngFor="let empresa of data.coexecutores | orderBy:'nome'"
+                    [value]="'c-' + empresa.id">{{empresa.nome}}</option>
+          </optgroup>
+        </select>
       </div>
     </div>
     <div class="col-4">
       <div class="form-group">
-        <label for="">Item Nacional</label>
-        <select name="" id="" class="form-control"></select>
+        <label>Beneficiado</label>
+        <input formControlName="beneficiado" placeholder="Beneficiado" type="text" class="form-control">
       </div>
     </div>
   </div>
 
-
   <div class="row">
     <div class="col-4">
       <div class="form-group">
-        <label for="">Mês Referência</label>
-        <select name="" id="" class="form-control"></select>
+        <label>Irá equipar laboratório Existente</label>
+        <select formControlName="equipaLaboratorioExistente" class="form-control">
+          <option value="" hidden>Selecione</option>
+          <option [value]="false">Não</option>
+          <option [value]="true">Sim</option>
+        </select>
       </div>
     </div>
     <div class="col-4">
       <div class="form-group">
-        <label for="">Quantidade itens</label>
-        <input type="text" class="form-control">
+        <label>Irá equipar laboratório Novo</label>
+        <select formControlName="equipaLaboratorioNovo" class="form-control">
+          <option value="" hidden>Selecione</option>
+          <option [value]="false">Não</option>
+          <option [value]="true">Sim</option>
+        </select>
       </div>
     </div>
     <div class="col-4">
       <div class="form-group">
-        <label for="">Valor Unitário</label>
-        <input type="number" class="form-control">
+        <label>Item Nacional</label>
+        <select formControlName="isNacional" class="form-control">
+          <option value="" hidden>Selecione</option>
+          <option [value]="false">Não</option>
+          <option [value]="true">Sim</option>
+        </select>
       </div>
     </div>
   </div>
@@ -83,8 +106,32 @@
   <div class="row">
     <div class="col-4">
       <div class="form-group">
-        <label for="">Tipo de Documento?</label>
-        <select name="" id="" class="form-control">
+        <label>Mês Referência</label>
+        <select formControlName="mesReferencia" class="form-control">
+          <option value="" hidden>Selecione</option>
+          <option *ngFor="let mes of data.meses" [value]="mes">{{mes | date:'MMMM y'}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group">
+        <label>Quantidade itens</label>
+        <input formControlName="quantidade" placeholder="Quantidade de itens" type="number" class="form-control">
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group">
+        <label>Valor Unitário</label>
+        <input formControlName="valor" placeholder="Valor unitário" type="number" step="0.01" class="form-control">
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-4">
+      <div class="form-group">
+        <label>Tipo de Documento?</label>
+        <select formControlName="tipoDocumento" class="form-control">
           <option value="">Selecione</option>
           <option value="CupomFiscal">Cupom Fiscal</option>
           <option value="Declaracao">Declaração</option>
@@ -99,14 +146,14 @@
     </div>
     <div class="col-4">
       <div class="form-group">
-        <label for="">Número de Documento</label>
-        <input type="text" class="form-control">
+        <label>Número de Documento</label>
+        <input formControlName="numeroDocumento" type="text" class="form-control" placeholder="Número de Documento">
       </div>
     </div>
     <div class="col-4">
       <div class="form-group">
-        <label for="">Data do Documento</label>
-        <input type="date" class="form-control">
+        <label>Data do Documento</label>
+        <input formControlName="dataDocumento" type="date" class="form-control">
       </div>
     </div>
   </div>
@@ -114,14 +161,16 @@
   <div class="row">
     <div class="col-12">
       <div class="form-group"><label>Específicação Técnica</label>
-        <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
+        <textarea formControlName="especificaoTecnica" cols="30" rows="5" class="form-control"
+                  placeholder="Especificações Técnicas do Material"></textarea>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-12">
       <div class="form-group"><label>Função deste recurso nesta etapa do projeto</label>
-        <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
+        <textarea formControlName="funcaoEtapa" cols="30" rows="5" class="form-control"
+                  placeholder="Funções deste recurso nesta etapa do projeto"></textarea>
       </div>
     </div>
   </div>
@@ -129,7 +178,8 @@
   <div class="row">
     <div class="col-12">
       <div class="form-group"><label>Observações Internas (Opcional)</label>
-        <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
+        <textarea formControlName="observacaoInterna" cols="30" rows="5" class="form-control"
+                  placeholder="Observações..."></textarea>
       </div>
     </div>
   </div>
@@ -137,13 +187,18 @@
   <div class="row">
     <div class="col-12">
       <div class="d-flex justify-content-between">
-        <div class="form-group">
-          <label>COMPROVANTE DA DESPESA</label>
-          ...
+        <div>
+          <div class="form-group">
+            <label>COMPROVANTE DA DESPESA</label>
+          </div>
+          <label class="btn-link btn">
+            <i class="ta-attachment"></i> Anexar
+            <input type="file" hidden (change)="fileChange($event)">
+          </label>
         </div>
         <div class="form-group">
           <label>Valor Final (Cálculo automático)</label>
-          <input type="text" class="form-control" readonly value="00000">
+          <input type="text" class="form-control" readonly [value]="custo">
         </div>
       </div>
     </div>
@@ -151,7 +206,9 @@
   <div class="row">
     <div class="col-12 d-flex justify-content-end">
       <button class="btn btn-link" type="button">Cancelar</button>
-      <button class="btn btn-primary" type="submit"><i class="ta-plus-circle"></i> Salvar Registro</button>
+      <button class="btn btn-primary" type="submit" [disabled]="form.invalid"><i class="ta-plus-circle"></i> Salvar
+        Registro
+      </button>
     </div>
   </div>
 

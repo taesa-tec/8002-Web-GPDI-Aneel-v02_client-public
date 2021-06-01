@@ -29,7 +29,10 @@ const routes: Routes = [
       },
       {
         path: 'recurso-material',
-        component: RecursoMaterialComponent
+        component: RecursoMaterialComponent,
+        resolve: {
+          items: NovoRegistroResolver
+        }
       }
     ]
   }

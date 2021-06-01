@@ -1,6 +1,6 @@
-import {Component, OnInit, ViewChild, AfterViewInit, ElementRef, forwardRef, Input} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, forwardRef, Input} from '@angular/core';
 import {CatalogsService} from '@app/services/catalogs.service';
-import { SubTema, SubTemaRequest, TemaProjeto, NoRequest, ResultadoResponse, CatalogTema, NiveisUsuarios} from '@app/commons';
+import {SubTema, CatalogTema} from '@app/commons';
 import {FormGroup, FormControl, Validators, FormArray, FormBuilder, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
 
@@ -20,9 +20,6 @@ export class TemasComponent implements OnInit, ControlValueAccessor {
 
 
   projeto: any;
-
-  temaProjeto: TemaProjeto;
-
   temas: Array<CatalogTema>;
   // Form
   temaControl = new FormControl('', [Validators.required]);
@@ -75,9 +72,9 @@ export class TemasComponent implements OnInit, ControlValueAccessor {
     protected catalogo: CatalogsService) {
   }
 
-  onChange: any = function() {
+  onChange: any = function () {
   };
-  onTouched: any = function() {
+  onTouched: any = function () {
   };
 
   subtemasdisponiveis(current?: any) {

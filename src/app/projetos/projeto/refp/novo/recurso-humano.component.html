@@ -1,29 +1,55 @@
 <form [formGroup]="form" class="mt-5">
   <div class="row">
-    <div class="col-12">
+    <div class="col-8">
       <div class="form-group">
-        <label for="">Beneficiário (Recurso Humano)</label>
-        <select name="" id="" class="form-control"></select>
+        <label>Beneficiário (Recurso Humano)</label>
+        <select class="form-control" formControlName="recursoHumanoId">
+          <option value="">Selecione</option>
+          <option *ngFor="let recurso of data.colaboradores | orderBy:'nomeCompleto'"
+                  [value]="recurso.id">{{recurso.nomeCompleto}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group">
+        <label>Etapa Relacionada</label>
+        <select class="form-control">
+          <option value="" hidden>Selecione</option>
+          <option *ngFor="let etapa of data.etapas" [value]="etapa.id">Etapa {{etapa.ordem | pad:'0': 2}}</option>
+        </select>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-4">
       <div class="form-group">
-        <label for="">Mês Referência</label>
-        <select name="" id="" class="form-control"></select>
+        <label>Mês Referência</label>
+        <select formControlName="mesReferencia" class="form-control">
+          <option value="" hidden>Selecione</option>
+          <option *ngFor="let mes of data.meses" [value]="mes">{{mes | date:'MMMM y'}}</option>
+        </select>
       </div>
     </div>
     <div class="col-4">
       <div class="form-group">
-        <label for="">Quantidade Horas</label>
-        <input type="text" class="form-control">
+        <label>Quantidade Horas</label>
+        <input formControlName="horas" placeholder="Quantidade Horas" min="0" type="number" class="form-control">
       </div>
     </div>
     <div class="col-4">
       <div class="form-group">
-        <label for="">Empresa Financiadora</label>
-        <select name="" id="" class="form-control"></select>
+        <label>Empresa Financiadora</label>
+        <select class="form-control" #financiador (change)="updateFinanciador(financiador.value)">
+          <option value="">Selecione</option>
+          <optgroup label="Empresas">
+            <option *ngFor="let empresa of data.empresas | orderBy:['categoria', 'nome']"
+                    [value]="'e-' + empresa.id">{{empresa.nome}}</option>
+          </optgroup>
+          <optgroup label="OUTRAS ENTIDADES">
+            <option *ngFor="let empresa of data.coexecutores | orderBy:'nome'"
+                    [value]="'c-' + empresa.id">{{empresa.nome}}</option>
+          </optgroup>
+        </select>
       </div>
     </div>
   </div>
@@ -31,8 +57,8 @@
   <div class="row">
     <div class="col-4">
       <div class="form-group">
-        <label for="">Tipo de Documento?</label>
-        <select name="" id="" class="form-control">
+        <label>Tipo de Documento?</label>
+        <select formControlName="tipoDocumento" class="form-control">
           <option value="">Selecione</option>
           <option value="CupomFiscal">Cupom Fiscal</option>
           <option value="Declaracao">Declaração</option>
@@ -47,14 +73,14 @@
     </div>
     <div class="col-4">
       <div class="form-group">
-        <label for="">Número de Documento</label>
-        <input type="text" class="form-control">
+        <label>Número de Documento</label>
+        <input formControlName="numeroDocumento" placeholder="Número de Documento" type="text" class="form-control">
       </div>
     </div>
     <div class="col-4">
       <div class="form-group">
-        <label for="">Data do Documento</label>
-        <input type="date" class="form-control">
+        <label>Data do Documento</label>
+        <input formControlName="dataDocumento" type="date" class="form-control">
       </div>
     </div>
   </div>
@@ -62,7 +88,8 @@
   <div class="row">
     <div class="col-12">
       <div class="form-group"><label>Atividade realizada na etapa pela pessoa</label>
-        <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
+        <textarea formControlName="atividadeRealizada" cols="30" rows="5" placeholder="Descreva atividade realizada"
+                  class="form-control"></textarea>
       </div>
     </div>
   </div>
@@ -70,7 +97,8 @@
   <div class="row">
     <div class="col-12">
       <div class="form-group"><label>Observações Internas (Opcional)</label>
-        <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
+        <textarea formControlName="observacaoInterna" cols="30" rows="5" placeholder="Observações intenas"
+                  class="form-control"></textarea>
       </div>
     </div>
   </div>
@@ -78,13 +106,18 @@
   <div class="row">
     <div class="col-12">
       <div class="d-flex justify-content-between">
-        <div class="form-group">
-          <label>COMPROVANTE DA DESPESA</label>
-          ...
+        <div>
+          <div class="form-group">
+            <label>COMPROVANTE DA DESPESA</label>
+          </div>
+          <label class="btn-link btn">
+            <i class="ta-attachment"></i> Anexar
+            <input type="file" hidden (change)="fileChange($event)">
+          </label>
         </div>
         <div class="form-group">
           <label>Valor Final (Cálculo automático)</label>
-          <input type="text" class="form-control" readonly value="00000">
+          <input type="text" class="form-control" readonly [value]="custo">
         </div>
       </div>
     </div>
@@ -92,7 +125,9 @@
   <div class="row">
     <div class="col-12 d-flex justify-content-end">
       <button class="btn btn-link" type="button">Cancelar</button>
-      <button class="btn btn-primary" type="submit"><i class="ta-plus-circle"></i> Salvar Registro</button>
+      <button class="btn btn-primary" type="submit" [disabled]="form.invalid"><i class="ta-plus-circle"></i> Salvar
+        Registro
+      </button>
     </div>
   </div>
 

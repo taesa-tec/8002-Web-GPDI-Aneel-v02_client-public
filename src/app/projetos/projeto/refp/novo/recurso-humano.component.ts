@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
+import {CurrencyPipe} from '@angular/common';
+import {ProjetoService} from '@app/projetos/projeto/services/projeto.service';
 
 @Component({
   selector: 'app-recurso-humano',
@@ -9,13 +11,91 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class RecursoHumanoComponent implements OnInit {
 
+  file: File;
+  valorHora = 0;
+  custo: any;
+  data: { etapas: any[], meses: any[], colaboradores: any[], recursos: any[], coexecutores: any[], empresas: any[] };
 
-  form = this.fb.group({});
+  recursoHumanoCtrl = this.fb.control('', [Validators.required]);
+  horasCtrl = this.fb.control('', [Validators.required, Validators.min(1)]);
 
-  constructor(protected fb: FormBuilder, protected route: ActivatedRoute) {
+  financiadoraCtrl = this.fb.control('');
+  coExecutorFinanciadorCtrl = this.fb.control('');
+
+  form = this.fb.group({
+    recursoHumanoId: this.recursoHumanoCtrl,
+    horas: this.horasCtrl,
+    atividadeRealizada: ['', Validators.required],
+    //
+    financiadoraId: this.financiadoraCtrl,
+    coExecutorFinanciadorId: this.coExecutorFinanciadorCtrl,
+    mesReferencia: ['', Validators.required],
+    tipoDocumento: ['', Validators.required],
+    numeroDocumento: ['', Validators.required],
+    dataDocumento: ['', Validators.required],
+    observacaoInterna: ['', Validators.required],
+  }, {
+    validators: form => {
+      if (form.value.financiadoraId === '' && form.value.coExecutorFinanciadorId === '') {
+        return {financiador: true};
+      }
+      return null;
+    }
+  });
+
+  constructor(protected fb: FormBuilder, protected route: ActivatedRoute, protected service: ProjetoService) {
   }
 
   ngOnInit(): void {
+    this.route.data.subscribe(data => {
+      this.data = data.items;
+    });
+    this.recursoHumanoCtrl.valueChanges.subscribe(id => {
+      this.valorHora = this.data.colaboradores.find(_c => _c.id === parseFloat(id))?.valorHora || 0;
+      this.updateCusto(this.horasCtrl.value);
+    });
+    this.horasCtrl.valueChanges.subscribe(value => {
+      this.updateCusto(value);
+    });
+    this.updateCusto(0);
   }
 
+  updateFinanciador(cod: string) {
+    this.financiadoraCtrl.setValue('');
+    this.coExecutorFinanciadorCtrl.setValue('');
+    if (cod.length > 0) {
+
+      const [type, id] = cod.split('-');
+
+      if (type === 'e') {
+        this.financiadoraCtrl.setValue(id);
+      } else {
+        this.coExecutorFinanciadorCtrl.setValue(id);
+      }
+    }
+
+
+  }
+
+  updateCusto(value) {
+    const custo = this.valorHora * parseFloat(value) || 0;
+    const p = new CurrencyPipe('pt-BR', 'R$');
+    this.custo = p.transform(custo);
+
+  }
+
+  fileChange(evt: Event) {
+    const files = (evt.target as HTMLInputElement).files;
+    this.file = files.length > 0 ? files.item(0) : null;
+  }
+
+  async uploadFile() {
+    // await this.service.upload(this.file, ``);
+  }
+
+  submit() {
+    if (this.form.invalid || this.file === null) {
+      return;
+    }
+  }
 }

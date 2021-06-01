@@ -14,8 +14,6 @@ export class NovoRegistroResolver implements Resolve<any> {
       this.service.projeto.subscribe(async projeto => {
         resolve(await this.service.obter(`${projeto.id}/RegistroFinanceiro/Criar`));
       }));
-
-
   }
 
 }
