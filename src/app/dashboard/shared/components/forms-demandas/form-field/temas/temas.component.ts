@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, AfterViewInit, ElementRef, forwardRef, Input} from '@angular/core';
 import {CatalogsService} from '@app/services/catalogs.service';
-import {Projeto, Tema, SubTema, SubTemaRequest, TemaProjeto, NoRequest, ResultadoResponse, CatalogTema, NiveisUsuarios} from '@app/commons';
+import { SubTema, SubTemaRequest, TemaProjeto, NoRequest, ResultadoResponse, CatalogTema, NiveisUsuarios} from '@app/commons';
 import {FormGroup, FormControl, Validators, FormArray, FormBuilder, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
 
@@ -19,7 +19,7 @@ import {LoadingComponent} from '@app/core/components/loading/loading.component';
 export class TemasComponent implements OnInit, ControlValueAccessor {
 
 
-  projeto: Projeto;
+  projeto: any;
 
   temaProjeto: TemaProjeto;
 
