@@ -7,10 +7,11 @@ import {DashboardModule} from '@app/dashboard';
 import { RecursoHumanoComponent } from './novo/recurso-humano.component';
 import { RecursoMaterialComponent } from './novo/recurso-material.component';
 import {CoreModule} from '@app/core';
+import { ListaComponent } from './lista/lista.component';
 
 
 @NgModule({
-  declarations: [NovoComponent, RecursoHumanoComponent, RecursoMaterialComponent],
+  declarations: [NovoComponent, RecursoHumanoComponent, RecursoMaterialComponent, ListaComponent],
   imports: [
     CommonModule,
     RefpRoutingModule,

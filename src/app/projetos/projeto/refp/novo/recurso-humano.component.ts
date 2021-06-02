@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CurrencyPipe} from '@angular/common';
 import {ProjetoService} from '@app/projetos/projeto/services/projeto.service';
+import {Projeto} from '@app/projetos/projeto/projeto.component';
+import {LoadingController} from '@app/services';
 
 @Component({
   selector: 'app-recurso-humano',
@@ -10,7 +12,7 @@ import {ProjetoService} from '@app/projetos/projeto/services/projeto.service';
   styles: []
 })
 export class RecursoHumanoComponent implements OnInit {
-
+  projeto: Projeto;
   file: File;
   valorHora = 0;
   custo: any;
@@ -27,6 +29,7 @@ export class RecursoHumanoComponent implements OnInit {
     horas: this.horasCtrl,
     atividadeRealizada: ['', Validators.required],
     //
+    etapaId: ['', Validators.required],
     financiadoraId: this.financiadoraCtrl,
     coExecutorFinanciadorId: this.coExecutorFinanciadorCtrl,
     mesReferencia: ['', Validators.required],
@@ -43,10 +46,14 @@ export class RecursoHumanoComponent implements OnInit {
     }
   });
 
-  constructor(protected fb: FormBuilder, protected route: ActivatedRoute, protected service: ProjetoService) {
+  constructor(protected fb: FormBuilder,
+              protected router: Router,
+              protected route: ActivatedRoute, protected service: ProjetoService,
+              protected loading: LoadingController) {
   }
 
   ngOnInit(): void {
+    this.service.projeto.subscribe(p => this.projeto = p);
     this.route.data.subscribe(data => {
       this.data = data.items;
     });
@@ -89,13 +96,19 @@ export class RecursoHumanoComponent implements OnInit {
     this.file = files.length > 0 ? files.item(0) : null;
   }
 
-  async uploadFile() {
-    // await this.service.upload(this.file, ``);
-  }
-
-  submit() {
+  async submit() {
     if (this.form.invalid || this.file === null) {
       return;
+    }
+    try {
+      this.loading.show().then();
+      const registro = await this.service.post(`${this.projeto.id}/RegistroFinanceiro/RecursoHumano`, this.form.value);
+      await this.service.upload([this.file], `${this.projeto.id}/RegistroFinanceiro/${registro.id}/Comprovante`);
+      this.router.navigate(['..', '..', 'pendente']).then();
+    } catch (e) {
+      console.error(e);
+    } finally {
+      this.loading.hide();
     }
   }
 }

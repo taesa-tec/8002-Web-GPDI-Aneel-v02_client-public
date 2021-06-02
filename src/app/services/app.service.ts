@@ -8,14 +8,16 @@ import {FileService} from '@app/services/file.service';
 import {PromptComponent} from '../core/components/prompt/prompt.component';
 import {Router} from '@angular/router';
 import {environment} from '@env/environment';
-import {ModalPageComponent} from '@app/core/components/modal-page/modal-page.component';
 import {DemandasService} from './demandas.service';
 import {BehaviorSubject, timer} from 'rxjs';
 import {SistemaService} from '@app/services/sistema.service';
 import {FileUploaderComponent} from '@app/core/components/file-uploader/file-uploader.component';
 
 
-class LoadingController {
+@Injectable({
+  providedIn: 'root'
+})
+export class LoadingController {
 
   private loadingSource = new BehaviorSubject(false);
 
@@ -56,6 +58,9 @@ class LoadingController {
     }
     return this;
   }
+
+  constructor() {
+  }
 }
 
 @Injectable({
@@ -65,7 +70,7 @@ export class AppService {
 
   moment: any;
   config: any;
-  loading: LoadingController;
+
 
   constructor(
     public modal: NgbModal,
@@ -75,9 +80,9 @@ export class AppService {
     public auth: AuthService,
     public sistema: SistemaService,
     public router: Router,
-    public modalConfig: NgbModalConfig
+    public modalConfig: NgbModalConfig,
+    public loading: LoadingController
   ) {
-    this.loading = new LoadingController();
     this.config = environment;
     this.modalConfig.backdrop = 'static';
   }

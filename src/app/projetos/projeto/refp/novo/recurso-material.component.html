@@ -1,4 +1,4 @@
-<form [formGroup]="form" class="mt-5">
+<form [formGroup]="form" class="mt-5" (ngSubmit)="submit()">
   <div class="row">
     <div class="col-12">
       <div class="form-group">
@@ -68,6 +68,26 @@
         <input formControlName="beneficiado" placeholder="Beneficiado" type="text" class="form-control">
       </div>
     </div>
+  </div>
+
+  <div class="row">
+    <div class="col-4">
+      <div class="form-group">
+        <label>CNPJ Benefíciado</label>
+        <input formControlName="cnpjBeneficiado" type="text" class="form-control" placeholder="00.000.000/0000-00"
+               mask="00.000.000/0000-00">
+      </div>
+    </div>
+    <div class="col-8">
+      <div class="form-group">
+        <label>CATEGORIA CONTÁBIL</label>
+        <select class="form-control" formControlName="categoriaContabilId">
+          <option value="" hidden>Selecione</option>
+          <option *ngFor="let categoria of data.categorias" [value]="categoria.id">{{categoria.nome}} ({{categoria.valor}})</option>
+        </select>
+      </div>
+    </div>
+
   </div>
 
   <div class="row">
@@ -192,21 +212,27 @@
             <label>COMPROVANTE DA DESPESA</label>
           </div>
           <label class="btn-link btn">
-            <i class="ta-attachment"></i> Anexar
+            <i class="ta-attachment"></i> {{file?.name || 'Anexar'}}
             <input type="file" hidden (change)="fileChange($event)">
           </label>
         </div>
         <div class="form-group">
           <label>Valor Final (Cálculo automático)</label>
-          <input type="text" class="form-control" readonly [value]="custo">
+          <input type="text" class="form-control" tabindex="-1" readonly [value]="custo">
         </div>
       </div>
     </div>
   </div>
+  <pre>
+    {{form.value | json}}
+    -----
+    {{form.errors | json}}
+  </pre>
   <div class="row">
     <div class="col-12 d-flex justify-content-end">
       <button class="btn btn-link" type="button">Cancelar</button>
-      <button class="btn btn-primary" type="submit" [disabled]="form.invalid"><i class="ta-plus-circle"></i> Salvar
+      <button class="btn btn-primary" type="submit" [disabled]="form.invalid  || !file"><i class="ta-plus-circle"></i>
+        Salvar
         Registro
       </button>
     </div>
