@@ -21,4 +21,8 @@ export class ProjetoService extends ServiceBase<any> {
       throw new Error('Projeto inválido!');
     }
   }
+
+  getCurrentProjeto() {
+    return this.$currentProjeto.getValue();
+  }
 }

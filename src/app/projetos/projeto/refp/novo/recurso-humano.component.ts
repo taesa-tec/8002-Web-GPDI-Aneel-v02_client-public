@@ -104,7 +104,7 @@ export class RecursoHumanoComponent implements OnInit {
       this.loading.show().then();
       const registro = await this.service.post(`${this.projeto.id}/RegistroFinanceiro/RecursoHumano`, this.form.value);
       await this.service.upload([this.file], `${this.projeto.id}/RegistroFinanceiro/${registro.id}/Comprovante`);
-      this.router.navigate(['..', '..', 'pendente']).then();
+      this.router.navigate(['../../pendente'], {relativeTo: this.route}).then();
     } catch (e) {
       console.error(e);
     } finally {

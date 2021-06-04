@@ -1,20 +1,26 @@
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
-import {Inject, Injectable} from '@angular/core';
+import {Inject, Injectable, Provider} from '@angular/core';
 import {ProjetoService} from '@app/projetos/projeto/services/projeto.service';
 import {ROOT_URL} from '@app/commons';
 
 @Injectable()
 export class RegistrosResolver implements Resolve<any> {
 
-  constructor(@Inject(ROOT_URL) protected root_url, protected router: Router, protected service: ProjetoService) {
+  static ToStatus(status: string, providerAs: string): Provider {
+    return {
+      provide: providerAs,
+      deps: [Router, ProjetoService],
+      useFactory: (router: Router, service: ProjetoService) => new RegistrosResolver(status, router, service)
+    };
+  }
+
+  constructor(protected status: string, protected router: Router, protected service: ProjetoService) {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    console.log({route, state});
-    return await new Promise(resolve =>
-      this.service.projeto.subscribe(async projeto => {
-        resolve(await this.service.obter(`${projeto.id}/RegistroFinanceiro/`));
-      }));
+    const projeto = this.service.getCurrentProjeto();
+    console.log(projeto);
+    return await this.service.obter(`${projeto.id}/RegistroFinanceiro/${this.status}`);
   }
 
 }

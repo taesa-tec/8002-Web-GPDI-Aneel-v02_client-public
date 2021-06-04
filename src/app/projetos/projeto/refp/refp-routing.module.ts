@@ -41,22 +41,31 @@ const routes: Routes = [
   {
     path: 'pendente',
     component: ListaComponent,
+    data: {
+      title: 'Registros Pendentes - REFP'
+    },
     resolve: {
-      //registros: RegistrosResolver
+      registros: 'registrosPendentes'
     }
   },
   {
     path: 'reprovado',
     component: ListaComponent,
+    data: {
+      title: 'Registros Reprovados - REFP'
+    },
     resolve: {
-      //registros: RegistrosResolver
+      registros: 'registrosReprovados'
     }
   },
   {
     path: 'aprovado',
     component: ListaComponent,
+    data: {
+      title: 'Registros Aprovados - REFP'
+    },
     resolve: {
-      //registros: RegistrosResolver
+      registros: 'registrosAprovados'
     }
   }
 ];

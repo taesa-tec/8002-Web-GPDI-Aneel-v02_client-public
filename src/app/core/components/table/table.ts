@@ -15,7 +15,7 @@ export interface TableComponentCol<T = any> {
   order?: boolean;
   orderType?: 'number' | 'date' | 'alpha';
   priority?: number;
-  type?: string;
+  type?: 'img' | 'image' | 'imagebg' | 'background' | 'currency' | 'ng-pipe' | 'template' | string;
   pipe?: string | PipeTransform;
   width?: string;
   permission?: string | Array<string>;
