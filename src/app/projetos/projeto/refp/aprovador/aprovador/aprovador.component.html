@@ -1,0 +1,74 @@
+<div class="modal-header">
+
+  <div class="text-uppercase modal-title text-blue-light fs-20">
+    Aprovação Registro
+  </div>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.close('close')">
+    <i class="ta-cancel-circle"></i>
+  </button>
+</div>
+<div class="modal-body">
+  <form action="">
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label>Beneficiário</label>
+          <input type="text" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group"><label>EMPRESA FINACIADORA</label><input type="text" class="form-control"></div>
+      </div>
+      <div class="col-6">
+        <div class="form-group"><label>EMPRESA RECEBEDORA</label><input type="text" class="form-control"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group"><label>MÊS REFERÊNCIA</label><input type="text" class="form-control"></div>
+      </div>
+      <div class="col-6">
+        <div class="form-group"><label>QUANTIDADE HORAS</label><input type="text" class="form-control"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group"><label>TIPO DE DOCUMENTO</label><input type="text" class="form-control"></div>
+      </div>
+      <div class="col-6">
+        <div class="form-group"><label>DATA DO DOCUMENTO</label><input type="text" class="form-control"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group"><label>NÚMERO DE DOCUMENTO</label><input type="text" class="form-control"></div>
+      </div>
+      <div class="col-6">
+        <div class="form-group"><label>VALOR FINAL (CÁLCULO AUTOMÁTICO)</label><input type="text" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label>ATIVIDADE REALIZADA NA ETAPA PELA PESSOA</label>
+          <textarea class="form-control" cols="30" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label>OBSERVAÇÕES INTERNAS(OPCIONAL)</label>
+          <textarea class="form-control" cols="30" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

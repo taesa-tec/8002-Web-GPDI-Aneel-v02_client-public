@@ -5,7 +5,7 @@ import {RecursoHumanoComponent} from './novo/recurso-humano.component';
 import {RecursoMaterialComponent} from './novo/recurso-material.component';
 import {NovoRegistroResolver} from '@app/projetos/projeto/resolvers/novo-registro.resolver';
 import {ListaComponent} from '@app/projetos/projeto/refp/lista/lista.component';
-import {RegistrosResolver} from '@app/projetos/projeto/resolvers/registros.resolver';
+import {RegistroResolver, RegistrosResolver} from '@app/projetos/projeto/resolvers/registros.resolver';
 
 const routes: Routes = [
   {
@@ -41,31 +41,35 @@ const routes: Routes = [
   {
     path: 'pendente',
     component: ListaComponent,
+    runGuardsAndResolvers: 'always',
     data: {
       title: 'Registros Pendentes - REFP'
     },
     resolve: {
-      registros: 'registrosPendentes'
+      registros: 'registrosPendentes', registro: RegistroResolver
     }
   },
   {
     path: 'reprovado',
+    runGuardsAndResolvers: 'always',
     component: ListaComponent,
     data: {
       title: 'Registros Reprovados - REFP'
     },
     resolve: {
-      registros: 'registrosReprovados'
+      registros: 'registrosReprovados', registro: RegistroResolver
     }
   },
   {
     path: 'aprovado',
+    runGuardsAndResolvers: 'always',
     component: ListaComponent,
     data: {
       title: 'Registros Aprovados - REFP'
     },
     resolve: {
-      registros: 'registrosAprovados'
+      registros: 'registrosAprovados',
+      registro: RegistroResolver
     }
   }
 ];

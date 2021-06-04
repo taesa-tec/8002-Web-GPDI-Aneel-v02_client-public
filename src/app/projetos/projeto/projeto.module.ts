@@ -8,7 +8,7 @@ import {ProjetoService} from '@app/projetos/projeto/services/projeto.service';
 import {ProjetoResolver} from '@app/projetos/projeto/resolvers/projeto.resolver';
 import {PipesModule} from '@app/core/pipes';
 import {NovoRegistroResolver} from '@app/projetos/projeto/resolvers/novo-registro.resolver';
-import {RegistrosResolver} from '@app/projetos/projeto/resolvers/registros.resolver';
+import {RegistroResolver, RegistrosResolver} from '@app/projetos/projeto/resolvers/registros.resolver';
 
 
 @NgModule({
@@ -23,6 +23,7 @@ import {RegistrosResolver} from '@app/projetos/projeto/resolvers/registros.resol
     ProjetoService,
     ProjetoResolver,
     RegistrosResolver,
+    RegistroResolver,
     NovoRegistroResolver
   ]
 })
