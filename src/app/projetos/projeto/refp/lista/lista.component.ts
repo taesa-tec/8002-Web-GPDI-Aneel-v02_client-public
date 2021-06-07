@@ -31,15 +31,16 @@ export class ListaComponent implements OnInit {
       this.data = d.registros;
       this.title = d.title;
       if (d.registro) {
-        this.openModal(d.registro).then();
+        this.openModal(d.registro, d.observacoes).then();
       }
     });
 
   }
 
-  async openModal(registro) {
+  async openModal(registro, obs?) {
     const ref = this.modal.open(AprovadorComponent, {size: 'lg'});
     ref.componentInstance.registro = registro;
+    ref.componentInstance.observacoes = obs;
     await ref.result;
     this.router.navigate(['./'], {relativeTo: this.route}).then();
 

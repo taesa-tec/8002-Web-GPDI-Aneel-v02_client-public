@@ -12,63 +12,53 @@
   </button>
 </div>
 <div class="modal-body">
-  <form action="">
-    <div class="row">
-      <div class="col-12">
-        <div class="form-group">
-          <label>Beneficiário</label>
-          <input type="text" class="form-control">
+
+  <div class="row">
+    <div class="col-12" [ngSwitch]="registro.tipo">
+      <app-recurso-humano *ngSwitchCase="'RegistroFinanceiroRh'" [registro]="registro"
+                          [readonly]="true"></app-recurso-humano>
+      <app-recurso-material *ngSwitchCase="'RegistroFinanceiroRm'" [registro]="registro"
+                            [readonly]="true"></app-recurso-material>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <div>
+          <label>COMPRAVANTE DA DESPESA</label>
         </div>
+        <button class="btn-link btn" type="button" (click)="downloadComprovante()">
+          <i class="ta-attachment"></i> Ver Anexo
+        </button>
       </div>
     </div>
-    <div class="row">
-      <div class="col-6">
-        <div class="form-group"><label>EMPRESA FINACIADORA</label><input type="text" class="form-control"></div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label>OBSERVAÇÕES INTERNAS</label>
       </div>
-      <div class="col-6">
-        <div class="form-group"><label>EMPRESA RECEBEDORA</label><input type="text" class="form-control"></div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-6">
-        <div class="form-group"><label>MÊS REFERÊNCIA</label><input type="text" class="form-control"></div>
-      </div>
-      <div class="col-6">
-        <div class="form-group"><label>QUANTIDADE HORAS</label><input type="text" class="form-control"></div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-6">
-        <div class="form-group"><label>TIPO DE DOCUMENTO</label><input type="text" class="form-control"></div>
-      </div>
-      <div class="col-6">
-        <div class="form-group"><label>DATA DO DOCUMENTO</label><input type="text" class="form-control"></div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-6">
-        <div class="form-group"><label>NÚMERO DE DOCUMENTO</label><input type="text" class="form-control"></div>
-      </div>
-      <div class="col-6">
-        <div class="form-group"><label>VALOR FINAL (CÁLCULO AUTOMÁTICO)</label><input type="text" class="form-control">
+      <ng-container *ngFor="let obs of observacoes">
+        <div class="observacao mb-3">
+          <div class="bg-cinza-claro observacao-content p-3 rounded">{{obs.content}}</div>
+          <div class="fs-12 observacao-info text-cinza text-right">
+            {{obs.createdAt | date:'short'}} por {{obs.author}}
+          </div>
         </div>
-      </div>
+      </ng-container>
     </div>
-    <div class="row">
-      <div class="col-12">
-        <div class="form-group">
-          <label>ATIVIDADE REALIZADA NA ETAPA PELA PESSOA</label>
-          <textarea class="form-control" cols="30" rows="3"></textarea>
-        </div>
-      </div>
+  </div>
+  <div class="row">
+    <div class="col-12 d-flex justify-content-center">
+      <button class="btn btn-danger mx-2" type="button"><i class="ta-cancel-circle"></i> Reprovar Registro</button>
+      <button class="btn btn-success mx-2" type="button"><i class="ta-ok"></i> Aprovar Registro</button>
     </div>
-    <div class="row">
-      <div class="col-12">
-        <div class="form-group">
-          <label>OBSERVAÇÕES INTERNAS(OPCIONAL)</label>
-          <textarea class="form-control" cols="30" rows="3"></textarea>
-        </div>
-      </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <button class="btn-link btn" type="button">
+        <i class="ta-cancel-circle"></i> Excluir Registro
+      </button>
     </div>
-  </form>
+  </div>
 </div>

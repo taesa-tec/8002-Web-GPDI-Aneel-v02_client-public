@@ -83,7 +83,9 @@
         <label>CATEGORIA CONTÁBIL</label>
         <select class="form-control" formControlName="categoriaContabilId">
           <option value="" hidden>Selecione</option>
-          <option *ngFor="let categoria of data.categorias" [value]="categoria.id">{{categoria.nome}} ({{categoria.valor}})</option>
+          <option *ngFor="let categoria of data.categorias" [value]="categoria.id">{{categoria.nome}}
+            ({{categoria.valor}})
+          </option>
         </select>
       </div>
     </div>
@@ -223,11 +225,6 @@
       </div>
     </div>
   </div>
-  <pre>
-    {{form.value | json}}
-    -----
-    {{form.errors | json}}
-  </pre>
   <div class="row">
     <div class="col-12 d-flex justify-content-end">
       <button class="btn btn-link" type="button">Cancelar</button>

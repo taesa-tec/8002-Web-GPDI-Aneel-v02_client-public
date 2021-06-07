@@ -26,8 +26,8 @@ export class FileService {
     URL.revokeObjectURL(blobUrl);
   }
 
-  async download(url: string, progressCb?: (progress: { type: number; loaded: number; total: number }) => void) {
-    const blob = await this.http.get(url, {
+  async download(url: string, progressCb?: (progress: { type: number; loaded: number; total: number; response?: HttpResponse<any> }) => void) {
+    const $evt = await this.http.get(url, {
       observe: 'events',
       responseType: 'blob',
       reportProgress: true
@@ -38,13 +38,30 @@ export class FileService {
         }
       }),
       filter(evt => evt instanceof HttpResponse),
-      map((evt: HttpResponse<Blob>) => evt.body)
+      map((evt: HttpResponse<Blob>) => evt)
     ).toPromise();
-    return URL.createObjectURL(blob);
+    if (progressCb) {
+      progressCb({type: 0, loaded: 0, total: 0, response: $evt});
+    }
+    return URL.createObjectURL($evt.body);
   }
 
-  async urlToBlobDownload(url: string, filename: string, progressCb?: (progress: { type: number; loaded: number; total: number }) => void) {
-    const blobUrl = await this.download(url, progressCb);
+  async urlToBlobDownload(url: string, filename: string, progressCb?: (progress: { type: number; loaded: number; total: number } | HttpResponse<any>) => void) {
+
+    const blobUrl = await this.download(url, (arg) => {
+      if (progressCb) {
+        progressCb(arg);
+      }
+      if (arg.response && arg.response instanceof HttpResponse) {
+        const cd = arg.response.headers.get('content-disposition');
+        if (!filename || filename.trim().length === 0) {
+          const m = cd.match(/filename=(.+);/);
+          if (m) {
+            filename = m[1];
+          }
+        }
+      }
+    });
     this.downloadBlob(blobUrl, filename);
   }
 

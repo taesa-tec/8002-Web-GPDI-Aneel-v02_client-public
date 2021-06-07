@@ -5,7 +5,7 @@ import {RecursoHumanoComponent} from './novo/recurso-humano.component';
 import {RecursoMaterialComponent} from './novo/recurso-material.component';
 import {NovoRegistroResolver} from '@app/projetos/projeto/resolvers/novo-registro.resolver';
 import {ListaComponent} from '@app/projetos/projeto/refp/lista/lista.component';
-import {RegistroResolver, RegistrosResolver} from '@app/projetos/projeto/resolvers/registros.resolver';
+import {RegistroObservacoesResolver, RegistroResolver, RegistrosResolver} from '@app/projetos/projeto/resolvers/registros.resolver';
 
 const routes: Routes = [
   {
@@ -46,7 +46,7 @@ const routes: Routes = [
       title: 'Registros Pendentes - REFP'
     },
     resolve: {
-      registros: 'registrosPendentes', registro: RegistroResolver
+      registros: 'registrosPendentes', registro: RegistroResolver, observacoes: RegistroObservacoesResolver
     }
   },
   {
@@ -57,7 +57,7 @@ const routes: Routes = [
       title: 'Registros Reprovados - REFP'
     },
     resolve: {
-      registros: 'registrosReprovados', registro: RegistroResolver
+      registros: 'registrosReprovados', registro: RegistroResolver, observacoes: RegistroObservacoesResolver
     }
   },
   {
