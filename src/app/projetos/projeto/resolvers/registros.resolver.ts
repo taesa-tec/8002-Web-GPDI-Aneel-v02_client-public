@@ -5,13 +5,25 @@ import {ProjetoService} from '@app/projetos/projeto/services/projeto.service';
 
 @Injectable()
 export class RegistroResolver implements Resolve<any> {
-  constructor(protected router: Router, protected service: ProjetoService) {
+
+  static AsInfo(info: boolean, providerAs): Provider {
+    return {
+      provide: providerAs,
+      deps: [Router, ProjetoService],
+      useFactory: (router: Router, service: ProjetoService) => new RegistroResolver(router, service, info)
+    };
+  }
+
+  constructor(protected router: Router, protected service: ProjetoService, protected info = false) {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const id = parseFloat(route.fragment);
     if (!isNaN(id)) {
       const projeto = this.service.getCurrentProjeto();
+      if (this.info) {
+        return await this.service.obter(`${projeto.id}/RegistroFinanceiro/${id}/Info`);
+      }
       return await this.service.obter(`${projeto.id}/RegistroFinanceiro/${id}`);
     }
     return undefined;

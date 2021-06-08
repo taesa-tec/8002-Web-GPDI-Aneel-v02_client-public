@@ -25,4 +25,8 @@ export class ProjetoService extends ServiceBase<any> {
   getCurrentProjeto() {
     return this.$currentProjeto.getValue();
   }
+
+  async setStatusRegistro(projetoId: number, registroId: number, aprovado: boolean, observacao?: string) {
+    return await this.post(`${projetoId}/RegistroFinanceiro/${registroId}/${aprovado ? 'Aprovar' : 'Reprovar'}`, {observacao});
+  }
 }

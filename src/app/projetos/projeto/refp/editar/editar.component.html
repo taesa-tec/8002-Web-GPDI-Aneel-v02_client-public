@@ -1,0 +1,79 @@
+<div class="modal-header">
+
+  <div class="text-uppercase modal-title text-blue-light fs-20">
+    Detalhes do Registro
+  </div>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.close('close')">
+    <i class="ta-cancel-circle"></i>
+  </button>
+</div>
+<div class="modal-body">
+
+  <div class="row">
+    <div class="col-12" [ngSwitch]="registro.tipo">
+      <app-refp-editar-rh *ngSwitchCase="'RegistroFinanceiroRh'"
+                          [registro]="registro" (formChange)="formChange($event)"
+                          [data]="items"></app-refp-editar-rh>
+      <app-refp-editar-rm *ngSwitchCase="'RegistroFinanceiroRm'" [registro]="registro"
+                          (formChange)="formChange($event)"
+                          [data]="items"></app-refp-editar-rm>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <div>
+          <label>COMPRAVANTE DA DESPESA</label>
+        </div>
+        <button class="btn-link btn" type="button" (click)="downloadComprovante()">
+          <i class="ta-attachment"></i> Ver Anexo
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label>OBSERVAÇÕES INTERNAS</label>
+      </div>
+      <ng-container *ngFor="let obs of observacoes">
+        <div class="observacao mb-3">
+          <div class="bg-cinza-claro observacao-content p-3 rounded">{{obs.content}}</div>
+          <div class="fs-12 observacao-info text-cinza text-right">
+            {{obs.createdAt | date:'short'}} por {{obs.author}}
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label>Resposta aos questionamentos (Será adicionado as observações)</label>
+        <textarea cols="30" rows="3" class="form-control"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-primary" type="button" [disabled]="form.invalid">
+          <i class="ta-plus-circle"></i> Enviar Novamente para Aprovação
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <button class="btn-link btn" type="button">
+        <i class="ta-cancel-circle"></i> Excluir Registro
+      </button>
+    </div>
+  </div>
+</div>
+
+

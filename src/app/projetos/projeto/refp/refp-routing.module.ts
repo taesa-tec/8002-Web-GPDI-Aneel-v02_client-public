@@ -46,7 +46,7 @@ const routes: Routes = [
       title: 'Registros Pendentes - REFP'
     },
     resolve: {
-      registros: 'registrosPendentes', registro: RegistroResolver, observacoes: RegistroObservacoesResolver
+      registros: 'registrosPendentes', registro: 'registroInfo', observacoes: RegistroObservacoesResolver
     }
   },
   {
@@ -57,7 +57,8 @@ const routes: Routes = [
       title: 'Registros Reprovados - REFP'
     },
     resolve: {
-      registros: 'registrosReprovados', registro: RegistroResolver, observacoes: RegistroObservacoesResolver
+      registros: 'registrosReprovados', registro: RegistroResolver, observacoes: RegistroObservacoesResolver,
+      items: NovoRegistroResolver
     }
   },
   {
@@ -69,7 +70,7 @@ const routes: Routes = [
     },
     resolve: {
       registros: 'registrosAprovados',
-      registro: RegistroResolver
+      registro: 'registroInfo'
     }
   }
 ];

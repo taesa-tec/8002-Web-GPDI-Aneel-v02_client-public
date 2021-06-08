@@ -8,8 +8,10 @@ import {RecursoHumanoComponent} from './novo/recurso-humano.component';
 import {RecursoMaterialComponent} from './novo/recurso-material.component';
 import {CoreModule} from '@app/core';
 import {ListaComponent} from './lista/lista.component';
-import {RegistroObservacoesResolver, RegistrosResolver} from '@app/projetos/projeto/resolvers/registros.resolver';
+import {RegistroObservacoesResolver, RegistroResolver, RegistrosResolver} from '@app/projetos/projeto/resolvers/registros.resolver';
 import {AprovadorModule} from '@app/projetos/projeto/refp/aprovador/aprovador.module';
+import {DetalhesModule} from '@app/projetos/projeto/refp/detalhes/detalhes.module';
+import {EditarModule} from '@app/projetos/projeto/refp/editar/editar.module';
 
 
 @NgModule({
@@ -17,6 +19,8 @@ import {AprovadorModule} from '@app/projetos/projeto/refp/aprovador/aprovador.mo
   imports: [
     CommonModule,
     AprovadorModule,
+    DetalhesModule,
+    EditarModule,
     RefpRoutingModule,
     DashboardModule,
     CoreModule
@@ -25,6 +29,8 @@ import {AprovadorModule} from '@app/projetos/projeto/refp/aprovador/aprovador.mo
     RegistrosResolver.ToStatus('Pendentes', 'registrosPendentes'),
     RegistrosResolver.ToStatus('Reprovados', 'registrosReprovados'),
     RegistrosResolver.ToStatus('Aprovados', 'registrosAprovados'),
+    RegistroResolver.AsInfo(false, RegistroResolver),
+    RegistroResolver.AsInfo(true, 'registroInfo'),
     RegistroObservacoesResolver
   ]
 })

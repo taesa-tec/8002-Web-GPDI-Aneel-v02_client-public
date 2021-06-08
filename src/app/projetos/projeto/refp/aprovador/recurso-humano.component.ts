@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Registro} from '@app/projetos/projeto/refp/registro';
+import {RegistroInfo} from '@app/projetos/projeto/refp/registroInfo';
 import {FormBuilder} from '@angular/forms';
 
 @Component({
@@ -9,7 +9,7 @@ import {FormBuilder} from '@angular/forms';
 })
 export class RecursoHumanoComponent implements OnInit {
 
-  @Input() registro: Registro;
+  @Input() registro: RegistroInfo;
   @Input() readonly: boolean;
 
   form = this.fb.group({
