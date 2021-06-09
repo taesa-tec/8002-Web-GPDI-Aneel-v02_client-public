@@ -16,10 +16,9 @@
   <div class="row">
     <div class="col-12" [ngSwitch]="registro.tipo">
       <app-refp-editar-rh *ngSwitchCase="'RegistroFinanceiroRh'"
-                          [registro]="registro" (formChange)="formChange($event)"
+                          [registro]="registro"
                           [data]="items"></app-refp-editar-rh>
       <app-refp-editar-rm *ngSwitchCase="'RegistroFinanceiroRm'" [registro]="registro"
-                          (formChange)="formChange($event)"
                           [data]="items"></app-refp-editar-rm>
     </div>
   </div>
@@ -27,11 +26,21 @@
     <div class="col-12">
       <div class="form-group">
         <div>
-          <label>COMPRAVANTE DA DESPESA</label>
+          <label>COMPROVANTE DA DESPESA</label>
         </div>
-        <button class="btn-link btn" type="button" (click)="downloadComprovante()">
-          <i class="ta-attachment"></i> Ver Anexo
-        </button>
+        <ng-container *ngIf="registro.comprovanteId; else attach">
+          <button class="btn-link btn" type="button" (click)="downloadComprovante()">
+            <i class="ta-attachment"></i> Ver Anexo
+          </button>
+          <button class="btn btn-link" type="button" (click)="deletarComprovante()"><i
+            class="ta-cancel-circle text-danger"></i></button>
+        </ng-container>
+        <ng-template #attach>
+          <label class="btn-link btn">
+            <i class="ta-attachment"></i> {{file?.name || 'Anexar'}}
+            <input type="file" hidden (change)="fileChange($event)">
+          </label>
+        </ng-template>
       </div>
     </div>
   </div>
@@ -52,16 +61,16 @@
   </div>
   <div class="row">
     <div class="col-12">
-      <div class="form-group">
+      <div class="form-group" [formGroup]="form">
         <label>Resposta aos questionamentos (Será adicionado as observações)</label>
-        <textarea cols="30" rows="3" class="form-control"></textarea>
+        <textarea cols="30" rows="3" class="form-control" formControlName="observacaoInterna"></textarea>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-12">
       <div class="d-flex justify-content-end">
-        <button class="btn btn-primary" type="button" [disabled]="form.invalid">
+        <button class="btn btn-primary" type="button" [disabled]="!valid" (click)="submit()">
           <i class="ta-plus-circle"></i> Enviar Novamente para Aprovação
         </button>
       </div>

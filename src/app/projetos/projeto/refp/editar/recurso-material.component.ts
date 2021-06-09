@@ -53,6 +53,8 @@ export class RecursoMaterialComponent implements OnInit {
 
     this.service.projeto.subscribe(p => this.projeto = p);
     this.parent.form = this.fb.group({
+      id: [''],
+      observacaoInterna: ['', Validators.required],
       nomeItem: ['', Validators.required],
       etapaId: ['', Validators.required],
       recursoMaterialId: this.recursoMaterialCtrl,

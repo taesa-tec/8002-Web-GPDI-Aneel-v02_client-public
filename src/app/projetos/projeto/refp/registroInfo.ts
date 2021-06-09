@@ -37,23 +37,24 @@ export interface Registro {
   tipo: 'RegistroFinanceiroRh' | 'RegistroFinanceiroRm';
   projetoId: number;
   status: 'Pendente' | 'Aprovado' | 'Reprovado';
-  financiadoraId: number;
-  coExecutorFinanciadorId: null;
-  financiadora: null;
+  comprovanteId: number | null;
+  financiadoraId: number | null;
+  coExecutorFinanciadorId: number | null;
+  financiadora: string | null;
   mesReferencia: Date;
   tipoDocumento: string;
   numeroDocumento: string;
   dataDocumento: Date;
   atividadeRealizada: string;
-  recursoHumanoId: number;
+  recursoHumanoId: number | null;
   recursoHumano: string;
   horas: number;
-  nomeItem: null;
-  beneficiado: null;
-  recursoMaterialId: number;
+  nomeItem: string | null;
+  beneficiado: string | null;
+  recursoMaterialId: number | null;
   recursoMaterial: null;
   cnpjBeneficiado: null;
-  categoriaContabilId: number;
+  categoriaContabilId: number | null;
   categoriaContabil: null;
   equipaLaboratorioExistente: boolean;
   equipaLaboratorioNovo: boolean;
@@ -62,9 +63,9 @@ export interface Registro {
   valor: number;
   especificaoTecnica: null;
   funcaoEtapa: null;
-  recebedoraId: null;
+  recebedoraId: number | null;
   recebedora: null;
-  coExecutorRecebedorId: null;
+  coExecutorRecebedorId: number | null;
   coExecutorRecebedor: null;
 }
 

@@ -45,6 +45,8 @@ export class RecursoHumanoComponent implements OnInit {
     this.service.projeto.subscribe(p => this.projeto = p);
 
     this.parent.form = this.fb.group({
+      id: [''],
+      observacaoInterna: ['', Validators.required],
       recursoHumanoId: this.recursoHumanoCtrl,
       horas: this.horasCtrl,
       atividadeRealizada: ['', Validators.required],

@@ -70,7 +70,8 @@ const routes: Routes = [
     },
     resolve: {
       registros: 'registrosAprovados',
-      registro: 'registroInfo'
+      registro: 'registroInfo',
+      observacoes: RegistroObservacoesResolver
     }
   }
 ];
