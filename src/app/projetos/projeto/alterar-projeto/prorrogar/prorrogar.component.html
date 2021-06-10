@@ -1,0 +1,73 @@
+<form class="mt-5">
+  <div class="row">
+    <div class="col-12 fs-22 text-cinza text-uppercase">
+      Prorrogar Projeto
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-4">
+      <div class="form-group">
+        <label>Nova Data Final do projeto</label>
+        <input type="date" class="form-control">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="alert alert-danger">
+        <i class="ta-alert fs-24 align-middle mr-3"></i>
+        <span>Será criada uma nova Etapa no projeto chamada Prorrogação contendo a duração que será acrescentada ao projeto.</span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label>PRODUTOS INTERMEDIÁRIOS ASSOCIADOS A ESTA ETAPA</label>
+
+        <select class="form-control">
+          <option value="" hidden>Selecione</option>
+        </select>
+
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label>Descrição das atividades</label>
+        <textarea cols="4" rows="4" class="form-control"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 d-flex justify-content-end">
+      <button class="btn btn-primary" type="submit"><i class="ta-sync"></i> Prorrogar Projeto</button>
+    </div>
+  </div>
+</form>
+<form action="">
+  <div class="row">
+    <div class="col-12 fs-22 text-cinza text-uppercase">
+      Gerar XML de prorrogação
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="bg-cinza-claro p-3 rounded">
+        <div class="form-group">
+          <label>Versão</label>
+        </div>
+        <div class="d-flex">
+          <div class="mr-3">
+            <input type="text" class="form-control">
+          </div>
+          <div>
+            <button class="btn btn-primary" type="submit">Gerar XML</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -38,7 +38,11 @@ const routes: Routes = [
           extrato: ExtratoFinanceiroResolver
         }
 
-      }
+      },
+      {
+        path: 'alteracoes',
+        loadChildren: () => import('./alterar-projeto/alterar-projeto.module').then(m => m.AlterarProjetoModule)
+      },
     ]
   }
 ];
