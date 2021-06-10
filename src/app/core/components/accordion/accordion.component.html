@@ -6,15 +6,15 @@
                 <div class="icon-handle ta-circle-right fs-32"></div>
             </div>
             <div class="px-3 flex-grow-1">
-                <ng-content select="[role=heading]"></ng-content>
+                <ng-content select="slot[role=heading]"></ng-content>
             </div>
         </div>
     </header>
-    
+
     <div [ngbCollapse]="isCollapsed">
         <div class="card">
             <div class="card-body">
-                <ng-content select="[role=main]"></ng-content>
+                <ng-content select="slot[role=main]"></ng-content>
             </div>
         </div>
     </div>

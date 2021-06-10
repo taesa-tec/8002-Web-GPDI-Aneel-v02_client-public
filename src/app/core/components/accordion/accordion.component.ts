@@ -1,22 +1,32 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 
 @Component({
-    selector: 'app-accordion',
-    templateUrl: './accordion.component.html',
-    styleUrls: ['./accordion.component.scss']
+  selector: 'app-accordion',
+  templateUrl: './accordion.component.html',
+  styleUrls: ['./accordion.component.scss']
 })
 export class AccordionComponent implements OnInit {
+  private _isCollapsed = true;
+
+  get isCollapsed(): boolean {
+    return this.isLocked || this._isCollapsed;
+  }
+
+  @Input() set isCollapsed(value: boolean) {
+    this._isCollapsed = value;
+  }
+
+  @Input() isLocked = false;
 
 
-    @Input() isCollapsed = true;
+  constructor() {
+  }
 
-    constructor() { }
+  ngOnInit() {
+  }
 
-    ngOnInit() {
-    }
-
-    toogle() {
-        this.isCollapsed = !this.isCollapsed;
-    }
+  toogle() {
+    this._isCollapsed = !this._isCollapsed;
+  }
 
 }

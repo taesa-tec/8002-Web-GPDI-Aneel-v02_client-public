@@ -1,0 +1,13 @@
+.extrato-empresa{
+  margin-bottom: 4rem;
+}
+.extrato-row {
+  display: grid;
+  grid-template-columns: 50% repeat(3, calc(50% / 3));
+}
+
+app-accordion {
+  .extrato-row {
+    grid-template-columns: calc(50% - 16px) repeat(3, calc((50% + 2.25rem + 16px) / 3));
+  }
+}
