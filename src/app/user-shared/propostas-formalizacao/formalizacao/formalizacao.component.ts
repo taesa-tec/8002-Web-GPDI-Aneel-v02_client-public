@@ -47,7 +47,6 @@ export class FormalizacaoComponent implements OnInit, OnDestroy {
       this.equipe = data.equipe;
       this.captacaoId = parseFloat(this.route.snapshot.fragment);
       this.empresas = data.empresas.filter(e => e.categoria === 1);
-      console.log(this.empresas);
     });
     this.aprovadoCtrl.valueChanges.subscribe(value => {
       [this.tituloCompletoCtrl, this.empresaProponenteCtrl, this.numeroProjetoCtrl, this.inicioProjetoCtrl].forEach(ctrl => {

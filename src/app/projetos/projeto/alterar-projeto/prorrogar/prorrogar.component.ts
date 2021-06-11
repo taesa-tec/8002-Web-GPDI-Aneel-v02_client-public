@@ -18,15 +18,11 @@ export class ProrrogarComponent implements OnInit {
   form = this.fb.group({
     data: ['', [Validators.required]],
     descricao: ['', Validators.required],
-    produtos: [[''], (c: AbstractControl) => {
-      if (c.value.some(v => v === '')) {
-        return {required: true};
-      }
-      return null;
-    }]
+    produtoId: ['', Validators.required],
   });
 
-  constructor(protected route: ActivatedRoute, protected fb: FormBuilder, protected service: ProjetoService, protected app: AppService) {
+  constructor(protected route: ActivatedRoute,
+              protected fb: FormBuilder, protected service: ProjetoService, protected app: AppService) {
   }
 
   ngOnInit(): void {
@@ -42,12 +38,18 @@ export class ProrrogarComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+    this.app.loading.show().then();
     try {
       await this.service.prorrogar(this.projeto.id, this.form.value);
       this.app.alert('Projeto Prorrogado com sucesso').then();
+      this.projeto.dataFinalProjeto = this.form.value.data;
+      this.service.setProjeto(this.projeto);
+      this.form.reset();
+
     } catch (e) {
       console.error(e);
     }
+    this.app.loading.hide();
 
   }
 

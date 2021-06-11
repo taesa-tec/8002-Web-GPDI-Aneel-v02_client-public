@@ -8,18 +8,20 @@ import {UploadFileComponent} from './upload-file/upload-file.component';
 import {DirectivesModule} from '@app/core/directives';
 import {PipesModule} from '@app/core/pipes';
 import {FileListComponent} from '@app/core/components/forms/file-list/file-list.component';
+import { MonthYearSelectorComponent } from './month-year-selector/month-year-selector.component';
 
 const components = [TextareaComponent, UploadImageComponent, CheckboxComponent, UploadFileComponent, FileListComponent];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, MonthYearSelectorComponent],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     BaseFormsModule,
     PipesModule,
     DirectivesModule,
   ],
-  exports: [...components]
+  exports: [...components, MonthYearSelectorComponent]
 })
 export class FormsModule {
 }
