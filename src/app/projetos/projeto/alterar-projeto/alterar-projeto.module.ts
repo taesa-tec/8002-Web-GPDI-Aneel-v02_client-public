@@ -8,6 +8,8 @@ import {ProrrogarComponent} from './prorrogar/prorrogar.component';
 import {RecursosHumanosComponent} from './recursos-humanos/recursos-humanos.component';
 import {RecursosMateriaisComponent} from './recursos-materiais/recursos-materiais.component';
 import {ProjetoNodeResolver} from '@app/projetos/projeto/resolvers/projeto.resolver';
+import {CoreModule} from '@app/core';
+import {MultiSelectModule} from '@app/core/components/forms/multi-select/multi-select.module';
 
 const menu: Array<MenuItem> = [
   {
@@ -30,7 +32,9 @@ const menu: Array<MenuItem> = [
   imports: [
     CommonModule,
     DashboardModule,
-    AlterarProjetoRoutingModule
+    AlterarProjetoRoutingModule,
+    CoreModule,
+    MultiSelectModule
   ],
   providers: [
     {

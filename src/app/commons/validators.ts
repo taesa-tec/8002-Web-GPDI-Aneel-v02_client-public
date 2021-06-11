@@ -1,7 +1,50 @@
-import {ValidatorFn, AbstractControl, ValidationErrors, Validators, FormArray} from '@angular/forms';
+import {ValidatorFn, AbstractControl, ValidationErrors, Validators, FormArray, FormControl} from '@angular/forms';
 
+function santizeDate(date: string): Date {
+  if (typeof date === 'string' && /^\d{4}-\d{2}-\d{2}/.test(date)) {
+    if (date.length === 10) {
+      date = date.concat('T00:00:00');
+    }
+    return new Date(date);
+  }
+  throw new Error('Formato inválido de data, os formatos aceitos são 0000-00-00 e 0000-00-00T00:00:00');
+}
+
+function validateDateFactory(dateComparer: (d1: Date, d2: Date) => boolean) {
+
+  return (date: Date | string) => {
+    let d: Date;
+    if (typeof date === 'string') {
+      try {
+        d = santizeDate(date);
+      } catch (e) {
+        console.error(e);
+        d = new Date();
+      }
+    } else {
+      d = date;
+    }
+
+    return (ctrl: FormControl): ValidationErrors | null => {
+      try {
+        const ctrldate = santizeDate(ctrl.value);
+        if (!dateComparer(d, ctrldate)) {
+          return {invalidDate: true};
+        }
+      } catch (e) {
+        return {invalidDate: true};
+      }
+      return null;
+
+    };
+  };
+
+}
 
 export class AppValidators {
+
+  static minDate = validateDateFactory((d1, d2) => d1.getTime() <= d2.getTime());
+  static maxDate = validateDateFactory((d1, d2) => d1.getTime() >= d2.getTime());
 
   /**
    *
@@ -16,8 +59,8 @@ export class AppValidators {
       return {cpf: true};
     }
     const isValid = [9, 10].map(n => cpf.substr(0, n).split('')
-        .map((d, idx) => parseInt(d, 10) * (n + 1 - idx))
-        .reduce((p, c) => p + c) * 10 % 11).map(d => d > 9 ? 0 : d).join('') === cpf.substr(9, 2);
+      .map((d, idx) => parseInt(d, 10) * (n + 1 - idx))
+      .reduce((p, c) => p + c) * 10 % 11).map(d => d > 9 ? 0 : d).join('') === cpf.substr(9, 2);
     return isValid ? null : {cpf: true};
   }
 

@@ -1,0 +1,25 @@
+<form [formGroup]="form">
+  <ng-content select="label"></ng-content>
+  <ng-container *ngFor="let select of selects.controls; let i = index">
+    <div class="form-group">
+      <div class="d-flex justify-content-between">
+        <select class="form-control" [formControl]="select">
+          <option *ngIf="placeholder" value="">{{placeholder}}</option>
+          <ng-container
+            *ngFor="let option of options | listUnique:[select.value]: selects.value: 'value'; trackBy:trkOpt">
+            <option [value]="option.value">{{option.label}}</option>
+          </ng-container>
+        </select>
+        <button class="btn btn-link btn-sm" type="button" *ngIf="selects.length > min" (click)="removeSelect(i)">
+          <i class="ta-cancel-circle"></i>
+        </button>
+      </div>
+    </div>
+  </ng-container>
+  <div *ngIf="selects.length < options.length" class="d-flex justify-content-end">
+    <button class="btn btn-link btn-sm" type="button" (click)="addSelect('')">
+      <i class="ta-plus-circle"></i>
+      Adicionar
+    </button>
+  </div>
+</form>
