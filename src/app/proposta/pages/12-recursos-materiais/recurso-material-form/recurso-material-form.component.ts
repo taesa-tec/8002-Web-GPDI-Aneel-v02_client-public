@@ -23,12 +23,17 @@ export class RecursoMaterialFormComponent extends PropostaNodeFormDirective impl
   });
   categorias = [];
 
-  constructor(@Inject(PROPOSTA_CAN_EDIT) canEdit: boolean, app: AppService, fb: FormBuilder, activeModal: NgbActiveModal, service: PropostaServiceBase) {
+  constructor(@Inject(PROPOSTA_CAN_EDIT) canEdit: boolean, app: AppService, fb: FormBuilder, activeModal: NgbActiveModal,
+              service: PropostaServiceBase) {
     super(canEdit, app, fb, activeModal, service);
   }
 
   ngOnInit() {
     super.ngOnInit();
     this.categorias = this.route.snapshot.data.categorias;
+  }
+
+  async onSubmit() {
+
   }
 }

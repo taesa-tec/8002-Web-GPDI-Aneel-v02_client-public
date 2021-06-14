@@ -3,6 +3,7 @@ import {Inject, Injectable, Provider} from '@angular/core';
 import {ProjetoService} from '@app/projetos/projeto/services/projeto.service';
 import {Projeto} from '@app/projetos/projeto/projeto.component';
 import {ROOT_URL} from '@app/commons';
+import {template} from 'lodash-es';
 
 @Injectable()
 export class ProjetoResolver implements Resolve<any> {
@@ -33,9 +34,9 @@ export class ProjetoNodeResolver implements Resolve<any> {
     };
   }
 
-  constructor(protected router: Router, protected service: ProjetoService, protected node) {
+  constructor(protected router: Router, protected service: ProjetoService, protected node: string) {
     if (!node) {
-      throw new Error('É necessário especificar o nodo');
+      throw new Error('É necessário especificar o node');
     }
   }
 
@@ -43,7 +44,14 @@ export class ProjetoNodeResolver implements Resolve<any> {
     const projeto = this.service.getCurrentProjeto();
 
     if (this.node) {
-      return await this.service.obter(`${projeto.id}/${this.node}`);
+      const node = template(this.node.replace(/#$/g, ''))(route);
+      if (this.node.endsWith('#')) {
+        if (!route.fragment || Number.isNaN(parseFloat(route.fragment))) {
+          return null;
+        }
+      }
+
+      return await this.service.obter(`${projeto.id}/${node}`);
     }
   }
 

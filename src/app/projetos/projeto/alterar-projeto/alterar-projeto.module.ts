@@ -41,7 +41,11 @@ const menu: Array<MenuItem> = [
       provide: TOPNAV_MENU,
       useValue: menu
     },
-    ProjetoNodeResolver.Node('Produtos', 'projetoProdutos')
+    ProjetoNodeResolver.Node('Produtos', 'projetoProdutos'),
+    ProjetoNodeResolver.Node('Empresas', 'projetoEmpresas'),
+    ProjetoNodeResolver.Node('Recursos/Humanos', 'projetoRH'),
+    ProjetoNodeResolver.Node('Recursos/Humanos/${fragment}#', 'projetoRH_Item'),
+    ProjetoNodeResolver.Node('Recursos/Materiais', 'projetoRM')
   ]
 })
 export class AlterarProjetoModule {

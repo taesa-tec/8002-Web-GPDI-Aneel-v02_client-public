@@ -4,6 +4,8 @@ import {TopnavComponent} from '@app/dashboard/topnav/topnav.component';
 import {ProrrogarComponent} from '@app/projetos/projeto/alterar-projeto/prorrogar/prorrogar.component';
 import {RecursosHumanosComponent} from '@app/projetos/projeto/alterar-projeto/recursos-humanos/recursos-humanos.component';
 import {RecursosMateriaisComponent} from '@app/projetos/projeto/alterar-projeto/recursos-materiais/recursos-materiais.component';
+import {CategoriasContabeisResolver} from '@app/resolvers/categorias-contabeis.resolver';
+import {EmpresasResolver} from '@app/proposta/resolvers';
 
 const routes: Routes = [
   {
@@ -23,11 +25,21 @@ const routes: Routes = [
       },
       {
         path: 'recursos-humanos',
-        component: RecursosHumanosComponent
+        component: RecursosHumanosComponent,
+        runGuardsAndResolvers: 'always',
+        resolve: {
+          recursos: 'projetoRH',
+          recurso: 'projetoRH_Item',
+          empresas: 'projetoEmpresas'
+        }
       },
       {
         path: 'recursos-materiais',
-        component: RecursosMateriaisComponent
+        component: RecursosMateriaisComponent,
+        resolve: {
+          recursos: 'projetoRM',
+          categorias: CategoriasContabeisResolver
+        }
       }
     ]
   }

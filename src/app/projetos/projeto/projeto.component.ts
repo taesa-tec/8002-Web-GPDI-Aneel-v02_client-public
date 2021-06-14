@@ -42,7 +42,7 @@ export interface Projeto {
         {text: 'Alterações Projeto', icon: 'ta-alert', path: `alteracoes`},
         {text: 'Consultar Dados<br> Planejamento Projeto', icon: 'ta-eye', path: `consulta`},
         {text: 'Central<br> Administrativa', icon: 'ta-central-admin', path: `central-administrativa`},
-        {text: 'Log Projeto', icon: 'ta-log', path: `logs`},
+        // {text: 'Log Projeto', icon: 'ta-log', path: `logs`},
       ]
     }
   ]
