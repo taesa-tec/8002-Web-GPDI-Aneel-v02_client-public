@@ -36,8 +36,10 @@ const routes: Routes = [
       {
         path: 'recursos-materiais',
         component: RecursosMateriaisComponent,
+        runGuardsAndResolvers: 'always',
         resolve: {
           recursos: 'projetoRM',
+          recurso: 'projetoRM_Item',
           categorias: CategoriasContabeisResolver
         }
       }
