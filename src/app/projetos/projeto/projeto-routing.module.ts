@@ -43,6 +43,11 @@ const routes: Routes = [
         path: 'alteracoes',
         loadChildren: () => import('./alterar-projeto/alterar-projeto.module').then(m => m.AlterarProjetoModule)
       },
+      {
+        path: 'consulta',
+        loadChildren: () => import('./consultar-planejamento/consultar-planejamento.module').then(m => m.ConsultarPlanejamentoModule)
+        // component: ConsultaPlanejamentoComponent
+      }
     ]
   }
 ];
