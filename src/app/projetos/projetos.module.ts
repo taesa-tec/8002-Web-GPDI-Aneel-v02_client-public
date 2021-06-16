@@ -8,11 +8,13 @@ import {ServiceBase} from '@app/services';
 import {ProjetosResolver} from '@app/projetos/projetos.resolver';
 import {CoreModule} from '@app/core';
 import {ProjetoModule} from '@app/projetos/projeto/projeto.module';
+import {ScreensModule} from '@app/core/screens/screens.module';
 
 
 @NgModule({
   declarations: [EmExecucaoComponent, EmFinalizacaoComponent],
   imports: [
+    ScreensModule,
     CommonModule,
     ProjetoModule,
     ProjetosRoutingModule,

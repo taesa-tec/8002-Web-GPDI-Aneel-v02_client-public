@@ -2,8 +2,6 @@ export * from './components.module';
 export * from './alert/alert.component';
 export * from './accordion/accordion.component';
 export * from './confirm/confirm.component';
-export * from './screens/debug.component'; // @todo Verificar uso
-export * from './screens/error.component';
 export * from './file-uploader/file-uploader.component';
 export * from './loading/loading.component';
 export * from './modal-page/modal-page.component';
