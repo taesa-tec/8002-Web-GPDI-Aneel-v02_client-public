@@ -4,7 +4,6 @@ import {EmExecucaoComponent} from '@app/projetos/em-execucao/em-execucao.compone
 import {EmFinalizacaoComponent} from '@app/projetos/em-finalizacao/em-finalizacao.component';
 import {ProjetosResolver} from '@app/projetos/projetos.resolver';
 import {SidebarComponent} from '@app/dashboard/sidebar/sidebar.component';
-import {NotFoundComponent} from '@app/core/screens/not-found.component';
 
 const routes: Routes = [
   {
@@ -35,10 +34,6 @@ const routes: Routes = [
         data: {
           status: 'Finalizados'
         }
-      },
-      {
-        path: '**',
-        component: NotFoundComponent
       }
     ]
   },

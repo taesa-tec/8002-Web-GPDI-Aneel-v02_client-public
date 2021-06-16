@@ -12,6 +12,7 @@ import {RegistroResolver, RegistrosResolver} from '@app/projetos/projeto/resolve
 import {ExtratoFinanceiroComponent} from './extrato-financeiro/extrato-financeiro.component';
 import {ExtratoFinanceiroResolver} from '@app/projetos/projeto/resolvers/extrato-financeiro.resolver';
 import {ComponentsModule} from '@app/core/components';
+import {ScreensModule} from '@app/core/screens/screens.module';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import {ComponentsModule} from '@app/core/components';
     ProjetoRoutingModule,
     DashboardModule,
     PipesModule,
+    ScreensModule,
     ComponentsModule
   ],
   providers: [
