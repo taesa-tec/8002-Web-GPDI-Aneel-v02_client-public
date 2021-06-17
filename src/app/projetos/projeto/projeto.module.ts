@@ -31,7 +31,7 @@ import {ScreensModule} from '@app/core/screens/screens.module';
     RegistrosResolver,
     RegistroResolver,
     NovoRegistroResolver,
-    ExtratoFinanceiroResolver
+    ExtratoFinanceiroResolver,
   ]
 })
 export class ProjetoModule {
