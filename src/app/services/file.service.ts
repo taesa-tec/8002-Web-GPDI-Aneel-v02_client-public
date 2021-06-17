@@ -26,7 +26,8 @@ export class FileService {
     URL.revokeObjectURL(blobUrl);
   }
 
-  async download(url: string, progressCb?: (progress: { type: number; loaded: number; total: number; response?: HttpResponse<any> }) => void) {
+  async download(url: string,
+                 progressCb?: (progress: { type: number; loaded: number; total: number; response?: HttpResponse<any> }) => void) {
     const $evt = await this.http.get(url, {
       observe: 'events',
       responseType: 'blob',
@@ -46,22 +47,50 @@ export class FileService {
     return URL.createObjectURL($evt.body);
   }
 
-  async urlToBlobDownload(url: string, filename: string, progressCb?: (progress: { type: number; loaded: number; total: number } | HttpResponse<any>) => void) {
+  async downloadPost(url: string,
+                     data: any,
+                     progressCb?: (progress: { type: number; loaded: number; total: number; response?: HttpResponse<any> }) => void) {
+    const $evt = await this.http.post(url, data, {
+      observe: 'events',
+      responseType: 'blob',
+      reportProgress: true
+    }).pipe(
+      tap((evt: HttpEvent<any>) => {
+        if (evt.type === HttpEventType.DownloadProgress && progressCb) {
+          progressCb(evt as { type: number; loaded: number; total: number });
+        }
+      }),
+      filter(evt => evt instanceof HttpResponse),
+      map((evt: HttpResponse<Blob>) => evt)
+    ).toPromise();
+    if (progressCb) {
+      progressCb({type: 0, loaded: 0, total: 0, response: $evt});
+    }
+    return URL.createObjectURL($evt.body);
+  }
 
-    const blobUrl = await this.download(url, (arg) => {
+  async urlToBlobDownload(url: string,
+                          filename: string,
+                          progressCb?: (progress: { type: number; loaded: number; total: number } | HttpResponse<any>) => void,
+                          data?: any) {
+
+    const callback = (arg) => {
       if (progressCb) {
         progressCb(arg);
       }
       if (arg.response && arg.response instanceof HttpResponse) {
         const cd = arg.response.headers.get('content-disposition');
         if (!filename || filename.trim().length === 0) {
-          const m = cd.match(/filename=(.+);/);
+          const m = cd?.match(/filename=(.+);/);
           if (m) {
             filename = m[1];
+          } else {
+            filename = 'noname';
           }
         }
       }
-    });
+    };
+    const blobUrl = await (data ? this.downloadPost(url, data, callback) : this.download(url, callback));
     this.downloadBlob(blobUrl, filename);
   }
 

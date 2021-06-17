@@ -5,6 +5,7 @@ import {Projeto} from '@app/projetos/projeto/projeto.component';
 import {ProjetoService} from '@app/projetos/projeto/services/projeto.service';
 import {AppValidators} from '@app/commons';
 import {AppService} from '@app/services';
+import {FileService} from '@app/services/file.service';
 
 @Component({
   selector: 'app-prorrogar',
@@ -21,8 +22,15 @@ export class ProrrogarComponent implements OnInit {
     produtoId: ['', Validators.required],
   });
 
+  formXml = this.fb.group({
+    versao: ['', Validators.required]
+  });
+
   constructor(protected route: ActivatedRoute,
-              protected fb: FormBuilder, protected service: ProjetoService, protected app: AppService) {
+              protected fb: FormBuilder,
+              protected service: ProjetoService,
+              protected file: FileService,
+              protected app: AppService) {
   }
 
   ngOnInit(): void {
@@ -48,6 +56,22 @@ export class ProrrogarComponent implements OnInit {
 
     } catch (e) {
       console.error(e);
+      this.app.alertError('Erro ao prorrogar o projeto, tente novamente mais tarde').then();
+    }
+    this.app.loading.hide();
+  }
+
+  async gerarXml() {
+    if (this.formXml.invalid) {
+      return;
+    }
+    this.app.loading.show().then();
+
+    try {
+      await this.file.urlToBlobDownload(`Projetos/${this.projeto.id}/GerarXML/Prorrogacao`, '', null, this.formXml.value);
+    } catch (e) {
+      console.error(e);
+
     }
     this.app.loading.hide();
 

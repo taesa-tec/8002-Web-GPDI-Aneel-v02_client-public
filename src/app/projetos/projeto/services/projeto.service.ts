@@ -33,4 +33,10 @@ export class ProjetoService extends ServiceBase<any> {
   async prorrogar(projetoId: number, data) {
     return await this.post(`${projetoId}/Prorrogacao`, data);
   }
+
+  async gerarXmlProrrogacao(projetoId: number, data) {
+    return await this.post(`${projetoId}/GerarXML/Prorrogacao`, data, {
+      responseType: 'blob' as 'json'
+    });
+  }
 }

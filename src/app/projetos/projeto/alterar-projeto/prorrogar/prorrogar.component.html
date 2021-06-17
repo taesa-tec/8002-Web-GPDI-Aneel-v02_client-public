@@ -1,5 +1,5 @@
 <form class="mt-5" [formGroup]="form" (ngSubmit)="submit()">
-  <div class="row my-2">
+  <div class="row mb-2">
     <div class="col-12 fs-22 text-blue text-uppercase">
       Prorrogar Projeto
     </div>
@@ -21,7 +21,8 @@
         <div class="input-group">
           <div class="input-group-prepend">
             <span class="input-group-text">
-             <span>Fim Atual Previsto:</span> <u class="text-capitalize px-3"> {{projeto.dataFinalProjeto | date:'MMMM y'}}</u>
+             <span>Fim Atual Previsto:</span> <u
+              class="text-capitalize px-3"> {{projeto.dataFinalProjeto | date:'MMMM y'}}</u>
             </span>
           </div>
           <app-month-year-selector formControlName="data"></app-month-year-selector>
@@ -57,7 +58,7 @@
     </div>
   </div>
 </form>
-<form action="">
+<form [formGroup]="formXml" (ngSubmit)="gerarXml()">
   <div class="row">
     <div class="col-12 fs-22 text-cinza text-uppercase">
       Gerar XML de prorrogação
@@ -71,10 +72,10 @@
         </div>
         <div class="d-flex">
           <div class="mr-3">
-            <input type="text" class="form-control">
+            <input type="text" formControlName="versao" class="form-control">
           </div>
           <div>
-            <button class="btn btn-primary" type="submit">Gerar XML</button>
+            <button class="btn btn-primary" type="submit" [disabled]="formXml.invalid">Gerar XML</button>
           </div>
         </div>
       </div>
