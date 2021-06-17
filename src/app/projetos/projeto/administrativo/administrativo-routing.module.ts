@@ -3,6 +3,8 @@ import {Routes, RouterModule} from '@angular/router';
 import {AdministrativoComponent} from '@app/projetos/projeto/administrativo/administrativo.component';
 import {DebugComponent} from '@app/core/screens/debug.component';
 import {LogsDutoComponent} from '@app/projetos/projeto/administrativo/logs-duto/logs-duto.component';
+import {RepositorioXmlComponent} from '@app/projetos/projeto/administrativo/repositorio-xml/repositorio-xml.component';
+import {AlterarSatusComponent} from '@app/projetos/projeto/administrativo/alterar-satus/alterar-satus.component';
 
 const routes: Routes = [
   {
@@ -20,10 +22,13 @@ const routes: Routes = [
         }
       }, {
         path: 'repositorio-xml',
-        component: DebugComponent
+        component: RepositorioXmlComponent,
+        resolve: {
+          xmls: 'projetoXmls',
+        }
       }, {
         path: 'status',
-        component: DebugComponent
+        component: AlterarSatusComponent
       },
     ]
   }

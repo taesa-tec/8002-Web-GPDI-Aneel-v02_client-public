@@ -9,6 +9,9 @@ import {ScreensModule} from '@app/core/screens/screens.module';
 import { LogsDutoComponent } from './logs-duto/logs-duto.component';
 import {ProjetoNodeResolver} from '@app/projetos/projeto/resolvers/projeto.resolver';
 import {ComponentsModule} from '@app/core/components';
+import { RepositorioXmlComponent } from './repositorio-xml/repositorio-xml.component';
+import { AlterarSatusComponent } from './alterar-satus/alterar-satus.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 const menu: Array<MenuItem> = [
   {path: 'logs-duto', text: 'Logs DUTO'},
@@ -17,13 +20,14 @@ const menu: Array<MenuItem> = [
 ];
 
 @NgModule({
-  declarations: [AdministrativoComponent, LogsDutoComponent],
+  declarations: [AdministrativoComponent, LogsDutoComponent, RepositorioXmlComponent, AlterarSatusComponent],
   imports: [
     CommonModule,
     DashboardModule,
     ScreensModule,
     AdministrativoRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    ReactiveFormsModule
   ],
   providers: [
     {
@@ -31,6 +35,7 @@ const menu: Array<MenuItem> = [
       useValue: menu
     },
     ProjetoNodeResolver.Node('LogsDuto', 'projetoLogsDuto'),
+    ProjetoNodeResolver.Node('Xmls', 'projetoXmls'),
   ]
 })
 export class AdministrativoModule {

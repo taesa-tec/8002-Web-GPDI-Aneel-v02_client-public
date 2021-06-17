@@ -1,0 +1,25 @@
+<div class="row mt-3">
+  <div class="col-12">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-row">
+        <div class="form-group col">
+          <label>Status do projeto</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col">
+          <select class="form-control" formControlName="status" (change)="form.updateValueAndValidity()">
+            <option value="Execucao">Em Execução</option>
+            <option value="Finalizado">Finalizado</option>
+          </select>
+        </div>
+        <div class="col">
+          <button class="btn btn-blue" type="submit" [disabled]="projeto.status === status.value">
+            <span class="ta-save"></span>
+            Salvar Status
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
