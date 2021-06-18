@@ -26,7 +26,7 @@ import {PROPOSTA_CAN_EDIT} from '@app/proposta/shared';
         {text: 'Projetos - Identificação e medição de riscos ', icon: 'ta-file-check', path: `/${AdminRootUrl}/identificacao-riscos`},
         {text: 'Projetos - Aprovação e Formalização ', icon: 'ta-file-check', path: `/${AdminRootUrl}/formalizacao`},
         {text: 'Projetos - Em execução', icon: 'ta-file-check', path: `/${AdminRootUrl}/projetos/em-execucao`},
-        {text: 'Projetos - Em finalizados', icon: 'ta-file-check', path: `/${AdminRootUrl}/projetos/em-finalizacao`},
+        {text: 'Projetos - Em finalização', icon: 'ta-file-check', path: `/${AdminRootUrl}/projetos/em-finalizacao`},
         {text: 'Configurações do Sistema', icon: 'ta-gear', path: `/${AdminRootUrl}/configuracoes`},
       ]
     }, {

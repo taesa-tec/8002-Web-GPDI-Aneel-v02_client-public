@@ -5,6 +5,8 @@ import {ProjetoResolver} from '@app/projetos/projeto/resolvers/projeto.resolver'
 import {ExtratoFinanceiroComponent} from '@app/projetos/projeto/extrato-financeiro/extrato-financeiro.component';
 import {ExtratoFinanceiroResolver} from '@app/projetos/projeto/resolvers/extrato-financeiro.resolver';
 import {NotFoundComponent} from '@app/core/screens/not-found.component';
+import {HomeComponent} from '@app/projetos/projeto/home/home.component';
+import {DebugComponent} from '@app/core/screens/debug.component';
 
 const routes: Routes = [
   {
@@ -26,16 +28,20 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'refp'
+        component: HomeComponent
       },
       {
         path: 'refp',
+        resolve: {
+          status: 'projetoExecucao'
+        },
         loadChildren: () => import('./refp/refp.module').then(m => m.RefpModule)
       },
       {
         path: 'extrato',
         component: ExtratoFinanceiroComponent,
         resolve: {
+          status: 'projetoExecucao',
           extrato: ExtratoFinanceiroResolver
         }
       },
@@ -52,6 +58,13 @@ const routes: Routes = [
         path: 'central-administrativa',
         loadChildren: () => import('./administrativo/administrativo.module').then(m => m.AdministrativoModule)
         // component: ConsultaPlanejamentoComponent
+      },
+      {
+        path: 'relatorio',
+        component: DebugComponent,
+        resolve: {
+          status: 'projetoFinalizado'
+        },
       },
       {
         path: 'notfound',

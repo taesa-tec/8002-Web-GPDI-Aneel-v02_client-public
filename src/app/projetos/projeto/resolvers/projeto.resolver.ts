@@ -56,3 +56,30 @@ export class ProjetoNodeResolver implements Resolve<any> {
   }
 
 }
+
+@Injectable()
+export class ProjetoStatusResolver implements Resolve<any> {
+
+  static Status(status: string, providerAs): Provider {
+    return {
+      provide: providerAs,
+      deps: [Router, ProjetoService],
+      useFactory: (router: Router, service: ProjetoService) => new ProjetoStatusResolver(router, service, status)
+    };
+  }
+
+  constructor(protected router: Router, protected service: ProjetoService, protected status: string) {
+    if (!status) {
+      throw new Error('É necessário especificar o status');
+    }
+  }
+
+  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    const projeto = this.service.getCurrentProjeto();
+    if (this.status !== projeto.status) {
+      return this.router.navigateByUrl('/');
+    }
+    return projeto.status;
+  }
+
+}

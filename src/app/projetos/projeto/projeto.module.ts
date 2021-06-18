@@ -5,7 +5,7 @@ import {ProjetoComponent} from './projeto.component';
 import {DashboardModule} from '@app/dashboard';
 import {TesteComponent} from './components/teste/teste.component';
 import {ProjetoService} from '@app/projetos/projeto/services/projeto.service';
-import {ProjetoResolver} from '@app/projetos/projeto/resolvers/projeto.resolver';
+import {ProjetoResolver, ProjetoStatusResolver} from '@app/projetos/projeto/resolvers/projeto.resolver';
 import {PipesModule} from '@app/core/pipes';
 import {NovoRegistroResolver} from '@app/projetos/projeto/resolvers/novo-registro.resolver';
 import {RegistroResolver, RegistrosResolver} from '@app/projetos/projeto/resolvers/registros.resolver';
@@ -13,10 +13,11 @@ import {ExtratoFinanceiroComponent} from './extrato-financeiro/extrato-financeir
 import {ExtratoFinanceiroResolver} from '@app/projetos/projeto/resolvers/extrato-financeiro.resolver';
 import {ComponentsModule} from '@app/core/components';
 import {ScreensModule} from '@app/core/screens/screens.module';
+import {HomeComponent} from './home/home.component';
 
 
 @NgModule({
-  declarations: [ProjetoComponent, TesteComponent, ExtratoFinanceiroComponent],
+  declarations: [ProjetoComponent, TesteComponent, ExtratoFinanceiroComponent, HomeComponent],
   imports: [
     CommonModule,
     ProjetoRoutingModule,
@@ -32,6 +33,8 @@ import {ScreensModule} from '@app/core/screens/screens.module';
     RegistroResolver,
     NovoRegistroResolver,
     ExtratoFinanceiroResolver,
+    ProjetoStatusResolver.Status('Execucao', 'projetoExecucao'),
+    ProjetoStatusResolver.Status('Finalizado', 'projetoFinalizado'),
   ]
 })
 export class ProjetoModule {
