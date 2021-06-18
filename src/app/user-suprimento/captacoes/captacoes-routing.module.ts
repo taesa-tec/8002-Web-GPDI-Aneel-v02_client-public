@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {CaptacaoCols} from '@app/user-shared/captacao';
+import {CaptacaoCols} from '@app/captacao';
 import {SidebarComponent} from '@app/dashboard/sidebar/sidebar.component';
 import {CaptacoesComponent} from './captacoes.component';
 import {CaptacaoResolver} from '@app/user-suprimento/resolvers/captacao.resolver';
@@ -36,7 +36,7 @@ const routes: Routes = [
               captacaoTable: {
                 cols: CaptacaoCols.EmElaboracao,
                 buttons: [{
-                  action: '/suprimento/captacoes/${id}',
+                  action: '/captacoes/${id}',
                   text: 'Configurar',
                   isLink: true,
                   icon: 'ta-edit',
@@ -55,7 +55,7 @@ const routes: Routes = [
               captacaoTable: {
                 cols: CaptacaoCols.EmElaboracao,
                 buttons: [{
-                  action: '/suprimento/captacoes/${id}',
+                  action: '/captacoes/${id}',
                   text: 'Configurar',
                   isLink: true,
                   icon: 'ta-edit',
@@ -74,7 +74,7 @@ const routes: Routes = [
               captacaoTable: {
                 cols: CaptacaoCols.EmElaboracao,
                 buttons: [{
-                  action: '/suprimento/captacoes/${id}',
+                  action: '/captacoes/${id}',
                   text: 'Visualizar',
                   isLink: true,
                   icon: 'ta-edit',
@@ -92,7 +92,7 @@ const routes: Routes = [
               captacaoTable: {
                 cols: CaptacaoCols.EmElaboracao,
                 buttons: [{
-                  action: '/suprimento/captacoes/${id}',
+                  action: '/captacoes/${id}',
                   text: 'Visualizar',
                   isLink: true,
                   icon: 'ta-edit',

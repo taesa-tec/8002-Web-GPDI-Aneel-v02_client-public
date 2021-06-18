@@ -5,6 +5,7 @@ import {LoginRequest, RecoverRequest, ResultadoResponse, NewpassRequest, UserRol
 import {LoginResponse} from '@app/commons';
 import {Router} from '@angular/router';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {RoutesRoleMap} from '@app/routes/routes';
 
 const storageKey = 'loggedUser';
 
@@ -31,7 +32,7 @@ export class AuthService {
   protected authEventsSource: BehaviorSubject<{ type: string; data?: any }>;
   protected session: Session;
 
-  redirectTo = '/dashboard';
+  redirectTo = '/';
   authEvent: Observable<{ type: string; data?: any }>;
 
   get expiration() {
@@ -80,7 +81,9 @@ export class AuthService {
       try {
         this.loginResponse = JSON.parse(loggedUser);
         this.setSession(this.loginResponse);
+        this.setRoutes(this.loginResponse.user.role);
         this.authEventsSource = new BehaviorSubject<{ type: string; data?: any }>({type: 'login', data: this.loginResponse});
+
       } catch (e) {
         console.error(e.message);
         this.authEventsSource = new BehaviorSubject<{ type: string; data?: any }>(null);
@@ -115,6 +118,7 @@ export class AuthService {
     const response = await this.http.post<LoginResponse>(`Login`, loginRequest).toPromise();
 
     const storage = remember ? localStorage : sessionStorage;
+
     storage.setItem(storageKey, JSON.stringify(response));
 
     this.setSession(response);
@@ -124,7 +128,7 @@ export class AuthService {
     } else {
       sessionStorage.removeItem('last_login_user');
     }
-
+    this.setRoutes(this.loginResponse.user.role);
     return response;
   }
 
@@ -138,7 +142,9 @@ export class AuthService {
       this.modal.dismissAll('logout');
     }
     this.authEventsSource.next({type: 'logout'});
-    return await this.router.navigate(['/login'], {queryParams: {redirect}});
+    this.setRoutes('');
+    this.router.onSameUrlNavigation = 'reload';
+    return await this.router.navigate(['/'], {queryParams: {redirect}});
   }
 
   recuperarSenha(recoverRequest: RecoverRequest) {
@@ -158,6 +164,15 @@ export class AuthService {
     return roles
       .reduce((p, c) => [...p, ...(Array.isArray(c) ? c : [c])], [])
       .some(role => this.user.roles.indexOf(role as UserRole) >= 0);
+  }
+
+  setRoutes(role: string) {
+    if (RoutesRoleMap.has(role)) {
+      this.router.resetConfig(RoutesRoleMap.get(role));
+    } else {
+      console.error(role);
+      this.router.resetConfig(RoutesRoleMap.get(''));
+    }
   }
 
 }

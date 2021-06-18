@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {DashboardComponent} from '@app/dashboard';
 import {SidebarComponent} from '@app/dashboard/sidebar/sidebar.component';
-import {MeuCadastroRoute} from '@app/user-shared';
+import {MeuCadastroRoute} from '@app/routes/routes';
 
 
 const routes: Routes = [
@@ -19,33 +19,33 @@ const routes: Routes = [
       {
         path: 'demandas',
         // component: SidebarComponent,
-        loadChildren: () => import('@app/user-shared/demandas/demandas.module').then(m => m.DemandasModule)
+        loadChildren: () => import('@app/demandas/demandas.module').then(m => m.DemandasModule)
       },
       {
         path: 'captacoes',
         component: SidebarComponent,
-        loadChildren: () => import('@app/user-shared/captacao/captacao.module').then(m => m.CaptacaoModule)
+        loadChildren: () => import('@app/captacao/captacao.module').then(m => m.CaptacaoModule)
       },
       {
         path: 'selecao',
         component: SidebarComponent,
-        loadChildren: () => import('@app/user-shared/propostas-selecao/propostas-selecao.module').then(m => m.PropostasSelecaoModule)
+        loadChildren: () => import('@app/propostas/selecao/propostas-selecao.module').then(m => m.PropostasSelecaoModule)
       },
       {
         path: 'refinamento',
-        loadChildren: () => import('@app/user-shared/propostas-refinamento/propostas-refinamento.module')
+        loadChildren: () => import('@app/propostas/refinamento/propostas-refinamento.module')
           .then(m => m.PropostasRefinamentoModule)
       },
       {
         path: 'identificacao-riscos',
         component: SidebarComponent,
-        loadChildren: () => import('@app/user-shared/propostas-identificacao-riscos/propostas-identificacao-riscos.module')
+        loadChildren: () => import('@app/propostas/identificacao-riscos/propostas-identificacao-riscos.module')
           .then(m => m.PropostasIdentificacaoRiscosModule)
       },
       {
         path: 'formalizacao',
         component: SidebarComponent,
-        loadChildren: () => import('@app/user-shared/propostas-formalizacao/propostas-formalizacao.module')
+        loadChildren: () => import('@app/propostas/formalizacao/propostas-formalizacao.module')
           .then(m => m.PropostasFormalizacaoModule)
       },
       {
@@ -56,11 +56,11 @@ const routes: Routes = [
       {
         path: 'configuracoes',
         component: SidebarComponent,
-        loadChildren: () => import('./configuracoes/configuracoes-sistema.module').then(m => m.ConfiguracoesSistemaModule)
+        loadChildren: () => import('../configuracoes/configuracoes-sistema.module').then(m => m.ConfiguracoesSistemaModule)
       },
       {
         path: 'gerenciar-usuarios',
-        loadChildren: () => import('./gerenciar-usuarios/gerenciar-usuarios.module').then(m => m.GerenciarUsuariosModule)
+        loadChildren: () => import('../gerenciar-usuarios/gerenciar-usuarios.module').then(m => m.GerenciarUsuariosModule)
       }
     ]
   }

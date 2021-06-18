@@ -7,12 +7,14 @@ import {FilesizePipe} from '@app/core/pipes/filesize.pipe';
 import {PadCharPipe} from '@app/core/pipes/pad-char.pipe';
 import {ListUniquePipe} from '@app/core/pipes/list-unique.pipe';
 import {LabelReplacePipe} from '@app/core/pipes/label-replace.pipe';
+import {LogFormatPipe} from '@app/core/pipes/log-format.pipe';
 
 const pipes = [
   LabelReplacePipe,
   NotDefinedPipe,
   OrderByPipe,
   TipoProjetoPipe,
+  LogFormatPipe,
   N2arrayPipe,
   FilesizePipe,
   PadCharPipe,

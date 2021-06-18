@@ -7,7 +7,6 @@ import {HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
 import {CaptacoesService} from '@app/user-suprimento/services/captacoes.service';
 import {CaptacaoResolver} from '@app/user-suprimento/resolvers/captacao.resolver';
 import {CaptacoesResolver} from '@app/user-suprimento/resolvers/captacoes.resolver';
-import {SuprimentoRootUrl} from '@app/routes/routes';
 
 
 @NgModule({
@@ -24,16 +23,16 @@ import {SuprimentoRootUrl} from '@app/routes/routes';
     {
       provide: SIDEBAR_MENU,
       useValue: [
-        {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: '/suprimento/captacoes'},
+        {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: '/captacoes'},
       ]
     }, {
       provide: HEADER_MENU,
       useValue: [
-        {text: 'Meu Cadastro', icon: 'ta-user-o', path: '/suprimento/meu-cadastro'}
+        {text: 'Meu Cadastro', icon: 'ta-user-o', path: '/meu-cadastro'}
       ]
     }, {
       provide: ROOT_URL,
-      useValue: `/${SuprimentoRootUrl}`
+      useValue: `/`
     }
   ]
 })

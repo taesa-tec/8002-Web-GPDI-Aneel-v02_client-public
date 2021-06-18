@@ -5,7 +5,6 @@ import {Provider} from '@angular/core';
 
 
 export const MenuShared: Array<MenuItem> = [
-  {text: 'Inserir Registro <br> REFP', icon: 'ta-edit', path: `refp/novo`},
   {text: 'Alterações Projeto', icon: 'ta-alert', path: `alteracoes`},
   {text: 'Consultar Dados<br> Planejamento Projeto', icon: 'ta-eye', path: `consulta`},
   {text: 'Central<br> Administrativa', icon: 'ta-central-admin', path: `central-administrativa`},

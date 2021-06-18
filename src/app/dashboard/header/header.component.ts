@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
 
   get avatar() {
 
-    return this.auth.user.fotoPerfil ? `url(${this.auth.user.fotoPerfil})` : '';
+    return this.auth.user?.fotoPerfil ? `url(${this.auth.user.fotoPerfil})` : '';
   }
 
   get empresa() {

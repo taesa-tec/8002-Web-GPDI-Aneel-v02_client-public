@@ -6,8 +6,8 @@ import {ActivatedRoute} from '@angular/router';
 import {AppService} from '@app/services';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {filter} from 'rxjs/operators';
-import {CriarComponent} from '@app/user-shared/captacao/criar/criar.component';
-import {EnviarComponent} from '@app/user-shared/captacao/enviar/enviar.component';
+import {CriarComponent} from '@app/captacao/criar/criar.component';
+import {EnviarComponent} from '@app/captacao/enviar/enviar.component';
 import {CaptacaoTableConfig} from '@app/user-suprimento/captacoes/captacoes.component';
 
 @Component({

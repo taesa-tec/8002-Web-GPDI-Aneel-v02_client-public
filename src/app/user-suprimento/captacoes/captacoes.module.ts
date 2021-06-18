@@ -8,7 +8,6 @@ import {CaptacoesResolver} from '@app/resolvers/captacoes.resolver';
 import {DirectivesModule} from '@app/dashboard/shared/directives';
 import {CaptacoesComponent} from '@app/user-suprimento/captacoes/captacoes.component';
 import {TOPNAV_MENU} from '@app/commons';
-import {SuprimentoRootUrl} from '@app/routes/routes';
 import {DashboardModule} from '@app/dashboard';
 import {ListComponent} from './list.component';
 
@@ -31,10 +30,10 @@ import {ListComponent} from './list.component';
     {
       provide: TOPNAV_MENU,
       useValue: [
-        {text: 'Pendentes', path: `/${SuprimentoRootUrl}/captacoes/pendentes`},
-        {text: 'Abertas', path: `/${SuprimentoRootUrl}/captacoes/abertas`},
-        {text: 'Finalizadas', path: `/${SuprimentoRootUrl}/captacoes/finalizadas`},
-        {text: 'Canceladas', path: `/${SuprimentoRootUrl}/captacoes/canceladas`},
+        {text: 'Pendentes', path: `/captacoes/pendentes`},
+        {text: 'Abertas', path: `/captacoes/abertas`},
+        {text: 'Finalizadas', path: `/captacoes/finalizadas`},
+        {text: 'Canceladas', path: `/captacoes/canceladas`},
       ]
     }
   ]

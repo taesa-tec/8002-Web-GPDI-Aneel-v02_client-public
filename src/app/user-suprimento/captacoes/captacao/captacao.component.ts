@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MenuItem, SIDEBAR_MENU} from '@app/commons';
-import {CaptacaoDetalhes} from '@app/user-shared/captacao';
+import {CaptacaoDetalhes} from '@app/captacao';
 import {CaptacoesService} from '@app/user-suprimento/services/captacoes.service';
 
 

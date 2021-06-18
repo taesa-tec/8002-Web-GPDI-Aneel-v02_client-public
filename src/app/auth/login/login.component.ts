@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '@app/services/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LoginRequest, UserRole} from '@app/commons';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {environment} from '../../../environments/environment';
-import {RootsUrl} from '@app/routes/routes';
+import {FormBuilder, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -17,33 +17,32 @@ export class LoginComponent implements OnInit {
   private loading: LoadingComponent;
 
   errorMessage: string;
-
-  loginRequest: LoginRequest = {
-    email: sessionStorage.getItem('last_login_user'),
-    password: ''
-  };
+  form = this.fb.group({
+    email: [sessionStorage.getItem('last_login_user'), [Validators.required, Validators.email]],
+    password: ['', Validators.required]
+  });
 
   remember = !environment.production;
 
-  constructor(protected authService: AuthService, private router: Router,
-              protected activatedRoute: ActivatedRoute) {
+  constructor(protected authService: AuthService,
+              private router: Router,
+              protected fb: FormBuilder,
+              protected activatedRoute: ActivatedRoute,
+              protected cdr: ChangeDetectorRef) {
   }
 
-  getHomeUrl(role) {
-    const path = RootsUrl.has(role) ? RootsUrl.get(role) : 'error';
-    return `/${path}`;
-  }
-
-  async doLogin(event) {
-
-    event.preventDefault();
+  async doLogin() {
+    if (this.form.invalid) {
+      return;
+    }
 
     this.loading.show();
     this.errorMessage = null;
     try {
-      const response = await this.authService.login(this.loginRequest, this.remember);
+      const response = await this.authService.login(this.form.value, this.remember);
+
       if (response.accessToken) {
-        const redirect = this.activatedRoute.snapshot.queryParams.redirect || this.getHomeUrl(response.user.role);
+        const redirect = this.activatedRoute.snapshot.queryParams.redirect || '/';
         await this.router.navigateByUrl(redirect);
       }
     } catch (e) {
@@ -52,13 +51,15 @@ export class LoginComponent implements OnInit {
       } else {
         this.errorMessage = e.message;
       }
-      console.error(e);
     } finally {
+      this.form.get('password').setValue('');
       this.loading.hide();
+      this.cdr.detectChanges();
     }
+    console.log("Fim");
   }
 
   ngOnInit(): void {
-
+    console.log('init');
   }
 }

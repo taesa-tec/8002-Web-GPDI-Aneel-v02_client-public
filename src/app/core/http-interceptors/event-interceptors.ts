@@ -19,14 +19,14 @@ export class EventInterceptor implements HttpInterceptor {
     return request.pipe(
       tap(event => {
           if (event instanceof HttpResponse) {
-            if (event.status === 401) {
-              this.auth.logout();
+            if (event.status === 401 && this.auth.isLoggedIn) {
+              this.auth.logout().then();
             }
           }
         },
         error => {
-          if (error.status === 401) {
-            this.auth.logout();
+          if (error.status === 401 && this.auth.isLoggedIn) {
+            this.auth.logout().then();
           } else {
             switch (error.status) {
               case 403:

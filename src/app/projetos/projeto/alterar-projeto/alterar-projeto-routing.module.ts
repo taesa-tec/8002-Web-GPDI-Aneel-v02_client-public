@@ -5,7 +5,7 @@ import {ProrrogarComponent} from '@app/projetos/projeto/alterar-projeto/prorroga
 import {RecursosHumanosComponent} from '@app/projetos/projeto/alterar-projeto/recursos-humanos/recursos-humanos.component';
 import {RecursosMateriaisComponent} from '@app/projetos/projeto/alterar-projeto/recursos-materiais/recursos-materiais.component';
 import {CategoriasContabeisResolver} from '@app/resolvers/categorias-contabeis.resolver';
-import {EmpresasResolver} from '@app/proposta/resolvers';
+import {EmpresasResolver} from '@app/propostas/proposta/resolvers';
 
 const routes: Routes = [
   {

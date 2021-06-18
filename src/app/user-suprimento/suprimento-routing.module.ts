@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {DashboardComponent} from '@app/dashboard';
-import {MeuCadastroRoute} from '@app/user-shared';
+import {MeuCadastroRoute} from '@app/routes';
 
 
 const routes: Routes = [

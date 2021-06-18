@@ -9,7 +9,7 @@ import {ConfiguracaoComponent} from './configuracao/configuracao.component';
 import {PropostasComponent} from './propostas/propostas.component';
 import {FornecedoresResolver} from '@app/resolvers/fornecedores.resolver';
 import {ContratoPadraoResolver, ContratosPadroesResolver} from '@app/resolvers';
-import {ComponentsModule} from '@app/user-shared/components';
+import {ComponentsModule} from '@app/components';
 import {PropostasResolver} from '@app/user-suprimento/resolvers/propostas.resolver';
 import {ListComponent} from './propostas/list.component';
 import {PropostaDetalhesComponent} from './propostas/proposta-detalhes/proposta-detalhes.component';

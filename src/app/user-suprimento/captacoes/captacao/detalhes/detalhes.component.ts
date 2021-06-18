@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CaptacaoArquivo, CaptacaoDetalhes} from '@app/user-shared/captacao';
+import {CaptacaoArquivo, CaptacaoDetalhes} from '@app/captacao';
 import {CaptacaoComponent} from '@app/user-suprimento/captacoes/captacao/captacao.component';
 import {FileService} from '@app/services/file.service';
 

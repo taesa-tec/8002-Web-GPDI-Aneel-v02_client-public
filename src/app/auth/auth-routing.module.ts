@@ -4,8 +4,8 @@ import {LoginComponent} from './login/login.component';
 import {AuthComponent} from './auth/auth.component';
 import {ForgetPassComponent} from './forget-pass/forget-pass.component';
 import {NewpassComponent} from './newpass/newpass.component';
-import {GuestGuard} from './guest.guard';
-import {NewpassGuard} from './newpass.guard';
+import {GuestGuard} from '../guards/guest.guard';
+import {NewpassGuard} from '../guards/newpass.guard';
 
 const routes: Routes = [
   {

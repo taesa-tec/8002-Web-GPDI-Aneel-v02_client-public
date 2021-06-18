@@ -8,9 +8,11 @@ import localeBr from '@angular/common/locales/pt';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {NotFoundComponent} from './core/components/not-found/not-found.component';
-import {IndexComponent} from './index.component';
 import {SharedModule} from '@app/core/shared';
 import {ComponentsModule} from '@app/core/components';
+import {AuthGuard} from '@app/guards';
+import {RoleGuard} from '@app/guards/role.guard';
+import {UserRole} from '@app/commons';
 
 
 registerLocaleData(localeBr, 'pt');
@@ -21,7 +23,6 @@ moment.locale('pt-br');
   declarations: [
     AppComponent,
     NotFoundComponent,
-    IndexComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,7 +33,12 @@ moment.locale('pt-br');
     FontAwesomeModule,
   ],
   providers: [
-    {provide: LOCALE_ID, useValue: 'pt'}
+    {provide: LOCALE_ID, useValue: 'pt'},
+    {provide: 'logged', useClass: AuthGuard},
+    RoleGuard.To([UserRole.Administrador, UserRole.User, UserRole.Suprimento], 'isAdmin'),
+    RoleGuard.To([UserRole.User], 'isGestor'),
+    RoleGuard.To([UserRole.Suprimento], 'isSuprimento'),
+    RoleGuard.To([UserRole.Fornecedor], 'isFornecedor'),
   ],
   bootstrap: [AppComponent]
 })

@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {DashboardComponent} from '@app/dashboard';
-import {MeuCadastroRoute} from '@app/user-shared';
+import {MeuCadastroRoute} from '@app/routes';
 
 
 const routes: Routes = [
@@ -22,11 +22,11 @@ const routes: Routes = [
       {
         path: 'proposta',
         //component: SidebarComponent,
-        loadChildren: () => import('@app/proposta/proposta.module').then(m => m.PropostaModule)
+        loadChildren: () => import('@app/propostas/proposta/proposta.module').then(m => m.PropostaModule)
       },
       {
         path: 'refinamento',
-        loadChildren: () => import('@app/user-shared/propostas-refinamento/propostas-refinamento.module')
+        loadChildren: () => import('@app/propostas/refinamento/propostas-refinamento.module')
           .then(m => m.PropostasRefinamentoModule)
       },
     ]
