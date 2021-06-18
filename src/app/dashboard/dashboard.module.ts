@@ -1,12 +1,11 @@
 import {NgModule} from '@angular/core';
 
-import {UsersModule} from '@app/dashboard/users/users.module';
+import {UsersModule} from '@app/pages/gerenciar-usuarios/users/users.module';
 import {HeaderComponent, SharedModule} from '@app/dashboard/shared';
 
 import {NotFoundComponent} from './not-found/not-found.component';
 import {DashboardComponent} from './dashboard.component';
 import {UsersService} from '@app/services/users.service';
-import {IndexComponent} from './index/index.component';
 import {SidebarComponent} from '@app/dashboard/sidebar/sidebar.component';
 import {TopnavComponent} from '@app/dashboard/topnav/topnav.component';
 
@@ -18,12 +17,9 @@ import {TopnavComponent} from '@app/dashboard/topnav/topnav.component';
     TopnavComponent,
     HeaderComponent,
     NotFoundComponent,
-    IndexComponent,
   ],
   imports: [
-    SharedModule,
-    UsersModule,
-    // DashboardRoutingModule,
+    SharedModule
   ],
   exports: [
     DashboardComponent,

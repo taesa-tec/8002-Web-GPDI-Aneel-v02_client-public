@@ -1,0 +1,153 @@
+<div class="bg-light py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h3 class="text-uppercase text-dark">Editar usuário</h3>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container my-3 position-relative">
+  <app-loading type="fullscreen"></app-loading>
+  <form [formGroup]="form" *ngIf="form" class="mb-3" (ngSubmit)="submit()">
+    <div class="row">
+      <div class="col-3" [formGroup]="fotoPerfil">
+        <app-upload-image
+          formControlName="file"
+          name="file"
+          [previewImage]="user?.fotoPerfil"
+        ></app-upload-image>
+        <div class="text-center mt-3">
+          <button
+            class="btn btn-danger btn-sm"
+            type="button"
+            *ngIf="user"
+            (click)="removeUser()"
+          >
+            <span class="ta-trash"></span> Excluir usuário
+          </button>
+        </div>
+      </div>
+      <div class="col-9">
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label for="tipo">Tipo de usuário <app-help codigo="cadastro-usuario-tipo"></app-help></label>
+              <select
+                name="tipo"
+                formControlName="role"
+                id="tipo"
+                class="form-control"
+              >
+                <option value="" hidden>Selecione o tipo</option>
+                <option *ngFor="let role of roles" [value]="role.value">{{
+                  role.text
+                  }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label for="nome-completo">Nome Completo <app-help codigo="cadastro-usuario-nome-completo"></app-help></label>
+              <input
+                type="text"
+                formControlName="nomeCompleto"
+                id="nome-completo"
+                class="form-control"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label for="email">Email <app-help codigo="cadastro-usuario-email"></app-help></label>
+              <input
+                type="email"
+                id="email"
+                autocomplete="off"
+                formControlName="email"
+                class="form-control"
+              />
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label for="">Status</label>
+              <select
+                name="status"
+                id="status"
+                formControlName="status"
+                class="form-control"
+              >
+                <option [value]="true">Ativo</option>
+                <option [value]="false">Desativo</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label for="">Empresa</label>
+              <!-- formControlName="empresa" -->
+              <select
+                name="empresaId"
+                id=""
+                class="form-control"
+                formControlName="empresaId"
+                #empresa
+              >
+                <option value="" hidden>Selecione</option>
+                <option *ngFor="let empresa of empresas" [value]="empresa.id">{{
+                  empresa.nome
+                  }}</option>
+                <option value="0">Outra (Empresa Externa)</option>
+              </select>
+            </div>
+            <div class="form-group" *ngIf="empresaIdControl.value === '0'">
+              <label for="">Nome da Empresa</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="razaoSocial"
+              />
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label for="">CPF Usuário</label>
+              <!-- formControlName="cpf" -->
+              <input
+                type="text"
+                mask="000.000.000-00"
+                formControlName="cpf"
+                placeholder="999.999.999-99"
+                class="form-control"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-12">
+            <!-- Acesso por projetos -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <hr/>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 text-right">
+            <a routerLink="/gerenciar-usuarios" class="btn btn-link">Cancelar</a>
+            <button class="btn btn-primary" [disabled]="form.invalid">
+              <i class="ta-save"></i> Salvar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
