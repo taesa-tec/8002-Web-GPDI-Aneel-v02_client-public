@@ -14,6 +14,7 @@ import {ExtratoFinanceiroResolver} from '@app/pages/projetos/projeto/resolvers/e
 import {ComponentsModule} from '@app/core/components';
 import {ScreensModule} from '@app/core/screens/screens.module';
 import {HomeComponent} from './home/home.component';
+import {IsResponsavelProvider} from '@app/pages/projetos/projeto/projeto';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import {HomeComponent} from './home/home.component';
     ComponentsModule
   ],
   providers: [
+    IsResponsavelProvider,
     ProjetoService,
     ProjetoResolver,
     RegistrosResolver,

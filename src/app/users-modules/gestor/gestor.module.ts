@@ -3,8 +3,9 @@ import {CommonModule} from '@angular/common';
 
 import {GestorRoutingModule} from './gestor-routing.module';
 import {DashboardModule} from '@app/dashboard';
-import {HEADER_MENU, ROOT_URL, SIDEBAR_MENU} from '@app/commons';
+import {ROOT_URL} from '@app/commons';
 import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
+import {HeaderMenu, ProjetoExecucaoMenu, ProjetoFinalizadoMenu, SidebarMenu} from './menus';
 
 
 @NgModule({
@@ -15,22 +16,7 @@ import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
     GestorRoutingModule
   ],
   providers: [
-    {
-      provide: SIDEBAR_MENU,
-      useValue: [
-        {text: 'Gestão de Demandas', icon: 'ta-projeto', path: `/demandas`},
-        {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: `/captacoes`},
-        {text: 'Projetos - Priorização e Seleção', icon: 'ta-file-check', path: `/selecao`},
-        {text: 'Projetos - Refinamento', icon: 'ta-file-check', path: `/refinamento`},
-        {text: 'Projetos - Identificação e medição de riscos ', icon: 'ta-file-check', path: `/identificacao-riscos`},
-        {text: 'Projetos - Aprovação e Formalização ', icon: 'ta-file-check', path: `/formalizacao`},
-      ]
-    }, {
-      provide: HEADER_MENU,
-      useValue: [
-        {text: 'Meu Cadastro', icon: 'ta-user-o', path: `/meu-cadastro`}
-      ]
-    }, {
+    SidebarMenu, HeaderMenu, ProjetoExecucaoMenu, ProjetoFinalizadoMenu, {
       provide: ROOT_URL,
       useValue: ``
     },

@@ -35,9 +35,9 @@ moment.locale('pt-br');
   providers: [
     {provide: LOCALE_ID, useValue: 'pt'},
     {provide: 'logged', useClass: AuthGuard},
-    RoleGuard.To([UserRole.Administrador, UserRole.User, UserRole.Suprimento], 'isAdmin'),
-    RoleGuard.To([UserRole.User], 'isGestor'),
-    RoleGuard.To([UserRole.Suprimento], 'isSuprimento'),
+    RoleGuard.To([UserRole.Administrador], 'isAdmin'),
+    RoleGuard.To([UserRole.Administrador, UserRole.User], 'isGestor'),
+    RoleGuard.To([UserRole.Administrador, UserRole.Suprimento], 'isSuprimento'),
     RoleGuard.To([UserRole.Fornecedor], 'isFornecedor'),
   ],
   bootstrap: [AppComponent]

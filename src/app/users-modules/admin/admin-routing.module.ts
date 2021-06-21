@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {DashboardComponent} from '@app/dashboard';
 import {SidebarComponent} from '@app/dashboard/sidebar/sidebar.component';
-import {ConfiguracaoRoute, GerenciarUsuariosRoute, MeuCadastroRoute, ProjetosRoute} from '@app/routes/routes';
+import {ConfiguracaoRoute, GerenciarUsuariosRoute, MeuCadastroRoute, ProjetosRoute, PropostaRefinamentoRoute} from '@app/routes/routes';
 
 
 const routes: Routes = [
@@ -30,11 +30,7 @@ const routes: Routes = [
         component: SidebarComponent,
         loadChildren: () => import('@app/pages/propostas/selecao/propostas-selecao.module').then(m => m.PropostasSelecaoModule)
       },
-      {
-        path: 'refinamento',
-        loadChildren: () => import('@app/pages/propostas/refinamento/propostas-refinamento.module')
-          .then(m => m.PropostasRefinamentoModule)
-      },
+      PropostaRefinamentoRoute,
       {
         path: 'identificacao-riscos',
         component: SidebarComponent,

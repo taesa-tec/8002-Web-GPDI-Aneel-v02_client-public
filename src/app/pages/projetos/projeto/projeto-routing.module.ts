@@ -39,6 +39,7 @@ const routes: Routes = [
       },
       {
         path: 'extrato',
+        canActivate: ['isGestor'],
         component: ExtratoFinanceiroComponent,
         resolve: {
           status: 'projetoExecucao',
@@ -46,18 +47,19 @@ const routes: Routes = [
         }
       },
       {
+
         path: 'alteracoes',
+        canActivate: ['isGestor'],
         loadChildren: () => import('./alterar-projeto/alterar-projeto.module').then(m => m.AlterarProjetoModule)
       },
       {
         path: 'consulta',
         loadChildren: () => import('./consultar-planejamento/consultar-planejamento.module').then(m => m.ConsultarPlanejamentoModule)
-        // component: ConsultaPlanejamentoComponent
       },
       {
         path: 'central-administrativa',
+        canActivate: ['isAdmin'],
         loadChildren: () => import('./administrativo/administrativo.module').then(m => m.AdministrativoModule)
-        // component: ConsultaPlanejamentoComponent
       },
       {
         path: 'relatorio',

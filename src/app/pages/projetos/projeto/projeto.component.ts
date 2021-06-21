@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ProjetoService} from '@app/pages/projetos/projeto/services/projeto.service';
-import {SidebarMenuProvider} from '@app/pages/projetos/projeto/sidebar-menu';
+import {SidebarMenuProvider} from '@app/pages/projetos/projeto/projeto';
 
 export interface Projeto {
+  responsavelId: string;
   titulo: string;
   tituloCompleto: string;
   status: 'Execucao' | 'Finalizado';

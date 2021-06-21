@@ -2,7 +2,6 @@ import {Injectable, Provider} from '@angular/core';
 import {CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {AuthService} from '@app/services';
-import {UserRole} from '@app/commons';
 
 @Injectable()
 export class RoleGuard implements CanActivate, CanActivateChild {
@@ -11,11 +10,11 @@ export class RoleGuard implements CanActivate, CanActivateChild {
     return {
       provide: providerAs,
       deps: [AuthService, Router],
-      useFactory: (auth: AuthService, router: Router) => new RoleGuard(auth, router, role)
+      useFactory: (auth: AuthService) => new RoleGuard(auth, role)
     };
   }
 
-  constructor(private auth: AuthService, private router: Router, protected roles: string[]) {
+  constructor(private auth: AuthService, protected roles: string[]) {
   }
 
   canActivate(

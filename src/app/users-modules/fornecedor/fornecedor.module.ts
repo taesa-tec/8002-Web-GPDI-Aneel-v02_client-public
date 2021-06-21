@@ -10,6 +10,7 @@ import {PropostasService} from '@app/users-modules/fornecedor/services/propostas
 import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
 import {COMPONENT_LABELS} from '@app/core/shared';
 import {Texts} from '@app/users-modules/fornecedor/texts';
+import {HeaderMenu, ProjetoExecucaoMenu, ProjetoFinalizadoMenu, SidebarMenu} from '@app/users-modules/fornecedor/menus';
 
 
 @NgModule({
@@ -23,20 +24,11 @@ import {Texts} from '@app/users-modules/fornecedor/texts';
     PropostaResolver,
     PropostasResolver,
     PropostasService,
+    SidebarMenu,
+    HeaderMenu,
+    ProjetoExecucaoMenu,
+    ProjetoFinalizadoMenu,
     {
-      provide: SIDEBAR_MENU,
-      useValue: [
-        {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: `/propostas`},
-        {text: 'Projetos - Refinamento', icon: 'ta-file-check', path: `/refinamento`},
-        {text: 'Projetos - Em execução', icon: 'ta-file-check', path: `/projetos/em-execucao`},
-        {text: 'Projetos - Em finalização', icon: 'ta-file-check', path: `/projetos/em-finalizacao`},
-      ]
-    }, {
-      provide: HEADER_MENU,
-      useValue: [
-        {text: 'Meu Cadastro', icon: 'ta-user-o', path: `/meu-cadastro`}
-      ]
-    }, {
       provide: ROOT_URL,
       useValue: ``
     },

@@ -559,7 +559,7 @@ export interface MenuItem {
   [prop: string]: any;
 }
 
-export type AppMenu = Array<MenuItem>;
+export type MenuItems = Array<MenuItem>;
 
 export interface Pagination<T> {
   data: Array<T>;
@@ -576,8 +576,3 @@ export const SIDEBAR_MENU = new InjectionToken<Array<MenuItem> | BehaviorSubject
 export const HEADER_MENU = new InjectionToken<Array<MenuItem>>('Header menu');
 export const TOPNAV_MENU = new InjectionToken<Array<MenuItem>>('Topnav menu');
 export const ROOT_URL = new InjectionToken<string>('Root Url');
-/**
- * @deprecated Não utilizar, não é atualizado em trocas de logins
- */
-export const CURRENT_USER = new InjectionToken<User>('Current User');
-

@@ -48,7 +48,7 @@
       </ng-container>
     </div>
   </div>
-  <div class="row" *ngIf="registro.status === 'Pendente'">
+  <div class="row" *ngIf="registro.status === 'Pendente' && isResponsavel">
     <div class="col-12 d-flex justify-content-center">
       <button class="btn btn-danger mx-2" type="button" (click)="modalReprovar(reprovar)"><i
         class="ta-cancel-circle"></i> Reprovar Registro
@@ -58,7 +58,7 @@
       </button>
     </div>
   </div>
-  <div class="row">
+  <div class="row" *ngIf="isResponsavel">
     <div class="col-12">
       <button class="btn-link btn" type="button">
         <i class="ta-cancel-circle"></i> Excluir Registro
