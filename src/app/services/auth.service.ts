@@ -137,7 +137,7 @@ export class AuthService {
     this.loginResponse = null;
     localStorage.removeItem(storageKey);
     sessionStorage.removeItem(storageKey);
-    this.redirectTo = '/dashboard';
+    this.redirectTo = '/';
     if (this.modal.hasOpenModals()) {
       this.modal.dismissAll('logout');
     }

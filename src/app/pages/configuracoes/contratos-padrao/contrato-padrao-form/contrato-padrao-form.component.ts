@@ -29,13 +29,11 @@ export class ContratoPadraoFormComponent implements OnInit {
   ngOnInit() {
     this.configEditor.shortcodes = new Map(this.route.snapshot.data.shortcodes || []);
     this.buildForm();
-    console.log(this.configEditor);
-
   }
 
   buildForm() {
     this.form = this.fb.group({
-      id: '0',
+      id: 0,
       titulo: ['', [Validators.required]],
       header: ['', Validators.required],
       conteudo: ['', Validators.required],
@@ -52,7 +50,7 @@ export class ContratoPadraoFormComponent implements OnInit {
       try {
 
         await this.service.excluir(this.form.value.id);
-        this.app.router.navigateByUrl('/admin/configuracoes/contratos-padrao').then();
+        this.app.router.navigateByUrl('/configuracoes/contratos-padrao').then();
       } catch (e) {
         this.app.alert('Não foi possível excluir este contrato').then();
       }
@@ -64,7 +62,7 @@ export class ContratoPadraoFormComponent implements OnInit {
       try {
         await this.service.salvar(this.form.value);
         this.app.alert('Contrato salvo com sucesso').then();
-        this.app.router.navigateByUrl('/admin/configuracoes/contratos-padrao').then();
+        this.app.router.navigateByUrl('/configuracoes/contratos-padrao').then();
 
       } catch (e) {
         this.app.alert('Não foi possível salvar o contrato').then();

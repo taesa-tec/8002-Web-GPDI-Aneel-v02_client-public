@@ -56,10 +56,8 @@ export class LoginComponent implements OnInit {
       this.loading.hide();
       this.cdr.detectChanges();
     }
-    console.log("Fim");
   }
 
   ngOnInit(): void {
-    console.log('init');
   }
 }

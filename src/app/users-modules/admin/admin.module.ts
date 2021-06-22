@@ -6,6 +6,7 @@ import {DashboardModule} from '@app/dashboard';
 import {ROOT_URL} from '@app/commons';
 import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
 import {HeaderMenu, ProjetoExecucaoMenu, ProjetoFinalizadoMenu, SidebarMenu} from './menus';
+import {PropostaTextsProvider} from '@app/users-modules/shared/texts';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {HeaderMenu, ProjetoExecucaoMenu, ProjetoFinalizadoMenu, SidebarMenu} fro
       provide: PROPOSTA_CAN_EDIT,
       useValue: false
     },
+    PropostaTextsProvider
   ]
 })
 export class AdminModule {

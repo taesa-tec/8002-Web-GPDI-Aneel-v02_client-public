@@ -7,7 +7,6 @@ import {EnviadasParaCaptacaoComponent} from './enviadas-para-captacao/enviadas-p
 import {AprovadasComponent} from './aprovadas/aprovadas.component';
 import {GestaoDeDemandasComponent} from './demandas.component';
 
-import {ElaboracaoComponent} from './elaboracao/elaboracao.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {DemandasListComponent} from './demandas-list/demandas-list.component';
 import {DemandaProgressComponent} from './demanda-progress/demanda-progress.component';
@@ -17,6 +16,7 @@ import {DemandaGuard} from '@app/pages/demandas/demanda/guards/demanda.guard';
 import {DemandaResolver} from '@app/pages/demandas/demanda/demanda.resolver';
 import {DemandaModule} from '@app/pages/demandas/demanda/demanda.module';
 import {SharedModule} from '@app/dashboard/shared';
+import {DemandasResolver} from '@app/pages/demandas/resolvers/demandas.resolver';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,6 @@ import {SharedModule} from '@app/dashboard/shared';
     EnviadasParaCaptacaoComponent,
     AprovadasComponent,
     GestaoDeDemandasComponent,
-    ElaboracaoComponent,
     NovaDemandaComponent,
     DemandasListComponent,
     DemandaProgressComponent,
@@ -44,7 +43,7 @@ import {SharedModule} from '@app/dashboard/shared';
     DemandaModule,
     ReactiveFormsModule,
   ],
-  providers: [DemandaGuard, DemandaResolver]
+  providers: [DemandaGuard, DemandaResolver, DemandasResolver]
 })
 export class DemandasModule {
 }

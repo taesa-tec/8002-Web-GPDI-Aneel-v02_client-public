@@ -5,14 +5,20 @@
     </h5>
   </div>
   <div class="col-auto">
-    <button
-      class="btn btn-outline-primary"
-      type="button"
-      (click)="novaDemanda()"
-    >
-      <i class="ta-plus-circle fs-24 align-middle align-middle"></i>
-      Nova Demanda
-    </button>
+    <div class="d-inline-block" ngbTooltip="A Equipe não foi definida"
+         [disableTooltip]="hasEquipe">
+
+      <button
+        class="btn btn-outline-primary"
+        type="button"
+        [disabled]="!hasEquipe"
+        routerLink=""
+        fragment="novo"
+      >
+        <i class="ta-plus-circle fs-24 align-middle align-middle"></i>
+        Nova Demanda
+      </button>
+    </div>
   </div>
 </div>
 

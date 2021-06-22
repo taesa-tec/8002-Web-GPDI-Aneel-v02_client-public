@@ -6,11 +6,14 @@ import {COMPONENT_LABELS} from '@app/core/shared';
 })
 export class LabelReplacePipe implements PipeTransform {
 
-  constructor(@Optional() @Inject(COMPONENT_LABELS) protected labels: Map<string, string>) {
+  labels: Map<string, string>[];
+
+  constructor(@Optional() @Inject(COMPONENT_LABELS) labels: Map<string, string>[]) {
+    this.labels = [...labels].reverse();
   }
 
   transform(value: string, ...args: unknown[]): string {
-    return this.labels?.has(value) ? this.labels.get(value) : value;
+    return (this.labels?.find(l => l.has(value))?.get(value)) || value;
   }
 
 }

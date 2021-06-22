@@ -1,8 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {NovaDemandaComponent} from '@app/pages/demandas/nova-demanda/nova-demanda.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {User} from '@app/commons';
+import {EquipePeD, User} from '@app/commons';
 import {AuthService} from '@app/services';
+import {ActivatedRoute, Router} from '@angular/router';
 
 
 @Component({
@@ -14,12 +15,18 @@ export class GestaoDeDemandasComponent implements OnInit {
 
   menu: Array<any>;
   showChild = true;
+  equipe: EquipePeD;
   protected user: User;
+  hasEquipe = false;
 
-  constructor(protected auth: AuthService, protected modal: NgbModal) {
+  constructor(protected auth: AuthService, protected modal: NgbModal, protected route: ActivatedRoute, protected router: Router) {
   }
 
   ngOnInit() {
+    this.route.data.subscribe(data => {
+      this.equipe = data.equipe;
+      this.hasEquipe = this.equipe.gerente != null && this.equipe.diretor != null && this.equipe.coordenador != null;
+    });
     this.user = this.auth.user;
     this.menu = [
       {text: 'Em Elaboração', path: 'elaboracao'},
@@ -27,6 +34,11 @@ export class GestaoDeDemandasComponent implements OnInit {
       {text: 'Aprovadas', path: 'aprovadas'},
       {text: 'Enviadas para Captação', path: 'enviadas-para-captacao'},
     ];
+    this.route.fragment.subscribe(f => {
+      if (f === 'novo') {
+        this.novaDemanda().then();
+      }
+    });
   }
 
 
@@ -40,5 +52,9 @@ export class GestaoDeDemandasComponent implements OnInit {
 
     }
     this.showChild = true;
+
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate(['./'], {relativeTo: this.route}).then();
+
   }
 }

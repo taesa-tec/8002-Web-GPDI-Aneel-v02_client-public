@@ -46,7 +46,7 @@ export class FornecedorFormComponent implements OnInit {
     protected app: AppService,
     protected service: ServiceBase<any>,
     private fb: FormBuilder,
-    public activeModal: NgbActiveModal
+    public activeModal: NgbActiveModal,
   ) {
   }
 
@@ -65,16 +65,17 @@ export class FornecedorFormComponent implements OnInit {
 
   async onSubmit() {
     if (this.form.valid) {
+      this.app.loading.show().then();
       try {
-        const result = await this.service.salvar(this.form.value);
-        console.log(result);
-        await this.app.alert('Fornecedor salvo com sucesso').then();
+        await this.service.salvar(this.form.value);
         this.activeModal.close(true);
+        this.app.alert('Fornecedor salvo com sucesso').then();
 
       } catch (e) {
         this.app.alert('Não foi possível salvar o Fornecedor').then();
         console.error(e);
       }
+      this.app.loading.hide();
     }
   }
 

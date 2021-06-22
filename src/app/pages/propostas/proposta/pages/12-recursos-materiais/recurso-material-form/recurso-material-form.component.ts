@@ -32,8 +32,4 @@ export class RecursoMaterialFormComponent extends PropostaNodeFormDirective impl
     super.ngOnInit();
     this.categorias = this.route.snapshot.data.categorias;
   }
-
-  async onSubmit() {
-
-  }
 }

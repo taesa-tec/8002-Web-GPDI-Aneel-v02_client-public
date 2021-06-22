@@ -24,7 +24,7 @@ export class DemandaGuard implements CanActivate {
           } else if (e.status === 404) {
             this.app.alert('Demanda Não encontrada');
           }
-          await this.app.router.navigate(['/dashboard']);
+          await this.app.router.navigate(['/']);
         }
         return false;
       }

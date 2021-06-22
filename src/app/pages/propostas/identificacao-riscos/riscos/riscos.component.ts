@@ -70,6 +70,7 @@ export class RiscosComponent implements OnInit, OnDestroy {
     if (this.form.invalid) {
       return;
     }
+    this.app.loading.show().then();
     try {
       await this.service.post(`${this.captacaoId}/ConfirmarRiscos`, this.form.value);
       try {
@@ -87,6 +88,7 @@ export class RiscosComponent implements OnInit, OnDestroy {
         this.app.alertError('Não foi possível salvar a Identificação de Riscos').then();
       }
     }
+    this.app.loading.hide();
 
 
   }

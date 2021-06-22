@@ -1,9 +1,11 @@
-import {Provider} from '@angular/core';
+import {Provider, Optional} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {BehaviorSubject} from 'rxjs';
-import {CAPTACAO_ID, PROPOSTA} from './tokens';
+import {CAPTACAO_ID, PROPOSTA, PROPOSTA_LABELS} from './tokens';
 import {Proposta, SIDEBAR_MENU} from '@app/commons';
 import {PropostasService} from '@app/pages/propostas/proposta/services/propostas.service';
+import {COMPONENT_LABELS} from '@app/core/shared';
+import {PropostaTexts} from '@app/pages/propostas/proposta/shared/texts';
 
 export const CaptacaoIdProvider: Provider = {
   provide: CAPTACAO_ID,
@@ -70,3 +72,17 @@ export const PropostaSidebar: Provider = {
   },
 
 };
+export const TextsProvider: Provider[] = [
+  {
+    provide: COMPONENT_LABELS,
+    useValue: PropostaTexts,
+    multi: true
+  },
+  {
+    provide: COMPONENT_LABELS,
+    multi: true,
+    deps: [[new Optional(), PROPOSTA_LABELS]],
+    useFactory: (labels) => labels || new Map([])
+  }
+];
+

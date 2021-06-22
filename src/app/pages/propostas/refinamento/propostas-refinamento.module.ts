@@ -22,10 +22,6 @@ import {Texts} from './text';
   providers: [
     PropostasRefinamentoResolver,
     {provide: ServiceBase, deps: [HttpClient], useFactory: (httpClient) => new ServiceBase(httpClient, 'Captacoes')},
-    {
-      provide: COMPONENT_LABELS,
-      useValue: Texts
-    }
   ]
 })
 export class PropostasRefinamentoModule {

@@ -86,7 +86,7 @@ export class HelpComponent implements OnInit {
       evt.preventDefault();
       this.app.confirm('Deseja editar este item de ajuda?', `Editar item de ajuda (${this.item.codigo})?`).then(editar => {
         if (editar) {
-          this.router.navigate([`/admin/configuracoes/ajuda/`], {fragment: this.item.id.toString()}).then();
+          this.router.navigate([`/configuracoes/ajuda/`], {fragment: this.item.id.toString()}).then();
         }
       });
     } else if (this.item.hasContent) {

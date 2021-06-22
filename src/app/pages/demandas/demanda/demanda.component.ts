@@ -46,14 +46,14 @@ export class DemandaComponent implements OnInit {
 
 
   readonly ETAPAS = {
-    0: 'Elaboracao',
-    1: 'PreAprovacao',
-    2: 'RevisorPendente',
-    3: 'AprovacaoRevisor',
-    4: 'AprovacaoCoordenador',
-    5: 'AprovacaoGerente',
-    6: 'AprovacaoDiretor',
-    7: 'Captacao'
+    0: 'Elaboração',
+    1: 'Pre-Aprovação',
+    2: 'Revisor Pendente',
+    3: 'Aprovação Revisor',
+    4: 'Aprovação Coordenador',
+    5: 'Aprovação Gerente',
+    6: 'Aprovação Diretor',
+    7: 'Captação'
   };
 
   constructor(protected modal: NgbModal, protected route: ActivatedRoute) {

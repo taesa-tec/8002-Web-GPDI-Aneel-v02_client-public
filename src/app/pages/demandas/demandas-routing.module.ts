@@ -4,6 +4,8 @@ import {GestaoDeDemandasComponent} from './demandas.component';
 import {DemandasListComponent} from './demandas-list/demandas-list.component';
 import {DemandaEtapaStatus} from './commons';
 import {SidebarComponent} from '@app/dashboard/sidebar/sidebar.component';
+import {EquipePedResolver} from '@app/resolvers';
+import {DemandasResolver} from '@app/pages/demandas/resolvers/demandas.resolver';
 
 const routes: Routes = [
   {
@@ -13,6 +15,9 @@ const routes: Routes = [
       {
         path: '',
         component: GestaoDeDemandasComponent,
+        resolve: {
+          equipe: EquipePedResolver
+        },
         children: [
           {
             path: '',
@@ -22,6 +27,12 @@ const routes: Routes = [
           {
             path: 'elaboracao',
             component: DemandasListComponent,
+            runGuardsAndResolvers: (from, to) => {
+              return from.fragment === 'novo';
+            },
+            resolve: {
+              demandas: DemandasResolver
+            },
             data: {
               demandaEtapaStatus: DemandaEtapaStatus.EmElaboracao
             }
@@ -29,6 +40,9 @@ const routes: Routes = [
           {
             path: 'reprovadas',
             component: DemandasListComponent,
+            resolve: {
+              demandas: DemandasResolver
+            },
             data: {
               demandaEtapaStatus: DemandaEtapaStatus.Reprovada
             }
@@ -36,6 +50,9 @@ const routes: Routes = [
           {
             path: 'aprovadas',
             component: DemandasListComponent,
+            resolve: {
+              demandas: DemandasResolver
+            },
             data: {
               demandaEtapaStatus: DemandaEtapaStatus.Aprovada
             }
@@ -43,6 +60,9 @@ const routes: Routes = [
           {
             path: 'enviadas-para-captacao',
             component: DemandasListComponent,
+            resolve: {
+              demandas: DemandasResolver
+            },
             data: {
               demandaEtapaCaptacao: true
             }

@@ -4,6 +4,7 @@ import {AppService} from '@app/services/app.service';
 import {DemandaEtapa, DemandaEtapaStatus} from '../commons';
 import {Demanda} from '@app/commons/demandas';
 import {EquipePeD} from '@app/commons';
+import {GestaoDeDemandasComponent} from '@app/pages/demandas/demandas.component';
 
 @Component({
   selector: 'app-demandas-list',
@@ -27,18 +28,17 @@ export class DemandasListComponent implements OnInit {
   equipe: EquipePeD;
 
 
-  constructor(protected route: ActivatedRoute, protected router: Router, protected app: AppService) {
+  constructor(protected route: ActivatedRoute, protected router: Router,
+              protected app: AppService,
+              protected parent: GestaoDeDemandasComponent) {
   }
 
   async ngOnInit() {
-    const data = this.route.snapshot.data;
-    this.equipe = await this.app.sistema.getEquipePeD();
-    if (data.demandaEtapaStatus !== undefined) {
-      const status: DemandaEtapaStatus = data.demandaEtapaStatus;
-      this.getDemandas(status);
-    } else if (data.demandaEtapaCaptacao) {
-      this.getDemandas('Captacao');
-    }
+    this.equipe = this.parent.equipe;
+    this.route.data.subscribe(data => {
+      this._demandas = data.demandas;
+      this.filter();
+    });
 
   }
 
@@ -50,30 +50,5 @@ export class DemandasListComponent implements OnInit {
     }
   }
 
-
-  async getDemandas(status: DemandaEtapaStatus | 'Captacao') {
-
-
-    let _status: 'Reprovadas' | 'Aprovadas' | 'EmElaboracao' | 'Captacao' = 'EmElaboracao';
-
-    switch (status) {
-      case DemandaEtapaStatus.EmElaboracao:
-        _status = 'EmElaboracao';
-        break;
-      case DemandaEtapaStatus.ReprovadaPermanente:
-      case DemandaEtapaStatus.Reprovada:
-
-        _status = 'Reprovadas';
-        break;
-      case DemandaEtapaStatus.Aprovada:
-        _status = 'Aprovadas';
-        break;
-      case 'Captacao':
-        _status = 'Captacao';
-
-    }
-    this._demandas = await this.app.demandas.getDemandasByStatus(_status).toPromise();
-    this.filter();
-  }
 }
 

@@ -26,7 +26,7 @@ export const SidebarMenu = {
     {text: 'Projetos - Aprovação e Formalização ', icon: 'ta-file-check', path: `/formalizacao`},
     {text: 'Projetos - Em execução', icon: 'ta-file-check', path: `/projetos/em-execucao`},
     {text: 'Projetos - Em finalização', icon: 'ta-file-check', path: `/projetos/em-finalizacao`},
-    {text: 'Configurações do Sistema', icon: 'ta-gear', path: `/configuracoes`},
+    //{text: 'Configurações do Sistema', icon: 'ta-gear', path: `/configuracoes`},
   ]
 };
 

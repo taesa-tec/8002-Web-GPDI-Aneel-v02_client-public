@@ -16,7 +16,6 @@
 
 <div class="row" [ngSwitch]="proposta?.participacao">
   <div class="col">
-
     <ng-container *ngSwitchCase="1" [ngTemplateOutlet]="confirmacao"></ng-container>
     <ng-container *ngSwitchCase="3" [ngTemplateOutlet]="confirmacao"></ng-container>
     <div class="alert border border-success d-flex align-items-center" *ngSwitchCase="2">

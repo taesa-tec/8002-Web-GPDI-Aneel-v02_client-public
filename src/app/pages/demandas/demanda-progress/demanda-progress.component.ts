@@ -65,9 +65,9 @@ export class DemandaProgressComponent implements OnInit {
       this.app.showLoading();
       try {
         await this.app.demandas.enviarCaptacao(id);
-        await this.app.router.navigate(['/dashboard', 'demandas', 'enviadas-para-captacoes']);
+        await this.app.router.navigate(['/demandas', 'enviadas-para-captacoes']);
       } catch (e) {
-        this.app.alert('Não foi possível enviar para a captação', 'Erro!');
+        this.app.alert('Não foi possível enviar para a captação', 'Erro!').then();
         console.error(e);
       }
       this.app.hideLoading();

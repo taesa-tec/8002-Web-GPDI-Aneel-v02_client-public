@@ -14,7 +14,7 @@ export class AdminGuard implements CanActivate {
     const me = await this.auth.user;
     if (me.role !== UserRole.Administrador) {
       this.app.alert('Você não ter permissão para fazer isso', 'Acesso negado').then();
-      return this.router.navigateByUrl('/dashboard');
+      return this.router.navigateByUrl('/');
     }
 
     return true;

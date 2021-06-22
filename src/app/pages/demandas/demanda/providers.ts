@@ -7,12 +7,13 @@ import {AuthService} from '@app/services';
 
 
 function menu(demanda: Demanda, user, equipe: EquipePeD): Array<MenuItem> {
-
   if (user.role === UserRole.Administrador) {
-    return menuCriador([
-      {text: 'Central Administrativa', icon: 'ta-central-admin', path: 'central-administrativa'},
-      {text: 'Logs', icon: 'ta-log', path: 'logs'}
-    ], demanda);
+    return menuCriador(
+      menuAprovadores([
+        {text: 'Central Administrativa', icon: 'ta-central-admin', path: 'central-administrativa'},
+        {text: 'Logs', icon: 'ta-log', path: 'logs'}
+      ], demanda)
+      , demanda);
   }
 
 
@@ -20,6 +21,8 @@ function menu(demanda: Demanda, user, equipe: EquipePeD): Array<MenuItem> {
     case equipe.diretor.id:
     case equipe.coordenador.id:
     case equipe.gerente.id:
+    case demanda.revisorId:
+    case demanda.superiorDiretoId:
       const _menu = user.id === demanda.criadorId ? menuCriador([], demanda) : [];
       return menuAprovadores(_menu, demanda);
     case demanda.criadorId:

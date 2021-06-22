@@ -113,7 +113,7 @@ export class FornecedoresComponent implements OnInit {
     } catch (e) {
       //console.error(e);
     } finally {
-      await this.app.router.navigateByUrl('/admin/configuracoes/fornecedores', {fragment: ''});
+      await this.app.router.navigateByUrl('/configuracoes/fornecedores', {fragment: ''});
     }
 
   }

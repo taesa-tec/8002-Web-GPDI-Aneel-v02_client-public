@@ -50,10 +50,10 @@ export class EquipeValidacaoComponent implements OnInit {
         await this.app.demandas.setSuperiorDireto(this.demanda.id, this.form.value);
         this.app.hideLoading();
         await this.app.alert('Demanda atualizada com sucesso!');
-        this.app.router.navigate(['/dashboard', 'demanda', this.demanda.id, 'formulario', 'especificacao-tecnica']);
+        this.app.router.navigate(['../', 'formulario', 'especificacao-tecnica'], {relativeTo: this.route}).then();
       } catch (e) {
         this.app.hideLoading();
-        this.app.alert('Não foi possível atualizar a demanda');
+        this.app.alert('Não foi possível atualizar a demanda').then();
       }
 
     }

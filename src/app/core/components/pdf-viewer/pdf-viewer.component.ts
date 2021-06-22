@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {HttpClient, HttpErrorResponse, HttpEvent, HttpEventType} from '@angular/common/http';
+import {FileService} from '@app/services/file.service';
 
 @Component({
   selector: 'app-pdf-viewer',
@@ -16,7 +17,7 @@ export class PdfViewerComponent implements OnInit {
   isLoading = false;
   errorMessage: string = null;
 
-  constructor(protected http: HttpClient, protected sanitizer: DomSanitizer) {
+  constructor(protected http: HttpClient, protected sanitizer: DomSanitizer, protected fileService: FileService) {
   }
 
 
@@ -44,10 +45,7 @@ export class PdfViewerComponent implements OnInit {
   }
 
   download() {
-    const a = document.createElement('a');
-    a.href = this.realUrlFile;
-    a.setAttribute('download', this.filename);
-    a.click();
+    this.fileService.urlToBlobDownload(this.url, '').then();
   }
 
 }

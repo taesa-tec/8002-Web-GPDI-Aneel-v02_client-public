@@ -12,7 +12,7 @@ export class DemandasService {
   }
 
   getDemandasByStatus(status: 'Reprovadas' | 'Aprovadas' | 'EmElaboracao' | 'Captacao') {
-    return this.http.get<Array<Demanda>>(`Demandas/${status}`);
+    return this.http.get<Array<Demanda>>(`Demandas/${status}`).toPromise();
   }
 
   demandaExist(id: number) {

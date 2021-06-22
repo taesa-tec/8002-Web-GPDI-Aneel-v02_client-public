@@ -6,7 +6,7 @@ import {CoreModule} from '@app/core';
 import {PropostaComponent} from './proposta.component';
 import {DashboardModule} from '@app/dashboard';
 import {PropostasResolver} from '@app/pages/propostas/proposta/resolvers/propostas.resolver';
-import {PropostaProvider} from '@app/pages/propostas/proposta/shared';
+import {PropostaProvider, TextsProvider} from '@app/pages/propostas/proposta/shared';
 import {ContratoService} from '@app/pages/propostas/proposta/services/proposta-service-base.service';
 
 
@@ -20,6 +20,7 @@ import {ContratoService} from '@app/pages/propostas/proposta/services/proposta-s
   providers: [
     PropostasService,
     PropostaProvider,
+    TextsProvider,
     PropostasResolver,
     PropostaResolver,
     ContratoService,

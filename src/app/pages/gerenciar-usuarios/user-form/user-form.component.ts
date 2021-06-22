@@ -66,7 +66,7 @@ export class UserFormComponent implements OnInit {
           await this.usersService.updateAvatar(this.fotoPerfil.value.file, this.user.id);
         }
         await this.app.alert('Usuário salvo com sucesso');
-        await this.app.router.navigate(['/admin/gerenciar-usuarios/']);
+        await this.app.router.navigate(['/gerenciar-usuarios/']);
       } catch (e) {
         console.error(e);
       }
@@ -77,7 +77,7 @@ export class UserFormComponent implements OnInit {
     if (this.user && await this.app.confirm('Tem certeza que deseja remover este usuário?')) {
       try {
         await this.usersService.excluir(this.user.id);
-        await this.app.router.navigate(['/admin/gerenciar-usuarios/']);
+        await this.app.router.navigate(['/gerenciar-usuarios/']);
       } catch (e) {
         console.error(e);
       }

@@ -16,7 +16,7 @@ export class HasRoleGuard implements CanActivate {
         return true;
       }
       this.app.alert('Você não ter permissão para fazer isso', 'Acesso negado').then();
-      return this.router.navigateByUrl('/dashboard');
+      return this.router.navigateByUrl('/');
     } else {
       console.warn('HasRoleGuard: Rota sem roles definida em "data"');
     }
