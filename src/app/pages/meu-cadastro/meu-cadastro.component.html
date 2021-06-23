@@ -57,7 +57,6 @@
                   class="form-control"
                   formControlName="empresaId"
                   readonly
-                  #empresa
                 >
                   <option value="">Selecione</option>
                   <option *ngFor="let empresa of empresas" [value]="empresa.id">{{
@@ -66,7 +65,7 @@
                   <option value="0">Outra (Empresa Externa)</option>
                 </select>
               </div>
-              <div class="form-group" *ngIf="razaoSocial">
+              <div class="form-group" *ngIf="form.value.empresaId === '0'">
                 <label for="">Nome da Empresa</label>
                 <input
                   type="text"

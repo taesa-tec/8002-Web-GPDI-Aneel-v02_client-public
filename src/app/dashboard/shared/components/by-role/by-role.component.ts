@@ -39,7 +39,7 @@ export class ByRoleComponent implements OnInit, AfterViewInit {
   @ViewChild('templateRef', {static: true, read: ViewContainerRef}) viewContainer: ViewContainerRef;
 
   get user() {
-    return this.auth.user;
+    return this.auth.getUser();
   }
 
   get roles() {
@@ -87,7 +87,7 @@ export class ByRoleComponent implements OnInit, AfterViewInit {
 })
 export class RedirectByRoleComponent implements OnInit {
   get user() {
-    return this.auth.user;
+    return this.auth.getUser();
   }
 
   get roles() {

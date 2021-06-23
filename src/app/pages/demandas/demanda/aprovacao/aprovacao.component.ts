@@ -39,24 +39,14 @@ export class AprovacaoComponent implements OnInit {
 
   set demanda(value: Demanda) {
 
-    //this.pdfUrl = `${environment.api_url}/Demandas/${value.id}/Form/${this.formKey}/Pdf`;
     this.$demanda = value;
     this.emAprovacao = value.status === DemandaEtapaStatus.Pendente || value.status === DemandaEtapaStatus.EmElaboracao;
-
     const clearCache = Date.now();
-    this.file.download(`${environment.api_url}/Demandas/${value.id}/Form/${this.formKey}/Pdf?time=${clearCache}`, p => {
-      this.pdfProgress = (p.loaded / p.total) * 100;
-    }).then(url => {
-      this.pdfProgress = null;
-      this.pdfUrl = url;
-    }).catch(err => {
-      this.pdfProgress = null;
-      console.log(err);
-    });
+    this.pdfUrl = `${environment.api_url}/Demandas/${value.id}/Form/${this.formKey}/Pdf?time=${clearCache}`;
   }
 
   get isResponsavel() {
-    return this.responsavelAprovacao === this.auth.user.id;
+    return this.responsavelAprovacao === this.auth.getUser().id;
   }
 
   get responsavelAprovacao() {

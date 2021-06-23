@@ -21,7 +21,7 @@ export class IndexComponent implements OnInit {
   ngOnInit(): void {
 
     let urlParts: Array<any>;
-    if (this.demanda.criadorId === this.auth.user.id) {
+    if (this.demanda.criadorId === this.auth.getUser().id) {
       if (this.demanda.superiorDiretoId) {
         if (this.demanda.status === DemandaEtapaStatus.Reprovada || this.demanda.etapaAtual !== DemandaEtapa.Elaboracao) {
           urlParts = ['aprovacao'];

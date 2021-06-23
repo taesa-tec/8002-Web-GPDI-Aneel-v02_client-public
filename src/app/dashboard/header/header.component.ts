@@ -3,6 +3,7 @@ import {HEADER_MENU, MenuItem, ROOT_URL, User} from '@app/commons';
 import {AppService} from '@app/services/app.service';
 import {AuthService} from '@app/services/auth.service';
 import {UsersService} from '@app/services';
+import {filter} from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -12,11 +13,7 @@ import {UsersService} from '@app/services';
 export class HeaderComponent implements OnInit {
 
   menu: Array<MenuItem>;
-
-  get avatar() {
-
-    return this.auth.user?.fotoPerfil ? `url(${this.auth.user.fotoPerfil})` : '';
-  }
+  avatar = '';
 
   get empresa() {
     if (this.currentUser) {
@@ -29,7 +26,6 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     @Optional() @Inject(HEADER_MENU) menu,
-    @Inject(ROOT_URL) public home_url: string,
     protected app: AppService,
     protected auth: AuthService,
     protected userService: UsersService,
@@ -39,19 +35,19 @@ export class HeaderComponent implements OnInit {
   }
 
   openCadastro() {
-    this.app.router.navigate([this.home_url, 'meu-cadastro']).then();
+    this.app.router.navigate(['/meu-cadastro']).then();
   }
 
   logout() {
-    this.auth.logout();
+    this.auth.logout().then();
   }
 
   ngOnInit() {
-    this.currentUser = this.auth.user;
-    this.userService.avatarUpdated.subscribe((t) => {
-      console.log('update');
-      this.currentUser.fotoPerfil = this.currentUser.fotoPerfil.concat('?time=', t.toString());
-      this.cdr.detectChanges();
+    this.currentUser = this.auth.getUser();
+    this.auth.user.pipe(filter(u => u != null)).subscribe(user => {
+
+      this.currentUser = user;
+      this.avatar = user.fotoPerfil.concat('?time=', Date.now().toString());
     });
   }
 

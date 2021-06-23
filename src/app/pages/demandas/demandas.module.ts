@@ -2,9 +2,6 @@ import {NovaDemandaComponent} from './nova-demanda/nova-demanda.component';
 import {NgModule} from '@angular/core';
 
 import {DemandasRoutingModule} from './demandas-routing.module';
-import {ReprovadasComponent} from './reprovadas/reprovadas.component';
-import {EnviadasParaCaptacaoComponent} from './enviadas-para-captacao/enviadas-para-captacao.component';
-import {AprovadasComponent} from './aprovadas/aprovadas.component';
 import {GestaoDeDemandasComponent} from './demandas.component';
 
 import {ReactiveFormsModule} from '@angular/forms';
@@ -20,9 +17,6 @@ import {DemandasResolver} from '@app/pages/demandas/resolvers/demandas.resolver'
 
 @NgModule({
   declarations: [
-    ReprovadasComponent,
-    EnviadasParaCaptacaoComponent,
-    AprovadasComponent,
     GestaoDeDemandasComponent,
     NovaDemandaComponent,
     DemandasListComponent,

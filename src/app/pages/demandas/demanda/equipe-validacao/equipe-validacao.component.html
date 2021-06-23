@@ -21,7 +21,7 @@
         >
           <option value="">Selecione</option>
           <option [value]="pessoa.id"
-                  *ngFor="let pessoa of pessoas | listUnique: []: [auth.user.id]:'id'">{{ pessoa.nomeCompleto || pessoa.userName }}</option>
+                  *ngFor="let pessoa of pessoas | listUnique: []: [auth.getUser().id]:'id'">{{ pessoa.nomeCompleto || pessoa.userName }}</option>
         </select>
       </div>
     </div>

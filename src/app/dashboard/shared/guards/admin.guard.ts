@@ -11,7 +11,7 @@ export class AdminGuard implements CanActivate {
   }
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean | UrlTree> {
-    const me = await this.auth.user;
+    const me = await this.auth.getUser();
     if (me.role !== UserRole.Administrador) {
       this.app.alert('Você não ter permissão para fazer isso', 'Acesso negado').then();
       return this.router.navigateByUrl('/');

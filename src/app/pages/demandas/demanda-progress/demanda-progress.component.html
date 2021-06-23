@@ -6,6 +6,8 @@
     <main>
       <div class="text-blue fs-14 font-weight-medium">
         {{ demanda.titulo }}
+        <div class="fs-10">{{demanda.createdAt | date:'short'}}</div>
+
       </div>
     </main>
     <footer>
@@ -24,7 +26,8 @@
 
         <ng-container *ngSwitchCase="ETAPAS_VALUES.AprovacaoDiretor">
           <button *ngIf="demanda.status === ETAPAS_STATUS.Aprovada"
-                  class="btn btn-link text-uppercase p-0 fs-12 font-weight-medium" (click)="enviarCaptacao(demanda.id)">
+                  class="btn btn-link text-uppercase p-0 fs-12 font-weight-medium d-block"
+                  (click)="enviarCaptacao(demanda.id)">
             <i class="ta-ok"></i>
             Enviar para Captação
           </button>

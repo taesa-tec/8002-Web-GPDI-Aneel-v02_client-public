@@ -28,7 +28,7 @@ export class UsersService extends ServiceBase<any> {
     return await this.http.put<ResultadoResponse>(`Me`, user).toPromise();
   }
 
-  async updateAvatar(file: File, userId = 'me') {
+  async updateAvatar(file: File, userId: number | 'me' = 'me') {
     const formData = new FormData();
     formData.append('file', file);
     if (userId !== 'me') {

@@ -14,7 +14,6 @@ import {AuthGuard} from '@app/guards';
 import {RoleGuard} from '@app/guards/role.guard';
 import {UserRole} from '@app/commons';
 
-
 registerLocaleData(localeBr, 'pt');
 moment.locale('pt-br');
 

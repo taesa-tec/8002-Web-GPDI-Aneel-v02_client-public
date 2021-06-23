@@ -23,7 +23,7 @@
                   [ngStyle]="{
                     'background-size': 'cover',
                     'background-position': 'center',
-                    'background-image': avatar
+                    'background-image': 'url('+avatar+')'
                   }"
                 ></div>
               </div>
@@ -58,7 +58,7 @@
                     </a>
                   </ng-container>
                   <button (click)="logout()"
-                     class="dropdown-item"
+                          class="dropdown-item"
                   >
                     <span class="fs-24 mr-3"><i class="ta-exit"></i></span>
                     Logout

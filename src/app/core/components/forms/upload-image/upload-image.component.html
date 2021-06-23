@@ -16,5 +16,5 @@
   <div class="text-cinza text-center py-2" [hidden]="!hasImage">
     <i class="ta-camera"></i> Alterar Imagem
   </div>
-  <input type="file" (name)="name" (disabled)="disabled" class="d-none" #input (change)=elOnChange($event)>
+  <input type="file" [name]="name" [disabled]="disabled" class="d-none" #input (change)=elOnChange($event)>
 </label>

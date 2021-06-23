@@ -88,7 +88,7 @@
       Essa demanda já foi enviada para o processo de captação.
     </div>
   </ng-container>
-  <ng-container *ngIf="demanda.etapaAtual !== ETAPAS_VALUES.Captacao" [ngSwitch]="auth.user.id">
+  <ng-container *ngIf="demanda.etapaAtual !== ETAPAS_VALUES.Captacao" [ngSwitch]="auth.getUser().id">
     <div class="d-flex justify-content-center" *ngSwitchCase="demanda.criadorId">
       <span>Essa Demanda está na etapa <strong>{{etapa_atual}}</strong></span>
     </div>

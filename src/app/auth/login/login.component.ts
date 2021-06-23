@@ -5,6 +5,7 @@ import {LoginRequest, UserRole} from '@app/commons';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {environment} from '../../../environments/environment';
 import {FormBuilder, Validators} from '@angular/forms';
+import {filter} from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,7 @@ export class LoginComponent implements OnInit {
 
   remember = !environment.production;
 
-  constructor(protected authService: AuthService,
+  constructor(protected auth: AuthService,
               private router: Router,
               protected fb: FormBuilder,
               protected activatedRoute: ActivatedRoute,
@@ -38,26 +39,25 @@ export class LoginComponent implements OnInit {
 
     this.loading.show();
     this.errorMessage = null;
-    try {
-      const response = await this.authService.login(this.form.value, this.remember);
+    const loggein = await this.auth.login(this.form.value, this.remember);
+    if (loggein) {
+      await this.router.navigate(['./'], {relativeTo: this.activatedRoute});
+    }
+    this.form.get('password').setValue('');
+    this.loading.hide();
+    this.cdr.detectChanges();
 
-      if (response.accessToken) {
-        const redirect = this.activatedRoute.snapshot.queryParams.redirect || '/';
-        await this.router.navigateByUrl(redirect);
-      }
-    } catch (e) {
+  }
+
+
+  ngOnInit(): void {
+    this.auth.error.pipe(filter(e => e != null)).subscribe(e => {
       if (e.error) {
         this.errorMessage = e.error.detail;
       } else {
         this.errorMessage = e.message;
       }
-    } finally {
-      this.form.get('password').setValue('');
-      this.loading.hide();
-      this.cdr.detectChanges();
-    }
-  }
+    });
 
-  ngOnInit(): void {
   }
 }

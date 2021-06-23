@@ -1,8 +1,12 @@
 import {UserRole} from '@app/commons';
 import {Route, Routes} from '@angular/router';
 import {SidebarComponent} from '@app/dashboard/sidebar/sidebar.component';
+import {NotFoundComponent} from '@app/core/screens/not-found.component';
 
-
+export const NotFoundRoute: Route = {
+  path: '**',
+  component: NotFoundComponent
+};
 export const MeuCadastroRoute: Route = {
   path: 'meu-cadastro',
   canActivate: ['logged'],

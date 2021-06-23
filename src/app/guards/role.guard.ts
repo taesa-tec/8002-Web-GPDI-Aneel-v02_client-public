@@ -20,7 +20,7 @@ export class RoleGuard implements CanActivate, CanActivateChild {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.roles.indexOf(this.auth.user?.role) >= 0;
+    return this.roles.indexOf(this.auth.getUser()?.role) >= 0;
   }
 
   canActivateChild(

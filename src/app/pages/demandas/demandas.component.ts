@@ -27,7 +27,7 @@ export class GestaoDeDemandasComponent implements OnInit {
       this.equipe = data.equipe;
       this.hasEquipe = this.equipe.gerente != null && this.equipe.diretor != null && this.equipe.coordenador != null;
     });
-    this.user = this.auth.user;
+    this.user = this.auth.getUser();
     this.menu = [
       {text: 'Em Elaboração', path: 'elaboracao'},
       {text: 'Reprovadas', path: 'reprovadas'},

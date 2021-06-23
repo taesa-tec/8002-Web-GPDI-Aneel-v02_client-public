@@ -31,7 +31,7 @@ export class NovaDemandaComponent implements OnInit {
         const demanda = await this.app.demandas.criarDemanda(this.form.value.titulo);
         this.app.alert('Demanda salva com sucesso!', 'Sucesso').then();
         this.activeModal.close();
-        this.app.router.navigate(['/', this.auth.user.role === UserRole.Administrador ? 'admin' : 'gestor', 'demandas', demanda.id]).then();
+        this.app.router.navigate(['/', this.auth.getUser().role === UserRole.Administrador ? 'admin' : 'gestor', 'demandas', demanda.id]).then();
       } catch (error) {
         console.error(error);
 

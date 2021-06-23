@@ -80,6 +80,7 @@ export class FileService {
       }
       if (arg.response && arg.response instanceof HttpResponse) {
         const cd = arg.response.headers.get('content-disposition');
+        console.log(cd);
         if (!filename || filename.trim().length === 0) {
           const m = cd?.match(/filename=(.+);/);
           if (m) {

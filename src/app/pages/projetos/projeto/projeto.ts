@@ -91,9 +91,9 @@ export const IsResponsavelProvider: Provider = {
   deps: [AuthService, ProjetoService],
   useFactory: (auth: AuthService, service: ProjetoService) => {
     const check = (p, u) => p !== undefined && (p.responsavelId === u.id || auth.userHasRoles(UserRole.Administrador));
-    const behavior = new BehaviorSubject(check(service.getCurrentProjeto(), auth.user));
+    const behavior = new BehaviorSubject(check(service.getCurrentProjeto(), auth.getUser()));
     service.projeto.subscribe(p => {
-      behavior.next(check(p, auth.user));
+      behavior.next(check(p, auth.getUser()));
     });
     return behavior;
   }

@@ -9,10 +9,10 @@ import {AuthService} from '@app/services';
 function menu(demanda: Demanda, user, equipe: EquipePeD): Array<MenuItem> {
   if (user.role === UserRole.Administrador) {
     return menuCriador(
-      menuAprovadores([
+      [...menuAprovadores([], demanda),
         {text: 'Central Administrativa', icon: 'ta-central-admin', path: 'central-administrativa'},
         {text: 'Logs', icon: 'ta-log', path: 'logs'}
-      ], demanda)
+      ]
       , demanda);
   }
 
@@ -66,5 +66,5 @@ export const DemandaProvider: FactoryProvider = {
 export const DemandaMenuProvider: FactoryProvider = {
   provide: SIDEBAR_MENU,
   deps: [DEMANDA, AuthService, EQUIPE_PED],
-  useFactory: (demanda: Demanda, auth: AuthService, equipe: EquipePeD) => menu(demanda, auth.user, equipe)
+  useFactory: (demanda: Demanda, auth: AuthService, equipe: EquipePeD) => menu(demanda, auth.getUser(), equipe)
 };

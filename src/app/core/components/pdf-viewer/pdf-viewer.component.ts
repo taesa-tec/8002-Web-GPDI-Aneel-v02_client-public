@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {HttpClient, HttpErrorResponse, HttpEvent, HttpEventType} from '@angular/common/http';
 import {FileService} from '@app/services/file.service';
+import {environment} from '@env/environment';
 
 @Component({
   selector: 'app-pdf-viewer',
@@ -16,36 +17,38 @@ export class PdfViewerComponent implements OnInit {
   loadedFileUrl: SafeResourceUrl;
   isLoading = false;
   errorMessage: string = null;
+  pdfProgress: any = 0;
 
-  constructor(protected http: HttpClient, protected sanitizer: DomSanitizer, protected fileService: FileService) {
+  constructor(protected http: HttpClient, protected sanitizer: DomSanitizer, protected file: FileService) {
   }
 
 
-  async ngOnInit() {
+  ngOnInit() {
     if (this.url) {
+      this.loadUrlFile(this.url).then();
+    }
+  }
+
+  async loadUrlFile(url) {
+    try {
       this.isLoading = true;
-      try {
-        const response = await this.http.get(this.url, {observe: 'response', responseType: 'blob'}).toPromise();
-        const content = response.headers.get('content-disposition');
-        if (content) {
-          this.filename = content.split(';')
-            .map(i => i.trim())
-            .find(i => i.startsWith('filename'))
-            .replace(/^filename=/, '');
-        }
-        this.realUrlFile = URL.createObjectURL(response.body);
-        this.loadedFileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.realUrlFile);
-      } catch (e) {
-        if (e instanceof HttpErrorResponse && e.status === 404) {
-          this.errorMessage = 'Arquivo não encontrado';
-        }
+      this.realUrlFile = await this.file.download(url, p => {
+        this.pdfProgress = (p.loaded / p.total) * 100;
+      });
+      this.loadedFileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.realUrlFile);
+    } catch (e) {
+      console.log(e);
+      if (e instanceof HttpErrorResponse && e.status === 404) {
+        this.errorMessage = 'Arquivo não encontrado';
       }
+    } finally {
+      this.pdfProgress = null;
       this.isLoading = false;
     }
   }
 
   download() {
-    this.fileService.urlToBlobDownload(this.url, '').then();
+    this.file.urlToBlobDownload(this.url, '').then();
   }
 
 }

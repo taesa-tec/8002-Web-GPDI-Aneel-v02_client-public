@@ -82,7 +82,7 @@ export class HelpComponent implements OnInit {
 
   @HostListener('click', ['$event'])
   click(evt: MouseEvent) {
-    if (evt.ctrlKey && this.auth.user.role === 'Administrador') {
+    if (evt.ctrlKey && this.auth.getUser().role === 'Administrador') {
       evt.preventDefault();
       this.app.confirm('Deseja editar este item de ajuda?', `Editar item de ajuda (${this.item.codigo})?`).then(editar => {
         if (editar) {
