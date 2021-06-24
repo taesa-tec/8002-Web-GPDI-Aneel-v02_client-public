@@ -1,5 +1,24 @@
 import {ValidatorFn, AbstractControl, ValidationErrors, Validators, FormArray, FormControl} from '@angular/forms';
 
+
+interface PasswordOptions {
+  requiredLength?: number;
+  //requiredUniqueChars?: number;
+  requireNonAlphanumeric?: boolean;
+  requireLowercase?: boolean;
+  requireUppercase?: boolean;
+  requireDigit?: boolean;
+}
+
+const passwordOptionDefault: PasswordOptions = {
+  requiredLength: 6,
+  //requiredUniqueChars: 1,
+  requireNonAlphanumeric: true,
+  requireDigit: true,
+  requireLowercase: true,
+  requireUppercase: true
+};
+
 function santizeDate(date: string): Date {
   if (typeof date === 'string' && /^\d{4}-\d{2}-\d{2}/.test(date)) {
     if (date.length === 10) {
@@ -121,6 +140,30 @@ export class AppValidators {
         return {max: {max: maxItens, actual: formArray.length}};
       }
       return null;
+    };
+  }
+
+  static strongPass(config: PasswordOptions = passwordOptionDefault, errorDesc = true) {
+    config = config ?? passwordOptionDefault;
+    return (control: AbstractControl) => {
+      if (control.value === null || control.value === '') {
+        return null;
+      }
+      const value = control.value as string;
+      console.log(value, config);
+      const result = {
+        length: (config?.requiredLength ?? 1) > value.length,
+        uppercase: (config?.requireUppercase ?? false) && !/[A-Z]/.test(value),
+        lowerCase: (config?.requireUppercase ?? false) && !/[a-z]/.test(value),
+        nonAlphanumeric: (config?.requireNonAlphanumeric ?? false) && !/[!@#$%&*+\-_]/.test(value),
+        digit: (config?.requireDigit ?? false) && !/\d/.test(value),
+      };
+
+      if (Object.entries(result).reduce((p, c) => p || c[1], false)) {
+        return errorDesc ? result : {password: true};
+      }
+      return null;
+
     };
   }
 }

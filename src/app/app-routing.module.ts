@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {NotFoundComponent} from '@app/core/screens/not-found.component';
 
 const routes: Routes = [
   {path: '', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},

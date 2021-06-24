@@ -24,7 +24,6 @@ export class RoleGuard implements CanActivate, CanActivateChild {
     if (this.roles.indexOf(this.auth.getUser()?.role) >= 0) {
       return true;
     }
-    console.log("PQP");
     return this.router.navigate(['/']);
   }
 

@@ -68,6 +68,8 @@ const routes: Routes = [
           status: 'projetoFinalizado'
         },
       },
+
+      //
       {
         path: 'notfound',
         component: NotFoundComponent
