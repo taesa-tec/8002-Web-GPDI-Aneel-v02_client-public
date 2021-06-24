@@ -11,8 +11,7 @@ import {NotFoundComponent} from './core/components/not-found/not-found.component
 import {SharedModule} from '@app/core/shared';
 import {ComponentsModule} from '@app/core/components';
 import {AuthGuard} from '@app/guards';
-import {RoleGuard} from '@app/guards/role.guard';
-import {UserRole} from '@app/commons';
+import {IsAdmin, IsFornecedor, IsGestor, IsSuprimento, RoleGuard} from '@app/guards/role.guard';
 
 registerLocaleData(localeBr, 'pt');
 moment.locale('pt-br');
@@ -34,10 +33,10 @@ moment.locale('pt-br');
   providers: [
     {provide: LOCALE_ID, useValue: 'pt'},
     {provide: 'logged', useClass: AuthGuard},
-    RoleGuard.To([UserRole.Administrador], 'isAdmin'),
-    RoleGuard.To([UserRole.Administrador, UserRole.User], 'isGestor'),
-    RoleGuard.To([UserRole.Administrador, UserRole.Suprimento], 'isSuprimento'),
-    RoleGuard.To([UserRole.Fornecedor], 'isFornecedor'),
+    IsAdmin,
+    IsGestor,
+    IsSuprimento,
+    IsFornecedor,
   ],
   bootstrap: [AppComponent]
 })

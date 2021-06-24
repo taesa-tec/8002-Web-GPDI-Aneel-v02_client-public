@@ -19,8 +19,7 @@ export const SidebarMenu = {
   useValue: [
     {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: `/propostas`},
     {text: 'Projetos - Refinamento', icon: 'ta-file-check', path: `/refinamento`},
-    {text: 'Projetos - Em execução', icon: 'ta-file-check', path: `/projetos/em-execucao`},
-    {text: 'Projetos - Em finalização', icon: 'ta-file-check', path: `/projetos/em-finalizacao`},
+    {text: 'Projetos - Em execução', icon: 'ta-file-check', path: `/projetos/em-execucao`}
   ]
 };
 

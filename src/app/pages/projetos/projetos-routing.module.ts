@@ -4,6 +4,7 @@ import {EmExecucaoComponent} from '@app/pages/projetos/em-execucao/em-execucao.c
 import {EmFinalizacaoComponent} from '@app/pages/projetos/em-finalizacao/em-finalizacao.component';
 import {ProjetosResolver} from '@app/pages/projetos/projetos.resolver';
 import {SidebarComponent} from '@app/dashboard/sidebar/sidebar.component';
+import {IsGestor} from '@app/guards/role.guard';
 
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
       {
         path: 'em-finalizacao',
         component: EmFinalizacaoComponent,
+        canActivate: ['isGestor'],
         resolve: {
           projetos: ProjetosResolver
         },
