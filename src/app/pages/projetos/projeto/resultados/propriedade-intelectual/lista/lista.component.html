@@ -1,1 +1,18 @@
-<p>lista intelectual works!</p>
+<div class="row">
+    <div class="col-12">
+        <h5 class="text-uppercase text-blue font-weight-normal my-4">Resultados propriedade intelectual</h5>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 text-right">
+        <button class="btn btn-outline-primary" type="button" (click)="openModal()">
+            <i class="ta-plus-circle fs-24 align-middle align-middle"></i>
+            Registrar Propriedade Intelectual
+        </button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <app-table [cols]="cols" [buttons]="buttons" [data]="propriedades"></app-table>
+    </div>
+</div>

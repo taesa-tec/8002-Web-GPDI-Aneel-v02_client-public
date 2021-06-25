@@ -16,9 +16,9 @@ export class ListaComponent implements OnInit {
   ];
 
   cols: TableComponentCols = [
-    {title: 'Membro da Equipe', field: 'membro'},
-    {title: 'Capacitação', field: 'capacitacao'},
-    {title: 'Arquivo Cadastrado?', field: 'arquivo'}
+    {title: 'Membro da Equipe', field: 'membro', order: true},
+    {title: 'Capacitação', field: 'capacitacao', order: true},
+    {title: 'Arquivo Cadastrado?', field: 'arquivo', order: true}
   ];
 
   buttons: TableComponentActions = [
@@ -44,7 +44,7 @@ export class ListaComponent implements OnInit {
     });
   }
 
-  async openModal(capacitacao) {
+  async openModal(capacitacao?: any) {
     let ref = this.modal.open(EditorComponent, {size: 'lg'});
     ref.componentInstance.capacitacao = capacitacao;
     await ref.result;

@@ -17,10 +17,10 @@ export class ListaComponent implements OnInit {
   ];
 
   cols: TableComponentCols = [
-    {title: 'Etapas', field: 'etapas'},
-    {title: 'Data Inicial', field: 'dataInicial', pipe: new DatePipe('pt-BR'), value: item => [item.dataInicial, 'short']},
-    {title: 'Data Final', field: 'dataFinal', pipe: new DatePipe('pt-BR'), value: item => [item.dataFinal, 'short']},
-    {title: 'Atividades Cadastradas?', field: 'atividades'}
+    {title: 'Etapas', field: 'etapas', order: true},
+    {title: 'Data Inicial', field: 'dataInicial', pipe: new DatePipe('pt-BR'), value: item => [item.dataInicial, 'short'], order: true},
+    {title: 'Data Final', field: 'dataFinal', pipe: new DatePipe('pt-BR'), value: item => [item.dataFinal, 'short'], order: true},
+    {title: 'Atividades Cadastradas?', field: 'atividades', order: true}
   ];
 
   buttons: TableComponentActions = [
@@ -46,7 +46,7 @@ export class ListaComponent implements OnInit {
     });
   }
 
-  async openModal(etapa) {
+  async openModal(etapa?: any) {
     let ref = this.modal.open(EditorComponent, {size: 'lg'});
     ref.componentInstance.etapa = etapa;
     await ref.result;

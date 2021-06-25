@@ -16,8 +16,8 @@ export class ListaComponent implements OnInit {
   ];
 
   cols: TableComponentCols = [
-    {title: 'Tipo', field: 'tipo'},
-    {title: 'CNPJ Entidade', field: 'cnpj'}
+    {title: 'Tipo', field: 'tipo', order: true},
+    {title: 'CNPJ Entidade', field: 'cnpj', order: true}
   ];
 
   buttons: TableComponentActions = [
@@ -43,7 +43,7 @@ export class ListaComponent implements OnInit {
     });
   }
 
-  async openModal(apoio) {
+  async openModal(apoio?: any) {
     let ref = this.modal.open(EditorComponent, {size: 'lg'});
     ref.componentInstance.apoio = apoio;
     await ref.result;

@@ -16,9 +16,9 @@ export class ListaComponent implements OnInit {
   ];
 
   cols: TableComponentCols = [
-    {title: 'Tipo', field: 'tipo'},
-    {title: 'Periódico', field: 'periodico'},
-    {title: 'Arquivo Cadastrado?', field: 'arquivo'}
+    {title: 'Tipo', field: 'tipo', order: true},
+    {title: 'Periódico', field: 'periodico', order: true},
+    {title: 'Arquivo Cadastrado?', field: 'arquivo', order: true}
   ];
 
   buttons: TableComponentActions = [
@@ -44,7 +44,7 @@ export class ListaComponent implements OnInit {
     });
   }
 
-  async openModal(cientifico) {
+  async openModal(cientifico?: any) {
     let ref = this.modal.open(EditorComponent, {size: 'lg'});
     ref.componentInstance.cientifico = cientifico;
     await ref.result;
