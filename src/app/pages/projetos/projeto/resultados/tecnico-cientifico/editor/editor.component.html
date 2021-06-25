@@ -1,0 +1,109 @@
+<div class="modal-header">
+    <div class="text-uppercase modal-title text-blue-light fs-20">
+        Registrar Produção Técnico Científica
+    </div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close('close')">
+        <i class="ta-cancel-circle"></i>
+    </button>
+</div>
+
+<div class="modal-body">
+    <form [formGroup]="form" (ngSumit)="submit">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>TIPO DE PRODUÇÃO</label>
+                    <select class="form-control" formControlName="tipo">
+                        <option value="" hidden>Selecione</option>
+                        <option [value]="1">Valor 1</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>DATA DA PUBLICAÇÃO</label>
+                    <input type="date" class="form-control" formControlName="dataPublicacao"/>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>RECEBIDA A CONFIRMAÇÃO DA PUBLICAÇÃO?</label>
+                    <select class="form-control" formControlName="confirmacao">
+                        <option value="" hidden>Selecione</option>
+                        <option [value]="1">Valor 1</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>NOME DO PERIÓDICO OU DO EVENTO DE PUBLICAÇÃO DA PRODUÇÃO TÉCNICO-CIENTÍFICA</label>
+                    <app-textarea class="form-control" rows="1" maxlength="50" formControlName="nome"></app-textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>ENDEREÇO NA INTERNET DO PERIÓDICO OU DO EVENTO DE PUBLICAÇÃO</label>
+                    <app-textarea class="form-control" rows="1" maxlength="50" formControlName="endereco"></app-textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>PAÍS DA PUBLICAÇÃO</label>
+                    <select class="form-control" formControlName="pais">
+                        <option value="" hidden>Selecione</option>
+                        <option [value]="1">Valor 1</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>CIDADE DA PUBLICAÇÃO</label>
+                    <input type="text" class="form-control" formControlName="cidade">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>TÍTULO DO TRABALHO QUE GEROU A PRODUÇÃO TÉCNICO-CIENTÍFICA</label>
+                    <app-textarea class="form-control" rows="2" maxlength="200" formControlName="titulo"></app-textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>ARQUIVO EM FORMATO PDF DO TRABALHO QUE GEROU A PRODUÇÃO</label>
+                    <div>
+                        <span>Anexar Arquivo (ID127)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group d-flex justify-content-end mt-4">
+            <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">
+                Cancelar
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+                <i class="ta-save mr-1"></i>
+                Adicionar Produção Técnico Científica
+            </button>
+        </div>
+    </form>
+</div>

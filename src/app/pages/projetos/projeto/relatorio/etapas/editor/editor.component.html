@@ -1,0 +1,50 @@
+<div class="modal-header">
+  <div class="text-uppercase modal-title text-blue-light fs-20">
+    Editar Etapa
+  </div>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.close('close')">
+    <i class="ta-cancel-circle"></i>
+  </button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="form" (ngSumit)="submit">
+
+    <div class="form-group">
+      <label>DESCRIÇÃO DAS ATIVIDADES REALIZADAS NA ETAPA SELECIONADA</label>
+      <app-textarea class="form-control" rows="4" maxlength="300" formControlName="atividadesRealizadas"></app-textarea>
+    </div>
+    
+    <div class="form-group">
+      <div class="border-top mt-2 mb-4 pt-3">
+        <span>
+          DADOS CADASTRADOS NO PLANEJAMENTO DO  PLANEJAMENTO (PARA REFERÊNCIA)
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>DESCRIÇÃO DAS ATIVIDADES</label>
+      <app-textarea class="form-control" rows="4" maxlength="300" formControlName="atividades"></app-textarea>
+    </div>
+
+    <div class="form-group">
+      <label>PRODUTOS INTERMEDIÁRIOS ASSOCIADOS A ESTA ETAPA</label>
+      <input class="form-control" formControlName="produtos"/>
+    </div>
+
+    <div class="form-group d-flex justify-content-end mt-4">
+      <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">
+        Cancelar
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+        <i class="ta-save mr-1"></i>
+        Salvar Dados
+      </button>
+    </div>
+  </form>
+</div>

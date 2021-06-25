@@ -1,0 +1,100 @@
+<div class="modal-header">
+    <div class="text-uppercase modal-title text-blue-light fs-20">
+        Registrar Capacitação Profissional
+    </div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close('close')">
+        <i class="ta-cancel-circle"></i>
+    </button>
+</div>
+
+<div class="modal-body">
+    <form [formGroup]="form" (ngSumit)="submit">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>RECURSO HUMANO</label>
+                    <select class="form-control" formControlName="recursoHumano">
+                        <option value="" hidden>Selecione</option>
+                        <option [value]="1">Valor 1</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>TIPO DE CAPACITAÇÃO</label>
+                    <select class="form-control" formControlName="tipo">
+                        <option value="" hidden>Selecione</option>
+                        <option [value]="1">Valor 1</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>CONCLUSÃO DA CAPACITAÇÃO?</label>
+                    <select class="form-control" formControlName="conclucao">
+                        <option value="" hidden>Selecione</option>
+                        <option [value]="1">Valor 1</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>DATA DE CONCLUSÃO CAPACITAÇÃO</label>
+                    <input type="date" class="form-control" formControlName="dataConclusao">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>CNPJ INSTITUIÇÃO</label>
+                    <input type="text" class="form-control" formControlName="cnpj">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>ÁREA DA PESQUISA DE CAPTAÇÃO PROFISSIONAL</label>
+                    <app-textarea class="form-control" rows="2" maxlength="50" formControlName="pesquisa"></app-textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>TÍTULO DO TRABALHO QUE DEU ORIGEM À CAPACITAÇÃO PROFISSIONAL</label>
+                    <app-textarea class="form-control" rows="2" maxlength="200" formControlName="tituloOrigem"></app-textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>ANEXAR ARQUIVO DO TRABALHO QUE DEU ORIGEM A CAPTAÇÃO PROFISSIONAL (EM PDF)</label>
+                    <div>
+                        <span>Anexar Arquivo (ID127)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group d-flex justify-content-end mt-4">
+            <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">
+                Cancelar
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+                <i class="ta-save mr-1"></i>
+                Adicionar Captação Profissional
+            </button>
+        </div>
+    </form>
+</div>

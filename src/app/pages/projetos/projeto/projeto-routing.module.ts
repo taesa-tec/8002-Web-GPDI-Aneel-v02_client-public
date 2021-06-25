@@ -63,10 +63,19 @@ const routes: Routes = [
       },
       {
         path: 'relatorio',
-        component: DebugComponent,
+        canActivate: ['isGestor'],
         resolve: {
           status: 'projetoFinalizado'
         },
+        loadChildren: () => import('./relatorio/relatorio.module').then(m => m.RelatorioModule)
+      },
+      {
+        path: 'resultados',
+        canActivate: ['isGestor'],
+        resolve: {
+          status: 'projetoFinalizado'
+        },
+        loadChildren: () => import('./resultados/resultados.module').then(m => m.ResultadosModule)
       },
 
       //
