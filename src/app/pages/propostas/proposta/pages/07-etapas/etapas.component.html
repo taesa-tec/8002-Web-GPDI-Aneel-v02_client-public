@@ -3,7 +3,7 @@
     <h5 class="text-uppercase text-blue font-weight-normal my-4">ETAPAS</h5>
   </div>
   <div class="col-auto">
-    <a type="button" class="btn btn-outline-primary" routerLink="./" fragment="novo" *ngIf="canEdit">
+    <a type="button" class="btn btn-outline-primary" routerLink="./" fragment="novo" *ngIf="canEdit && proposta.duracao > 0">
       <i class="ta-plus-circle fs-24 align-middle"></i>
       Nova Etapa
     </a>

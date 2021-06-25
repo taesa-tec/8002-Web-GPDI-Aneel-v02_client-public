@@ -33,7 +33,6 @@ export const SidebarMenu = {
 export const HeaderMenu = {
   provide: HEADER_MENU,
   useValue: [
-    {text: 'Gerenciar Usuários', icon: 'ta-group', path: `/gerenciar-usuarios`},
     {text: 'Meu Cadastro', icon: 'ta-user-o', path: `/meu-cadastro`}
   ]
 };

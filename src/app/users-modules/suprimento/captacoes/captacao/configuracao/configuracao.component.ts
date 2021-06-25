@@ -110,7 +110,7 @@ export class ConfiguracaoComponent implements OnInit {
 
   abrirContrato(id: number) {
 
-    const modalRef = this.modal.open(ViewContratoComponent, {size: 'lg'});
+    const modalRef = this.modal.open(ViewContratoComponent, {size: 'fullwidth'});
     modalRef.componentInstance.contratoId = id;
   }
 
