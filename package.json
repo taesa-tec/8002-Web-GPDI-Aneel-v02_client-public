@@ -1,10 +1,11 @@
 {
   "name": "sistema-ped",
-  "version": "2.2.0",
+  "version": "2.7.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm run buildeditor; ng serve",
-    "build": "npm run buildeditor; ng build",
+    "start": "ng serve",
+    "prebuild": "npm run buildeditor; npm version patch",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "lintfix": "ng lint sistema-ped --fix",
