@@ -34,6 +34,7 @@ const statusMap = new Map([
   ['Encerrada', 'Encerrada'],
   ['Refinamento', 'Refinamento'],
   ['AnaliseRisco', 'Analise de Risco'],
+  ['Formalizacao', 'Encerrada'],
 ]);
 export const CaptacaoCols: { [prop: string]: TableComponentCols } = {
   Pendente: [

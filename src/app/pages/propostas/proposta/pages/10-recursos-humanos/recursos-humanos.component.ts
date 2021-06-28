@@ -11,7 +11,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {PropostaComponent} from '@app/pages/propostas/proposta/proposta.component';
 import {RiscoFormComponent} from '@app/pages/propostas/proposta/pages/09-riscos/risco-form/risco-form.component';
 import {Funcoes, Graduacoes} from '@app/commons';
-import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
+import {ActionOpenItem, PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
 
 const tableCols: TableComponentCols = [
   {
@@ -54,7 +54,7 @@ const buttons = [
   providers: [
     {provide: CRUD_EDITOR, useValue: RecursoHumanoFormComponent},
     {provide: TABLE_COLS, useValue: tableCols},
-    {provide: TABLE_ACTIONS, useValue: buttons},
+    ActionOpenItem,
   ]
 })
 export class RecursosHumanosComponent implements OnInit {

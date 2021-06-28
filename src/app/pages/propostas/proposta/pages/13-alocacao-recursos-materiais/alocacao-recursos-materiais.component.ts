@@ -10,7 +10,7 @@ import {
 import {
   AlocarRecursoHumanoFormComponent
 } from '@app/pages/propostas/proposta/pages/11-alocacao-recursos-humanos/alocar-recurso-humano-form/alocar-recurso-humano-form.component';
-import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
+import {ActionOpenItem, PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
 
 const tableCols: TableComponentCols = [
   {
@@ -52,7 +52,7 @@ const buttons = [
   providers: [
     {provide: CRUD_EDITOR, useValue: AlocarRecursoMaterialFormComponent},
     {provide: TABLE_COLS, useValue: tableCols},
-    {provide: TABLE_ACTIONS, useValue: buttons},
+    ActionOpenItem,
   ]
 })
 export class AlocacaoRecursosMateriaisComponent implements OnInit {
