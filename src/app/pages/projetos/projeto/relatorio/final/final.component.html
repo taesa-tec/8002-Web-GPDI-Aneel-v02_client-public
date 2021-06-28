@@ -1,1 +1,154 @@
-<p>final works!</p>
+<div class="row">
+    <div class="col-12">
+        <h5 class="text-uppercase text-blue font-weight-normal my-4">Relatório final e auditoria</h5>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+            <div class="form-group">
+                <label>PRODUTO PRINCIPAL PREVISTO FOI ALCANÇADO OU SUPERADO?</label>
+                <div class="mt-2">
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input cursor-pointer" formControlName="isProdutoAlcancado"
+                            id="produto-alcancado-sim" [value]="true">
+                        <label class="custom-control-label text-transform-none cursor-pointer" for="produto-alcancado-sim">
+                            Sim
+                        </label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input cursor-pointer" formControlName="isProdutoAlcancado"
+                            id="produto-alcancado-nao" [value]="false">
+                        <label class="custom-control-label text-transform-none cursor-pointer" for="produto-alcancado-nao">
+                            Não
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" *ngIf="form.value.isProdutoAlcancado !== ''">
+                <label *ngIf="!form.value.isProdutoAlcancado">
+                    JUSTIFICATIVA PELO NÃO ALCANCE DO PRODUTO PRINCIPAL PREVISTO
+                </label>
+                <label *ngIf="form.value.isProdutoAlcancado">
+                    ESPECIFICAÇÃO TÉCNICA DO PRODUTO PRINCIPAL OBTIDO
+                </label>
+                <app-textarea class="form-control" rows="3" maxlength="1000" formControlName="tecnicaProduto"></app-textarea>
+            </div>
+
+            <div class="form-group">
+                <label>TÉCNICA PREVISTA FOI IMPLEMENTADA?</label>
+                <div class="mt-2">
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input cursor-pointer" formControlName="isTecnicaImplementada"
+                            id="tecnica-implementada-sim" [value]="true">
+                        <label class="custom-control-label text-transform-none cursor-pointer" for="tecnica-implementada-sim">
+                            Sim
+                        </label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input cursor-pointer" formControlName="isTecnicaImplementada"
+                            id="tecnica-implementada-nao" [value]="false">
+                        <label class="custom-control-label text-transform-none cursor-pointer" for="tecnica-implementada-nao">
+                            Não
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" *ngIf="form.value.isTecnicaImplementada !== ''">
+                <label *ngIf="!form.value.isTecnicaImplementada">
+                    JUSTIFICATIVA PELA NÃO IMPLEMENTAÇÃO DA TÉCNICA PREVISTA
+                </label>
+                <label *ngIf="form.value.isTecnicaImplementada">
+                    DESCRIÇÃO, SUCINTA, DA TÉCNICA EMPREGADA
+                </label>
+                <app-textarea class="form-control" rows="3" maxlength="1000" formControlName="tecnicaImplementada"></app-textarea>
+            </div>
+
+            <div class="form-group">
+                <label>APLICABILIDADE PREVISTA FOI ALCANÇADA OU SUPERADA?</label>
+                <div class="mt-2">
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input cursor-pointer" formControlName="isAplicabilidadeAlcancada"
+                            id="aplicabilidade-alcancada-sim" [value]="true">
+                        <label class="custom-control-label text-transform-none cursor-pointer" for="aplicabilidade-alcancada-sim">
+                            Sim
+                        </label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input cursor-pointer" formControlName="isAplicabilidadeAlcancada"
+                            id="aplicabilidade-alcancada-nao" [value]="false">
+                        <label class="custom-control-label text-transform-none cursor-pointer" for="aplicabilidade-alcancada-nao">
+                            Não
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <ng-container *ngIf="form.value.isAplicabilidadeAlcancada !== ''">
+
+                <ng-container *ngIf="!form.value.isAplicabilidadeAlcancada">
+                    <div class="form-group">
+                        <label>JUSTIFICATIVA PELO NÃO ALCANCE DA APLICABILIDADE PREVISTA</label>
+                        <app-textarea class="form-control" rows="3" maxlength="1000" formControlName="aplicabilidadeJustificativa"></app-textarea>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="form.value.isAplicabilidadeAlcancada">
+                    <div class="form-group">
+                        <label>DESCRIÇÃO, SUCINTA, DOS RESULTADOS DOS TESTES DE FUNCIONALIDADE DO PRODUTO PRINCIPAL E SUAS RESTRIÇÕES</label>
+                        <app-textarea class="form-control" rows="3" maxlength="1000" formControlName="resultadosTestes"></app-textarea>
+                    </div>
+        
+                    <div class="form-group">
+                        <label>DESCRIÇÃO DA ABRANGÊNCIA DE APLICAÇÃO DO PRODUTO PRINCIPAL E SUAS RESTRIÇÕES</label>
+                        <app-textarea class="form-control" rows="3" maxlength="1000" formControlName="abrangenciaProduto"></app-textarea>
+                    </div>
+        
+                    <div class="form-group">
+                        <label>DESCRIÇÃO DO ÂMBITO DE APLICAÇÃO DO PRODUTO PRINCIPAL E SUAS RESTRIÇÕES</label>
+                        <app-textarea class="form-control" rows="3" maxlength="1000" formControlName="ambitoAplicacaoProduto"></app-textarea>
+                    </div>
+                </ng-container>
+
+            </ng-container>
+
+            <div class="form-group">
+                <label>DESCRIÇÃO, SUCINTA, DAS ATIVIDADES RELACIONADAS À TRANSFERÊNCIA/DIFUSÃO TECNOLÓGICA</label>
+                <app-textarea class="form-control" rows="3" maxlength="500" formControlName="transferenciaTecnologica"></app-textarea>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group m-0">
+                        <label>ARQUIVO PDF RELATÓRIO FINAL</label>
+                    </div>
+                    <label class="btn-link btn px-0">
+                        <i class="ta-attachment"></i> {{relatorioArquivo?.name || 'Anexar'}}
+                        <input type="file" hidden (change)="fileChange('relatorioArquivo', $event)">
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group m-0">
+                        <label>ARQUIVO EM FORMATO PDF DO RELATÓRIO DE AUDITORIA CONTÁBIL E FINANCEIRA DO PROJETO DE P&D</label>
+                    </div>
+                    <label class="btn-link btn px-0">
+                        <i class="ta-attachment"></i> {{auditoriaRelatorioArquivo?.name || 'Anexar'}}
+                        <input type="file" hidden (change)="fileChange('auditoriaRelatorioArquivo', $event)">
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-group d-flex justify-content-end mt-4 border-top">
+                <button type="submit" class="btn btn-primary mt-4" [disabled]="!validate()">
+                    <i class="ta-save mr-1"></i>
+                    Salvar Dados
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

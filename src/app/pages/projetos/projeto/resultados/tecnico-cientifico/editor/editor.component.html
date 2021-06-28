@@ -87,12 +87,13 @@
 
         <div class="row">
             <div class="col-12">
-                <div class="form-group">
+                <div class="form-group m-0">
                     <label>ARQUIVO EM FORMATO PDF DO TRABALHO QUE GEROU A PRODUÇÃO</label>
-                    <div>
-                        <span>Anexar Arquivo (ID127)</span>
-                    </div>
                 </div>
+                <label class="btn-link btn px-0">
+                    <i class="ta-attachment"></i> {{file?.name || 'Anexar'}}
+                    <input type="file" hidden (change)="fileChange('file', $event)">
+                </label>
             </div>
         </div>
 
@@ -100,7 +101,7 @@
             <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">
                 Cancelar
             </div>
-            <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+            <button type="submit" class="btn btn-primary" [disabled]="!validate()">
                 <i class="ta-save mr-1"></i>
                 Adicionar Produção Técnico Científica
             </button>

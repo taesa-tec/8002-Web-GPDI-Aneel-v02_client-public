@@ -9,6 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class EditorComponent implements OnInit {
 
   cientifico: any;
+  file: File;
 
   form = this.fb.group({
     id: [0, Validators.required],
@@ -30,8 +31,24 @@ export class EditorComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  submit() {
-    
+  fileChange(file: string, evt: Event) {
+    const files = (evt.target as HTMLInputElement).files;
+    this[file] = files.length > 0 ? files.item(0) : null;
+  }
+
+  validate() {
+    return (this.form.valid && this.file);
+  }
+
+  async submit() {
+    if(this.validate()) {
+      try {
+        const cientifico = this.form.value;
+        //await this.service.salvar(relatorio);
+      } catch(e) {
+        console.log(e.message);
+      }
+    }
   }
 
 }

@@ -35,19 +35,13 @@
             <div class="col-6">
                 <div class="form-group">
                     <label>UNIDADE DA BASE DO INDICADOR</label>
-                    <select class="form-control" formControlName="unidadeIndicador">
-                        <option value="" hidden>Selecione</option>
-                        <option [value]="1">Valor 1</option>
-                    </select>
+                    <input type="text" class="form-control" maxlength="10" formControlName="unidadeIndicador"/>
                 </div>
             </div>
             <div class="col-6">
                 <div class="form-group">
                     <label>VALOR NUMÉRICO DO INDICADOR</label>
-                    <select class="form-control" formControlName="valorIndicador">
-                        <option value="" hidden>Selecione</option>
-                        <option [value]="1">Valor 1</option>
-                    </select>
+                    <input type="number" class="form-control" formControlName="valorIndicador"/>
                 </div>
             </div>
         </div>
@@ -55,20 +49,14 @@
         <div class="row">
             <div class="col-6">
                 <div class="form-group">
-                    <label>PORCENTAGEM DO IMPACTO </label>
-                    <select class="form-control" formControlName="porcentagem">
-                        <option value="" hidden>Selecione</option>
-                        <option [value]="1">Valor 1</option>
-                    </select>
+                    <label>PORCENTAGEM DO IMPACTO</label>
+                    <input type="number" class="form-control" formControlName="porcentagem"/>
                 </div>
             </div>
             <div class="col-6">
                 <div class="form-group">
                     <label>VALOR DO BENEFÍCIO ECONÔMICO</label>
-                    <select class="form-control" formControlName="valorEconomico">
-                        <option value="" hidden>Selecione</option>
-                        <option [value]="1">Valor 1</option>
-                    </select>
+                    <input type="text" class="form-control" formControlName="valorEconomico" currencyMask/>
                 </div>
             </div>
         </div>
