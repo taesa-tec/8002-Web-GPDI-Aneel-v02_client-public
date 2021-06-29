@@ -126,7 +126,7 @@
                     </div>
                     <label class="btn-link btn px-0">
                         <i class="ta-attachment"></i> {{relatorioArquivo?.name || 'Anexar'}}
-                        <input type="file" hidden (change)="fileChange('relatorioArquivo', $event)">
+                        <input type="file" accept=".pdf" hidden (change)="fileChange('relatorioArquivo', $event)">
                     </label>
                 </div>
             </div>
@@ -138,7 +138,7 @@
                     </div>
                     <label class="btn-link btn px-0">
                         <i class="ta-attachment"></i> {{auditoriaRelatorioArquivo?.name || 'Anexar'}}
-                        <input type="file" hidden (change)="fileChange('auditoriaRelatorioArquivo', $event)">
+                        <input type="file" accept=".pdf" hidden (change)="fileChange('auditoriaRelatorioArquivo', $event)">
                     </label>
                 </div>
             </div>

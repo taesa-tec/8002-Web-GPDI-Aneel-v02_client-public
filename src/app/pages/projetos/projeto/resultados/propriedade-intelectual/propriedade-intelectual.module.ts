@@ -5,6 +5,7 @@ import { PropriedadeIntelectualRoutingModule } from './propriedade-intelectual-r
 import { ListaComponent } from './lista/lista.component';
 import { EditorComponent } from './editor/editor.component';
 import { CoreModule } from '@app/core';
+import { MultiSelectModule } from '@app/core/components/forms/multi-select/multi-select.module';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { CoreModule } from '@app/core';
   imports: [
     CommonModule,
     PropriedadeIntelectualRoutingModule,
-    CoreModule
+    CoreModule,
+    MultiSelectModule
   ]
 })
 export class PropriedadeIntelectualModule { }

@@ -8,7 +8,7 @@
 </div>
 
 <div class="modal-body">
-    <form [formGroup]="form" (ngSumit)="submit">
+    <form [formGroup]="form" (ngSubmit)="submit()">
 
         <div class="row">
             <div class="col-12">
@@ -16,7 +16,10 @@
                     <label>TIPO DE PRODUÇÃO</label>
                     <select class="form-control" formControlName="tipo">
                         <option value="" hidden>Selecione</option>
-                        <option [value]="1">Valor 1</option>
+                        <option value="PN">Periódico Nacional</option>
+                        <option value="PI">Periódico Internacional</option>
+                        <option value="AN">Anais de Evento Nacional</option>
+                        <option value="AI">Anais de Evento Internacional</option>
                     </select>
                 </div>
             </div>
@@ -34,7 +37,8 @@
                     <label>RECEBIDA A CONFIRMAÇÃO DA PUBLICAÇÃO?</label>
                     <select class="form-control" formControlName="confirmacao">
                         <option value="" hidden>Selecione</option>
-                        <option [value]="1">Valor 1</option>
+                        <option value="true">Sim</option>
+                        <option value="false">Não</option>
                     </select>
                 </div>
             </div>
@@ -64,14 +68,16 @@
                     <label>PAÍS DA PUBLICAÇÃO</label>
                     <select class="form-control" formControlName="pais">
                         <option value="" hidden>Selecione</option>
-                        <option [value]="1">Valor 1</option>
+                        <option [value]="pais.id" *ngFor="let pais of paises">
+                            {{ pais.nome }}
+                        </option>
                     </select>
                 </div>
             </div>
             <div class="col-6">
                 <div class="form-group">
                     <label>CIDADE DA PUBLICAÇÃO</label>
-                    <input type="text" class="form-control" formControlName="cidade">
+                    <input type="text" class="form-control" maxlength="30" formControlName="cidade">
                 </div>
             </div>
         </div>
@@ -92,7 +98,7 @@
                 </div>
                 <label class="btn-link btn px-0">
                     <i class="ta-attachment"></i> {{file?.name || 'Anexar'}}
-                    <input type="file" hidden (change)="fileChange('file', $event)">
+                    <input type="file" hidden accept=".pdf" (change)="fileChange('file', $event)">
                 </label>
             </div>
         </div>

@@ -8,7 +8,7 @@
 </div>
 
 <div class="modal-body">
-    <form [formGroup]="form" (ngSumit)="submit">
+    <form [formGroup]="form" (ngSubmit)="submit()">
 
         <div class="row">
             <div class="col-12">
@@ -16,7 +16,32 @@
                     <label>TIPO DE INDICADOR ECONÔMICO OBTIDO COMO RESULTADO DO PROJETO</label>
                     <select class="form-control" formControlName="tipo">
                         <option value="" hidden>Selecione</option>
-                        <option [value]="1">Valor 1</option>
+                        <option value="PR1">Redução de Homem/Hora - Produtividade</option>
+                        <option value="PR2">Redução de Insumos - Produtividade</option>
+                        <option value="PR3">Redução de Tempo - Produtividade</option>
+                        <option value="PRX">Outro - Produtividade</option>
+                        <option value="QF1">Redução de DEC, FEC e TMA - Qualidade do Fornecimento</option>
+                        <option value="QF2">Redução de VTCDs e Outros Distúrbios - Qualidade do Fornecimento</option>
+                        <option value="QF3">Redução do Índice de Reclamações - Qualidade do Fornecimento</option>
+                        <option value="QFX">Outro - Qualidade do Fornecimento</option>
+                        <option value="GA1">Postergação de Investimento - Gestão de Ativos</option>
+                        <option value="GA2">Investimento Evitado - Gestão de Ativos</option>
+                        <option value="GA3">Redução de Roubos e Furtos - Gestão de Ativos</option>
+                        <option value="GAX">Outro - Gestão de Ativos</option>
+                        <option value="NT1">Redução de Inadimplência - Perdas Não Técnicas</option>
+                        <option value="NT2">Redução de Fraudes e Desvios - Perdas Não Técnicas</option>
+                        <option value="NT3">Redução de Erros de Medição - Perdas Não Técnicas</option>
+                        <option value="NT4">Redução de Perdas Indenizatórias - Perdas Não Técnicas</option>
+                        <option value="NTX">Outro - Perdas Não Técnicas</option>
+                        <option value="ME1">Redução no Custo da Energia - Mercado da Empresa</option>
+                        <option value="ME2">Redução nos Erros de Previsão - Mercado da Empresa</option>
+                        <option value="MEX">Outro - Mercado da Empresa</option>
+                        <option value="EE1">Aumento da Demanda Disponível (Oferta) - Eficiência Energética</option>
+                        <option value="EE2">Aumento da Energia Disponível (Oferta) - Eficiência Energética</option>
+                        <option value="EE3">Redução de Demanda (Uso Final) - Eficiência Energética</option>
+                        <option value="EE4">Energia Economizada (Uso Final) - Eficiência Energética</option>
+                        <option value="EEX">Outro - Eficiência Energética</option>
+                        <option value="OU">Outro - Outro</option>
                     </select>
                 </div>
             </div>
@@ -50,7 +75,7 @@
             <div class="col-6">
                 <div class="form-group">
                     <label>PORCENTAGEM DO IMPACTO</label>
-                    <input type="number" class="form-control" formControlName="porcentagem"/>
+                    <input type="number" step="0.1" max="100" class="form-control" formControlName="porcentagem"/>
                 </div>
             </div>
             <div class="col-6">

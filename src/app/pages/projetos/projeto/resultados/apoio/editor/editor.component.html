@@ -8,13 +8,18 @@
 </div>
 
 <div class="modal-body">
-    <form [formGroup]="form" (ngSumit)="submit">
+    <form [formGroup]="form" (ngSubmit)="submit()">
 
         <div class="form-group">
             <label>TIPO DE INFRAESTRUTURA RECEPTORA DA CAPACITAÇÃO TECNOLÓGICA</label>
             <select class="form-control" formControlName="tipo">
                 <option value="" hidden>Selecione</option>
-                <option [value]="1">Valor 1</option>
+                <option value="LNS">Laboratório Novo em Instituição de Ensino Superior</option>
+                <option value="LES">Laboratório Existente em Instituição de Ensino Superior</option>
+                <option value="LNP">Laboratório Novo em Instituição de Pesquisa</option>
+                <option value="LEP">Laboratório Existente em Instituição de Pesquisa</option>
+                <option value="LNE">Laboratório Novo em Empresa de Energia Elétrica</option>
+                <option value="LEE">Laboratório Existente em Empresa de Energia Elétrica</option>
             </select>
         </div>
 

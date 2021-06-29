@@ -9,6 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class EditorComponent implements OnInit {
 
   cientifico: any;
+  paises: Array<{ id: number; nome: string }>;
   file: File;
 
   form = this.fb.group({

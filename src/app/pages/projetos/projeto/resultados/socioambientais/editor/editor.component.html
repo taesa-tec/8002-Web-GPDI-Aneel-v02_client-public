@@ -8,7 +8,7 @@
 </div>
 
 <div class="modal-body">
-    <form [formGroup]="form" (ngSumit)="submit">
+    <form [formGroup]="form" (ngSubmit)="submit()">
 
         <div class="row">
             <div class="col-8">
@@ -16,7 +16,10 @@
                     <label>TIPO DE INDICADOR SOCIOAMBIENTAL</label>
                     <select class="form-control" formControlName="tipo">
                         <option value="" hidden>Selecione</option>
-                        <option [value]="1">Valor 1</option>
+                        <option value="ISA1">Possibilidade de impactos ambientais (água, ar ou solo)</option>
+                        <option value="ISA2">Possibilidade de diversificação da matriz energética</option>
+                        <option value="ISA3">Possibilidade de desenvolvimento de nova atividade socioeconômica (lazer, turismo, pesca, agricultura, etc.)</option>
+                        <option value="ISA4">Possibilidade de impactos na segurança ou na qualidade de vida da comunidade</option>
                     </select>
                 </div>
             </div>
@@ -25,7 +28,8 @@
                     <label>RESULTADO POSITIVO?</label>
                     <select class="form-control" formControlName="resultado">
                         <option value="" hidden>Selecione</option>
-                        <option [value]="1">Valor 1</option>
+                        <option value="true">Sim</option>
+                        <option value="false">Não</option>
                     </select>
                 </div>
             </div>

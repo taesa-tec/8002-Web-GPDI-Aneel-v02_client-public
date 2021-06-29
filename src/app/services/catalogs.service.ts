@@ -65,9 +65,8 @@ export class CatalogsService {
   }
 
   async paises() {
-    return await this.getData<Array<{ id: number; nome: string }>>('paises', `Catalogo/Paises`);
+    return await this.getData<Array<{ id: number; nome: string }>>('paises', `Catalogo/Pais`);
   }
-
 
   tipoCompartilhamento() {
     return TiposCompartilhamento;

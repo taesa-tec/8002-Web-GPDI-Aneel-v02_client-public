@@ -9,6 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class EditorComponent implements OnInit {
 
   etapa: any;
+  file: File;
 
   form = this.fb.group({
     id: [0, Validators.required],
@@ -27,6 +28,11 @@ export class EditorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+  }
+
+  fileChange(file: string, evt: Event) {
+    const files = (evt.target as HTMLInputElement).files;
+    this[file] = files.length > 0 ? files.item(0) : null;
   }
 
   submit() {

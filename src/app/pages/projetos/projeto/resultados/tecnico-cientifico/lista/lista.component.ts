@@ -14,6 +14,7 @@ export class ListaComponent implements OnInit {
     {id: 1, tipo: 'Periódico Nacional', periodico: 'Ciência Hoje', arquivo: 'Sim'},
     {id: 2, tipo: 'Anais de Evento Nacional', periodico: 'EDAO', arquivo: 'Sim'}
   ];
+  paises: Array<{ id: number; nome: string }>;
 
   cols: TableComponentCols = [
     {title: 'Tipo', field: 'tipo', order: true},
@@ -33,8 +34,12 @@ export class ListaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.openModal(null);
-    this.route.data.subscribe(d => {
+    const {paises} = this.route.snapshot.data;
+    this.paises = paises;
+
+    this.route.fragment.subscribe(id => {
+      //console.log("AAA: ",d);
+      //this.openModal(null);
       // this.data = d.registros;
       // this.title = d.title;
       // this.items = d.items;
@@ -47,6 +52,7 @@ export class ListaComponent implements OnInit {
   async openModal(cientifico?: any) {
     let ref = this.modal.open(EditorComponent, {size: 'lg'});
     ref.componentInstance.cientifico = cientifico;
+    ref.componentInstance.paises = this.paises;
     await ref.result;
     this.router.navigate(['./'], {relativeTo: this.route}).then();
   }

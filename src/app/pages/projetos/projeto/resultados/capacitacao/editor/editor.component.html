@@ -8,7 +8,7 @@
 </div>
 
 <div class="modal-body">
-    <form [formGroup]="form" (ngSumit)="submit">
+    <form [formGroup]="form" (ngSubmit)="submit()">
 
         <div class="row">
             <div class="col-12">
@@ -28,7 +28,10 @@
                     <label>TIPO DE CAPACITAÇÃO</label>
                     <select class="form-control" formControlName="tipo">
                         <option value="" hidden>Selecione</option>
-                        <option [value]="1">Valor 1</option>
+                        <option value="PD">PósDoutorado (Stricto Sensu)</option>
+                        <option value="DO">Doutorado (Stricto Sensu)</option>
+                        <option value="ME">Mestrado (Stricto Sensu)</option>
+                        <option value="ES">Especialização (Lato Sensu)</option>
                     </select>
                 </div>
             </div>
@@ -37,7 +40,8 @@
                     <label>CONCLUSÃO DA CAPACITAÇÃO?</label>
                     <select class="form-control" formControlName="conclucao">
                         <option value="" hidden>Selecione</option>
-                        <option [value]="1">Valor 1</option>
+                        <option value="true">Sim</option>
+                        <option value="false">Não</option>
                     </select>
                 </div>
             </div>
@@ -79,12 +83,13 @@
 
         <div class="row">
             <div class="col-12">
-                <div class="form-group">
+                <div class="form-group m-0">
                     <label>ANEXAR ARQUIVO DO TRABALHO QUE DEU ORIGEM A CAPTAÇÃO PROFISSIONAL (EM PDF)</label>
-                    <div>
-                        <span>Anexar Arquivo (ID127)</span>
-                    </div>
                 </div>
+                <label class="btn-link btn px-0">
+                    <i class="ta-attachment"></i> {{file?.name || 'Anexar'}}
+                    <input type="file" accept=".pdf" hidden (change)="fileChange('file', $event)">
+                </label>
             </div>
         </div>
 
