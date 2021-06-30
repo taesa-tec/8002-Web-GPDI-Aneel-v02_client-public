@@ -6,12 +6,14 @@
     "start": "ng serve",
     "prebuild": "npm run buildeditor; npm version patch",
     "build": "ng build --prod",
+    "postbuild": "npm run zip",
     "test": "ng test",
     "lint": "ng lint",
     "lintfix": "ng lint sistema-ped --fix",
     "e2e": "ng e2e",
     "postinstall": "ngcc",
-    "buildeditor": "npm run build --prefix ./projects/ckeditor/"
+    "buildeditor": "npm run build --prefix ./projects/ckeditor/",
+    "zip": "npm-build-zip --source=dist/production --destination=dist/"
   },
   "private": true,
   "dependencies": {
@@ -88,6 +90,7 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "npm-build-zip": "^1.0.3",
     "protractor": "~7.0.0",
     "ts-node": "~7.0.0",
     "tslib": "^1.10.0",
