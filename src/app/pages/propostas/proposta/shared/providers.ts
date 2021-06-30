@@ -1,11 +1,12 @@
 import {Provider, Optional} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {BehaviorSubject} from 'rxjs';
-import {CAPTACAO_ID, PROPOSTA, PROPOSTA_LABELS} from './tokens';
+import {CAPTACAO_ID, PROPOSTA, PROPOSTA_CAN_EDIT, PROPOSTA_LABELS} from './tokens';
 import {Proposta, SIDEBAR_MENU} from '@app/commons';
 import {PropostasService} from '@app/pages/propostas/proposta/services/propostas.service';
 import {COMPONENT_LABELS} from '@app/core/shared';
 import {PropostaTexts} from '@app/pages/propostas/proposta/shared/texts';
+import {TABLE_ACTIONS} from '@app/core/components';
 
 export const CaptacaoIdProvider: Provider = {
   provide: CAPTACAO_ID,
@@ -85,4 +86,15 @@ export const TextsProvider: Provider[] = [
     useFactory: (labels) => labels || new Map([])
   }
 ];
+export const ActionOpenItem = {
+  provide: TABLE_ACTIONS, deps: [PROPOSTA_CAN_EDIT], useFactory: canEdit => [
+    {
+      isLink: true,
+      action: './#${id}',
+      text: canEdit ? 'EDITAR' : 'Visualizar',
+      icon: canEdit ? 'ta-edit' : 'ta-eye',
+      className: 'btn btn-primary'
+    }
+  ]
+};
 

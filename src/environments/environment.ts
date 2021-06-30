@@ -3,12 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 
-import {version} from './version';
+import {version} from '../../package.json';
 
 export const environment = {
   production: false,
   api_url: '/api',
-  version,
+  version: version + '-dev',
   autologin: {
     user: '',
     pass: ''

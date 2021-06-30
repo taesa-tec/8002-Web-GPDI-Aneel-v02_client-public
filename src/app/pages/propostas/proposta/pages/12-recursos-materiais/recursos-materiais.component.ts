@@ -5,7 +5,7 @@ import {RecursoMaterialFormComponent} from './recurso-material-form/recurso-mate
 import {CRUD_EDITOR} from '@app/core/components/crud/crud.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PropostaComponent} from '@app/pages/propostas/proposta/proposta.component';
-import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
+import {ActionOpenItem, PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
 
 const tableCols: TableComponentCols = [
   {
@@ -42,7 +42,7 @@ const buttons = [
   providers: [
     {provide: CRUD_EDITOR, useValue: RecursoMaterialFormComponent},
     {provide: TABLE_COLS, useValue: tableCols},
-    {provide: TABLE_ACTIONS, useValue: buttons},
+    ActionOpenItem,
   ]
 })
 export class RecursosMateriaisComponent implements OnInit {
