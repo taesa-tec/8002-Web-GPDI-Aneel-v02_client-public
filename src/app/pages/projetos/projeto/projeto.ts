@@ -28,28 +28,28 @@ export const MenuItemRelatorioEtapa: MenuItem = {text: 'Relatório Etapas Projet
 export const MenuItemResultadosCapacitacao: MenuItem = {
   text: 'Resultados Capacitação Profissional',
   icon: 'ta-user-id',
-  path: `resultados/capacitacao`
+  path: `relatorio/capacitacao`
 };
 export const MenuItemResultadosCientifico: MenuItem = {
   text: 'Resultados Produção Técnico Científica',
   icon: 'ta-tubo-ensaio',
-  path: `resultados/cientifica`
+  path: `relatorio/cientifica`
 };
-export const MenuItemResultadosApoio: MenuItem = {text: 'Resultados Apoio', icon: 'ta-torre', path: `resultados/apoio`};
+export const MenuItemResultadosApoio: MenuItem = {text: 'Resultados Apoio', icon: 'ta-torre', path: `relatorio/apoio`};
 export const MenuItemResultadosIntelectual: MenuItem = {
   text: 'Resultados Propriedade Intelectual',
   icon: 'ta-lamp',
-  path: `resultados/intelectual`
+  path: `relatorio/intelectual`
 };
 export const MenuItemResultadosSocioAmbientais: MenuItem = {
   text: 'Resultados Socioambientais',
   icon: 'ta-ambiente',
-  path: `resultados/socioambientais`
+  path: `relatorio/socioambientais`
 };
 export const MenuItemResultadosEconomicos: MenuItem = {
   text: 'Resultados Indicadores Econômicos',
   icon: 'ta-chart',
-  path: `resultados/economicos`
+  path: `relatorio/economicos`
 };
 //</editor-fold>
 

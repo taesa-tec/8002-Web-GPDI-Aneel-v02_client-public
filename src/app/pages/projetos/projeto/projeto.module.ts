@@ -15,6 +15,7 @@ import {ComponentsModule} from '@app/core/components';
 import {ScreensModule} from '@app/core/screens/screens.module';
 import {HomeComponent} from './home/home.component';
 import {IsResponsavelProvider} from '@app/pages/projetos/projeto/projeto';
+import {RelatorioResolver} from './resolvers/relatorio.resolver';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import {IsResponsavelProvider} from '@app/pages/projetos/projeto/projeto';
     RegistroResolver,
     NovoRegistroResolver,
     ExtratoFinanceiroResolver,
+    RelatorioResolver,
     ProjetoStatusResolver.Status('Execucao', 'projetoExecucao'),
     ProjetoStatusResolver.Status('Finalizado', 'projetoFinalizado'),
   ]

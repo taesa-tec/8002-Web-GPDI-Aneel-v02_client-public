@@ -69,14 +69,6 @@ const routes: Routes = [
         },
         loadChildren: () => import('./relatorio/relatorio.module').then(m => m.RelatorioModule)
       },
-      {
-        path: 'resultados',
-        canActivate: ['isGestor'],
-        resolve: {
-          status: 'projetoFinalizado'
-        },
-        loadChildren: () => import('./resultados/resultados.module').then(m => m.ResultadosModule)
-      },
 
       //
       {

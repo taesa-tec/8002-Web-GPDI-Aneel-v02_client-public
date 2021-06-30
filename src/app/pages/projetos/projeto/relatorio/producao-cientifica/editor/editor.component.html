@@ -1,0 +1,122 @@
+<div class="modal-header">
+    <div class="text-uppercase modal-title text-blue-light fs-20">
+        {{ producao ? 'Editar' : 'Registrar' }} Produção Técnico Científica
+    </div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close('close')">
+        <i class="ta-cancel-circle"></i>
+    </button>
+</div>
+
+<div class="modal-body">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>TIPO DE PRODUÇÃO</label>
+                    <select class="form-control" formControlName="tipo">
+                        <option value="" hidden>Selecione</option>
+                        <option value="PN">Periódico Nacional</option>
+                        <option value="PI">Periódico Internacional</option>
+                        <option value="AN">Anais de Evento Nacional</option>
+                        <option value="AI">Anais de Evento Internacional</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>DATA DA PUBLICAÇÃO</label>
+                    <input type="date" class="form-control" formControlName="dataPublicacao"/>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>RECEBIDA A CONFIRMAÇÃO DA PUBLICAÇÃO?</label>
+                    <select class="form-control" formControlName="confirmacaoPublicacao">
+                        <option value="" hidden>Selecione</option>
+                        <option value="true">Sim</option>
+                        <option value="false">Não</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>NOME DO PERIÓDICO OU DO EVENTO DE PUBLICAÇÃO DA PRODUÇÃO TÉCNICO-CIENTÍFICA</label>
+                    <app-textarea class="form-control" rows="1" maxlength="50" formControlName="nomeEventoPublicacao"></app-textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>ENDEREÇO NA INTERNET DO PERIÓDICO OU DO EVENTO DE PUBLICAÇÃO</label>
+                    <app-textarea class="form-control" rows="1" maxlength="50" formControlName="linkPublicacao"></app-textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>PAÍS DA PUBLICAÇÃO</label>
+                    <select class="form-control" formControlName="paisId">
+                        <option value="" hidden>Selecione</option>
+                        <option [value]="pais.id" *ngFor="let pais of paises">
+                            {{ pais.nome }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>CIDADE DA PUBLICAÇÃO</label>
+                    <input type="text" class="form-control" maxlength="30" formControlName="cidade">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>TÍTULO DO TRABALHO QUE GEROU A PRODUÇÃO TÉCNICO-CIENTÍFICA</label>
+                    <app-textarea class="form-control" rows="2" maxlength="200" formControlName="tituloTrabalho"></app-textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group m-0">
+                    <label>ARQUIVO EM FORMATO PDF DO TRABALHO QUE GEROU A PRODUÇÃO</label>
+                </div>
+                <label class="btn-link btn px-0">
+                    <i class="ta-attachment"></i> {{file?.name || 'Anexar'}}
+                    <input type="file" hidden accept=".pdf" (change)="fileChange('file', $event)">
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group d-flex justify-content-end mt-4">
+            <div class="button btn btn-link" (click)="activeModal.close('cancel')">
+                Cancelar
+            </div>
+            <button type="button" class="btn btn-link" [disabled]="form.invalid"
+                *ngIf="form.value.id"
+                (click)="delete()">
+                <i class="ta-times-circle mr-1"></i>
+                Excluir
+            </button>
+            <button type="submit" class="btn btn-primary" [disabled]="!validate()">
+                <i class="ta-save mr-1"></i>
+                Salvar Produção Técnico Científica
+            </button>
+        </div>
+    </form>
+</div>
