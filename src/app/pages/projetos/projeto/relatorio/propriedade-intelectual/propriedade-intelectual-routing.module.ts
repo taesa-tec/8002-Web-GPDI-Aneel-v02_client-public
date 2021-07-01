@@ -5,7 +5,11 @@ import { ListaComponent } from './lista/lista.component';
 const routes: Routes = [
   {
     path: '',
-    component: ListaComponent
+    runGuardsAndResolvers: 'always',
+    component: ListaComponent,
+    resolve: {
+      propriedades: 'propriedadesIntelectuais'
+    }
   }
 ];
 

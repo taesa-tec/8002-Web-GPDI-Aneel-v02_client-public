@@ -1,3 +1,18 @@
+export interface RelatorioFinal {
+  id: number;
+  projetoId: number;
+  isProdutoAlcancado: boolean;
+  tecnicaProduto: string;
+  isTecnicaImplementada: boolean;
+  tecnicaImplementada: string;
+  isAplicabilidadeAlcancada: boolean;
+  aplicabilidadeJustificativa: string;
+  resultadosTestes: string;
+  abrangenciaProduto: string;
+  ambitoAplicacaoProduto: string;
+  transferenciaTecnologica: string;
+}
+
 export interface Apoio {
   id: number;
   projetoId: number;
@@ -52,4 +67,40 @@ export interface Socioambiental {
   tipo: string;
   resultadoPositivo: boolean;
   descricaoResultado: string;
+}
+
+export interface RelatorioEtapa {
+  id: number;
+  projetoId: number;
+  etapaId: number;
+  etapa: {
+    id: number;
+    projetoId: number;
+    produtoId: number;
+    produto: string;
+    ordem: number;
+    meses: Array<number>;
+    descricaoAtividades: string;
+  }
+  atividadesRealizadas: string;
+  hasAtividadeCadastrada: boolean;
+  inicio: string;
+  fim: string;
+}
+
+export interface PropriedadeIntelectual {
+  id: number;
+  projetoId: number;
+  tipo: string;
+  pedidoData: string;
+  pedidoNumero: string;
+  tituloINPI: string;
+  inventores: Array<number>;
+  depositantes: Array<Depositante>;
+}
+
+export interface Depositante {
+  empresaId: number;
+  coExecutorId: number;
+  porcentagem: number;
 }

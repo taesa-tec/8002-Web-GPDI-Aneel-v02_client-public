@@ -14,9 +14,10 @@ export class ListaComponent implements OnInit {
   capacitacoes: Array<Capacitacao>;
 
   cols: TableComponentCols = [
-    // {title: 'Membro da Equipe', field: 'membro', order: true},
+    {title: 'Membro da Equipe', field: 'membro', order: true},
     {title: 'Capacitação', field: 'tipo', order: true},
-    // {title: 'Arquivo Cadastrado?', field: 'arquivo', order: true}
+    {title: 'Arquivo Cadastrado?', field: 'arquivo', 
+      value: item => item.arquivoTrabalhoOrigemId ? 'Sim':'Não' ,order: true}
   ];
 
   buttons: TableComponentActions = [

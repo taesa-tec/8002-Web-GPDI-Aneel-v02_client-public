@@ -4,6 +4,7 @@ import { DatePipe } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EditorComponent } from '../editor/editor.component';
+import { RelatorioEtapa } from '../../relatorio';
 
 @Component({
   selector: 'app-lista',
@@ -11,16 +12,15 @@ import { EditorComponent } from '../editor/editor.component';
 })
 export class ListaComponent implements OnInit {
 
-  etapas: Array<any> = [
-    {id: 1, etapas: 'Etapa 01', dataInicial: '2021-01-12', dataFinal: '2021-01-12', atividades: 'Sim'},
-    {id: 2, etapas: 'Etapa 02', dataInicial: '2021-01-12', dataFinal: '2021-01-12', atividades: 'Não'}
-  ];
+  relatoriosEtapa: Array<RelatorioEtapa>;
 
   cols: TableComponentCols = [
-    {title: 'Etapas', field: 'etapas', order: true},
-    {title: 'Data Inicial', field: 'dataInicial', pipe: new DatePipe('pt-BR'), value: item => [item.dataInicial, 'short'], order: true},
-    {title: 'Data Final', field: 'dataFinal', pipe: new DatePipe('pt-BR'), value: item => [item.dataFinal, 'short'], order: true},
-    {title: 'Atividades Cadastradas?', field: 'atividades', order: true}
+    {title: 'Etapas', field: 'etapa', value: item => `Etapa ${item.etapa.ordem}`, order: true},
+    {title: 'Data Inicial', field: 'inicio', pipe: new DatePipe('pt-BR'), value: item => [item.inicio, 'short'], order: true},
+    {title: 'Data Final', field: 'fim', pipe: new DatePipe('pt-BR'), value: item => [item.fim, 'short'], order: true},
+    {title: 'Atividades Cadastradas?', field: 'hasAtividadeCadastrada', 
+      value: item => item.hasAtividadeCadastrada? 'Sim':'Não', order: true
+    }
   ];
 
   buttons: TableComponentActions = [
@@ -35,20 +35,18 @@ export class ListaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.openModal(null);
-    this.route.data.subscribe(d => {
-      // this.data = d.registros;
-      // this.title = d.title;
-      // this.items = d.items;
-      // if (d.registro) {
-      //   this.openModal(d.registro, d.observacoes).then();
-      // }
+    this.route.data.subscribe(({relatoriosEtapa}) => {
+      if(Array.isArray(relatoriosEtapa)) {
+        this.relatoriosEtapa = relatoriosEtapa
+      } else {
+        this.openModal(relatoriosEtapa)
+      }
     });
   }
 
-  async openModal(etapa?: any) {
+  async openModal(relatorioEtapa?: any) {
     let ref = this.modal.open(EditorComponent, {size: 'lg'});
-    ref.componentInstance.etapa = etapa;
+    ref.componentInstance.relatorioEtapa = relatorioEtapa;
     await ref.result;
     this.router.navigate(['./'], {relativeTo: this.route}).then();
   }

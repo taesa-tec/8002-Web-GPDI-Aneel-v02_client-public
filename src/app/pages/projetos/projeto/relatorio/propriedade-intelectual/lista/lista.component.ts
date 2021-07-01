@@ -4,6 +4,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TableComponentActions, TableComponentCols } from '@app/core/components';
 import { EditorComponent } from '../editor/editor.component';
 import { DatePipe } from '@angular/common';
+import { ProjetoService } from '@app/pages/projetos/projeto/services/projeto.service';
+import { Depositante, PropriedadeIntelectual } from '../../relatorio';
 
 @Component({
   selector: 'app-lista',
@@ -11,15 +13,14 @@ import { DatePipe } from '@angular/common';
 })
 export class ListaComponent implements OnInit {
 
-  propriedades: Array<any> = [
-    {id: 1, tipo: 'Laboratório Novo em Instituição de Ensino Superior', inpi: '13.844.202-0001/16', dataPedido: '2021-01-12'},
-    {id: 2, tipo: 'Laboratório Existente em Empresa de Energia Elétrica.', inpi: '13.844.202-0001/16', dataPedido: '2021-01-12'}
-  ];
+  propriedades: Array<PropriedadeIntelectual>;
+  recursos: Array<any>;
+  depositantes: Array<Depositante>;
 
   cols: TableComponentCols = [
     {title: 'Tipo', field: 'tipo', order: true},
-    {title: 'Número INPI', field: 'inpi', order: true},
-    {title: 'Data Pedido', field: 'dataPedido', pipe: new DatePipe('pt-BR'), value: item => [item.dataPedido, 'short'], order: true}
+    {title: 'Número INPI', field: 'pedidoNumero', order: true},
+    {title: 'Data Pedido', field: 'pedidoData', pipe: new DatePipe('pt-BR'), value: item => [item.pedidoData, 'short'], order: true}
   ];
 
   buttons: TableComponentActions = [
@@ -27,27 +28,38 @@ export class ListaComponent implements OnInit {
   ];
 
   constructor(
+    protected service: ProjetoService, 
     protected route: ActivatedRoute, 
     protected modal: NgbModal, 
     protected router: Router
   ) {
   }
 
-  ngOnInit(): void {
-    this.openModal(null);
-    this.route.data.subscribe(d => {
-      // this.data = d.registros;
-      // this.title = d.title;
-      // this.items = d.items;
-      // if (d.registro) {
-      //   this.openModal(d.registro, d.observacoes).then();
-      // }
+  async ngOnInit() {
+    const projeto = this.service.getCurrentProjeto();
+    this.recursos = await this.service.obter(`${projeto.id}/Recursos/Humanos`);
+    this.depositantes = await this.service.obter(`${projeto.id}/Empresas`);
+    
+    this.route.data.subscribe(({propriedades}) => {
+      if(Array.isArray(propriedades)) {
+        this.propriedades = propriedades
+      } else {
+        this.openModal(propriedades)
+      }
+    });
+
+    this.route.fragment.subscribe(data => {
+      if(data == 'novo') {
+        this.openModal();
+      }
     });
   }
 
   async openModal(propriedade?: any) {
     let ref = this.modal.open(EditorComponent, {size: 'lg'});
     ref.componentInstance.propriedade = propriedade;
+    ref.componentInstance.recursos = this.recursos;
+    //ref.componentInstance.depositantes = this.depositantes;
     await ref.result;
     this.router.navigate(['./'], {relativeTo: this.route}).then();
   }

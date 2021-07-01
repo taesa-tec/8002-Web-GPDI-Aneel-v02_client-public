@@ -10,11 +10,14 @@ const routes: Routes = [
   },
   {
     path: 'final',
-    component: FinalComponent
+    component: FinalComponent,
+    resolve: {
+      relatorio: 'relatorioFinal'
+    }
   },
   {
     path: 'etapa',
-    loadChildren: () => import('./etapas/etapas.module').then(m => m.EtapasModule)
+    loadChildren: () => import('./etapa/etapa.module').then(m => m.EtapaModule)
   },
   {
     path: 'capacitacao',

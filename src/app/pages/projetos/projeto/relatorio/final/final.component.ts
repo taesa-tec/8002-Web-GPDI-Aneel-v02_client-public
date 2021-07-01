@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Projeto } from '../../projeto.component';
+import { ProjetoService } from '@app/pages/projetos/projeto/services/projeto.service';
+import { RelatorioFinal } from './../relatorio';
 
 @Component({
   selector: 'app-final',
@@ -7,7 +11,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class FinalComponent implements OnInit {
 
-  relatorio: any;
+  projeto: Projeto;
+  relatorio: RelatorioFinal;
   relatorioArquivo: File;
   auditoriaRelatorioArquivo: File;
 
@@ -26,11 +31,17 @@ export class FinalComponent implements OnInit {
   });
 
   constructor(
+    private service: ProjetoService,
+    private route: ActivatedRoute,
     private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
-    if(this.relatorio) {
+    const {relatorio} = this.route.snapshot.data;
+    this.relatorio = relatorio;
+    this.projeto = this.service.getCurrentProjeto();
+
+    if(this.relatorio.id) {
       this.form.patchValue(this.relatorio);
     }
 
@@ -85,13 +96,20 @@ export class FinalComponent implements OnInit {
   }
 
   async submit() {
-    if(this.validate()) {
-      try {
+    try {
+      if(this.validate()) {
         const relatorio = this.form.value;
-        //await this.service.salvar(relatorio);
-      } catch(e) {
-        console.log(e.message);
+        const path = `${this.projeto.id}/Relatorio/RelatorioFinal`;
+
+        if(relatorio.id) {
+          this.relatorio = await this.service.put(path, relatorio);
+        } else {
+          this.relatorio = await this.service.post(path, relatorio);
+        }
+        this.form.patchValue(this.relatorio);
       }
+    } catch(e) {
+      console.log(e.message);
     }
   }
 

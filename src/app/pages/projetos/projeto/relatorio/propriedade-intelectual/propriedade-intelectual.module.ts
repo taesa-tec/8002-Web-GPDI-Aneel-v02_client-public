@@ -6,6 +6,7 @@ import { ListaComponent } from './lista/lista.component';
 import { EditorComponent } from './editor/editor.component';
 import { CoreModule } from '@app/core';
 import { MultiSelectModule } from '@app/core/components/forms/multi-select/multi-select.module';
+import { RelatorioResolver } from '../../resolvers/relatorio.resolver';
 
 
 @NgModule({
@@ -15,6 +16,9 @@ import { MultiSelectModule } from '@app/core/components/forms/multi-select/multi
     PropriedadeIntelectualRoutingModule,
     CoreModule,
     MultiSelectModule
+  ],
+  providers: [
+    RelatorioResolver.ToType('PropriedadeIntelectual', 'propriedadesIntelectuais')
   ]
 })
 export class PropriedadeIntelectualModule { }

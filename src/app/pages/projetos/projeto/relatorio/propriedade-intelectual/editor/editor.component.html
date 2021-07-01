@@ -1,6 +1,6 @@
 <div class="modal-header">
     <div class="text-uppercase modal-title text-blue-light fs-20">
-        Registrar Propriedade Intelectual
+        {{ propriedade ? 'Editar' : 'Registrar' }} Propriedade Intelectual
     </div>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.close('close')">
         <i class="ta-cancel-circle"></i>
@@ -29,13 +29,13 @@
             <div class="col-6">
                 <div class="form-group">
                     <label>DATA DO PEDIDO INPI</label>
-                    <input type="date" class="form-control" formControlName="dataPedido">
+                    <input type="date" class="form-control" formControlName="pedidoData">
                 </div>
             </div>
             <div class="col-6">
                 <div class="form-group">
                     <label>NÚMERO PEDIDO INPI</label>
-                    <input type="number" class="form-control" maxlength="15" formControlName="numeroPedido">
+                    <input type="number" class="form-control" maxlength="15" formControlName="pedidoNumero">
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
             <div class="col-12">
                 <div class="form-group">
                     <label>TÍTULO DA PROPRIEDADE INTELECTUAL NO INPI</label>
-                    <app-textarea class="form-control" rows="3" maxlength="200" formControlName="titulo"></app-textarea>
+                    <app-textarea class="form-control" rows="3" maxlength="200" formControlName="tituloINPI"></app-textarea>
                 </div>
             </div>
         </div>
@@ -53,9 +53,10 @@
             <div class="col-12">
                 <div class="form-group">
                     <label>INVENTORES</label>
-                    <app-multi-select placeholder="Selecione um membro da equipe do projeto" formControlName="investidores">
-                        <app-multi-select-option [value]="1" label="Teste 1"></app-multi-select-option>
-                        <app-multi-select-option [value]="2" label="Teste 2"></app-multi-select-option>
+                    <app-multi-select placeholder="Selecione um membro da equipe do projeto" formControlName="inventores">
+                        <app-multi-select-option 
+                            *ngFor="let recurso of recursos" [value]="recurso.id" [label]="recurso.nomeCompleto">
+                        </app-multi-select-option>
                     </app-multi-select>
                 </div>
             </div>
@@ -101,6 +102,12 @@
             <div class="button btn btn-link" (click)="activeModal.close('cancel')">
                 Cancelar
             </div>
+            <button type="button" class="btn btn-link" [disabled]="form.invalid"
+                *ngIf="form.value.id"
+                (click)="delete()">
+                <i class="ta-times-circle mr-1"></i>
+                Excluir
+            </button>
             <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
                 <i class="ta-save mr-1"></i>
                 Salvar Propriedade Intelectual

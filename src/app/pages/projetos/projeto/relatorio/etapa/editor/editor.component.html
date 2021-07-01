@@ -1,6 +1,6 @@
 <div class="modal-header">
   <div class="text-uppercase modal-title text-blue-light fs-20">
-    Editar Etapa
+    {{ relatorioEtapa ? 'Editar' : 'Registrar' }} Etapa
   </div>
   <button
     type="button"
@@ -26,15 +26,15 @@
         </span>
       </div>
     </div>
-
-    <div class="form-group">
+    
+    <div class="form-group" formGroupName="etapa">
       <label>DESCRIÇÃO DAS ATIVIDADES</label>
-      <app-textarea class="form-control" rows="4" maxlength="300" formControlName="atividades"></app-textarea>
+      <app-textarea class="form-control" rows="4" maxlength="300" formControlName="descricaoAtividades"></app-textarea>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" formGroupName="etapa">
       <label>PRODUTOS INTERMEDIÁRIOS ASSOCIADOS A ESTA ETAPA</label>
-      <input class="form-control" formControlName="produtos"/>
+      <input class="form-control" formControlName="produto"/>
     </div>
 
     <div class="form-group d-flex justify-content-end mt-4">

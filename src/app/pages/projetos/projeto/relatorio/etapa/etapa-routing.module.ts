@@ -5,7 +5,11 @@ import { ListaComponent } from './lista/lista.component';
 const routes: Routes = [
   {
     path: '',
-    component: ListaComponent
+    runGuardsAndResolvers: 'always',
+    component: ListaComponent,
+    resolve: {
+      relatoriosEtapa: 'relatoriosEtapa'
+    }
   }
 ];
 
@@ -13,4 +17,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class EtapasRoutingModule { }
+export class EtapaRoutingModule { }

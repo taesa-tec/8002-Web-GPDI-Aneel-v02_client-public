@@ -17,7 +17,8 @@ export class ListaComponent implements OnInit {
   cols: TableComponentCols = [
     {title: 'Tipo', field: 'tipo', order: true},
     {title: 'Periódico', field: 'periodico', order: true},
-    {title: 'Arquivo Cadastrado?', field: 'arquivo', order: true}
+    {title: 'Arquivo Cadastrado?', field: 'arquivo', 
+      value: item => item.arquivoTrabalhoOrigemId ? 'Sim':'Não', order: true}
   ];
 
   buttons: TableComponentActions = [
