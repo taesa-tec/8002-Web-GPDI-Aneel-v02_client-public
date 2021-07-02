@@ -124,10 +124,20 @@
                     <div class="form-group m-0">
                         <label>ARQUIVO PDF RELATÓRIO FINAL</label>
                     </div>
-                    <label class="btn-link btn px-0">
-                        <i class="ta-attachment"></i> {{relatorioArquivo?.name || 'Anexar'}}
-                        <input type="file" accept=".pdf" hidden (change)="fileChange('relatorioArquivo', $event)">
-                    </label>
+                    <ng-container *ngIf="!relatorio?.relatorioArquivoId">
+                        <label class="btn-link btn m-0 px-0">
+                            <i class="ta-attachment"></i> {{relatorioArquivo?.name || 'Anexar'}}
+                            <input type="file" accept=".pdf" hidden (change)="fileChange('relatorioArquivo', $event)">
+                        </label>
+                    </ng-container>
+                    <ng-container *ngIf="relatorio?.relatorioArquivoId">
+                        <button class="btn-link btn px-0" type="button" (click)="downloadFile('Relatorio')">
+                            <i class="ta-attachment"></i> Ver Anexo
+                        </button>
+                        <button type="button" class="btn btn-link btn-sm" (click)="deleteFile('relatorioArquivoId')">
+                            <i class="ta-cancel-circle"></i>
+                        </button>
+                    </ng-container>
                 </div>
             </div>
 
@@ -136,10 +146,20 @@
                     <div class="form-group m-0">
                         <label>ARQUIVO EM FORMATO PDF DO RELATÓRIO DE AUDITORIA CONTÁBIL E FINANCEIRA DO PROJETO DE P&D</label>
                     </div>
-                    <label class="btn-link btn px-0">
-                        <i class="ta-attachment"></i> {{auditoriaRelatorioArquivo?.name || 'Anexar'}}
-                        <input type="file" accept=".pdf" hidden (change)="fileChange('auditoriaRelatorioArquivo', $event)">
-                    </label>
+                    <ng-container *ngIf="!relatorio?.auditoriaRelatorioArquivoId">
+                        <label class="btn-link btn m-0 px-0">
+                            <i class="ta-attachment"></i> {{auditoriaRelatorioArquivo?.name || 'Anexar'}}
+                            <input type="file" accept=".pdf" hidden (change)="fileChange('auditoriaRelatorioArquivo', $event)">
+                        </label>
+                    </ng-container>
+                    <ng-container *ngIf="relatorio?.auditoriaRelatorioArquivoId">
+                        <button class="btn-link btn px-0" type="button" (click)="downloadFile('RelatorioAuditoria')">
+                            <i class="ta-attachment"></i> Ver Anexo
+                        </button>
+                        <button type="button" class="btn btn-link btn-sm" (click)="deleteFile('auditoriaRelatorioArquivoId')">
+                            <i class="ta-cancel-circle"></i>
+                        </button>
+                    </ng-container>
                 </div>
             </div>
             

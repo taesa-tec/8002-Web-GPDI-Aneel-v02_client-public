@@ -5,6 +5,7 @@ import { Projeto } from '@app/pages/projetos/projeto/projeto.component';
 import { ProjetoService } from '@app/pages/projetos/projeto/services/projeto.service';
 import { PropriedadeIntelectual } from '../../relatorio';
 import { AppService } from '@app/services';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-editor',
@@ -43,10 +44,11 @@ export class EditorComponent implements OnInit {
     this.projeto = this.service.getCurrentProjeto();
 
     if(this.propriedade) {
-      this.form.patchValue(this.propriedade);
-      this.depositantes.forEach(d => {
-        this.addDepositante(d);
+      this.form.patchValue({
+        ...this.propriedade,
+        dataConclusao: moment(this.propriedade.pedidoData).format("yyyy-MM-D")
       });
+      this.depositantes.forEach(d => this.addDepositante(d));
     } else {
       this.addDepositante();
     }

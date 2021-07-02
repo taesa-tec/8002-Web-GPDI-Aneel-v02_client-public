@@ -15,7 +15,8 @@ export class ListaComponent implements OnInit {
 
   cols: TableComponentCols = [
     {title: 'Tipo', field: 'tipo', order: true},
-    {title: 'CNPJ Entidade', field: 'cnpjReceptora', order: true}
+    {title: 'CNPJ Entidade', field: 'cnpjReceptora', order: true,
+      value: i => i.cnpjReceptora.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5')}
   ];
 
   buttons: TableComponentActions = [

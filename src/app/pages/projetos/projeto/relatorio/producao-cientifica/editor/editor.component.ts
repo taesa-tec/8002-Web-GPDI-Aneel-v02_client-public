@@ -5,6 +5,8 @@ import { Projeto } from '@app/pages/projetos/projeto/projeto.component';
 import { ProjetoService } from '@app/pages/projetos/projeto/services/projeto.service';
 import { ProducaoCientifica } from '../../relatorio';
 import { AppService } from '@app/services';
+import { FileService } from '@app/services/file.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-editor',
@@ -31,6 +33,7 @@ export class EditorComponent implements OnInit {
 
   constructor(
     private app: AppService,
+    private fileService: FileService,
     private service: ProjetoService,
     private fb: FormBuilder,
     public activeModal: NgbActiveModal
@@ -38,9 +41,11 @@ export class EditorComponent implements OnInit {
 
   ngOnInit(): void {
     this.projeto = this.service.getCurrentProjeto();
-
     if(this.producao) {
-      this.form.patchValue(this.producao);
+      this.form.patchValue({
+        ...this.producao,
+        dataPublicacao: moment(this.producao.dataPublicacao).format("yyyy-MM-D")
+      });
     }
   }
 
@@ -49,8 +54,16 @@ export class EditorComponent implements OnInit {
     this[file] = files.length > 0 ? files.item(0) : null;
   }
 
+  deleteFile() {
+    this.producao.arquivoTrabalhoOrigemId = null;
+  }
+
+  async downloadFile() {
+    await this.fileService.urlToBlobDownload(`Projetos/${this.projeto.id}/Relatorio/ProducaoCientifica/${this.producao.id}/Arquivos/Origem`, null);
+  }
+
   validate() {
-    return (this.form.valid && this.file);
+    return (this.form.valid && (this.producao?.arquivoTrabalhoOrigemId || this.file));
   }
 
   async delete() {
@@ -69,14 +82,19 @@ export class EditorComponent implements OnInit {
   async submit() {
     try {
       if(this.validate()) {
-        const producao = this.form.value;
-        const path = `${this.projeto.id}/Relatorio/ProducaoCientifica`;
+        let producao = this.form.value;
+        let path = `${this.projeto.id}/Relatorio/ProducaoCientifica`;
 
         if(producao.id) {
-          await this.service.put(path, producao);
+          producao = await this.service.put(path, producao);
         } else {
-          await this.service.post(path, producao);
+          producao = await this.service.post(path, producao);
         }
+
+        if(this.file) {
+          await this.service.upload([this.file], `${path}/${producao.id}/Arquivos/Origem`);
+        }
+
         this.activeModal.close();
       }
     } catch(e) {

@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Projeto } from '../../projeto.component';
 import { ProjetoService } from '@app/pages/projetos/projeto/services/projeto.service';
 import { RelatorioFinal } from './../relatorio';
+import { FileService } from '@app/services/file.service';
+import { AppService } from '@app/services';
 
 @Component({
   selector: 'app-final',
@@ -23,14 +25,16 @@ export class FinalComponent implements OnInit {
     isTecnicaImplementada: ['', Validators.required],
     tecnicaImplementada: ['', Validators.required],
     isAplicabilidadeAlcancada: ['', Validators.required],
-    aplicabilidadeJustificativa: ['', Validators.required],
-    resultadosTestes: ['', Validators.required],
-    abrangenciaProduto: ['', Validators.required],
-    ambitoAplicacaoProduto: ['', Validators.required],
+    aplicabilidadeJustificativa: [''],
+    resultadosTestes: [''],
+    abrangenciaProduto: [''],
+    ambitoAplicacaoProduto: [''],
     transferenciaTecnologica: ['', Validators.required]
   });
 
   constructor(
+    private app: AppService,
+    private fileService: FileService,
     private service: ProjetoService,
     private route: ActivatedRoute,
     private fb: FormBuilder
@@ -91,22 +95,41 @@ export class FinalComponent implements OnInit {
     this[file] = files.length > 0 ? files.item(0) : null;
   }
 
+  deleteFile(file: string) {
+    this.relatorio[file] = null;
+  }
+
+  async downloadFile(file: string) {
+    await this.fileService.urlToBlobDownload(`Projetos/${this.projeto.id}/Relatorio/RelatorioFinal/Arquivos/${file}`, null);
+  }
+
   validate() {
-    return (this.form.valid && this.relatorioArquivo && this.auditoriaRelatorioArquivo);
+    return (this.form.valid && 
+      (this.relatorio?.relatorioArquivoId || this.relatorioArquivo) &&
+      (this.relatorio?.auditoriaRelatorioArquivoId || this.auditoriaRelatorioArquivo));
   }
 
   async submit() {
     try {
       if(this.validate()) {
-        const relatorio = this.form.value;
-        const path = `${this.projeto.id}/Relatorio/RelatorioFinal`;
+        let relatorio = this.form.value;
+        let path = `${this.projeto.id}/Relatorio/RelatorioFinal`;
 
         if(relatorio.id) {
-          this.relatorio = await this.service.put(path, relatorio);
+          await this.service.put(path, relatorio);
         } else {
           this.relatorio = await this.service.post(path, relatorio);
         }
-        this.form.patchValue(this.relatorio);
+
+        if(this.relatorioArquivo) {
+          await this.service.upload([this.relatorioArquivo], `${path}/Arquivos/Relatorio`);
+        }
+
+        if(this.auditoriaRelatorioArquivo) {
+          await this.service.upload([this.auditoriaRelatorioArquivo], `${path}/Arquivos/RelatorioAuditoria`);
+        }
+
+        this.app.alert("Relatório salvo com sucesso.");
       }
     } catch(e) {
       console.log(e.message);

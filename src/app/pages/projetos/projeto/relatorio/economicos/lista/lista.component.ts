@@ -15,7 +15,7 @@ export class ListaComponent implements OnInit {
 
   cols: TableComponentCols = [
     {title: 'Tipo', field: 'tipo', order: true},
-    {title: 'Percentual Impacto', field: 'porcentagemImpacto', order: true}
+    {title: 'Percentual Impacto', field: 'porcentagemImpacto', value: i => `${i.porcentagemImpacto}%`, order: true}
   ];
 
   buttons: TableComponentActions = [

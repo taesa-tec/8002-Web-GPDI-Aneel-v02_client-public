@@ -11,6 +11,8 @@ export interface RelatorioFinal {
   abrangenciaProduto: string;
   ambitoAplicacaoProduto: string;
   transferenciaTecnologica: string;
+  relatorioArquivoId: string;
+  auditoriaRelatorioArquivoId: string;
 }
 
 export interface Apoio {
