@@ -28,6 +28,7 @@ export class FormalizacaoComponent implements OnInit, OnDestroy {
   form = this.fb.group({
     aprovado: this.aprovadoCtrl,
     responsavelId: ['', Validators.required],
+    compartilhamento: ['', Validators.required],
     numeroProjeto: this.numeroProjetoCtrl,
     tituloCompleto: this.tituloCompletoCtrl,
     empresaProponenteId: this.empresaProponenteCtrl,

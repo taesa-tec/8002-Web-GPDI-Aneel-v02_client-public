@@ -38,6 +38,16 @@
         <input type="text" class="form-control" formControlName="numeroProjeto">
       </div>
       <div class="form-group">
+        <label>TIPO DE COMPARTILHAMENTO</label>
+        <select formControlName="compartilhamento" class="form-control">
+          <option value="" hidden>Selecione o compartilhamento</option>
+          <option value="DP">Domínio Público</option>
+          <option value="EE">Exclusivo da(s) empresa(s) de energia elétrica</option>
+          <option value="EX">Exclusivo da(s) entidade(s) executora(s)</option>
+          <option value="CE">Compartilhado entre as empresa(s) de energia elétrica e entidade(s) executora(s)</option>
+        </select>
+      </div>
+      <div class="form-group">
         <label>DATA DE INÍCIO DO PROJETO</label>
         <app-month-year-selector formControlName="inicioProjeto"></app-month-year-selector>
       </div>
