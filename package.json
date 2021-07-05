@@ -4,9 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "prebuild": "npm run buildeditor; npm version patch",
+    "prebuild": "npm run buildeditor",
     "build": "ng build --prod",
     "postbuild": "npm run zip",
+    "version": "npm run build",
+    "postversion": "git push && git push --tags",
     "test": "ng test",
     "lint": "ng lint",
     "lintfix": "ng lint sistema-ped --fix",
