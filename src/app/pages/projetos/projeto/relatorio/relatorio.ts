@@ -97,7 +97,7 @@ export interface PropriedadeIntelectual {
   pedidoData: string;
   pedidoNumero: string;
   tituloINPI: string;
-  inventores: Array<number>;
+  inventores: Array<any>;
   depositantes: Array<Depositante>;
 }
 

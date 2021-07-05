@@ -6,6 +6,7 @@ import { ProjetoService } from '@app/pages/projetos/projeto/services/projeto.ser
 import { PropriedadeIntelectual } from '../../relatorio';
 import { AppService } from '@app/services';
 import * as moment from 'moment';
+import { sumBy } from 'lodash-es';
 
 @Component({
   selector: 'app-editor',
@@ -16,10 +17,7 @@ export class EditorComponent implements OnInit {
   projeto: Projeto;
   propriedade: PropriedadeIntelectual;
   recursos: Array<any>;
-  depositantes = [
-    {id: 1, nome: 'Depositante 1', porcentagem: '20'},
-    {id: 2, nome: 'Depositante 2', porcentagem: '30'}
-  ];
+  depositantes: Array<any>;
 
   form = this.fb.group({
     id: [0, Validators.required],
@@ -46,9 +44,15 @@ export class EditorComponent implements OnInit {
     if(this.propriedade) {
       this.form.patchValue({
         ...this.propriedade,
-        dataConclusao: moment(this.propriedade.pedidoData).format("yyyy-MM-D")
+        inventores: this.propriedade.inventores.map(a => a.id),
+        pedidoData: moment(this.propriedade.pedidoData).format("yyyy-MM-DD")
       });
-      this.depositantes.forEach(d => this.addDepositante(d));
+      this.propriedade.depositantes.forEach(d => {
+        this.addDepositante({
+          id: d.empresaId ? `e-${d.empresaId}` : `c-${d.coExecutorId}`,
+          porcentagem: d.porcentagem
+        });
+      });
     } else {
       this.addDepositante();
     }
@@ -73,7 +77,7 @@ export class EditorComponent implements OnInit {
 
   async delete() {
     try {
-      if(this.form.valid) {
+      if(this.validate()) {
         if(await this.app.confirm("Tem certeza que deseja excluir esta propriedade intelectual?")) {
           await this.service.delete(`${this.projeto.id}/Relatorio/PropriedadeIntelectual/${this.form.value.id}`);
           this.activeModal.close();
@@ -84,18 +88,31 @@ export class EditorComponent implements OnInit {
     }
   }
 
+  validate() {
+    return (this.form.valid && sumBy(this.form.value.depositantes, 'porcentagem') === 100);
+  }
+
   async submit() {
     try {
-      if(this.form.valid) {
+      if(this.validate()) {
         const propriedade = this.form.value;
+        propriedade.depositantes = propriedade.depositantes.map(d => {
+          const ee = d.id.split('-');
+          return {
+            empresaId: ee[0] === 'e' ? parseFloat(ee[1]) : null,
+            coExecutorId: ee[0] === 'c' ? parseFloat(ee[1]) : null,
+            porcentagem: d.porcentagem
+          }
+        }); 
+        
         const path = `${this.projeto.id}/Relatorio/PropriedadeIntelectual`;
-        console.log(propriedade);
-        // if(propriedade.id) {
-        //   await this.service.put(path, propriedade);
-        // } else {
-        //   await this.service.post(path, propriedade);
-        // }
-        //this.activeModal.close();
+
+        if(propriedade.id) {
+          await this.service.put(path, propriedade);
+        } else {
+          await this.service.post(path, propriedade);
+        }
+        this.activeModal.close();
       }
     } catch(e) {
       console.log(e.message);

@@ -44,7 +44,7 @@ export class EditorComponent implements OnInit {
     if(this.capacitacao) {
       this.form.patchValue({
         ...this.capacitacao,
-        dataConclusao: moment(this.capacitacao.dataConclusao).format("yyyy-MM-D")
+        dataConclusao: moment(this.capacitacao.dataConclusao).format("yyyy-MM-DD")
       });
     }
   }

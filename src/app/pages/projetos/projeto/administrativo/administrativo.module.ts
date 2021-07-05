@@ -12,15 +12,17 @@ import {ComponentsModule} from '@app/core/components';
 import { RepositorioXmlComponent } from './repositorio-xml/repositorio-xml.component';
 import { AlterarSatusComponent } from './alterar-satus/alterar-satus.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { GeradorXmlComponent } from './gerador-xml/gerador-xml.component';
 
 const menu: Array<MenuItem> = [
+  {path: 'gerador-xml', text: 'Geração XMLS'},
   {path: 'logs-duto', text: 'Logs DUTO'},
   {path: 'repositorio-xml', text: 'Repositório XMLs Gerados'},
   {path: 'status', text: 'Alteração de Status'},
 ];
 
 @NgModule({
-  declarations: [AdministrativoComponent, LogsDutoComponent, RepositorioXmlComponent, AlterarSatusComponent],
+  declarations: [AdministrativoComponent, LogsDutoComponent, RepositorioXmlComponent, AlterarSatusComponent, GeradorXmlComponent],
   imports: [
     CommonModule,
     DashboardModule,

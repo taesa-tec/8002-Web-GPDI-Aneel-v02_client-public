@@ -117,7 +117,7 @@
             <div class="button btn btn-link" (click)="activeModal.close('cancel')">
                 Cancelar
             </div>
-            <button type="button" class="btn btn-link" [disabled]="form.invalid"
+            <button type="button" class="btn btn-link" [disabled]="!validate()"
                 *ngIf="form.value.id"
                 (click)="delete()">
                 <i class="ta-times-circle mr-1"></i>

@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TableComponentActions, TableComponentCols } from '@app/core/components';
 import { EditorComponent } from '../editor/editor.component';
 import { DatePipe } from '@angular/common';
+import { Projeto } from '@app/pages/projetos/projeto/projeto.component';
 import { ProjetoService } from '@app/pages/projetos/projeto/services/projeto.service';
 import { Depositante, PropriedadeIntelectual } from '../../relatorio';
 
@@ -13,6 +14,7 @@ import { Depositante, PropriedadeIntelectual } from '../../relatorio';
 })
 export class ListaComponent implements OnInit {
 
+  projeto: Projeto;
   propriedades: Array<PropriedadeIntelectual>;
   recursos: Array<any>;
   depositantes: Array<Depositante>;
@@ -36,10 +38,10 @@ export class ListaComponent implements OnInit {
   }
 
   async ngOnInit() {
-    const projeto = this.service.getCurrentProjeto();
-    this.recursos = await this.service.obter(`${projeto.id}/Recursos/Humanos`);
-    this.depositantes = await this.service.obter(`${projeto.id}/Empresas`);
-    
+    this.projeto = this.service.getCurrentProjeto();
+    this.recursos = await this.service.obter(`${this.projeto.id}/Recursos/Humanos`);
+    this.depositantes = await this.getDepositantes();
+
     this.route.data.subscribe(({propriedades}) => {
       if(Array.isArray(propriedades)) {
         this.propriedades = propriedades
@@ -59,9 +61,20 @@ export class ListaComponent implements OnInit {
     let ref = this.modal.open(EditorComponent, {size: 'lg'});
     ref.componentInstance.propriedade = propriedade;
     ref.componentInstance.recursos = this.recursos;
-    //ref.componentInstance.depositantes = this.depositantes;
+    ref.componentInstance.depositantes = this.depositantes;
     await ref.result;
     this.router.navigate(['./'], {relativeTo: this.route}).then();
+  }
+
+  async getDepositantes() {
+    const result = await this.service.obter<any>(`${this.projeto.id}/Empresas`);
+    if (result !== null) {
+      if (result !== null) {
+        const empresas = result.empresas.map(e => ({text: e.nome, value: `e-${e.id}`}));
+        const coExecutores = result.coExecutores.map(e => ({text: e.razaoSocial, value: `c-${e.id}`}));
+        return [...empresas, ...coExecutores];
+      }
+    }
   }
 
 }

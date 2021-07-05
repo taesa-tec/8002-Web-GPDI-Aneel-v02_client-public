@@ -44,7 +44,7 @@ export class EditorComponent implements OnInit {
     if(this.producao) {
       this.form.patchValue({
         ...this.producao,
-        dataPublicacao: moment(this.producao.dataPublicacao).format("yyyy-MM-D")
+        dataPublicacao: moment(this.producao.dataPublicacao).format("yyyy-MM-DD")
       });
     }
   }
@@ -68,7 +68,7 @@ export class EditorComponent implements OnInit {
 
   async delete() {
     try {
-      if(this.form.valid) {
+      if(this.validate()) {
         if(await this.app.confirm("Tem certeza que deseja excluir esta produção científica?")) {
           await this.service.delete(`${this.projeto.id}/Relatorio/ProducaoCientifica/${this.form.value.id}`);
           this.activeModal.close();
