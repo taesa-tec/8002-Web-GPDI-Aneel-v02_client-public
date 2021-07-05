@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ProjetoService } from '@app/pages/projetos/projeto/services/projeto.service';
 import { AppService } from '@app/services';
 import { FileService } from '@app/services/file.service';
@@ -12,7 +12,10 @@ import { Projeto } from '../../projeto.component';
 export class GeradorXmlComponent implements OnInit {
 
   projeto: Projeto;
-  formXml = this.fb.group({
+  formProjetoXml = this.fb.group({
+    versao: ['', Validators.required]
+  });
+  formAuditoriaXml = this.fb.group({
     versao: ['', Validators.required]
   });
 
@@ -27,14 +30,14 @@ export class GeradorXmlComponent implements OnInit {
     this.projeto = this.service.getCurrentProjeto();
   }
 
-  async gerarXml() {
-    if (this.formXml.invalid) {
+  async gerarXml(form: FormGroup, type: string) {
+    if (form.invalid) {
       return;
     }
     this.app.loading.show().then();
 
     try {
-      await this.file.urlToBlobDownload(`Projetos/${this.projeto.id}/GerarXML/FinalProjeto`, '', null, this.formXml.value);
+      await this.file.urlToBlobDownload(`Projetos/${this.projeto.id}/GerarXML/${type}`, '', null, form.value);
     } catch (e) {
       console.error(e);
 

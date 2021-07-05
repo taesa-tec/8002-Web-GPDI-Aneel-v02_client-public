@@ -69,11 +69,9 @@ export class ListaComponent implements OnInit {
   async getDepositantes() {
     const result = await this.service.obter<any>(`${this.projeto.id}/Empresas`);
     if (result !== null) {
-      if (result !== null) {
-        const empresas = result.empresas.map(e => ({text: e.nome, value: `e-${e.id}`}));
-        const coExecutores = result.coExecutores.map(e => ({text: e.razaoSocial, value: `c-${e.id}`}));
-        return [...empresas, ...coExecutores];
-      }
+      const empresas = result.empresas.map(e => ({text: e.nome, value: `e-${e.id}`}));
+      const coExecutores = result.coExecutores.map(e => ({text: e.razaoSocial, value: `c-${e.id}`}));
+      return [...empresas, ...coExecutores];
     }
   }
 

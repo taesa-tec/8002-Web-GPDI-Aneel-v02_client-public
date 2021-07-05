@@ -65,7 +65,6 @@ export const ProjetoFinalizadoMenu = {
     MenuItemResultadosIntelectual,
     MenuItemResultadosSocioAmbientais,
     MenuItemResultadosEconomicos,
-    MenuItemConsultarDados,
     MenuItemCentralAdministrativa
   ]
 };
