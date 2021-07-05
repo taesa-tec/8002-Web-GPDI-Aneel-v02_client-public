@@ -1,21 +1,23 @@
 {
   "name": "sistema-ped",
-  "version": "2.7.10",
+  "version": "2.8.2",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
+    "patch": "npm version patch",
+    "minor": "npm version minor",
+    "version": "npm run build",
+    "postversion": "git push && git push --tags",
     "prebuild": "npm run buildeditor",
     "build": "ng build --prod",
     "postbuild": "npm run zip",
-    "version": "npm run build",
-    "postversion": "git push && git push --tags",
+    "buildeditor": "npm run build --prefix ./projects/ckeditor/",
+    "zip": "npm-build-zip --source=dist/production --destination=dist/",
+    "ng": "ng",
+    "start": "ng serve",
     "test": "ng test",
     "lint": "ng lint",
     "lintfix": "ng lint sistema-ped --fix",
     "e2e": "ng e2e",
-    "postinstall": "ngcc",
-    "buildeditor": "npm run build --prefix ./projects/ckeditor/",
-    "zip": "npm-build-zip --source=dist/production --destination=dist/"
+    "postinstall": "ngcc"
   },
   "private": true,
   "dependencies": {
