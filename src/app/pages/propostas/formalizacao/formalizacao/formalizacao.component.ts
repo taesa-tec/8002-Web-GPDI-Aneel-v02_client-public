@@ -27,6 +27,7 @@ export class FormalizacaoComponent implements OnInit, OnDestroy {
   inicioProjetoCtrl = this.fb.control('');
   responsavelIdCtrl = this.fb.control('');
   compartilhamentoCtrl = this.fb.control('');
+  segmentoIdCtrl = this.fb.control('');
   form = this.fb.group({
     aprovado: this.aprovadoCtrl,
     responsavelId: this.responsavelIdCtrl,
@@ -34,6 +35,7 @@ export class FormalizacaoComponent implements OnInit, OnDestroy {
     numeroProjeto: this.numeroProjetoCtrl,
     tituloCompleto: this.tituloCompletoCtrl,
     empresaProponenteId: this.empresaProponenteCtrl,
+    segmentoId: this.segmentoIdCtrl,
     inicioProjeto: this.inicioProjetoCtrl,
   });
 

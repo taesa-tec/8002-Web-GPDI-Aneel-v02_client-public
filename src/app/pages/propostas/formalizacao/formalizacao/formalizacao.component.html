@@ -48,6 +48,16 @@
         </select>
       </div>
       <div class="form-group">
+        <label>SEGMENTO</label>
+        <select formControlName="segmentoId" class="form-control">
+          <option value="" hidden>Selecione o Segmento</option>
+          <option value="G">Geração</option>
+          <option value="T">Transmissão</option>
+          <option value="D">Distribuição</option>
+          <option value="C">Comercialização</option>
+        </select>
+      </div>
+      <div class="form-group">
         <label>DATA DE INÍCIO DO PROJETO</label>
         <app-month-year-selector formControlName="inicioProjeto"></app-month-year-selector>
       </div>
