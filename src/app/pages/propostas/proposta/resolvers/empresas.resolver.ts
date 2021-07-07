@@ -17,16 +17,19 @@ export class EmpresasResolver implements Resolve<any> {
           let empresas = [];
           empresas.push({
             text: result.empresa.nome,
-            value: `e-${result.empresa.id}`
+            value: `e-${result.empresa.id}`,
+            type: 't'
           });
           empresas.push({
             text: result.fornecedor.nome,
-            value: `e-${result.fornecedor.id}`
+            value: `e-${result.fornecedor.id}`,
+            type: 'f'
           });
           empresas = empresas.concat(result.coExecutores.map(c => (
             {
               text: c.razaoSocial,
-              value: `c-${c.id}`
+              value: `c-${c.id}`,
+              type: 'c'
             }
           )));
           return empresas;

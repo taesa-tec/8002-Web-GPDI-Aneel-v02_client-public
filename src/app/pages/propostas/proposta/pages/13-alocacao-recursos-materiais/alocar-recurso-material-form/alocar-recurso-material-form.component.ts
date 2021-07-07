@@ -17,23 +17,25 @@ export class AlocarRecursoMaterialFormComponent extends PropostaNodeFormDirectiv
   empresas = [];
   etapas = [];
   recursos = [];
-  empresaFinanciadora = this.fb.control('', Validators.required);
-  empresaRecebedora = this.fb.control('', Validators.required);
+  empresaFinanciadoraCtrl = this.fb.control('', Validators.required);
+  empresaFinanciadora: any;
+  empresaRecebedoraCtrl = this.fb.control('', Validators.required);
   form = this.fb.group({
     id: 0,
     recursoId: ['', Validators.required],
     etapaId: ['', Validators.required],
-    empresaFinanciadora: this.empresaFinanciadora,
+    empresaFinanciadora: this.empresaFinanciadoraCtrl,
     empresaFinanciadoraId: [''],
     coExecutorFinanciadorId: [''],
-    empresaRecebedora: this.empresaRecebedora,
+    empresaRecebedora: this.empresaRecebedoraCtrl,
     empresaRecebedoraId: [''],
     coExecutorRecebedorId: [''],
     justificativa: ['', Validators.required],
     quantidade: ['', [Validators.required, Validators.min(1)]],
   });
 
-  constructor(@Inject(PROPOSTA_CAN_EDIT) canEdit: boolean, app: AppService, fb: FormBuilder, activeModal: NgbActiveModal, service: PropostaServiceBase) {
+  constructor(@Inject(PROPOSTA_CAN_EDIT) canEdit: boolean, app: AppService, fb: FormBuilder, activeModal: NgbActiveModal,
+              service: PropostaServiceBase) {
     super(canEdit, app, fb, activeModal, service);
   }
 
@@ -42,24 +44,23 @@ export class AlocarRecursoMaterialFormComponent extends PropostaNodeFormDirectiv
     this.empresas = this.route.snapshot.data.empresas;
     this.etapas = this.route.snapshot.data.etapas;
     this.recursos = this.route.snapshot.data.recursos;
-
     if (this.route.snapshot.data.item) {
       const item = this.route.snapshot.data.item;
 
       if (item.coExecutorFinanciadorId) {
-        this.empresaFinanciadora.setValue(`c-${item.coExecutorFinanciadorId}`);
+        this.empresaFinanciadoraCtrl.setValue(`c-${item.coExecutorFinanciadorId}`);
       } else {
-        this.empresaFinanciadora.setValue(`e-${item.empresaFinanciadoraId}`);
+        this.empresaFinanciadoraCtrl.setValue(`e-${item.empresaFinanciadoraId}`);
       }
 
       if (item.coExecutorRecebedorId) {
-        this.empresaRecebedora.setValue(`c-${item.coExecutorRecebedorId}`);
+        this.empresaRecebedoraCtrl.setValue(`c-${item.coExecutorRecebedorId}`);
       } else {
-        this.empresaRecebedora.setValue(`e-${item.empresaRecebedoraId}`);
+        this.empresaRecebedoraCtrl.setValue(`e-${item.empresaRecebedoraId}`);
       }
     }
 
-    this.empresaFinanciadora.valueChanges.subscribe(e => {
+    this.empresaFinanciadoraCtrl.valueChanges.subscribe(e => {
       this.form.get('empresaFinanciadoraId').setValue('');
       this.form.get('coExecutorFinanciadorId').setValue('');
       const ee = e.split('-');
@@ -67,9 +68,10 @@ export class AlocarRecursoMaterialFormComponent extends PropostaNodeFormDirectiv
 
       const ctrl = this.form.get(ee[0] === 'e' ? 'empresaFinanciadoraId' : 'coExecutorFinanciadorId');
       ctrl.setValue(id);
+      this.updateFinanciadora();
     });
 
-    this.empresaRecebedora.valueChanges.subscribe(e => {
+    this.empresaRecebedoraCtrl.valueChanges.subscribe(e => {
       this.form.get('empresaRecebedoraId').setValue('');
       this.form.get('coExecutorRecebedorId').setValue('');
       const ee = e.split('-');
@@ -78,5 +80,14 @@ export class AlocarRecursoMaterialFormComponent extends PropostaNodeFormDirectiv
       const ctrl = this.form.get(ee[0] === 'e' ? 'empresaRecebedoraId' : 'coExecutorRecebedorId');
       ctrl.setValue(id);
     });
+    this.updateFinanciadora();
+  }
+
+  updateFinanciadora() {
+    this.empresaFinanciadora = this.empresas.find(e => e.value === this.empresaFinanciadoraCtrl.value);
+    const recebedora = this.empresas.find(e => e.value === this.empresaRecebedoraCtrl.value);
+    if (this.empresaFinanciadora?.type !== 't' && recebedora?.type === 't') {
+      this.empresaRecebedoraCtrl.setValue('');
+    }
   }
 }

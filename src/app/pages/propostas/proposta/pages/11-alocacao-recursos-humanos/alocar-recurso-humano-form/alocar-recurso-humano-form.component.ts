@@ -32,6 +32,7 @@ export class AlocarRecursoHumanoFormComponent extends PropostaNodeFormDirective 
     justificativa: ['', Validators.required],
     horaMeses: this.formMeses,
   });
+  recursoSelected: any;
 
 
   private _meses: Array<number> = [];
@@ -95,6 +96,7 @@ export class AlocarRecursoHumanoFormComponent extends PropostaNodeFormDirective 
     });
     this.recursoCtrl.valueChanges.subscribe(id => {
       maxMeses(id);
+      this.updateFinanciador();
     });
     this.empresaFinanciadora.valueChanges.subscribe(e => {
       this.form.get('empresaFinanciadoraId').setValue('');
@@ -108,6 +110,17 @@ export class AlocarRecursoHumanoFormComponent extends PropostaNodeFormDirective 
     if (!this.canEdit) {
       this.formMeses.disable();
     }
+    this.updateFinanciador();
 
+  }
+
+  updateFinanciador() {
+    this.recursoSelected = this.recursos.find(r => r.id === parseFloat(this.recursoCtrl.value));
+    if (this.recursoSelected?.empresaId) {
+      this.empresaFinanciadora.setValue(`e-${this.recursoSelected.empresaId}`);
+      this.empresaFinanciadora.disable();
+    } else if (this.empresaFinanciadora.disabled) {
+      this.empresaFinanciadora.enable();
+    }
   }
 }

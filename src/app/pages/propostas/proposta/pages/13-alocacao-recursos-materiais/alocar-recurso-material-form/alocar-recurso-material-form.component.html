@@ -43,7 +43,8 @@
         </label>
         <select class="form-control" id="empresa-recebedora" formControlName="empresaRecebedora">
           <option value="" hidden>Selecione</option>
-          <option [value]="empresa.value" *ngFor="let empresa of empresas">
+          <option [value]="empresa.value" *ngFor="let empresa of empresas"
+                  [disabled]="empresa.type === 't' && empresaFinanciadora?.type !== 't'">
             {{ empresa.text }}
           </option>
         </select>
