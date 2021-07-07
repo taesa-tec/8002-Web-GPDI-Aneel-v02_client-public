@@ -87,4 +87,11 @@ export class EditarComponent implements OnInit {
 
     }
   }
+
+  async excluir() {
+    if (await this.app.confirm('Tem certeza que deseja remover esse registro?')) {
+      await this.service.delete(`${this.registro.projetoId}/RegistroFinanceiro/${this.registro.id}`);
+    }
+    this.activeModal.close();
+  }
 }

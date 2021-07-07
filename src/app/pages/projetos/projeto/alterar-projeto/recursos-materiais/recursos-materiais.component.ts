@@ -91,7 +91,10 @@ export class RecursosMateriaisComponent implements OnInit {
     });
     this.route.fragment.subscribe(f => {
       if (f === 'novo') {
-        this.openForm().then();
+        setTimeout(() => {
+          this.openForm().then();
+        }, 100);
+
       }
     });
   }
@@ -100,6 +103,7 @@ export class RecursosMateriaisComponent implements OnInit {
   async openForm() {
     this.activeModal = this.modal.open(this.formRef, {size: 'lg'});
     try {
+      this.cdr.detectChanges();
       await this.activeModal.result;
     } catch (e) {
       console.error(e);

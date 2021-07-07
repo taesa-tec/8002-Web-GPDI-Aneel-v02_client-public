@@ -55,7 +55,11 @@ export class ListaComponent implements OnInit {
     }
     ref.componentInstance.registro = registro;
     ref.componentInstance.observacoes = obs;
-    await ref.result;
+    try {
+      await ref.result;
+    } catch (e) {
+      console.error(e);
+    }
     this.router.navigate(['./'], {relativeTo: this.route}).then();
 
 
