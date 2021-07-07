@@ -173,7 +173,7 @@ export class AuthService {
 
 
   hasRoles(...roles: string[]) {
-    this.userHasRoles(...roles);
+    return this.userHasRoles(...roles);
   }
 
   userHasRoles(...roles: string[]) {

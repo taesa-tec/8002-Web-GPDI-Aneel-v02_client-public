@@ -1,8 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {Proposta} from '@app/commons';
+import {Proposta, Roles, UserRole} from '@app/commons';
 import {CaptacaoIdProvider, PROPOSTA, PROPOSTA_CAN_EDIT, PropostaProvider, PropostaSidebar} from './shared';
 import {BehaviorSubject} from 'rxjs';
 import {EtapasService} from '@app/users-modules/fornecedor/services/propostas.service';
+import {AuthService} from '@app/services';
 
 
 @Component({
@@ -20,7 +21,14 @@ import {EtapasService} from '@app/users-modules/fornecedor/services/propostas.se
 export class PropostaComponent implements OnInit {
   proposta: Proposta;
 
-  constructor(@Inject(PROPOSTA) public propostaObservable: BehaviorSubject<Proposta>) {
+  backLink = '/';
+
+  constructor(@Inject(PROPOSTA) public propostaObservable: BehaviorSubject<Proposta>, protected auth: AuthService) {
+    if (auth.hasRoles(UserRole.Fornecedor)) {
+      this.backLink = '/propostas';
+    } else {
+      this.backLink = '/refinamento';
+    }
   }
 
   ngOnInit() {
