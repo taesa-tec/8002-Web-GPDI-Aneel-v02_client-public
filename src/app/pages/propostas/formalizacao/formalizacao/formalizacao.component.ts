@@ -25,10 +25,12 @@ export class FormalizacaoComponent implements OnInit, OnDestroy {
   tituloCompletoCtrl = this.fb.control('');
   empresaProponenteCtrl = this.fb.control('');
   inicioProjetoCtrl = this.fb.control('');
+  responsavelIdCtrl = this.fb.control('');
+  compartilhamentoCtrl = this.fb.control('');
   form = this.fb.group({
     aprovado: this.aprovadoCtrl,
-    responsavelId: ['', Validators.required],
-    compartilhamento: ['', Validators.required],
+    responsavelId: this.responsavelIdCtrl,
+    compartilhamento: this.compartilhamentoCtrl,
     numeroProjeto: this.numeroProjetoCtrl,
     tituloCompleto: this.tituloCompletoCtrl,
     empresaProponenteId: this.empresaProponenteCtrl,
@@ -50,7 +52,8 @@ export class FormalizacaoComponent implements OnInit, OnDestroy {
       this.empresas = data.empresas.filter(e => e.categoria === 1);
     });
     this.aprovadoCtrl.valueChanges.subscribe(value => {
-      [this.tituloCompletoCtrl, this.empresaProponenteCtrl, this.numeroProjetoCtrl, this.inicioProjetoCtrl].forEach(ctrl => {
+      [this.tituloCompletoCtrl, this.empresaProponenteCtrl, this.numeroProjetoCtrl,
+        this.inicioProjetoCtrl, this.responsavelIdCtrl, this.compartilhamentoCtrl].forEach(ctrl => {
         ctrl.clearValidators();
         ctrl.setValue('');
         if (value) {

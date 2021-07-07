@@ -81,12 +81,15 @@
       </div>
     </div>
 
-    <div class="form-group"><label for="responsavel-refinamento">Responsável Próxima Etapa (Projeto em Execução)</label>
-      <select id="responsavel-refinamento" class="form-control" formControlName="responsavelId">
-        <option value="" hidden>Selecione</option>
-        <option *ngFor="let user of equipe.outros" [value]="user.id">{{user.nomeCompleto}}</option>
-      </select>
-    </div>
+    <ng-container *ngIf="aprovadoCtrl.value">
+      <div class="form-group">
+        <label for="responsavel-refinamento">Responsável Próxima Etapa (Projeto em Execução)</label>
+        <select id="responsavel-refinamento" class="form-control" formControlName="responsavelId">
+          <option value="" hidden>Selecione</option>
+          <option *ngFor="let user of equipe.outros" [value]="user.id">{{user.nomeCompleto}}</option>
+        </select>
+      </div>
+    </ng-container>
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-link" type="button" (click)="activeModal.close('cancel')">Cancelar</button>
