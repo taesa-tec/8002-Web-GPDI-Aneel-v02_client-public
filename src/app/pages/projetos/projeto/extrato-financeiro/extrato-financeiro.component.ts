@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ExtratoEmpresa} from '@app/pages/projetos/projeto/extrato-financeiro/extrato-financeiro';
+import {ProjetoService} from '@app/pages/projetos/projeto/services/projeto.service';
+import {FileService} from '@app/services/file.service';
+import {LoadingController} from '@app/services';
 
 @Component({
   selector: 'app-extrato-financeiro',
@@ -14,7 +17,7 @@ export class ExtratoFinanceiroComponent implements OnInit {
   previsto = 0;
   desvio = '0';
 
-  constructor(protected route: ActivatedRoute) {
+  constructor(protected route: ActivatedRoute, protected loading: LoadingController, protected projetoService: ProjetoService, protected fileService: FileService) {
   }
 
   ngOnInit(): void {
@@ -34,6 +37,13 @@ export class ExtratoFinanceiroComponent implements OnInit {
       return 'N/A';
     }
     return `${desvio}%`;
+  }
+
+  async downloadXls() {
+    this.loading.show().then();
+    const projeto = this.projetoService.getCurrentProjeto();
+    await this.fileService.urlToBlobDownload(`Projetos/${projeto.id}/ExtratoFinanceiro/Xlsx`, '');
+    this.loading.hide();
   }
 
 }
