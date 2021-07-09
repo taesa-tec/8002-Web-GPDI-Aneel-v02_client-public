@@ -30,14 +30,33 @@
       </div>
     </div>
   </div>
-
-
   <div class="row">
     <div class="col">
 
-
+    </div>
+  </div>
+  <div class="row" *ngIf="showOriginal && contrato.rascunho != null">
+    <div class="col">
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-outline-primary" type="button" (click)="showOriginal = false"><i class="ta-edit"></i>
+          Continuar Editando
+        </button>
+      </div>
+      <div class="bg-cinza-claro p-3 rounded my-3">
+        <div [innerHTML]="contrato.conteudo" class="bg-light p-3" style="cursor: not-allowed"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-outline-primary" (click)="showOriginal = true" type="button"
+                *ngIf="contrato.rascunho && !showOriginal"><i class="ta-eye"></i>
+          Ver Contrato Salvo
+        </button>
+      </div>
       <div class="form-group">
-        <div class="bg-cinza-claro p-3 rounded my-3">
+        <div class="bg-cinza-claro p-3 rounded my-3" *ngIf="!showOriginal">
           <ckeditor
             [editor]="editor"
             [config]="configEditor"
@@ -94,7 +113,7 @@
           Histórico de Versões
         </button>
         <div class="ml-auto">
-          <button type="button" class="btn btn-link" [disabled]="contrato.id === 0" (click)="downloadPdf()">
+          <button type="button" class="btn btn-link" [disabled]="!contrato.conteudo" (click)="downloadPdf()">
             <i class="ta-download"></i>
             Download PDF
           </button>
@@ -102,7 +121,8 @@
                   *ngIf="fornecedorCanEdit">
             <i class="ta-save fs-24 align-middle"></i> Salvar como Rascunho
           </button>
-          <button type="submit" class="btn btn-success mx-2" value="publish" [disabled]="form.invalid" *ngIf="fornecedorCanEdit">
+          <button type="submit" class="btn btn-success mx-2" value="publish" [disabled]="form.invalid"
+                  *ngIf="fornecedorCanEdit">
             <i class="ta-ok fs-24 align-middle"></i> Salvar e Marcar como Finalizado
           </button>
         </div>

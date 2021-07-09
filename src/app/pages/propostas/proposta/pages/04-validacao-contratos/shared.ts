@@ -11,6 +11,7 @@ export interface Contrato {
   parent: Parent;
   titulo: string;
   header: string;
+  rascunho?: string;
   conteudo?: string;
   footer: string;
   revisoes: any[];

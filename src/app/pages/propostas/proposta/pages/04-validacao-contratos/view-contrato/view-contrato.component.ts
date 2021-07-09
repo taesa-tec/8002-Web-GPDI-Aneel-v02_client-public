@@ -25,6 +25,7 @@ export class ViewContratoComponent implements OnInit {
   configEditor = ConfigEditor;
   contrato: Contrato;
   files: File[] = [];
+  showOriginal = false;
   form = this.fb.group({
     draft: [true],
     conteudo: ['', Validators.required],
@@ -54,7 +55,7 @@ export class ViewContratoComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.subscribe(data => {
       this.contrato = data.contrato;
-      this.form.get('conteudo').patchValue(this.contrato.conteudo || this.contrato.parent.conteudo);
+      this.form.get('conteudo').patchValue(this.contrato.rascunho || this.contrato.conteudo || this.contrato.parent.conteudo);
     });
     this.service.proposta.subscribe(p => {
       this.proposta = p;
@@ -66,6 +67,12 @@ export class ViewContratoComponent implements OnInit {
 
     if (!this.canEdit || !this.fornecedorCanEdit) {
       this.form.disable();
+    }
+  }
+
+  reverter() {
+    if (this.contrato.conteudo) {
+      this.form.get('conteudo').patchValue(this.contrato.conteudo);
     }
   }
 
@@ -81,6 +88,12 @@ export class ViewContratoComponent implements OnInit {
         const response: any = await this.service.saveContrato(this.proposta.guid, this.form.value);
         this.contrato.id = response.id;
         this.contrato.finalizado = !saveAsDraft;
+        if (saveAsDraft) {
+          this.contrato.rascunho = this.form.value.conteudo;
+        } else {
+          this.contrato.conteudo = this.form.value.conteudo;
+          this.contrato.rascunho = null;
+        }
         this.app.alert('Contrato Salvo com sucesso!').then();
         if (this.proposta.captacaoStatus === 'Refinamento' && !saveAsDraft) {
           this.proposta.contratoAprovacao = 'Pendente';
