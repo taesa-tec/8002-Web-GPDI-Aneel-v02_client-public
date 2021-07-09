@@ -38,7 +38,7 @@ export class ProrrogarComponent implements OnInit {
     const dataCtrl = this.form.get('data');
     dataCtrl.setValidators([Validators.required, AppValidators.minDate(this.projeto.dataFinalProjeto)]);
     this.route.data.subscribe(data => {
-      this.produtos = data.produtos.filter(p => p.classificacao === 'Intermediario');
+      this.produtos = data.produtos; // .filter(p => p.classificacao === 'Intermediario');
     });
   }
 
