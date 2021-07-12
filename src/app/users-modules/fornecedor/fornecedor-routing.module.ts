@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {DashboardComponent} from '@app/dashboard';
-import {MeuCadastroRoute, ProjetosRoute, PropostaRefinamentoRoute} from '@app/routes';
+import {MeuCadastroRoute, NotFoundRoute, ProjetosRoute, PropostaRefinamentoRoute, RedirectRoute} from '@app/routes';
 
 
 const routes: Routes = [
@@ -9,6 +9,7 @@ const routes: Routes = [
     path: '',
     component: DashboardComponent,
     children: [
+      RedirectRoute('propostas'),
       MeuCadastroRoute,
       {
         path: '',
@@ -27,6 +28,7 @@ const routes: Routes = [
       },
       ProjetosRoute,
       PropostaRefinamentoRoute,
+      NotFoundRoute
     ]
   }
 ];

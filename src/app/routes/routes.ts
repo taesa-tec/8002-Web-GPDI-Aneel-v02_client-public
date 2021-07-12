@@ -13,7 +13,11 @@ export const MeuCadastroRoute: Route = {
   loadChildren: () => import('@app/pages/meu-cadastro/meu-cadastro.module').then(m => m.MeuCadastroModule)
 
 };
-
+export const RedirectRoute = (r, rd = null) => ({
+  path: rd ? r : '',
+  pathMatch: 'full',
+  redirectTo: rd || r
+});
 export const ProjetosRoute: Route = {
   path: 'projetos',
   loadChildren: () => import('@app/pages/projetos/projetos.module')
@@ -30,12 +34,38 @@ export const GerenciarUsuariosRoute: Route = {
   path: 'gerenciar-usuarios',
   loadChildren: () => import('@app/pages/gerenciar-usuarios/gerenciar-usuarios.module').then(m => m.GerenciarUsuariosModule)
 };
+export const DemandasRoute: Route = {
+  path: 'demandas',
+  loadChildren: () => import('@app/pages/demandas/demandas.module').then(m => m.DemandasModule)
+};
+export const CaptacoesRoute: Route = {
+  path: 'captacoes',
+  component: SidebarComponent,
+  loadChildren: () => import('@app/pages/captacao/captacao.module').then(m => m.CaptacaoModule)
+};
 
-
+export const PropostaSelecaoRoute: Route = {
+  path: 'selecao',
+  component: SidebarComponent,
+  loadChildren: () => import('@app/pages/propostas/selecao/propostas-selecao.module').then(m => m.PropostasSelecaoModule)
+};
 export const PropostaRefinamentoRoute: Route = {
   path: 'refinamento',
   loadChildren: () => import('@app/pages/propostas/refinamento/propostas-refinamento.module')
     .then(m => m.PropostasRefinamentoModule)
+};
+export const PropostaFormalizacaoRoute: Route = {
+  path: 'formalizacao',
+  component: SidebarComponent,
+  loadChildren: () => import('@app/pages/propostas/formalizacao/propostas-formalizacao.module')
+    .then(m => m.PropostasFormalizacaoModule)
+};
+
+export const PropostaRiscosRoute: Route = {
+  path: 'identificacao-riscos',
+  component: SidebarComponent,
+  loadChildren: () => import('@app/pages/propostas/identificacao-riscos/propostas-identificacao-riscos.module')
+    .then(m => m.PropostasIdentificacaoRiscosModule)
 };
 
 const GuestRoutes: Routes = [{path: '', loadChildren: () => import('@app/auth/auth.module').then(m => m.AuthModule)}];

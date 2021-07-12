@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {DashboardComponent} from '@app/dashboard';
-import {MeuCadastroRoute} from '@app/routes';
+import {MeuCadastroRoute, NotFoundRoute, RedirectRoute} from '@app/routes';
 
 
 const routes: Routes = [
@@ -9,16 +9,13 @@ const routes: Routes = [
     path: '',
     component: DashboardComponent,
     children: [
+      RedirectRoute('captacoes'),
       MeuCadastroRoute,
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'captacoes'
-      },
       {
         path: 'captacoes',
         loadChildren: () => import('./captacoes/captacoes.module').then(m => m.CaptacoesModule)
-      }
+      },
+      NotFoundRoute
     ]
   }
 ];

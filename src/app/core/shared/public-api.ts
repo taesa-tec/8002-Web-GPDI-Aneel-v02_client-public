@@ -1,4 +1,4 @@
-import {InjectionToken} from '@angular/core';
+import {InjectionToken, Provider} from '@angular/core';
 
 export * from './shared.module';
 //import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -39,3 +39,12 @@ export const ConfigEditor = {
 };
 
 export const COMPONENT_LABELS = new InjectionToken<Map<string, string>>('Textos usados no componente');
+export const PERMISSIONS = new InjectionToken<Map<string, any>>('Permissões');
+
+export function ProvidePermissions(...permisions: string[]): Provider {
+  return {
+    provide: PERMISSIONS,
+    multi: true,
+    useValue: new Map(permisions.map(p => [p, true]))
+  };
+}
