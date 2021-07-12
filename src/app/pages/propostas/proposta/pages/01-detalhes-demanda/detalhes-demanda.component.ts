@@ -72,7 +72,7 @@ export class DetalhesDemandaComponent implements OnInit {
         await this.service.participar(this.proposta.guid);
         this.proposta.participacao = 1;
         this.service.setProposta(this.proposta);
-        // request...
+        this.router.navigate(['/proposta', this.proposta.guid, 'condicoes']).then();
       }
     } catch (e) {
       this.app.alertError('Ocorreu um erro, tente novamente mais tarde!').then();

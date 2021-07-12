@@ -1,6 +1,6 @@
 import {HEADER_MENU, SIDEBAR_MENU} from '@app/commons';
 import {
-  MenuItemAlterarProjeto, MenuItemCentralAdministrativa,
+  MenuItemAlterarProjeto,
   MenuItemConsultarDados, MenuItemExtrato,
   MenuItemRefpAprovado,
   MenuItemRefpNovo,
@@ -20,6 +20,7 @@ import {
   Demandas,
   Execucao,
   Finalizacao,
+  MeuCadastro,
   Refinamento,
   Riscos,
   Selecao
@@ -43,7 +44,7 @@ export const SidebarMenu = {
 export const HeaderMenu = {
   provide: HEADER_MENU,
   useValue: [
-    {text: 'Meu Cadastro', icon: 'ta-user-o', path: `/meu-cadastro`}
+    MeuCadastro
   ]
 };
 

@@ -15,7 +15,7 @@ import {
   PROJETO_FINALIZADO_MENU
 } from '@app/pages/projetos/projeto/projeto';
 import {
-  Demandas, Captacoes, Selecao, Refinamento, Riscos, Aprovacao, Execucao, Finalizacao, Configuracao
+  Demandas, Captacoes, Selecao, Refinamento, Riscos, Aprovacao, Execucao, Finalizacao, Configuracao, MeuCadastro, GerenciarUsers
 } from '@app/users-modules/shared/menus';
 
 export const SidebarMenu = {
@@ -36,8 +36,8 @@ export const SidebarMenu = {
 export const HeaderMenu = {
   provide: HEADER_MENU,
   useValue: [
-    {text: 'Gerenciar Usuários', icon: 'ta-group', path: `/gerenciar-usuarios`},
-    {text: 'Meu Cadastro', icon: 'ta-user-o', path: `/meu-cadastro`}
+    GerenciarUsers,
+    MeuCadastro
   ]
 };
 

@@ -13,7 +13,7 @@ import {
   PROJETO_EXECUCAO_MENU,
   PROJETO_FINALIZADO_MENU
 } from '@app/pages/projetos/projeto/projeto';
-import {Execucao, Refinamento} from '@app/users-modules/shared/menus';
+import {Execucao, MeuCadastro, Refinamento} from '@app/users-modules/shared/menus';
 
 export const SidebarMenu = {
   provide: SIDEBAR_MENU,
@@ -27,7 +27,7 @@ export const SidebarMenu = {
 export const HeaderMenu = {
   provide: HEADER_MENU,
   useValue: [
-    {text: 'Meu Cadastro', icon: 'ta-user-o', path: `/meu-cadastro`}
+    MeuCadastro
   ]
 };
 

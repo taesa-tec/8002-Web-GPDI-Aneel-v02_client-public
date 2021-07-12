@@ -1,3 +1,7 @@
+export const MeuCadastro = {text: 'Meu Cadastro', icon: 'ta-user-o', path: `/meu-cadastro`};
+export const GerenciarUsers = {text: 'Gerenciar Usuários', icon: 'ta-group', path: `/gerenciar-usuarios`};
+
+
 export const Demandas = {text: 'Gestão de Demandas', icon: 'ta-projeto', path: `/demandas`};
 export const Captacoes = {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: `/captacoes`};
 export const Selecao = {text: 'Projetos - Priorização e Seleção', icon: 'ta-filtro-escuro', path: `/selecao`};
