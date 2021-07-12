@@ -14,19 +14,22 @@ import {
   PROJETO_EXECUCAO_MENU,
   PROJETO_FINALIZADO_MENU
 } from '@app/pages/projetos/projeto/projeto';
+import {
+  Demandas, Captacoes, Selecao, Refinamento, Riscos, Aprovacao, Execucao, Finalizacao, Configuracao
+} from '@app/users-modules/shared/menus';
 
 export const SidebarMenu = {
   provide: SIDEBAR_MENU,
   useValue: [
-    {text: 'Gestão de Demandas', icon: 'ta-projeto', path: `/demandas`},
-    {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: `/captacoes`},
-    {text: 'Projetos - Priorização e Seleção', icon: 'ta-file-check', path: `/selecao`},
-    {text: 'Projetos - Refinamento', icon: 'ta-file-check', path: `/refinamento`},
-    {text: 'Projetos - Identificação e medição de riscos ', icon: 'ta-file-check', path: `/identificacao-riscos`},
-    {text: 'Projetos - Aprovação e Formalização ', icon: 'ta-file-check', path: `/formalizacao`},
-    {text: 'Projetos - Em execução', icon: 'ta-file-check', path: `/projetos/em-execucao`},
-    {text: 'Projetos - Em finalização', icon: 'ta-file-check', path: `/projetos/em-finalizacao`},
-    {text: 'Configurações do Sistema', icon: 'ta-gear', path: `/configuracoes`},
+    Demandas,
+    Captacoes,
+    Selecao,
+    Refinamento,
+    Riscos,
+    Aprovacao,
+    Execucao,
+    Finalizacao,
+    Configuracao
   ]
 };
 

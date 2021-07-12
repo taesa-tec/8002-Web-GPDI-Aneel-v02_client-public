@@ -13,13 +13,14 @@ import {
   PROJETO_EXECUCAO_MENU,
   PROJETO_FINALIZADO_MENU
 } from '@app/pages/projetos/projeto/projeto';
+import {Execucao, Refinamento} from '@app/users-modules/shared/menus';
 
 export const SidebarMenu = {
   provide: SIDEBAR_MENU,
   useValue: [
     {text: 'Projetos - Captação de Propostas', icon: 'ta-extrato', path: `/propostas`},
-    {text: 'Projetos - Refinamento', icon: 'ta-file-check', path: `/refinamento`},
-    {text: 'Projetos - Em execução', icon: 'ta-file-check', path: `/projetos/em-execucao`}
+    Refinamento,
+    Execucao
   ]
 };
 

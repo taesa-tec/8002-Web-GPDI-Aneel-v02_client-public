@@ -2,9 +2,10 @@
 
 @font-face {
   font-family: '#{$icomoon-font-family}';
-  src: url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?x87sak') format('truetype'),
-  url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?x87sak') format('woff'),
-  url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?x87sak##{$icomoon-font-family}') format('svg');
+  src:
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?i0crka') format('truetype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?i0crka') format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?i0crka##{$icomoon-font-family}') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -13,423 +14,421 @@
 [class^="ta-"], [class*=" ta-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: '#{$icomoon-font-family}' !important;
-  speak: none;
+  speak: never;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
   line-height: 1;
+  
+  /* Enable Ligatures ================ */
+  letter-spacing: 0;
+  -webkit-font-feature-settings: "liga";
+  -moz-font-feature-settings: "liga=1";
+  -moz-font-feature-settings: "liga";
+  -ms-font-feature-settings: "liga" 1;
+  font-feature-settings: "liga";
+  -webkit-font-variant-ligatures: discretionary-ligatures;
+  font-variant-ligatures: discretionary-ligatures;
 
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.ta-work-plan {
+.ta-engrenagem-chave-escura1 {
   &:before {
-    content: $ta-work-plan;
+    content: $ta-engrenagem-chave-escura1; 
   }
 }
-
-.ta-gavel {
+.ta-pasta {
   &:before {
-    content: $ta-gavel;
+    content: $ta-pasta; 
   }
 }
-
-.ta-file-check {
+.ta-pdf {
   &:before {
-    content: $ta-file-check;
+    content: $ta-pdf; 
   }
 }
-
-.ta-attachment {
+.ta-lupa-acoes {
   &:before {
-    content: $ta-attachment;
+    content: $ta-lupa-acoes; 
   }
 }
-
-.ta-taesa {
+.ta-apresentacao {
   &:before {
-    content: $ta-taesa;
+    content: $ta-apresentacao; 
   }
 }
-
-.ta-ficha {
+.ta-distintivo {
   &:before {
-    content: $ta-ficha;
+    content: $ta-distintivo; 
   }
 }
-
-.ta-capacete {
+.ta-filtro-escuro {
   &:before {
-    content: $ta-capacete;
+    content: $ta-filtro-escuro; 
   }
 }
-
-.ta-camera {
-  &:before {
-    content: $ta-camera;
-  }
-}
-
 .ta-arrow-down {
   &:before {
-    content: $ta-arrow-down;
+    content: $ta-arrow-down; 
   }
 }
-
 .ta-arrow-left {
   &:before {
-    content: $ta-arrow-left;
+    content: $ta-arrow-left; 
   }
 }
-
 .ta-arrow-right {
   &:before {
-    content: $ta-arrow-right;
+    content: $ta-arrow-right; 
   }
 }
-
 .ta-arrow-up {
   &:before {
-    content: $ta-arrow-up;
+    content: $ta-arrow-up; 
   }
 }
-
 .ta-plus-circle {
   &:before {
-    content: $ta-plus-circle;
+    content: $ta-plus-circle; 
   }
 }
-
 .ta-remove-circle {
   &:before {
-    content: $ta-remove-circle;
+    content: $ta-remove-circle; 
   }
 }
-
 .ta-power {
   &:before {
-    content: $ta-power;
+    content: $ta-power; 
   }
 }
-
 .ta-search {
   &:before {
-    content: $ta-search;
+    content: $ta-search; 
   }
 }
-
 .ta-alert {
   &:before {
-    content: $ta-alert;
+    content: $ta-alert; 
   }
 }
-
 .ta-alocacao-material {
   &:before {
-    content: $ta-alocacao-material;
+    content: $ta-alocacao-material; 
   }
 }
-
+.ta-alocacao-rm {
+  &:before {
+    content: $ta-alocacao-rm; 
+  }
+}
 .ta-alocacao-rh {
   &:before {
-    content: $ta-alocacao-rh;
+    content: $ta-alocacao-rh; 
   }
 }
-
 .ta-ambiente {
   &:before {
-    content: $ta-ambiente;
+    content: $ta-ambiente; 
   }
 }
-
 .ta-ampulheta {
   &:before {
-    content: $ta-ampulheta;
+    content: $ta-ampulheta; 
   }
 }
-
 .ta-trash {
   &:before {
-    content: $ta-trash;
+    content: $ta-trash; 
   }
 }
-
 .ta-blocked {
   &:before {
-    content: $ta-blocked;
+    content: $ta-blocked; 
   }
 }
-
 .ta-box {
   &:before {
-    content: $ta-box;
+    content: $ta-box; 
   }
 }
-
 .ta-cancel-circle {
   &:before {
-    content: $ta-cancel-circle;
+    content: $ta-cancel-circle; 
   }
 }
-
+.ta-close {
+  &:before {
+    content: $ta-close; 
+  }
+}
 .ta-ok {
   &:before {
-    content: $ta-ok;
+    content: $ta-ok; 
   }
 }
-
 .ta-central-admin {
   &:before {
-    content: $ta-central-admin;
+    content: $ta-central-admin; 
   }
 }
-
 .ta-chart {
   &:before {
-    content: $ta-chart;
+    content: $ta-chart; 
   }
 }
-
 .ta-chat {
   &:before {
-    content: $ta-chat;
+    content: $ta-chat; 
   }
 }
-
 .ta-checkbox-checked {
   &:before {
-    content: $ta-checkbox-checked;
+    content: $ta-checkbox-checked; 
   }
 }
-
 .ta-checkbox-unchecked {
   &:before {
-    content: $ta-checkbox-unchecked;
+    content: $ta-checkbox-unchecked; 
   }
 }
-
 .ta-radio-checked {
   &:before {
-    content: $ta-radio-checked;
+    content: $ta-radio-checked; 
   }
 }
-
 .ta-radio-unchecked {
   &:before {
-    content: $ta-radio-unchecked;
+    content: $ta-radio-unchecked; 
   }
 }
-
 .ta-circle-down {
   &:before {
-    content: $ta-circle-down;
+    content: $ta-circle-down; 
   }
 }
-
 .ta-circle-left {
   &:before {
-    content: $ta-circle-left;
+    content: $ta-circle-left; 
   }
 }
-
 .ta-circle-right {
   &:before {
-    content: $ta-circle-right;
+    content: $ta-circle-right; 
   }
 }
-
 .ta-circle-up {
   &:before {
-    content: $ta-circle-up;
+    content: $ta-circle-up; 
   }
 }
-
 .ta-confused {
   &:before {
-    content: $ta-confused;
+    content: $ta-confused; 
   }
 }
-
 .ta-download {
   &:before {
-    content: $ta-download;
+    content: $ta-download; 
   }
 }
-
 .ta-edit {
   &:before {
-    content: $ta-edit;
+    content: $ta-edit; 
   }
 }
-
 .ta-empresas {
   &:before {
-    content: $ta-empresas;
+    content: $ta-empresas; 
   }
 }
-
 .ta-enter {
   &:before {
-    content: $ta-enter;
+    content: $ta-enter; 
   }
 }
-
 .ta-envelope {
   &:before {
-    content: $ta-envelope;
+    content: $ta-envelope; 
   }
 }
-
 .ta-etapas {
   &:before {
-    content: $ta-etapas;
+    content: $ta-etapas; 
   }
 }
-
 .ta-exit {
   &:before {
-    content: $ta-exit;
+    content: $ta-exit; 
   }
 }
-
 .ta-extrato {
   &:before {
-    content: $ta-extrato;
+    content: $ta-extrato; 
   }
 }
-
 .ta-eye {
   &:before {
-    content: $ta-eye;
+    content: $ta-eye; 
   }
 }
-
 .ta-gear {
   &:before {
-    content: $ta-gear;
+    content: $ta-gear; 
   }
 }
-
 .ta-group {
   &:before {
-    content: $ta-group;
+    content: $ta-group; 
   }
 }
-
 .ta-info {
   &:before {
-    content: $ta-info;
+    content: $ta-info; 
   }
 }
-
 .ta-lamp {
   &:before {
-    content: $ta-lamp;
+    content: $ta-lamp; 
   }
 }
-
 .ta-lock {
   &:before {
-    content: $ta-lock;
+    content: $ta-lock; 
   }
 }
-
 .ta-log {
   &:before {
-    content: $ta-log;
+    content: $ta-log; 
   }
 }
-
 .ta-warning {
   &:before {
-    content: $ta-warning;
+    content: $ta-warning; 
   }
 }
-
 .ta-notification {
   &:before {
-    content: $ta-notification;
+    content: $ta-notification; 
   }
 }
-
 .ta-question-o {
   &:before {
-    content: $ta-question-o;
+    content: $ta-question-o; 
   }
 }
-
 .ta-question {
   &:before {
-    content: $ta-question;
+    content: $ta-question; 
   }
 }
-
 .ta-projeto {
   &:before {
-    content: $ta-projeto;
+    content: $ta-projeto; 
   }
 }
-
 .ta-recurso-material {
   &:before {
-    content: $ta-recurso-material;
+    content: $ta-recurso-material; 
   }
 }
-
 .ta-save {
   &:before {
-    content: $ta-save;
+    content: $ta-save; 
   }
 }
-
 .ta-spinner {
   &:before {
-    content: $ta-spinner;
+    content: $ta-spinner; 
   }
 }
-
 .ta-sync {
   &:before {
-    content: $ta-sync;
+    content: $ta-sync; 
   }
 }
-
 .ta-table {
   &:before {
-    content: $ta-table;
+    content: $ta-table; 
   }
 }
-
 .ta-torre {
   &:before {
-    content: $ta-torre;
+    content: $ta-torre; 
   }
 }
-
 .ta-tubo-ensaio {
   &:before {
-    content: $ta-tubo-ensaio;
+    content: $ta-tubo-ensaio; 
   }
 }
-
 .ta-upload {
   &:before {
-    content: $ta-upload;
+    content: $ta-upload; 
   }
 }
-
 .ta-user-id {
   &:before {
-    content: $ta-user-id;
+    content: $ta-user-id; 
   }
 }
-
 .ta-user-o {
   &:before {
-    content: $ta-user-o;
+    content: $ta-user-o; 
+  }
+}
+.ta-engrenagem-chave-escura {
+  &:before {
+    content: $ta-engrenagem-chave-escura; 
+  }
+}
+.ta-lupa-engrenagem {
+  &:before {
+    content: $ta-lupa-engrenagem; 
+  }
+}
+.ta-work-plan {
+  &:before {
+    content: $ta-work-plan; 
+  }
+}
+.ta-gavel {
+  &:before {
+    content: $ta-gavel; 
+  }
+}
+.ta-file-check {
+  &:before {
+    content: $ta-file-check; 
+  }
+}
+.ta-attachment {
+  &:before {
+    content: $ta-attachment; 
+  }
+}
+.ta-taesa {
+  &:before {
+    content: $ta-taesa; 
+  }
+}
+.ta-ficha {
+  &:before {
+    content: $ta-ficha; 
+  }
+}
+.ta-capacete {
+  &:before {
+    content: $ta-capacete; 
+  }
+}
+.ta-camera {
+  &:before {
+    content: $ta-camera; 
   }
 }
 
