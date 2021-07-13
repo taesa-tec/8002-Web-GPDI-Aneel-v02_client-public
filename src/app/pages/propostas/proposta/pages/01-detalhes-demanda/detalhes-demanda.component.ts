@@ -42,6 +42,7 @@ export class DetalhesDemandaComponent implements OnInit {
     });
     this.service.proposta.subscribe(proposta => {
       this.proposta = proposta;
+      if(this.proposta.captacaoStatus){}
     });
   }
 

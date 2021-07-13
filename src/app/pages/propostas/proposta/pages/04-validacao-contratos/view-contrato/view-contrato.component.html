@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col">
-    <h5 class="text-uppercase text-blue font-weight-normal my-4">CONTRATOS</h5>
+    <h5 class="text-uppercase text-blue font-weight-normal my-4">CONTRATO</h5>
   </div>
 </div>
 
@@ -83,7 +83,7 @@
   </div>
 
   <div class="row"
-       *ngIf="canEdit && proposta.captacaoStatus === 'Refinamento' && proposta.contratoAprovacao === 'Alteracao'">
+       *ngIf="isFornecedor && fornecedorCanEdit && proposta.captacaoStatus === 'Refinamento' && proposta.contratoAprovacao === 'Alteracao'">
     <div class="col-12">
       <h6 class="text-blue-light">DESCRITIVO ALTERAÇÕES</h6>
       <div class="form-group">
@@ -118,11 +118,11 @@
             Download PDF
           </button>
           <button type="submit" class="btn btn-outline-primary mx-2" value="draft" [disabled]="form.invalid"
-                  *ngIf="fornecedorCanEdit">
+                  *ngIf="fornecedorCanEdit && isFornecedor">
             <i class="ta-save fs-24 align-middle"></i> Salvar como Rascunho
           </button>
           <button type="submit" class="btn btn-success mx-2" value="publish" [disabled]="form.invalid"
-                  *ngIf="fornecedorCanEdit">
+                  *ngIf="fornecedorCanEdit && isFornecedor">
             <i class="ta-ok fs-24 align-middle"></i> Salvar e Marcar como Finalizado
           </button>
         </div>

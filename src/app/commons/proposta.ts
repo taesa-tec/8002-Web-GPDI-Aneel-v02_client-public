@@ -15,6 +15,7 @@ type CaptacaoStatus = 'Cancelada' | 'Pendente' | 'Elaboracao' | 'Fornecedor' | '
 
 export interface Proposta {
   guid: string;
+  responsavelId: string;
   captacao: string;
   captacaoStatus: CaptacaoStatus;
   fornecedorId: number;

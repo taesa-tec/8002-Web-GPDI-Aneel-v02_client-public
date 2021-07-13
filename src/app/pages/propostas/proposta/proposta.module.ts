@@ -6,8 +6,11 @@ import {CoreModule} from '@app/core';
 import {PropostaComponent} from './proposta.component';
 import {DashboardModule} from '@app/dashboard';
 import {PropostasResolver} from '@app/pages/propostas/proposta/resolvers/propostas.resolver';
-import {PropostaProvider, TextsProvider} from '@app/pages/propostas/proposta/shared';
+import {PROPOSTA, PROPOSTA_CAN_EDIT, PropostaProvider, TextsProvider} from '@app/pages/propostas/proposta/shared';
 import {ContratoService} from '@app/pages/propostas/proposta/services/proposta-service-base.service';
+import {AuthService} from '@app/services';
+import {BehaviorSubject} from 'rxjs';
+import {Proposta} from '@app/commons';
 
 
 @NgModule({
@@ -24,6 +27,21 @@ import {ContratoService} from '@app/pages/propostas/proposta/services/proposta-s
     PropostasResolver,
     PropostaResolver,
     ContratoService,
+    {
+      provide: PROPOSTA_CAN_EDIT,
+      deps: [PROPOSTA, AuthService],
+      useFactory: (p: BehaviorSubject<Proposta>, auth: AuthService) => {
+        const proposta = p.getValue();
+        const responsavelId = proposta?.responsavelId;
+        const userId = auth.getUser()?.id;
+        return userId != null &&
+          userId === responsavelId &&
+          (
+            proposta.captacaoStatus === 'Fornecedor' ||
+            (proposta.captacaoStatus === 'Refinamento' && proposta.planoTrabalhoAprovacao === 'Alteracao')
+          );
+      }
+    }
   ],
 
 })

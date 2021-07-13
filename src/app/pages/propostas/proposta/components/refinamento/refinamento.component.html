@@ -1,6 +1,6 @@
 <div>
   <hr>
-  <ng-container *ngIf="!canEdit">
+  <ng-container *ngIf="!isResponsavel">
     <ng-container [ngSwitch]="status">
       <app-aprovador *ngSwitchCase="'Pendente'" [type]="type"></app-aprovador>
       <div class="alert border border-warning text-warning d-flex align-items-center" *ngSwitchCase="'Alteracao'">
@@ -13,7 +13,7 @@
     </ng-container>
   </ng-container>
 
-  <ng-container *ngIf="canEdit">
+  <ng-container *ngIf="isResponsavel">
     <ng-container [ngSwitch]="status">
 
       <div class="alert border border-warning text-warning d-flex align-items-center" *ngSwitchCase="'Pendente'">

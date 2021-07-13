@@ -12,6 +12,7 @@ import {ConfigEditor} from '@app/core/shared';
 import * as ClassicEditor from '@projects/ckeditor/build/ckeditor';
 import {Proposta} from '@app/commons';
 import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
+import {AuthService} from '@app/services';
 
 
 @Component({
@@ -32,8 +33,12 @@ export class ViewContratoComponent implements OnInit {
     alteracao: ['']
   });
 
+  get isFornecedor() {
+    return this.auth.getUser().id === this.proposta.responsavelId;
+  }
+
   get fornecedorCanEdit() {
-    return this.canEdit && (
+    return (
       this.proposta.captacaoStatus === 'Fornecedor' ||
       (this.proposta.captacaoStatus === 'Refinamento' && this.proposta.contratoAprovacao === 'Alteracao')
     );
@@ -49,6 +54,7 @@ export class ViewContratoComponent implements OnInit {
     private modal: NgbModal,
     private fb: FormBuilder,
     protected fileService: FileService,
+    protected auth: AuthService
   ) {
   }
 
@@ -65,7 +71,7 @@ export class ViewContratoComponent implements OnInit {
       }
     });
 
-    if (!this.canEdit || !this.fornecedorCanEdit) {
+    if (!(this.fornecedorCanEdit && this.isFornecedor)) {
       this.form.disable();
     }
   }

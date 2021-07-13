@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {Proposta, Roles, UserRole} from '@app/commons';
-import {CaptacaoIdProvider, PROPOSTA, PROPOSTA_CAN_EDIT, PropostaProvider, PropostaSidebar} from './shared';
+import {Proposta,  UserRole} from '@app/commons';
+import {CaptacaoIdProvider, PROPOSTA, PropostaProvider, PropostaSidebar} from './shared';
 import {BehaviorSubject} from 'rxjs';
 import {EtapasService} from '@app/users-modules/fornecedor/services/propostas.service';
 import {AuthService} from '@app/services';
@@ -14,7 +14,7 @@ import {AuthService} from '@app/services';
     PropostaProvider,
     EtapasService,
     CaptacaoIdProvider,
-    PropostaSidebar,
+    PropostaSidebar
   ],
 
 })
