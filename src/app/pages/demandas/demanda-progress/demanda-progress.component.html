@@ -13,7 +13,7 @@
     <footer>
 
       <div [ngSwitch]="demanda.etapaAtual" class="text-blue fs-12 font-weight-medium">
-        <a [routerLink]="[root_url, 'demandas', demanda.id]"
+        <a [routerLink]="['/', 'demandas', demanda.id]"
            class="text-blue text-uppercase"
         ><i class="ta-edit"></i> {{canEdit ? 'Editar' : 'Visualizar'}}</a>
         <ng-container *ngSwitchCase="ETAPAS_VALUES.Captacao">

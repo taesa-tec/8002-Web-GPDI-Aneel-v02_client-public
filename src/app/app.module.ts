@@ -11,7 +11,7 @@ import {NotFoundComponent} from './core/components/not-found/not-found.component
 import {SharedModule} from '@app/core/shared';
 import {ComponentsModule} from '@app/core/components';
 import {AuthGuard} from '@app/guards';
-import {IsAdmin, IsFornecedor, IsGestor, IsSuprimento, RoleGuard} from '@app/guards/role.guard';
+import {IsAdmin, IsColaborador, IsFornecedor, IsGestor, IsSuprimento} from '@app/guards/role.guard';
 
 registerLocaleData(localeBr, 'pt');
 moment.locale('pt-br');
@@ -37,6 +37,7 @@ moment.locale('pt-br');
     IsGestor,
     IsSuprimento,
     IsFornecedor,
+    IsColaborador
   ],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,5 @@
 import {Injectable, Provider} from '@angular/core';
-import {CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {Observable} from 'rxjs';
 import {AuthService} from '@app/services';
 import {UserRole} from '@app/commons';
@@ -40,3 +40,4 @@ export const IsAdmin = RoleGuard.To([UserRole.Administrador], 'isAdmin');
 export const IsGestor = RoleGuard.To([UserRole.Administrador, UserRole.User], 'isGestor');
 export const IsSuprimento = RoleGuard.To([UserRole.Administrador, UserRole.Suprimento], 'isSuprimento');
 export const IsFornecedor = RoleGuard.To([UserRole.Fornecedor], 'isFornecedor');
+export const IsColaborador = RoleGuard.To([UserRole.Administrador, UserRole.User, UserRole.Colaborador, UserRole.Suprimento], 'isColaborador');

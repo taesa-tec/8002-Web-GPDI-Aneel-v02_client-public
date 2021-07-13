@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Demanda} from '@app/commons/demandas';
 import {DemandaEtapa, DemandaEtapaItems, DemandaEtapaStatus} from '@app/pages/demandas/commons';
 import {environment} from '@env/environment';
-import {EQUIPE_PED, EquipePeD, ROOT_URL} from '@app/commons';
+import {EQUIPE_PED, EquipePeD} from '@app/commons';
 import {UsersService} from '@app/services/users.service';
 import {DEMANDA} from '@app/pages/demandas/demanda/providers';
 import {AuthService} from '@app/services';
@@ -79,7 +79,6 @@ export class AprovacaoComponent implements OnInit {
   constructor(
     @Inject(EQUIPE_PED) public equipe: EquipePeD,
     @Inject(DEMANDA) demanda: Demanda,
-    @Inject(ROOT_URL) protected root_url: string,
     protected app: AppService,
     protected file: FileService,
     protected usersService: UsersService,
@@ -102,7 +101,7 @@ export class AprovacaoComponent implements OnInit {
 
   async avaliacao(demanda) {
     this.demanda = demanda;
-    this.app.router.navigate([this.root_url]).then();
+    this.app.router.navigate(['/']).then();
   }
 
   async userSelected(value) {
@@ -110,7 +109,7 @@ export class AprovacaoComponent implements OnInit {
     try {
       this.demanda = await this.app.demandas.definirRevisor(this.demanda.id, value);
       this.app.alert('Revisor definido com sucesso!').then();
-      this.app.router.navigate([this.root_url]).then();
+      this.app.router.navigate(['/']).then();
     } catch (e) {
       console.error(e);
     }

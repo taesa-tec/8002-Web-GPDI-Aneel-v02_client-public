@@ -3,10 +3,12 @@ import {TextValue} from './common';
 import {ResultadoResponse} from './responses';
 
 export const Roles: Array<TextValue> = [
-  {text: 'Administrador', value: UserRole.Administrador},
+
+  {text: 'Colaborador', value: UserRole.Colaborador},
   {text: 'Equipe P&D', value: UserRole.User},
   {text: 'Suprimentos', value: UserRole.Suprimento},
   {text: 'Fornecedor', value: UserRole.Fornecedor},
+  {text: 'Administrador', value: UserRole.Administrador},
 ];
 
 export const NiveisUsuarios = {

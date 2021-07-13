@@ -25,7 +25,6 @@ export class FormEditorComponent implements OnInit {
 
   constructor(
     @Inject(DEMANDA) protected demanda: Demanda,
-    @Inject(ROOT_URL) protected root_url: string,
     protected app: AppService,
     protected route: ActivatedRoute, protected parent: DemandaComponent) {
   }
@@ -52,7 +51,7 @@ export class FormEditorComponent implements OnInit {
     try {
       await this.app.demandas.editarDemandaForm(this.demandaId, this.key, data).toPromise();
       this.app.alert('Formulário Salvo com sucesso!').then();
-      this.app.router.navigate([this.root_url, 'demandas', this.demandaId, 'documento-aprovacoes']).then();
+      this.app.router.navigate(['/', 'demandas', this.demandaId, 'documento-aprovacoes']).then();
     } catch (e) {
       console.error(e);
     } finally {

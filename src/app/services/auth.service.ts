@@ -186,8 +186,8 @@ export class AuthService {
     if (RoutesRoleMap.has(role)) {
       this.router.resetConfig(RoutesRoleMap.get(role));
     } else {
-      console.error(role);
-      this.router.resetConfig(RoutesRoleMap.get(''));
+      console.error(`Rotas para ${role} não disponíveis`);
+      this.logout().then();
     }
   }
 

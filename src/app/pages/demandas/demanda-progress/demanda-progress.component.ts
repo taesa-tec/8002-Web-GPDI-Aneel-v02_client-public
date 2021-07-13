@@ -1,7 +1,7 @@
 import {Component, OnInit, Input, Inject} from '@angular/core';
 import {DemandaEtapa, DemandaEtapaItem, DemandaEtapaItems, DemandaEtapaStatus} from '../commons';
 import {Demanda} from '@app/commons/demandas';
-import {ROOT_URL, User} from '@app/commons';
+import {User} from '@app/commons';
 import {AppService} from '@app/services/app.service';
 
 @Component({
@@ -19,7 +19,6 @@ export class DemandaProgressComponent implements OnInit {
   readonly ETAPAS_STATUS = DemandaEtapaStatus;
   @Input() demanda: Demanda;
   @Input('equipe') equipePeD: any;
-  root_url = '';
 
 
   get captacao() {
@@ -41,8 +40,7 @@ export class DemandaProgressComponent implements OnInit {
     return this.demanda.id.toString().padStart(3, '0');
   }
 
-  constructor(protected app: AppService, @Inject(ROOT_URL) root_url) {
-    this.root_url = root_url;
+  constructor(protected app: AppService) {
   }
 
   ngOnInit() {

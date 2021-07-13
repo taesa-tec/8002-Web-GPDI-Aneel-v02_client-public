@@ -81,6 +81,12 @@ const GestorRoutes: Routes = [{
   canActivateChild: ['logged', 'isGestor'],
   loadChildren: () => import('@app/users-modules/gestor/gestor.module').then(m => m.GestorModule)
 }];
+const ColaboradorRoutes: Routes = [{
+  path: '',
+  canActivate: ['logged', 'isColaborador'],
+  canActivateChild: ['logged', 'isColaborador'],
+  loadChildren: () => import('@app/users-modules/colaborador/colaborador.module').then(m => m.ColaboradorModule)
+}];
 const SuprimentoRoutes: Routes = [{
   path: '',
   canActivate: ['logged', 'isSuprimento'],
@@ -98,6 +104,7 @@ export const RoutesRoleMap = new Map<string, Routes>([
   ['', GuestRoutes],
   [UserRole.Administrador, AdminRoutes],
   [UserRole.User, GestorRoutes],
+  [UserRole.Colaborador, ColaboradorRoutes],
   [UserRole.Fornecedor, FornecedorRoutes],
   [UserRole.Suprimento, SuprimentoRoutes]
 ]);
