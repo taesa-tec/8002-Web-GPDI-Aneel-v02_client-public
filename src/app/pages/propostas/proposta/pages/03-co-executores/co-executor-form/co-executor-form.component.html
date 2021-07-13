@@ -1,6 +1,7 @@
 <div class="modal-header">
   <div class="text-uppercase modal-title text-blue-light fs-24">
-    {{ form.value.id !== 0 ? 'EDITAR ENTIDADE' : 'REGISTRAR ENTIDADE' }}
+    <span *ngIf="canEdit">{{ form.value.id !== 0 ? 'EDITAR ENTIDADE' : 'REGISTRAR ENTIDADE' }}</span>
+    <span *ngIf="!canEdit">ENTIDADE</span>
   </div>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
     <i class="ta-cancel-circle"></i>
@@ -14,7 +15,9 @@
 
     <div class="form-row">
       <div class="form-group col">
-        <label for="cnpj">CNPJ <app-help codigo="cadastro-co-executor-cnpj"></app-help></label>
+        <label for="cnpj">CNPJ
+          <app-help codigo="cadastro-co-executor-cnpj"></app-help>
+        </label>
         <input
           type="text"
           class="form-control"
@@ -25,7 +28,9 @@
         >
       </div>
       <div class="form-group col">
-        <label for="uf">UF de cadastro na fazenda <app-help codigo="cadastro-co-executor-uf"></app-help></label>
+        <label for="uf">UF de cadastro na fazenda
+          <app-help codigo="cadastro-co-executor-uf"></app-help>
+        </label>
         <select class="form-control" id="uf" formControlName="uf">
           <option value="">Selecione</option>
           <option value="AC">Acre</option>
@@ -61,13 +66,17 @@
 
 
     <div class="form-group">
-      <label for="razao-social">Razão social <app-help codigo="cadastro-co-executor-razao-social"></app-help></label>
+      <label for="razao-social">Razão social
+        <app-help codigo="cadastro-co-executor-razao-social"></app-help>
+      </label>
       <input type="text" class="form-control" id="razao-social" formControlName="razaoSocial"
              placeholder="Razão Social">
     </div>
 
     <div class="form-group">
-      <label for="funcao">FUNÇÃO <app-help codigo="cadastro-co-executor-funcao"></app-help></label>
+      <label for="funcao">FUNÇÃO
+        <app-help codigo="cadastro-co-executor-funcao"></app-help>
+      </label>
       <select class="form-control" formControlName="funcao" id="funcao" name="funcao">
         <option value="">Selecione</option>
         <option value="Executora">Executora</option>

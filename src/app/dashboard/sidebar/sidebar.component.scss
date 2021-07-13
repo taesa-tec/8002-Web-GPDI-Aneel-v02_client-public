@@ -37,7 +37,7 @@
       }
     }
 
-       .side-nav {
+    .side-nav {
       display: flex;
       flex-direction: column;
       position: relative;
@@ -58,6 +58,10 @@
           text-decoration: none;
           background: $blue;
           color: white;
+        }
+
+        > .menu-item-text {
+          flex: 1 1 auto;
         }
       }
     }

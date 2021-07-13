@@ -47,7 +47,8 @@ export class CoExecutoresComponent implements OnInit {
   ) {
     this.buttons = [
       {
-        action: 'editar',
+        action: './#${id}',
+        isLink: true,
         text: this.canEdit ? 'EDITAR' : 'VISUALIZAR',
         icon: this.canEdit ? 'ta-edit' : 'ta-eye',
         className: 'btn btn-primary'
@@ -60,8 +61,9 @@ export class CoExecutoresComponent implements OnInit {
       this.coExecutores = data.coExecutores;
     });
     this.route.fragment.subscribe(f => {
-      if (f === 'novo') {
-        this.modalCoExecutora();
+      const id = parseFloat(f);
+      if ((this.canEdit && f === 'novo') || !isNaN(id)) {
+        this.modalCoExecutora(this.coExecutores.find(c => c.id === id));
       }
     });
   }
@@ -70,13 +72,12 @@ export class CoExecutoresComponent implements OnInit {
     const ref = this.modal.open(CoExecutorFormComponent, {size: 'lg'});
     const cmp = ref.componentInstance as CoExecutorFormComponent;
     cmp.coExecutor = coExecutor;
-    await ref.result;
+    try {
+      await ref.result;
+    } catch (e) {
+      console.error(e);
+    }
     await this.router.navigate(['./'], {relativeTo: this.route});
-  }
-
-  async tableAction(evt: TableActionEvent) {
-    await this.router.navigate(['./'], {relativeTo: this.route, fragment: evt.data.id.toString()});
-    await this.modalCoExecutora(evt.data);
   }
 
 }

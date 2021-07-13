@@ -1,6 +1,7 @@
 <div class="modal-header">
   <div class="text-uppercase modal-title text-blue-light fs-24">
-    {{form.value.id === 0 ? "NOVO" : "EDITAR"}} PRODUTO
+    <span *ngIf="canEdit">{{form.value.id === 0 ? "NOVO" : "EDITAR"}}</span>
+    PRODUTO
   </div>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <i class="ta-cancel-circle"></i>

@@ -1,6 +1,8 @@
 <div class="modal-header">
   <div class="text-uppercase modal-title text-blue-light fs-24">
-    {{ form.value.id != 0 ? 'EDITAR ALOCAÇÃO DE RECURSO MATERIAL' : 'ALOCAR RECURSO MATERIAL' }}
+    <span *ngIf="canEdit">{{form.value.id === 0 ? "EDITAR ALOCAÇÃO DE" : "ALOCAR"}}</span>
+    <span *ngIf="!canEdit">ALOCAÇÃO</span>
+    RECURSO MATERIAL
   </div>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <i class="ta-cancel-circle"></i>
