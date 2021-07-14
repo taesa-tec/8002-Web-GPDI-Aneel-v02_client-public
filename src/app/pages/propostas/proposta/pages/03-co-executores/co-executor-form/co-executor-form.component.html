@@ -13,82 +13,99 @@
 <div class="modal-body">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-    <div class="form-row">
-      <div class="form-group col">
-        <label for="cnpj">CNPJ
-          <app-help codigo="cadastro-co-executor-cnpj"></app-help>
-        </label>
-        <input
-          type="text"
-          class="form-control"
-          id="cnpj"
-          formControlName="cnpj"
-          mask="00.000.000/0000-00"
-          placeholder="00.000.000/0000-00"
-        >
-      </div>
-      <div class="form-group col">
-        <label for="uf">UF de cadastro na fazenda
-          <app-help codigo="cadastro-co-executor-uf"></app-help>
-        </label>
-        <select class="form-control" id="uf" formControlName="uf">
-          <option value="">Selecione</option>
-          <option value="AC">Acre</option>
-          <option value="AL">Alagoas</option>
-          <option value="AP">Amapá</option>
-          <option value="AM">Amazonas</option>
-          <option value="BA">Bahia</option>
-          <option value="CE">Ceará</option>
-          <option value="DF">Distrito Federal</option>
-          <option value="ES">Espirito Santo</option>
-          <option value="GO">Goiás</option>
-          <option value="MA">Maranhão</option>
-          <option value="MS">Mato Grosso do Sul</option>
-          <option value="MT">Mato Grosso</option>
-          <option value="MG">Minas Gerais</option>
-          <option value="PA">Pará</option>
-          <option value="PB">Paraíba</option>
-          <option value="PR">Paraná</option>
-          <option value="PE">Pernambuco</option>
-          <option value="PI">Piauí</option>
-          <option value="RJ">Rio de Janeiro</option>
-          <option value="RN">Rio Grande do Norte</option>
-          <option value="RS">Rio Grande do Sul</option>
-          <option value="RO">Rondônia</option>
-          <option value="RR">Roraima</option>
-          <option value="SC">Santa Catarina</option>
-          <option value="SP">São Paulo</option>
-          <option value="SE">Sergipe</option>
-          <option value="TO">Tocantins</option>
-        </select>
-      </div>
-    </div>
-
-
-    <div class="form-group">
-      <label for="razao-social">Razão social
-        <app-help codigo="cadastro-co-executor-razao-social"></app-help>
-      </label>
-      <input type="text" class="form-control" id="razao-social" formControlName="razaoSocial"
-             placeholder="Razão Social">
-    </div>
-
     <div class="form-group">
       <label for="funcao">FUNÇÃO
         <app-help codigo="cadastro-co-executor-funcao"></app-help>
       </label>
       <select class="form-control" formControlName="funcao" id="funcao" name="funcao">
-        <option value="">Selecione</option>
+        <option value="" hidden>Selecione</option>
         <option value="Executora">Executora</option>
-        <!--
-        <option value="Proponente">Proponente</option>
         <option value="Cooperada">Cooperada</option>
-         -->
-        <option value="Interveniente">Interveniente</option>
       </select>
     </div>
 
-    <div class="form-group" *ngIf="canEdit">
+    <ng-container *ngIf="funcaoCtrl.value === 'Executora'">
+
+      <div class="form-row">
+        <div class="form-group col">
+          <label for="cnpj">CNPJ
+            <app-help codigo="cadastro-co-executor-cnpj"></app-help>
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            id="cnpj"
+            formControlName="cnpj"
+            mask="00.000.000/0000-00"
+            placeholder="00.000.000/0000-00"
+          >
+        </div>
+        <div class="form-group col">
+          <label for="uf">UF de cadastro na fazenda
+            <app-help codigo="cadastro-co-executor-uf"></app-help>
+          </label>
+          <select class="form-control" id="uf" formControlName="uf">
+            <option value="">Selecione</option>
+            <option value="AC">Acre</option>
+            <option value="AL">Alagoas</option>
+            <option value="AP">Amapá</option>
+            <option value="AM">Amazonas</option>
+            <option value="BA">Bahia</option>
+            <option value="CE">Ceará</option>
+            <option value="DF">Distrito Federal</option>
+            <option value="ES">Espirito Santo</option>
+            <option value="GO">Goiás</option>
+            <option value="MA">Maranhão</option>
+            <option value="MS">Mato Grosso do Sul</option>
+            <option value="MT">Mato Grosso</option>
+            <option value="MG">Minas Gerais</option>
+            <option value="PA">Pará</option>
+            <option value="PB">Paraíba</option>
+            <option value="PR">Paraná</option>
+            <option value="PE">Pernambuco</option>
+            <option value="PI">Piauí</option>
+            <option value="RJ">Rio de Janeiro</option>
+            <option value="RN">Rio Grande do Norte</option>
+            <option value="RS">Rio Grande do Sul</option>
+            <option value="RO">Rondônia</option>
+            <option value="RR">Roraima</option>
+            <option value="SC">Santa Catarina</option>
+            <option value="SP">São Paulo</option>
+            <option value="SE">Sergipe</option>
+            <option value="TO">Tocantins</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="razao-social">Razão social
+          <app-help codigo="cadastro-co-executor-razao-social"></app-help>
+        </label>
+        <input type="text" class="form-control" id="razao-social" formControlName="razaoSocial"
+               placeholder="Razão Social">
+      </div>
+    </ng-container>
+    <ng-container *ngIf="funcaoCtrl.value === 'Cooperada'">
+      <div class="form-row">
+        <div class="form-group col">
+          <label for="razao-social">Razão social
+            <app-help codigo="cadastro-co-executor-razao-social"></app-help>
+          </label>
+          <input type="text" class="form-control" id="razao-social" formControlName="razaoSocial"
+                 placeholder="Razão Social">
+        </div>
+        <div class="form-group col">
+          <label for="codigo">Código Empresa
+            <app-help codigo="cadastro-co-executor-razao-social"></app-help>
+          </label>
+          <input type="text" class="form-control" id="codigo" formControlName="codigo"
+                 placeholder="Código Empresa">
+        </div>
+      </div>
+    </ng-container>
+
+
+    <div class="form-group" *ngIf="canEdit && !coExecutor?.required">
       <div class="d-flex">
         <div
           class="button btn btn-link px-0"

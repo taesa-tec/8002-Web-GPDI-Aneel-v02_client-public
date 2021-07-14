@@ -68,7 +68,7 @@ export class PropostasService extends ServiceBase<any> {
   }
 
   async getCoExecutores(guid: string) {
-    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${guid}/CoExecutores`, {}).toPromise();
+    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${guid}/Empresas`, {}).toPromise();
   }
 
   async getEmpresas(guid: string) {

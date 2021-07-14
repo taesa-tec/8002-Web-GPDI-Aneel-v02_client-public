@@ -7,6 +7,17 @@ import {PropostaNodeFormDirective} from '@app/pages/propostas/proposta/directive
 import {PropostaServiceBase} from '@app/pages/propostas/proposta/services/proposta-service-base.service';
 import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
 
+interface Empresa {
+  required: boolean;
+  cnpj: string;
+  uf: null | string;
+  razaoSocial: string;
+  funcao: string;
+  codigo: null | string;
+  propostaId: number;
+  id: number;
+}
+
 @Component({
   selector: 'app-co-executor-form',
   templateUrl: './co-executor-form.component.html',
@@ -14,13 +25,18 @@ import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
   providers: []
 })
 export class CoExecutorFormComponent extends PropostaNodeFormDirective implements OnInit {
-  coExecutor: any;
+  coExecutor: Empresa;
+  funcaoCtrl = this.fb.control('', Validators.required);
+  cnpjCtrl = this.fb.control('');
+  ufCtrl = this.fb.control('');
+  codigoCtrl = this.fb.control('');
   form = this.fb.group({
     id: [0],
-    cnpj: ['', [Validators.required, AppValidators.cnpj]],
-    uf: ['', Validators.required],
+    funcao: this.funcaoCtrl,
+    cnpj: this.cnpjCtrl,
+    uf: this.ufCtrl,
     razaoSocial: ['', Validators.required],
-    funcao: ['', Validators.required]
+    codigo: this.codigoCtrl
   });
 
 
@@ -31,15 +47,37 @@ export class CoExecutorFormComponent extends PropostaNodeFormDirective implement
   }
 
   ngOnInit(): void {
+
+    this.funcaoCtrl.valueChanges.subscribe(funcao => {
+      this.ufCtrl.clearValidators();
+      this.cnpjCtrl.clearValidators();
+      this.codigoCtrl.clearValidators();
+      switch (funcao) {
+        case 'Executora':
+          this.codigoCtrl.setValue('');
+          this.ufCtrl.setValidators(Validators.required);
+          this.cnpjCtrl.setValidators([Validators.required, AppValidators.cnpj]);
+          break;
+        case 'Cooperada':
+          this.ufCtrl.setValue('');
+          this.cnpjCtrl.setValue('');
+          this.codigoCtrl.setValidators(Validators.required);
+          break;
+      }
+      this.form.updateValueAndValidity();
+    });
+
+
     if (this.coExecutor) {
       this.form.patchValue(this.coExecutor);
+      if (this.coExecutor.required) {
+        this.form.disable();
+      }
     }
     if (!this.canEdit) {
       this.form.disable();
     }
-
   }
-
 
   async excluirEmpresa() {
     if (this.coExecutor && await this.app.confirm('Tem certeza que deseja excluir esta entidade?')) {
