@@ -13,7 +13,6 @@ export class CrudDataResolver implements Resolve<any> {
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const params = extractRouteParams(route);
     if (params.id) {
-      this.service.captacaoId = params.id;
       try {
         const result = await this.service.obter();
         if (result !== null) {
@@ -37,7 +36,6 @@ export class CrudItemResolver implements Resolve<any> {
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const params = extractRouteParams(route);
     if (params.id) {
-      this.service.captacaoId = params.id;
       if (route.fragment && !isNaN(parseFloat(route.fragment))) {
         return await this.service.obter(route.fragment);
       }

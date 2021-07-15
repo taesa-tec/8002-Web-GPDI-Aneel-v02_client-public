@@ -15,12 +15,9 @@ import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
 export class RecursoHumanoFormComponent extends PropostaNodeFormDirective implements OnInit {
 
   documentoMask = '';
-  empresaCtrl = this.fb.control('', Validators.required);
   form = this.fb.group({
     id: [0],
-    empresa: this.empresaCtrl,
     empresaId: [''],
-    coExecutorId: [''],
     nomeCompleto: ['', [Validators.required]],
     titulacao: ['', [Validators.required]],
     funcao: ['', [Validators.required]],
@@ -43,20 +40,6 @@ export class RecursoHumanoFormComponent extends PropostaNodeFormDirective implem
     super.ngOnInit();
     this.empresas = this.route.snapshot.data.empresas;
 
-    if (this.form.value.empresaId) {
-      this.form.get('empresa').setValue(`e-${this.form.value.empresaId}`);
-    } else if (this.form.value.coExecutorId) {
-      this.form.get('empresa').setValue(`c-${this.form.value.coExecutorId}`);
-    }
-    this.empresaCtrl.valueChanges.subscribe(e => {
-      this.form.get('empresaId').setValue('');
-      this.form.get('coExecutorId').setValue('');
-      const ee = e.split('-');
-      const id = parseFloat(ee[1]);
-
-      const ctrl = this.form.get(ee[0] === 'e' ? 'empresaId' : 'coExecutorId');
-      ctrl.setValue(id);
-    });
     this.form.get('nacionalidade').valueChanges.subscribe(v => {
       const brasileiro = v === 'Brasileiro';
       const control = this.form.get('documento');

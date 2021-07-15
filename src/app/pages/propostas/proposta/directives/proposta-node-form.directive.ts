@@ -7,6 +7,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {BehaviorSubject} from 'rxjs';
 import {PropostaServiceBase} from '@app/pages/propostas/proposta/services/proposta-service-base.service';
 import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Directive()
 export class PropostaNodeFormDirective implements OnInit {
@@ -43,8 +44,13 @@ export class PropostaNodeFormDirective implements OnInit {
         this.activeModal.close();
 
       } catch (e) {
-        this.app.alert('Não foi possível salvar').then();
         console.error(e);
+        if (e instanceof HttpErrorResponse) {
+          this.app.alertError(e).then();
+        } else {
+
+          this.app.alert('Não foi possível salvar').then();
+        }
       }
     }
   }

@@ -30,10 +30,11 @@
         <label for="empresa-financiadora">Empresa Financiadora
           <app-help codigo="alocacao-recurso-humano-financiadora"></app-help>
         </label>
-        <select class="form-control" id="empresa-financiadora" formControlName="empresaFinanciadora">
+
+        <select class="form-control" #financiadora id="empresa-financiadora" formControlName="empresaFinanciadoraId">
           <option value="" hidden>Selecione uma empresa financiadora</option>
-          <option [value]="empresa.value" *ngFor="let empresa of empresas">
-            {{ empresa.text }}
+          <option [value]="empresa.id" *ngFor="let empresa of empresas">
+            {{ empresa.razaoSocial }}
           </option>
         </select>
       </div>
