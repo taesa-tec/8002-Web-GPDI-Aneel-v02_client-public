@@ -22,12 +22,17 @@ export class TopnavComponent implements OnDestroy {
   constructor(
     @Optional() @Inject(TOPNAV_MENU) menu: Array<MenuItem> | Observable<Array<MenuItem>>,
     protected app: AppService, protected usersService: UsersService, protected modal: NgbModal) {
+
+    //@todo Criar classe para extender e remover código duplicado
     if (menu instanceof Observable) {
       this.subscription = menu.subscribe(_menu => {
         this.menu = _menu;
       });
-    } else {
+    } else if (Array.isArray(menu)) {
       this.menu = menu;
+    } else {
+      console.error('TOPNAVE: Menu não configurado corretamente', menu);
+      this.menu = [];
     }
   }
 

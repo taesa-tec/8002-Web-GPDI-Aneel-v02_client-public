@@ -104,7 +104,6 @@ export interface User {
 }
 
 
-
 export interface Tema {
   id: number;
   nome: string;
@@ -574,5 +573,5 @@ export const SIDEBAR_MENU = new InjectionToken<Array<MenuItem> | BehaviorSubject
   providedIn: 'root', factory: () => new BehaviorSubject([])
 });
 export const HEADER_MENU = new InjectionToken<Array<MenuItem>>('Header menu');
-export const TOPNAV_MENU = new InjectionToken<Array<MenuItem>>('Topnav menu');
+export const TOPNAV_MENU = new InjectionToken<Array<MenuItem> | BehaviorSubject<Array<MenuItem>>>('Topnav menu');
 export const ROOT_URL = new InjectionToken<string>('Root Url');
