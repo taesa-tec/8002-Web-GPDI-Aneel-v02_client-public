@@ -16,7 +16,8 @@ import {EQUIPE_PED} from '@app/commons';
       return route.snapshot.data.equipe;
     }
   },
-    DemandaProvider, DemandaMenuProvider,
+    DemandaProvider,
+    DemandaMenuProvider,
   ]
 })
 export class DemandaComponent implements OnInit {

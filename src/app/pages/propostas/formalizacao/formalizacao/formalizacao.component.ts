@@ -84,6 +84,7 @@ export class FormalizacaoComponent implements OnInit, OnDestroy {
       return;
     }
     try {
+      this.app.showLoading();
       await this.service.post(`${this.captacaoId}/Formalizacao`, this.form.value);
       try {
         await this.service.upload([this.file], `${this.captacaoId}/Formalizacao/Arquivo`);
@@ -100,6 +101,7 @@ export class FormalizacaoComponent implements OnInit, OnDestroy {
         this.app.alertError('Não foi possível salvar a Formalização').then();
       }
     }
+    this.app.hideLoading();
   }
 
 }
