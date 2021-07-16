@@ -30,6 +30,10 @@ export class FornecedoresComponent implements OnInit {
       field: 'nome',
       title: 'Nome Fornecedor',
       order: true
+    }, {
+      field: 'uf',
+      title: 'Uf',
+      order: true
     },
     {
       field: 'responsavelNome',

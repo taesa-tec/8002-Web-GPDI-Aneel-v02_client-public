@@ -33,32 +33,20 @@
     <div class="col-4">
       <div class="form-group">
         <label>Empresa Financiadora</label>
-        <select class="form-control" #financiador (change)="updateFinanciador(financiador.value)">
+        <select class="form-control" formControlName="financiadoraId">
           <option value="" hidden>Selecione</option>
-          <optgroup label="Empresas">
-            <option *ngFor="let empresa of data.empresas | orderBy:['categoria', 'nome']"
-                    [value]="'e-' + empresa.id">{{empresa.nome}}</option>
-          </optgroup>
-          <optgroup label="OUTRAS ENTIDADES">
-            <option *ngFor="let empresa of data.coexecutores | orderBy:'nome'"
-                    [value]="'c-' + empresa.id">{{empresa.nome}}</option>
-          </optgroup>
+          <option *ngFor="let empresa of data.empresas"
+                  [value]="empresa.id">{{empresa.nome}}</option>
         </select>
       </div>
     </div>
     <div class="col-4">
       <div class="form-group">
         <label>Empresa Recebedora</label>
-        <select class="form-control" #recebedor (change)="updateRecebedor(recebedor.value)">
+        <select class="form-control" formControlName="recebedoraId">
           <option value="" hidden>Selecione</option>
-          <optgroup label="Empresas">
-            <option *ngFor="let empresa of data.empresas | orderBy:['categoria', 'nome']"
-                    [value]="'e-' + empresa.id">{{empresa.nome}}</option>
-          </optgroup>
-          <optgroup label="OUTRAS ENTIDADES">
-            <option *ngFor="let empresa of data.coexecutores | orderBy:'nome'"
-                    [value]="'c-' + empresa.id">{{empresa.nome}}</option>
-          </optgroup>
+          <option *ngFor="let empresa of data.empresas"
+                  [value]="empresa.id">{{empresa.nome}}</option>
         </select>
       </div>
     </div>
@@ -138,7 +126,8 @@
     <div class="col-4">
       <div class="form-group">
         <label>Quantidade itens</label>
-        <input formControlName="quantidade" placeholder="Quantidade de itens" type="number" class="form-control">
+        <input formControlName="quantidade" placeholder="Quantidade de itens" type="number" min="0"
+               class="form-control">
       </div>
     </div>
     <div class="col-4">

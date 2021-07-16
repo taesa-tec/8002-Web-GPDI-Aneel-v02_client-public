@@ -36,7 +36,7 @@ export class ExtratoFinanceiroComponent implements OnInit {
     if (realizado === 0) {
       return 'N/A';
     }
-    return `${desvio}%`;
+    return `${desvio.toFixed(2)}%`;
   }
 
   async downloadXls() {

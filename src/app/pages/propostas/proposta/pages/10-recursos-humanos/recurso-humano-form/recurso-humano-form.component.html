@@ -16,10 +16,10 @@
         <label for="empresa">Empresa
           <app-help codigo="recurso-humano-empresa"></app-help>
         </label>
-        <select class="form-control" id="empresa" formControlName="empresa">
+        <select class="form-control" id="empresa" formControlName="empresaId">
           <option value="" hidden>Selecione um Empresa</option>
-          <option [value]="empresa.value" *ngFor="let empresa of empresas">
-            {{ empresa.text }}
+          <option [value]="empresa.id" *ngFor="let empresa of empresas">
+            {{ empresa.razaoSocial }}
           </option>
         </select>
       </div>
@@ -87,7 +87,7 @@
           id="cpf"
           [mask]="documentoMask"
           formControlName="documento"
-          placeholder="00.000.000/0000-00"
+          placeholder="000.000.000-00"
         />
       </div>
     </div>

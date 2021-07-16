@@ -30,10 +30,10 @@
         <label for="empresa-financiadora">Empresa financiadora
           <app-help codigo="alocacao-recurso-material-empresa-financiadora"></app-help>
         </label>
-        <select class="form-control" id="empresa-financiadora" formControlName="empresaFinanciadora">
+        <select class="form-control" id="empresa-financiadora" formControlName="empresaFinanciadoraId">
           <option value="" hidden>Selecione</option>
-          <option [value]="empresa.value" *ngFor="let empresa of empresas">
-            {{ empresa.text }}
+          <option [value]="empresa.id" *ngFor="let empresa of empresas">
+            {{ empresa.razaoSocial }}
           </option>
         </select>
       </div>
@@ -41,11 +41,11 @@
         <label for="empresa-recebedora">Empresa recebedora
           <app-help codigo="alocacao-recurso-material-empresa-recebedora"></app-help>
         </label>
-        <select class="form-control" id="empresa-recebedora" formControlName="empresaRecebedora">
+        <select class="form-control" id="empresa-recebedora" formControlName="empresaRecebedoraId">
           <option value="" hidden>Selecione</option>
-          <option [value]="empresa.value" *ngFor="let empresa of empresas"
-                  [disabled]="empresa.type === 't' && empresaFinanciadora?.type !== 't'">
-            {{ empresa.text }}
+          <option [value]="empresa.id" *ngFor="let empresa of empresas"
+                  [disabled]="empresa.funcao === 'Cooperada' && empresaFinanciadora?.funcao === 'Executora'">
+            {{ empresa.razaoSocial }}
           </option>
         </select>
       </div>

@@ -6,20 +6,14 @@ import {AdministrativoComponent} from './administrativo.component';
 import {MenuItem, TOPNAV_MENU} from '@app/commons';
 import {DashboardModule} from '@app/dashboard';
 import {ScreensModule} from '@app/core/screens/screens.module';
-import { LogsDutoComponent } from './logs-duto/logs-duto.component';
+import {LogsDutoComponent} from './logs-duto/logs-duto.component';
 import {ProjetoNodeResolver} from '@app/pages/projetos/projeto/resolvers/projeto.resolver';
 import {ComponentsModule} from '@app/core/components';
-import { RepositorioXmlComponent } from './repositorio-xml/repositorio-xml.component';
-import { AlterarSatusComponent } from './alterar-satus/alterar-satus.component';
+import {RepositorioXmlComponent} from './repositorio-xml/repositorio-xml.component';
+import {AlterarSatusComponent} from './alterar-satus/alterar-satus.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import { GeradorXmlComponent } from './gerador-xml/gerador-xml.component';
+import {GeradorXmlComponent} from './gerador-xml/gerador-xml.component';
 
-const menu: Array<MenuItem> = [
-  {path: 'gerador-xml', text: 'Geração XMLS'},
-  {path: 'logs-duto', text: 'Logs DUTO'},
-  {path: 'repositorio-xml', text: 'Repositório XMLs Gerados'},
-  {path: 'status', text: 'Alteração de Status'},
-];
 
 @NgModule({
   declarations: [AdministrativoComponent, LogsDutoComponent, RepositorioXmlComponent, AlterarSatusComponent, GeradorXmlComponent],
@@ -32,10 +26,6 @@ const menu: Array<MenuItem> = [
     ReactiveFormsModule
   ],
   providers: [
-    {
-      provide: TOPNAV_MENU,
-      useValue: menu
-    },
     ProjetoNodeResolver.Node('LogsDuto', 'projetoLogsDuto'),
     ProjetoNodeResolver.Node('Xmls', 'projetoXmls'),
   ]

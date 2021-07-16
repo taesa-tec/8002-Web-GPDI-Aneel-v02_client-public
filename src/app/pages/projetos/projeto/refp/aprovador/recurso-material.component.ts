@@ -21,8 +21,8 @@ export class RecursoMaterialComponent implements OnInit {
     isNacional: [''],
     equipaLaboratorioExistente: [''],
     equipaLaboratorioNovo: [''],
-    financiador: [''],
-    recebedor: [''],
+    financiadora: [''],
+    recebedora: [''],
     mesReferencia: [''],
     quantidadeHoras: [''],
     tipoDocumento: [''],
@@ -40,12 +40,6 @@ export class RecursoMaterialComponent implements OnInit {
   ngOnInit(): void {
     if (this.registro) {
       this.form.patchValue(this.registro);
-      let mes = this.form.value.mesReferencia;
-      mes = mes.split('T')[0];
-      let data = this.form.value.dataDocumento;
-      data = data.split('T')[0];
-      this.form.get('mesReferencia').setValue(mes);
-      this.form.get('dataDocumento').setValue(data);
       if (this.readonly) {
         this.form.disable();
       }

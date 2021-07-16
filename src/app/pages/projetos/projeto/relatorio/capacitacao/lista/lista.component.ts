@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TableComponentActions, TableComponentCols } from '@app/core/components';
-import { EditorComponent } from '../editor/editor.component';
-import { Capacitacao } from '../../relatorio';
-import { ProjetoService } from '../../../services/projeto.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {TableComponentActions, TableComponentCols} from '@app/core/components';
+import {EditorComponent} from '../editor/editor.component';
+import {Capacitacao} from '../../relatorio';
+import {ProjetoService} from '../../../services/projeto.service';
 
 @Component({
   selector: 'app-lista',
@@ -16,10 +16,12 @@ export class ListaComponent implements OnInit {
   recursos: Array<any>;
 
   cols: TableComponentCols = [
-    {title: 'Membro da Equipe', field: 'recursoId', order: true},
+    {title: 'Membro da Equipe', field: 'recurso', order: true},
     {title: 'Capacitação', field: 'tipo', order: true},
-    {title: 'Arquivo Cadastrado?', field: 'arquivo', 
-      value: item => item.arquivoTrabalhoOrigemId ? 'Sim':'Não' ,order: true}
+    {
+      title: 'Arquivo Cadastrado?', field: 'arquivo',
+      value: item => item.arquivoTrabalhoOrigemId ? 'Sim' : 'Não', order: true
+    }
   ];
 
   buttons: TableComponentActions = [
@@ -27,9 +29,9 @@ export class ListaComponent implements OnInit {
   ];
 
   constructor(
-    protected service: ProjetoService, 
-    protected route: ActivatedRoute, 
-    protected modal: NgbModal, 
+    protected service: ProjetoService,
+    protected route: ActivatedRoute,
+    protected modal: NgbModal,
     protected router: Router
   ) {
   }
@@ -39,15 +41,15 @@ export class ListaComponent implements OnInit {
     this.recursos = await this.service.obter(`${projeto.id}/Recursos/Humanos`);
 
     this.route.data.subscribe(({capacitacoes}) => {
-      if(Array.isArray(capacitacoes)) {
-        this.capacitacoes = capacitacoes
+      if (Array.isArray(capacitacoes)) {
+        this.capacitacoes = capacitacoes;
       } else {
-        this.openModal(capacitacoes)
+        this.openModal(capacitacoes);
       }
     });
 
     this.route.fragment.subscribe(data => {
-      if(data == 'novo') {
+      if (data == 'novo') {
         this.openModal();
       }
     });

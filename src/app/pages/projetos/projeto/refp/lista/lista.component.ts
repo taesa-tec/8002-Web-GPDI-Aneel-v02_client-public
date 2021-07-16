@@ -19,7 +19,7 @@ export class ListaComponent implements OnInit {
     {title: 'Nome/Beneficiário', field: 'recurso'},
     {title: 'Categoria Contábil', field: 'categoriaContabil'},
     {title: 'Empresa Pagadora', field: 'financiador'},
-    {title: 'Empresa Recebedora', field: 'recebedor'},
+    {title: 'Empresa Recebedora', field: 'recebedora'},
     {title: 'Valor', field: 'custo', type: 'currency'},
   ];
   data: any[] = [];

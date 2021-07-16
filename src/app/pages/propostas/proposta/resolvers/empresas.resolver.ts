@@ -12,28 +12,7 @@ export class EmpresasResolver implements Resolve<any> {
     const _route = route.pathFromRoot.reverse().find(r => r.params.id);
     if (_route) {
       try {
-        const result = await this.service.getEmpresas(_route.params.id);
-        if (result !== null) {
-          let empresas = [];
-          empresas.push({
-            text: result.empresa.nome,
-            value: `e-${result.empresa.id}`,
-            type: 't'
-          });
-          empresas.push({
-            text: result.fornecedor.nome,
-            value: `e-${result.fornecedor.id}`,
-            type: 'f'
-          });
-          empresas = empresas.concat(result.coExecutores.map(c => (
-            {
-              text: c.razaoSocial,
-              value: `c-${c.id}`,
-              type: 'c'
-            }
-          )));
-          return empresas;
-        }
+        return await this.service.getEmpresas(_route.params.id);
       } catch (e) {
         console.log(e);
       }

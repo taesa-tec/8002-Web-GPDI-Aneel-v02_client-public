@@ -33,7 +33,7 @@
       </ng-container>
     </div>
     <!--  -->
-    <div *ngSwitchCase="'RichText'">
+    <div *ngSwitchCase="'RichText'" class="position-relative w-100">
       <ng-container *ngIf="readonly">
         <div [innerHTML]="form.value.value"></div>
       </ng-container>
@@ -41,8 +41,9 @@
         <ckeditor
           [editor]="editor"
           [config]="configEditor"
-          style="max-width: max-content;"
+          style="width: 100%; display: block"
           formControlName="value"
+          class="ck-fullwidth"
         ></ckeditor>
       </ng-container>
     </div>

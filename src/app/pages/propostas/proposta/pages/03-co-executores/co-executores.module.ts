@@ -15,7 +15,7 @@ import {PropostaServiceBase} from '@app/pages/propostas/proposta/services/propos
     CoExecutorFormComponent, ViewContratoComponent
   ],
   providers: [
-    PropostaServiceBase.fromAppend('CoExecutores'),
+    PropostaServiceBase.fromAppend('Empresas'),
     CoExecutoresResolver,
     CrudItemResolver,
     CrudDataResolver,

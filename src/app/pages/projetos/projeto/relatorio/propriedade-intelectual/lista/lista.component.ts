@@ -30,9 +30,9 @@ export class ListaComponent implements OnInit {
   ];
 
   constructor(
-    protected service: ProjetoService, 
-    protected route: ActivatedRoute, 
-    protected modal: NgbModal, 
+    protected service: ProjetoService,
+    protected route: ActivatedRoute,
+    protected modal: NgbModal,
     protected router: Router
   ) {
   }
@@ -58,7 +58,7 @@ export class ListaComponent implements OnInit {
   }
 
   async openModal(propriedade?: any) {
-    let ref = this.modal.open(EditorComponent, {size: 'lg'});
+    const ref = this.modal.open(EditorComponent, {size: 'lg'});
     ref.componentInstance.propriedade = propriedade;
     ref.componentInstance.recursos = this.recursos;
     ref.componentInstance.depositantes = this.depositantes;
@@ -66,13 +66,9 @@ export class ListaComponent implements OnInit {
     this.router.navigate(['./'], {relativeTo: this.route}).then();
   }
 
+  //@todo to resolve
   async getDepositantes() {
-    const result = await this.service.obter<any>(`${this.projeto.id}/Empresas`);
-    if (result !== null) {
-      const empresas = result.empresas.map(e => ({text: e.nome, value: `e-${e.id}`}));
-      const coExecutores = result.coExecutores.map(e => ({text: e.razaoSocial, value: `c-${e.id}`}));
-      return [...empresas, ...coExecutores];
-    }
+    return  await this.service.obter<any>(`${this.projeto.id}/Empresas`);
   }
 
 }

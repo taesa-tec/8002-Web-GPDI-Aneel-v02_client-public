@@ -12,6 +12,7 @@ import {DemandasService} from './demandas.service';
 import {BehaviorSubject, timer} from 'rxjs';
 import {SistemaService} from '@app/services/sistema.service';
 import {FileUploaderComponent} from '@app/core/components/file-uploader/file-uploader.component';
+import {HttpErrorResponse} from '@angular/common/http';
 
 
 @Injectable({
@@ -94,13 +95,23 @@ export class AppService {
     return ref.result;
   }
 
-  alertError(message: string | Array<string>, title: string = 'Error') {
+  alertError(message: string | Array<string> | HttpErrorResponse, title: string = 'Error') {
     const ref = this.modal.open(AlertComponent, {backdrop: 'static'});
     ref.componentInstance.title = title;
     ref.componentInstance.className = 'border-danger';
-    ref.componentInstance.setMessage(message);
+    if (message instanceof HttpErrorResponse) {
+      if (message.error) {
+        const err = message.error;
+        // ref.componentInstance.title = err.title;// tá vindo en inglês
+        const msgs = Object.keys(err.errors).map(k => err.errors[k]).reduce((p, c) => [...p, ...c], []);
+        ref.componentInstance.setMessage(msgs);
+      }
+    } else {
+      ref.componentInstance.setMessage(message);
+    }
     return ref.result;
   }
+
 
   confirm(message: string, title: string = 'Confirme',
           options: Array<ConfirmComponentOption> =

@@ -36,6 +36,7 @@ export class FornecedorFormComponent implements OnInit {
     id: [0, Validators.required],
     ativo: [true],
     nome: ['', Validators.required],
+    uf: ['', Validators.required],
     cnpj: ['', [Validators.required, AppValidators.cnpj]],
     responsavelNome: ['', [Validators.required]],
     responsavelEmail: ['', [Validators.required]],

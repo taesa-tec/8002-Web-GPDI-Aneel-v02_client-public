@@ -31,18 +31,11 @@
           <label for="empresa">Empresa
             <app-help codigo="recurso-humano-empresa"></app-help>
           </label>
-          <select class="form-control" id="empresa" formControlName="empresa">
+          <select class="form-control" id="empresa" formControlName="empresaId">
             <option value="" hidden>Selecione um Empresa</option>
-            <optgroup label="Empresas">
-              <option [value]="'e-'+empresa.id" *ngFor="let empresa of empresas">
-                {{ empresa.nome }}
-              </option>
-            </optgroup>
-            <optgroup label="Entidades">
-              <option [value]="'c-'+empresa.id" *ngFor="let empresa of coExecutores">
-                {{ empresa.nome }}
-              </option>
-            </optgroup>
+            <option [value]="empresa.id" *ngFor="let empresa of empresas">
+              {{ empresa.nome }}
+            </option>
           </select>
         </div>
         <div class="form-group col">
