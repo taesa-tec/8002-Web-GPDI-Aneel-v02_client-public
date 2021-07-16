@@ -24,23 +24,15 @@ export class RecursoMaterialComponent implements OnInit {
   quantidadeCtrl = this.fb.control('', [Validators.required, Validators.min(1)]);
   valorCtrl = this.fb.control('', [Validators.required]);
 
-  financiadoraCtrl = this.fb.control('');
-  coExecutorFinanciadorCtrl = this.fb.control('');
-
-  recebedoraCtrl = this.fb.control('');
-  coExecutorRecebedorCtrl = this.fb.control('');
-
   form = this.fb.group({
     nomeItem: ['', Validators.required],
     etapaId: ['', Validators.required],
     recursoMaterialId: this.recursoMaterialCtrl,
     quantidade: this.quantidadeCtrl,
     valor: this.valorCtrl,
-    recebedoraId: this.recebedoraCtrl,
-    financiadoraId: this.financiadoraCtrl,
+    recebedoraId: ['', Validators.required],
+    financiadoraId: ['', Validators.required],
 
-    coExecutorFinanciadorId: this.coExecutorFinanciadorCtrl,
-    coExecutorRecebedorId: this.coExecutorRecebedorCtrl,
     mesReferencia: ['', Validators.required],
     tipoDocumento: ['', Validators.required],
     numeroDocumento: ['', Validators.required],
@@ -52,7 +44,7 @@ export class RecursoMaterialComponent implements OnInit {
     equipaLaboratorioNovo: ['', Validators.required],
     isNacional: ['', Validators.required],
     funcaoEtapa: ['', Validators.required],
-    observacaoInterna: ['', Validators.required],
+    observacaoInterna: [''],
     especificaoTecnica: ['', Validators.required],
   }, {
     validators: form => {
@@ -83,39 +75,6 @@ export class RecursoMaterialComponent implements OnInit {
       this.updateCusto();
     });
     this.updateCusto();
-  }
-
-  updateFinanciador(cod: string) {
-    this.financiadoraCtrl.setValue('');
-    this.coExecutorFinanciadorCtrl.setValue('');
-    if (cod.length > 0) {
-
-      const [type, id] = cod.split('-');
-
-      if (type === 'e') {
-        this.financiadoraCtrl.setValue(id);
-      } else {
-        this.coExecutorFinanciadorCtrl.setValue(id);
-      }
-    }
-
-
-  }
-
-  updateRecebedor(cod: string) {
-    this.recebedoraCtrl.setValue('');
-    this.coExecutorRecebedorCtrl.setValue('');
-    if (cod.length > 0) {
-      const [type, id] = cod.split('-');
-
-      if (type === 'e') {
-        this.recebedoraCtrl.setValue(id);
-      } else {
-        this.coExecutorRecebedorCtrl.setValue(id);
-      }
-    }
-
-
   }
 
   updateCusto() {

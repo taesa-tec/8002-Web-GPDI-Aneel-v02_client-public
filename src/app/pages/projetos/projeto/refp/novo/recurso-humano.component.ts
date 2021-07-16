@@ -16,7 +16,7 @@ export class RecursoHumanoComponent implements OnInit {
   file: File;
   valorHora = 0;
   custo: any;
-  data: { etapas: any[], meses: any[], colaboradores: any[], recursos: any[], coexecutores: any[], empresas: any[] };
+  data: { etapas: any[], meses: any[], colaboradores: any[], recursos: any[], empresas: any[] };
 
   recursoHumanoCtrl = this.fb.control('', [Validators.required]);
   horasCtrl = this.fb.control('', [Validators.required, Validators.min(1)]);
@@ -30,8 +30,7 @@ export class RecursoHumanoComponent implements OnInit {
     atividadeRealizada: ['', Validators.required],
     //
     etapaId: ['', Validators.required],
-    financiadoraId: this.financiadoraCtrl,
-    coExecutorFinanciadorId: this.coExecutorFinanciadorCtrl,
+    financiadoraId: ['', Validators.required],
     mesReferencia: ['', Validators.required],
     tipoDocumento: ['', Validators.required],
     numeroDocumento: ['', Validators.required],
@@ -65,23 +64,6 @@ export class RecursoHumanoComponent implements OnInit {
       this.updateCusto(value);
     });
     this.updateCusto(0);
-  }
-
-  updateFinanciador(cod: string) {
-    this.financiadoraCtrl.setValue('');
-    this.coExecutorFinanciadorCtrl.setValue('');
-    if (cod.length > 0) {
-
-      const [type, id] = cod.split('-');
-
-      if (type === 'e') {
-        this.financiadoraCtrl.setValue(id);
-      } else {
-        this.coExecutorFinanciadorCtrl.setValue(id);
-      }
-    }
-
-
   }
 
   updateCusto(value) {

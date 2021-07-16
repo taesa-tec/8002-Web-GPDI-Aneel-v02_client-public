@@ -49,7 +49,6 @@ export class RecursosHumanosComponent implements OnInit {
   ];
   recursos = [];
   empresas = [];
-  coExecutores = [];
 
   empresaCtrl = this.fb.control('', Validators.required);
   form = this.fb.group({
@@ -91,9 +90,7 @@ export class RecursosHumanosComponent implements OnInit {
     });
     this.route.data.subscribe(data => {
       this.recursos = data.recursos;
-      const {coExecutores, empresas} = data.empresas;
-      this.empresas = empresas;
-      this.coExecutores = coExecutores;
+      this.empresas = data.empresas;
       if (data.recurso) {
         this.form.patchValue(data.recurso);
         this.updateEmpresa(data.recurso);
@@ -103,9 +100,7 @@ export class RecursosHumanosComponent implements OnInit {
       } else {
         this.form.reset({
           id: 0,
-          empresa: '',
           empresaId: '',
-          coExecutorId: '',
           nomeCompleto: '',
           titulacao: '',
           funcao: '',
