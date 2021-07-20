@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Demanda, FormField} from '@app/commons/demandas';
 import {map} from 'rxjs/operators';
+import {BehaviorSubject} from 'rxjs';
+import {Projeto} from '@app/pages/projetos/projeto/projeto.component';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,22 @@ export class DemandasService {
 
   constructor(private http: HttpClient) {
   }
+
+  protected $currentDemanda: BehaviorSubject<Demanda> = new BehaviorSubject<Demanda>(null);
+  demanda = this.$currentDemanda.asObservable();
+
+  setDemanda(demanda: Demanda) {
+    if (demanda) {
+      this.$currentDemanda.next(demanda);
+    } else {
+      throw new Error('Demanda inválida!');
+    }
+  }
+
+  getCurrentDemanda() {
+    return this.$currentDemanda.getValue();
+  }
+
 
   getDemandasByStatus(status: 'Reprovadas' | 'Aprovadas' | 'EmElaboracao' | 'Captacao') {
     return this.http.get<Array<Demanda>>(`Demandas/${status}`).toPromise();
@@ -20,7 +38,7 @@ export class DemandasService {
   }
 
   getDemanda(id: number) {
-    return this.http.get<Demanda>(`Demandas/${id}`);
+    return this.http.get<Demanda>(`Demandas/${id}`).toPromise();
   }
 
   getDemandaForm(id: number, key: string) {

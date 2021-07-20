@@ -15,6 +15,7 @@ export interface Demanda {
   superiorDireto?: any;
   superiorDiretoId?: string;
   titulo: string;
+  especificacaoTecnicaFileId?: number;
 }
 
 

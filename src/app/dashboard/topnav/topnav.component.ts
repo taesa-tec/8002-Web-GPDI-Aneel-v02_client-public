@@ -31,7 +31,7 @@ export class TopnavComponent implements OnDestroy {
     } else if (Array.isArray(menu)) {
       this.menu = menu;
     } else {
-      console.error('TOPNAVE: Menu não configurado corretamente', menu);
+      console.error('TOPNAV: Menu não configurado corretamente', menu);
       this.menu = [];
     }
   }

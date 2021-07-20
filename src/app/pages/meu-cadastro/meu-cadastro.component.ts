@@ -14,6 +14,7 @@ export class MeuCadastroComponent implements OnInit {
   @ViewChild(LoadingComponent, {static: true}) loading: LoadingComponent;
   @Output() submited: EventEmitter<ResultadoResponse> = new EventEmitter<ResultadoResponse>();
 
+  protected shouldRemoveAvatar = false;
   fotoPerfil: FormGroup;
   roles = Roles;
   empresas: Array<Empresa>;
@@ -65,6 +66,10 @@ export class MeuCadastroComponent implements OnInit {
     this.setup();
   }
 
+  removeAvatar() {
+    this.shouldRemoveAvatar = true;
+  }
+
   setup() {
     this.fotoPerfil = new FormGroup({
       file: new FormControl('')
@@ -92,6 +97,8 @@ export class MeuCadastroComponent implements OnInit {
         await this.usersService.editMe(this.form.value);
         if (this.fotoPerfil.value.file) {
           await this.usersService.updateAvatar(this.fotoPerfil.value.file, 'me');
+        } else if (this.shouldRemoveAvatar) {
+          await this.usersService.removeAvatar('me');
         }
         await this.auth.syncUserInfo();
 

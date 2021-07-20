@@ -103,8 +103,12 @@ export class AppService {
       if (message.error) {
         const err = message.error;
         // ref.componentInstance.title = err.title;// tá vindo en inglês
-        const msgs = Object.keys(err.errors).map(k => err.errors[k]).reduce((p, c) => [...p, ...c], []);
-        ref.componentInstance.setMessage(msgs);
+        if (err.errors) {
+          const msgs = Object.keys(err.errors).map(k => err.errors[k]).reduce((p, c) => [...p, ...c], []);
+          ref.componentInstance.setMessage(msgs);
+        } else {
+          ref.componentInstance.setMessage(err.detail);
+        }
       }
     } else {
       ref.componentInstance.setMessage(message);

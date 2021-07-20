@@ -26,6 +26,11 @@
   background: $cinzaClaro;
   transition: background-color 250ms ease-in-out;
 
+  &.disabled {
+    background-color: $cinza !important;
+    cursor: not-allowed;
+  }
+
   &.active {
     color: white;
     background-color: $blue;

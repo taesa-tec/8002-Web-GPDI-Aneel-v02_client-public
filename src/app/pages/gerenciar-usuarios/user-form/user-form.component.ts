@@ -69,6 +69,7 @@ export class UserFormComponent implements OnInit {
         await this.app.router.navigate(['/gerenciar-usuarios/']);
       } catch (e) {
         console.error(e);
+        this.app.alertError(e).then();
       }
     }
   }

@@ -13,7 +13,12 @@
               routerLinkActive="active"
               class="nav-link"
               [routerLink]="route.path"
-            >{{ route.text }}</a
+            >
+              <span *ngIf="route.icon" class="fs-24 mr-3"><i [class]="route.icon"></i></span>
+              <ng-container *ngIf="route.beforeText"><span [innerHTML]="route.beforeText"></span></ng-container>
+              <span class="menu-item-text" [innerHTML]="route.text"></span>
+              <ng-container *ngIf="route.afterText"><span [innerHTML]="route.afterText"></span></ng-container>
+            </a
             >
           </li>
         </ng-container>

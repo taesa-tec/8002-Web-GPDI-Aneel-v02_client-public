@@ -4,7 +4,6 @@ import {AppService} from '@app/services/app.service';
 import {Component, Inject, OnInit} from '@angular/core';
 import {EtapasService, ProdutosService} from '@app/pages/propostas/proposta/services/proposta-service-base.service';
 import {Proposta} from '@app/commons';
-import {mesesSelectorRequered} from '@app/pages/propostas/proposta/pages/07-etapas/etapa-form/meses-selector.component';
 import {ActivatedRoute} from '@angular/router';
 import {PropostasService} from '@app/pages/propostas/proposta/services/propostas.service';
 import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
@@ -18,12 +17,16 @@ export class EtapaFormComponent implements OnInit {
   route: ActivatedRoute;
   proposta: Proposta;
   produtos: Array<any>;
-  mesesCtrl = this.fb.control([], mesesSelectorRequered);
+  mesFinalMin: number;
+  mesFinalMax: number;
+  mesInicioCtrl = this.fb.control('', Validators.required);
+  mesFinalCtrl = this.fb.control('', Validators.required);
   form = this.fb.group({
     id: [0],
     descricaoAtividades: ['', Validators.required],
     produtoId: ['', Validators.required],
-    meses: this.mesesCtrl
+    mesInicio: this.mesInicioCtrl,
+    mesFinal: this.mesFinalCtrl
   });
 
   constructor(
@@ -40,6 +43,17 @@ export class EtapaFormComponent implements OnInit {
   ngOnInit(): void {
     this.propostasService.proposta.subscribe(p => this.proposta = p);
     this.produtoService.obter().then(p => this.produtos = p);
+
+    this.mesInicioCtrl.valueChanges.subscribe(v => {
+      const m = parseFloat(v);
+      const mf = parseFloat(this.mesFinalCtrl.value);
+      this.mesFinalMin = Math.min(m + 2, this.proposta.duracao);
+      this.mesFinalMax = Math.min(m + 5, this.proposta.duracao);
+
+      if (mf > this.mesFinalMax || mf < this.mesFinalMin) {
+        this.mesFinalCtrl.setValue('');
+      }
+    });
     if (this.route.snapshot.data.etapa) {
       this.form.patchValue(this.route.snapshot.data.etapa);
     }

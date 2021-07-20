@@ -10,6 +10,7 @@ import {ServiceBase} from '@app/services/service-base.service';
 import {HttpClient} from '@angular/common/http';
 import {CaptacoesResolver} from '@app/resolvers/captacoes.resolver';
 import {DirectivesModule} from '@app/dashboard/shared/directives';
+import {DashboardModule} from '@app/dashboard';
 
 
 @NgModule({
@@ -19,11 +20,12 @@ import {DirectivesModule} from '@app/dashboard/shared/directives';
     EnviarComponent,
     ListComponent
   ],
-  imports: [
-    SharedModule,
-    DirectivesModule,
-    CaptacaoRoutingModule
-  ],
+    imports: [
+        SharedModule,
+        DirectivesModule,
+        CaptacaoRoutingModule,
+        DashboardModule
+    ],
   providers: [
     CaptacoesResolver,
     {provide: ServiceBase, deps: [HttpClient], useFactory: (httpClient) => new ServiceBase(httpClient, 'Captacoes')}

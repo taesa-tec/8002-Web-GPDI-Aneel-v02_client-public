@@ -32,11 +32,8 @@ export class EquipeValidacaoComponent implements OnInit {
   }
 
   async configForm() {
-    let superiorDireto;
-
-    [this.pessoas, {superiorDireto}] = await Promise.all([
-      this.usersService.usersInRole(UserRole.User),
-      this.app.demandas.getSuperiorDireto(this.demanda.id)]);
+    const {superiorDireto} = await this.app.demandas.getSuperiorDireto(this.demanda.id);
+    this.pessoas = this.equipe.outros;
 
     this.form = new FormGroup({
       superiorDireto: new FormControl(superiorDireto || '', [Validators.required]),

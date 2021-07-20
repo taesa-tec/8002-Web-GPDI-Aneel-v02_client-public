@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, Input, ElementRef, forwardRef} from '@angular/core';
+import {Component, OnInit, ViewChild, Input, ElementRef, forwardRef, Output, EventEmitter} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
@@ -15,25 +15,23 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 })
 export class UploadImageComponent implements OnInit, ControlValueAccessor {
 
+  onChange: (...args) => any;
+  onTouched: (...args) => any;
 
   constructor() {
   }
 
-  @Input()
-  previewImage: string;
+  @Input() previewImage: string;
 
-  @ViewChild('input', { static: true }) input: ElementRef;
+  @ViewChild('input', {static: true}) input: ElementRef;
 
   @Input() name = '';
   @Input() disabled = '';
   @Input() asBase64 = false;
+  @Output() removed: EventEmitter<any> = new EventEmitter<any>();
 
   file: File | string;
 
-  remove(event) {
-    event.preventDefault();
-    this.changeFile();
-  }
 
   get hasImage() {
 
@@ -59,8 +57,8 @@ export class UploadImageComponent implements OnInit, ControlValueAccessor {
     } else {
       this.file = val;
     }
-    this.onChange(this.file);
-    this.onTouched();
+    this.onChange?.(this.file);
+    this.onTouched?.();
   }
 
   get style() {
@@ -75,23 +73,27 @@ export class UploadImageComponent implements OnInit, ControlValueAccessor {
   ngOnInit() {
   }
 
+  preventDefault(event) {
+    event.preventDefault();
+  }
+
+  remove(event) {
+    this.preventDefault(event);
+    this.changeFile();
+    this.onChange?.(null);
+    this.removed.emit();
+  }
+
   elOnChange(event: Event) {
     const input = event.target as HTMLInputElement;
     this.changeFile(input.files);
   }
 
   onDrop(event: DragEvent) {
-    event.preventDefault();
+    this.preventDefault(event);
     this.changeFile(event.dataTransfer.files);
   }
 
-  onDragover(event: DragEvent) {
-    event.preventDefault();
-  }
-
-  onDrag(event: DragEvent) {
-    event.preventDefault();
-  }
 
   changeFile(files: FileList = null) {
     if (files && files.length > 0) {
@@ -112,13 +114,7 @@ export class UploadImageComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  onChange: any = () => {
-  };
-
-  onTouched: any = () => {
-  };
-
-  writeValue(value: any) {
+  writeValue(value) {
     if (value) {
       this.value = value;
     }

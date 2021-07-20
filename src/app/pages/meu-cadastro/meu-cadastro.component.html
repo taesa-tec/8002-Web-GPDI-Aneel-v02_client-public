@@ -17,6 +17,7 @@
           <app-upload-image
             formControlName="file"
             name="file"
+            (removed)="removeAvatar()"
             [previewImage]="previewAvatar"
           ></app-upload-image>
         </div>

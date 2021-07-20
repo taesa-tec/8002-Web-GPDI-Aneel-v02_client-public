@@ -39,6 +39,15 @@ export class UsersService extends ServiceBase<any> {
     }
   }
 
+  async removeAvatar(userId: number | 'me' = 'me') {
+    if (userId !== 'me') {
+      await this.http.delete<any>(`Users/${userId}/Avatar`).toPromise();
+    } else {
+      await this.http.delete<any>(`Me/Avatar`).toPromise();
+      this.$avatarUpdated.next(Date.now());
+    }
+  }
+
   async all() {
     return await this.http.get<Array<User>>(`Users`).toPromise();
   }

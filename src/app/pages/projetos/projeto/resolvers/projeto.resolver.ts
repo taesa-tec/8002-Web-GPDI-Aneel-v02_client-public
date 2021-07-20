@@ -8,7 +8,7 @@ import {template} from 'lodash-es';
 @Injectable()
 export class ProjetoResolver implements Resolve<any> {
 
-  constructor(@Inject(ROOT_URL) protected root_url, protected router: Router, protected service: ProjetoService) {
+  constructor(protected router: Router, protected service: ProjetoService) {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -17,7 +17,7 @@ export class ProjetoResolver implements Resolve<any> {
       this.service.setProjeto(projeto);
       return projeto;
     }
-    await this.router.navigate([this.root_url, 'projetos']);
+    await this.router.navigate(['/projetos']);
   }
 
 }

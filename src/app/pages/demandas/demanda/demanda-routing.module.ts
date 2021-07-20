@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule, UrlSegment} from '@angular/router';
 import {DemandaComponent} from './demanda.component';
 import {EquipeValidacaoComponent} from './equipe-validacao/equipe-validacao.component';
-import {DocumentoAprovacoesComponent} from './documento-aprovacoes/documento-aprovacoes.component';
 import {AprovacaoComponent} from './aprovacao/aprovacao.component';
 import {FormEditorComponent} from '@app/pages/demandas/demanda/form-editor/form-editor.component';
 import {DemandaResolver} from '@app/pages/demandas/demanda/demanda.resolver';

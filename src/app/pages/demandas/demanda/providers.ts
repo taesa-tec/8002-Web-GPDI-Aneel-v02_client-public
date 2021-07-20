@@ -3,7 +3,8 @@ import {EQUIPE_PED, EquipePeD, MenuItem, SIDEBAR_MENU, UserRole} from '@app/comm
 import {DemandaEtapaStatus} from '@app/pages/demandas/commons';
 import {FactoryProvider, InjectionToken, Provider} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {AuthService} from '@app/services';
+import {AuthService, DemandasService} from '@app/services';
+import {BehaviorSubject} from 'rxjs';
 
 
 function menu(demanda: Demanda, user, equipe: EquipePeD): Array<MenuItem> {
@@ -26,9 +27,10 @@ function menu(demanda: Demanda, user, equipe: EquipePeD): Array<MenuItem> {
       const _menu = user.id === demanda.criadorId ? menuCriador([], demanda) : [];
       return menuAprovadores(_menu, demanda);
     case demanda.criadorId:
-      return menuCriador([
+
+      return menuCriador(demanda.especificacaoTecnicaFileId ? [
         {text: 'Documento e Aprovações', icon: 'ta-projeto', path: 'aprovacao'},
-      ], demanda);
+      ] : [], demanda);
     default:
       return [];
   }
@@ -45,10 +47,14 @@ function menuCriador(_menu: Array<any>, demanda: Demanda) {
 
 function menuAprovadores(_menu: Array<any>, demanda: Demanda) {
   if (demanda.status !== DemandaEtapaStatus.ReprovadaPermanente) {
-    return [
-      ..._menu,
-      {text: 'Processo Aprovação Demanda', icon: 'ta-projeto', path: 'aprovacao'},
-    ];
+    if (demanda.especificacaoTecnicaFileId) {
+
+      return [
+        ..._menu,
+        {text: 'Processo Aprovação Demanda', icon: 'ta-projeto', path: 'aprovacao'},
+      ];
+    }
+    return _menu;
   }
   return [
     {text: 'Hístórico Demanda', icon: 'ta-projeto', path: 'historico'},
@@ -65,6 +71,13 @@ export const DemandaProvider: FactoryProvider = {
 };
 export const DemandaMenuProvider: FactoryProvider = {
   provide: SIDEBAR_MENU,
-  deps: [DEMANDA, AuthService, EQUIPE_PED],
-  useFactory: (demanda: Demanda, auth: AuthService, equipe: EquipePeD) => menu(demanda, auth.getUser(), equipe)
+  deps: [DemandasService, AuthService, EQUIPE_PED],
+  useFactory: (service: DemandasService, auth: AuthService, equipe: EquipePeD) => {
+    const behavior = new BehaviorSubject([]);
+    service.demanda.subscribe(d => {
+      const _menu = menu(d, auth.getUser(), equipe);
+      behavior.next(_menu);
+    });
+    return behavior;
+  }
 };
