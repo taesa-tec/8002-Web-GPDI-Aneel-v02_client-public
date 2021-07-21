@@ -1,9 +1,10 @@
 import {Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter} from '@angular/core';
-import {FormField} from '@app/commons/demandas';
+import {Demanda, FormField} from '@app/commons/demandas';
 import {AbstractControl, FormGroup, FormBuilder, Validators, FormArray, FormControl} from '@angular/forms';
 import {AppService} from '@app/services/app.service';
 import {ActivatedRoute} from '@angular/router';
 import {uniqBy} from 'lodash-es';
+import {DemandasService} from '@app/services';
 
 
 @Component({
@@ -26,15 +27,17 @@ export class FormEditorComponent implements OnInit {
   @Input() disabled = false;
   @Input() readonly = false;
   @Output() save: EventEmitter<object> = new EventEmitter<object>();
+  demanda: Demanda;
 
 
-  constructor(protected builder: FormBuilder, protected  app: AppService, protected route: ActivatedRoute) {
+  constructor(protected service: DemandasService, protected builder: FormBuilder, protected app: AppService, protected route: ActivatedRoute) {
   }
 
   async ngOnInit() {
     if (this.key === undefined || this.key === null) {
       throw new Error('Key form is undefined or null. Please give a key value');
     }
+    this.demanda = this.service.getCurrentDemanda();
     this.anexos = this.anexos || [];
     this.formField = await this.app.demandas.getForm(this.key).toPromise();
     this.anexosFormArray = this.builder.array(this.anexos.map(item => item.id));
@@ -48,7 +51,7 @@ export class FormEditorComponent implements OnInit {
     });
 
     this.form.updateValueAndValidity();
-    if (this.disabled) {
+    if (this.disabled || this.demanda.superiorDiretoId == null) {
       this.form.disable();
     }
   }

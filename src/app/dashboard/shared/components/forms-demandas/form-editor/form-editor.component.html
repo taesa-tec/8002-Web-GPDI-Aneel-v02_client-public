@@ -1,4 +1,12 @@
 <div *ngIf="form">
+  <div class="row" *ngIf="demanda.superiorDiretoId == null">
+    <div class="col-12">
+      <div class="d-flex alert align-items-center border border-danger text-danger">
+        <i class="ta-alert fs-24 mr-3"></i>
+        <span>Superior direto ainda não foi definido!</span>
+      </div>
+    </div>
+  </div>
   <div class="row">
     <div class="col-12">
       <div class="form-editor my-3" [formGroup]="form">

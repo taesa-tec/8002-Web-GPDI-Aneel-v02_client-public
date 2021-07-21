@@ -55,7 +55,13 @@ export class EtapaFormComponent implements OnInit {
       }
     });
     if (this.route.snapshot.data.etapa) {
-      this.form.patchValue(this.route.snapshot.data.etapa);
+      const etapa = this.route.snapshot.data.etapa;
+      this.form.patchValue(etapa);
+      const mesInicio = etapa.meses[0];
+      const mesFinal = etapa.meses[etapa.meses.length - 1];
+      this.mesInicioCtrl.setValue(mesInicio);
+      this.mesFinalCtrl.setValue(mesFinal);
+      this.form.updateValueAndValidity();
     }
     if (!this.canEdit) {
       this.form.disable();
