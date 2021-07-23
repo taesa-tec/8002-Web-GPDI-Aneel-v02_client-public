@@ -30,7 +30,7 @@
           <label>Mês de início</label>
           <select class="form-control" formControlName="mesInicio">
             <option value="" hidden>Selecione</option>
-            <option [value]="m" *ngFor="let m of (proposta.duracao -3) | n2array:1">Mês {{m | pad:"0":2}}</option>
+            <option [value]="m" *ngFor="let m of (proposta.duracao -2) | n2array:1">Mês {{m | pad:"0":2}}</option>
           </select>
         </div>
         <div class="col">
