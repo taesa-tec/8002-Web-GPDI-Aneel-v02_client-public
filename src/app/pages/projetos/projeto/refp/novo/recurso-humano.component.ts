@@ -35,7 +35,7 @@ export class RecursoHumanoComponent implements OnInit {
     tipoDocumento: ['', Validators.required],
     numeroDocumento: ['', Validators.required],
     dataDocumento: ['', Validators.required],
-    observacaoInterna: ['', Validators.required],
+    observacaoInterna: [''],
   }, {
     validators: form => {
       if (form.value.financiadoraId === '' && form.value.coExecutorFinanciadorId === '') {

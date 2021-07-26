@@ -100,6 +100,7 @@ export class AlocarRecursoHumanoFormComponent extends PropostaNodeFormDirective 
     });
     if (!this.canEdit) {
       this.formMeses.disable();
+      this.selectFinanciadora.nativeElement.setAttribute('disabled', 'disabled');
     }
     this.updateFinanciador();
 

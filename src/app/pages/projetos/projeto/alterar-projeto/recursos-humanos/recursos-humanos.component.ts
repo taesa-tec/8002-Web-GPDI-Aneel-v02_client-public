@@ -50,12 +50,9 @@ export class RecursosHumanosComponent implements OnInit {
   recursos = [];
   empresas = [];
 
-  empresaCtrl = this.fb.control('', Validators.required);
   form = this.fb.group({
     id: [0],
-    empresa: this.empresaCtrl,
     empresaId: [''],
-    coExecutorId: [''],
     nomeCompleto: ['', [Validators.required]],
     titulacao: ['', [Validators.required]],
     funcao: ['', [Validators.required]],
@@ -93,7 +90,6 @@ export class RecursosHumanosComponent implements OnInit {
       this.empresas = data.empresas;
       if (data.recurso) {
         this.form.patchValue(data.recurso);
-        this.updateEmpresa(data.recurso);
         this.form.updateValueAndValidity();
         this.cdr.detectChanges();
         this.openForm().then();
@@ -125,15 +121,6 @@ export class RecursosHumanosComponent implements OnInit {
   }
 
   formSetup() {
-    this.empresaCtrl.valueChanges.subscribe(e => {
-      this.form.get('empresaId').setValue('');
-      this.form.get('coExecutorId').setValue('');
-      const ee = e.split('-');
-      const id = parseFloat(ee[1]);
-
-      const ctrl = this.form.get(ee[0] === 'e' ? 'empresaId' : 'coExecutorId');
-      ctrl.setValue(id);
-    });
     this.form.get('nacionalidade').valueChanges.subscribe(v => {
       const brasileiro = v === 'Brasileiro';
       const control = this.form.get('documento');
@@ -147,14 +134,6 @@ export class RecursosHumanosComponent implements OnInit {
       }
 
     });
-  }
-
-  updateEmpresa(value) {
-    if (value.empresaId) {
-      this.form.get('empresa').setValue(`e-${value.empresaId}`);
-    } else if (value.coExecutorId) {
-      this.form.get('empresa').setValue(`c-${value.coExecutorId}`);
-    }
   }
 
   async remover(id) {
