@@ -25,12 +25,14 @@
         </ng-container>
 
         <ng-container *ngSwitchCase="ETAPAS_VALUES.AprovacaoDiretor">
-          <button *ngIf="demanda.status === ETAPAS_STATUS.Aprovada"
-                  class="btn btn-link text-uppercase p-0 fs-12 font-weight-medium d-block"
-                  (click)="enviarCaptacao(demanda.id)">
-            <i class="ta-ok"></i>
-            Enviar para Captação
-          </button>
+          <ng-container *appPermission="'enviar-captacao'">
+            <button *ngIf="demanda.status === ETAPAS_STATUS.Aprovada"
+                    class="btn btn-link text-uppercase p-0 fs-12 font-weight-medium d-block"
+                    (click)="enviarCaptacao(demanda.id)">
+              <i class="ta-ok"></i>
+              Enviar para Captação
+            </button>
+          </ng-container>
         </ng-container>
       </div>
     </footer>

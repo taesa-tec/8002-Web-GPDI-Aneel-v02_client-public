@@ -6,6 +6,7 @@ import {Demanda} from '@app/commons/demandas';
 import {DemandaEtapa, DemandaEtapaStatus} from '@app/pages/demandas/commons';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {DEMANDA} from '@app/pages/demandas/demanda/providers';
+import {DemandasService} from '@app/services';
 
 
 @Component({
@@ -17,20 +18,21 @@ export class FormViewerComponent implements OnInit {
   formValue: any;
   formValueDefault: any;
   demandaId: number;
+  demanda: Demanda;
   anexos: Array<any>;
   readonly ETAPAS_VALUES = DemandaEtapa;
   readonly ETAPAS_STATUS = DemandaEtapaStatus;
 
   constructor(
-    @Inject(DEMANDA) protected demanda: Demanda,
+    protected demandasService: DemandasService,
     protected app: AppService, protected route: ActivatedRoute, public activeModal: NgbActiveModal) {
   }
 
   async ngOnInit() {
     try {
       this.key = this.route.snapshot.paramMap.get('form') || this.key;
-      this.demanda = this.route.parent.snapshot.data.demanda.demanda || this.demanda;
-      this.demandaId = parseFloat(this.route.snapshot.parent.paramMap.get('id')) || this.demandaId;
+      this.demanda = this.demandasService.getCurrentDemanda();
+      this.demandaId = this.demanda.id;
     } catch (e) {
 
     }

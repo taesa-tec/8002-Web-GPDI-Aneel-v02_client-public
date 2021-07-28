@@ -118,6 +118,17 @@ export class AppValidators {
     return (control.value.length < 12) ? AppValidators.cpf(control) : AppValidators.cnpj(control);
   }
 
+
+  static minInArray(min: number) {
+    return (formArray: FormArray): ValidationErrors | null => {
+      const fmin = Math.min(...formArray.value.map(n => parseFloat(n)));
+      if (fmin && fmin < min) {
+        return {min: {min: min, actual: fmin}};
+      }
+      return null;
+    };
+  }
+
   static minFormArray(minItens: number) {
     return (formArray: FormArray): ValidationErrors | null => {
       if (formArray.length < minItens) {
@@ -138,6 +149,16 @@ export class AppValidators {
     return (formArray: FormArray): ValidationErrors | null => {
       if (formArray.length > maxItens) {
         return {max: {max: maxItens, actual: formArray.length}};
+      }
+      return null;
+    };
+  }
+
+  static maxInArray(max: number) {
+    return (formArray: FormArray): ValidationErrors | null => {
+      const fmax = Math.max(...formArray.value.map(n => parseFloat(n)));
+      if (fmax && fmax < max) {
+        return {max: {max: max, actual: max}};
       }
       return null;
     };

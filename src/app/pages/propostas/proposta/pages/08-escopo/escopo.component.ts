@@ -2,10 +2,9 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import {AppService} from '@app/services/app.service';
-import {PropostaComponent} from '@app/pages/propostas/proposta/proposta.component';
 import {ActivatedRoute} from '@angular/router';
 import {PropostasService} from '@app/pages/propostas/proposta/services/propostas.service';
-import {Proposta} from '@app/commons';
+import {AppValidators, Proposta} from '@app/commons';
 import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
 
 @Component({
@@ -51,17 +50,25 @@ export class EscopoComponent implements OnInit {
         this.addMeta();
       }
     }
-    this.service.proposta.subscribe(p => this.proposta = p);
+    this.service.proposta.subscribe(p => {
+      this.proposta = p;
+      this.metasArray.controls.forEach(ctrl => {
+        const m = ctrl.get('meses');
+        m.clearValidators();
+        m.setValidators([Validators.required, Validators.max(p.duracao)]);
+      });
+    });
     if (!this.canEdit) {
       this.form.disable();
     }
+
   }
 
   addMeta(meta?: { objetivo: string; meses: number; id: number }) {
     const formGroup = this.fb.group({
       id: [meta?.id || 0],
       objetivo: [meta?.objetivo || '', Validators.required],
-      meses: [meta?.meses || 1, Validators.required]
+      meses: [meta?.meses || 1, [Validators.required]]
     });
 
     this.metasArray.push(formGroup);

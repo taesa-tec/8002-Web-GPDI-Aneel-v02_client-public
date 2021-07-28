@@ -7,6 +7,7 @@ import {ROOT_URL} from '@app/commons';
 import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
 import {HeaderMenu, ProjetoExecucaoMenu, ProjetoFinalizadoMenu, SidebarMenu} from './menus';
 import {PropostaTextsProvider} from '@app/users-modules/shared/texts';
+import {ProvidePermissions} from '@app/core/shared';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {PropostaTextsProvider} from '@app/users-modules/shared/texts';
       provide: PROPOSTA_CAN_EDIT,
       useValue: false
     },
-    PropostaTextsProvider
+    PropostaTextsProvider,
+    ProvidePermissions('enviar-captacao')
   ]
 })
 export class AdminModule {

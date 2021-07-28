@@ -12,11 +12,12 @@ import {PermissionDirective} from './permission.directive';
     PermissionDirective,
     //HasRoleDirective,
   ],
-  exports: [
-    DynamicHostDirective,
-    DraggerDirective
-    // HasRoleDirective,
-  ],
+    exports: [
+        DynamicHostDirective,
+        DraggerDirective,
+        PermissionDirective,
+        // HasRoleDirective,
+    ],
   imports: [
     CommonModule
   ]
