@@ -7,6 +7,7 @@ import {Proposta} from '@app/commons';
 import {ActivatedRoute} from '@angular/router';
 import {PropostasService} from '@app/pages/propostas/proposta/services/propostas.service';
 import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-etapa-form',
@@ -28,9 +29,10 @@ export class EtapaFormComponent implements OnInit {
     mesInicio: this.mesInicioCtrl,
     mesFinal: this.mesFinalCtrl
   });
+  canEdit: boolean;
 
   constructor(
-    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
+    @Inject(PROPOSTA_CAN_EDIT) public propostaCanEdit: BehaviorSubject<boolean>,
     public produtoService: ProdutosService,
     protected propostasService: PropostasService,
     protected service: EtapasService,
@@ -41,6 +43,7 @@ export class EtapaFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.propostaCanEdit.subscribe(can => this.canEdit = can);
     this.propostasService.proposta.subscribe(p => this.proposta = p);
     this.produtoService.obter().then(p => this.produtos = p);
 

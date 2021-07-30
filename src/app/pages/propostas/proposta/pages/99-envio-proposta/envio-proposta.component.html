@@ -20,12 +20,34 @@
     </div>
   </div>
 </div>
-<div class="row mb-3" *ngIf="proposta.planoFinalizado">
+<div class="row mb-3" *ngIf="proposta.planoFinalizado && proposta.captacao === 'Fornecedor'">
   <div class="col">
     <div class="border border-success rounded d-flex text-success align-items-center p-3">
       <i class="ta-ok fs-48 mr-3"></i>
       <div>
         {{'plano-finalizado'|label}}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mb-3" *ngIf="proposta.captacaoStatus !== 'Fornecedor'">
+  <div class="col" [ngSwitch]="proposta.planoTrabalhoAprovacao">
+    <div class="border border-success rounded d-flex text-success align-items-center p-3" *ngSwitchCase="'Aprovado'">
+      <i class="ta-ok fs-48 mr-3"></i>
+      <div>
+        Plano de trabalho Finalizado e Aprovado!
+      </div>
+    </div>
+    <div class="border border-warning rounded d-flex text-warning align-items-center p-3" *ngSwitchCase="'Pendente'">
+      <i class="ta-ampulheta fs-32 mr-3"></i>
+      <div>
+        Plano de trabalho aguardando revisão do responsável
+      </div>
+    </div>
+    <div class="border border-warning rounded d-flex text-warning align-items-center p-3" *ngSwitchCase="'Alteracao'">
+      <i class="ta-ampulheta fs-32 mr-3"></i>
+      <div>
+        Plano de trabalho aguardando alterações do fornecedor
       </div>
     </div>
   </div>
@@ -140,7 +162,8 @@
           Download PDF
         </button>
       </div>
-      <button type="button" [disabled]="!validations.isValid || form.invalid" class="btn btn-success" (click)="marcarComoFinalizado()"
+      <button type="button" [disabled]="!validations.isValid || form.invalid" class="btn btn-success"
+              (click)="marcarComoFinalizado()"
               *ngIf="fornecedorCanEdit">
         <i class="ta-ok"></i>
         Marcar como Finalizado

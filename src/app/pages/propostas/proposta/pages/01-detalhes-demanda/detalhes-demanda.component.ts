@@ -7,6 +7,7 @@ import {PropostasService} from '@app/pages/propostas/proposta/services/propostas
 import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
 import {Proposta} from '@app/commons';
 import {AppService} from '@app/services';
+import {BehaviorSubject} from 'rxjs';
 
 
 @Component({
@@ -26,23 +27,26 @@ export class DetalhesDemandaComponent implements OnInit {
   detalhes: any;
 
   proposta: Proposta;
+  canEdit: boolean;
 
   constructor(private modal: NgbModal,
               private app: AppService,
               protected route: ActivatedRoute,
               protected router: Router,
               protected service: PropostasService,
-              @Optional() @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean
+              @Inject(PROPOSTA_CAN_EDIT) public propostaCanEdit: BehaviorSubject<boolean>
   ) {
   }
 
   ngOnInit() {
+    this.propostaCanEdit.subscribe(can => this.canEdit = can);
     this.route.data.subscribe(data => {
       this.detalhes = data.detalhes;
     });
     this.service.proposta.subscribe(proposta => {
       this.proposta = proposta;
-      if(this.proposta.captacaoStatus){}
+      if (this.proposta.captacaoStatus) {
+      }
     });
   }
 

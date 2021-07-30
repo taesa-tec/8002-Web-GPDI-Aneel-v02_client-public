@@ -5,6 +5,7 @@ import {TableComponentCols, TableComponentActions, TableComponentFilter, TableAc
 import {CoExecutorFormComponent} from './co-executor-form/co-executor-form.component';
 import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
 import {ActivatedRoute, Router} from '@angular/router';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-co-executores',
@@ -38,9 +39,10 @@ export class CoExecutoresComponent implements OnInit {
   buttons: TableComponentActions;
 
   filters: Array<TableComponentFilter> = [];
+  canEdit: boolean;
 
   constructor(
-    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
+    @Inject(PROPOSTA_CAN_EDIT) public propostaCanEdit: BehaviorSubject<boolean>,
     private router: Router,
     private route: ActivatedRoute,
     private modal: NgbModal,
@@ -57,6 +59,7 @@ export class CoExecutoresComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.propostaCanEdit.subscribe(can => this.canEdit = can);
     this.route.data.subscribe(data => {
       this.coExecutores = data.coExecutores;
     });

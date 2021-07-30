@@ -6,6 +6,7 @@ import {ActivatedRoute} from '@angular/router';
 import {PropostasService} from '@app/pages/propostas/proposta/services/propostas.service';
 import {AppValidators, Proposta} from '@app/commons';
 import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-escopo',
@@ -32,15 +33,16 @@ export class EscopoComponent implements OnInit {
   get maxNumMeses() {
     return this.proposta.duracao || 0;
   }
-
+  canEdit: boolean;
   constructor(
-    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
+    @Inject(PROPOSTA_CAN_EDIT) public propostaCanEdit: BehaviorSubject<boolean>,
     private app: AppService,
     private fb: FormBuilder,
     protected route: ActivatedRoute, protected service: PropostasService) {
   }
 
   ngOnInit(): void {
+    this.propostaCanEdit.subscribe(can => this.canEdit = can);
     if (this.route.snapshot.data.escopo) {
       this.form.patchValue(this.route.snapshot.data.escopo);
       const metas = this.route.snapshot.data.escopo.metas as Array<any>;

@@ -9,6 +9,7 @@ import {AppService} from '@app/services';
 import {LoadingComponent} from '@app/core/components';
 import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
 import {FormBuilder, Validators} from '@angular/forms';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-envio-proposta',
@@ -36,10 +37,11 @@ export class EnvioPropostaComponent implements OnInit {
     );
   }
 
+  canEdit: boolean;
+
   constructor(
-    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
+    @Inject(PROPOSTA_CAN_EDIT) public propostaCanEdit: BehaviorSubject<boolean>,
     protected route: ActivatedRoute,
-    protected router: Router,
     protected app: AppService,
     protected sanitize: DomSanitizer,
     protected fileService: FileService,
@@ -54,6 +56,7 @@ export class EnvioPropostaComponent implements OnInit {
         this.form.get('alteracao').setValidators(Validators.required);
       }
     });
+    this.propostaCanEdit.subscribe(can => this.canEdit = can);
 
     this.route.data.subscribe(data => {
       const blob = new Blob([data.documento.content], {type: 'text/html'});
@@ -95,10 +98,8 @@ export class EnvioPropostaComponent implements OnInit {
       this.proposta.planoFinalizado = true;
       this.proposta.planoTrabalhoAprovacao = 'Pendente';
       this.service.setProposta(this.proposta);
-      this.router.onSameUrlNavigation = 'reload';
       this.form.reset();
       this.form.updateValueAndValidity();
-      this.router.navigate(['./'], {relativeTo: this.route}).then();
     } catch (e) {
       console.error(e);
       if (e.error?.detail) {

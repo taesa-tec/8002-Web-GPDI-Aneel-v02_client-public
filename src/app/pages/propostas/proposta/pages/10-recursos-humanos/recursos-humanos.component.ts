@@ -12,6 +12,7 @@ import {PropostaComponent} from '@app/pages/propostas/proposta/proposta.componen
 import {RiscoFormComponent} from '@app/pages/propostas/proposta/pages/09-riscos/risco-form/risco-form.component';
 import {Funcoes, Graduacoes} from '@app/commons';
 import {ActionOpenItem, PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
+import {BehaviorSubject} from 'rxjs';
 
 const tableCols: TableComponentCols = [
   {
@@ -58,16 +59,17 @@ const buttons = [
   ]
 })
 export class RecursosHumanosComponent implements OnInit {
+  canEdit: boolean;
 
   constructor(
-    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
+    @Inject(PROPOSTA_CAN_EDIT) public propostaCanEdit: BehaviorSubject<boolean>,
     protected router: Router,
     protected route: ActivatedRoute,
     protected parent: PropostaComponent) {
   }
 
   async ngOnInit() {
-
+    this.propostaCanEdit.subscribe(can => this.canEdit = can);
   }
 
   async openForm(ref) {

@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<div class="row mb-3" *ngIf="contrato.finalizado">
+<div class="row mb-3" *ngIf="contrato.finalizado && proposta.captacaoStatus === 'Fornecedor'">
   <div class="col">
     <div class="border border-success rounded d-flex text-success align-items-center p-3">
       <i class="ta-ok fs-48 mr-3"></i>
@@ -20,6 +20,31 @@
     </div>
   </div>
 </div>
+
+<div class="row mb-3" *ngIf="proposta.captacaoStatus !== 'Fornecedor'">
+  <div class="col" [ngSwitch]="proposta.contratoAprovacao">
+    <div class="border border-success rounded d-flex text-success align-items-center p-3" *ngSwitchCase="'Aprovado'">
+      <i class="ta-ok fs-48 mr-3"></i>
+      <div>
+        Contrato Finalizado e Aprovado!
+      </div>
+    </div>
+    <div class="border border-warning rounded d-flex text-warning align-items-center p-3" *ngSwitchCase="'Pendente'">
+      <i class="ta-ampulheta fs-32 mr-3"></i>
+      <div>
+        Contrato aguardando revisão do responsável
+      </div>
+    </div>
+    <div class="border border-warning rounded d-flex text-warning align-items-center p-3" *ngSwitchCase="'Alteracao'">
+      <i class="ta-ampulheta fs-32 mr-3"></i>
+      <div>
+        Contrato aguardando alterações do fornecedor
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
 
   <div class="row">

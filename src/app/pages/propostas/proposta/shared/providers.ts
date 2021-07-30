@@ -112,12 +112,12 @@ export const TextsProvider: Provider[] = [
   }
 ];
 export const ActionOpenItem = {
-  provide: TABLE_ACTIONS, deps: [PROPOSTA_CAN_EDIT], useFactory: canEdit => [
+  provide: TABLE_ACTIONS, deps: [PROPOSTA_CAN_EDIT], useFactory: (canEdit: BehaviorSubject<boolean>) => [
     {
       isLink: true,
       action: './#${id}',
-      text: canEdit ? 'EDITAR' : 'Visualizar',
-      icon: canEdit ? 'ta-edit' : 'ta-eye',
+      text: canEdit.value ? 'EDITAR' : 'Visualizar',
+      icon: canEdit.value ? 'ta-edit' : 'ta-eye',
       className: 'btn btn-primary'
     }
   ]

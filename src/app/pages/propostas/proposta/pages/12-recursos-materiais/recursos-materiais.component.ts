@@ -6,6 +6,7 @@ import {CRUD_EDITOR} from '@app/core/components/crud/crud.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PropostaComponent} from '@app/pages/propostas/proposta/proposta.component';
 import {ActionOpenItem, PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
+import {BehaviorSubject} from 'rxjs';
 
 const tableCols: TableComponentCols = [
   {
@@ -46,16 +47,16 @@ const buttons = [
   ]
 })
 export class RecursosMateriaisComponent implements OnInit {
-
+  canEdit: boolean;
   constructor(
-    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
+    @Inject(PROPOSTA_CAN_EDIT) public propostaCanEdit: BehaviorSubject<boolean>,
     protected router: Router,
     protected route: ActivatedRoute,
     protected parent: PropostaComponent) {
   }
 
   async ngOnInit() {
-
+    this.propostaCanEdit.subscribe(can => this.canEdit = can);
   }
 
   async openForm(ref) {

@@ -9,6 +9,7 @@ import {EtapaFormComponent} from '@app/pages/propostas/proposta/pages/07-etapas/
 import {EtapasService} from '@app/pages/propostas/proposta/services/proposta-service-base.service';
 import {Proposta} from '@app/commons';
 import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-etapas',
@@ -42,9 +43,10 @@ export class EtapasComponent implements OnInit {
 
   buttons: TableComponentActions;
   etapas = [];
+  canEdit: boolean;
 
   constructor(
-    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
+    @Inject(PROPOSTA_CAN_EDIT) public propostaCanEdit: BehaviorSubject<boolean>,
     private route: ActivatedRoute,
     private router: Router,
     private modal: NgbModal,
@@ -52,18 +54,22 @@ export class EtapasComponent implements OnInit {
     private service: EtapasService,
     private propostaService: PropostasService,
   ) {
-    this.buttons = [
-      {
-        action: './#${id}',
-        isLink: true,
-        text: canEdit ? 'Editar' : 'Visualizar',
-        icon: canEdit ? 'ta-edit' : 'ta-eye',
-        className: 'btn btn-primary'
-      }
-    ];
+    this.buttons = [];
   }
 
   async ngOnInit() {
+    this.propostaCanEdit.subscribe(can => {
+
+        this.canEdit = can;
+        this.buttons = [{
+          action: './#${id}',
+          isLink: true,
+          text: can ? 'Editar' : 'Visualizar',
+          icon: can ? 'ta-edit' : 'ta-eye',
+          className: 'btn btn-primary'
+        }];
+      }
+    );
     this.route.data.subscribe(data => {
       this.etapas = data.etapas;
     });

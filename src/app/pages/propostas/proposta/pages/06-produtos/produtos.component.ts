@@ -6,6 +6,7 @@ import {ProdutoFormComponent} from './produto-form/produto-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProdutosService} from '@app/pages/propostas/proposta/services/proposta-service-base.service';
 import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-produtos',
@@ -34,27 +35,32 @@ export class ProdutosComponent implements OnInit {
 
   buttons: TableComponentActions;
   produtos: Array<any> = [];
+  canEdit: boolean;
 
   constructor(
-    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
+    @Inject(PROPOSTA_CAN_EDIT) public propostaCanEdit: BehaviorSubject<boolean>,
     private app: AppService,
     private modal: NgbModal,
     protected service: ProdutosService,
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.buttons = [
-      {
-        isLink: true,
-        action: './#${id}',
-        text: this.canEdit ? 'EDITAR' : 'VISUALIZAR',
-        icon: this.canEdit ? 'ta-edit' : 'ta-eye',
-        className: 'btn btn-primary'
-      }
-    ];
+    this.buttons = [];
   }
 
   async ngOnInit() {
+    this.propostaCanEdit.subscribe(can => {
+      this.canEdit = can;
+      this.buttons = [
+        {
+          isLink: true,
+          action: './#${id}',
+          text: this.canEdit ? 'EDITAR' : 'VISUALIZAR',
+          icon: this.canEdit ? 'ta-edit' : 'ta-eye',
+          className: 'btn btn-primary'
+        }
+      ];
+    });
     this.route.data.subscribe(data => {
       this.produtos = data.produtos;
       this.fases = data.fases;

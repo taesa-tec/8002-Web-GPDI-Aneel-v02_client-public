@@ -13,6 +13,7 @@ import * as ClassicEditor from '@projects/ckeditor/build/ckeditor';
 import {Proposta} from '@app/commons';
 import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
 import {AuthService} from '@app/services';
+import {BehaviorSubject} from 'rxjs';
 
 
 @Component({
@@ -44,8 +45,10 @@ export class ViewContratoComponent implements OnInit {
     );
   }
 
+  canEdit: boolean;
+
   constructor(
-    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
+    @Inject(PROPOSTA_CAN_EDIT) public propostaCanEdit: BehaviorSubject<boolean>,
     private app: AppService,
     private parent: PropostaComponent,
     private service: PropostasService,
@@ -59,6 +62,7 @@ export class ViewContratoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.propostaCanEdit.subscribe(can => this.canEdit = can);
     this.route.data.subscribe(data => {
       this.contrato = data.contrato;
       this.form.get('conteudo').patchValue(this.contrato.rascunho || this.contrato.conteudo || this.contrato.parent.conteudo);

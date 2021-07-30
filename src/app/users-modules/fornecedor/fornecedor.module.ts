@@ -29,10 +29,6 @@ import {HeaderMenu, ProjetoExecucaoMenu, ProjetoFinalizadoMenu, SidebarMenu} fro
     {
       provide: ROOT_URL,
       useValue: ``
-    },
-    {
-      provide: PROPOSTA_CAN_EDIT,
-      useValue: true
     }
   ]
 })

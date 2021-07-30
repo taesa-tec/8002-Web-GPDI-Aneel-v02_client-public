@@ -31,15 +31,20 @@ import {Proposta} from '@app/commons';
       provide: PROPOSTA_CAN_EDIT,
       deps: [PROPOSTA, AuthService],
       useFactory: (p: BehaviorSubject<Proposta>, auth: AuthService) => {
-        const proposta = p.getValue();
-        const responsavelId = proposta?.responsavelId;
-        const userId = auth.getUser()?.id;
-        return userId != null &&
-          userId === responsavelId &&
-          (
-            proposta.captacaoStatus === 'Fornecedor' ||
-            (proposta.captacaoStatus === 'Refinamento' && proposta.planoTrabalhoAprovacao === 'Alteracao')
-          );
+        const behavior = new BehaviorSubject<boolean>(false);
+        p.subscribe(proposta => {
+          const responsavelId = proposta?.responsavelId;
+          const userId = auth.getUser()?.id;
+          const canEdit = userId != null &&
+            userId === responsavelId &&
+            (
+              proposta.captacaoStatus === 'Fornecedor' ||
+              (proposta.captacaoStatus === 'Refinamento' && proposta.planoTrabalhoAprovacao === 'Alteracao')
+            );
+          behavior.next(canEdit);
+        });
+        return behavior;
+
       }
     }
   ],

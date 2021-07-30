@@ -7,6 +7,7 @@ import {PropostasService} from '@app/pages/propostas/proposta/services/propostas
 import {PropostaComponent} from '@app/pages/propostas/proposta/proposta.component';
 import {Proposta} from '@app/commons';
 import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-plano-trabalho',
@@ -30,9 +31,10 @@ export class PlanoTrabalhoComponent implements OnInit {
 
   });
   files: Array<any> = [];
+  canEdit: boolean;
 
   constructor(
-    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
+    @Inject(PROPOSTA_CAN_EDIT) public propostaCanEdit: BehaviorSubject<boolean>,
     private app: AppService, private fb: FormBuilder, private route: ActivatedRoute,
     private parent: PropostaComponent,
     private service: PropostasService
@@ -40,6 +42,7 @@ export class PlanoTrabalhoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.propostaCanEdit.subscribe(can => this.canEdit = can);
     this.route.data.subscribe(data => {
       if (data.plano && typeof data.plano === 'object') {
         const {arquivos, ...values} = data.plano;

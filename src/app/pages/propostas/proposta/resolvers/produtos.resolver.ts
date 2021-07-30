@@ -1,8 +1,6 @@
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
-
 import {ProdutosService} from '@app/pages/propostas/proposta/services/proposta-service-base.service';
-import {extractRouteParams} from '@app/core';
 
 @Injectable()
 export class ProdutosResolver implements Resolve<any> {
@@ -11,17 +9,13 @@ export class ProdutosResolver implements Resolve<any> {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const params = extractRouteParams(route);
-    if (params.id) {
-      this.service.captacaoId = params.id;
-      try {
-        const result = await this.service.obter();
-        if (result !== null) {
-          return result;
-        }
-      } catch (e) {
-        console.log(e);
+    try {
+      const result = await this.service.obter();
+      if (result !== null) {
+        return result;
       }
+    } catch (e) {
+      console.log(e);
     }
     return [];
   }

@@ -6,6 +6,8 @@ import {AppService} from '@app/services';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {PropostaServiceBase} from '@app/pages/propostas/proposta/services/proposta-service-base.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
+import {BehaviorSubject} from 'rxjs';
 
 @Directive()
 export class PropostaNodeFormDirective implements OnInit {
@@ -13,9 +15,10 @@ export class PropostaNodeFormDirective implements OnInit {
   route: ActivatedRoute;
   proposta: Proposta;
   form: FormGroup;
+  canEdit: boolean;
 
   constructor(
-    public canEdit: boolean,
+    public propostaCanEdit: BehaviorSubject<boolean>,
     protected app: AppService,
     protected fb: FormBuilder,
     public activeModal: NgbActiveModal,
@@ -24,7 +27,7 @@ export class PropostaNodeFormDirective implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.propostaCanEdit.subscribe(can => this.canEdit = can);
     if (this.route.snapshot.data.item) {
       this.form.patchValue(this.route.snapshot.data.item);
     }

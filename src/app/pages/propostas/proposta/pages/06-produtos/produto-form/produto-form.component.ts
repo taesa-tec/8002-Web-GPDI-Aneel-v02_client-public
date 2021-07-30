@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {LoadingComponent} from '@app/core/components';
 import {ProdutosService} from '@app/pages/propostas/proposta/services/proposta-service-base.service';
 import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-produto-form',
@@ -31,11 +32,11 @@ export class ProdutoFormComponent implements OnInit {
     tipoDetalhadoId: this.tipoDetalhadoCtrl
   });
   route: ActivatedRoute;
-
+  canEdit: boolean;
   @ViewChild(LoadingComponent) loading: LoadingComponent;
 
   constructor(
-    @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
+    @Inject(PROPOSTA_CAN_EDIT) public propostaCanEdit: BehaviorSubject<boolean>,
     private app: AppService,
     private fb: FormBuilder,
     protected service: ProdutosService,
@@ -45,6 +46,7 @@ export class ProdutoFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.propostaCanEdit.subscribe(can => this.canEdit = can);
     this.faseCadeiaCtrl.valueChanges.subscribe(value => {
       const fase = this.fases.find(f => f.id === value);
       this.tiposProdutoDetalhados = fase ? fase.tiposDetalhados : [];

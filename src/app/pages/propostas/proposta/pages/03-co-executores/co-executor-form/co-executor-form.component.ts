@@ -6,6 +6,7 @@ import {AppValidators} from '@app/commons';
 import {PropostaNodeFormDirective} from '@app/pages/propostas/proposta/directives';
 import {PropostaServiceBase} from '@app/pages/propostas/proposta/services/proposta-service-base.service';
 import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
+import {BehaviorSubject} from 'rxjs';
 
 interface Empresa {
   required: boolean;
@@ -41,9 +42,9 @@ export class CoExecutorFormComponent extends PropostaNodeFormDirective implement
 
 
   constructor(
-    @Inject(PROPOSTA_CAN_EDIT) canEdit: boolean,
+    @Inject(PROPOSTA_CAN_EDIT) public propostaCanEdit: BehaviorSubject<boolean>,
     app: AppService, fb: FormBuilder, activeModal: NgbActiveModal, service: PropostaServiceBase) {
-    super(canEdit, app, fb, activeModal, service);
+    super(propostaCanEdit, app, fb, activeModal, service);
   }
 
   ngOnInit(): void {

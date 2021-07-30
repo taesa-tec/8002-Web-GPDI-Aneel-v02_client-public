@@ -22,10 +22,6 @@ import {ProvidePermissions} from '@app/core/shared';
       provide: ROOT_URL,
       useValue: ``
     },
-    {
-      provide: PROPOSTA_CAN_EDIT,
-      useValue: false
-    },
     PropostaTextsProvider,
     ProvidePermissions('enviar-captacao')
   ],

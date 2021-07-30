@@ -3,6 +3,7 @@ import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
 import {PropostasService} from '@app/pages/propostas/proposta/services/propostas.service';
 import {Proposta} from '@app/commons';
 import {AuthService} from '@app/services';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-refinamento',
@@ -15,8 +16,9 @@ export class RefinamentoComponent implements OnInit {
   proposta: Proposta;
   description: string;
   isResponsavel: boolean;
+  canEdit: boolean;
 
-  constructor(@Inject(PROPOSTA_CAN_EDIT) public canEdit, protected service: PropostasService, protected auth: AuthService) {
+  constructor(@Inject(PROPOSTA_CAN_EDIT) public propostaCanEdit: BehaviorSubject<boolean>, protected service: PropostasService, protected auth: AuthService) {
   }
 
   get status() {
@@ -25,6 +27,7 @@ export class RefinamentoComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.propostaCanEdit.subscribe(can => this.canEdit = can);
     this.service.proposta.subscribe(p => {
       this.proposta = p;
       this.isResponsavel = this.auth.getUser().id === p.responsavelId;
