@@ -5,6 +5,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {PropostaNodeFormDirective} from '@app/pages/propostas/proposta/directives';
 import {PropostaServiceBase} from '@app/pages/propostas/proposta/services/proposta-service-base.service';
 import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-alocar-recurso-humano-form',
@@ -53,7 +54,7 @@ export class AlocarRecursoHumanoFormComponent extends PropostaNodeFormDirective 
   @Input() max = 172;
   @ViewChild('financiadora') selectFinanciadora: ElementRef<HTMLSelectElement>;
 
-  constructor(@Inject(PROPOSTA_CAN_EDIT) canEdit: boolean,
+  constructor(@Inject(PROPOSTA_CAN_EDIT) canEdit: BehaviorSubject<boolean>,
               app: AppService, fb: FormBuilder,
               activeModal: NgbActiveModal, service: PropostaServiceBase) {
     super(canEdit, app, fb, activeModal, service);
