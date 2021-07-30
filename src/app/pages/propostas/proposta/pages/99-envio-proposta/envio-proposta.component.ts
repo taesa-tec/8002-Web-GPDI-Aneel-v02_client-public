@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
 import {Proposta, Validations} from '@app/commons';
 import {PropostaComponent} from '@app/pages/propostas/proposta/proposta.component';
@@ -39,6 +39,7 @@ export class EnvioPropostaComponent implements OnInit {
   constructor(
     @Inject(PROPOSTA_CAN_EDIT) public canEdit: boolean,
     protected route: ActivatedRoute,
+    protected router: Router,
     protected app: AppService,
     protected sanitize: DomSanitizer,
     protected fileService: FileService,
@@ -94,8 +95,10 @@ export class EnvioPropostaComponent implements OnInit {
       this.proposta.planoFinalizado = true;
       this.proposta.planoTrabalhoAprovacao = 'Pendente';
       this.service.setProposta(this.proposta);
+      this.router.onSameUrlNavigation = 'reload';
       this.form.reset();
       this.form.updateValueAndValidity();
+      this.router.navigate(['./'], {relativeTo: this.route}).then();
     } catch (e) {
       console.error(e);
       if (e.error?.detail) {

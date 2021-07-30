@@ -89,7 +89,7 @@ export class ViewContratoComponent implements OnInit {
         await this.app.alert('Arquivos selecionados não serão enviados e o descritivo das alterações não será salvo', 'Atenção');
       }
       this.app.loading.show().then();
-      if (this.form.valid) {
+      if (this.form.valid || saveAsDraft) {
         this.form.get('draft').setValue(saveAsDraft);
         const response: any = await this.service.saveContrato(this.proposta.guid, this.form.value);
         this.contrato.id = response.id;

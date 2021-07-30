@@ -4,9 +4,7 @@ import {Proposta} from '@app/commons';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {AppService} from '@app/services';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {BehaviorSubject} from 'rxjs';
 import {PropostaServiceBase} from '@app/pages/propostas/proposta/services/proposta-service-base.service';
-import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
 import {HttpErrorResponse} from '@angular/common/http';
 
 @Directive()

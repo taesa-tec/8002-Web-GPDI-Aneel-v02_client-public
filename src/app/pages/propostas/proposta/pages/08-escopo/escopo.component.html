@@ -37,7 +37,7 @@
             <button
               type="button"
               class="btn btn-link text-cinza px-0"
-              *ngIf="metasArray.controls.length > 1"
+              *ngIf="metasArray.controls.length > 1 && canEdit"
               (click)="removeMeta(i)"
             >
               <i class="ta-cancel-circle"></i>

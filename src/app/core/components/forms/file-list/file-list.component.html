@@ -3,7 +3,7 @@
     <div class="file-item d-flex align-items-center justify-content-between"
          *ngFor="let file of fileinfo; let i = index;">
       <span class="text-primary">
-        <i class="ta-attachment pr-2"></i> <span>{{file.name}} ({{file.size}})</span>
+        <i class="ta-attachment pr-2"></i> <span>{{file.name}} ({{file.size | filesize}})</span>
       </span>
       <button class="btn hover-text-primary" type="button" (click)="removeAt(i)">
         <i class="ta-cancel-circle"></i>

@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {Proposta,  UserRole} from '@app/commons';
+import {Proposta, UserRole} from '@app/commons';
 import {CaptacaoIdProvider, PROPOSTA, PropostaProvider, PropostaSidebar} from './shared';
 import {BehaviorSubject} from 'rxjs';
 import {EtapasService} from '@app/users-modules/fornecedor/services/propostas.service';
@@ -24,16 +24,17 @@ export class PropostaComponent implements OnInit {
   backLink = '/';
 
   constructor(@Inject(PROPOSTA) public propostaObservable: BehaviorSubject<Proposta>, protected auth: AuthService) {
-    if (auth.hasRoles(UserRole.Fornecedor)) {
-      this.backLink = '/propostas';
-    } else {
-      this.backLink = '/refinamento';
-    }
+
   }
 
   ngOnInit() {
     this.propostaObservable.subscribe(data => {
       this.proposta = data;
+      if (this.proposta.captacaoStatus === 'Refinamento') {
+        this.backLink = '/refinamento';
+      } else {
+        this.backLink = '/propostas';
+      }
     });
   }
 

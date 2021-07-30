@@ -1,9 +1,9 @@
-<div class="row">
+<div class="row" *ngIf="comentarios?.length > 0">
   <div class="col">
     <h6 class="text-blue-light">HISTÓRICO DE COMENTÁRIOS</h6>
   </div>
 </div>
-<div class="row">
+<div class="row" *ngIf="comentarios?.length > 0">
   <div class="col-12 comments">
     <ng-container *ngFor="let comment of comentarios">
 

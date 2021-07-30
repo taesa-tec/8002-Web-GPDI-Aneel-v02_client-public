@@ -48,7 +48,7 @@ export class EtapaFormComponent implements OnInit {
       const m = parseFloat(v);
       const mf = parseFloat(this.mesFinalCtrl.value);
       this.mesFinalMin = Math.min(m + 2, this.proposta.duracao);
-      this.mesFinalMax = Math.min(m + 5, this.proposta.duracao);
+      this.mesFinalMax = this.proposta.duracao; // Math.min(m + 5, this.proposta.duracao);
 
       if (mf > this.mesFinalMax || mf < this.mesFinalMin) {
         this.mesFinalCtrl.setValue('');

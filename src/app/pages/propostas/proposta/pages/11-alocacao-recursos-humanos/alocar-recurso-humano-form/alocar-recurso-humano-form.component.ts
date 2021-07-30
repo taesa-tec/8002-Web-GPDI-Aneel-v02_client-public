@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewChecked, AfterViewInit, Component, ElementRef, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {AppService} from '@app/services';
 import {FormBuilder, Validators} from '@angular/forms';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
@@ -11,7 +11,7 @@ import {PROPOSTA_CAN_EDIT} from '@app/pages/propostas/proposta/shared';
   templateUrl: './alocar-recurso-humano-form.component.html',
   styleUrls: ['./alocar-recurso-humano-form.component.scss']
 })
-export class AlocarRecursoHumanoFormComponent extends PropostaNodeFormDirective implements OnInit {
+export class AlocarRecursoHumanoFormComponent extends PropostaNodeFormDirective implements OnInit, AfterViewInit {
   empresaReadonly = false;
   empresas = [];
   etapas = [];
@@ -100,9 +100,17 @@ export class AlocarRecursoHumanoFormComponent extends PropostaNodeFormDirective 
     });
     if (!this.canEdit) {
       this.formMeses.disable();
-      this.selectFinanciadora.nativeElement.setAttribute('disabled', 'disabled');
     }
-    this.updateFinanciador();
+    //this.updateFinanciador();
+  }
+
+  ngAfterViewInit() {
+    if (!this.canEdit) {
+      //this.formMeses.disable();
+      this.selectFinanciadora?.nativeElement.setAttribute('disabled', 'disabled');
+    } else {
+      this.updateFinanciador();
+    }
 
   }
 
@@ -114,7 +122,7 @@ export class AlocarRecursoHumanoFormComponent extends PropostaNodeFormDirective 
       this.empresaFinanciadora.setValue(this.recursoSelected.empresaId);
       // Não "Corrija" para this.empresaFinanciadora.disable();
       // Isso remove o empresaFinanciadoraId das informações enviadas
-      this.selectFinanciadora.nativeElement.setAttribute('disabled', 'disabled');
+      this.selectFinanciadora?.nativeElement.setAttribute('disabled', 'disabled');
     } else {
       this.empresaFinanciadora.enable();
     }
