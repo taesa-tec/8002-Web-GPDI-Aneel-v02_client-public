@@ -47,19 +47,22 @@ export class CoExecutoresComponent implements OnInit {
     private route: ActivatedRoute,
     private modal: NgbModal,
   ) {
-    this.buttons = [
-      {
-        action: './#${id}',
-        isLink: true,
-        text: this.canEdit ? 'EDITAR' : 'VISUALIZAR',
-        icon: this.canEdit ? 'ta-edit' : 'ta-eye',
-        className: 'btn btn-primary'
-      }
-    ];
+
   }
 
   async ngOnInit() {
-    this.propostaCanEdit.subscribe(can => this.canEdit = can);
+    this.propostaCanEdit.subscribe(can => {
+      this.canEdit = can;
+      this.buttons = [
+        {
+          action: './#${id}',
+          isLink: true,
+          text: this.canEdit ? 'EDITAR' : 'VISUALIZAR',
+          icon: this.canEdit ? 'ta-edit' : 'ta-eye',
+          className: 'btn btn-primary'
+        }
+      ];
+    });
     this.route.data.subscribe(data => {
       this.coExecutores = data.coExecutores;
     });

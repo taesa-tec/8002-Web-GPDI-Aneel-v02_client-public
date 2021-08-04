@@ -25,7 +25,7 @@
         <div class="border-top border-cinza-claro p-3" *ngIf="comment.files?.length">
           <span class="text-primary fs-14 font-weight-bold">Arquivos anexados</span>
           <div *ngFor="let file of comment.files;" class="btn btn-link btn-sm" (click)="downloadFile(file, comment)">
-            <i class="ta-attachment fs-14"></i> {{file.name}}
+            <i class="ta-attachment fs-14"></i> {{file.fileName}}
           </div>
         </div>
       </div>

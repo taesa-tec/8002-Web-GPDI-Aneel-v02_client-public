@@ -13,11 +13,11 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'equipe-ped',
+        redirectTo: 'equipe-pdi',
         pathMatch: 'full',
       },
       {
-        path: 'equipe-ped',
+        path: 'equipe-pdi',
         component: EquipeComponent
       },
       {

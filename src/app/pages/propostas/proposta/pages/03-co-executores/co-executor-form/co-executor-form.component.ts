@@ -75,9 +75,15 @@ export class CoExecutorFormComponent extends PropostaNodeFormDirective implement
         this.form.disable();
       }
     }
-    if (!this.canEdit) {
-      this.form.disable();
-    }
+    this.propostaCanEdit.subscribe(can => {
+      this.canEdit = can;
+      if (this.canEdit && !this.coExecutor?.required) {
+        this.form.enable();
+      } else {
+        this.form.disable();
+      }
+    });
+
   }
 
   async excluirEmpresa() {

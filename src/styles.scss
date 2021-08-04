@@ -84,3 +84,10 @@ ckeditor {
     max-height: var(--ck-editor-max-height, 100vh);
   }
 }
+
+.form-editor-field {
+  overflow:hidden;
+  img {
+    max-width: 100% !important;
+  }
+}

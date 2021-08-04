@@ -100,12 +100,12 @@
                         <label>DESCRIÇÃO, SUCINTA, DOS RESULTADOS DOS TESTES DE FUNCIONALIDADE DO PRODUTO PRINCIPAL E SUAS RESTRIÇÕES</label>
                         <app-textarea class="form-control" rows="3" maxlength="1000" formControlName="resultadosTestes"></app-textarea>
                     </div>
-        
+
                     <div class="form-group">
                         <label>DESCRIÇÃO DA ABRANGÊNCIA DE APLICAÇÃO DO PRODUTO PRINCIPAL E SUAS RESTRIÇÕES</label>
                         <app-textarea class="form-control" rows="3" maxlength="1000" formControlName="abrangenciaProduto"></app-textarea>
                     </div>
-        
+
                     <div class="form-group">
                         <label>DESCRIÇÃO DO ÂMBITO DE APLICAÇÃO DO PRODUTO PRINCIPAL E SUAS RESTRIÇÕES</label>
                         <app-textarea class="form-control" rows="3" maxlength="1000" formControlName="ambitoAplicacaoProduto"></app-textarea>
@@ -144,7 +144,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="form-group m-0">
-                        <label>ARQUIVO EM FORMATO PDF DO RELATÓRIO DE AUDITORIA CONTÁBIL E FINANCEIRA DO PROJETO DE P&D</label>
+                        <label>ARQUIVO EM FORMATO PDF DO RELATÓRIO DE AUDITORIA CONTÁBIL E FINANCEIRA DO PROJETO DE PDI</label>
                     </div>
                     <ng-container *ngIf="!relatorio?.auditoriaRelatorioArquivoId">
                         <label class="btn-link btn m-0 px-0">
@@ -162,7 +162,7 @@
                     </ng-container>
                 </div>
             </div>
-            
+
             <div class="form-group d-flex justify-content-end mt-4 border-top">
                 <button type="submit" class="btn btn-primary mt-4" [disabled]="!validate()">
                     <i class="ta-save mr-1"></i>

@@ -5,7 +5,7 @@ import {ResultadoResponse} from './responses';
 export const Roles: Array<TextValue> = [
 
   {text: 'Colaborador', value: UserRole.Colaborador},
-  {text: 'Equipe P&D', value: UserRole.User},
+  {text: 'Equipe PDI', value: UserRole.User},
   {text: 'Suprimentos', value: UserRole.Suprimento},
   {text: 'Fornecedor', value: UserRole.Fornecedor},
   {text: 'Administrador', value: UserRole.Administrador},
@@ -40,20 +40,20 @@ export const FasesCadeiaInovacao: Array<TextValue> = [
 
 //
 export const Atividades: Array<TextValue> = [
-  {text: 'Dedicação horária dos membros da equipe de gestão do Programa de P&D da Empresa, quadro efetivo.', value: 'HH'},
+  {text: 'Dedicação horária dos membros da equipe de gestão do Programa de PDI da Empresa, quadro efetivo.', value: 'HH'},
   {
     text: 'Participação dos membros da equipe de gestão em eventos sobre pesquisa, desenvolvimento e inovação relacionados ao ' +
       'setor elétrico e/ou em cursos de gestão tecnológica e da informação. ',
     value: 'EC'
   },
-  {text: 'Desenvolvimento de ferramenta para gestão do Programa de P&D da Empresa, excluindose aquisição de equipamentos.', value: 'FG'},
+  {text: 'Desenvolvimento de ferramenta para gestão do Programa de PDI da Empresa, excluindose aquisição de equipamentos.', value: 'FG'},
   {
     text: 'Prospecção tecnológica e demais atividades necessárias ao planejamento e' +
-      ' à elaboração do plano estratégico de investimento em P&D.',
+      ' à elaboração do plano estratégico de investimento em PDI.',
     value: 'PP'
   },
-  {text: 'Divulgação de resultados de projetos de P&D, concluídos e/ou em execução.', value: 'RP'},
-  {text: 'Participação dos responsáveis técnicos pelos projetos de P&D nas avaliações presenciais convocadas pela ANEEL.', value: 'AP'},
+  {text: 'Divulgação de resultados de projetos de PDI, concluídos e/ou em execução.', value: 'RP'},
+  {text: 'Participação dos responsáveis técnicos pelos projetos de PDI nas avaliações presenciais convocadas pela ANEEL.', value: 'AP'},
   {text: 'Buscas de anterioridade no Instituto Nacional da Propriedade Industrial (INPI).', value: 'BA'},
   {text: 'Contratação de auditoria contábil e financeira para os projetos concluídos.', value: 'CA'},
   {text: 'Apoio à realização do CITENEL.', value: 'AC'}

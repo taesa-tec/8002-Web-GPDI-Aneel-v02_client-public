@@ -4,6 +4,28 @@ import {Proposta} from '@app/commons';
 import {ContratoService} from '@app/pages/propostas/proposta/services/proposta-service-base.service';
 import {FileService} from '@app/services/file.service';
 
+interface ComentarioFile {
+  userId: null;
+  user: null;
+  size: number;
+  name: string;
+  fileName: string;
+  contentType: string;
+  createdAt: Date;
+  id: number;
+}
+
+interface Comentario {
+  authorId: string;
+  author: string;
+  mensagem: string;
+  createdAt: Date;
+  files: ComentarioFile[];
+  propostaId: number;
+  id: number;
+}
+
+
 @Component({
   selector: 'app-comentarios',
   templateUrl: './comentarios.component.html',
@@ -12,7 +34,7 @@ import {FileService} from '@app/services/file.service';
 export class ComentariosComponent implements OnInit {
   @Input() type: 'Contrato' | 'Plano';
   proposta: Proposta;
-  comentarios: Array<any>;
+  comentarios: Array<Comentario>;
 
   constructor(protected service: PropostasService, protected contratoService: ContratoService, protected fileService: FileService) {
   }

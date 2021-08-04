@@ -2,13 +2,15 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {ActivatedRoute} from '@angular/router';
 import {FileService} from '@app/services/file.service';
+import {HttpResponse} from '@angular/common/http';
 
-export interface CaptacaoSelecao {
+export interface CaptacaoFormalizacao {
   titulo: string;
-  proposta: string;
-  responsavel: string;
-  dataAlvo: Date;
+  fornecedor: string;
+  execucaoResponsavel: string;
+  aprovacaoResponsavel: string;
   id: number;
+  filename: string;
 }
 
 @Component({
@@ -18,7 +20,7 @@ export interface CaptacaoSelecao {
 export class FormalizacaoDetalhesComponent implements OnInit {
 
   route: ActivatedRoute;
-  captacao: CaptacaoSelecao;
+  captacao: CaptacaoFormalizacao;
   progress: { type: number; loaded: number; total: number } = null;
   aprovado: boolean;
 
@@ -35,12 +37,13 @@ export class FormalizacaoDetalhesComponent implements OnInit {
 
   async download() {
     this.resetProgress();
-    const url = await this.file.download(`Captacoes/${this.captacao.id}/Formalizacao/Arquivo/`,
+    await this.file.urlToBlobDownload(`Captacoes/${this.captacao.id}/Formalizacao/Arquivo/`, '',
       progress => {
-        this.progress = progress;
-        this.cdr.detectChanges();
+        if (!(progress instanceof HttpResponse)) {
+          this.progress = progress;
+          this.cdr.detectChanges();
+        }
       });
-    this.file.downloadBlob(url, `${this.captacao.titulo}(Formalização).pdf`);
     this.progress = null;
   }
 }
