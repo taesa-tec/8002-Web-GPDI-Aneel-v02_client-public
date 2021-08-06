@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {ExtratoEmpresa} from '@app/pages/projetos/projeto/extrato-financeiro/extrato-financeiro';
 import {ProjetoService} from '@app/pages/projetos/projeto/services/projeto.service';
 import {FileService} from '@app/services/file.service';
-import {LoadingController} from '@app/services';
+import {AppService, LoadingController} from '@app/services';
 
 @Component({
   selector: 'app-extrato-financeiro',
@@ -17,7 +17,7 @@ export class ExtratoFinanceiroComponent implements OnInit {
   previsto = 0;
   desvio = '0';
 
-  constructor(protected route: ActivatedRoute, protected loading: LoadingController, protected projetoService: ProjetoService, protected fileService: FileService) {
+  constructor(protected route: ActivatedRoute, protected app: AppService, protected loading: LoadingController, protected projetoService: ProjetoService, protected fileService: FileService) {
   }
 
   ngOnInit(): void {
@@ -42,7 +42,13 @@ export class ExtratoFinanceiroComponent implements OnInit {
   async downloadXls() {
     this.loading.show().then();
     const projeto = this.projetoService.getCurrentProjeto();
-    await this.fileService.urlToBlobDownload(`Projetos/${projeto.id}/ExtratoFinanceiro/Xlsx`, '');
+    try {
+
+      await this.fileService.urlToBlobDownload(`Projetos/${projeto.id}/ExtratoFinanceiro/Xlsx`, '');
+    } catch (e) {
+      console.error(e);
+      this.app.alertError('Não foi possível baixar o arquivo no momento');
+    }
     this.loading.hide();
   }
 
