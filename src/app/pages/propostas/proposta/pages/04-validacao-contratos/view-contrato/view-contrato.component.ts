@@ -62,19 +62,27 @@ export class ViewContratoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.propostaCanEdit.subscribe(can => this.canEdit = can);
+    this.propostaCanEdit.subscribe(can => {
+      this.canEdit = can;
+      this.checkForm();
+    });
     this.route.data.subscribe(data => {
       this.contrato = data.contrato;
       this.form.get('conteudo').patchValue(this.contrato.rascunho || this.contrato.conteudo || this.contrato.parent.conteudo);
     });
     this.service.proposta.subscribe(p => {
       this.proposta = p;
+      this.checkForm();
       if (this.proposta.captacaoStatus === 'Refinamento') {
         this.form.get('alteracao').setValidators(Validators.required);
         this.form.updateValueAndValidity();
       }
     });
+    this.checkForm();
 
+  }
+
+  checkForm() {
     if (!(this.fornecedorCanEdit && this.isFornecedor)) {
       this.form.disable();
     }
@@ -104,13 +112,13 @@ export class ViewContratoComponent implements OnInit {
           this.contrato.conteudo = this.form.value.conteudo;
           this.contrato.rascunho = null;
         }
-        this.app.alert('Contrato Salvo com sucesso!').then();
+
         if (this.proposta.captacaoStatus === 'Refinamento' && !saveAsDraft) {
           this.proposta.contratoAprovacao = 'Pendente';
           await this.uploadFiles(response.comentario.id);
           this.service.setProposta(this.proposta);
         }
-
+        this.app.alert('Contrato Salvo com sucesso!').then();
       }
     } catch (e) {
       this.app.alert('Ocorreu um erro ao salvar o contrato!').then();
