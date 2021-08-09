@@ -21,7 +21,7 @@
                size="3">
         <div class="input-group-append">
           <span class="input-group-text">Meses</span>
-          <button class="btn btn-primary" [disabled]="loading || !canEdit"><i
+          <button class="btn btn-primary" [disabled]="duracao < 3 || loading || !canEdit"><i
             class="ta-save"></i> {{loading ? 'Salvando' : 'Salvar'}}</button>
         </div>
       </div>

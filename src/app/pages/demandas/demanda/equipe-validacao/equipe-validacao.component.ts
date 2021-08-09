@@ -1,9 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {FormGroup, FormControl, Validators, FormBuilder} from '@angular/forms';
 import {AppService} from '@app/services/app.service';
 import {ActivatedRoute} from '@angular/router';
 import {UsersService} from '@app/services/users.service';
-import {EQUIPE_PED, EquipePeD, UserRole} from '@app/commons';
+import {EQUIPE_PED, EquipePeD, Roles, UserRole} from '@app/commons';
 import {DEMANDA} from '@app/pages/demandas/demanda/providers';
 import {Demanda} from '@app/commons/demandas';
 import {AuthService} from '@app/services';
@@ -15,16 +15,19 @@ import {AuthService} from '@app/services';
 })
 export class EquipeValidacaoComponent implements OnInit {
 
-  form: FormGroup;
   pessoas: Array<any> = [];
+  exceptIds: Array<any> = [];
+  form = this.fb.group({
+    superiorDireto: ['', Validators.required]
+  });
 
   constructor(
     @Inject(DEMANDA) protected demanda: Demanda,
     @Inject(EQUIPE_PED) public equipe: EquipePeD,
     protected app: AppService,
-    protected usersService: UsersService,
     public auth: AuthService,
-    protected route: ActivatedRoute) {
+    protected route: ActivatedRoute,
+    protected fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -34,10 +37,10 @@ export class EquipeValidacaoComponent implements OnInit {
   async configForm() {
     const {superiorDireto} = await this.app.demandas.getSuperiorDireto(this.demanda.id);
     this.pessoas = this.equipe.outros;
-
-    this.form = new FormGroup({
-      superiorDireto: new FormControl(superiorDireto || '', [Validators.required]),
-    });
+    this.form.patchValue({superiorDireto});
+    if (!this.auth.hasRoles(UserRole.Administrador)) {
+      this.exceptIds = [this.auth.getUser().id];
+    }
   }
 
   async salvar() {

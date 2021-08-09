@@ -22,6 +22,10 @@ export class PropostasService extends ServiceBase<any> {
     }
   }
 
+  getProposta() {
+    return this.$currentProposta.getValue();
+  }
+
   async rejeitar(guid: string) {
     return await this.http.put<any>(`${this.controller}/${guid}/Rejeitar`, {}).toPromise();
   }
@@ -73,15 +77,6 @@ export class PropostasService extends ServiceBase<any> {
 
   async getEmpresas(guid: string) {
     return await this.http.get<any>(`${this.controller}/${guid}/Empresas`, {}).toPromise();
-  }
-
-  async removerCoExecutor(guid: string, coExecutorId: number) {
-    return await this.http.delete(`${this.controller}/${guid}/CoExecutores/${coExecutorId}`).toPromise();
-  }
-
-  async getContratos(guid: string) {
-    console.warn('Remover essa chamada!');
-    return await this.http.get<Array<BaseEntity>>(`${this.controller}/${guid}/Contratos`, {}).toPromise();
   }
 
   async getContrato(guid: string) {

@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Demanda} from '@app/commons/demandas';
 import {DemandaEtapa, DemandaEtapaItems, DemandaEtapaStatus} from '@app/pages/demandas/commons';
 import {environment} from '@env/environment';
-import {EQUIPE_PED, EquipePeD} from '@app/commons';
+import {EQUIPE_PED, EquipePeD, UserRole} from '@app/commons';
 import {UsersService} from '@app/services/users.service';
 import {DEMANDA} from '@app/pages/demandas/demanda/providers';
 import {AuthService} from '@app/services';
@@ -46,7 +46,7 @@ export class AprovacaoComponent implements OnInit {
   }
 
   get isResponsavel() {
-    return this.responsavelAprovacao === this.auth.getUser().id;
+    return this.responsavelAprovacao === this.auth.getUser().id || this.auth.hasRoles(UserRole.Administrador);
   }
 
   get responsavelAprovacao() {
@@ -128,9 +128,8 @@ export class AprovacaoComponent implements OnInit {
       this.form.reset();
       await this.app.router.navigate(['/']);
     } catch (e) {
-      console.error(e);
+      this.app.alert("Não foi possível ir para próxima etapa");
     } finally {
-
       this.app.hideLoading();
     }
   }

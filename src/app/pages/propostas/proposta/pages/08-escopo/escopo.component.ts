@@ -31,9 +31,11 @@ export class EscopoComponent implements OnInit {
   });
 
   get maxNumMeses() {
-    return this.proposta.duracao || 0;
+    return this.proposta?.duracao || 0;
   }
+
   canEdit: boolean;
+
   constructor(
     @Inject(PROPOSTA_CAN_EDIT) public propostaCanEdit: BehaviorSubject<boolean>,
     private app: AppService,
@@ -52,13 +54,11 @@ export class EscopoComponent implements OnInit {
         this.addMeta();
       }
     }
-    this.service.proposta.subscribe(p => {
-      this.proposta = p;
-      this.metasArray.controls.forEach(ctrl => {
-        const m = ctrl.get('meses');
-        m.clearValidators();
-        m.setValidators([Validators.required, Validators.max(p.duracao)]);
-      });
+    this.proposta = this.service.getProposta();
+    this.metasArray.controls.forEach(ctrl => {
+      const m = ctrl.get('meses');
+      m.clearValidators();
+      m.setValidators([Validators.required, Validators.min(1), Validators.max(this.proposta.duracao)]);
     });
     if (!this.canEdit) {
       this.form.disable();
@@ -70,7 +70,7 @@ export class EscopoComponent implements OnInit {
     const formGroup = this.fb.group({
       id: [meta?.id || 0],
       objetivo: [meta?.objetivo || '', Validators.required],
-      meses: [meta?.meses || 1, [Validators.required]]
+      meses: [meta?.meses || 1, [Validators.required, Validators.min(1), Validators.max(this.maxNumMeses)]]
     });
 
     this.metasArray.push(formGroup);
