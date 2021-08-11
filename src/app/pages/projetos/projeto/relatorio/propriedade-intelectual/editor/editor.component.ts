@@ -10,7 +10,8 @@ import {sumBy} from 'lodash-es';
 
 @Component({
   selector: 'app-editor',
-  templateUrl: './editor.component.html'
+  templateUrl: './editor.component.html',
+  styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent implements OnInit {
 
@@ -18,7 +19,9 @@ export class EditorComponent implements OnInit {
   propriedade: PropriedadeIntelectual;
   recursos: Array<any>;
   depositantes: Array<any>;
+  chartData: [string, number, number][];
 
+  depositantesControls = this.fb.array([], Validators.required);
   form = this.fb.group({
     id: [0, Validators.required],
     tipo: ['', Validators.required],
@@ -26,10 +29,9 @@ export class EditorComponent implements OnInit {
     pedidoNumero: ['', Validators.required],
     tituloINPI: ['', Validators.required],
     inventores: [[], Validators.required],
-    depositantes: this.fb.array([], Validators.required)
+    depositantes: this.depositantesControls
   });
 
-  depositantesControls = this.form.get('depositantes') as FormArray;
 
   constructor(
     private app: AppService,
@@ -57,12 +59,49 @@ export class EditorComponent implements OnInit {
     } else {
       this.addDepositante();
     }
+
+    this.depositantesControls.valueChanges.subscribe(changes => {
+      //this.corrigirDivisao();
+      //this.buildChartData();
+    });
+    //this.corrigirDivisao();
+    //this.buildChartData();
+  }
+
+  corrigirDivisao() {
+    const depositantes = this.depositantesControls.value as Array<{ empresaId: string; porcentagem: number }>;
+    const sum = depositantes.reduce((p, c) => p + c.porcentagem, 0);
+    if (sum < 100) {
+      return;
+    }
+    this.depositantesControls.controls.forEach(control => {
+      const pc = control.get('porcentagem');
+      const p = parseFloat(pc.value) ?? 0;
+      const v = parseFloat(((p / sum) * 100).toFixed(1));
+      pc.setValue(v, {emitEvent: false});
+    });
+
+  }
+
+  buildChartData() {
+
+    const depositantes = this.depositantesControls.value as Array<{ empresaId: string; porcentagem: number }>;
+    const sum = depositantes.reduce((p, c) => p + c.porcentagem, 0);
+
+    this.chartData = depositantes.map((e, i, es) => [
+      this.depositantes.find(d => d.id === parseFloat(e.empresaId))?.nome ?? 'Não definido',
+      sum > 0 ? (e.porcentagem / sum) * 100 : 100 / depositantes.length,
+      e.porcentagem
+    ]);
   }
 
   addDepositante(depositante?: any) {
+    const depositantes = this.depositantesControls.value as Array<{ empresaId: string; porcentagem: number }>;
+    const sum = depositantes.reduce((p, c) => p + c.porcentagem, 0);
+    const p = sum > 0 ? Math.max(100 - sum, 0) : 0;
     this.depositantesControls.push(this.fb.group({
       empresaId: [depositante?.empresaId || '', Validators.required],
-      porcentagem: [depositante?.porcentagem || '', Validators.required]
+      porcentagem: [depositante?.porcentagem ?? p, [Validators.required, Validators.min(0)]]
     }));
   }
 
@@ -73,7 +112,7 @@ export class EditorComponent implements OnInit {
   }
 
   selectedDepositantes() {
-    return this.depositantesControls.value.map(a => a.id);
+    return this.depositantesControls.value.map(a => a.empresaId);
   }
 
   async delete() {
