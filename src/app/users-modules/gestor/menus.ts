@@ -1,6 +1,6 @@
 import {HEADER_MENU, SIDEBAR_MENU} from '@app/commons';
 import {
-  MenuItemAlterarProjeto,
+  MenuItemAlterarProjeto, MenuItemCentralAdministrativa,
   MenuItemConsultarDados, MenuItemExtrato,
   MenuItemRefpAprovado,
   MenuItemRefpNovo,
@@ -58,6 +58,7 @@ export const ProjetoExecucaoMenu = {
     MenuItemAlterarProjeto,
     MenuItemExtrato,
     MenuItemConsultarDados,
+    MenuItemCentralAdministrativa,
   ]
 };
 export const ProjetoFinalizadoMenu = {
@@ -72,5 +73,6 @@ export const ProjetoFinalizadoMenu = {
     MenuItemResultadosSocioAmbientais,
     MenuItemResultadosEconomicos,
     MenuItemConsultarDados,
+    MenuItemCentralAdministrativa,
   ]
 };

@@ -34,12 +34,11 @@
   <div class="row">
     <div class="col-12">
       <div class="form-group">
-        <label>PRODUTO INTERMEDIÁRIO ASSOCIADO A ESTA ETAPA</label>
+        <label>PRODUTO ASSOCIADO A ESTA ETAPA</label>
         <select formControlName="produtoId" placeholder="Selecione" class="form-control">
           <option value="">Selecione</option>
           <option *ngFor="let p of produtos" [value]="p.id">{{p.titulo}}</option>
         </select>
-
       </div>
     </div>
   </div>

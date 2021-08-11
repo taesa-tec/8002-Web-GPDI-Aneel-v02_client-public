@@ -58,7 +58,7 @@ const routes: Routes = [
       },
       {
         path: 'central-administrativa',
-        canActivate: ['isAdmin'],
+        canActivate: ['isGestor'],
         loadChildren: () => import('./administrativo/administrativo.module').then(m => m.AdministrativoModule)
       },
       {

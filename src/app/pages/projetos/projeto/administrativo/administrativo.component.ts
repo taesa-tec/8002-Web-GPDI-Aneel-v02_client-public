@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {MenuItem, TOPNAV_MENU} from '@app/commons';
+import {MenuItem, TOPNAV_MENU, UserRole} from '@app/commons';
 import {ProjetoService} from '@app/pages/projetos/projeto/services/projeto.service';
 import {BehaviorSubject} from 'rxjs';
+import {AuthService} from '@app/services';
 
 
 @Component({
@@ -10,18 +11,21 @@ import {BehaviorSubject} from 'rxjs';
   providers: [
     {
       provide: TOPNAV_MENU,
-      deps: [ProjetoService],
-      useFactory: (service: ProjetoService) => {
+      deps: [ProjetoService, AuthService],
+      useFactory: (service: ProjetoService, auth: AuthService) => {
         const behavior = new BehaviorSubject<Array<MenuItem>>([]);
         service.projeto.subscribe(p => {
           let menu: Array<MenuItem> = [
 
             {path: 'logs-duto', text: 'Logs DUTO'},
             {path: 'repositorio-xml', text: 'Repositório XMLs Gerados'},
-            {path: 'status', text: 'Alteração de Status'},
+
           ];
           if (p.status === 'Finalizado') {
             menu = [{path: 'gerador-xml', text: 'Geração XMLS'}, ...menu];
+          }
+          if (auth.hasRoles(UserRole.Administrador)) {
+            menu = [...menu, {path: 'status', text: 'Alteração de Status'}];
           }
           behavior.next(menu);
         });

@@ -13,8 +13,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'gerador-xml'
-      }, 
+        redirectTo: 'logs-duto'
+      },
       {
         path: 'gerador-xml',
         component: GeradorXmlComponent,
@@ -25,16 +25,17 @@ const routes: Routes = [
         resolve: {
           logs: 'projetoLogsDuto'
         }
-      }, 
+      },
       {
         path: 'repositorio-xml',
         component: RepositorioXmlComponent,
         resolve: {
           xmls: 'projetoXmls',
         }
-      }, 
+      },
       {
         path: 'status',
+        canActivate: ['isAdmin'],
         component: AlterarSatusComponent
       },
     ]
