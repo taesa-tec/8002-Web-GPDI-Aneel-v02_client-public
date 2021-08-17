@@ -44,7 +44,7 @@
         <select class="form-control" id="empresa-recebedora" formControlName="empresaRecebedoraId">
           <option value="" hidden>Selecione</option>
           <option [value]="empresa.id" *ngFor="let empresa of empresas"
-                  [disabled]="empresa.funcao === 'Cooperada' && empresaFinanciadora?.funcao === 'Executora'">
+                  [hidden]="empresa.funcao === 'Cooperada' && empresaFinanciadora?.funcao === 'Executora'">
             {{ empresa.razaoSocial }}
           </option>
         </select>
