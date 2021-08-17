@@ -54,14 +54,14 @@ export const DemandaEtapaItems: Array<DemandaEtapaItem> = [
   },
   {
     etapa: DemandaEtapa.AprovacaoCoordenador,
-    titulo: 'Aprovação Coordenador PDI'
-  },
-  {
-    etapa: DemandaEtapa.AprovacaoGerente,
     titulo: 'Aprovação Gerente PDI'
   },
   {
+    etapa: DemandaEtapa.AprovacaoGerente,
+    titulo: 'Aprovação Gerente Executivo Gestão de Ativos'
+  },
+  {
     etapa: DemandaEtapa.AprovacaoDiretor,
-    titulo: 'Aprovação Diretor PDI'
+    titulo: 'Aprovação Diretor Técnico'
   }
 ];

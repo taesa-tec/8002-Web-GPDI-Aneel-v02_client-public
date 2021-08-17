@@ -14,15 +14,15 @@
 
     <h5 class="text-primary">PARTE INICIAL (NÃO EDITÁVEL PELO FORNECEDOR)</h5>
     <div class="bg-cinza-claro rounded p-2 mb-3">
-      <div class="bg-white p-3" [innerHTML]="contrato.header"></div>
+      <div class="bg-white p-3 overflow-auto" [innerHTML]="contrato.header"></div>
     </div>
     <h5 class="text-primary">PARTE CENTRAL (EDITÁVEL PELO FORNECEDOR)</h5>
     <div class="bg-cinza-claro rounded p-2 mb-3">
-      <div class="bg-white p-3" [innerHTML]="contrato.conteudo"></div>
+      <div class="bg-white p-3 overflow-auto" [innerHTML]="contrato.conteudo"></div>
     </div>
     <h5 class="text-primary">PARTE FINAL (NÃO EDITÁVEL PELO FORNECEDOR)</h5>
     <div class="bg-cinza-claro rounded p-2">
-      <div class="bg-white p-3" [innerHTML]="contrato.footer"></div>
+      <div class="bg-white p-3 overflow-auto" [innerHTML]="contrato.footer"></div>
     </div>
     <div class="d-flex justify-content-center mt-3">
       <button class="btn btn-outline-primary" type="button" (click)="activeModal.close('Cross click')">

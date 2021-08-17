@@ -17,7 +17,7 @@ export class ConfiguracoesSistemaComponent implements OnInit {
 
   ngOnInit() {
     this.tabs = [
-      {text: 'Equipe de PDI', path: 'equipe-pdi'},
+      {text: 'Equipe de Aprovadores', path: 'equipe'},
       {text: 'Padrão Formulários', path: 'padrao-formularios'},
       {text: 'Contratos Padrão', path: 'contratos-padrao'},
       {text: 'Condições Fundamentais para Fornecimento', path: 'clausulas'},

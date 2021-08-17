@@ -16,6 +16,7 @@ export const ConfigEditor = {
     'undo',
     'redo',
     'heading',
+    'alignment',
     '|',
     'bold',
     'italic',

@@ -33,13 +33,16 @@ import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar';
 import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload';
 import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter';
 
+import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
+
 export default class ClassicEditor extends ClassicEditorBase {
 }
 
 // Plugins to include in the build.
 ClassicEditor.builtinPlugins = [
   Essentials,
-  //UploadAdapter,
+  Alignment,
+  // UploadAdapter,
   Autoformat,
   Bold,
   Italic,
@@ -72,6 +75,7 @@ ClassicEditor.defaultConfig = {
       'undo',
       'redo',
       'heading',
+      'alignment',
       '|',
       'bold',
       'italic',

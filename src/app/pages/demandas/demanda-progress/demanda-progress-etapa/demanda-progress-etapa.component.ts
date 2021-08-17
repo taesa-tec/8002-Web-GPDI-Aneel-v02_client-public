@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DemandaEtapa, DemandaEtapaItem, DemandaEtapaItems, DemandaEtapaStatus, DemandaEtapaStatusText} from '../../commons';
-import {User} from '@app/commons';
 import {Demanda} from '@app/commons/demandas';
 
 
