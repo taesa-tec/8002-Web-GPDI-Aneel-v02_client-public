@@ -168,6 +168,7 @@ export const CaptacaoButtons: { [prop: string]: TableComponentActions } = {
 
 export interface CaptacaoDetalhes {
   id: number;
+  demandaId: number;
   titulo: string;
   status: string;
   finalizada: boolean;
