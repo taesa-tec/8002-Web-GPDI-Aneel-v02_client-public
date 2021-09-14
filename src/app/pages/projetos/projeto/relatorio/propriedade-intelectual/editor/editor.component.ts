@@ -127,7 +127,9 @@ export class EditorComponent implements OnInit {
   }
 
   validate() {
-    return (this.form.valid && sumBy(this.form.value.depositantes, 'porcentagem') === 100);
+    const depositantes = this.depositantesControls.value as Array<{ empresaId: string; porcentagem: number }>;
+    const sum = depositantes.reduce((p, c) => p + (c.porcentagem * 100), 0) / 100;
+    return (this.form.valid && sum === 100);
   }
 
   async submit() {

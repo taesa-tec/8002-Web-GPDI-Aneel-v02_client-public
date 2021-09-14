@@ -51,7 +51,7 @@ export class FormEditorComponent implements OnInit {
     });
 
     this.form.updateValueAndValidity();
-    if (this.disabled || this.demanda.superiorDiretoId == null) {
+    if (this.disabled || (this.demanda && this.demanda.superiorDiretoId == null)) {
       this.form.disable();
     }
   }
