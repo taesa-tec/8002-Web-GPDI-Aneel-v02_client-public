@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Projeto } from '../../projeto.component';
-import { ProjetoService } from '@app/pages/projetos/projeto/services/projeto.service';
-import { RelatorioFinal } from './../relatorio';
-import { FileService } from '@app/services/file.service';
-import { AppService } from '@app/services';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {Projeto} from '../../projeto.component';
+import {ProjetoService} from '@app/pages/projetos/projeto/services/projeto.service';
+import {RelatorioFinal} from './../relatorio';
+import {FileService} from '@app/services/file.service';
+import {AppService} from '@app/services';
 
 @Component({
   selector: 'app-final',
@@ -38,14 +38,15 @@ export class FinalComponent implements OnInit {
     private service: ProjetoService,
     private route: ActivatedRoute,
     private fb: FormBuilder
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     const {relatorio} = this.route.snapshot.data;
     this.relatorio = relatorio;
     this.projeto = this.service.getCurrentProjeto();
 
-    if(this.relatorio.id) {
+    if (this.relatorio.id) {
       this.form.patchValue(this.relatorio);
     }
 
@@ -76,13 +77,13 @@ export class FinalComponent implements OnInit {
       ];
 
       controls.forEach(c => {
-        if(status) {
+        if (status) {
           this.form.controls[c.name].setValidators([c.status ? Validators.required : Validators.nullValidator]);
         } else {
           this.form.controls[c.name].setValidators([!c.status ? Validators.required : Validators.nullValidator]);
         }
       });
-      
+
       controls.forEach(c => {
         this.form.controls[c.name].reset();
         this.form.controls[c.name].updateValueAndValidity();
@@ -92,7 +93,12 @@ export class FinalComponent implements OnInit {
 
   fileChange(file: string, evt: Event) {
     const files = (evt.target as HTMLInputElement).files;
-    this[file] = files.length > 0 ? files.item(0) : null;
+    const _file = files.length > 0 ? files.item(0) : null;
+    if (_file.name.toLowerCase().endsWith('.pdf')) {
+      this[file] = _file;
+    } else {
+      this.app.alert("Somentes arquivos pdf");
+    }
   }
 
   deleteFile(file: string) {
@@ -104,34 +110,34 @@ export class FinalComponent implements OnInit {
   }
 
   validate() {
-    return (this.form.valid && 
+    return (this.form.valid &&
       (this.relatorio?.relatorioArquivoId || this.relatorioArquivo) &&
       (this.relatorio?.auditoriaRelatorioArquivoId || this.auditoriaRelatorioArquivo));
   }
 
   async submit() {
     try {
-      if(this.validate()) {
+      if (this.validate()) {
         let relatorio = this.form.value;
         let path = `${this.projeto.id}/Relatorio/RelatorioFinal`;
 
-        if(relatorio.id) {
+        if (relatorio.id) {
           await this.service.put(path, relatorio);
         } else {
           this.relatorio = await this.service.post(path, relatorio);
         }
 
-        if(this.relatorioArquivo) {
+        if (this.relatorioArquivo) {
           await this.service.upload([this.relatorioArquivo], `${path}/Arquivos/Relatorio`);
         }
 
-        if(this.auditoriaRelatorioArquivo) {
+        if (this.auditoriaRelatorioArquivo) {
           await this.service.upload([this.auditoriaRelatorioArquivo], `${path}/Arquivos/RelatorioAuditoria`);
         }
 
-        this.app.alert("Relatório salvo com sucesso.");
+        this.app.alert('Relatório salvo com sucesso.');
       }
-    } catch(e) {
+    } catch (e) {
       console.log(e.message);
     }
   }

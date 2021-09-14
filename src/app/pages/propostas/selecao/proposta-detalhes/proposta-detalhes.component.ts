@@ -9,6 +9,8 @@ export interface CaptacaoSelecao {
   responsavel: string;
   dataAlvo: Date;
   id: number;
+  arquivoComprobatorio: string;
+  arquivoComprobatorioId: number;
 }
 
 @Component({

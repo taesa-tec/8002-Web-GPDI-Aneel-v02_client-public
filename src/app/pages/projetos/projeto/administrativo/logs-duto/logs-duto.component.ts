@@ -54,6 +54,11 @@ export class LogsDutoComponent implements OnInit {
   }
 
   async uploadLog(evt: Event) {
+    const file = (evt.target as HTMLInputElement).files.item(0);
+    if (file && !file.name.toLowerCase().endsWith('.xml')) {
+      await this.app.alert('Apenas arquivos xml');
+      return;
+    }
     if (await this.app.confirm('Confirme o envio')) {
       this.app.loading.show().then();
       const i = evt.target as HTMLInputElement;

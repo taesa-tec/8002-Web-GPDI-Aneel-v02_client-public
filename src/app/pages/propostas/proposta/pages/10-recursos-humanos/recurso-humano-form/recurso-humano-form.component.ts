@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, Validators, FormGroup} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppValidators, Funcoes, Graduacoes, TextValue} from '@app/commons';
 import {AppService} from '@app/services/app.service';
@@ -18,7 +18,7 @@ export class RecursoHumanoFormComponent extends PropostaNodeFormDirective implem
   documentoMask = '';
   form = this.fb.group({
     id: [0],
-    empresaId: [''],
+    empresaId: ['', [Validators.required]],
     nomeCompleto: ['', [Validators.required]],
     titulacao: ['', [Validators.required]],
     funcao: ['', [Validators.required]],
