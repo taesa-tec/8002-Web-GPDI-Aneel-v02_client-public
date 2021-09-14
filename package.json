@@ -1,6 +1,6 @@
 {
   "name": "sistema-ped",
-  "version": "2.8.17",
+  "version": "2.8.18",
   "scripts": {
     "patch": "npm version patch",
     "minor": "npm version minor",
