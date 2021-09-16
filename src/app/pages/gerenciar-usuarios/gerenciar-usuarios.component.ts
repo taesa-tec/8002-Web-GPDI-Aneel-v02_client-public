@@ -50,6 +50,10 @@ export class GerenciarUsuariosComponent implements OnInit {
     if (query.message && alertMessages[query.message]) {
       this.dashboardAlert = alertMessages[query.message];
     }
+
+    this.activatedRoute.fragment.subscribe(f => {
+      this.ativos = f !== 'inativo';
+    });
   }
 
 }

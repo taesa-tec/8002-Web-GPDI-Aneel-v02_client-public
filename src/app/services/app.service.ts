@@ -95,7 +95,7 @@ export class AppService {
     return ref.result;
   }
 
-  alertError(message: string | Array<string> | HttpErrorResponse, title: string = 'Error') {
+  async alertError(message: string | Array<string> | HttpErrorResponse, title: string = 'Error') {
     const ref = this.modal.open(AlertComponent, {backdrop: 'static'});
     ref.componentInstance.title = title;
     ref.componentInstance.className = 'border-danger';
@@ -104,10 +104,20 @@ export class AppService {
         const err = message.error;
         // ref.componentInstance.title = err.title;// tá vindo en inglês
 
+
         if (err.errors && Object.keys(err.errors).length > 0) {
           const msgs = Object.keys(err.errors).map(k => err.errors[k]).reduce((p, c) => [...p, ...c], []);
           ref.componentInstance.setMessage(msgs);
-        } else {
+        } else if (err instanceof Blob) {
+          const msg = await err.text();
+          if (err.type.endsWith('json')) {
+            const obj = JSON.parse(msg);
+            ref.componentInstance.setMessage(obj.detail);
+          } else {
+            ref.componentInstance.setMessage(msg);
+          }
+
+        } else if (err.detail) {
           ref.componentInstance.setMessage(err.detail);
         }
       }

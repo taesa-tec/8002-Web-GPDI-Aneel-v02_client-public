@@ -17,11 +17,11 @@
   <div class="row mb-4">
     <div class="col-12">
       <ul class="nav nav-bar-row pt-3">
-        <li class="nav-item" (click)="ativos = true;" style="cursor: pointer">
-          <span class="nav-link px-3" [ngClass]="{active:ativos}">Ativos</span>
+        <li class="nav-item" style="cursor: pointer">
+          <a routerLink="./" fragment="" class="nav-link px-3" [ngClass]="{active:ativos}">Ativos</a>
         </li>
-        <li class="nav-item" (click)="ativos = false;" style="cursor: pointer">
-          <span class="nav-link px-3" [ngClass]="{active:!ativos}">Inativos</span>
+        <li class="nav-item" style="cursor: pointer">
+          <a routerLink="./" fragment="inativo" class="nav-link px-3" [ngClass]="{active:!ativos}">Inativos</a>
         </li>
       </ul>
     </div>

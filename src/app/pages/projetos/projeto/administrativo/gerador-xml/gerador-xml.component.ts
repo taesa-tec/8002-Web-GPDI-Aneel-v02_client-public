@@ -40,6 +40,8 @@ export class GeradorXmlComponent implements OnInit {
       await this.file.urlToBlobDownload(`Projetos/${this.projeto.id}/GerarXML/${type}`, '', null, form.value);
     } catch (e) {
       console.error(e);
+      //this.app.alertError("Não é possível gerar o xml, verifique se o Relatório Final foi preenchido corretamente").then();
+      this.app.alertError(e).then();
 
     }
     this.app.loading.hide();
