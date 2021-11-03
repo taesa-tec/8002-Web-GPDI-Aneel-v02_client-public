@@ -171,7 +171,6 @@ export class AppValidators {
         return null;
       }
       const value = control.value as string;
-      console.log(value, config);
       const result = {
         length: (config?.requiredLength ?? 1) > value.length,
         uppercase: (config?.requireUppercase ?? false) && !/[A-Z]/.test(value),

@@ -1,9 +1,17 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
+import {SistemaStatusResolver} from '@app/resolvers';
+import {AppEntranceComponent} from '@app/app.component';
 
 const routes: Routes = [
-  {path: '', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
-
+  {
+    path: '',
+    component: AppEntranceComponent,
+    resolve: {
+      status: SistemaStatusResolver
+    }
+  }
+  //{path: '', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
 ];
 
 @NgModule({

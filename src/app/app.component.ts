@@ -1,5 +1,12 @@
 import {Component, HostBinding, HostListener, Inject, OnInit, ViewChild} from '@angular/core';
-import {Router, NavigationStart, NavigationEnd, ActivationEnd, NavigationCancel, NavigationError} from '@angular/router';
+import {
+  Router,
+  NavigationStart,
+  NavigationEnd,
+  NavigationCancel,
+  NavigationError,
+  ActivatedRoute
+} from '@angular/router';
 import {filter} from 'rxjs/operators';
 import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {AppService} from '@app/services/app.service';
@@ -67,4 +74,26 @@ export class AppComponent implements OnInit {
     }
     this.loading.hide();
   }
+}
+
+@Component({
+  selector: 'app-entrance',
+  template: 'Carregando',
+})
+export class AppEntranceComponent implements OnInit {
+  constructor(protected route: ActivatedRoute, protected router: Router) {
+  }
+
+  ngOnInit(): void {
+    const {installed} = this.route.snapshot.data.status;
+    if (!installed) {
+      this.router.resetConfig([{path: '', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)}]);
+    } else {
+      this.router.resetConfig([{path: '', loadChildren: () => import('./installer/installer.module').then(m => m.InstallerModule)}]);
+
+    }
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigateByUrl('./', {relativeTo: this.route}).then();
+  }
+
 }

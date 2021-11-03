@@ -9,3 +9,4 @@ export * from './list.resolver';
 export * from './produto-tipo.resolver';
 export * from './contrato-padrao.resolver';
 export * from './contratos-padroes.resolver';
+export * from './sistema-status.resolver';
