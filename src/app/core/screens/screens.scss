@@ -1,0 +1,15 @@
+.wrap-full-content {
+  animation: sliderDown 250ms ease-out;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes sliderDown {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

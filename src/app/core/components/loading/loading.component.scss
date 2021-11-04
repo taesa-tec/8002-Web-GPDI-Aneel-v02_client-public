@@ -1,25 +1,26 @@
 .wrap-loading {
-    &.fullscreen {
-        z-index: 9999;
-        position: fixed;
-    }
+  &.fullscreen {
+    z-index: 9999;
+    position: fixed;
+  }
 
-    &.fullparent {
-        position: absolute;
-    }
+  &.fullparent {
+    position: absolute;
+  }
 
-    &.inline {
-        display: inline-flex;
-        padding: 1rem;
-    }
+  &.inline {
+    display: inline-flex;
+    padding: 1rem;
+  }
 
-    &.fullscreen, &.fullparent {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-    }
+  &.fullscreen, &.fullparent {
+    animation: growAndFade 200ms ease-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
 }

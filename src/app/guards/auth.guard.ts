@@ -27,7 +27,8 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     if (!this.authService.isLoggedIn) {
-      return this.authService.logout(state.url);
+      this.authService.logout(state.url);
+      return false;
     }
     return true;
   }
@@ -40,7 +41,8 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
     if (!this.authService.isLoggedIn) {
-      return this.authService.logout();
+      this.authService.logout();
+      return false;
     }
     return true;
   }

@@ -10,8 +10,12 @@ export class SistemaStatusResolver implements Resolve<{ installed: boolean }> {
   constructor(protected http: HttpClient) {
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<{ installed: boolean }> {
-    return this.http.get<{ installed: boolean }>('/api/Sistema/Status').toPromise();
+  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<{ installed: boolean }> {
+    try {
+      return await this.http.get<{ installed: boolean }>('/api/Sistema/Status').toPromise();
+    } catch (e) {
+      return null;
+    }
   }
 
 }

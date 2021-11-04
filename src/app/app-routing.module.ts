@@ -5,7 +5,7 @@ import {AppEntranceComponent} from '@app/app.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: '**',
     component: AppEntranceComponent,
     resolve: {
       status: SistemaStatusResolver

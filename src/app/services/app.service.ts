@@ -9,10 +9,12 @@ import {PromptComponent} from '../core/components/prompt/prompt.component';
 import {Router} from '@angular/router';
 import {environment} from '@env/environment';
 import {DemandasService} from './demandas.service';
-import {BehaviorSubject, timer} from 'rxjs';
+import {BehaviorSubject, Subscription, timer} from 'rxjs';
 import {SistemaService} from '@app/services/sistema.service';
 import {FileUploaderComponent} from '@app/core/components/file-uploader/file-uploader.component';
 import {HttpErrorResponse} from '@angular/common/http';
+import {ErrorComponent} from '@app/core/screens/error.component';
+import {RoutesRoleMap} from '@app/routes';
 
 
 @Injectable({
@@ -71,6 +73,8 @@ export class AppService {
 
   moment: any;
   config: any;
+  userSubscription: Subscription;
+  protected isInstalled = false;
 
 
   constructor(
@@ -166,5 +170,59 @@ export class AppService {
   hideLoading() {
     this.loading.hide();
   }
+
+  //
+
+  setInstalled() {
+    this.isInstalled = true;
+    if (!this.userSubscription) {
+      this.userSubscription = this.auth.user.subscribe(user => {
+        this.updateRoutes();
+      });
+    }
+  }
+
+  forceRefresh() {
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate(['./']).then();
+  }
+
+  updateRoutes() {
+    if (this.isInstalled) {
+      if (this.auth.isLoggedIn) {
+        this.userRoutes();
+      } else {
+        this.authRoutes();
+      }
+    } else {
+      this.installerRoutes();
+    }
+    this.forceRefresh();
+  }
+
+  authRoutes() {
+    this.router.resetConfig([{path: '', loadChildren: () => import('../auth/auth.module').then(m => m.AuthModule)}]);
+  }
+
+  installerRoutes() {
+    this.router.resetConfig([{path: '', loadChildren: () => import('../installer/installer.module').then(m => m.InstallerModule)}]);
+  }
+
+  errorRoutes() {
+    this.router.resetConfig([{path: '**', component: ErrorComponent}]);
+  }
+
+  userRoutes() {
+    const role = this.auth.role;
+    if (RoutesRoleMap.has(role)) {
+      const routes = RoutesRoleMap.get(role);
+      this.router.resetConfig(routes);
+    } else {
+      console.error(`Rotas para ${role} não disponíveis`);
+      this.auth.logout();
+    }
+  }
+
+
 }
 

@@ -114,7 +114,6 @@ export class AuthService {
     this.$token = response.accessToken;
     this.session = this.extractInfoToken(this.token);
     this.setUser(response.user);
-    this.setRoutes(this.getUser().role);
   }
 
   clearSession() {
@@ -152,15 +151,12 @@ export class AuthService {
   }
 
 
-  async logout(redirect?: string) {
+  logout(redirect?: string) {
     this.redirectTo = '/';
     if (this.modal.hasOpenModals()) {
       this.modal.dismissAll('logout');
     }
     this.clearSession();
-    this.setRoutes('');
-    this.router.onSameUrlNavigation = 'reload';
-    return await this.router.navigate(['/'], {queryParams: {redirect}});
   }
 
   recuperarSenha(recoverRequest: RecoverRequest) {
@@ -182,13 +178,18 @@ export class AuthService {
       .some(role => this.getUser().roles.indexOf(role as UserRole) >= 0);
   }
 
-  setRoutes(role: string) {
-    if (RoutesRoleMap.has(role)) {
-      this.router.resetConfig(RoutesRoleMap.get(role));
-    } else {
-      console.error(`Rotas para ${role} não disponíveis`);
-      this.logout().then();
-    }
-  }
+  // updateRoutes() {
+  //   this.setRoutes(this.role ?? '');
+  // }
+  //
+  // setRoutes(role: string) {
+  //   if (RoutesRoleMap.has(role)) {
+  //     const routes = RoutesRoleMap.get(role);
+  //     this.router.resetConfig(routes);
+  //   } else {
+  //     console.error(`Rotas para ${role} não disponíveis`);
+  //     this.logout().then();
+  //   }
+  // }
 
 }

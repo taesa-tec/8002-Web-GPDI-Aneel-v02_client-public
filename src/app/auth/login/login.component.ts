@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '@app/services/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LoginRequest, UserRole} from '@app/commons';
@@ -12,14 +12,17 @@ import {filter} from 'rxjs/operators';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
+
 
   @ViewChild(LoadingComponent, {static: true})
   private loading: LoadingComponent;
+  @ViewChild('email') inputEmail: ElementRef<HTMLInputElement>;
+  @ViewChild('password') inputPass: ElementRef<HTMLInputElement>;
 
   errorMessage: string;
   form = this.fb.group({
-    email: [sessionStorage.getItem('last_login_user'), [Validators.required, Validators.email]],
+    email: [sessionStorage.getItem('last_login_user') ?? '', [Validators.required, Validators.email]],
     password: ['', Validators.required]
   });
 
@@ -32,23 +35,6 @@ export class LoginComponent implements OnInit {
               protected cdr: ChangeDetectorRef) {
   }
 
-  async doLogin() {
-    if (this.form.invalid) {
-      return;
-    }
-
-    this.loading.show();
-    this.errorMessage = null;
-    const loggein = await this.auth.login(this.form.value, this.remember);
-    if (loggein) {
-      await this.router.navigate(['./'], {relativeTo: this.activatedRoute});
-    }
-    this.form.get('password').setValue('');
-    this.loading.hide();
-    this.cdr.detectChanges();
-
-  }
-
 
   ngOnInit(): void {
     this.auth.error.pipe(filter(e => e != null)).subscribe(e => {
@@ -58,6 +44,30 @@ export class LoginComponent implements OnInit {
         this.errorMessage = e.message;
       }
     });
+
+
+  }
+
+  ngAfterViewInit(): void {
+    if (this.form.value.email.length > 0) {
+      this.inputPass.nativeElement.focus();
+    } else {
+      this.inputEmail.nativeElement.focus();
+    }
+  }
+
+  async doLogin() {
+    if (this.form.invalid) {
+      return;
+    }
+
+    this.loading.show();
+    this.errorMessage = null;
+    await this.auth.login(this.form.value, this.remember);
+
+    this.form.get('password').setValue('');
+    this.loading.hide();
+    this.cdr.detectChanges();
 
   }
 }

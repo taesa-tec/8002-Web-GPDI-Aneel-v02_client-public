@@ -12,6 +12,7 @@ import {SharedModule} from '@app/core/shared';
 import {ComponentsModule} from '@app/core/components';
 import {AuthGuard} from '@app/guards';
 import {IsAdmin, IsColaborador, IsFornecedor, IsGestor, IsSuprimento} from '@app/guards/role.guard';
+import {ScreensModule} from '@app/core/screens/screens.module';
 
 registerLocaleData(localeBr, 'pt');
 moment.locale('pt-br');
@@ -27,6 +28,7 @@ moment.locale('pt-br');
     BrowserModule,
     HttpClientModule,
     SharedModule,
+    ScreensModule,
     ComponentsModule,
     AppRoutingModule,
     FontAwesomeModule,

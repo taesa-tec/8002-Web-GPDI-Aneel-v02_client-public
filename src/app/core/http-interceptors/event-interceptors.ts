@@ -18,29 +18,29 @@ export class EventInterceptor implements HttpInterceptor {
     const request = next.handle(req);
     return request.pipe(
       tap(event => {
-          if (event instanceof HttpResponse) {
-            if (event.status === 401 && this.auth.isLoggedIn) {
-              this.auth.logout().then();
-            }
+        if (event instanceof HttpResponse) {
+          if (event.status === 401 && this.auth.isLoggedIn) {
+            this.auth.logout();
           }
-        },
-        error => {
-          if (error.status === 401 && this.auth.isLoggedIn) {
-            this.auth.logout().then();
-          } else {
-            switch (error.status) {
-              case 403:
-                this.app.alertError('Você não tem permissão para continuar', 'Não autorizado').then();
-                break;
-              default:
-                if (error.error.Message) {
-                  console.error(error.error.Message);
-                  throw error;
-                }
-                break;
-            }
+        }
+      }, error => {
+        if (error.status === 401 && this.auth.isLoggedIn) {
+          this.auth.logout();
+        } else {
+          switch (error.status) {
+            case 403:
+              this.app.alertError('Você não tem permissão para continuar', 'Não autorizado').then();
+              break;
+            default:
+              if (error.error.Message) {
+                console.error(error.error.Message);
+                throw error;
+              }
+              break;
           }
-        }));
+        }
+      })
+    );
 
   }
 
