@@ -141,7 +141,7 @@
         </div>
         <div class="row">
           <div class="col-12 text-right">
-            <a routerLink="/gerenciar-usuarios" [fragment]="user.status?'':'inativo'"  class="btn btn-link">Cancelar</a>
+            <a routerLink="/gerenciar-usuarios" [fragment]="user?.status?'':'inativo'"  class="btn btn-link">Cancelar</a>
             <button class="btn btn-primary" [disabled]="form.invalid">
               <i class="ta-save"></i> Salvar
             </button>

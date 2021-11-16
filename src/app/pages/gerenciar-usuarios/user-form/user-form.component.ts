@@ -61,15 +61,19 @@ export class UserFormComponent implements OnInit {
 
     if (this.form.valid) {
       try {
+        this.loading.show();
         await this.usersService.salvar(this.form.value);
         if (this.fotoPerfil.value.file) {
           await this.usersService.updateAvatar(this.fotoPerfil.value.file, parseFloat(this.user.id));
         }
-        await this.app.alert('Usuário salvo com sucesso');
+        this.loading.hide();
+        this.app.alert('Usuário salvo com sucesso').then;
         await this.app.router.navigate(['/gerenciar-usuarios/']);
       } catch (e) {
         console.error(e);
         this.app.alertError(e).then();
+      } finally {
+
       }
     }
   }

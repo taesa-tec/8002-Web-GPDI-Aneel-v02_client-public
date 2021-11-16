@@ -151,7 +151,13 @@ export class AuthService {
   }
 
 
-  logout(redirect?: string) {
+  async logout(redirect?: string) {
+    try {
+
+      await this.http.post('logout', {}).toPromise();
+    } catch (e) {
+      console.error(e);
+    }
     this.redirectTo = '/';
     if (this.modal.hasOpenModals()) {
       this.modal.dismissAll('logout');
