@@ -18,9 +18,9 @@ export class DemandasListComponent implements OnInit {
     {value: DemandaEtapa.PreAprovacao, text: 'Pré - Aprovação Superior Direto'},
     {value: DemandaEtapa.RevisorPendente, text: 'Revisor Pendente'},
     {value: DemandaEtapa.AprovacaoRevisor, text: 'Aprovação Revisor'},
-    {value: DemandaEtapa.AprovacaoCoordenador, text: 'Aprovação Coordenador PDI'},
-    {value: DemandaEtapa.AprovacaoGerente, text: 'Aprovação Gerente PDI'},
-    {value: DemandaEtapa.AprovacaoDiretor, text: 'Aprovação Diretor PDI'},
+    {value: DemandaEtapa.AprovacaoCoordenador, text: 'Aprovação Gerente PDI'},
+    {value: DemandaEtapa.AprovacaoGerente, text: 'Aprovação Gerente Executivo Gestão de Ativos'},
+    {value: DemandaEtapa.AprovacaoDiretor, text: 'Aprovação Diretor Técnico'},
   ];
   demandas: Array<Demanda> = [];
   _demandas: Array<Demanda> = [];
