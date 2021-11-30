@@ -12,12 +12,17 @@ export class ProjetoResolver implements Resolve<any> {
   }
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const projeto = await this.service.obter(route.params.id) as Projeto;
-    if (projeto) {
-      this.service.setProjeto(projeto);
-      return projeto;
+    try {
+
+      const projeto = await this.service.obter(route.params.id) as Projeto;
+      if (projeto) {
+        this.service.setProjeto(projeto);
+        return projeto;
+      }
+    } catch (e) {
+      console.error('Projeto não encontrado!');
     }
-    await this.router.navigate(['/projetos']);
+    await this.router.navigateByUrl('/projetos');
   }
 
 }

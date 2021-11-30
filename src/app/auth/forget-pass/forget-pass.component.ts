@@ -35,11 +35,10 @@ export class ForgetPassComponent implements OnInit {
     this.resultadoResponse = null;
     try {
       this.resultadoResponse = await this.authService.recuperarSenha(this.form.value);
-      this.app.alert('Email de recuperação enviado').then();
+      this.app.alert('Um email será enviado caso o usuário seja cadastrado no sistema').then();
       this.router.navigate(['/']).then();
     } catch (e) {
       console.error(e);
-      this.app.alert('Email não encontrado!').then();
     }
 
     this.loading.hide();

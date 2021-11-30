@@ -110,7 +110,8 @@ export class AppEntranceComponent implements OnInit {
       this.app.errorRoutes();
     }
     this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate(['./']).then();
+    this.router.navigateByUrl(location.pathname).then();
+
   }
 
 }
