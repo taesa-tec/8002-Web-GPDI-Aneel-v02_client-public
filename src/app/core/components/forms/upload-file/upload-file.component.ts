@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, forwardRef, Input, Output, EventEmitter } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as Filesize from 'filesize';
 
@@ -14,7 +14,7 @@ import * as Filesize from 'filesize';
     }
   ],
 })
-export class UploadFileComponent implements OnInit, ControlValueAccessor {
+export class UploadFileComponent implements ControlValueAccessor {
   @Input() name = '';
   @Input() disabled;
   @Input('value') val: FileList;
@@ -61,9 +61,6 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
       const file = this.value.item(i);
       this.fileinfo.push({ name: file.name, size: file.size });
     }
-  }
-
-  ngOnInit() {
   }
 
   onChange: any = () => {

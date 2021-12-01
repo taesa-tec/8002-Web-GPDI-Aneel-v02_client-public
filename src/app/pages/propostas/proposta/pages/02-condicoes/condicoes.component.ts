@@ -49,7 +49,7 @@ export class CondicoesComponent implements OnInit {
           const map = JSON.parse(clausulasAceitas);
           this.clausulasAceitas = new Map<number, boolean>(map);
         } catch (e) {
-
+          console.error(e);
         }
       }
     });

@@ -1,15 +1,14 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {UsersService} from '@app/services/users.service';
 import {User} from '@app/commons';
 import {CatalogsService} from '@app/services/catalogs.service';
-import {environment} from '@env/environment';
 
 @Component({
   selector: 'app-list-users',
   templateUrl: './list-users.component.html',
   styleUrls: ['./list-users.component.scss']
 })
-export class ListUsersComponent implements OnInit {
+export class ListUsersComponent {
 
   @Input() users: Array<User>;
 
@@ -27,10 +26,6 @@ export class ListUsersComponent implements OnInit {
 
   userAvatar(user: User) {
     return user.fotoPerfil ? `url(${user.fotoPerfil})` : '/assets/default_avatar.png';
-  }
-
-  ngOnInit() {
-
   }
 
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, Input, ElementRef, forwardRef, Output, EventEmitter} from '@angular/core';
+import {Component, ViewChild, Input, ElementRef, forwardRef, Output, EventEmitter} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
@@ -13,7 +13,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
     }
   ],
 })
-export class UploadImageComponent implements OnInit, ControlValueAccessor {
+export class UploadImageComponent implements ControlValueAccessor {
 
   onChange: (...args) => any;
   onTouched: (...args) => any;
@@ -68,9 +68,6 @@ export class UploadImageComponent implements OnInit, ControlValueAccessor {
       };
     }
     return {};
-  }
-
-  ngOnInit() {
   }
 
   preventDefault(event) {

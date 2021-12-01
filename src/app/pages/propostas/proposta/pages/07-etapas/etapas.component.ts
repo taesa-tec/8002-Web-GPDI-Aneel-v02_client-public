@@ -98,7 +98,7 @@ export class EtapasComponent implements OnInit {
     try {
       await ref.result;
     } catch (e) {
-
+      console.error(e);
     }
     this.router.navigate([]).then();
   }

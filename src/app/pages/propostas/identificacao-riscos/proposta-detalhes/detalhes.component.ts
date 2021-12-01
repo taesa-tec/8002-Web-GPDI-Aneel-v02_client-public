@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {ActivatedRoute} from '@angular/router';
 import {FileService} from '@app/services/file.service';
@@ -16,7 +16,7 @@ export interface CaptacaoSelecao {
   templateUrl: './detalhes.component.html',
   styleUrls: ['./detalhes.component.scss']
 })
-export class DetalhesComponent implements OnInit {
+export class DetalhesComponent{
 
   route: ActivatedRoute;
   captacao: any;
@@ -25,9 +25,6 @@ export class DetalhesComponent implements OnInit {
   constructor(public activeModal: NgbActiveModal, protected file: FileService, protected cdr: ChangeDetectorRef) {
   }
 
-  ngOnInit(): void {
-
-  }
 
   protected resetProgress() {
     this.progress = {loaded: 0, total: 0, type: 0};

@@ -1,5 +1,5 @@
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
@@ -7,7 +7,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
   templateUrl: './modal-demanda.component.html',
   styleUrls: ['./modal-demanda.component.scss']
 })
-export class ModalDemandaComponent implements OnInit {
+export class ModalDemandaComponent {
   form = new FormGroup({
     confirm: new FormControl(false, Validators.requiredTrue)
   });
@@ -23,8 +23,4 @@ export class ModalDemandaComponent implements OnInit {
   confirmarRejeicao() {
     this.status = 2;
   }
-
-  ngOnInit(): void {
-  }
-
 }

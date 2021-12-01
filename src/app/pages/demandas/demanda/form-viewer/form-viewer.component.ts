@@ -34,7 +34,7 @@ export class FormViewerComponent implements OnInit {
       this.demanda = this.demandasService.getCurrentDemanda();
       this.demandaId = this.demanda.id;
     } catch (e) {
-
+      console.error(e);
     }
 
     if (this.key === undefined || this.key === null) {

@@ -49,7 +49,7 @@ export class GestaoDeDemandasComponent implements OnInit {
     try {
       await modalRef.result;
     } catch (e) {
-
+      console.error(e);
     }
     this.showChild = true;
 

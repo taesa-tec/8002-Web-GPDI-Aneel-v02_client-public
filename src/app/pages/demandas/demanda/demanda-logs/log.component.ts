@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {LogProjeto} from '@app/commons';
 import {AppService} from '@app/services/app.service';
 import {SafeUrl} from '@angular/platform-browser';
@@ -8,7 +8,7 @@ import {SafeUrl} from '@angular/platform-browser';
   templateUrl: './log.component.html',
   styles: []
 })
-export class LogComponent implements OnInit {
+export class LogComponent {
 
   @Input() log: LogProjeto;
   @Output() viewForm: EventEmitter<any> = new EventEmitter<any>();
@@ -16,10 +16,6 @@ export class LogComponent implements OnInit {
   avatar: SafeUrl;
 
   constructor(protected app: AppService) {
-  }
-
-  ngOnInit() {
-
   }
 
   get hasLogDataStatusNovo() {

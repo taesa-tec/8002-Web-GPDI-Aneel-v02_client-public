@@ -1,8 +1,4 @@
 app-historico {
-  .unchanged {
-
-  }
-
   .modified {
     background-color: orange;
     color: white;
@@ -24,10 +20,6 @@ app-historico {
     position: relative;
     padding: 0.2em 0.5em;
     z-index: 0;
-  }
-
-  .legenda {
-
   }
 
   .modal-body {

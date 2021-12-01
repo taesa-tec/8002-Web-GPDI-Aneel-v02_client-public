@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, AfterViewInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {
   TableActionEvent,
   TableComponentActions,
@@ -19,7 +19,7 @@ import {Searchables} from '@app/core/util';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit, AfterViewInit {
+export class TableComponent implements OnInit {
 
   protected $listOrder: Array<TableOrder> = [];
   protected $defaultListOrder: Array<TableOrder> = [];
@@ -449,9 +449,5 @@ export class TableComponent implements OnInit, AfterViewInit {
     if (this.data.length === 0 && this.dataRequester) {
       this.setCurrentData().then();
     }
-  }
-
-  ngAfterViewInit() {
-
   }
 }

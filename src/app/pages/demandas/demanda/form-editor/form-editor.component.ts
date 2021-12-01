@@ -34,7 +34,7 @@ export class FormEditorComponent implements OnInit {
       this.key = this.route.snapshot.paramMap.get('form') || this.key;
       this.demandaId = parseFloat(this.route.snapshot.parent.paramMap.get('id')) || this.demandaId;
     } catch (e) {
-
+      console.error(e);
     }
 
     if (this.key === undefined || this.key === null) {

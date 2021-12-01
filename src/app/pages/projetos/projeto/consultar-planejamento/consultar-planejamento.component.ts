@@ -1,16 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-consultar-planejamento',
   templateUrl: './consultar-planejamento.component.html',
-  styles: [
-  ]
+  styles: []
 })
-export class ConsultarPlanejamentoComponent implements OnInit {
+export class ConsultarPlanejamentoComponent {
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor() {
   }
-
 }

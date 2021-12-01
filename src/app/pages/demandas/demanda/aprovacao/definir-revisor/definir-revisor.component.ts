@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Demanda} from '@app/commons/demandas';
 import {User} from '@app/commons';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
@@ -8,7 +8,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
   templateUrl: './definir-revisor.component.html',
   styles: []
 })
-export class DefinirRevisorComponent implements OnInit {
+export class DefinirRevisorComponent {
   @Input() demanda: Demanda;
   @Input() users: Array<User>;
   @Output() userSelected: EventEmitter<any> = new EventEmitter<any>();
@@ -17,9 +17,6 @@ export class DefinirRevisorComponent implements OnInit {
   });
 
   constructor() {
-  }
-
-  ngOnInit() {
   }
 
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {HttpClient} from '@angular/common/http';
@@ -9,7 +9,7 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./modal-page.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ModalPageComponent implements OnInit {
+export class ModalPageComponent {
 
   htmlContent: SafeHtml;
   loading = false;
@@ -49,8 +49,4 @@ export class ModalPageComponent implements OnInit {
       this.loading = false;
     }
   }
-
-  ngOnInit() {
-  }
-
 }

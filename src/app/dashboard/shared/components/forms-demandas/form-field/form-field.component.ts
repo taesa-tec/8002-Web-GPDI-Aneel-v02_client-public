@@ -8,7 +8,7 @@ import {AbstractControl, FormGroup, FormBuilder, Validators, FormArray, FormCont
   encapsulation: ViewEncapsulation.None
 })
 
-export class FormFieldComponent implements OnInit {
+export class FormFieldComponent {
 
   protected _field: FormField;
   protected _form: AbstractControl;
@@ -42,9 +42,6 @@ export class FormFieldComponent implements OnInit {
   }
 
   constructor(protected builder: FormBuilder) {
-  }
-
-  ngOnInit() {
   }
 
   add() {

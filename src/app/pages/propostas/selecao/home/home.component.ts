@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {MenuItem, UserRole} from '@app/commons';
 
 @Component({
@@ -6,7 +6,7 @@ import {MenuItem, UserRole} from '@app/commons';
   templateUrl: './home.component.html',
   styles: []
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
   menu: Array<MenuItem> = [
     {text: 'Seleção Pendente', path: 'pendente', role: [UserRole.Administrador, UserRole.User]},
@@ -14,9 +14,6 @@ export class HomeComponent implements OnInit {
   ];
 
   constructor() {
-  }
-
-  ngOnInit(): void {
   }
 
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 
@@ -12,7 +12,7 @@ import {AppService} from '@app/services';
   templateUrl: './forget-pass.component.html',
   styleUrls: ['./forget-pass.component.scss']
 })
-export class ForgetPassComponent implements OnInit {
+export class ForgetPassComponent {
 
   @ViewChild(LoadingComponent, {static: true})
   private loading: LoadingComponent;
@@ -24,10 +24,6 @@ export class ForgetPassComponent implements OnInit {
   });
 
   constructor(protected authService: AuthService, private router: Router, protected app: AppService) {
-  }
-
-  ngOnInit() {
-
   }
 
   async onSubmit() {

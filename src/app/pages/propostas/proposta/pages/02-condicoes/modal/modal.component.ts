@@ -7,15 +7,11 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss']
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent {
   form = new FormGroup({
     confirm: new FormControl(false, Validators.requiredTrue)
   });
 
   constructor(public activeModal: NgbActiveModal) {
   }
-
-  ngOnInit(): void {
-  }
-
 }

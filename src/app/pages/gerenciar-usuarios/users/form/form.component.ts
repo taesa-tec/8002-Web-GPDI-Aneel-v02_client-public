@@ -112,8 +112,4 @@ export class FormComponent implements OnInit {
     }
   }
 
-  removeUser() {
-
-  }
-
 }

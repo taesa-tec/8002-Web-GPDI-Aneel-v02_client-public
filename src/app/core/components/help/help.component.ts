@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ViewContainerRef, ViewChild, ContentChild, HostListener, ElementRef} from '@angular/core';
+import {Component, Input, ViewChild, HostListener, ElementRef} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NgbModal, NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 import {Subscription} from 'rxjs';
@@ -14,7 +14,7 @@ import {Router} from '@angular/router';
     'i{font-size:80%}'
   ]
 })
-export class HelpComponent implements OnInit {
+export class HelpComponent {
   private _codigo;
   private subscription: Subscription = null;
   loading = true;
@@ -39,9 +39,6 @@ export class HelpComponent implements OnInit {
     protected router: Router,
     protected http: HttpClient,
     protected element: ElementRef, protected modal: NgbModal, protected auth: AuthService) {
-  }
-
-  ngOnInit() {
   }
 
   getMessage() {

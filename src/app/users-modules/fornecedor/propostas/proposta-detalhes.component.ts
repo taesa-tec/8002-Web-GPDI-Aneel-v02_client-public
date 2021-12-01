@@ -1,6 +1,5 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {ActivatedRoute} from '@angular/router';
 import {FileService} from '@app/services/file.service';
 
 @Component({
@@ -8,16 +7,12 @@ import {FileService} from '@app/services/file.service';
   templateUrl: './proposta-detalhes.component.html',
   styleUrls: []
 })
-export class PropostaDetalhesComponent implements OnInit {
+export class PropostaDetalhesComponent {
 
   proposta: any;
   progress: { type: number; loaded: number; total: number } = null;
 
   constructor(public activeModal: NgbActiveModal, protected file: FileService, protected cdr: ChangeDetectorRef) {
-  }
-
-  ngOnInit(): void {
-
   }
 
   protected resetProgress() {

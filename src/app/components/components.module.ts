@@ -1,5 +1,4 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
 import {ViewContratoComponent} from '@app/components/view-contrato/view-contrato.component';
 import {CoreModule} from '@app/core';
 

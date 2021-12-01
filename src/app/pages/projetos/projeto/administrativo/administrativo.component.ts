@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {MenuItem, TOPNAV_MENU, UserRole} from '@app/commons';
 import {ProjetoService} from '@app/pages/projetos/projeto/services/projeto.service';
 import {BehaviorSubject} from 'rxjs';
@@ -36,12 +36,8 @@ import {AuthService} from '@app/services';
     }
   ]
 })
-export class AdministrativoComponent implements OnInit {
+export class AdministrativoComponent {
 
   constructor() {
   }
-
-  ngOnInit(): void {
-  }
-
 }

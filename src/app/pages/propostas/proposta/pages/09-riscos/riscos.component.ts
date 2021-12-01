@@ -49,6 +49,7 @@ export class RiscosComponent implements OnInit {
   loading = false;
 
   canEdit: boolean;
+
   constructor(
     @Inject(PROPOSTA_CAN_EDIT) public propostaCanEdit: BehaviorSubject<boolean>,
     protected router: Router,
@@ -67,7 +68,7 @@ export class RiscosComponent implements OnInit {
     try {
       await ref.result;
     } catch (e) {
-
+      // Modais lançam erros quando fechandos com a função dimiss
     }
     this.router.navigate([]).then();
   }

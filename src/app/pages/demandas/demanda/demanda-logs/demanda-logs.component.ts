@@ -26,7 +26,7 @@ export class DemandaLogsComponent implements OnInit {
     try {
       await this.loadData();
     } catch (e) {
-
+      console.error(e);
     }
   }
 

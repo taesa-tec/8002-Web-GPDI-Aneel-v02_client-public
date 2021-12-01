@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {DemandaEtapa, DemandaEtapaItem, DemandaEtapaItems, DemandaEtapaStatus, DemandaEtapaStatusText} from '../../commons';
 import {Demanda} from '@app/commons/demandas';
 
@@ -9,7 +9,7 @@ import {Demanda} from '@app/commons/demandas';
   styleUrls: ['demanda-progress-etapa.component.scss']
 })
 
-export class DemandaProgressEtapaComponent implements OnInit {
+export class DemandaProgressEtapaComponent {
   constructor() {
   }
 
@@ -76,6 +76,4 @@ export class DemandaProgressEtapaComponent implements OnInit {
     return DemandaEtapaStatusText[this.etapaStatus];
   }
 
-  ngOnInit() {
-  }
 }

@@ -73,11 +73,6 @@ export class ProdutosComponent implements OnInit {
     });
   }
 
-  async tableAction({action, data}) {
-    if (action === 'editar') {
-    }
-  }
-
   async formProduto() {
     const ref = this.modal.open(ProdutoFormComponent, {size: 'lg'});
     const cmp = ref.componentInstance as ProdutoFormComponent;

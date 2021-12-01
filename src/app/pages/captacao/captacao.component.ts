@@ -37,13 +37,9 @@ import {BehaviorSubject} from 'rxjs';
     }
   ]
 })
-export class CaptacaoComponent implements OnInit {
+export class CaptacaoComponent {
 
   constructor() {
-  }
-
-  ngOnInit() {
-
   }
 
 }

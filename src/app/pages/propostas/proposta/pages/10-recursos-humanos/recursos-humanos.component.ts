@@ -79,7 +79,7 @@ export class RecursosHumanosComponent implements OnInit {
     try {
       await ref.result;
     } catch (e) {
-
+      // Modais lançam erros quando fechandos com a função dimiss
     }
     this.router.navigate([]).then();
   }

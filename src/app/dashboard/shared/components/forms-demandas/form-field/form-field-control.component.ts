@@ -3,7 +3,6 @@ import {AbstractControl} from '@angular/forms';
 import {FormField} from '@app/commons/demandas';
 import {ConfigEditor} from '@app/core/shared';
 import * as ClassicEditor from '@projects/ckeditor/build/ckeditor';
-// import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter';
 
 
 @Component({
@@ -11,7 +10,7 @@ import * as ClassicEditor from '@projects/ckeditor/build/ckeditor';
   templateUrl: 'form-field-control.component.html',
   styleUrls: ['form-field-control.component.scss']
 })
-export class FormFieldControlComponent implements OnInit {
+export class FormFieldControlComponent {
   constructor() {
   }
 
@@ -24,7 +23,4 @@ export class FormFieldControlComponent implements OnInit {
 
 
   @Output() remove = new EventEmitter<any>();
-
-  ngOnInit() {
-  }
 }

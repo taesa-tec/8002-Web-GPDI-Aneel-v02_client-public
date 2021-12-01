@@ -11,7 +11,7 @@ import {HttpClient} from '@angular/common/http';
   templateUrl: './installer.component.html',
   styles: ['form{max-width: 600px}']
 })
-export class InstallerComponent implements OnInit {
+export class InstallerComponent {
 
   @ViewChild(LoadingComponent, {static: true})
   private loading: LoadingComponent;
@@ -35,9 +35,6 @@ export class InstallerComponent implements OnInit {
               protected activatedRoute: ActivatedRoute,
               protected http: HttpClient
   ) {
-  }
-
-  ngOnInit(): void {
   }
 
   async requestInstall() {

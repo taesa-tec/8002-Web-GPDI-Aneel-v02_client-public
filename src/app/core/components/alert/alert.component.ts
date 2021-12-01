@@ -1,23 +1,22 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
-import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import {Component, ElementRef} from '@angular/core';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-alert',
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.scss']
 })
-export class AlertComponent implements OnInit {
+export class AlertComponent {
 
   message: string;
   title: string;
+
   set className(value) {
     const el: HTMLElement = this.elementRef.nativeElement;
     el.parentElement.classList.add(value);
   }
 
-  constructor(public activeModal: NgbActiveModal, protected elementRef: ElementRef) { }
-
-  ngOnInit() {
+  constructor(public activeModal: NgbActiveModal, protected elementRef: ElementRef) {
   }
 
   setMessage(message: string | Array<string>) {

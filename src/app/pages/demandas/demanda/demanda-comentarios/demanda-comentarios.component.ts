@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Demanda} from '@app/commons/demandas';
 
 @Component({
@@ -6,12 +6,10 @@ import {Demanda} from '@app/commons/demandas';
   templateUrl: './demanda-comentarios.component.html',
   styles: []
 })
-export class DemandaComentariosComponent implements OnInit {
+export class DemandaComentariosComponent {
 
   @Input() demanda: Demanda;
+
   constructor() {
   }
-  ngOnInit() {
-  }
-
 }

@@ -72,8 +72,6 @@ export class UserFormComponent implements OnInit {
       } catch (e) {
         console.error(e);
         this.app.alertError(e).then();
-      } finally {
-
       }
     }
   }

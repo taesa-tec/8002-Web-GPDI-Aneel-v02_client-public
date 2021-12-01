@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {ActivatedRoute} from '@angular/router';
 import {FileService} from '@app/services/file.service';
@@ -17,7 +17,7 @@ export interface CaptacaoFormalizacao {
   selector: 'app-proposta-detalhes',
   templateUrl: './formalizacao-detalhes.component.html'
 })
-export class FormalizacaoDetalhesComponent implements OnInit {
+export class FormalizacaoDetalhesComponent {
 
   route: ActivatedRoute;
   captacao: CaptacaoFormalizacao;
@@ -25,10 +25,6 @@ export class FormalizacaoDetalhesComponent implements OnInit {
   aprovado: boolean;
 
   constructor(public activeModal: NgbActiveModal, protected file: FileService, protected cdr: ChangeDetectorRef) {
-  }
-
-  ngOnInit(): void {
-
   }
 
   protected resetProgress() {

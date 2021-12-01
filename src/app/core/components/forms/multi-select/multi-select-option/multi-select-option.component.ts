@@ -1,19 +1,15 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-multi-select-option',
   template: '',
   styles: []
 })
-export class MultiSelectOptionComponent implements OnInit {
+export class MultiSelectOptionComponent {
 
   @Input() value;
   @Input() label;
 
   constructor() {
   }
-
-  ngOnInit(): void {
-  }
-
 }

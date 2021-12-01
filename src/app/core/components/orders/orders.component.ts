@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
+import {Component, Output, EventEmitter, Input} from '@angular/core';
 
 @Component({
   selector: 'app-handler-order',
@@ -9,7 +9,7 @@ import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
     </div>`,
   styleUrls: ['./orders.component.scss']
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent {
 
   constructor() {
   }
@@ -20,9 +20,6 @@ export class OrdersComponent implements OnInit {
   @Input() currents: Array<{ field: string; direction: 'asc' | 'desc' }>;
   @Output() order: EventEmitter<{ field: string; type: string; direction: 'asc' | 'desc' }> = new EventEmitter();
   protected isLastOrder = false;
-
-  ngOnInit() {
-  }
 
   get orderClass() {
     if (this.currents) {
