@@ -153,7 +153,6 @@ export class AuthService {
 
   async logout(redirect?: string) {
     try {
-
       await this.http.post('logout', {}).toPromise();
     } catch (e) {
       console.error(e);

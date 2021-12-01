@@ -184,7 +184,7 @@ export class AppService {
 
   forceRefresh() {
     this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate(['./']).then();
+    this.router.navigateByUrl(location.pathname).then();
   }
 
   updateRoutes() {
