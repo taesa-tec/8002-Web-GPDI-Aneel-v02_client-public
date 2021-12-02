@@ -1,6 +1,5 @@
 import {UserRole, ProjetoAccess} from './enums';
 import {TextValue} from './common';
-import {ResultadoResponse} from './responses';
 
 export const Roles: Array<TextValue> = [
 
@@ -29,16 +28,6 @@ export const TiposProdutos: Array<TextValue> = [
   {text: 'Máquina ou Equipamento', value: 'ME'}
 ];
 
-export const FasesCadeiaInovacao: Array<TextValue> = [
-  {text: 'Pesquisa Básica Dirigida', value: 'PB'},
-  {text: 'Pesquisa Aplicada', value: 'PA'},
-  {text: 'Desenvolvimento Experimental', value: 'DE'},
-  {text: 'Cabeça de série', value: 'CS'},
-  {text: 'Lote Pioneiro', value: 'LP'},
-  {text: 'Inserção no Mercado', value: 'IM'},
-];
-
-//
 export const Atividades: Array<TextValue> = [
   {text: 'Dedicação horária dos membros da equipe de gestão do Programa de PDI da Empresa, quadro efetivo.', value: 'HH'},
   {
@@ -90,13 +79,6 @@ export const IndicadoresEconomicos: Array<TextValue> = [
   {text: 'Outro - Outro', value: 'OU'},
 ];
 
-export const IndicadoresSocioambientais: Array<TextValue> = [
-  {text: 'Possibilidade de impactos ambientais (água, ar ou solo).', value: 'ISA1'},
-  {text: 'Possibilidade de diversificação da matriz energética.', value: 'ISA2'},
-  {text: 'Possibilidade de desenvolvimento de nova atividade socioeconômica (lazer, turismo, pesca, agricultura, etc.)', value: 'ISA3'},
-  {text: 'Possibilidade de impactos na segurança ou na qualidade de vida da comunidade.', value: 'ISA4'},
-];
-
 export const PropriedadeIntelectual: Array<TextValue> = [
   {text: 'Patente de Invenção', value: 'PI'},
   {text: 'Patente de Modelo de Utilidade', value: 'PU'},
@@ -104,35 +86,11 @@ export const PropriedadeIntelectual: Array<TextValue> = [
   {text: 'Registro de Desenho Industrial', value: 'RD'},
 ];
 
-export const TiposProducaoTC: Array<TextValue> = [
-  {text: 'Periódico Nacional', value: 'PN'},
-  {text: 'Periódico Internacional', value: 'PI'},
-  {text: 'Anais de Evento Nacional', value: 'AN'},
-  {text: 'Anais de Evento Internacional', value: 'AI'}
-];
-
-export const TiposCapacitacao: Array<TextValue> = [
-  {text: 'PósDoutorado (Stricto Sensu)', value: 'PD'},
-  {text: 'Doutorado (Stricto Sensu)', value: 'DO'},
-  {text: 'Mestrado (Stricto Sensu)', value: 'ME'},
-  {text: 'Especialização (Lato Sensu)', value: 'ES'},
-];
-
 export const TiposCompartilhamento: Array<TextValue> = [
   {text: 'Domínio Público', value: 'DP'},
   {text: 'Exclusivo da(s) empresa(s) de energia elétrica', value: 'EE'},
   {text: 'Exclusivo da(s) entidade(s) executora(s)', value: 'EX'},
   {text: 'Compartilhado entre as empresa(s) de energia elétrica e entidade(s) executora(s)', value: 'CE'},
-];
-
-export const CategoriasContabeis: Array<TextValue> = [
-  // { text: "Recursos Humanos", value: "RH" },
-  {text: 'Serviços de Terceiros', value: 'ST'},
-  {text: 'Materiais de Consumo', value: 'MC'},
-  {text: 'Materiais Permanentes e Equipamentos', value: 'MP'},
-  {text: 'Viagens e Diárias', value: 'VD'},
-  {text: 'Outros', value: 'OU'},
-
 ];
 
 export const Funcoes: Array<TextValue> = [
@@ -150,64 +108,6 @@ export const Graduacoes: Array<TextValue> = [
   {text: 'Especialista', value: 'ES'},
   {text: 'Superior', value: 'SU'},
   {text: 'Técnico', value: 'TE'},
-];
-
-export const EmpresaTaesa: Array<TextValue> = [
-  {text: 'TAESA', value: '7527'},
-  {text: 'ATE', value: '4906'},
-  {text: 'ATE II', value: '5012'},
-  {text: 'ATE III', value: '5455'},
-  {text: 'ETEO', value: '414'},
-  {text: 'GTESA', value: '3624'},
-  {text: 'MARIANA', value: '8837'},
-  {text: 'MUNIRAH', value: '4757'},
-  {text: 'NOVATRANS', value: '2609'},
-  {text: 'NTE', value: '3619'},
-  {text: 'PATESA', value: '3943'},
-  {text: 'São Gotardo', value: '8193'},
-  {text: 'STE', value: '3944'},
-  {text: 'TSN', value: '2607'},
-  {text: 'ETAU', value: '3942'},
-  {text: 'BRASNORTE', value: '6625'},
-  {text: 'EBTE', value: null},
-  {text: 'ENTE', value: '4380'},
-  {text: 'ERTE', value: '3939'},
-  {text: 'ESDE', value: '3939'},
-  {text: 'ETEP', value: '2648'},
-  {text: 'Lumitrans', value: '4821'},
-  {text: 'STC', value: '5454'},
-  {text: 'ECTE', value: '2606'},
-  {text: 'ETSE', value: null},
-  {text: 'TRANSIRAPÉ', value: '5011'},
-  {text: 'TRANSLESTE', value: '4734'},
-  {text: 'TRANSUDESTE', value: '5014'},
-];
-
-export const TiposInfraestrutura: Array<TextValue> = [
-  {text: 'Laboratório Novo em Instituição de Ensino Superior.', value: 'LNS'},
-  {text: 'Laboratório Existente em Instituição de Ensino Superior.', value: 'LES'},
-  {text: 'Laboratório Novo em Instituição de Pesquisa.', value: 'LNP'},
-  {text: 'Laboratório Existente em Instituição de Pesquisa.', value: 'LEP'},
-  {text: 'Laboratório Novo em Empresa de Energia Elétrica.', value: 'LNE'},
-  {text: 'Laboratório Existente em Empresa de Energia Elétrica.', value: 'LEE'},
-];
-
-export const NoRequest: ResultadoResponse = {
-  acao: 'NoRequest',
-  id: null,
-  sucesso: true,
-  inconsistencias: []
-};
-
-export const TiposDoc: Array<TextValue> = [
-  {text: 'Cupom Fiscal', value: 'Cupom'},
-  {text: 'Declaração de Horas', value: 'Declaracao'},
-  {text: 'Fatura', value: 'Fatura'},
-  {text: 'Guia de NFS-e', value: 'Guia'},
-  {text: 'Nota Fiscal', value: 'Nota'},
-  {text: 'Recibo', value: 'Recibo'},
-  {text: 'Reserva', value: 'Reserva'},
-  {text: 'Recibo não vinculado a CNPJ', value: 'ReciboSemCNPJ'}
 ];
 
 export const AcaoLog: Array<TextValue> = [

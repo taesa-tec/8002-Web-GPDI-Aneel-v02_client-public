@@ -43,7 +43,7 @@ export class InstallerComponent {
       try {
         this.loading.show();
 
-        await this.http.post('/api/Sistema/Install', this.form.value).toPromise();
+        await this.http.post('Sistema/Install', this.form.value).toPromise();
 
         this.app.alert('Usuário administrativo cadastrado com sucesso').then();
         this.app.setInstalled();

@@ -1,9 +1,6 @@
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
-import {ServiceBase} from '@app/services/service-base.service';
-import {Observable} from 'rxjs';
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {CaptacoesService} from '@app/users-modules/suprimento/services/captacoes.service';
-import {ROOT_URL} from '@app/commons';
 
 @Injectable()
 export class CaptacaoResolver implements Resolve<any> {

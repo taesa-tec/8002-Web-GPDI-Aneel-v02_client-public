@@ -7,12 +7,8 @@ import {version} from '../../package.json';
 
 export const environment = {
   production: false,
-  api_url: '/api',
-  version: version + '-dev',
-  autologin: {
-    user: '',
-    pass: ''
-  }
+  api_url: 'http://localhost:5000/api',
+  version: version + '-dev'
 };
 
 /*

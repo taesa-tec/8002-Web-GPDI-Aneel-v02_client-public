@@ -6,12 +6,8 @@ import {version} from '../../package.json';
 
 export const environment = {
   production: false,
-  api_url: '/api',
-  version,
-  autologin: {
-    user: 'diego.franca@lojainterativa.com',
-    pass: 'Loja@123'
-  }
+  api_url: 'http://localhost:5000/api',
+  version
 };
 
 /*
