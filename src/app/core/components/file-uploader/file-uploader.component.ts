@@ -1,8 +1,8 @@
-import { Component, Input, OnInit, AfterContentChecked, AfterViewInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClient, HttpEvent, HttpEventType, HttpRequest } from '@angular/common/http';
-import { FormArray, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { AppService } from '@app/services/app.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {HttpClient, HttpEvent, HttpEventType} from '@angular/common/http';
+import {FormBuilder} from '@angular/forms';
+import {AppService} from '@app/services/app.service';
 
 @Component({
   selector: 'app-file-uploader',
@@ -25,6 +25,7 @@ export class FileUploaderComponent implements OnInit {
   get app() {
     return this._app;
   }
+
   set app(value: AppService) {
     this._app = this._app || value;
   }
@@ -64,6 +65,7 @@ export class FileUploaderComponent implements OnInit {
   fileChange(event) {
     this.sendFiles();
   }
+
   fileChangeError(message) {
     this._app.alertError(message);
   }
@@ -77,11 +79,10 @@ export class FileUploaderComponent implements OnInit {
         const file = this.files.item(i);
         formdata.append(`files[${i}]`, file);
       }
-      // const request = new HttpRequest('POST', 'File', formdata, {reportProgress: true});
       this._preSelecteds = this.filesSent.filter(f => this.selecteds[`${f.id}`]).map(f => f.id);
       console.log(this._preSelecteds);
 
-      this.http.post(this.pathUpload, formdata, { reportProgress: true, observe: 'events' })
+      this.http.post(this.pathUpload, formdata, {reportProgress: true, observe: 'events'})
         .subscribe((event: HttpEvent<any>) => {
           switch (event.type) {
             case HttpEventType.Sent:
@@ -114,6 +115,7 @@ export class FileUploaderComponent implements OnInit {
     const selectedFiles = this.filesSent.filter(f => this.selecteds[f.id]);
     this.activeModal.close(selectedFiles);
   }
+
   async deleteFile(event: MouseEvent, file) {
     event.preventDefault();
     if (await this.app.confirm('Tem certeza que deseja excluir esse arquivo? Essa ação não pode ser desfeita', 'Tem certeza?')) {

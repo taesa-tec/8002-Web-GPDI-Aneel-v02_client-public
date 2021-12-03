@@ -129,7 +129,6 @@ export class ConfiguracaoComponent implements OnInit {
       this.uploads = await this.app.uploadForm(this.uploads.map(f => f.id), `Captacoes/${this.captacao.id}/Arquivos`);
       const files = this.uploads.map(f => f.id);
       this.arquivosControls.setValue(files);
-      //this.updateFormFiles(files);
     } catch (e) {
       console.log(e);
     }

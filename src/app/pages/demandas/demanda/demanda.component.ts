@@ -65,7 +65,6 @@ export class DemandaComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.demanda = data.demanda;
     });
-    // this.Subscriptions.push(fromEvent(window, 'popstate').subscribe((event) => this.historyBack(event)));
   }
 
 }

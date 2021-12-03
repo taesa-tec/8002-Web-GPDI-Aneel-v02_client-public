@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 import {FormField} from '@app/commons/demandas';
 import {ConfigEditor} from '@app/core/shared';

@@ -1,9 +1,8 @@
 import {Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter} from '@angular/core';
 import {Demanda, FormField} from '@app/commons/demandas';
-import {AbstractControl, FormGroup, FormBuilder, Validators, FormArray, FormControl} from '@angular/forms';
+import {FormGroup, FormBuilder, Validators, FormArray, FormControl} from '@angular/forms';
 import {AppService} from '@app/services/app.service';
 import {ActivatedRoute} from '@angular/router';
-import {uniqBy} from 'lodash-es';
 import {DemandasService} from '@app/services';
 
 
@@ -30,7 +29,8 @@ export class FormEditorComponent implements OnInit {
   demanda: Demanda;
 
 
-  constructor(protected service: DemandasService, protected builder: FormBuilder, protected app: AppService, protected route: ActivatedRoute) {
+  constructor(protected service: DemandasService, protected builder: FormBuilder,
+              protected app: AppService, protected route: ActivatedRoute) {
   }
 
   async ngOnInit() {
@@ -65,10 +65,9 @@ export class FormEditorComponent implements OnInit {
       files.forEach(file => {
         this.anexosFormArray.push(this.builder.control(file.id));
       });
-      this.anexos = files; // uniqBy([...this.anexos, ...files], item => item.id);
-      console.log(files);
+      this.anexos = files;
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   }
 
@@ -91,16 +90,12 @@ export class FormEditorComponent implements OnInit {
     const formControl = this.builder.group({});
 
     if (field.fieldType.match(/RichText|Text|Date|Options|Temas/)) {
-      //formControl.addControl("fieldValue", field.isArray ? new FormArray([]) : new FormControl("", [Validators.required]));
-
       formControl.addControl('value', new FormControl(controlValue?.value ?? '', [Validators.required]));
     }
 
     try {
       if (field.children) {
         const children = this.builder.group({});
-        //
-
         field.children.forEach(child => {
 
 
@@ -117,26 +112,20 @@ export class FormEditorComponent implements OnInit {
             children.addControl(child.key, childControl);
           }
         });
-
         if (field.fieldType === 'Form') {
           return children;
         }
         formControl.addControl('children', children);
-
       }
     } catch (error) {
       console.error(error);
 
     }
     return formControl;
-
-
   }
 
   buildForm(field: FormField, formValue: { value: any; children?: any }) {
-
     const formControl = this.builder.group({});
-
     try {
       if (field.children) {
         field.children.forEach(child => {
@@ -146,17 +135,13 @@ export class FormEditorComponent implements OnInit {
       }
     } catch (error) {
       console.error(error);
-
     }
-
     const root = this.builder.group({
       key: field.key
     });
     root.addControl('children', formControl);
     return root;
-
   }
-
 
   saveData() {
     if (this.form.valid) {

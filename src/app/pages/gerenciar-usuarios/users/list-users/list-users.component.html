@@ -22,14 +22,6 @@
         ></app-handler-order>
       </div>
     </th>
-    <!--
-      <th>
-        <div class="d-flex align-items-center">
-          <span class="mx-2">Status</span>
-          <app-handler-order [current]="listOrder" field="status" (order)=order($event)></app-handler-order>
-        </div>
-      </th>
-       -->
     <th>
       <div class="d-flex align-items-center">
         <span class="mx-2">Data Cadastro</span>
@@ -64,11 +56,6 @@
     <td>
       <span>{{ user.empresa || user.razaoSocial }}</span>
     </td>
-    <!--
-      <td>
-          <span>{{ gestor.status | userStatus }}</span>
-      </td>
-       -->
     <td>
       <span>{{ user.dataCadastro | date: "dd/MM/yyyy" }}</span>
     </td>

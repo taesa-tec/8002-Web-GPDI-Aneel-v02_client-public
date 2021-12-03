@@ -55,8 +55,6 @@ export class ListComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.route.data.subscribe(({propostas}: { propostas: Array<Proposta> }) => {
         this.propostas = propostas;
-        //this.cols = captacaoTable.cols;
-        //this.buttons = captacaoTable.buttons;
       }));
     this.addListeners();
   }

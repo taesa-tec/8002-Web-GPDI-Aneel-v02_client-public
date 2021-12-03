@@ -115,7 +115,7 @@ export class FornecedoresComponent implements OnInit {
         this.data = await this.service.obter();
       }
     } catch (e) {
-      //console.error(e);
+      console.error(e);
     } finally {
       await this.app.router.navigateByUrl('/configuracoes/fornecedores', {fragment: ''});
     }

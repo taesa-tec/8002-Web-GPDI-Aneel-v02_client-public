@@ -106,9 +106,6 @@ export class AppService {
     if (message instanceof HttpErrorResponse) {
       if (message.error) {
         const err = message.error;
-        // ref.componentInstance.title = err.title;// tá vindo en inglês
-
-
         if (err.errors && Object.keys(err.errors).length > 0) {
           const msgs = Object.keys(err.errors).map(k => err.errors[k]).reduce((p, c) => [...p, ...c], []);
           ref.componentInstance.setMessage(msgs);

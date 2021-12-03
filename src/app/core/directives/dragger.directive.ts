@@ -80,7 +80,6 @@ export class DraggerDirective implements AfterViewInit {
     this.hasEvents = false;
   }
 
-  // @HostListener("mousedown", ['$event'])
   mouseDown(event: MouseEvent) {
     if (this.mousebutton === 'any' || mapbutton.get(this.mousebutton) === event.button) {
       event.preventDefault();
@@ -90,7 +89,6 @@ export class DraggerDirective implements AfterViewInit {
     }
   }
 
-  // @HostListener("window:mousemove", ['$event'])
   mouseMove(event: MouseEvent) {
 
     if (this.isMouseDown && (!this.strict || this.strict && this.isMouseOver)) {
@@ -104,12 +102,10 @@ export class DraggerDirective implements AfterViewInit {
 
   }
 
-  // @HostListener("window:mouseup", ['$event'])
   mouseUp(event: MouseEvent) {
     if (!this.isMouseDown) {
       return;
     }
-    // event.preventDefault();
     this.isMouseDown = false;
     this.end.emit(event);
   }

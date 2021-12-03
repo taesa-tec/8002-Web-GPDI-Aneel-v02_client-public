@@ -3,7 +3,6 @@ import {TableComponentCols, TableComponentActions, TableComponentFilter} from '@
 import {Component, Inject, OnInit} from '@angular/core';
 import {AppService} from '@app/services';
 import {PropostasService} from '@app/pages/propostas/proposta/services/propostas.service';
-import {PropostaComponent} from '@app/pages/propostas/proposta/proposta.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EtapaFormComponent} from '@app/pages/propostas/proposta/pages/07-etapas/etapa-form/etapa-form.component';
 import {EtapasService} from '@app/pages/propostas/proposta/services/proposta-service-base.service';
@@ -85,12 +84,7 @@ export class EtapasComponent implements OnInit {
 
   }
 
-  async tableAction({action, data}) {
-    if (action === 'editar') {
-    }
-  }
-
-  async formEtapa(etapa?: any) {
+  async formEtapa(_?: any) {
     const ref = this.modal.open(EtapaFormComponent, {size: 'lg'});
     const cmp = ref.componentInstance as EtapaFormComponent;
     cmp.proposta = this.proposta;

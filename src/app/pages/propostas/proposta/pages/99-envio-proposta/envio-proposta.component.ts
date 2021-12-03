@@ -2,7 +2,6 @@ import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
 import {Proposta, Validations} from '@app/commons';
-import {PropostaComponent} from '@app/pages/propostas/proposta/proposta.component';
 import {PropostasService} from '@app/pages/propostas/proposta/services/propostas.service';
 import {FileService} from '@app/services/file.service';
 import {AppService} from '@app/services';
@@ -116,7 +115,6 @@ export class EnvioPropostaComponent implements OnInit {
 
   fileChange(evt: Event) {
     const files = (evt.target as HTMLInputElement).files;
-    // this.files = [];
     for (let i = 0; i < files.length; i++) {
       this.files.push(files.item(i));
     }

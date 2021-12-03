@@ -317,8 +317,7 @@ export class TableComponent implements OnInit {
         item.toggleSelect();
       }
     } catch (e) {
-      // console.log(e);
-
+      console.error(e);
     }
 
   }
@@ -358,7 +357,7 @@ export class TableComponent implements OnInit {
   }
 
   protected getTableCellData(col: TableComponentCol, item): TableCellData {
-    let value = '';
+    let value: string;
     const originalValue = get(item, col.field);
     const slug = kebabCase(col.field);
     if (typeof col.value === 'function') {

@@ -115,7 +115,6 @@ export class TemasComponent implements OnInit, ControlValueAccessor {
   }
 
   protected reset(keepOne = true) {
-    // this.subTemasForms.reset();
     while (this.subTemasForms.length > 0) {
       this.subTemasForms.removeAt(0);
     }

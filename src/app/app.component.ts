@@ -64,7 +64,7 @@ export class AppComponent implements OnInit {
     });
     this.app.router.events.pipe(
       filter(e => (e instanceof NavigationEnd || e instanceof NavigationCancel || e instanceof NavigationError)))
-      .subscribe(e => {
+      .subscribe(_ => {
         this.loading.hide();
       });
 

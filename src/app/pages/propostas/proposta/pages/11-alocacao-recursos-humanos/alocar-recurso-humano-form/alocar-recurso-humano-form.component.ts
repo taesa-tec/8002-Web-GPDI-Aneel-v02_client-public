@@ -1,4 +1,4 @@
-import {AfterViewChecked, AfterViewInit, Component, ElementRef, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {AppService} from '@app/services';
 import {FormBuilder, Validators} from '@angular/forms';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
@@ -102,7 +102,6 @@ export class AlocarRecursoHumanoFormComponent extends PropostaNodeFormDirective 
     if (!this.canEdit) {
       this.formMeses.disable();
     }
-    //this.updateFinanciador();
   }
 
   ngAfterViewInit() {

@@ -148,7 +148,6 @@ export class ViewContratoComponent implements OnInit {
 
   fileChange(evt: Event) {
     const files = (evt.target as HTMLInputElement).files;
-    // this.files = [];
     for (let i = 0; i < files.length; i++) {
       this.files.push(files.item(i));
     }
