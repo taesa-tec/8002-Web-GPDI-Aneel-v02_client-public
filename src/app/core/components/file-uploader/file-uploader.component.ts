@@ -80,8 +80,6 @@ export class FileUploaderComponent implements OnInit {
         formdata.append(`files[${i}]`, file);
       }
       this._preSelecteds = this.filesSent.filter(f => this.selecteds[`${f.id}`]).map(f => f.id);
-      console.log(this._preSelecteds);
-
       this.http.post(this.pathUpload, formdata, {reportProgress: true, observe: 'events'})
         .subscribe((event: HttpEvent<any>) => {
           switch (event.type) {
@@ -102,6 +100,7 @@ export class FileUploaderComponent implements OnInit {
           }
         }, error => {
           console.error(error);
+          this.app.alertError('Erro no upload, verifique os arquivos permitidos e tente novamente');
           this.progress = 0;
           this.isSending = false;
         });
