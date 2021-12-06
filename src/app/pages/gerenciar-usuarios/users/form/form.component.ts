@@ -105,7 +105,7 @@ export class FormComponent implements OnInit {
         };
         this.submited.emit(r);
         this.resultado = error.inconsistencias ? error : r;
-        console.log(error);
+
       } finally {
         this.loading.hide();
       }

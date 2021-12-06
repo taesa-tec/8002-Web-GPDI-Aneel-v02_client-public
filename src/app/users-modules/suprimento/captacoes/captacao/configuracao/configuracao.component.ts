@@ -130,7 +130,7 @@ export class ConfiguracaoComponent implements OnInit {
       const files = this.uploads.map(f => f.id);
       this.arquivosControls.setValue(files);
     } catch (e) {
-      console.log(e);
+
     }
   }
 

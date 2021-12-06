@@ -9,7 +9,7 @@ export class CatalogsService {
   protected cache = new Map<string, any>();
 
   constructor(private http: HttpClient) {
-    console.log('CatalogsService OK');
+
   }
 
   protected async getData<T>(key: string, url: string) {

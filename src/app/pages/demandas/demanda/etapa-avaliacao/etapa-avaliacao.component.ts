@@ -41,7 +41,7 @@ export class EtapaAvaliacaoComponent implements OnInit {
   }
 
   async download(anexo) {
-    console.log(anexo);
+
     if (this.demanda.id) {
       this.app.showLoading();
       try {

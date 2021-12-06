@@ -24,7 +24,7 @@ export class UploadFilesService {
   }
 
   download(url: string) {
-    console.log("CASA");
+
     return this.http.get(url, {
       responseType: 'blob' as 'json'
     });

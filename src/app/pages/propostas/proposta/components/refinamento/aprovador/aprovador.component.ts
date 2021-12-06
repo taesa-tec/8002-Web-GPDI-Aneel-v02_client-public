@@ -35,7 +35,7 @@ export class AprovadorComponent implements OnInit {
     try {
 
       this.arquivos = await this.app.uploadForm([]);
-      console.log(this.arquivos);
+
     } catch (e) {
       //
     }

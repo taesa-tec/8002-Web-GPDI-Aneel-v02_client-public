@@ -73,7 +73,7 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   criarCaptacao(data) {
-    console.log(data);
+
     const modalRef = this.modal.open(CriarComponent, {size: 'lg'});
     const criar = modalRef.componentInstance as CriarComponent;
     criar.id = data.id;
@@ -81,7 +81,7 @@ export class ListComponent implements OnInit, OnDestroy {
 
   actionAberta({action, data}) {
     // Redirecionar para outra tela
-    console.log(data);
+
   }
 
   actionEncerrada({action, data}) {

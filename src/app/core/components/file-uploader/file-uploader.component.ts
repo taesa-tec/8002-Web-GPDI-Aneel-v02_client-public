@@ -106,7 +106,7 @@ export class FileUploaderComponent implements OnInit {
         });
 
     } catch (e) {
-      console.log(e);
+
     }
   }
 

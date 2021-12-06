@@ -75,7 +75,7 @@ export class EditorComponent implements OnInit {
         }
       }
     } catch (e) {
-      console.log(e.message);
+
     }
   }
 
@@ -98,7 +98,7 @@ export class EditorComponent implements OnInit {
         this.activeModal.close();
       }
     } catch(e) {
-      console.log(e.message);
+
     }
   }
 

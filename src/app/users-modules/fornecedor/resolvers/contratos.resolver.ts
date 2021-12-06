@@ -18,7 +18,7 @@ export class ContratosResolver implements Resolve<any> {
           return result;
         }
       } catch (e) {
-        console.log(e);
+
       }
     }
     return [];
@@ -40,7 +40,7 @@ export class ContratoResolver implements Resolve<any> {
           return result;
         }
       } catch (e) {
-        console.log(e);
+
       }
     }
     return null;

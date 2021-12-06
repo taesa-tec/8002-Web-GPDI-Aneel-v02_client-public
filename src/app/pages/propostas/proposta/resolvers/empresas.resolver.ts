@@ -14,7 +14,7 @@ export class EmpresasResolver implements Resolve<any> {
       try {
         return await this.service.getEmpresas(_route.params.id);
       } catch (e) {
-        console.log(e);
+
       }
     }
     return [];

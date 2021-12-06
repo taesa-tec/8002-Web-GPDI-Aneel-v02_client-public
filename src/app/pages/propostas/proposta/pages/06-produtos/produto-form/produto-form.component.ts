@@ -68,7 +68,7 @@ export class ProdutoFormComponent implements OnInit {
         await this.service.salvar(this.form.value);
         this.activeModal.close();
       } catch (e) {
-        console.log(e);
+
         if (e.error && e.error.detail) {
           this.app.alert(e.error.detail, 'Erro').then();
         } else {
@@ -88,7 +88,7 @@ export class ProdutoFormComponent implements OnInit {
         this.activeModal.close(true);
       }
     } catch (e) {
-      console.log(e);
+
       if (e.error && e.error.detail) {
         this.app.alert(e.error.detail, 'Erro').then();
       } else {

@@ -49,12 +49,12 @@ export class FormViewerComponent implements OnInit {
 
   async submit(data) {
     this.app.loading.show();
-    console.log(data);
+
     try {
       await this.app.demandas.editarDemandaForm(this.demandaId, this.key, data).toPromise();
       this.app.alert('Formulário Salvo com sucesso!');
     } catch (e) {
-      console.log(e);
+
     }
     this.app.loading.hide();
   }

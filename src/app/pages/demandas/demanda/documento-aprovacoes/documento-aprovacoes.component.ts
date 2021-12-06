@@ -48,7 +48,7 @@ export class DocumentoAprovacoesComponent implements OnInit {
       this.pdfUrl = url;
     }).catch(err => {
       this.pdfProgress = null;
-      console.log(err);
+
     });
     this.$demanda = value;
   }
@@ -82,7 +82,7 @@ export class DocumentoAprovacoesComponent implements OnInit {
   }
 
   async download(anexo) {
-    console.log(anexo);
+
     if (this.demanda.id) {
       this.app.showLoading();
       try {

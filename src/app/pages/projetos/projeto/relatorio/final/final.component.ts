@@ -138,7 +138,7 @@ export class FinalComponent implements OnInit {
         this.app.alert('Relatório salvo com sucesso.');
       }
     } catch (e) {
-      console.log(e.message);
+
     }
   }
 

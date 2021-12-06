@@ -19,7 +19,7 @@ export class PermissionService {
   }
 
   hasPermission(permission, level = null) {
-    console.log(this.permissions);
+
     const hasPermission = this.permissions.find(p => p.has(permission))?.get(permission) || false;
     return hasPermission && (level == null || level === hasPermission);
   }

@@ -41,7 +41,7 @@ export class SelecaoComponent implements OnInit, OnDestroy {
       this.propostas = data.propostas;
       this.equipe = data.equipe;
       this.captacaoId = parseFloat(this.route.snapshot.fragment);
-      console.log(data);
+
     });
   }
 
@@ -56,7 +56,7 @@ export class SelecaoComponent implements OnInit, OnDestroy {
   }
 
   async download(proposta, arquivo: string) {
-    console.log(proposta);
+
     await this.fileService.urlToBlobDownload(`Captacoes/${proposta.captacaoId}/Propostas/${proposta.id}/${arquivo}`, `${arquivo}(${proposta.fornecedor}).pdf`);
   }
 
@@ -64,7 +64,7 @@ export class SelecaoComponent implements OnInit, OnDestroy {
     try {
       this.file = evt.target.files.item(0);
     } catch (e) {
-      console.log(e);
+
     }
   }
 

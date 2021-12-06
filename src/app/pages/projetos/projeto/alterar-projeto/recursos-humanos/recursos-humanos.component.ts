@@ -146,7 +146,7 @@ export class RecursosHumanosComponent implements OnInit {
       await this.service.delete(`${projeto.id}/Recursos/Humanos/${id}`);
       this.activeModal.close();
     } catch (e) {
-      console.log(e);
+
       if (e.error && e.error.detail) {
         this.app.alertError(e.error.detail).then();
       } else {

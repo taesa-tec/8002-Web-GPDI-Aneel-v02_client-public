@@ -93,7 +93,7 @@ export class CoExecutorFormComponent extends PropostaNodeFormDirective implement
         await this.service.excluir(this.coExecutor.id);
         this.activeModal.close(true);
       } catch (e) {
-        console.log(e);
+
         if (e.error && e.error.detail) {
           this.app.alert(e.error.detail, 'Erro').then();
         } else {

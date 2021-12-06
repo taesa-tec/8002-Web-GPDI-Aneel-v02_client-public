@@ -47,7 +47,7 @@ export class RepositorioXmlComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.subscribe(data => {
       this.xmls = data.xmls;
-      console.log(data);
+
     });
   }
 

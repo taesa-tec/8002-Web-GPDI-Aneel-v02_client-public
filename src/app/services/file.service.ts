@@ -10,7 +10,7 @@ export class FileService {
 
 
   constructor(private http: HttpClient, protected sanatizer: DomSanitizer) {
-    console.log('FileService Ok');
+
   }
 
   protected doDownload(file: File, filename?: string) {

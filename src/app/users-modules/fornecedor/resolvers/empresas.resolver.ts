@@ -32,7 +32,7 @@ export class EmpresasResolver implements Resolve<any> {
           return empresas;
         }
       } catch (e) {
-        console.log(e);
+
       }
     }
     return [];

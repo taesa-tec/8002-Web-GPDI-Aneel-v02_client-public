@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
       this.ks.splice(0, 1);
     }
     if (evt.key === 'a' && 'uuddlrlrba' === this.ks.join('')) {
-      console.log('%cKONAMI CODE - Você sabe o que está fazendo?', 'color:red; background: white');
+
       this.kc.next(true);
     }
   }

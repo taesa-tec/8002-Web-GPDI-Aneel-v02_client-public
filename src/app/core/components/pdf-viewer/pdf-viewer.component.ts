@@ -37,7 +37,7 @@ export class PdfViewerComponent implements OnInit {
       });
       this.loadedFileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.realUrlFile);
     } catch (e) {
-      console.log(e);
+
       if (e instanceof HttpErrorResponse && e.status === 404) {
         this.errorMessage = 'Arquivo não encontrado';
       }

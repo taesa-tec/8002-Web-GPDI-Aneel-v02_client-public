@@ -93,7 +93,7 @@ export class ListComponent implements OnInit, OnDestroy {
 
   actionAberta({action, data}) {
     // Redirecionar para outra tela
-    console.log(data);
+
   }
 
   actionEncerrada({action, data}) {

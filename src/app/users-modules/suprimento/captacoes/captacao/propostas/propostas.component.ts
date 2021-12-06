@@ -21,7 +21,7 @@ export class PropostasComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.fragment.subscribe(f => {
-      console.log(f);
+
     });
     if (this.parent.captacao.finalizada) {
       this.menu = [{text: 'Propostas Recebidas', path: 'recebidas'},

@@ -30,7 +30,7 @@ export class RecursoHumanoComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.registro) {
-      console.log(this.registro);
+
       this.form.patchValue(this.registro);
       let mes = this.form.value.mesReferencia;
       mes = mes.split('T')[0];

@@ -45,7 +45,7 @@ export class EditorComponent implements OnInit {
         this.activeModal.close();
       }
     } catch(e) {
-      console.log(e.message);
+
     }
   }
 

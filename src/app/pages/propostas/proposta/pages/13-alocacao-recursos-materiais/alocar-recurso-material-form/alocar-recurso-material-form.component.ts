@@ -55,7 +55,7 @@ export class AlocarRecursoMaterialFormComponent extends PropostaNodeFormDirectiv
   updateFinanciadora() {
     this.empresaFinanciadora = this.empresas.find(e => e.id === parseFloat(this.empresaFinanciadoraCtrl.value));
     const recebedora = this.empresas.find(e => e.id === parseFloat(this.empresaRecebedoraCtrl.value));
-    console.log(this.empresaFinanciadora, recebedora);
+
     if (this.empresaFinanciadora?.funcao === 'Executora' && recebedora?.funcao === 'Cooperada') {
       this.empresaRecebedoraCtrl.setValue('');
     }

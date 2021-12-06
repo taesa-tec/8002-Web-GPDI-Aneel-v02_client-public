@@ -18,7 +18,7 @@ export class PlanoTrabalhoResolver implements Resolve<any> {
           return result;
         }
       } catch (e) {
-        console.log(e);
+
       }
     }
     await this.router.navigate(['/fornecedor', 'propostas']);
