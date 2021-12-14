@@ -1,0 +1,72 @@
+<div class="modal-header">
+  <div class="d-block w-100 p-3 ">
+    <div class="row border-bottom">
+      <div class="col  pb-3">
+        <div class="text-uppercase modal-title text-blue-light fs-18">Comparativo de versões</div>
+      </div>
+      <div class="col">
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.close('close')">
+          <i class="ta-cancel-circle"></i>
+        </button>
+      </div>
+    </div>
+
+    <ng-container *ngIf="revisoes.length > 1">
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group py-3">
+            <select class="form-control" [ngModel]="revisaoId" (ngModelChange)="carregarRevisao($event)">
+              <option *ngFor="let version of revisoes | orderBy: 'createdAt'" [value]="version.id">
+                Revisão: {{version.name}} - {{version.createdAt | date: 'short'}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group py-3">
+            <div class="input form-control" readonly>Revisão Atual</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 legenda text-center">
+          <div>
+            <span class="diff-text inserted p-2">Texto inserido</span>
+            &nbsp;
+            <span class="diff-text deleted p-2">Texto removido</span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="revisoes.length <= 1">
+      <div class="row">
+        <div class="col py-2">
+          <div class="alert border border-info text-info text-center">
+            Não há revisões para serem comparadas
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+</div>
+<div class="modal-body">
+  <div class="wrap">
+
+    <div class="row" *ngIf="!loading; else htmlloading">
+      <div class="col" style="overflow: auto">
+        <div [innerHTML]="revisao" class="inner-html"></div>
+      </div>
+      <div class="col" style="overflow: auto" *ngIf="contrato; else nohistory">
+        <div [innerHTML]="contrato.conteudo" class="inner-html"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #htmlloading>
+  <div class="row">
+    <div class="col  text-center">Carregando Histórico</div>
+  </div>
+</ng-template>
+<ng-template #nohistory>
+  <div class="col text-center">Sem histórico de alterações</div>
+</ng-template>

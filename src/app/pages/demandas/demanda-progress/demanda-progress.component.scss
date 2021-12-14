@@ -1,0 +1,36 @@
+.demanda-progresso {
+  margin: 16px 0;
+  display: grid;
+  grid-template-columns: 20% repeat(7, calc(80% / 7));
+
+  .demanda-chunk {
+    flex: 1 1 auto;
+
+    &.demanda-info {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      box-sizing: border-box;
+      margin: 0 -8px;
+      flex: 1.5 0;
+      margin-left: 0;
+      padding: 8px 32px 8px 12px;
+      background: #eee;
+      clip-path: polygon(
+          0px 0px,
+          calc(100% - 22px) 0,
+          100% 50%,
+          calc(100% - 22px) 100%,
+          0% 100%
+      );
+    }
+
+    main {
+      flex: 1;
+    }
+
+    footer {
+      margin-top: 12px;
+    }
+  }
+}

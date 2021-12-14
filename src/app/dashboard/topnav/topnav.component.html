@@ -1,0 +1,32 @@
+<div class="layout-topnav">
+
+  <div class="layout-topnav-before">
+    <ng-content></ng-content>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <ul class="nav nav-bar-row nav-justified pt-3">
+        <ng-container *ngFor="let route of menu">
+          <li class="nav-item">
+            <a
+              routerLinkActive="active"
+              class="nav-link"
+              [routerLink]="route.path"
+            >
+              <span *ngIf="route.icon" class="fs-24 mr-3"><i [class]="route.icon"></i></span>
+              <ng-container *ngIf="route.beforeText"><span [innerHTML]="route.beforeText"></span></ng-container>
+              <span class="menu-item-text" [innerHTML]="route.text"></span>
+              <ng-container *ngIf="route.afterText"><span [innerHTML]="route.afterText"></span></ng-container>
+            </a
+            >
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+
+  <div class="wrap-outlet-projeto">
+    <router-outlet></router-outlet>
+  </div>
+</div>

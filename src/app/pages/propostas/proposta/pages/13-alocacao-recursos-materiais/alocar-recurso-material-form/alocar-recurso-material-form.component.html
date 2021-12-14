@@ -1,0 +1,99 @@
+<div class="modal-header">
+  <div class="text-uppercase modal-title text-blue-light fs-24">
+    <span *ngIf="canEdit">{{form.value.id === 0 ? "EDITAR ALOCAÇÃO DE" : "ALOCAR"}}</span>
+    <span *ngIf="!canEdit">ALOCAÇÃO</span>
+    RECURSO MATERIAL
+  </div>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <i class="ta-cancel-circle"></i>
+  </button>
+</div>
+
+<app-loading type="fullscreen"></app-loading>
+
+<div class="modal-body">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="recurso-material">Selecione um recurso material
+        <app-help codigo="alocacao-recurso-material"></app-help>
+      </label>
+      <select class="form-control" id="recurso-material" formControlName="recursoId">
+        <option value="" hidden>Selecione aqui</option>
+        <option [value]="recurso.id" *ngFor="let recurso of recursos">
+          {{ recurso.nome }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col">
+        <label for="empresa-financiadora">Empresa financiadora
+          <app-help codigo="alocacao-recurso-material-empresa-financiadora"></app-help>
+        </label>
+        <select class="form-control" id="empresa-financiadora" formControlName="empresaFinanciadoraId">
+          <option value="" hidden>Selecione</option>
+          <option [value]="empresa.id" *ngFor="let empresa of empresas">
+            {{ empresa.razaoSocial }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col">
+        <label for="empresa-recebedora">Empresa recebedora
+          <app-help codigo="alocacao-recurso-material-empresa-recebedora"></app-help>
+        </label>
+        <select class="form-control" id="empresa-recebedora" formControlName="empresaRecebedoraId">
+          <option value="" hidden>Selecione</option>
+          <option [value]="empresa.id" *ngFor="let empresa of empresas"
+                  [hidden]="empresa.funcao === 'Cooperada' && empresaFinanciadora?.funcao === 'Executora'">
+            {{ empresa.razaoSocial }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col">
+        <label for="etapa">Etapa
+          <app-help codigo="alocacao-recurso-material-etapa"></app-help>
+        </label>
+        <select class="form-control" id="etapa" formControlName="etapaId">
+          <option value="" hidden>Selecione</option>
+          <option [value]="etapa.id" *ngFor="let etapa of etapas">
+            Etapa {{ etapa.ordem }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col">
+        <label for="quantidade">Quantidade
+          <app-help codigo="alocacao-recurso-material-quantidade"></app-help>
+        </label>
+        <input type="number" class="form-control" id="quantidade" formControlName="quantidade" min="0"
+               placeholder="Digite">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Justificativa do recurso nesta etapa</label>
+      <app-textarea class="form-control" formControlName="justificativa" rows="4" maxlength="1000"></app-textarea>
+    </div>
+
+    <div class="form-group d-flex justify-content-between" *ngIf="canEdit">
+      <div>
+        <button type="button" class="button btn btn-danger" (click)="remover()" *ngIf="form.value.id !== 0">
+          <i class="ta-trash mr-1"></i>
+          Excluir Alocação
+        </button>
+      </div>
+      <div class="text-right">
+        <div class="button btn btn-link" (click)="activeModal.dismiss('cancel')">
+          Cancelar
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          <i class="ta-save mr-1"></i>
+          Salvar Alterações
+        </button>
+      </div>
+    </div>
+
+  </form>
+</div>

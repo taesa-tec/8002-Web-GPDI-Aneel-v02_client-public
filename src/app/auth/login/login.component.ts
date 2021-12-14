@@ -1,59 +1,73 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '@app/services/auth.service';
-import {Router} from '@angular/router';
-import {LoginRequest} from '@app/models';
-import {LoadingComponent} from '@app/core/shared/app-components/loading/loading.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {LoginRequest, UserRole} from '@app/commons';
+import {LoadingComponent} from '@app/core/components/loading/loading.component';
 import {environment} from '../../../environments/environment';
-
+import {FormBuilder, Validators} from '@angular/forms';
+import {filter} from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
 
-  @ViewChild(LoadingComponent)
+
+  @ViewChild(LoadingComponent, {static: true})
   private loading: LoadingComponent;
+  @ViewChild('email') inputEmail: ElementRef<HTMLInputElement>;
+  @ViewChild('password') inputPass: ElementRef<HTMLInputElement>;
 
   errorMessage: string;
-
-  loginRequest: LoginRequest = {
-    email: sessionStorage.getItem('last_login_user'),
-    password: ''
-  };
+  form = this.fb.group({
+    email: [sessionStorage.getItem('last_login_user') ?? '', [Validators.required, Validators.email]],
+    password: ['', Validators.required]
+  });
 
   remember = !environment.production;
 
-  constructor(protected authService: AuthService, private router: Router) {
+  constructor(protected auth: AuthService,
+              private router: Router,
+              protected fb: FormBuilder,
+              protected activatedRoute: ActivatedRoute,
+              protected cdr: ChangeDetectorRef) {
   }
 
-  doLogin(event) {
-
-    event.preventDefault();
-
-    const self = this;
-
-    this.loading.show();
-
-    this.errorMessage = null;
-
-    this.authService.login(this.loginRequest, this.remember).subscribe(
-      result => {
-        self.loading.hide();
-        if (!result.authenticated) {
-          self.errorMessage = result.message;
-        } else {
-          // self.router.navigate(['/dashboard']);
-        }
-      }, e => {
-        console.log(e);
-        self.loading.hide();
-      });
-
-  }
 
   ngOnInit(): void {
+    this.auth.error.pipe(filter(e => e != null)).subscribe(e => {
+      if (e.error) {
+        this.errorMessage = e.error.detail;
+      } else {
+        this.errorMessage = e.message;
+      }
+    });
+
+
+  }
+
+  ngAfterViewInit(): void {
+    if (this.form.value.email.length > 0) {
+      this.inputPass.nativeElement.focus();
+    } else {
+      this.inputEmail.nativeElement.focus();
+    }
+  }
+
+  async doLogin() {
+    if (this.form.invalid) {
+      return;
+    }
+
+    this.loading.show();
+    this.errorMessage = null;
+    await this.auth.login(this.form.value, this.remember);
+
+    this.form.get('password').setValue('');
+    this.loading.hide();
+    this.cdr.detectChanges();
 
   }
 }

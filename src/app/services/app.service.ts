@@ -1,23 +1,26 @@
 import {Injectable, Inject} from '@angular/core';
 import {NgbModal, NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
-import {AlertComponent} from '../core/shared/entry-components/alert/alert.component';
-import {ConfirmComponent} from '../core/shared/entry-components/confirm/confirm.component';
+import {AlertComponent} from '../core/components/alert/alert.component';
+import {ConfirmComponent, ConfirmComponentOption} from '../core/components/confirm/confirm.component';
 import {CatalogsService} from '@app/services/catalogs.service';
-import {ProjetosService} from '@app/services/projetos.service';
 import {AuthService} from '@app/services/auth.service';
 import {FileService} from '@app/services/file.service';
-import {UsersService} from '@app/services/users.service';
-import {PromptComponent} from '../core/shared/entry-components/prompt/prompt.component';
+import {PromptComponent} from '../core/components/prompt/prompt.component';
 import {Router} from '@angular/router';
 import {environment} from '@env/environment';
-import {ModalPageComponent} from '@app/core/shared/entry-components/modal-page/modal-page.component';
 import {DemandasService} from './demandas.service';
-import {BehaviorSubject, timer} from 'rxjs';
+import {BehaviorSubject, Subscription, timer} from 'rxjs';
 import {SistemaService} from '@app/services/sistema.service';
-import {FileUploaderComponent} from '@app/core/shared/entry-components/file-uploader/file-uploader.component';
+import {FileUploaderComponent} from '@app/core/components/file-uploader/file-uploader.component';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ErrorComponent} from '@app/core/screens/error.component';
+import {RoutesRoleMap} from '@app/routes';
 
 
-class LoadingController {
+@Injectable({
+  providedIn: 'root'
+})
+export class LoadingController {
 
   private loadingSource = new BehaviorSubject(false);
 
@@ -58,6 +61,9 @@ class LoadingController {
     }
     return this;
   }
+
+  constructor() {
+  }
 }
 
 @Injectable({
@@ -67,21 +73,21 @@ export class AppService {
 
   moment: any;
   config: any;
-  loading: LoadingController;
+  userSubscription: Subscription;
+  protected isInstalled = false;
+
 
   constructor(
     public modal: NgbModal,
     public catalogo: CatalogsService,
-    public projetos: ProjetosService,
     public demandas: DemandasService,
-    public users: UsersService,
     public file: FileService,
     public auth: AuthService,
     public sistema: SistemaService,
     public router: Router,
-    public modalConfig: NgbModalConfig
+    public modalConfig: NgbModalConfig,
+    public loading: LoadingController
   ) {
-    this.loading = new LoadingController();
     this.config = environment;
     this.modalConfig.backdrop = 'static';
   }
@@ -93,13 +99,43 @@ export class AppService {
     return ref.result;
   }
 
+  async alertError(message: string | Array<string> | HttpErrorResponse, title: string = 'Error') {
+    const ref = this.modal.open(AlertComponent, {backdrop: 'static'});
+    ref.componentInstance.title = title;
+    ref.componentInstance.className = 'border-danger';
+    if (message instanceof HttpErrorResponse) {
+      if (message.error) {
+        const err = message.error;
+        if (err.errors && Object.keys(err.errors).length > 0) {
+          const msgs = Object.keys(err.errors).map(k => err.errors[k]).reduce((p, c) => [...p, ...c], []);
+          ref.componentInstance.setMessage(msgs);
+        } else if (err instanceof Blob) {
+          const msg = await err.text();
+          if (err.type.endsWith('json')) {
+            const obj = JSON.parse(msg);
+            ref.componentInstance.setMessage(obj.detail);
+          } else {
+            ref.componentInstance.setMessage(msg);
+          }
+
+        } else if (err.detail) {
+          ref.componentInstance.setMessage(err.detail);
+        }
+      }
+    } else {
+      ref.componentInstance.setMessage(message);
+    }
+    return ref.result;
+  }
+
+
   confirm(message: string, title: string = 'Confirme',
-          options: { text: string, value: any, cssClass: string }[] =
+          options: Array<ConfirmComponentOption> =
             [
               {text: 'Cancelar', value: false, cssClass: 'btn btn-link'},
               {text: 'Ok', value: true, cssClass: 'btn-primary'}
-            ]) {
-    const ref = this.modal.open(ConfirmComponent, {backdrop: 'static'});
+            ], size: 'sm' | 'lg' | 'xl' | string = 'lg') {
+    const ref = this.modal.open(ConfirmComponent, {backdrop: 'static', size});
     ref.componentInstance.setMessage(message);
     ref.componentInstance.title = title;
     ref.componentInstance.options = options;
@@ -113,8 +149,14 @@ export class AppService {
     return ref.result;
   }
 
-  uploadForm() {
+  uploadForm(selecteds: Array<any> = [], path: string = 'File', multi = true) {
     const ref = this.modal.open(FileUploaderComponent, {backdrop: 'static', size: 'lg'});
+    const cmp = (ref.componentInstance as FileUploaderComponent);
+    cmp.pathUpload = path;
+    cmp.preSelected = selecteds;
+    cmp.isMulti = multi;
+    cmp.app = this;
+
     return ref.result;
   }
 
@@ -126,17 +168,58 @@ export class AppService {
     this.loading.hide();
   }
 
-  openPage(pageName) {
-    const ref = this.modal.open(ModalPageComponent, {backdrop: 'static', size: 'lg'});
-    const component = <ModalPageComponent>ref.componentInstance;
-    try {
-      component.setPage(pageName);
-    } catch (e) {
-      ref.dismiss(e);
-      this.alert(e.message);
-    }
+  //
 
-    return ref.result;
+  setInstalled() {
+    this.isInstalled = true;
+    if (!this.userSubscription) {
+      this.userSubscription = this.auth.user.subscribe(user => {
+        this.updateRoutes();
+      });
+    }
   }
+
+  forceRefresh() {
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigateByUrl(location.pathname).then();
+  }
+
+  updateRoutes() {
+    if (this.isInstalled) {
+      if (this.auth.isLoggedIn) {
+        this.userRoutes();
+      } else {
+        this.authRoutes();
+      }
+    } else {
+      this.installerRoutes();
+    }
+    this.forceRefresh();
+  }
+
+  authRoutes() {
+    this.router.resetConfig([{path: '', loadChildren: () => import('../auth/auth.module').then(m => m.AuthModule)}]);
+  }
+
+  installerRoutes() {
+    this.router.resetConfig([{path: '', loadChildren: () => import('../installer/installer.module').then(m => m.InstallerModule)}]);
+  }
+
+  errorRoutes() {
+    this.router.resetConfig([{path: '**', component: ErrorComponent}]);
+  }
+
+  userRoutes() {
+    const role = this.auth.role;
+    if (RoutesRoleMap.has(role)) {
+      const routes = RoutesRoleMap.get(role);
+      this.router.resetConfig(routes);
+    } else {
+      console.error(`Rotas para ${role} não disponíveis`);
+      this.auth.logout();
+    }
+  }
+
+
 }
 

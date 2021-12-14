@@ -1,0 +1,14 @@
+image: node:10.15.3
+
+pipelines:
+  branches:
+    master|develop:
+      - step:
+          name: Build and Test
+          caches:
+            - node
+          script:
+            - npm install -g @angular/cli
+            - npm install
+            - ng build --prod
+            - ng lint

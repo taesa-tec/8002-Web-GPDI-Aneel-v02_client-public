@@ -1,0 +1,12 @@
+.file-list {
+  max-width: 100%;
+  width: max-content;
+
+  .file-item {
+    min-width: 100%;
+
+    .btn {
+      justify-self: end;
+    }
+  }
+}

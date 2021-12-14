@@ -3,16 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 
-import {version} from './version';
+import {version} from '../../package.json';
 
 export const environment = {
-    production: false,
-    api_url: 'https://taesagestor.azurewebsites.net/api',
-    version: version,
-    autologin: {
-        user: '',
-        pass: ''
-    }
+  production: false,
+  api_url: 'http://localhost:5000/api',
+  version: version + '-dev'
 };
 
 /*

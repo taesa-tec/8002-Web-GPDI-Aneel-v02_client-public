@@ -1,31 +1,35 @@
 import {NgModule} from '@angular/core';
-// import { SharedModule } from '@app/core/shared/shared.module';
 
-import {DashboardRoutingModule} from './dashboard-routing.module';
+import {UsersModule} from '@app/pages/gerenciar-usuarios/users/users.module';
+import {HeaderComponent, SharedModule} from '@app/dashboard/shared';
 
-import {MeuCadastroComponent} from './meu-cadastro/meu-cadastro.component';
 import {NotFoundComponent} from './not-found/not-found.component';
-import {GerenciarUsuariosComponent} from './gerenciar-usuarios/gerenciar-usuarios.component';
 import {DashboardComponent} from './dashboard.component';
-import {UsersModule} from '@app/users/users.module';
-import {NovoProjetoComponent} from '@app/core/shared/novo-projeto/novo-projeto.component';
-import {SharedModule} from './shared/shared.module';
-import {currentUserProvider} from '@app/providers/user.provider';
+import {UsersService} from '@app/services/users.service';
+import {SidebarComponent} from '@app/dashboard/sidebar/sidebar.component';
+import {TopnavComponent} from '@app/dashboard/topnav/topnav.component';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    MeuCadastroComponent,
+    SidebarComponent,
+    TopnavComponent,
+    HeaderComponent,
     NotFoundComponent,
-    GerenciarUsuariosComponent,
-    NovoProjetoComponent,
   ],
-  entryComponents: [NovoProjetoComponent],
   imports: [
-    SharedModule,
-    UsersModule,
-    DashboardRoutingModule,
+    SharedModule
+  ],
+  exports: [
+    DashboardComponent,
+    HeaderComponent,
+    SidebarComponent,
+    TopnavComponent,
+    NotFoundComponent,
+  ],
+  providers: [
+    UsersService
   ]
 })
 export class DashboardModule {

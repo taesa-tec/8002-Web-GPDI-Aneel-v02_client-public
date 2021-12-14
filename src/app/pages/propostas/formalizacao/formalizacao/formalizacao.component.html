@@ -1,0 +1,112 @@
+<div class="modal-header">
+  <div class="text-uppercase modal-title text-blue-light fs-20">
+    Salvar Aprovação e Formalização
+  </div>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.close('close')">
+    <i class="ta-cancel-circle"></i>
+  </button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="mb-3">
+
+      <div class="form-group mb-0">
+        <label>O PROJETO FOI APROVADO?</label>
+      </div>
+      <div class="d-flex">
+        <label class="mr-3">
+          <input type="radio" formControlName="aprovado" [value]="true"> Sim
+        </label>
+        <label>
+          <input type="radio" formControlName="aprovado" [value]="false"> Não
+        </label>
+      </div>
+    </div>
+
+    <ng-container *ngIf="aprovadoCtrl.value">
+      <div class="form-group">
+        <label>TITULO COMPLETO</label>
+        <input type="text" class="form-control" formControlName="tituloCompleto">
+      </div>
+      <div class="form-group">
+        <label>NÚMERO DO PROJETO</label>
+        <input type="text" class="form-control" formControlName="numeroProjeto">
+      </div>
+      <div class="form-group">
+        <label>TIPO DE COMPARTILHAMENTO</label>
+        <select formControlName="compartilhamento" class="form-control">
+          <option value="" hidden>Selecione o compartilhamento</option>
+          <option value="DP">Domínio Público</option>
+          <option value="EE">Exclusivo da(s) empresa(s) de energia elétrica</option>
+          <option value="EX">Exclusivo da(s) entidade(s) executora(s)</option>
+          <option value="CE">Compartilhado entre as empresa(s) de energia elétrica e entidade(s) executora(s)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>SEGMENTO</label>
+        <select formControlName="segmentoId" class="form-control">
+          <option value="" hidden>Selecione o Segmento</option>
+          <option value="G">Geração</option>
+          <option value="T">Transmissão</option>
+          <option value="D">Distribuição</option>
+          <option value="C">Comercialização</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>DATA DE INÍCIO DO PROJETO</label>
+        <app-month-year-selector formControlName="inicioProjeto"></app-month-year-selector>
+      </div>
+      <div class="form-group">
+        <label>EMPRESA PROPONENTE</label>
+        <select class="form-control" formControlName="empresaProponenteId">
+          <option value="" hidden>Selecione a empresa</option>
+          <option *ngFor="let empresa of empresas | orderBy:'nome'" [value]="empresa.id">{{empresa.nome}}
+            ({{empresa.valor}})
+          </option>
+        </select>
+      </div>
+    </ng-container>
+
+    <div class="form-group">
+      <label>SELECIONE O DOCUMENTO COMPROBATÓRIO DE APROVAÇÃO</label>
+
+      <div>
+        <label class="btn btn-link">
+          <ng-container *ngIf="!file">
+            <i class="ta-plus-circle"></i>
+            <span> Anexar arquivo</span>
+          </ng-container>
+          <ng-container *ngIf="file">
+            <i class="ta-attachment text-primary"></i>
+            <span class="text-primary" style="text-transform: none">{{file.name}}</span>
+          </ng-container>
+          <input type="file" accept="application/pdf" class="form-control d-none" (change)="anexarArquivos($event)">
+        </label>
+
+      </div>
+    </div>
+
+    <ng-container *ngIf="aprovadoCtrl.value">
+      <div class="form-group">
+        <label for="responsavel-refinamento">Responsável Próxima Etapa (Projeto em Execução)</label>
+        <select id="responsavel-refinamento" class="form-control" formControlName="responsavelId">
+          <option value="" hidden>Selecione</option>
+          <option *ngFor="let user of equipe.outros" [value]="user.id">{{user.nomeCompleto}}</option>
+        </select>
+      </div>
+    </ng-container>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-link" type="button" (click)="activeModal.close('cancel')">Cancelar</button>
+      <button class="btn btn-primary" type="submit" [disabled]="form.invalid || !file"><i class="ta-plus-circle"></i>
+        Confirmar Aprovação e Formalização
+      </button>
+    </div>
+
+  </form>
+</div>

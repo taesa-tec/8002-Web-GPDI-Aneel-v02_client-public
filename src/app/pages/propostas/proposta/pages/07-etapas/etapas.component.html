@@ -1,0 +1,41 @@
+<div class="row justify-content-between">
+  <div class="col mb-4">
+    <h5 class="text-uppercase text-blue font-weight-normal my-4">ETAPAS</h5>
+  </div>
+  <div class="col-auto">
+    <a type="button" class="btn btn-outline-primary" routerLink="./" fragment="novo" *ngIf="canEdit && proposta.duracao > 0">
+      <i class="ta-plus-circle fs-24 align-middle"></i>
+      Nova Etapa
+    </a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-3">
+    <form (ngSubmit)="salvarDuracao()">
+      <div class="form-group">
+        <label class="d-block">Duração do Projeto (Em Meses)</label>
+      </div>
+      <div class="input-group">
+        <input type="number" class="form-control" [disabled]="!canEdit" name="duracao" [(ngModel)]="duracao" value="3" min="3" max="12"
+               size="3">
+        <div class="input-group-append">
+          <span class="input-group-text">Meses</span>
+          <button class="btn btn-primary" [disabled]="duracao < 3 || loading || !canEdit"><i
+            class="ta-save"></i> {{loading ? 'Salvando' : 'Salvar'}}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <app-table
+      [cols]="cols"
+      [data]="etapas"
+      [buttons]="buttons"
+    >
+    </app-table>
+  </div>
+</div>

@@ -6,10 +6,89 @@
 @import "styles/tables";
 @import "styles/tabs";
 @import "styles/validation";
-@import "styles/fonts/style.scss";
+@import "styles/fonts/style";
 @import "styles/layouts";
+@import "styles/screens";
 
 html,
 body {
   height: 100%;
+  scroll-behavior: smooth;
+}
+
+app-form-editor,
+app-form-edit-template {
+  display: block;
+}
+
+:root {
+  --side-bar-width: 256px;
+  --header-height: 7rem;
+}
+
+::-webkit-scrollbar {
+  //background: $cinzaClaro;
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background: $cinzaClaro;
+  opacity: 0.5;
+}
+
+::-webkit-scrollbar-track-piece {
+  width: 9px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $blueLight;
+}
+
+
+.sticky-sidebar {
+  position: sticky;
+  top: var(--header-height);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+ckeditor {
+  display: block;
+  max-width: 99%;
+
+  p {
+    img {
+      max-width: 99% !important;
+      height: auto !important;
+      margin: 0;
+      padding: 0;
+      display: inline-block;
+    }
+  }
+
+  .placeholder {
+    background: #ffff00;
+    padding: 4px 2px;
+    outline-offset: -2px;
+    line-height: 1em;
+    margin: 0 1px;
+  }
+
+  .placeholder::selection {
+    display: none;
+  }
+
+  .ck-editor__editable_inline {
+    min-height: var(--ck-editor-height, 200px);
+    max-height: var(--ck-editor-max-height, 100vh);
+  }
+}
+
+.form-editor-field {
+  overflow:hidden;
+  img {
+    max-width: 100% !important;
+  }
 }

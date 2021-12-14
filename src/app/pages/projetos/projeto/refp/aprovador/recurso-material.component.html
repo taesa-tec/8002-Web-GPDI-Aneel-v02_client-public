@@ -1,0 +1,133 @@
+<form action="" [formGroup]="form">
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label>Nome do Item</label>
+        <input type="text" class="form-control" formControlName="nomeItem">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label>Recurso Material Associado</label>
+        <input type="text" class="form-control" formControlName="recurso">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <label>EMPRESA FINACIADORA</label>
+        <input type="text" class="form-control" formControlName="financiadora">
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="form-group"><label>EMPRESA RECEBEDORA</label>
+        <input type="text" class="form-control" formControlName="recebedora">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <label>BENEFICIADO</label>
+        <input type="text" class="form-control" formControlName="beneficiado">
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="form-group"><label>CNPJ BENEFICIADO</label>
+        <input type="text" class="form-control" formControlName="cnpjBeneficiado">
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group"><label>CATEGORIA CONTÁBIL</label>
+        <input type="text" class="form-control" formControlName="categoriaContabil"></div>
+    </div>
+    <div class="col-6">
+      <div class="form-group"><label>ITEM NACIONAL?</label>
+        <input type="text" class="form-control" formControlName="isNacional"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group"><label>IRÁ EQUIPAR LABORATÓRIO EXISTENTE?</label>
+        <input type="text" class="form-control" formControlName="equipaLaboratorioExistente"></div>
+    </div>
+    <div class="col-6">
+      <div class="form-group"><label>IRÁ EQUIPAR LABORATÓRIO NOVO</label>
+        <input type="text" class="form-control" formControlName="equipaLaboratorioNovo"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group"><label>MÊS REFERÊNCIA</label>
+        <input type="date" class="form-control" formControlName="mesReferencia"></div>
+    </div>
+    <div class="col-6">
+      <div class="form-group"><label>QUANTIDADE ITENS</label>
+        <input type="text" class="form-control" formControlName="quantidadeHoras"></div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group"><label>VALOR UNITÁRIO</label>
+        <input type="text" class="form-control" formControlName="valor"></div>
+    </div>
+
+    <div class="col-6">
+      <div class="form-group"><label>VALOR FINAL (CÁLCULO AUTOMÁTICO)</label>
+        <input type="text" formControlName="custo" class="form-control">
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group"><label>TIPO DE DOCUMENTO</label>
+        <input type="text" class="form-control" formControlName="tipoDocumento"></div>
+    </div>
+    <div class="col-6">
+      <div class="form-group"><label>NÚMERO DE DOCUMENTO</label>
+        <input type="text" class="form-control" formControlName="numeroDocumento">
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group"><label>DATA DO DOCUMENTO</label>
+        <input type="date" class="form-control" formControlName="dataDocumento">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label>ESPECÍFICAÇÃO TÉCNICA</label>
+        <textarea class="form-control" cols="30" rows="3" formControlName="especificaoTecnica"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label>FUNÇÃO DESTE RECURSO NESTA ETAPA DO PROJETO</label>
+        <textarea class="form-control" cols="30" rows="3" formControlName="funcaoEtapa"></textarea>
+      </div>
+    </div>
+  </div>
+
+</form>

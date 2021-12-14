@@ -3,9 +3,9 @@
 @font-face {
   font-family: '#{$icomoon-font-family}';
   src:
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?6fiu58') format('truetype'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?6fiu58') format('woff'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?6fiu58##{$icomoon-font-family}') format('svg');
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?i0crka') format('truetype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?i0crka') format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?i0crka##{$icomoon-font-family}') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -14,41 +14,61 @@
 [class^="ta-"], [class*=" ta-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: '#{$icomoon-font-family}' !important;
-  speak: none;
+  speak: never;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
   line-height: 1;
+  
+  /* Enable Ligatures ================ */
+  letter-spacing: 0;
+  -webkit-font-feature-settings: "liga";
+  -moz-font-feature-settings: "liga=1";
+  -moz-font-feature-settings: "liga";
+  -ms-font-feature-settings: "liga" 1;
+  font-feature-settings: "liga";
+  -webkit-font-variant-ligatures: discretionary-ligatures;
+  font-variant-ligatures: discretionary-ligatures;
 
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.ta-attachment {
+.ta-engrenagem-chave-escura1 {
   &:before {
-    content: $ta-attachment; 
+    content: $ta-engrenagem-chave-escura1; 
   }
 }
-.ta-taesa {
+.ta-pasta {
   &:before {
-    content: $ta-taesa; 
+    content: $ta-pasta; 
   }
 }
-.ta-ficha {
+.ta-pdf {
   &:before {
-    content: $ta-ficha; 
+    content: $ta-pdf; 
   }
 }
-.ta-capacete {
+.ta-lupa-acoes {
   &:before {
-    content: $ta-capacete; 
+    content: $ta-lupa-acoes; 
   }
 }
-.ta-camera {
+.ta-apresentacao {
   &:before {
-    content: $ta-camera; 
+    content: $ta-apresentacao; 
+  }
+}
+.ta-distintivo {
+  &:before {
+    content: $ta-distintivo; 
+  }
+}
+.ta-filtro-escuro {
+  &:before {
+    content: $ta-filtro-escuro; 
   }
 }
 .ta-arrow-down {
@@ -101,6 +121,11 @@
     content: $ta-alocacao-material; 
   }
 }
+.ta-alocacao-rm {
+  &:before {
+    content: $ta-alocacao-rm; 
+  }
+}
 .ta-alocacao-rh {
   &:before {
     content: $ta-alocacao-rh; 
@@ -134,6 +159,11 @@
 .ta-cancel-circle {
   &:before {
     content: $ta-cancel-circle; 
+  }
+}
+.ta-close {
+  &:before {
+    content: $ta-close; 
   }
 }
 .ta-ok {
@@ -349,6 +379,56 @@
 .ta-user-o {
   &:before {
     content: $ta-user-o; 
+  }
+}
+.ta-engrenagem-chave-escura {
+  &:before {
+    content: $ta-engrenagem-chave-escura; 
+  }
+}
+.ta-lupa-engrenagem {
+  &:before {
+    content: $ta-lupa-engrenagem; 
+  }
+}
+.ta-work-plan {
+  &:before {
+    content: $ta-work-plan; 
+  }
+}
+.ta-gavel {
+  &:before {
+    content: $ta-gavel; 
+  }
+}
+.ta-file-check {
+  &:before {
+    content: $ta-file-check; 
+  }
+}
+.ta-attachment {
+  &:before {
+    content: $ta-attachment; 
+  }
+}
+.ta-taesa {
+  &:before {
+    content: $ta-taesa; 
+  }
+}
+.ta-ficha {
+  &:before {
+    content: $ta-ficha; 
+  }
+}
+.ta-capacete {
+  &:before {
+    content: $ta-capacete; 
+  }
+}
+.ta-camera {
+  &:before {
+    content: $ta-camera; 
   }
 }
 

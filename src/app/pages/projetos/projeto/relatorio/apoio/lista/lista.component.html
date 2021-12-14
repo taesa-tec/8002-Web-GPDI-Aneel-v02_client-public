@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col-12">
+        <h5 class="text-uppercase text-blue font-weight-normal my-4">Resultados apoio a infra-estrutura</h5>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 text-right">
+        <button class="btn btn-outline-primary" type="button" routerLink="../" fragment="novo">
+            <i class="ta-plus-circle fs-24 align-middle align-middle"></i>
+            Registrar Apoio a Infra-estrutura
+        </button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <app-table [cols]="cols" [buttons]="buttons" [data]="apoios"></app-table>
+    </div>
+</div>

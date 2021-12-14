@@ -1,142 +1,58 @@
-import {Injectable, Inject} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {CreateUserRequest, ResultadoResponse, User, UserProjeto, NiveisUsuarios, Permissao, Projeto, Roles, UserRole} from '@app/models';
-import {Observable, Subject, of, zip, BehaviorSubject, timer} from 'rxjs';
-import {share, delay, filter, tap} from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {ResultadoResponse, User} from '@app/commons';
+import {Subject} from 'rxjs';
+
 import {AuthService} from '@app/services/auth.service';
-import {CatalogsService} from '@app/services/catalogs.service';
 import {SistemaService} from '@app/services/sistema.service';
+import {ServiceBase} from '@app/services/service-base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService {
+export class UsersService extends ServiceBase<any> {
 
-  protected _currentUser: User;
-  protected currentUserUpdatedSource = new BehaviorSubject<User>(null);
-  protected usersAccesses = new Map<string, Array<UserProjeto>>();
+  protected $avatarUpdated = new Subject();
+  avatarUpdated = this.$avatarUpdated.asObservable();
 
-  currentUserUpdated: Observable<any> = this.currentUserUpdatedSource.asObservable();
-
-
-  niveisUsuarios = NiveisUsuarios;
-
-  constructor(protected http: HttpClient, protected auth: AuthService, protected catalogo: CatalogsService, protected sistema: SistemaService) {
-    setTimeout(() => {
-      this.auth.authEvent.pipe(filter(e => e !== null)).subscribe(async e => {
-        if (e.type === 'logout') {
-          this.currentUser = null;
-        } else {
-          await this.setCurrentUser();
-        }
-      });
-    }, 0);
-    console.log('UsersService Ok');
-  }
-
-  get currentUser() {
-    return this._currentUser;
-  }
-
-  set currentUser(value) {
-    if (value && value !== this._currentUser) {
-      this.currentUserUpdatedSource.next(value);
-    }
-    this._currentUser = value;
-  }
-
-  async setCurrentUser() {
-    try {
-      this.currentUser = await this.me().toPromise();
-    } catch (e) {
-      console.error(e);
-    }
+  constructor(protected http: HttpClient,
+              protected auth: AuthService, protected sistema: SistemaService) {
+    super(http, 'Users');
   }
 
   me() {
-    return this.http.get<User>(`Users/me`);
+    return this.http.get<User>(`Me`);
   }
 
   async editMe(user: User) {
-    const response = await this.http.put<ResultadoResponse>(`Users/me`, user).toPromise();
-    if (response.sucesso) {
-      this.currentUser = Object.assign(this.currentUser, user);
-    }
-    return response;
+    return await this.http.put<ResultadoResponse>(`Me`, user).toPromise();
   }
 
-  all() {
-    return this.http.get<Array<User>>(`Users`);
-  }
-
-  byId(id: string) {
-    return this.http.get<User>(`Users/${id}`);
-  }
-
-  create(user: CreateUserRequest) {
-    return this.http.post<ResultadoResponse>(`Users`, user);
-  }
-
-  edit(user: User) {
-    return this.http.put<ResultadoResponse>(`Users`, user);
-  }
-
-  remove(user: User | string) {
-    const id = (typeof user === 'string') ? user : user.id;
-    return this.http.delete<ResultadoResponse>(`Users/${id}`);
-  }
-
-  userProjetos(id: string) {
-    return this.http.get<Array<UserProjeto>>(`UserProjetos/${id}`);
-  }
-
-  criarUserProjeto(userProjetos: Array<UserProjeto>) {
-    return this.http.post<ResultadoResponse>(`UserProjetos`, userProjetos);
-  }
-
-  userAvatar(id: string) {
-    return this.http.get<any>(`Users/${id}/avatar`);
-  }
-
-  async userCanAccess(id: string, projeto: Projeto, permissao: any = null) {
-
-    const permissoes = await this.catalogo.permissoes().toPromise();
-    const projetos = this.usersAccesses.has(id) ? this.usersAccesses.get(id) : await this.userProjetos(id).toPromise();
-
-    if (projetos.length === 0 || permissoes.length === 0) {
-      return false;
-    }
-
-    this.usersAccesses.set(id, projetos);
-
-    const projetoAccess = projetos.find(p => p.projetoId === projeto.id);
-
-    if (projetoAccess) {
-
-      if (permissao) {
-        try {
-          const userp = this.niveisUsuarios[projetoAccess.catalogUserPermissao.valor];
-          return (userp & permissao) === permissao;
-        } catch (error) {
-
-          return false;
-        }
-      }
-      return true;
+  async updateAvatar(file: File, userId: number | 'me' = 'me') {
+    const formData = new FormData();
+    formData.append('file', file);
+    if (userId !== 'me') {
+      await this.http.post<any>(`Users/${userId}/Avatar`, formData).toPromise();
     } else {
-      return false;
+      await this.http.post<any>(`Me/Avatar`, formData).toPromise();
+      this.$avatarUpdated.next(Date.now());
     }
   }
 
-  async currentUserCanAccess(projeto: Projeto, permissao: any = null) {
-    const user = this.currentUser;
-    if (user) {
-      if (user.role === UserRole.Administrador) {
-        return true;
-      }
-      return await this.userCanAccess(user.id, projeto, permissao);
+  async removeAvatar(userId: number | 'me' = 'me') {
+    if (userId !== 'me') {
+      await this.http.delete<any>(`Users/${userId}/Avatar`).toPromise();
     } else {
-      return false;
+      await this.http.delete<any>(`Me/Avatar`).toPromise();
+      this.$avatarUpdated.next(Date.now());
     }
+  }
+
+  async all() {
+    return await this.http.get<Array<User>>(`Users`).toPromise();
+  }
+
+  async usersInRole(role: string) {
+    return await this.http.get<Array<User>>(`Users/Role/${role}`).toPromise();
   }
 }

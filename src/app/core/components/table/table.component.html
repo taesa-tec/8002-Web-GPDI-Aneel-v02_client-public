@@ -1,0 +1,168 @@
+<div>
+  <div class="row py-4">
+    <ng-container *ngIf="hasSearch">
+      <div class="form-group col-auto">
+        <div class="position-relative">
+          <input type="search" class="form-control" placeholder="Buscar" [(ngModel)]="searchTerm"
+                 (ngModelChange)="setCurrentData()">
+          <span class="ta-search fs-22 text-cinza-claro-4" style="position: absolute; right: 4px; top:10px"></span>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="filters && filters.length > 0">
+      <div class="form-group" [ngClass]="filter.class" *ngFor="let filter of filters">
+        <select
+          class="form-control"
+          [(ngModel)]="filter.value"
+          (change)="setCurrentData(1)"
+        >
+          <option
+            *ngFor="let f of filter.options | orderBy: 'text'"
+            [value]="f.value"
+          >{{ f.text }}</option
+          >
+        </select>
+      </div>
+    </ng-container>
+  </div>
+  <table class="table">
+    <thead *ngIf="showHeader">
+    <tr>
+      <td *ngIf="showSelect">
+        <i
+          [ngClass]="{
+              'ta-radio-checked': allSelected,
+              'ta-radio-unchecked': !allSelected
+            }"
+          class="toogle-select"
+          (click)="toggleGroupSelect()"
+        ></i>
+      </td>
+      <ng-container *ngIf="cols">
+        <th *ngFor="let col of cols">
+          <div class="d-flex align-items-center">
+            <span class="mr-2">{{ col.title }}</span>
+            <app-handler-order
+              *ngIf="col.order"
+              [currents]="listOrder"
+              [field]="col.field"
+              [type]="col.orderType"
+              (order)="reorderItems($event)"
+            >
+            </app-handler-order>
+          </div>
+        </th>
+      </ng-container>
+      <th *ngIf="$buttons.length > 0">
+        <div class="d-flex align-items-center">
+          <span class="mx-2">Ações</span>
+        </div>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr
+      *ngFor="let item of currentData; index as i; trackBy: trackFunc"
+      [ngClass]="{ selected: item.selected }"
+      (click)="itemClick($event, item)"
+    >
+      <td *ngIf="showSelect" width="22">
+        <i
+          [ngClass]="{
+              'ta-radio-checked': item.selected,
+              'ta-radio-unchecked': !item.selected
+            }"
+          class="toogle-select"
+          (click)="item.toggleSelect()"
+        ></i>
+      </td>
+      <ng-container *ngIf="cols">
+        <ng-container *ngFor="let col of cols; trackBy: trackCol">
+          <td
+            [innerHTML]="item.rendered[col.field]"
+            [className]="getFieldClass(col)"
+            [attr.width]="col.width"
+          ></td>
+        </ng-container>
+      </ng-container>
+      <td *ngIf="$buttons.length > 0" width="1%">
+        <div class="d-flex flex-row">
+          <ng-container *ngFor="let actionItem of $buttons">
+            <button
+              *ngIf="!actionItem.isLink"
+              type="button"
+              class="btn btn-sm mx-1 text-nowrap"
+              [ngClass]="actionItem.className"
+              (click)="doAction(actionItem.action, item.data)"
+            >
+              <i [class]="actionItem.icon" *ngIf="actionItem.icon"></i>
+              {{ actionItem.text }}
+            </button>
+            <a
+              *ngIf="actionItem.isLink"
+              [routerLink]="getActionLink(actionItem, item)"
+              [fragment]="getActionLinkFragment(actionItem,item)"
+              class="btn btn-sm mx-1 text-nowrap"
+              [ngClass]="actionItem.className"
+            >
+              <i [class]="actionItem.icon" *ngIf="actionItem.icon"></i>
+              {{ actionItem.text }}
+            </a>
+          </ng-container>
+        </div>
+      </td>
+    </tr>
+    <tr *ngIf="currentData.length === 0 && !requesting">
+      <td [colSpan]="colLength" class="text-center">{{ emptyText }}</td>
+    </tr>
+    <tr *ngIf="requesting">
+      <td [colSpan]="colLength" class="text-center">
+        <div class="spinner-border"></div>
+      </td>
+    </tr>
+    </tbody>
+    <tfoot *ngIf="showSelect">
+    <tr>
+      <td [colSpan]="colLength">
+        <div class="d-flex justify-content-start align-items-center">
+          <select
+            class="form-control flex-shrink-1 w-auto mr-3"
+            [(ngModel)]="actionGroup"
+            [disabled]="selection.length === 0"
+          >
+            <option value="">Ações em massa</option>
+            <option
+              *ngFor="let actionItem of $groupsButtons"
+              [value]="actionItem.action"
+            >
+              {{ actionItem.text }}
+            </option>
+          </select>
+          <button
+            class="btn btn-primary"
+            [disabled]="selection.length === 0 || actionGroup === ''"
+            type="button"
+            (click)="doActionGroup(actionGroup, selection)"
+          >
+            Aplicar
+          </button>
+        </div>
+      </td>
+    </tr>
+    </tfoot>
+  </table>
+
+  <div class="row" *ngIf="pagination && pagination.totalItems > pagination.perPage">
+    <div class="col d-flex justify-content-center">
+      <ngb-pagination [(page)]="pagination.page"
+                      [pageSize]="pagination.perPage"
+                      [collectionSize]="pagination.totalItems"
+                      (pageChange)="setCurrentData()"
+                      [ellipses]="true"
+                      [rotate]="true"
+                      [maxSize]="5">
+      </ngb-pagination>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+@import "components-base";
+
+.chart-divisions {
+  display: flex;
+  border: 1px solid #333;
+  border-radius: 3px;
+  overflow: hidden;
+  max-width: 100%;
+  position: relative;
+  z-index: 0;
+
+  &:empty {
+    display: none;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    box-shadow: inset 0 0 3px $danger;
+  }
+
+  .chart-division {
+    z-index: 1;
+    padding: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: all 300ms ease-in-out;
+    flex: 0 0 auto;
+    width: 0;
+
+    text-align: center;
+    color: white;
+    text-shadow: 1px 1px #333;
+
+
+    &:nth-child(4n + 1) {
+      background-color: $blue;
+    }
+
+    &:nth-child(4n + 2) {
+      background-color: $green;
+    }
+
+    &:nth-child(4n + 3) {
+      background-color: $yellow;
+    }
+
+    &:nth-child(4n) {
+      background-color: $orange;
+    }
+  }
+}

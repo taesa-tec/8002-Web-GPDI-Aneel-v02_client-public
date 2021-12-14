@@ -1,0 +1,35 @@
+<div class="row" *ngIf="comentarios?.length > 0">
+  <div class="col">
+    <h6 class="text-blue-light">HISTÓRICO DE COMENTÁRIOS</h6>
+  </div>
+</div>
+<div class="row" *ngIf="comentarios?.length > 0">
+  <div class="col-12 comments">
+    <ng-container *ngFor="let comment of comentarios">
+
+      <div class="bg-light comment mb-3">
+        <div class="comment-header border-bottom border-blue-light p-3 d-flex justify-content-between text-blue-light">
+          <div class="comment-author font-weight-bold d-flex align-items-center">
+            <div class="avatar rounded-circle p-3 bg-cinza-claro d-inline-block mr-2"
+                 [ngStyle]="{'background-image':'url(/avatar/'+comment.authorId+'.jpg'}"
+            ></div>
+            <span>{{comment.author}}</span>
+          </div>
+          <div class="comment-date d-flex align-items-center">
+            {{ comment.createdAt | date:'short'}}
+          </div>
+        </div>
+        <div class="comment-content p-3">
+          <p>{{comment.mensagem}}</p>
+        </div>
+        <div class="border-top border-cinza-claro p-3" *ngIf="comment.files?.length">
+          <span class="text-primary fs-14 font-weight-bold">Arquivos anexados</span>
+          <div *ngFor="let file of comment.files;" class="btn btn-link btn-sm" (click)="downloadFile(file, comment)">
+            <i class="ta-attachment fs-14"></i> {{file.fileName}}
+          </div>
+        </div>
+      </div>
+
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="main-layout-side-bar">
+  <div class="side-bar">
+    <div class="sticky-sidebar">
+      <nav class="side-nav">
+        <app-loading type="fullparent" background="transparent"></app-loading>
+        <ng-content></ng-content>
+        <ng-container *ngFor="let route of menu">
+          <a
+            [routerLink]="route.path"
+            class="side-nav-item"
+            routerLinkActive="active"
+          >
+            <span class="fs-24 mr-3"><i [class]="route.icon"></i></span>
+            <ng-container *ngIf="route.beforeText"><span [innerHTML]="route.beforeText"></span></ng-container>
+            <span class="menu-item-text" [innerHTML]="route.text"></span>
+            <ng-container *ngIf="route.afterText"><span [innerHTML]="route.afterText"></span></ng-container>
+          </a>
+        </ng-container>
+      </nav>
+    </div>
+    <div class="handle-width" app-dragger (moving)="resize($event.x)"></div>
+  </div>
+  <div class="py-4 px-5 mb-5">
+    <router-outlet></router-outlet>
+  </div>
+</div>

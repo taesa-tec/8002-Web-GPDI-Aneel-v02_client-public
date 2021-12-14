@@ -1,0 +1,24 @@
+th,
+td {
+  vertical-align: middle;
+}
+
+tbody {
+  .toogle-select {
+    cursor: pointer;
+  }
+
+  tr {
+    td {
+      vertical-align: middle;
+    }
+
+    &.selected {
+      background: rgba(128, 128, 128, 0.2);
+    }
+  }
+}
+
+input[type=search]:focus + .ta-search, input[type=search]:hover + .ta-search {
+  display: none;
+}

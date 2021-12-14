@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-12 py-3 d-flex justify-content-end">
+    <label class="btn btn-outline-blue">
+      <input type="file" hidden (change)="uploadLog($event)" accept=".xml">
+      <i class="ta-log"></i>
+      Novo Log
+    </label>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <app-table [cols]="tableCols" [buttons]="buttons" [data]="logs" (action)="download($event)"></app-table>
+  </div>
+</div>
+

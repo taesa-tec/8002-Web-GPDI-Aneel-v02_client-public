@@ -1,0 +1,25 @@
+@import "src/styles/components-base";
+
+:host {
+  display: block;
+}
+
+.order-content {
+  .number {
+    border-top-left-radius: 5px;
+    background: #CCC;
+    text-align: center;
+    position: absolute;
+    font-weight: bold;
+    padding: 4px;
+    color: var(--primary);
+    z-index: 2;
+    left: 0;
+    top: 0;
+  }
+}
+
+
+.fixed-bottom {
+  left: unset !important;
+}

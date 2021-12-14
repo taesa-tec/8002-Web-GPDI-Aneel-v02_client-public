@@ -1,0 +1,139 @@
+<div class="row mt-5">
+  <div class="col-6">
+    <span class="text-blue fs-22">Alterar Recursos Humanos</span>
+  </div>
+  <div class="col-6 d-flex justify-content-end">
+    <button class="btn btn-outline-blue" type="button" routerLink="./" fragment="novo"><i class="ta-plus-circle"></i>
+      Novo Recurso Humano
+    </button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <app-table [buttons]="buttons" [cols]="tableCols" [data]="recursos"></app-table>
+  </div>
+</div>
+
+<ng-template #formRef let-activeModal>
+  <div class="modal-header">
+    <div class="text-uppercase modal-title text-blue-light fs-24">
+      {{ form.value.id > 0 ? 'EDITAR RECURSO HUMANO' : 'REGISTRAR RECURSO HUMANO' }}
+    </div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+      <i class="ta-cancel-circle"></i>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-group col">
+          <label for="empresa">Empresa
+            <app-help codigo="recurso-humano-empresa"></app-help>
+          </label>
+          <select class="form-control" id="empresa" formControlName="empresaId">
+            <option value="" hidden>Selecione um Empresa</option>
+            <option [value]="empresa.id" *ngFor="let empresa of empresas">
+              {{ empresa.nome }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group col">
+          <label for="valor-hora">Valor hora
+            <app-help codigo="recurso-humano-valor-hora"></app-help>
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            id="valor-hora"
+            autocomplete="off"
+            formControlName="valorHora"
+            currencyMask
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="nome-completo">Nome Completo
+          <app-help codigo="recurso-humano-nome-completo"></app-help>
+        </label>
+        <input type="text" class="form-control" autocomplete="off" id="nome-completo" formControlName="nomeCompleto"
+               placeholder="Digite o seu nome completo">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col">
+          <label for="titulacao">Titulação
+            <app-help codigo="recurso-humano-titulacao"></app-help>
+          </label>
+          <select class="form-control" id="titulacao" formControlName="titulacao">
+            <option value="" hidden>Selecione uma Titulação</option>
+            <option *ngFor="let titulo of titulacoes" [value]="titulo.value">{{titulo.text}}</option>
+          </select>
+        </div>
+        <div class="form-group col">
+          <label for="funcao">Função
+            <app-help codigo="recurso-humano-funcao"></app-help>
+          </label>
+          <select class="form-control" id="funcao" formControlName="funcao">
+            <option value="" hidden>Selecione uma Função</option>
+            <option *ngFor="let funcao of funcoes" [value]="funcao.value">{{funcao.text}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col">
+          <label for="brasileiro">Brasileiro?
+            <app-help codigo="recurso-humano-brasileiro"></app-help>
+          </label>
+          <select class="form-control" id="brasileiro" formControlName="nacionalidade">
+            <option value="" hidden>Selecione</option>
+            <option value="Brasileiro">Sim</option>
+            <option value="Estrangeiro">Não</option>
+          </select>
+        </div>
+        <div class="form-group col">
+          <label for="cpf">Cpf ou passaporte
+            <app-help codigo="recurso-humano-cpf"></app-help>
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            id="cpf"
+            [mask]="documentoMask"
+            formControlName="documento"
+            placeholder="00.000.000/0000-00"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="curriculo-lattes">Endereço currículo lattes
+          <app-help codigo="recurso-humano-curriculo-lattes"></app-help>
+        </label>
+        <input type="text" class="form-control" id="curriculo-lattes" formControlName="urlCurriculo"
+               placeholder="Insira aqui o URL do currículo">
+      </div>
+
+      <div class="form-group d-flex justify-content-between">
+        <div>
+          <button type="button" class="button btn btn-danger" (click)="remover(form.value.id)"
+                  *ngIf="form.value.id !== 0">
+            <i class="ta-trash mr-1"></i>
+            Excluir Recurso Humano
+          </button>
+        </div>
+        <div class="text-right">
+          <div class="button btn btn-link" (click)="activeModal.close()">
+            Cancelar
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+            <i class="ta-save mr-1"></i>
+            Salvar Pessoa
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</ng-template>

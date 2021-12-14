@@ -1,46 +1,53 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <title>Sistema P&AMP;D </title>
-  <base href="/">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
-  <link rel="manifest" href="/manifest.json">
-  <style>
-    .if-ie {
-      display: none;
-    }
+  <head>
+    <meta charset="utf-8" />
+    <title>Sistema P&AMP;D</title>
+    <base href="/" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:400,500,700"
+      rel="stylesheet"
+    />
+    <link rel="manifest" href="/manifest.json" />
+    <style>
+      .if-ie {
+        display: none;
+      }
 
-    body.windows.trident .if-ie {
-      display: block;
-    }
-
-  </style>
-</head>
-<body>
-<!-- [IF IE]>
+      body.windows.trident .if-ie {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- [IF IE]>
 <div style="text-align: center; padding: 2em; border:solid 1px #F00; margin: 2em auto; width: 800px;">
   Para Acessar o Gestor P&D Taesa por favor use um navegador mais recente. O Software Internet Explorer foi
   descontinuado pela Microsoft. O Gestor P&D Taesa é compatível com todos os navegadores modernos como Chrome,
   Firefox, Microsoft Edge e Safari.
 </div>
 <![endif]-->
-<div class="if-ie"
-     style="text-align: center; padding: 2em; border:solid 1px #F00; margin: 2em auto; width: 800px;">
-  Para Acessar o Gestor P&D Taesa por favor use um navegador mais recente. O Software Internet Explorer foi
-  descontinuado pela Microsoft. O Gestor P&D Taesa é compatível com todos os navegadores modernos como Chrome,
-  Firefox, Microsoft Edge e Safari.
-</div>
-<app-root></app-root>
-<script>
-    try {
-        document.body.className = navigator.userAgent.replace(/\W/g, ' ').replace(/\s\d+/g, '').replace(/\s{2,}/g, ' ').toLocaleLowerCase();
-    } catch (e) {
-
-    }
-</script>
-</body>
+    <div
+      class="if-ie"
+      style="text-align: center; padding: 2em; border:solid 1px #F00; margin: 2em auto; width: 800px;"
+    >
+      Para Acessar o Gestor P&D Taesa por favor use um navegador mais recente. O
+      Software Internet Explorer foi descontinuado pela Microsoft. O Gestor P&D
+      Taesa é compatível com todos os navegadores modernos como Chrome, Firefox,
+      Microsoft Edge e Safari.
+    </div>
+    <app-root></app-root>
+    <script>
+      try {
+        document.body.className = navigator.userAgent
+          .replace(/\W/g, " ")
+          .replace(/\s\d+/g, "")
+          .replace(/\s{2,}/g, " ")
+          .toLocaleLowerCase();
+      } catch (e) {}
+    </script>
+  </body>
 </html>

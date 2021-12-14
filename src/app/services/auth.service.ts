@@ -1,120 +1,200 @@
-import {Injectable, Inject} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, BehaviorSubject, timer} from 'rxjs';
-import {LoginRequest, RecoverRequest, ResultadoResponse, NewpassRequest} from '@app/models';
-import {LoginResponse} from '@app/models';
+import {BehaviorSubject} from 'rxjs';
+import {LoginRequest, RecoverRequest, ResultadoResponse, NewpassRequest, UserRole, User} from '@app/commons';
+import {LoginResponse} from '@app/commons';
 import {Router} from '@angular/router';
-import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {RoutesRoleMap} from '@app/routes/routes';
 
-const storageKey = 'loggedUser';
+const storageKey = 'userSession';
+
+interface Session {
+  aud: string;
+  iss: string;
+  jti: string;
+  ext: number;
+  nbf: number;
+  iat: number;
+  role: Array<string>;
+  unique_name: Array<string>;
+
+  [prop: string]: any;
+}
+
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
-
-  public redirectTo = '/dashboard';
-  private loginResponse: LoginResponse;
-
-  protected authEventsSource: BehaviorSubject<{ type: string, data?: any }>;
-  authEvent: Observable<{ type: string, data?: any }>;
-
-  constructor(private http: HttpClient, protected router: Router, public modal: NgbModal) {
-    let loggedUser;
-    if (localStorage.getItem(storageKey) != null) {
-      loggedUser = localStorage.getItem(storageKey);
-    } else if (sessionStorage.getItem(storageKey) != null) {
-      loggedUser = sessionStorage.getItem(storageKey);
-    }
-
-    if (loggedUser) {
-      try {
-        this.loginResponse = JSON.parse(loggedUser);
-        this.authEventsSource = new BehaviorSubject<{ type: string, data?: any }>({type: 'login', data: this.loginResponse});
-        console.log('Usuário logado');
-      } catch (e) {
-        console.error(e.message);
-        this.authEventsSource = new BehaviorSubject<{ type: string, data?: any }>(null);
-      }
-    } else {
-      this.authEventsSource = new BehaviorSubject<{ type: string, data?: any }>(null);
-    }
-    this.authEvent = this.authEventsSource.asObservable();
-  }
+  protected session: Session;
+  protected $currentUser: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+  protected $error: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  protected $token = null;
+  user = this.$currentUser.asObservable();
+  error = this.$error.asObservable();
+  redirectTo = '/';
 
   get expiration() {
-    if (this.loginResponse && this.loginResponse.expiration) {
-      return new Date(this.loginResponse.expiration);
+    return (this.session?.exp || 0) * 1e3;
+  }
+
+  get token() {
+    return this.$token;
+  }
+
+  get isLoggedIn() {
+    return (this.token && this.expiration > Date.now());
+  }
+
+  get role() {
+    return this.getUser()?.role;
+  }
+
+  get roles() {
+    return this.getUser()?.role;
+  }
+
+  constructor(private http: HttpClient, protected router: Router, public modal: NgbModal) {
+    this.init().then(() => this.syncUserInfo());
+  }
+
+  protected getStorageUser() {
+    let storageUser = null;
+    if (localStorage.getItem(storageKey) != null) {
+      storageUser = localStorage.getItem(storageKey);
+    } else if (sessionStorage.getItem(storageKey) != null) {
+      storageUser = sessionStorage.getItem(storageKey);
+    }
+    if (storageUser) {
+      try {
+        return JSON.parse(storageUser);
+      } catch (e) {
+        console.error(e);
+      }
     }
     return null;
   }
 
-  get token() {
-    if (this.loginResponse && this.loginResponse.authenticated) {
-      return this.loginResponse.accessToken;
+  protected extractInfoToken(token: string) {
+    if (token) {
+      return JSON.parse(atob(token.split('.')[1]));
     }
-    return false;
+    return null;
   }
 
-  get isLoggedIn() {
-    return (this.token && this.expiration !== null && this.expiration.getTime() > Date.now());
+  async init() {
+    const storageUser = this.getStorageUser();
 
-  }
-
-  login(loginRequest: LoginRequest, remember: boolean = false, redirectTo: string | null = null): Observable<LoginResponse> {
-    return new Observable<LoginResponse>(rootObserver => {
-      if (redirectTo) {
-        this.redirectTo = redirectTo;
+    if (storageUser) {
+      try {
+        this.setSession(storageUser);
+      } catch (e) {
+        console.error(e.message);
       }
-
-      this.http.post<LoginResponse>(`Login`, loginRequest).subscribe(loginResponse => {
-        if (loginResponse.authenticated) {
-          const storage = remember ? localStorage : sessionStorage;
-
-          if (remember) {
-            sessionStorage.setItem('last_login_user', loginRequest.email);
-          } else {
-            sessionStorage.removeItem('last_login_user');
-          }
-          this.loginResponse = loginResponse;
-
-          storage.setItem(storageKey, JSON.stringify(loginResponse));
-          this.router.navigateByUrl(this.redirectTo).then(() => {
-            this.authEventsSource.next({type: 'login', data: loginResponse});
-          }, error => {
-            console.log(error);
-          });
-        }
-        rootObserver.next(loginResponse);
-      }, error => {
-        rootObserver.error(error);
-      }, () => {
-        rootObserver.complete();
-      });
-    });
-    // this.http.post(`${this.api}/login`, user);
+    }
   }
 
-  logout(): void {
-    this.loginResponse = null;
+  async syncUserInfo() {
+    if (this.isLoggedIn) {
+      const user = await this.http.get<User>('Me').toPromise();
+      this.setUser(user);
+    }
+  }
+
+  setUser(user: User) {
+    this.$currentUser.next(user);
+  }
+
+  getUser() {
+    return this.$currentUser.getValue();
+  }
+
+  setSession(response: LoginResponse) {
+    this.$token = response.accessToken;
+    this.session = this.extractInfoToken(this.token);
+    this.setUser(response.user);
+  }
+
+  clearSession() {
+    this.$token = null;
+    this.session = null;
+    this.setUser(null);
     localStorage.removeItem(storageKey);
     sessionStorage.removeItem(storageKey);
-    this.redirectTo = '/dashboard';
-    this.router.navigate(['/login']);
+  }
+
+  async login(loginRequest: LoginRequest, remember: boolean = false) {
+
+    try {
+
+      const response = await this.http.post<LoginResponse>(`Login`, loginRequest).toPromise();
+
+      const storage = remember ? localStorage : sessionStorage;
+
+      storage.setItem(storageKey, JSON.stringify(response));
+
+      this.setSession(response);
+
+      if (remember) {
+        sessionStorage.setItem('last_login_user', loginRequest.email);
+      } else {
+        sessionStorage.removeItem('last_login_user');
+      }
+      this.$error.next(null);
+      return true;
+    } catch (e) {
+      this.$error.next(e);
+      return false;
+    }
+
+  }
+
+
+  async logout(redirect?: string) {
+    try {
+      await this.http.post('logout', {}).toPromise();
+    } catch (e) {
+      console.error(e);
+    }
+    this.redirectTo = '/';
     if (this.modal.hasOpenModals()) {
       this.modal.dismissAll('logout');
     }
-    this.authEventsSource.next({type: 'logout'});
+    this.clearSession();
   }
 
-  recuperarSenha(recoverRequest: RecoverRequest): Observable<ResultadoResponse> {
-    return this.http.post<ResultadoResponse>('Login/recuperar-senha', recoverRequest);
+  recuperarSenha(recoverRequest: RecoverRequest) {
+    return this.http.post<ResultadoResponse>('Login/recuperar-senha', recoverRequest).toPromise();
   }
 
-  novaSenha(recoverRequest: NewpassRequest): Observable<ResultadoResponse> {
-    return this.http.post<ResultadoResponse>('Login/nova-senha', recoverRequest);
+  async novaSenha(recoverRequest: NewpassRequest) {
+    return await this.http.post<ResultadoResponse>('Login/nova-senha', recoverRequest).toPromise();
   }
 
+
+  hasRoles(...roles: string[]) {
+    return this.userHasRoles(...roles);
+  }
+
+  userHasRoles(...roles: string[]) {
+    return roles
+      .reduce((p, c) => [...p, ...(Array.isArray(c) ? c : [c])], [])
+      .some(role => this.getUser().roles.indexOf(role as UserRole) >= 0);
+  }
+
+  // updateRoutes() {
+  //   this.setRoutes(this.role ?? '');
+  // }
+  //
+  // setRoutes(role: string) {
+  //   if (RoutesRoleMap.has(role)) {
+  //     const routes = RoutesRoleMap.get(role);
+  //     this.router.resetConfig(routes);
+  //   } else {
+  //     console.error(`Rotas para ${role} não disponíveis`);
+  //     this.logout().then();
+  //   }
+  // }
 
 }

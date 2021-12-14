@@ -1,0 +1,59 @@
+<form [formGroup]="formProjetoXml" (ngSubmit)="gerarXml(formProjetoXml, 'FinalProjeto')">
+  <div class="row mt-5">
+    <div class="col-12 fs-22 text-cinza text-uppercase">
+      Gerar XML do relatório final do projeto
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="bg-cinza-claro p-3 rounded">
+        <div>
+          <div class="form-group">
+            <label>Versão</label>
+          </div>
+          <div class="d-flex">
+            <div class="mr-3">
+              <input type="text" formControlName="versao" class="form-control">
+            </div>
+            <div>
+              <button class="btn btn-primary" type="submit" [disabled]="formProjetoXml.invalid">
+                <i class="ta-download mr-1"></i>
+                Gerar XML
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<form [formGroup]="formAuditoriaXml" (ngSubmit)="gerarXml(formAuditoriaXml, 'Auditoria')">
+  <div class="row mt-5">
+    <div class="col-12 fs-22 text-cinza text-uppercase">
+      Gerar XML da auditoria contábil e financeira do projeto
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="bg-cinza-claro p-3 rounded">
+        <div>
+          <div class="form-group">
+            <label>Versão</label>
+          </div>
+          <div class="d-flex">
+            <div class="mr-3">
+              <input type="text" formControlName="versao" class="form-control">
+            </div>
+            <div>
+              <button class="btn btn-primary" type="submit" [disabled]="formAuditoriaXml.invalid">
+                <i class="ta-download mr-1"></i>
+                Gerar XML
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,64 @@
+<form action="" [formGroup]="form">
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label>Beneficiário</label>
+        <input type="text" class="form-control" formControlName="recurso">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <label>EMPRESA FINACIADORA</label>
+        <input type="text" class="form-control" formControlName="financiadora">
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="form-group"><label>EMPRESA RECEBEDORA</label>
+        <input type="text" class="form-control" formControlName="recebedora">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group"><label>MÊS REFERÊNCIA</label>
+        <input type="date" class="form-control" formControlName="mesReferencia"></div>
+    </div>
+    <div class="col-6">
+      <div class="form-group"><label>QUANTIDADE HORAS</label>
+        <input type="text" class="form-control" formControlName="quantidadeHoras"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group"><label>TIPO DE DOCUMENTO</label>
+        <input type="text" class="form-control" formControlName="tipoDocumento"></div>
+    </div>
+    <div class="col-6">
+      <div class="form-group"><label>DATA DO DOCUMENTO</label>
+        <input type="date" class="form-control" formControlName="dataDocumento">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group"><label>NÚMERO DE DOCUMENTO</label>
+        <input type="text" class="form-control" formControlName="numeroDocumento">
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="form-group"><label>VALOR FINAL (CÁLCULO AUTOMÁTICO)</label>
+        <input type="text" formControlName="custo" class="form-control">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label>ATIVIDADE REALIZADA NA ETAPA PELA PESSOA</label>
+        <textarea class="form-control" cols="30" rows="3" formControlName="atividadeRealizada"></textarea>
+      </div>
+    </div>
+  </div>
+</form>

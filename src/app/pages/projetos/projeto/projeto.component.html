@@ -1,0 +1,21 @@
+<app-sidebar>
+  <div class="bg-blue-light text-white">
+    <div class=" p-3 border-bottom border-cinza-claro text-uppercase">
+      {{projeto.id | pad:'0':3 }} - {{projeto.titulo}} <br>
+    </div>
+    <div class="p-3 ">
+      <div class="etapa">
+        {{projeto.status === 'Execucao' ? 'Em Execução' : 'Em finalização'}}
+      </div>
+      <div>
+        {{projeto.proponente}}
+      </div>
+      <div class="mt-2">
+        <a routerLink="../" class="d-inline-flex align-items-center">
+          <i class="ta-sync fs-22 mr-2"></i>
+          <span> Trocar de projeto</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</app-sidebar>

@@ -1,0 +1,56 @@
+<div *ngIf="form">
+  <div class="row" *ngIf="demanda && demanda.superiorDiretoId == null">
+    <div class="col-12">
+      <div class="d-flex alert align-items-center border border-danger text-danger">
+        <i class="ta-alert fs-24 mr-3"></i>
+        <span>Superior direto ainda não foi definido!</span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-editor my-3" [formGroup]="form">
+        <div class="form-editor-title fs-22 text-blue">{{ formField.title }}</div>
+        <ng-container *ngFor="let child of formField.children">
+          <app-form-editor-field
+            *ngIf="form.get(['children',child.key])"
+            [form]="form.get(['children',child.key])"
+            [field]="child"
+            [readonly]="readonly"
+          ></app-form-editor-field>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="canAppendFile">
+    <div class="col-12">
+      <h5 class="text-blue-light">
+        Arquivos Complentares <span [hidden]="readonly">(Opcional)</span>
+      </h5>
+      <button class="btn btn-link" type="button" (click)="anexarArquivos()" *ngIf="!readonly"
+              [disabled]="form.disabled">
+        <i class="ta-attachment fs-22"></i> Adicionar e Gerenciar Arquivos Complementares
+      </button>
+      <div class="pr-3 mb-3">
+        <span *ngFor="let anexo of anexos;" style="cursor: pointer" class="text-blue d-block my-1"
+              (click)="download(anexo)">
+          <i class="ta-projeto"></i> -
+          <span>{{anexo.fileName}}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row actions-bar py-3" *ngIf="!readonly">
+    <div class="col-12 d-flex justify-content-start actions-bar-content">
+      <div class="cover-action-bar-shadow"></div>
+      <button class="btn btn-primary" type="button" (click)="saveData()" [disabled]="form.invalid || form.disabled">
+        <i class="ta-save"></i>
+        Salvar Dados
+      </button>
+      <button class="btn btn-link" type="button" routerLink="/">
+        Cancelar Alterações
+      </button>
+    </div>
+  </div>
+</div>

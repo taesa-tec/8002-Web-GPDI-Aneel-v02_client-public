@@ -1,0 +1,47 @@
+<div class="form-editor-field" [ngClass]="classname" [formGroup]="form">
+  <div class="form-editor-field-title">
+    {{ field.title }}
+  </div>
+  <ng-container *ngIf="field.isArray">
+    <div class="form-editor-field-list">
+      <div
+        class="form-editor-field-list-item"
+        *ngFor="let fieldItem of formArray.controls; let i = index"
+      >
+        <div class="form-editor-field-list-item-title">
+          {{ field.itemTitle }}
+        </div>
+        <app-form-field-control
+          (remove)="remove(i)"
+          [form]="fieldItem"
+          [field]="field"
+          [readonly]="readonly"
+          [canRemove]="!readonly && formArray.controls.length > 1"
+        ></app-form-field-control>
+      </div>
+    </div>
+    <div class="d-flex justify-content-end py-3" *ngIf="!readonly">
+      <button class="btn btn-outline-primary" (click)="add()">
+        <i class="ta-plus-circle"></i> Adicionar {{ field.itemTitle }}
+      </button>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!field.isArray">
+    <app-form-field-control
+      [form]="form"
+      [field]="field"
+      [readonly]="readonly"
+    ></app-form-field-control>
+    <div class="form-editor-field-children" *ngIf="field.children">
+      <div *ngFor="let child of field.children">
+        <app-form-editor-field
+          *ngIf="form.get(['children', child.key])"
+          [form]="form.get(['children', child.key])"
+          [field]="child"
+          [readonly]="readonly"
+        ></app-form-editor-field>
+        <div *ngIf="!form.get(['children', child.key])">{{child.key}}</div>
+      </div>
+    </div>
+  </ng-container>
+</div>

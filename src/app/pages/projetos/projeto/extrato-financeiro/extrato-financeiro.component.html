@@ -1,0 +1,87 @@
+<div class="row">
+  <div class="col-12 fs-24 text-blue mb-3">
+    Extrato Financeiro REFP
+  </div>
+</div>
+<ng-container *ngFor="let empresa of extrato | orderBy:'nome'">
+  <div class="row extrato-empresa">
+    <div class="col-12">
+      <div class="extrato-row">
+        <div class="fs-20 text-uppercase">
+          {{empresa.nome}}
+        </div>
+        <div class="text-center">Previsto</div>
+        <div class="text-center">Realizado</div>
+        <div class="text-center">Desvio(%)</div>
+      </div>
+      <ng-container *ngFor="let categoria of empresa.categorias">
+        <app-accordion>
+          <slot role="heading">
+            <div class="extrato-row">
+              <div class="fs-14 text-capitalize">
+                {{categoria.nome}} ({{categoria.codigo}})
+              </div>
+              <div class="text-center">{{categoria.previsto | currency:'R$'}}</div>
+              <div class="text-center">{{categoria.realizado | currency:'R$'}}</div>
+              <div
+                class="text-center"
+                [innerHTML]="formatDesvio(categoria.previsto, categoria.realizado, categoria.desvio)"></div>
+            </div>
+          </slot>
+          <slot role="main">
+            <ng-container *ngIf="categoria.registros.length > 0; else semRegistros">
+              <ng-container *ngFor="let registro of categoria.registros">
+                <div class="d-flex justify-content-between">
+                  <div>{{registro.recurso}}</div>
+                  <div>Etapa {{registro.etapa}}</div>
+                  <div>{{registro.nomeItem || "Sem nome"}}</div>
+                  <div>{{registro.custo | currency:'R$'}}</div>
+                </div>
+              </ng-container>
+            </ng-container>
+
+          </slot>
+        </app-accordion>
+      </ng-container>
+
+      <div class="extrato-row">
+        <div class="fs-20 text-uppercase">
+          &nbsp;
+        </div>
+        <div class="text-center text-blue font-weight-medium">{{empresa.previsto | currency:'R$'}}</div>
+        <div class="text-center text-blue font-weight-medium">{{empresa.realizado | currency:'R$'}}</div>
+        <div class="text-center text-blue font-weight-medium"
+             [innerHTML]="formatDesvio(empresa.previsto, empresa.realizado, empresa.desvio)"></div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<div class="row">
+  <div class="col-12">
+    <hr>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="extrato-row">
+      <div class="fs-20 text-uppercase text-blue"><span>Extrato Geral</span></div>
+      <div class="text-center">{{previsto | currency:'R$'}}</div>
+      <div class="text-center">{{realizado | currency:'R$'}}</div>
+      <div class="text-center">{{desvio}} %</div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 d-flex justify-content-end">
+    <button class="btn btn-outline-blue" type="button" (click)="downloadXls()">
+      <i class="ta-download"></i>
+      Gerar XLSX
+    </button>
+  </div>
+</div>
+
+
+<ng-template #semRegistros>
+  <div class="text-center">Nenhum registro aprovado</div>
+</ng-template>

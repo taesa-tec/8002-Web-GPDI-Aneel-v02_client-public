@@ -1,0 +1,175 @@
+<app-loading type="fullscreen"></app-loading>
+<div class="row" *ngIf="parent.captacao.status === 'Cancelada'">
+  <div class="col">
+    <div class="alert alert-danger d-flex align-items-center">
+      <i class="ta-alert fs-22 mr-3"></i>
+      <span class="fs-18">Esta captação foi cancelada</span>
+    </div>
+  </div>
+</div>
+<div class="row justify-content-between">
+  <div class="col-12">
+    <h5 class="text-uppercase text-blue font-weight-normal my-4">
+      CONFIGURAÇÕES DA PROPOSTA
+    </h5>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <form [formGroup]="form" *ngIf="form" (ngSubmit)="onSubmit()">
+
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label>Modelos Contratos</label>
+            <div class="d-flex mb-2">
+              <select class="form-control" formControlName="contratoId">
+                <option value="" hidden>Escolha um contrato</option>
+                <option [value]="contrato.id" *ngFor="let contrato of contratos">
+                  {{ contrato.titulo }}
+                </option>
+              </select>
+              <div class="border-right" style="height: 22px; margin-top: 10px;"></div>
+              <button
+                type="button"
+                [disabled]="!form.value.contratoId"
+                class="btn btn-link text-decoration-none p-2"
+                (click)="abrirContrato(form.value.contratoId)"
+              >
+                <i class="ta-eye fs-22"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-12">
+          <div class="form-group">
+            <label>Arquivos disponibilizados para o fornecedor</label>
+          </div>
+          <div>
+
+            <button class="btn btn-link" type="button" (click)="anexarArquivos()" [hidden]="form.disabled"
+                    [disabled]="form.disabled">
+              <i class="ta-attachment fs-22"></i> Adicionar e Gerenciar Arquivos Complementares
+            </button>
+
+
+            <!-- Enviados anteriormente -->
+            <div class="d-flex flex-column align-items-start" style="width: fit-content"
+                 *ngIf="captacao && captacao.arquivos">
+              <div *ngFor="let file of uploads; let i = index;" class="w-100 d-flex justify-content-between">
+                <div class="btn btn-link py-1" (click)="download(file)">
+                  <span>
+                    <i class="ta-attachment"></i>
+                  </span>
+                  {{file.fileName}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="consideracoes">Considerações extras para os fornecedores
+              <app-help codigo="captacao-consideracoes"></app-help>
+            </label>
+            <textarea class="form-control" id="consideracoes" rows="5"
+                      formControlName="consideracoes"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-4">
+          <div class="form-group">
+            <label for="dataMaxima">Data máxima de envio proposta
+              <app-help codigo="captacao-data-maxima"></app-help>
+            </label>
+            <input type="date" class="form-control" id="dataMaxima" formControlName="termino" [min]="dataMinimaExt"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group" formArrayName="fornecedores">
+            <label>Fornecedores convidados</label>
+            <div class="d-flex mb-2" *ngFor="let control of fornecedoresControls.controls; let i = index">
+              <select class="form-control" [formControl]="control">
+                <option value="" hidden>Escolha um fornecedor</option>
+                <option [value]="fornecedor.id"
+                        *ngFor="let fornecedor of fornecedores | listUnique: [control.value]: fornecedoresControls.value: 'id'">
+                  {{ fornecedor.nome }}</option>
+              </select>
+              <button
+                type="button"
+                class="btn btn-link text-decoration-none p-2"
+                *ngIf="fornecedoresControls.controls.length > 1"
+                (click)="removeFornecedor(i)"
+              >
+                <i class="ta-remove-circle"></i>
+              </button>
+            </div>
+            <button
+              type="button"
+              class="btn btn-link text-decoration-none p-2"
+              *ngIf="captacao.status === 'Elaboracao' && fornecedores.length > fornecedoresControls.controls.length"
+              (click)="addFornecedor()"
+            >
+              <i class="ta-plus-circle"></i> Adicionar Fornecedor
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="form.enabled">
+        <div class="col-12">
+          <div class="form-group mt-4">
+            <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+              <i class="ta-plus-circle"></i>
+              Enviar demanda para fornecedores
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <ng-container *ngIf="captacao.status === 'Fornecedor'">
+      <hr>
+      <div class="row">
+        <div class="col-12">
+          <h5 class="text-uppercase text-blue font-weight-normal my-4">
+            ALTERAR PROJETO
+          </h5>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4 pb-3">
+          <div class="form-group">
+            <label for="dataMaximaExt">Data máxima de envio proposta
+              <app-help codigo="captacao-data-maxima-ext"></app-help>
+            </label>
+            <input type="date" class="form-control" id="dataMaximaExt" [min]="dataMinimaExt"
+                   [(ngModel)]="dataMaximaExt"/>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 d-flex">
+          <button class="btn btn-primary" type="button" (click)="estenderData()"><i class="ta-plus-circle"></i> Alterar
+            Projeto
+          </button>
+          <button class="btn btn-link" type="button" (click)="cancelarCaptacao()"><i class="ta-cancel-circle"></i>
+            Cancelar
+            Processo de Captação
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

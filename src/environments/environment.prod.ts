@@ -1,11 +1,7 @@
-import {version} from './version';
+import {version} from '../../package.json';
 
 export const environment = {
-    production: true,
-    api_url: 'https://projetosped.taesa.com.br/v1/api/',
-    version: version,
-    autologin: {
-        user: '',
-        pass: ''
-    }
+  production: true,
+  api_url: '/api',
+  version
 };

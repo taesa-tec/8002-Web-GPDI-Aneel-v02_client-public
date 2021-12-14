@@ -1,34 +1,35 @@
 import {NgModule} from '@angular/core';
-import {SharedModule as SharedCoreModule} from '@app/core/shared/shared.module';
-import {MainComponent} from './main/main.component';
-import {ListaProjetosComponent} from './lista-projetos/lista-projetos.component';
-import {ProjetoCardComponent} from './projeto-card/projeto-card.component';
-import {MeusProjetosComponent} from './meus-projetos/meus-projetos.component';
-import {FormFieldComponent} from './form-edit-components/form-field/form-field.component';
-import {FormEditorComponent} from './form-edit-components/form-editor/form-editor.component';
-import {FormFieldControlComponent} from './form-edit-components/form-field/form-field-control.component';
-import {TemasComponent} from './form-edit-components/form-field/temas/temas.component';
-import {PdfViewerComponent} from '@app/dashboard/shared/pdf-viewer/pdf-viewer.component';
-
-const components = [
-  MainComponent,
-  ListaProjetosComponent,
-  ProjetoCardComponent,
-  MeusProjetosComponent,
+import {CoreModule} from '@app/core';
+import {ComponentsModule} from '@app/dashboard/shared/components/components.module';
+import {DirectivesModule} from '@app/dashboard/shared/directives/directives.module';
+// @todo Exportar para um modulo único de Demandas
+import {
   FormFieldComponent,
   FormEditorComponent,
   FormFieldControlComponent,
-  TemasComponent,
-  PdfViewerComponent
+  TemasComponent
+} from '@app/dashboard/shared/components/forms-demandas';
+import {AdminGuard, HasRoleGuard} from '@app/dashboard/shared/guards';
+
+const components = [
+  FormFieldComponent,
+  FormEditorComponent,
+  FormFieldControlComponent,
+  TemasComponent
 ];
 
 @NgModule({
   declarations: components,
-  entryComponents: [],
   imports: [
-    SharedCoreModule,
+    DirectivesModule,
+    ComponentsModule,
+    CoreModule,
   ],
-  exports: [SharedCoreModule, ...components],
+  exports: [CoreModule, ...components, ComponentsModule],
+  providers: [
+    AdminGuard,
+    HasRoleGuard
+  ]
 })
 export class SharedModule {
 }

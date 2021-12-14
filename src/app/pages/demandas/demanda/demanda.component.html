@@ -1,0 +1,18 @@
+<app-sidebar>
+  <div
+    class="projeto-side-info text-white fs-14 font-weight-light position-relative"
+  >
+    <div class=" p-3 border-bottom border-cinza-claro text-uppercase">
+      {{ DemandaId }} - {{ DemandaTitulo }}
+    </div>
+    <div class="p-3 ">
+      <div class="etapa">Etapa: {{ DemandaEtapa }}</div>
+      <div class="mt-2">
+        <a routerLink="/">
+          <i class="ta-sync fs-18"></i>
+          Trocar de projeto
+        </a>
+      </div>
+    </div>
+  </div>
+</app-sidebar>

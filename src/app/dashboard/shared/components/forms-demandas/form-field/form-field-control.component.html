@@ -1,0 +1,64 @@
+<ng-container *ngIf="form && form.get('value')">
+  <div
+    class="form-editor-field"
+    [ngSwitch]="field.fieldType"
+    [formGroup]="form"
+  >
+    <div class="form-group" *ngSwitchCase="'Text'">
+      <ng-container *ngIf="readonly">
+        {{ form.value.value }}
+      </ng-container>
+      <ng-container *ngIf="!readonly">
+        <input
+          formControlName="value"
+          type="text"
+          class="form-control"
+          [placeholder]="field.placeholder"
+        />
+      </ng-container>
+    </div>
+    <!--  -->
+    <div class="form-group" *ngSwitchCase="'Date'">
+      Date
+      <ng-container *ngIf="readonly">
+        {{ form.value.value | date: "short" }}
+      </ng-container>
+      <ng-container *ngIf="!readonly">
+        <input
+          type="date"
+          formControlName="value"
+          class="form-control"
+          [placeholder]="field.placeholder"
+        />
+      </ng-container>
+    </div>
+    <!--  -->
+    <div *ngSwitchCase="'RichText'" class="position-relative w-100">
+      <ng-container *ngIf="readonly">
+        <div [innerHTML]="form.value.value"></div>
+      </ng-container>
+      <ng-container *ngIf="!readonly">
+        <ckeditor
+          [editor]="editor"
+          [config]="configEditor"
+          style="width: 100%; display: block"
+          formControlName="value"
+          class="ck-fullwidth"
+        ></ckeditor>
+      </ng-container>
+    </div>
+
+    <div *ngSwitchCase="'Temas'">
+      <app-form-editor-temas
+        [readonly]="readonly"
+        formControlName="value"
+      ></app-form-editor-temas>
+    </div>
+    <!--  -->
+    <div *ngIf="canRemove" class="align-items-center d-flex justify-content-center p-1">
+      <button (click)="remove.emit()" class="btn btn-sm btn-outline-danger">
+        <i class="ta-trash"></i>
+      </button>
+    </div>
+  </div>
+</ng-container>

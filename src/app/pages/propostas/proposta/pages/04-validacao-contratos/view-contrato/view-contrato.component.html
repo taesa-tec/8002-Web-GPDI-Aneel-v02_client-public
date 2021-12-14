@@ -1,0 +1,162 @@
+<div class="row">
+  <div class="col">
+    <h5 class="text-uppercase text-blue font-weight-normal my-4">CONTRATO</h5>
+  </div>
+</div>
+
+<div class="row mb-5 bg-light">
+  <div class="col d-flex justify-content-between align-items-center py-2">
+    <h5 class="font-weight-normal m-0">{{contrato.titulo}}</h5>
+  </div>
+</div>
+
+<div class="row mb-3" *ngIf="contrato.finalizado && proposta.captacaoStatus === 'Fornecedor'">
+  <div class="col">
+    <div class="border border-success rounded d-flex text-success align-items-center p-3">
+      <i class="ta-ok fs-48 mr-3"></i>
+      <div>
+        {{'contrato-finalizado' | label}}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-3" *ngIf="proposta.captacaoStatus !== 'Fornecedor'">
+  <div class="col" [ngSwitch]="proposta.contratoAprovacao">
+    <div class="border border-success rounded d-flex text-success align-items-center p-3" *ngSwitchCase="'Aprovado'">
+      <i class="ta-ok fs-48 mr-3"></i>
+      <div>
+        Contrato Finalizado e Aprovado!
+      </div>
+    </div>
+    <div class="border border-warning rounded d-flex text-warning align-items-center p-3" *ngSwitchCase="'Pendente'">
+      <i class="ta-ampulheta fs-32 mr-3"></i>
+      <div>
+        Contrato aguardando revisão do responsável
+      </div>
+    </div>
+    <div class="border border-warning rounded d-flex text-warning align-items-center p-3" *ngSwitchCase="'Alteracao'">
+      <i class="ta-ampulheta fs-32 mr-3"></i>
+      <div>
+        Contrato aguardando alterações do fornecedor
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<form [formGroup]="form" (ngSubmit)="onSubmit($event)">
+
+  <div class="row">
+    <div class="col">
+      <h5 class="text-blue-light">PARTE INICIAL (NÃO EDITÁVEL - VARIÁVEIS PREENCHIDAS AUTOMATICAMENTE):</h5>
+      <div class="bg-cinza-claro p-3 rounded my-3">
+        <div [innerHTML]="contrato.header" class="bg-light p-3" style="cursor: not-allowed"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+
+    </div>
+  </div>
+  <div class="row" *ngIf="showOriginal && contrato.rascunho != null">
+    <div class="col">
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-outline-primary" type="button" (click)="showOriginal = false"><i class="ta-edit"></i>
+          Continuar Editando
+        </button>
+      </div>
+      <div class="bg-cinza-claro p-3 rounded my-3">
+        <div [innerHTML]="contrato.conteudo" class="bg-light p-3" style="cursor: not-allowed"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-outline-primary" (click)="showOriginal = true" type="button"
+                *ngIf="contrato.rascunho && !showOriginal"><i class="ta-eye"></i>
+          Ver Contrato Salvo
+        </button>
+      </div>
+      <div class="form-group">
+        <div class="bg-cinza-claro p-3 rounded my-3" *ngIf="!showOriginal">
+          <ckeditor
+            [editor]="editor"
+            [config]="configEditor"
+            formControlName="conteudo"
+          ></ckeditor>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h5 class="text-blue-light">PARTE FINAL (NÃO EDITÁVEL - VARIÁVEIS PREENCHIDAS AUTOMATICAMENTE):</h5>
+      <div class="bg-cinza-claro p-3 rounded my-3">
+        <div [innerHTML]="contrato.parent.footer" class="bg-light p-3 overflow-auto" style="cursor: not-allowed"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <app-comentarios type="Contrato"></app-comentarios>
+    </div>
+  </div>
+
+  <div class="row"
+       *ngIf="isFornecedor && fornecedorCanEdit && proposta.captacaoStatus === 'Refinamento' && proposta.contratoAprovacao === 'Alteracao'">
+    <div class="col-12">
+      <h6 class="text-blue-light">DESCRITIVO ALTERAÇÕES</h6>
+      <div class="form-group">
+        <app-textarea formControlName="alteracao" class="form-control" rows="5"></app-textarea>
+      </div>
+      <div>
+        <div class="files text-primary p-2">
+          <div *ngFor="let file of files; let i = index" class="border-bottom border-light">
+            <i class="ta-attachment fs-14"></i> {{file.name}}
+            <button class="btn btn-link btn-sm" type="button" (click)="removeFile(i)"><i class="ta-cancel-circle"></i>
+            </button>
+          </div>
+        </div>
+        <label class="cursor-pointer text-primary">
+          <i class="ta-plus-circle"></i> Selecionar arquivos
+          <input type="file" hidden multiple (change)="fileChange($event)">
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-6">
+    <div class="col">
+      <div class="form-group d-flex mt-4">
+        <button type="button" class="button btn btn-link px-0" (click)="historico()">
+          <i class="ta-ampulheta"></i>
+          Histórico de Versões
+        </button>
+        <div class="ml-auto">
+          <button type="button" class="btn btn-link" [disabled]="!contrato.conteudo" (click)="downloadPdf()">
+            <i class="ta-download"></i>
+            Download PDF
+          </button>
+          <button type="submit" class="btn btn-outline-primary mx-2" value="draft"
+                  *ngIf="fornecedorCanEdit && isFornecedor">
+            <i class="ta-save fs-24 align-middle"></i> Salvar como Rascunho
+          </button>
+          <button type="submit" class="btn btn-success mx-2" value="publish" [disabled]="form.invalid"
+                  *ngIf="fornecedorCanEdit && isFornecedor">
+            <i class="ta-ok fs-24 align-middle"></i> Salvar e Marcar como Finalizado
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</form>
+
+<div id="refinamento" *ngIf="proposta.captacaoStatus === 'Refinamento'">
+  <app-refinamento type="Contrato"></app-refinamento>
+</div>

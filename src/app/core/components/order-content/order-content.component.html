@@ -1,0 +1,36 @@
+<div class="order-content d-flex align-items-center rounded mb-3 position-relative"
+     [ngClass]="options.background">
+  <div class="number" [ngStyle]="{width:widthNumber}">
+    {{ beforeNumber}}{{ indice + 1 }}{{ afterNumber}}
+  </div>
+
+  <div class="d-flex flex-fill">
+    <div class="d-flex flex-column align-self-center pt-4 px-2">
+      <button class="btn p-0" (click)="moveTo(-1)" type="button" [ngbTooltip]="options.upButton.tooltip"
+              *ngIf="showOrder && indice > 0">
+        <i [ngClass]="options.upButton.iconClassName"></i>
+      </button>
+      <button class="btn p-0" (click)="moveTo(1)" type="button" *ngIf="showOrder && indice+1 < total"
+              [ngbTooltip]="options.downButton.tooltip">
+        <i [ngClass]="options.downButton.iconClassName"></i>
+      </button>
+    </div>
+    <div class="d-flex flex-grow-1 pb-4" [ngClass]="total > 1 && showOrder?'pt-4':'pt-5'">
+      <div class="flex-grow-1 align-self-center">
+        <ng-content></ng-content>
+      </div>
+      <div class="d-flex px-2">
+        <button type="button" class="btn text-nowrap"
+                [ngClass]="options.deleteButton.className"
+                (click)="remover()"
+                *ngIf="showRemove && total > min"
+                [ngbTooltip]="options.deleteButton.tooltip">
+                  <span class="align-middle">
+                      <i [ngClass]="options.deleteButton.iconClassName"></i>
+                  </span>
+          <span> {{ options.deleteButton.title }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

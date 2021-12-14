@@ -1,0 +1,27 @@
+<div>
+  <hr>
+  <ng-container *ngIf="!isResponsavel">
+    <ng-container [ngSwitch]="status">
+      <app-aprovador *ngSwitchCase="'Pendente'" [type]="type"></app-aprovador>
+      <div class="alert border border-warning text-warning d-flex align-items-center" *ngSwitchCase="'Alteracao'">
+        <i class="ta-ampulheta fs-22 mr-2"></i>
+        <span>Aguardando retorno do fornecedor. Validação enviada.</span>
+      </div>
+      <div class="alert alert-success" *ngSwitchCase="'Aprovado'">
+        <i class="ta-ok"></i>
+        {{description}} Aprovado!</div>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="isResponsavel">
+    <ng-container [ngSwitch]="status">
+
+      <div class="alert border border-warning text-warning d-flex align-items-center" *ngSwitchCase="'Pendente'">
+        <i class="ta-ampulheta fs-22 mr-2"></i>
+        <span>Aguardando retorno do revisor. Versão enviada.</span>
+      </div>
+      <div class="alert alert-success" *ngSwitchCase="'Aprovado'">{{description}} Aprovado!</div>
+    </ng-container>
+  </ng-container>
+
+</div>

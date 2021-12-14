@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col">
+    <h5 class="text-uppercase text-blue font-weight-normal my-3">
+      LOGS da Demanda
+    </h5>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <app-demanda-log-item *ngFor="let log of logs | orderBy:'created':'desc'" [log]="log"
+                          (viewForm)="viewFormData($event)"></app-demanda-log-item>
+  </div>
+</div>

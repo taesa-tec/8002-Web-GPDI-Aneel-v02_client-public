@@ -1,0 +1,130 @@
+<form [formGroup]="form" class="mt-5" (ngSubmit)="submit()">
+  <div class="row">
+    <div class="col-8">
+      <div class="form-group">
+        <label>Beneficiário (Recurso Humano)</label>
+        <select class="form-control" formControlName="recursoHumanoId">
+          <option value="">Selecione</option>
+          <option *ngFor="let recurso of data.colaboradores | orderBy:'nomeCompleto'"
+                  [value]="recurso.id">{{recurso.nomeCompleto}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group">
+        <label>Etapa Relacionada</label>
+        <select class="form-control" formControlName="etapaId">
+          <option value="" hidden>Selecione</option>
+          <option *ngFor="let etapa of data.etapas" [value]="etapa.id">Etapa {{etapa.ordem | pad:'0': 2}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <div class="form-group">
+        <label>Mês Referência</label>
+        <select formControlName="mesReferencia" class="form-control">
+          <option value="" hidden>Selecione</option>
+          <option *ngFor="let mes of data.meses" [value]="mes">{{mes | date:'MMMM y'}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group">
+        <label>Quantidade Horas</label>
+        <input formControlName="horas" placeholder="Quantidade Horas" min="0" type="number" class="form-control">
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group">
+        <label>Empresa Financiadora</label>
+        <select class="form-control" formControlName="financiadoraId">
+          <option value="" hidden>Selecione</option>
+            <option *ngFor="let empresa of data.empresas"
+                    [value]="empresa.id">{{empresa.nome}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-4">
+      <div class="form-group">
+        <label>Tipo de Documento?</label>
+        <select formControlName="tipoDocumento" class="form-control">
+          <option value="">Selecione</option>
+          <option value="CupomFiscal">Cupom Fiscal</option>
+          <option value="Declaracao">Declaração</option>
+          <option value="Fatura">Fatura</option>
+          <option value="Guia">Guia</option>
+          <option value="Nota">Nota</option>
+          <option value="Recibo">Recibo</option>
+          <option value="Reserva">Reserva</option>
+          <option value="ReciboSemCnpj">Recibo Sem Cnpj</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group">
+        <label>Número de Documento</label>
+        <input formControlName="numeroDocumento" placeholder="Número de Documento" type="text" class="form-control">
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group">
+        <label>Data do Documento</label>
+        <input formControlName="dataDocumento" type="date" class="form-control">
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group"><label>Atividade realizada na etapa pela pessoa</label>
+        <textarea formControlName="atividadeRealizada" cols="30" rows="5" placeholder="Descreva atividade realizada"
+                  class="form-control"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group"><label>Observações Internas (Opcional)</label>
+        <textarea formControlName="observacaoInterna" cols="30" rows="5" placeholder="Observações intenas"
+                  class="form-control"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-between">
+        <div>
+          <div class="form-group">
+            <label>COMPROVANTE DA DESPESA</label>
+          </div>
+          <label class="btn-link btn">
+            <i class="ta-attachment"></i> {{file?.name || 'Anexar'}}
+            <input type="file" hidden (change)="fileChange($event)">
+          </label>
+        </div>
+        <div class="form-group">
+          <label>Valor Final (Cálculo automático)</label>
+          <input type="text" class="form-control" tabindex="-1" readonly [value]="custo">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 d-flex justify-content-end">
+      <button class="btn btn-link" type="button">Cancelar</button>
+      <button class="btn btn-primary" type="submit" [disabled]="form.invalid || !file"><i class="ta-plus-circle"></i>
+        Salvar
+        Registro
+      </button>
+    </div>
+  </div>
+
+
+</form>

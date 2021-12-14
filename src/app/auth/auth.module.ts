@@ -5,17 +5,17 @@ import {AuthComponent} from './auth/auth.component';
 import {ForgetPassComponent} from './forget-pass/forget-pass.component';
 import {LoginComponent} from './login/login.component';
 import {NewpassComponent} from './newpass/newpass.component';
-import {SharedModule} from '@app/core/shared/shared.module';
-import {AuthService} from '@app/services/auth.service';
+import {CoreModule} from '@app/core';
+import {ScreensModule} from '@app/core/screens/screens.module';
 
 
 @NgModule({
-    declarations: [AuthComponent, ForgetPassComponent, LoginComponent, NewpassComponent],
+  declarations: [AuthComponent, ForgetPassComponent, LoginComponent, NewpassComponent],
     imports: [
-        SharedModule,
-        AuthRoutingModule
+        CoreModule,
+        AuthRoutingModule,
+        ScreensModule
     ],
-    providers: [AuthService]
 })
 export class AuthModule {
 }

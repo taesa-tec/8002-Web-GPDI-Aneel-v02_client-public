@@ -1,84 +1,78 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Empresa, ProjetoStatus, Segmento, TiposCompartilhamento, TextValue, Permissao} from '@app/models';
-import {of, Observable} from 'rxjs';
-import {map, share, first} from 'rxjs/operators';
+import {Empresa, ProjetoStatus, Segmento, TiposCompartilhamento, Permissao} from '@app/commons';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class CatalogsService {
+  protected cache = new Map<string, any>();
 
+  constructor(private http: HttpClient) {
 
-    protected cache = new Map();
-    protected observables: { [propName: string]: Observable<any> } = {};
+  }
 
-    constructor(private http: HttpClient) {
-        console.log('CatalogsService OK');
+  protected async getData<T>(key: string, url: string) {
+
+    if (this.cache.has(key)) {
+      return this.cache.get(key);
     }
+    const result = await this.http.get<T>(url).toPromise();
+    this.cache.set(key, result);
+    return result;
+  }
 
-    protected getData<T>(key: string, url: string): Observable<T> {
+  async empresas() {
+    return await this.getData<Array<Empresa>>('empresas', `Empresas`);
+  }
 
-        const cached = this.cache.get(key);
+  async empresa(id: number) {
+    console.warn('atualizar metodo de busca de empresa');
+    return (await this.empresas()).find(e => e.id === id);
+  }
 
-        if (cached) {
-            return of(cached);
-        } else if (this.observables[key]) {
-            return this.observables[key];
-        } else {
-            this.observables[key] = this.http.get<T>(url)
-                .pipe(
-                    map(r => {
-                        this.cache.set(key, r);
-                        return r;
-                    }),
-                    share()
-                );
-            return this.observables[key];
-        }
-    }
+  async status() {
+    console.warn('Status de projeto usado');
+    return await this.getData<Array<ProjetoStatus>>('status', `Catalogo/status`);
+  }
 
-    permissoes() {
-        return this.getData<Array<Permissao>>('permissoes', `catalogs/permissoes`);
-    }
+  async segmentos() {
+    return await this.getData<Array<Segmento>>('segmentos', `Catalogo/segmentos`);
+  }
 
-    empresas() {
-        return this.getData<Array<Empresa>>('empresas', `catalogs/empresas`);
-    }
+  async temas() {
+    return await this.getData<any>('temas', `Catalogo/Temas`);
+  }
 
-    empresa(id: number) {
-        return this.empresas().pipe(map(empresas => empresas.find(e => e.id === id)));
-    }
+  async estados() {
+    return await this.getData<any>('estados', `Catalogo/Estados`);
+  }
 
-    status() {
-        return this.getData<Array<ProjetoStatus>>('status', `catalogs/status`);
-    }
+  async categoriasContabeisGestao() {
+    return await this.getData<Array<any>>('categoriasContabeisGestao', `Catalogo/categoriascontabeisgestao`);
+  }
 
-    segmentos() {
-        return this.getData<Array<Segmento>>('segmentos', `catalogs/segmentos`);
-    }
+  async categoriasContabeis() {
+    return await this.getData<Array<any>>('categoriasContabeis', `Catalogo/CategoriaContabil`);
+  }
 
-    temas() {
-        return this.getData<any>('temas', `catalogs/temas`);
-    }
+  async produtoTipos() {
+    return await this.getData<Array<any>>('produtoTipos', `Catalogo/ProdutoTipo`);
+  }
 
-    estados() {
-        return this.getData<any>('estados', `catalogs/Estados`);
-    }
+  async categoriasContabeisAtividade() {
+    return await this.getData<Array<any>>('categoriasContabeisAtividade', `Catalogo/CategoriaContabilAtividade`);
+  }
 
-    categoriasContabeisGestao() {
-        return this.getData<Array<any>>('categoriasContabeisGestao', `catalogs/categoriascontabeisgestao`);
-    }
+  async paises() {
+    return await this.getData<Array<{ id: number; nome: string }>>('paises', `Catalogo/Pais`);
+  }
 
-    paises() {
-        return this.getData<Array<{ id: number; nome: string; }>>('paises', `catalogs/Paises`);
-    }
+  tipoCompartilhamento() {
+    return TiposCompartilhamento;
+  }
 
-    tipoCompartilhamento() {
-        return of<Array<TextValue>>(TiposCompartilhamento);
-    }
-
-    produtoFasesCadeia() {
-        return this.getData<Array<{ id: number; nome: string; }>>('produtoFasesCadeia', `catalogs/ProdutoFasesCadeia`);
-    }
+  async produtoFasesCadeia() {
+    return await this.getData<Array<{ id: number; nome: string }>>('produtoFasesCadeia', `Catalogo/ProdutoFaseCadeia`);
+  }
 }

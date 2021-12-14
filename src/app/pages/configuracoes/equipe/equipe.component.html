@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col">
+    <h5 class="text-uppercase text-cinza font-weight-normal my-4">CARGOS CHAVES</h5>
+
+    <hr>
+  </div>
+</div>
+
+<form class="ve" [formGroup]="formEquipe" *ngIf="formEquipe" (ngSubmit)="salvar()">
+  <div class="row">
+    <div class="col-4">
+      <div class="form-group">
+        <label>
+          Diretor Técnico
+        </label>
+        <select class="form-control flex-grow-1" formControlName="diretor">
+          <option value="" hidden>Selecione o DIRETOR do projeto</option>
+          <option [value]="pessoa.id"
+                  *ngFor="let pessoa of pessoasEquipe(formEquipe.value.diretor)">{{ pessoa.nomeCompleto }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="linha"></div>
+    <div class="col-4">
+      <div class="form-group pl-2">
+        <label>
+          Gerente Executivo Gestão de Ativos
+        </label>
+        <select class="form-control flex-grow-1" formControlName="gerente">
+          <option value="" hidden>Selecione o GERENTE do projeto</option>
+          <option [value]="pessoa.id"
+                  *ngFor="let pessoa of pessoasEquipe(formEquipe.value.gerente)">{{ pessoa.nomeCompleto }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="linha2"></div>
+    <div class="col-4 pl-6">
+      <div class="form-group py-2">
+        <label>
+          Gerente PDI
+        </label>
+        <select class="form-control flex-grow-1" formControlName="coordenador">
+          <option value="" hidden>Selecione o COORDENADOR do projeto</option>
+          <option [value]="pessoa.id"
+                  *ngFor="let pessoa of pessoasEquipe(formEquipe.value.coordenador)">{{ pessoa.nomeCompleto }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 text-left pt-5">
+      <button type="submit" class="btn btn-primary" [disabled]="formEquipe.invalid">
+        <i class="ta-save"></i> Salvar Alterações
+      </button>
+    </div>
+  </div>
+
+</form>

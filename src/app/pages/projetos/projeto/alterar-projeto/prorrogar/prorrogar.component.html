@@ -1,0 +1,83 @@
+<form class="mt-5" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="row mb-2">
+    <div class="col-12 fs-22 text-blue text-uppercase">
+      Prorrogar Projeto
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="alert alert-danger">
+        <i class="ta-alert fs-24 align-middle mr-3"></i>
+        <span>Será criada uma nova Etapa no projeto chamada Prorrogação contendo a duração que será acrescentada ao projeto.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-12">
+      <div class="form-group">
+        <label>Nova Data Final do projeto</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">
+             <span>Fim Atual Previsto:</span> <u
+              class="text-capitalize px-3"> {{projeto.dataFinalProjeto | date:'MMMM y'}}</u>
+            </span>
+          </div>
+          <app-month-year-selector formControlName="data"></app-month-year-selector>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label>PRODUTO ASSOCIADO A ESTA ETAPA</label>
+        <select formControlName="produtoId" placeholder="Selecione" class="form-control">
+          <option value="">Selecione</option>
+          <option *ngFor="let p of produtos" [value]="p.id">{{p.titulo}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label>Descrição das atividades</label>
+        <textarea cols="4" rows="4" class="form-control" formControlName="descricao"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 d-flex justify-content-end">
+      <button class="btn btn-primary" type="submit" [disabled]="form.invalid"><i class="ta-sync"></i> Prorrogar Projeto
+      </button>
+    </div>
+  </div>
+</form>
+<form [formGroup]="formXml" (ngSubmit)="gerarXml()">
+  <div class="row">
+    <div class="col-12 fs-22 text-cinza text-uppercase">
+      Gerar XML de prorrogação
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="bg-cinza-claro p-3 rounded">
+        <div class="form-group">
+          <label>Versão</label>
+        </div>
+        <div class="d-flex">
+          <div class="mr-3">
+            <input type="text" formControlName="versao" class="form-control">
+          </div>
+          <div>
+            <button class="btn btn-primary" type="submit" [disabled]="formXml.invalid">Gerar XML</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

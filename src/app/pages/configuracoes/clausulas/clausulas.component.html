@@ -1,0 +1,35 @@
+<div class="row mt-5">
+  <div class="col-12">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <app-order-content *ngFor="let control of clausulas.controls; index as i" [indice]="i" [showRemove]="true"
+                         afterNumber="º Cláusula"
+                         widthNumber="150px"
+                         (move)="move($event.index, $event.offset)"
+                         (remove)="removeClausula($event)"
+                         [total]="clausulas.controls.length">
+        <div class="flex-grow-1" [formGroup]="control">
+          <label>&nbsp;</label>
+          <app-textarea class="form-control" rows="5" formControlName="conteudo" maxlength="1000"></app-textarea>
+        </div>
+      </app-order-content>
+
+      <div class="form-group">
+        <div class="text-right">
+          <div class="btn btn-link px-0" (click)="addClausula()">
+            <i class="ta-plus-circle"></i>
+            Adicionar cláusula
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          <i class="ta-save mr-1"></i>
+          Salvar Dados
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

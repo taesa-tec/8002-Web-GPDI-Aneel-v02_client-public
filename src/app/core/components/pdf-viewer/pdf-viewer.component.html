@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-12">
+    <div class="area-pdf">
+
+      <iframe *ngIf="loadedFileUrl; else carregandoPdf" [src]="loadedFileUrl" frameborder="0" width="100%"
+              height="100%"></iframe>
+      <ng-template #carregandoPdf>
+        <ngb-progressbar *ngIf="pdfProgress !== null" type="info" class="mb-3" [value]="pdfProgress" [striped]="true"
+                         [animated]="true">
+          <i>{{pdfProgress.toFixed(2)}}%</i>
+        </ngb-progressbar>
+        <div *ngIf="pdfProgress === null" class="alert alert-danger d-flex align-items-center">
+          <i class="ta-alert fs-22 mr-3"></i>
+          Arquivo não encontrado!
+        </div>
+      </ng-template>
+
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="loadedFileUrl">
+  <div class="col-12 d-flex justify-content-end">
+    <span class="btn btn-link" (click)="download()">
+      <i class="ta-download"></i> Download PDF
+    </span>
+  </div>
+</div>

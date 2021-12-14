@@ -1,0 +1,71 @@
+@import "components-base";
+
+.main-layout-side-bar {
+  grid-area: content;
+  display: grid;
+  grid-template-columns: 256px auto;
+  grid-template-columns: var(--side-bar-width) auto;
+  grid-template-areas: "side main";
+  min-height: calc(100vh - var(--header-height));
+  max-width: 100vw;
+
+
+  .side-bar {
+    grid-area: side;
+    background: $cinzaClaro;
+    position: relative;
+    width: var(--side-bar-width);
+    z-index: 2;
+
+    + * {
+      grid-area: main;
+      max-width: calc(100vw - var(--side-bar-width) - 1px);
+    }
+
+    .handle-width {
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 3px;
+      cursor: ew-resize;
+      background-color: transparent;
+      transition: background-color ease-in-out 200ms;
+
+      &:hover {
+        background-color: $cinzaEscuro;
+      }
+    }
+
+    .side-nav {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      min-height: 150px;
+
+
+      .side-nav-item {
+        display: flex;
+        align-items: center;
+        color: $cinzaEscuro;
+        padding: 0.5rem 1rem;
+        border-bottom: solid 2px white;
+        transition: all ease-in 200ms;
+
+
+        &:hover,
+        &.active {
+          text-decoration: none;
+          background: $blue;
+          color: white;
+        }
+
+        > .menu-item-text {
+          flex: 1 1 auto;
+        }
+      }
+    }
+
+
+  }
+}

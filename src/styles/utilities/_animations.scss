@@ -17,3 +17,45 @@
     background-position: 100% 0%;
   }
 }
+
+@keyframes toDown {
+  from {
+    transform: translateY(-50%);
+  }
+
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes growUp {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes growAndFade {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

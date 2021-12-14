@@ -1,0 +1,30 @@
+<div class="row justify-content-between">
+  <div class="col mb-4">
+    <h5 class="text-uppercase text-blue font-weight-normal my-4">PRODUTOS</h5>
+  </div>
+  <div class="col-auto">
+    <a class="btn btn-outline-primary" [routerLink]="['./']" fragment="novo" *ngIf="canEdit">
+      <i class="ta-plus-circle fs-24 align-middle"></i>
+      Novo Produto
+    </a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <ng-container *ngIf="!loading; else loadingTpl">
+      <app-table
+        [cols]="cols"
+        [data]="produtos"
+        [buttons]="buttons"
+      >
+      </app-table>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #loadingTpl>
+  <h6 class="text-center py-3">
+    Carregando produtos...
+  </h6>
+</ng-template>

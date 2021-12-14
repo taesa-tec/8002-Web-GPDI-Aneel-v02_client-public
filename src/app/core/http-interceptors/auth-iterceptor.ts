@@ -7,20 +7,19 @@ import {AuthService} from '@app/services/auth.service';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-    url: string;
+  url: string;
 
-    constructor(protected auth: AuthService) {
+  constructor(protected auth: AuthService) {
+  }
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    let apiReq = req.clone();
+    if (this.auth.token) {
+      apiReq = apiReq.clone({
+        setHeaders: {Authorization: `Bearer ${this.auth.token}`}
+      });
     }
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        let apiReq = req.clone();
-
-        if (this.auth.token) {
-            apiReq = apiReq.clone({
-                setHeaders: {Authorization: `Bearer ${this.auth.token}`}
-            });
-        }
-
-        return next.handle(apiReq);
-    }
+    return next.handle(apiReq);
+  }
 }

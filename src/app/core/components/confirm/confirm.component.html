@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <div class="text-uppercase modal-title text-blue-light fs-24">{{title}}</div>
+</div>
+<div class="modal-body">
+  <div [innerHTML]="message"></div>
+  <div class="checks mb-3 mt-4" *ngIf="checkboxList.length > 0">
+    <ng-container *ngFor="let c of checkboxList">
+      <label>
+        <input type="checkbox" [(ngModel)]="c.checked"> {{c.checkMessage}}
+      </label>
+    </ng-container>
+  </div>
+</div>
+<div class="modal-footer">
+  <button *ngFor="let item of options" type="button" class="btn" [disabled]="isButtonDisable(item)" (click)="activeModal.close(item.value)"
+          [ngClass]="item.cssClass">{{item.text}}</button>
+</div>

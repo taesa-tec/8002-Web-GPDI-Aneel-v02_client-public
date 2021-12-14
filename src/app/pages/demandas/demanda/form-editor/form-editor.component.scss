@@ -1,0 +1,6 @@
+:host {
+  display: block;
+  max-width: calc(100vw - var(--side-bar-width) - 7rem - 2px);
+  //outline: solid 3px red;
+  //overflow: hidden;
+}
