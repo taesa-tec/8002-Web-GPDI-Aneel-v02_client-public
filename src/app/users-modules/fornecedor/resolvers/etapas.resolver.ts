@@ -20,7 +20,7 @@ export class EtapasResolver implements Resolve<any> {
           return result;
         }
       } catch (e) {
-
+        console.error(e);
       }
     }
     return [];

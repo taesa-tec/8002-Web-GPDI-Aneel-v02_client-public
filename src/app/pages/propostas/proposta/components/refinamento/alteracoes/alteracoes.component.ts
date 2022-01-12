@@ -6,9 +6,4 @@ import {Component} from '@angular/core';
   styleUrls: ['./alteracoes.component.scss']
 })
 export class AlteracoesComponent {
-
-  constructor() {
-  }
-
-
 }

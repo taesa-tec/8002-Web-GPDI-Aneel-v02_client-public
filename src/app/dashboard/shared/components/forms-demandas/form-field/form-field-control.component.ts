@@ -11,9 +11,6 @@ import * as ClassicEditor from '@projects/ckeditor/build/ckeditor';
   styleUrls: ['form-field-control.component.scss']
 })
 export class FormFieldControlComponent {
-  constructor() {
-  }
-
   editor = ClassicEditor;
   @Input() form: AbstractControl;
   @Input() field: FormField;

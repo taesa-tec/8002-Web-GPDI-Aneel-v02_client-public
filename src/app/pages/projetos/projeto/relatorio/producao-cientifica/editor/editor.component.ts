@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Projeto } from '@app/pages/projetos/projeto/projeto.component';
-import { ProjetoService } from '@app/pages/projetos/projeto/services/projeto.service';
-import { ProducaoCientifica } from '../../relatorio';
-import { AppService } from '@app/services';
-import { FileService } from '@app/services/file.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {Projeto} from '@app/pages/projetos/projeto/projeto.component';
+import {ProjetoService} from '@app/pages/projetos/projeto/services/projeto.service';
+import {ProducaoCientifica} from '../../relatorio';
+import {AppService} from '@app/services';
+import {FileService} from '@app/services/file.service';
 import * as moment from 'moment';
 
 @Component({
@@ -37,14 +37,15 @@ export class EditorComponent implements OnInit {
     private service: ProjetoService,
     private fb: FormBuilder,
     public activeModal: NgbActiveModal
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.projeto = this.service.getCurrentProjeto();
-    if(this.producao) {
+    if (this.producao) {
       this.form.patchValue({
         ...this.producao,
-        dataPublicacao: moment(this.producao.dataPublicacao).format("yyyy-MM-DD")
+        dataPublicacao: moment(this.producao.dataPublicacao).format('yyyy-MM-DD')
       });
     }
   }
@@ -68,37 +69,37 @@ export class EditorComponent implements OnInit {
 
   async delete() {
     try {
-      if(this.validate()) {
-        if(await this.app.confirm("Tem certeza que deseja excluir esta produção científica?")) {
+      if (this.validate()) {
+        if (await this.app.confirm('Tem certeza que deseja excluir esta produção científica?')) {
           await this.service.delete(`${this.projeto.id}/Relatorio/ProducaoCientifica/${this.form.value.id}`);
           this.activeModal.close();
         }
       }
     } catch (e) {
-
+      console.error(e);
     }
   }
 
   async submit() {
     try {
-      if(this.validate()) {
+      if (this.validate()) {
         let producao = this.form.value;
         let path = `${this.projeto.id}/Relatorio/ProducaoCientifica`;
 
-        if(producao.id) {
+        if (producao.id) {
           producao = await this.service.put(path, producao);
         } else {
           producao = await this.service.post(path, producao);
         }
 
-        if(this.file) {
+        if (this.file) {
           await this.service.upload([this.file], `${path}/${producao.id}/Arquivos/Origem`);
         }
 
         this.activeModal.close();
       }
-    } catch(e) {
-
+    } catch (e) {
+      console.error(e);
     }
   }
 

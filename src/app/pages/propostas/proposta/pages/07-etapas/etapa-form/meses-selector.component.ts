@@ -34,14 +34,12 @@ export class MesesSelectorComponent implements OnInit, ControlValueAccessor {
   }
 
   protected onChange: any = function () {
+    // Metodo Inicial
   };
 
   protected onTouch: any = function () {
+    // Metodo Inicial
   };
-
-  constructor() {
-  }
-
   registerOnChange(fn: any) {
     this.onChange = fn;
   }

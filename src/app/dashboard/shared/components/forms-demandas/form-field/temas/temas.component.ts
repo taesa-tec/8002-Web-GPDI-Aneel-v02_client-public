@@ -73,8 +73,10 @@ export class TemasComponent implements OnInit, ControlValueAccessor {
   }
 
   onChange: any = function () {
+    // Metodo inicial
   };
   onTouched: any = function () {
+    // Metodo inicial
   };
 
   subtemasdisponiveis(current?: any) {

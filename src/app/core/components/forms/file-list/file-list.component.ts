@@ -13,7 +13,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
     }
   ],
 })
-export class FileListComponent implements OnInit, ControlValueAccessor {
+export class FileListComponent implements ControlValueAccessor {
   @Input() name = '';
   @Input() disabled;
   @Input('value') val: Array<File>;
@@ -39,15 +39,11 @@ export class FileListComponent implements OnInit, ControlValueAccessor {
     this.updateFileInfo();
   }
 
-  constructor() {
-  }
-
-  ngOnInit(): void {
-  }
-
   onChange: any = () => {
+    // Metodo inicial
   };
   onTouched: any = () => {
+    // Metodo inicial
   };
 
   writeValue(value: FileList) {

@@ -18,9 +18,6 @@ export class UploadImageComponent implements ControlValueAccessor {
   onChange: (...args) => any;
   onTouched: (...args) => any;
 
-  constructor() {
-  }
-
   @Input() previewImage: string;
 
   @ViewChild('input', {static: true}) input: ElementRef;

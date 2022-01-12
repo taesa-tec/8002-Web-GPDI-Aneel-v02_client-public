@@ -291,7 +291,7 @@ export class TableComponent implements OnInit {
           totalItems: response.totalItems
         } : false;
       } catch (e) {
-
+        console.error(e);
       } finally {
         this.requesting = false;
       }

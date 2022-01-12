@@ -8,9 +8,6 @@ const maxAge = 5000;
 })
 export class RequestCacheService {
 
-    constructor() {
-    }
-
     cache = new Map();
 
     get(req: HttpRequest<any>): HttpResponse<any> | undefined {

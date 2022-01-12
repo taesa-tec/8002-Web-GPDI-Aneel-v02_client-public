@@ -122,7 +122,7 @@ export class EditorComponent implements OnInit {
         this.activeModal.close();
       }
     } catch (e) {
-
+      console.error(e);
     }
   }
 
@@ -146,7 +146,7 @@ export class EditorComponent implements OnInit {
         this.activeModal.close();
       }
     } catch (e) {
-
+      console.error(e);
     }
   }
 

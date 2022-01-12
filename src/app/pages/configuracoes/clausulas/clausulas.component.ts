@@ -73,7 +73,7 @@ export class ClausulasComponent implements OnInit {
         this.app.showLoading();
         await this.service.criar(this.clausulas.value);
       } catch (e) {
-
+        console.error(e);
       } finally {
         this.app.hideLoading();
       }

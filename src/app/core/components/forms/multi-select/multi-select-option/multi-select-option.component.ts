@@ -9,7 +9,4 @@ export class MultiSelectOptionComponent {
 
   @Input() value;
   @Input() label;
-
-  constructor() {
-  }
 }

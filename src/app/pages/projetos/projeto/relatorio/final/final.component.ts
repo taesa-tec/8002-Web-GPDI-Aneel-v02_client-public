@@ -97,7 +97,7 @@ export class FinalComponent implements OnInit {
     if (_file.name.toLowerCase().endsWith('.pdf')) {
       this[file] = _file;
     } else {
-      this.app.alert("Somentes arquivos pdf");
+      this.app.alert('Somentes arquivos pdf');
     }
   }
 
@@ -138,7 +138,7 @@ export class FinalComponent implements OnInit {
         this.app.alert('Relatório salvo com sucesso.');
       }
     } catch (e) {
-
+      console.error(e);
     }
   }
 

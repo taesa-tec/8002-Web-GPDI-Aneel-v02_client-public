@@ -6,12 +6,7 @@ import {Component} from '@angular/core';
   styleUrls: []
 })
 export class CentralAdministrativaComponent {
-
   menu = [
     {text: 'Alteração Status Projeto', path: 'alteracao-status-demanda'},
   ];
-
-
-  constructor() {
-  }
 }

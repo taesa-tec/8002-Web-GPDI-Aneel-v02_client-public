@@ -66,7 +66,7 @@ export class PlanoTrabalhoComponent implements OnInit {
         `Propostas/${this.proposta.guid}/Arquivos`);
       this.updateFormFiles(files);
     } catch (e) {
-
+      console.error(e);
     }
   }
 

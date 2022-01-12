@@ -6,7 +6,4 @@ import {Component} from '@angular/core';
   styles: []
 })
 export class DebugComponent {
-
-  constructor() {
-  }
 }

@@ -10,9 +10,6 @@ import {Demanda} from '@app/commons/demandas';
 })
 
 export class DemandaProgressEtapaComponent {
-  constructor() {
-  }
-
   @Input() etapa: DemandaEtapaItem;
   @Input() etapaDemanda: DemandaEtapaItem;
   @Input() etapaDemandaStatus: DemandaEtapaStatus;
