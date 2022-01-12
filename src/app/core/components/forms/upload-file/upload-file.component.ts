@@ -39,9 +39,6 @@ export class UploadFileComponent implements ControlValueAccessor {
     this.updateFileInfo();
   }
 
-  constructor() {
-  }
-
   protected checkFiles(fileList: FileList) {
     let size = 0;
     for (let i = 0; i < fileList.length; i++) {
@@ -64,8 +61,10 @@ export class UploadFileComponent implements ControlValueAccessor {
   }
 
   onChange: any = () => {
+    // Metodo inicial
   };
   onTouched: any = () => {
+    // Metodo inicial
   };
 
   writeValue(value: FileList) {

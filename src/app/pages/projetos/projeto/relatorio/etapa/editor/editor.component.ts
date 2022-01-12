@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Projeto } from '@app/pages/projetos/projeto/projeto.component';
-import { ProjetoService } from '@app/pages/projetos/projeto/services/projeto.service';
-import { RelatorioEtapa } from '../../relatorio';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {Projeto} from '@app/pages/projetos/projeto/projeto.component';
+import {ProjetoService} from '@app/pages/projetos/projeto/services/projeto.service';
+import {RelatorioEtapa} from '../../relatorio';
 
 @Component({
   selector: 'app-editor',
@@ -27,25 +27,26 @@ export class EditorComponent implements OnInit {
     private service: ProjetoService,
     private fb: FormBuilder,
     public activeModal: NgbActiveModal
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.projeto = this.service.getCurrentProjeto();
 
-    if(this.relatorioEtapa) {
+    if (this.relatorioEtapa) {
       this.form.patchValue(this.relatorioEtapa);
     }
   }
 
   async submit() {
     try {
-      if(this.form.valid) {
+      if (this.form.valid) {
         const relatorioEtapa = this.form.value;
         await this.service.put(`${this.projeto.id}/Relatorio/RelatorioEtapa`, relatorioEtapa);
         this.activeModal.close();
       }
-    } catch(e) {
-
+    } catch (e) {
+      console.error(e);
     }
   }
 

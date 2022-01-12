@@ -64,7 +64,7 @@ export class SelecaoComponent implements OnInit, OnDestroy {
     try {
       this.file = evt.target.files.item(0);
     } catch (e) {
-
+      console.error(e);
     }
   }
 

@@ -13,7 +13,7 @@ export class EmpresasResolver implements Resolve<any> {
       const projeto = this.service.getCurrentProjeto();
       return await this.service.obter<any>(`${projeto.id}/Empresas`);
     } catch (e) {
-
+      console.error(e);
     }
     return [];
   }

@@ -37,7 +37,4 @@ import {AuthService} from '@app/services';
   ]
 })
 export class AdministrativoComponent {
-
-  constructor() {
-  }
 }

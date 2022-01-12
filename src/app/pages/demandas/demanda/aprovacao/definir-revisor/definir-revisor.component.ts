@@ -16,7 +16,4 @@ export class DefinirRevisorComponent {
     revisorId: new FormControl('', Validators.required)
   });
 
-  constructor() {
-  }
-
 }

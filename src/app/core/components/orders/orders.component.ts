@@ -10,10 +10,6 @@ import {Component, Output, EventEmitter, Input} from '@angular/core';
   styleUrls: ['./orders.component.scss']
 })
 export class OrdersComponent {
-
-  constructor() {
-  }
-
   @Input() field: string;
   @Input() type: string;
   @Input() current: { field: string; direction: 'asc' | 'desc' };

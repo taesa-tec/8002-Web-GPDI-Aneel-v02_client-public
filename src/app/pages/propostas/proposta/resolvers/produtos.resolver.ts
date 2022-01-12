@@ -15,7 +15,7 @@ export class ProdutosResolver implements Resolve<any> {
         return result;
       }
     } catch (e) {
-
+      console.error(e);
     }
     return [];
   }

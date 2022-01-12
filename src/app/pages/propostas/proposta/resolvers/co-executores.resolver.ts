@@ -18,7 +18,7 @@ export class CoExecutoresResolver implements Resolve<any> {
           return result;
         }
       } catch (e) {
-
+        console.error(e);
       }
     }
     return [];

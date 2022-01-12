@@ -7,9 +7,5 @@ import {Demanda} from '@app/commons/demandas';
   styles: []
 })
 export class DemandaComentariosComponent {
-
   @Input() demanda: Demanda;
-
-  constructor() {
-  }
 }

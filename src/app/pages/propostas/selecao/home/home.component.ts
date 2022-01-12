@@ -12,8 +12,4 @@ export class HomeComponent {
     {text: 'Seleção Pendente', path: 'pendente', role: [UserRole.Administrador, UserRole.User]},
     {text: 'Seleção Finalizada', path: 'finalizada', role: [UserRole.Administrador, UserRole.User]},
   ];
-
-  constructor() {
-  }
-
 }

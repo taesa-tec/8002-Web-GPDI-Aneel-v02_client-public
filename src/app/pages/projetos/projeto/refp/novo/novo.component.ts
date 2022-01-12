@@ -19,6 +19,4 @@ const menu: Array<MenuItem> = [
 })
 export class NovoComponent {
 
-  constructor() {
-  }
 }

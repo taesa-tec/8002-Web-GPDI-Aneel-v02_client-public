@@ -13,8 +13,4 @@ export class HomeComponent {
     {text: 'Identificação Finalizada', path: 'finalizada', role: [UserRole.Administrador, UserRole.User]},
   ];
 
-  constructor() {
-  }
-
-
 }

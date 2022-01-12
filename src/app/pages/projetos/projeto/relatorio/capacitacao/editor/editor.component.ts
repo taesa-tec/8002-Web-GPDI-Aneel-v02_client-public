@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Projeto } from '@app/pages/projetos/projeto/projeto.component';
-import { ProjetoService } from '@app/pages/projetos/projeto/services/projeto.service';
-import { FileService } from '@app/services/file.service';
-import { Capacitacao } from '../../relatorio';
-import { AppService } from '@app/services';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {Projeto} from '@app/pages/projetos/projeto/projeto.component';
+import {ProjetoService} from '@app/pages/projetos/projeto/services/projeto.service';
+import {FileService} from '@app/services/file.service';
+import {Capacitacao} from '../../relatorio';
+import {AppService} from '@app/services';
 import * as moment from 'moment';
 
 @Component({
@@ -36,15 +36,16 @@ export class EditorComponent implements OnInit {
     private service: ProjetoService,
     private fb: FormBuilder,
     public activeModal: NgbActiveModal
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.projeto = this.service.getCurrentProjeto();
 
-    if(this.capacitacao) {
+    if (this.capacitacao) {
       this.form.patchValue({
         ...this.capacitacao,
-        dataConclusao: moment(this.capacitacao.dataConclusao).format("yyyy-MM-DD")
+        dataConclusao: moment(this.capacitacao.dataConclusao).format('yyyy-MM-DD')
       });
     }
   }
@@ -68,36 +69,36 @@ export class EditorComponent implements OnInit {
 
   async delete() {
     try {
-      if(this.validate()) {
-        if(await this.app.confirm("Tem certeza que deseja excluir esta capacitacao?")) {
+      if (this.validate()) {
+        if (await this.app.confirm('Tem certeza que deseja excluir esta capacitacao?')) {
           await this.service.delete(`${this.projeto.id}/Relatorio/Capacitacao/${this.form.value.id}`);
           this.activeModal.close();
         }
       }
     } catch (e) {
-
+      console.error(e);
     }
   }
 
   async submit() {
     try {
-      if(this.validate()) {
+      if (this.validate()) {
         let capacitacao = this.form.value;
         let path = `${this.projeto.id}/Relatorio/Capacitacao`;
 
-        if(capacitacao.id) {
+        if (capacitacao.id) {
           capacitacao = await this.service.put(path, capacitacao);
         } else {
           capacitacao = await this.service.post(path, capacitacao);
         }
 
-        if(this.file) {
+        if (this.file) {
           await this.service.upload([this.file], `${path}/${capacitacao.id}/Arquivos/Origem`);
         }
 
         this.activeModal.close();
       }
-    } catch(e) {
+    } catch (e) {
 
     }
   }

@@ -6,7 +6,4 @@ import {Component} from '@angular/core';
   styleUrls: ['./screens.scss']
 })
 export class WrapFullComponent {
-
-  constructor() {
-  }
 }

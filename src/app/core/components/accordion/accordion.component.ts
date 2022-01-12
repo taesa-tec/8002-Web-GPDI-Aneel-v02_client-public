@@ -18,10 +18,6 @@ export class AccordionComponent {
 
   @Input() isLocked = false;
 
-
-  constructor() {
-  }
-
   toogle() {
     this._isCollapsed = !this._isCollapsed;
   }

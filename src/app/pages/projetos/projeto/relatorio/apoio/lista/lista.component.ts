@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TableComponentActions, TableComponentCols } from '@app/core/components';
-import { EditorComponent } from '../editor/editor.component';
-import { Apoio } from '../../relatorio';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {TableComponentActions, TableComponentCols} from '@app/core/components';
+import {EditorComponent} from '../editor/editor.component';
+import {Apoio} from '../../relatorio';
 
 @Component({
   selector: 'app-lista',
@@ -15,8 +15,10 @@ export class ListaComponent implements OnInit {
 
   cols: TableComponentCols = [
     {title: 'Tipo', field: 'tipo', order: true},
-    {title: 'CNPJ Entidade', field: 'cnpjReceptora', order: true,
-      value: i => i.cnpjReceptora.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5')}
+    {
+      title: 'CNPJ Entidade', field: 'cnpjReceptora', order: true,
+      value: i => i.cnpjReceptora.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5')
+    }
   ];
 
   buttons: TableComponentActions = [
@@ -24,23 +26,23 @@ export class ListaComponent implements OnInit {
   ];
 
   constructor(
-    protected route: ActivatedRoute, 
-    protected modal: NgbModal, 
+    protected route: ActivatedRoute,
+    protected modal: NgbModal,
     protected router: Router
   ) {
   }
 
   ngOnInit(): void {
     this.route.data.subscribe(({apoios}) => {
-      if(Array.isArray(apoios)) {
-        this.apoios = apoios
+      if (Array.isArray(apoios)) {
+        this.apoios = apoios;
       } else {
-        this.openModal(apoios)
+        this.openModal(apoios);
       }
     });
 
     this.route.fragment.subscribe(data => {
-      if(data == 'novo') {
+      if (data === 'novo') {
         this.openModal();
       }
     });

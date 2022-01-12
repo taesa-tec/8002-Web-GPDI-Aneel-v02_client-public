@@ -13,8 +13,4 @@ export class HomeComponent {
     {text: 'Formalizados', path: 'formalizados', role: [UserRole.Administrador, UserRole.User]},
     {text: 'No Deal', path: 'no-deal', role: [UserRole.Administrador, UserRole.User]},
   ];
-
-  constructor() {
-  }
-
 }

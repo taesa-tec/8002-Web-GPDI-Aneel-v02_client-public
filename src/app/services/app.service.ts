@@ -61,9 +61,6 @@ export class LoadingController {
     }
     return this;
   }
-
-  constructor() {
-  }
 }
 
 @Injectable({
