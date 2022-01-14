@@ -34,6 +34,7 @@ export class ForgetPassComponent {
       this.app.alert('Um email será enviado caso o usuário seja cadastrado no sistema').then();
       this.router.navigate(['/']).then();
     } catch (e) {
+      this.app.alert('Ocorreu um erro inesperado no servidor, tente novamente mais tarde').then();
       console.error(e);
     }
 
