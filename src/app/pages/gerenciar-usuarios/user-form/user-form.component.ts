@@ -70,8 +70,8 @@ export class UserFormComponent implements OnInit {
         this.app.alert('Usuário salvo com sucesso').then();
         await this.app.router.navigate(['/gerenciar-usuarios/']);
       } catch (e) {
+        this.app.alertError("Erro ao salvar usuário").then();
         console.error(e);
-        this.app.alertError(e).then();
       }
     }
   }
