@@ -1,4 +1,4 @@
-import {HttpClient, HttpRequest} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpRequest} from '@angular/common/http';
 import {BaseEntity} from '@app/commons';
 import {Injectable, Provider} from '@angular/core';
 
@@ -10,7 +10,8 @@ export class UploadFilesService {
   constructor(protected http: HttpClient) {
   }
 
-  upload(files: Array<File>, url: string) {
+  upload(files: Array<File>, url: string);
+  upload<T>(files: Array<File>, url: string) {
 
     const formData = new FormData();
 
@@ -18,9 +19,7 @@ export class UploadFilesService {
       formData.append('file', file, file.name)
     );
 
-    const request = new HttpRequest('POST', url, formData);
-
-    return this.http.request<any>(request).toPromise();
+    return this.http.post(url, formData).toPromise();
   }
 
   download(url: string) {
@@ -38,6 +37,16 @@ export class ServiceBase<T extends { id?: any }> extends UploadFilesService {
    * @description Controller da api utilizado por este serviço, é adicionada como prefixo a todas as requisições internas
    */
   controller: string;
+
+  /**
+   *
+   * @param http Cliente Http
+   * @param controller Controller da api utlizado
+   */
+  constructor(protected http: HttpClient, controller: string) {
+    super(http);
+    this.controller = controller.replace(/^\/|\/$/g, '');
+  }
 
   static useExisting(t): Provider {
     return {
@@ -62,15 +71,6 @@ export class ServiceBase<T extends { id?: any }> extends UploadFilesService {
   post: (url, data, ...args) => Promise<any> = (url, data, ...args) => this.http.post(`${this.controller}/${url}`, data, ...args)
     .toPromise();
 
-  /**
-   *
-   * @param http Cliente Http
-   * @param controller Controller da api utlizado
-   */
-  constructor(protected http: HttpClient, controller: string) {
-    super(http);
-    this.controller = controller.replace(/^\/|\/$/g, '');
-  }
 
   sanitizeQuery(query: any) {
 
@@ -137,7 +137,8 @@ export class ServiceBase<T extends { id?: any }> extends UploadFilesService {
     return await this.http.delete(`${this.controller}/${id}`).toPromise();
   }
 
-  upload(files: Array<File>, url: string) {
+  upload(files: Array<File>, url: string);
+  upload<UT>(files: Array<File>, url: string): Promise<HttpEvent<UT>> {
     return super.upload(files, `${this.controller}/${url}`);
   }
 }
