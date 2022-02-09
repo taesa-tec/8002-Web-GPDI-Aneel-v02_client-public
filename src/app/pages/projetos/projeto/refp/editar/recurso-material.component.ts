@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ProjetoService} from '@app/pages/projetos/projeto/services/projeto.service';
 import {CurrencyPipe} from '@angular/common';
 import {Projeto} from '@app/pages/projetos/projeto/projeto.component';
-import {LoadingController} from '@app/services';
+import {AppService, LoadingController, UploadFilesService} from '@app/services';
 import {AppValidators} from '@app/commons';
 import {EditarComponent} from '@app/pages/projetos/projeto/refp/editar/editar.component';
 
@@ -43,6 +43,8 @@ export class RecursoMaterialComponent implements OnInit {
 
 
   constructor(protected fb: FormBuilder, protected route: ActivatedRoute,
+              protected app: AppService,
+              protected uploadService: UploadFilesService,
               protected parent: EditarComponent,
               protected router: Router,
               protected service: ProjetoService,
@@ -62,6 +64,7 @@ export class RecursoMaterialComponent implements OnInit {
       valor: this.valorCtrl,
       recebedoraId: this.recebedoraCtrl,
       financiadoraId: this.financiadoraCtrl,
+      comprovanteId: [''],
 
       coExecutorFinanciadorId: this.coExecutorFinanciadorCtrl,
       coExecutorRecebedorId: this.coExecutorRecebedorCtrl,
@@ -153,11 +156,16 @@ export class RecursoMaterialComponent implements OnInit {
     }
     try {
       this.loading.show().then();
-      const registro = await this.service.post(`${this.projeto.id}/RegistroFinanceiro/RecursoMaterial`, this.form.value);
-      await this.service.upload([this.file], `${this.projeto.id}/RegistroFinanceiro/${registro.id}/Comprovante`);
+      if (this.file) {
+        const file = await this.uploadService.upload([this.file], 'File');
+        this.form.patchValue({comprovanteId: file[0].id});
+      }
+      await this.service.post(`${this.projeto.id}/RegistroFinanceiro/RecursoMaterial`, this.form.value);
+      this.app.alert('Registro Salvo com sucesso!');
       this.router.navigate(['../../pendente'], {relativeTo: this.route}).then();
     } catch (e) {
       console.error(e);
+      this.app.alertError('Não foi possível salvar o registro!');
     } finally {
       this.loading.hide();
     }

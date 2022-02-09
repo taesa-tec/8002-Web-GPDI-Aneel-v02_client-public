@@ -21,7 +21,6 @@ export class UploadFilesService {
 
     return this.http.post(url, formData).toPromise();
   }
-
   download(url: string) {
 
     return this.http.get(url, {
