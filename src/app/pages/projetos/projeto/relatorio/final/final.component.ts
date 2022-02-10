@@ -5,7 +5,7 @@ import {Projeto} from '../../projeto.component';
 import {ProjetoService} from '@app/pages/projetos/projeto/services/projeto.service';
 import {RelatorioFinal} from './../relatorio';
 import {FileService} from '@app/services/file.service';
-import {AppService} from '@app/services';
+import {AppService, UploadFilesService} from '@app/services';
 
 @Component({
   selector: 'app-final',
@@ -29,12 +29,15 @@ export class FinalComponent implements OnInit {
     resultadosTestes: [''],
     abrangenciaProduto: [''],
     ambitoAplicacaoProduto: [''],
-    transferenciaTecnologica: ['', Validators.required]
+    transferenciaTecnologica: ['', Validators.required],
+    relatorioArquivoId: [''],
+    auditoriaRelatorioArquivoId: ['']
   });
 
   constructor(
     private app: AppService,
     private fileService: FileService,
+    private uploadService: UploadFilesService,
     private service: ProjetoService,
     private route: ActivatedRoute,
     private fb: FormBuilder
@@ -118,26 +121,23 @@ export class FinalComponent implements OnInit {
   async submit() {
     try {
       if (this.validate()) {
-        let relatorio = this.form.value;
-        let path = `${this.projeto.id}/Relatorio/RelatorioFinal`;
-
-        if (relatorio.id) {
-          await this.service.put(path, relatorio);
-        } else {
-          this.relatorio = await this.service.post(path, relatorio);
-        }
+        const path = `${this.projeto.id}/Relatorio/RelatorioFinal`;
 
         if (this.relatorioArquivo) {
-          await this.service.upload([this.relatorioArquivo], `${path}/Arquivos/Relatorio`);
+          const file = await this.uploadService.upload([this.relatorioArquivo], 'File');
+          this.form.patchValue({relatorioArquivoId: file[0].id});
         }
 
         if (this.auditoriaRelatorioArquivo) {
-          await this.service.upload([this.auditoriaRelatorioArquivo], `${path}/Arquivos/RelatorioAuditoria`);
+          const file = await this.uploadService.upload([this.auditoriaRelatorioArquivo], 'File');
+          this.form.patchValue({auditoriaRelatorioArquivoId: file[0].id});
         }
 
-        this.app.alert('Relatório salvo com sucesso.');
+        this.relatorio = await this.service.post(path, this.form.value);
+        this.app.alert('Relatório salvo com sucesso.').then();
       }
     } catch (e) {
+      this.app.alertError('Não foi possível salvar o relatório final').then();
       console.error(e);
     }
   }
