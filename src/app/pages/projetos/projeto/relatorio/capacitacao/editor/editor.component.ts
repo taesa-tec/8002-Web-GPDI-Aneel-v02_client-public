@@ -5,7 +5,7 @@ import {Projeto} from '@app/pages/projetos/projeto/projeto.component';
 import {ProjetoService} from '@app/pages/projetos/projeto/services/projeto.service';
 import {FileService} from '@app/services/file.service';
 import {Capacitacao} from '../../relatorio';
-import {AppService} from '@app/services';
+import {AppService, UploadFilesService} from '@app/services';
 import * as moment from 'moment';
 
 @Component({
@@ -27,11 +27,13 @@ export class EditorComponent implements OnInit {
     dataConclusao: ['', Validators.required],
     cnpjInstituicao: ['', Validators.required],
     areaPesquisa: ['', Validators.required],
-    tituloTrabalhoOrigem: ['', Validators.required]
+    tituloTrabalhoOrigem: ['', Validators.required],
+    arquivoTrabalhoOrigemId: ['']
   });
 
   constructor(
     private app: AppService,
+    private uploadService: UploadFilesService,
     private fileService: FileService,
     private service: ProjetoService,
     private fb: FormBuilder,
@@ -83,22 +85,25 @@ export class EditorComponent implements OnInit {
   async submit() {
     try {
       if (this.validate()) {
-        let capacitacao = this.form.value;
-        let path = `${this.projeto.id}/Relatorio/Capacitacao`;
-
-        if (capacitacao.id) {
-          capacitacao = await this.service.put(path, capacitacao);
-        } else {
-          capacitacao = await this.service.post(path, capacitacao);
-        }
+        const path = `${this.projeto.id}/Relatorio/Capacitacao`;
 
         if (this.file) {
-          await this.service.upload([this.file], `${path}/${capacitacao.id}/Arquivos/Origem`);
+          const file = await this.uploadService.upload([this.file], 'File');
+          this.form.patchValue({arquivoTrabalhoOrigemId: file[0].id});
         }
 
+        if (this.form.value.id) {
+          await this.service.put(path, this.form.value);
+        } else {
+          await this.service.post(path, this.form.value);
+        }
+
+        this.app.alert('Capacitação salva com sucesso!');
         this.activeModal.close();
       }
     } catch (e) {
+      this.app.alertError('Não foi possível salvar o registro');
+      console.error(e);
 
     }
   }

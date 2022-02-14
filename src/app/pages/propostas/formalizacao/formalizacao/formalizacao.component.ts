@@ -14,7 +14,6 @@ import {FileService} from '@app/services/file.service';
 })
 export class FormalizacaoComponent implements OnInit, OnDestroy {
 
-  protected subscription: Subscription;
   route: ActivatedRoute;
   equipe: EquipePeD;
   empresas: Array<any>;
@@ -37,7 +36,10 @@ export class FormalizacaoComponent implements OnInit, OnDestroy {
     empresaProponenteId: this.empresaProponenteCtrl,
     segmentoId: this.segmentoIdCtrl,
     inicioProjeto: this.inicioProjetoCtrl,
+    arquivoId: ['']
   });
+
+  protected subscription: Subscription;
 
   constructor(public activeModal: NgbActiveModal,
               protected app: AppService,
@@ -85,12 +87,9 @@ export class FormalizacaoComponent implements OnInit, OnDestroy {
     }
     try {
       this.app.showLoading();
+      const file = await this.service.upload([this.file], `${this.captacaoId}/Formalizacao/Arquivo`);
+      this.form.patchValue({arquivoId: file.id});
       await this.service.post(`${this.captacaoId}/Formalizacao`, this.form.value);
-      try {
-        await this.service.upload([this.file], `${this.captacaoId}/Formalizacao/Arquivo`);
-      } catch (e) {
-        this.app.alertError('Não foi possível enviar o arquivo comprobatório').then();
-      }
       this.app.alert('Formalização salvo com sucesso!').then();
       this.activeModal.close();
     } catch (e) {

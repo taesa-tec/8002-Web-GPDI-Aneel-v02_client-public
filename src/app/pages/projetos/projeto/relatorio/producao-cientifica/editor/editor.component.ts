@@ -4,7 +4,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Projeto} from '@app/pages/projetos/projeto/projeto.component';
 import {ProjetoService} from '@app/pages/projetos/projeto/services/projeto.service';
 import {ProducaoCientifica} from '../../relatorio';
-import {AppService} from '@app/services';
+import {AppService, UploadFilesService} from '@app/services';
 import {FileService} from '@app/services/file.service';
 import * as moment from 'moment';
 
@@ -28,11 +28,13 @@ export class EditorComponent implements OnInit {
     linkPublicacao: ['', Validators.required],
     paisId: ['', Validators.required],
     cidade: ['', Validators.required],
-    tituloTrabalho: ['', Validators.required]
+    tituloTrabalho: ['', Validators.required],
+    arquivoTrabalhoOrigemId: ['']
   });
 
   constructor(
     private app: AppService,
+    private uploadService: UploadFilesService,
     private fileService: FileService,
     private service: ProjetoService,
     private fb: FormBuilder,
@@ -83,23 +85,26 @@ export class EditorComponent implements OnInit {
   async submit() {
     try {
       if (this.validate()) {
-        let producao = this.form.value;
-        let path = `${this.projeto.id}/Relatorio/ProducaoCientifica`;
-
-        if (producao.id) {
-          producao = await this.service.put(path, producao);
-        } else {
-          producao = await this.service.post(path, producao);
-        }
+        const path = `${this.projeto.id}/Relatorio/ProducaoCientifica`;
 
         if (this.file) {
-          await this.service.upload([this.file], `${path}/${producao.id}/Arquivos/Origem`);
+          const file = await this.uploadService.upload([this.file], 'File');
+          this.form.patchValue({arquivoTrabalhoOrigemId: file[0].id});
         }
+        
+        const producao = this.form.value;
 
+        if (producao.id) {
+          await this.service.put(path, producao);
+        } else {
+          await this.service.post(path, producao);
+        }
+        this.app.alert('Registro salvo com sucesso!');
         this.activeModal.close();
       }
     } catch (e) {
       console.error(e);
+      this.app.alertError('Erro ao salvar o registro');
     }
   }
 

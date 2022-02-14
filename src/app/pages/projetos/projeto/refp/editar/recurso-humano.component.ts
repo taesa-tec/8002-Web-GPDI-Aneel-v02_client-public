@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {CurrencyPipe} from '@angular/common';
 import {ProjetoService} from '@app/pages/projetos/projeto/services/projeto.service';
 import {Projeto} from '@app/pages/projetos/projeto/projeto.component';
-import {LoadingController} from '@app/services';
+import {AppService, LoadingController, UploadFilesService} from '@app/services';
 import {EditarComponent} from '@app/pages/projetos/projeto/refp/editar/editar.component';
 
 @Component({
@@ -13,11 +13,14 @@ import {EditarComponent} from '@app/pages/projetos/projeto/refp/editar/editar.co
   styles: []
 })
 export class RecursoHumanoComponent implements OnInit {
+  @Input() data: { etapas: any[]; meses: any[]; colaboradores: any[]; recursos: any[]; coexecutores: any[]; empresas: any[] };
+  @Input() registro;
+  @Output() formChange: EventEmitter<any> = new EventEmitter<any>();
+
   projeto: Projeto;
   file: File;
   valorHora = 0;
   custo: any;
-  @Input() data: { etapas: any[], meses: any[], colaboradores: any[], recursos: any[], coexecutores: any[], empresas: any[] };
 
   financiadorInput = '';
   recursoHumanoCtrl = this.fb.control('', [Validators.required]);
@@ -28,16 +31,16 @@ export class RecursoHumanoComponent implements OnInit {
 
   get form() {
     return this.parent.form;
-  };
-
-  @Input() registro;
-  @Output() formChange: EventEmitter<any> = new EventEmitter<any>();
+  }
 
 
   constructor(protected fb: FormBuilder,
               protected parent: EditarComponent,
+              protected app: AppService,
+              protected uploadService: UploadFilesService,
               protected router: Router,
-              protected route: ActivatedRoute, protected service: ProjetoService,
+              protected route: ActivatedRoute,
+              protected service: ProjetoService,
               protected loading: LoadingController) {
   }
 
@@ -50,6 +53,7 @@ export class RecursoHumanoComponent implements OnInit {
       recursoHumanoId: this.recursoHumanoCtrl,
       horas: this.horasCtrl,
       atividadeRealizada: ['', Validators.required],
+      comprovanteId: [''],
       //
       etapaId: ['', Validators.required],
       financiadoraId: this.financiadoraCtrl,
@@ -117,11 +121,17 @@ export class RecursoHumanoComponent implements OnInit {
     }
     try {
       this.loading.show().then();
-      const registro = await this.service.post(`${this.projeto.id}/RegistroFinanceiro/RecursoHumano`, this.form.value);
-      await this.service.upload([this.file], `${this.projeto.id}/RegistroFinanceiro/${registro.id}/Comprovante`);
+      if (this.file) {
+        const file = await this.uploadService.upload([this.file], 'File');
+        this.form.patchValue({comprovanteId: file[0].id});
+      }
+      await this.service.post(`${this.projeto.id}/RegistroFinanceiro/RecursoHumano`, this.form.value);
+      this.app.alert('Registro Salvo com sucesso!');
+
       this.router.navigate(['../../pendente'], {relativeTo: this.route}).then();
     } catch (e) {
       console.error(e);
+      this.app.alertError('Não foi possível salvar o registro!');
     } finally {
       this.loading.hide();
     }

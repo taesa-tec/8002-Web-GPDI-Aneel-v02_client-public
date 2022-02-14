@@ -14,7 +14,6 @@ import {FileService} from '@app/services/file.service';
 })
 export class SelecaoComponent implements OnInit, OnDestroy {
 
-  protected subscription: Subscription;
   minDateAlvo = (new Date()).toJSON().replace(/T.+$/, '');
   route: ActivatedRoute;
   propostas: Array<any> = [];
@@ -26,8 +25,10 @@ export class SelecaoComponent implements OnInit, OnDestroy {
   form = this.fb.group({
     propostaId: this.propostaCtrl,
     responsavelId: ['', Validators.required],
-    dataAlvo: ['', Validators.required]
+    dataAlvo: ['', Validators.required],
+    arquivoId: ['']
   });
+  protected subscription: Subscription;
 
   constructor(public activeModal: NgbActiveModal,
               protected app: AppService,
@@ -56,8 +57,8 @@ export class SelecaoComponent implements OnInit, OnDestroy {
   }
 
   async download(proposta, arquivo: string) {
-
-    await this.fileService.urlToBlobDownload(`Captacoes/${proposta.captacaoId}/Propostas/${proposta.id}/${arquivo}`, `${arquivo}(${proposta.fornecedor}).pdf`);
+    await this.fileService.urlToBlobDownload(`Captacoes/${proposta.captacaoId}/Propostas/${proposta.id}/${arquivo}`,
+      `${arquivo}(${proposta.fornecedor}).pdf`);
   }
 
   async anexarArquivos(evt) {
@@ -73,12 +74,10 @@ export class SelecaoComponent implements OnInit, OnDestroy {
       return;
     }
     try {
+      const file = await this.service.upload([this.file], `${this.captacaoId}/SelecionarProposta/Arquivo`);
+      this.form.patchValue({arquivoId: file.id});
+      console.log(this.form.value);
       await this.service.post(`${this.captacaoId}/SelecionarProposta`, this.form.value);
-      try {
-        await this.service.upload([this.file], `${this.captacaoId}/SelecionarProposta/Arquivo`);
-      } catch (e) {
-        this.app.alertError('Não foi possível enviar o arquivo comprobatório').then();
-      }
       this.app.alert('Seleção confirmada com sucesso!').then();
       this.activeModal.close();
     } catch (e) {

@@ -14,7 +14,6 @@ import {FileService} from '@app/services/file.service';
 })
 export class RiscosComponent implements OnInit, OnDestroy {
 
-  protected subscription: Subscription;
   minDateAlvo = (new Date()).toJSON().replace(/T.+$/, '');
   route: ActivatedRoute;
   propostas: Array<any> = [];
@@ -25,7 +24,9 @@ export class RiscosComponent implements OnInit, OnDestroy {
   propostaCtrl = this.fb.control('', [Validators.required]);
   form = this.fb.group({
     responsavelId: ['', Validators.required],
+    arquivoId: ['']
   });
+  protected subscription: Subscription;
 
   constructor(public activeModal: NgbActiveModal,
               protected app: AppService,
@@ -72,12 +73,9 @@ export class RiscosComponent implements OnInit, OnDestroy {
     }
     this.app.loading.show().then();
     try {
+      const file = await this.service.upload([this.file], `${this.captacaoId}/ConfirmarRiscos/Arquivo`);
+      this.form.patchValue({arquivoId: file.id});
       await this.service.post(`${this.captacaoId}/ConfirmarRiscos`, this.form.value);
-      try {
-        await this.service.upload([this.file], `${this.captacaoId}/ConfirmarRiscos/Arquivo`);
-      } catch (e) {
-        this.app.alertError('Não foi possível enviar o arquivo comprobatório').then();
-      }
       this.app.alert('Identificação de Riscos salva com sucesso!').then();
       this.activeModal.close();
     } catch (e) {
