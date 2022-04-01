@@ -1,5 +1,9 @@
 # Gestor PDI
 
+Sistema de gerenciamento de projetos de Pesquisa, Desenvolvimento e Inovação.
+
+[Acesse o material para detalhes do projeto.](https://github.com/taesa-tec/8002-Web-GPDI-Aneel-v02_client-public/blob/main/banner.pdf)
+
 ## Instalação
 
 ### Pré-requisitos
@@ -16,10 +20,8 @@ está.
 ```js
 export const environment = {
   ...
-    api_url
-:
-"URL_DA_API",
-...
+    api_url:"URL_DA_API",
+  ...
 }
 ;
 ```
