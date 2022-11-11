@@ -178,7 +178,19 @@ export class AppService {
 
   forceRefresh() {
     this.router.onSameUrlNavigation = 'reload';
-    this.router.navigateByUrl(location.pathname).then();
+    const routeTree = this.router.parseUrl(location.pathname);
+    const query = new URLSearchParams(location.search) as any;
+    const queryParam = {};
+    for (let p of query) {
+      if (!queryParam[p[0]]) {
+        queryParam[p[0]] = p[1];
+      } else {
+        queryParam[p[0]] = Array.isArray(queryParam[p[0]]) ? [...queryParam[p[0]], p[1]] : [queryParam[p[0]], p[1]];
+      }
+    }
+    routeTree.queryParams = queryParam;
+    routeTree.fragment = location.hash;
+    this.router.navigateByUrl(routeTree).then();
   }
 
   updateRoutes() {
